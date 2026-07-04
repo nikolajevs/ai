@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowBox</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div>
+                <div class="subtitle" id="box-time">Синхронизация времени...</div>
+            </div>
+            <div class="header-status">
+                <span id="cycle-str" class="status-badge day-badge">Загрузка...</span>
+                <a href="/settings" class="btn-nav">Настройки Box</a>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Датчик КЛИМАТА</h3>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <span class="label">Температура</span>
+                        <div class="value" id="t-val">--.-<span class="unit">°C</span></div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Влажность</span>
+                        <div class="value" id="h-val" style="color: var(--primary)">--.-<span class="unit">%</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Освещение и Силовые цепи</h3>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <span class="label">Мощность LED</span>
+                        <div class="value" id="led-val" style="color: var(--warning)">--<span class="unit">%</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Полив</h3>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <span class="label">Статус насоса</span>
+                        <div class="value" id="pump-val" style="color: var(--text-muted)">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Вентиляция (ШИМ)</h3>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <span class="label">Вентилятор 1 (Обдув)</span>
+                        <div class="value" id="fan1-val" style="color: var(--success)">--<span class="unit">%</span></div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Вентилятор 2 (Вытяжка)</span>
+                        <div class="value" id="fan2-val" style="color: var(--success)">--<span class="unit">%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <div class="chart-header-row">
+                <div class="chart-title">Архивные графики параметров</div>
+                <input type="date" id="chart-date-selector" style="max-width: 180px; padding: 6px 10px; background: #1f2937; color: #fff; border: 1px solid var(--card-border); border-radius: 8px;">
+            </div>
+            <svg id="svgChart" viewBox="0 0 1000 400"></svg>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

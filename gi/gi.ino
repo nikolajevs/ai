@@ -1,0 +1,506 @@
+#include <esp_task_wdt.h>
+#include <Arduino.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SPIFFS.h>
+#include <RTClib.h>
+#include <Adafruit_SHT4x.h>
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
+#include <Preferences.h>
+#include <HTTPClient.h>
+
+// --- Настройки подключения к домашнему роутеру и Ubidots ---
+#define WIFI_SSID_ROUTER "B535_90A3-ext"      
+#define WIFI_PASS_ROUTER "d92Te5L78H3"  
+#define UBIDOTS_TOKEN    "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"   
+#define DEVICE_LABEL     "kireal"         
+
+// --- Распиновка периферии ---
+#define SD_CS_PIN     5
+#define LED_PWM_PIN   4
+#define FAN1_PWM_PIN  13
+#define FAN2_PWM_PIN  33
+#define PUMP_PIN      25 // реле/мосфет насоса полива — при необходимости смени на свободный GPIO
+
+#define PWM_FREQ      5000
+#define PWM_RES       8
+
+// --- Переменные параметров климата и автоматизации ---
+float temp_target = 25.0; 
+float temp_delta = 2.0;   
+float max_hum_night = 60.0; 
+
+int led_on_hour = 6;        
+int led_off_hour = 23;      
+int fan1_min_limit = 30;    
+int fan1_max_limit = 80;    
+int fan2_min_limit = 30;    
+int fan2_max_limit = 80;    
+int led_min_limit = 30;     
+int led_max_limit = 80;    
+uint32_t start_timestamp = 0; 
+
+// --- Настройки автополива ---
+uint8_t watering_days = 0;        // битовая маска: бит0=Пн, бит1=Вт, ... бит6=Вс
+int watering_hour = 8;
+int watering_minute = 0;
+int watering_duration_sec = 30;
+
+// --- Состояние насоса ---
+bool pump_active = false;
+uint32_t pump_start_time = 0;
+uint32_t last_watering_day = 0;   // защита от повторного срабатывания в ту же минуту
+
+// --- Глобальные переменные состояния системы ---
+float current_temp = 0.0;
+float current_hum = 0.0;
+int current_led_pwm = 255;
+int current_fan1_pwm = 51; 
+int current_fan2_pwm = 51; 
+bool is_day = true;
+
+// --- Статус здоровья периферии (Самодиагностика) ---
+bool sht_online = true;
+bool rtc_online = true;
+
+// Переменные для программного дублирования времени (на случай отказа RTC)
+uint32_t backup_unixtime = 1774838400; // Дефолтный 2026 год, если RTC умер сразу при старте
+unsigned long last_rtc_check_ms = 0;
+
+// --- Хендлы FreeRTOS для многоядерности ---
+TaskHandle_t UbidotsTaskHandle = NULL;
+SemaphoreHandle_t xMutex = NULL; 
+
+// --- Инициализация объектов ---
+Adafruit_SHT4x sht40 = Adafruit_SHT4x();
+RTC_DS3231 rtc;
+AsyncWebServer server(80);
+Preferences preferences;
+
+struct ClimateData {
+  float temp;
+  float hum;
+  int led;
+  int fan1;
+  int fan2;
+  bool sht_ok;
+};
+
+// Фоновая задача на Core 0 для работы с облаком Ubidots
+void vUbidotsTask(void *pvParameters) {
+  ClimateData localData;
+  
+  for (;;) {
+    vTaskDelay(pdMS_TO_TICKS(300000)); // 5 минут сна
+    
+    Serial.println("[Core 0] Пробуждение задачи Ubidots...");
+
+    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(1000)) == pdTRUE) {
+      localData.temp = current_temp;
+      localData.hum = current_hum;
+      localData.led = current_led_pwm;
+      localData.fan1 = current_fan1_pwm;
+      localData.fan2 = current_fan2_pwm;
+      localData.sht_ok = sht_online;
+      xSemaphoreGive(xMutex); 
+    } else {
+      continue; 
+    }
+
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.begin(WIFI_SSID_ROUTER, WIFI_PASS_ROUTER);
+    
+    int attempts = 0;
+    while (WiFi.status() != WL_CONNECTED && attempts < 30) {
+      vTaskDelay(pdMS_TO_TICKS(500)); 
+      attempts++;
+    }
+    
+    if (WiFi.status() == WL_CONNECTED) {
+      HTTPClient http;
+      String url = "http://industrial.api.ubidots.com/api/v1.6/devices/" + String(DEVICE_LABEL);
+      
+      http.begin(url);
+      http.addHeader("Content-Type", "application/json");
+      http.addHeader("X-Auth-Token", UBIDOTS_TOKEN);
+      
+      String payload = "{";
+      if (localData.sht_ok) {
+        payload += "\"temperature\":" + String(localData.temp, 2) + ",";
+        payload += "\"humidity\":" + String(localData.hum, 2) + ",";
+      }
+      payload += "\"led-power\":" + String(round(localData.led / 2.55)) + ",";
+      payload += "\"fan1-power\":" + String(round(localData.fan1 / 2.55)) + ",";
+      payload += "\"fan2-power\":" + String(round(localData.fan2 / 2.55)) + ",";
+      payload += "\"sensor-status\":" + String(localData.sht_ok ? 1 : 0); // Отсылаем статус датчика в облако
+      payload += "}";
+      
+      int httpResponseCode = http.POST(payload);
+      http.end();
+    }
+    
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_AP);
+  }
+}
+
+// Функция получения безопасного времени (из RTC или программного бэкапа)
+DateTime getSafeDateTime() {
+  if (rtc_online) {
+    DateTime now = rtc.now();
+    // Проверяем, не выдает ли RTC нулевой или ошибочный год (признак сбоя чтения)
+    if (now.year() >= 2026 && now.year() < 2100) {
+      backup_unixtime = now.unixtime(); // Синхронизируем бэкап
+      return now;
+    } else {
+      Serial.println("[КРИТИКА] RTC вернул некорректную дату! Переход на программный таймер.");
+      rtc_online = false;
+    }
+  }
+  
+  // Если RTC сломан, рассчитываем время программно на основе millis()
+  unsigned long ms = millis();
+  uint32_t elapsed_seconds = (ms - last_rtc_check_ms) / 1000;
+  if (elapsed_seconds > 0) {
+    backup_unixtime += elapsed_seconds;
+    last_rtc_check_ms += elapsed_seconds * 1000;
+  }
+  return DateTime(backup_unixtime);
+}
+
+void setup() {
+  Serial.begin(115200);
+  // Внутри setup() после инициализации Serial
+  #ifdef ESP_IDF_VERSION_VAL
+    // Инициализация WDT на 15 секунды
+    esp_task_wdt_config_t wdt_config = {
+        .timeout_ms = 15000,
+        .idle_core_mask = (1 << 0) | (1 << 1), // Мониторим оба ядра
+        .trigger_panic = true
+    };
+    esp_task_wdt_reconfigure(&wdt_config);
+    esp_task_wdt_add(NULL); // Добавляем текущую задачу (loop)
+  #else
+    // Старый метод для более старых версий (2.x)
+    esp_task_wdt_init(4, true);
+    esp_task_wdt_add(NULL);
+  #endif
+  Wire.begin(21, 22); 
+  
+  xMutex = xSemaphoreCreateMutex();
+
+  preferences.begin("grow-box", false);
+  temp_target = preferences.getFloat("temp_target", 25.0);
+  temp_delta = preferences.getFloat("temp_delta", 2.0);
+  max_hum_night = preferences.getFloat("max_hum_night", 60.0);
+  led_on_hour = preferences.getInt("led_on_hour", 6);
+  led_off_hour = preferences.getInt("led_off_hour", 18);
+  fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
+  fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
+  fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
+  fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
+  led_min_limit = preferences.getInt("led_min_limit", 10); 
+  led_max_limit = preferences.getInt("led_max_limit", 100);
+  start_timestamp = preferences.getUInt("start_time", 0);
+
+  watering_days = preferences.getUChar("watering_days", 0);
+  watering_hour = preferences.getInt("watering_hour", 8);
+  watering_minute = preferences.getInt("watering_minute", 0);
+  watering_duration_sec = preferences.getInt("watering_dur", 30);
+
+  // Безопасная инициализация датчиков с проверкой работоспособности
+  if (!sht40.begin(&Wire)) {
+    Serial.println("ОШИБКА: SHT4x не найден!");
+    sht_online = false;
+  }
+  
+  if (!rtc.begin()) {
+    Serial.println("ОШИБКА: RTC DS3231 не найден!");
+    rtc_online = false;
+    last_rtc_check_ms = millis();
+  }
+
+  if (!SD.begin(SD_CS_PIN)) Serial.println("SD-карта не обнаружена.");
+  if (!SPIFFS.begin(true)) Serial.println("Ошибка SPIFFS!");
+
+  pinMode(PUMP_PIN, OUTPUT);
+  digitalWrite(PUMP_PIN, LOW); // насос выключен при старте
+
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP("KiReal", "420420420");
+
+  xTaskCreatePinnedToCore(vUbidotsTask, "UbidotsTask", 8192, NULL, 1, &UbidotsTaskHandle, 0);
+
+  // --- МАРШРУТИЗАЦИЯ ВЕБ-СЕРВЕРА ---
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/index.html", "text/html"); });
+  server.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/settings.html", "text/html"); });
+  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/style.css", "text/css"); });
+  server.on("/script.js", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/script.js", "application/javascript"); });
+  server.on("/settings.js", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/settings.js", "application/javascript"); });
+
+  server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest *request){
+    DateTime now = getSafeDateTime();
+    int grow_day = (start_timestamp > 0 && now.unixtime() >= start_timestamp) ? ((now.unixtime() - start_timestamp) / 86400) + 1 : 0;
+    
+    float t, h; int l, f1, f2; bool s_ok, r_ok;
+    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+      t = current_temp; h = current_hum; l = current_led_pwm; f1 = current_fan1_pwm; f2 = current_fan2_pwm;
+      s_ok = sht_online; r_ok = rtc_online;
+      xSemaphoreGive(xMutex);
+    }
+
+    String json = "{";
+    json += "\"temp\":" + String(t, 2) + ",";
+    json += "\"hum\":" + String(h, 2) + ",";
+    json += "\"led\":" + String(l) + ",";
+    json += "\"fan1\":" + String(f1) + ",";
+    json += "\"fan2\":" + String(f2) + ",";
+    json += "\"time\":\"" + now.timestamp(DateTime::TIMESTAMP_TIME) + "\",";
+    json += "\"date\":\"" + now.timestamp(DateTime::TIMESTAMP_DATE) + "\",";
+    json += "\"is_day\":" + String(is_day ? "true" : "false") + ",";
+    json += "\"grow_day\":" + String(grow_day) + ",";
+    json += "\"sht_online\":" + String(s_ok ? "true" : "false") + ","; // Передаем статус в UI
+    json += "\"rtc_online\":" + String(r_ok ? "true" : "false") + ",";
+    json += "\"pump_active\":" + String(pump_active ? "true" : "false");
+    json += "}";
+    request->send(200, "application/json", json);
+  });
+
+  server.on("/api/settings", HTTP_GET, [](AsyncWebServerRequest *request){
+    DateTime now = getSafeDateTime();
+    char buf[16]; snprintf(buf, sizeof(buf), "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+    String json = "{";
+    json += "\"temp_target\":" + String(temp_target, 1) + ",";
+    json += "\"temp_delta\":" + String(temp_delta, 1) + ",";
+    json += "\"max_hum_night\":" + String(max_hum_night, 1) + ",";
+    json += "\"led_on_hour\":" + String(led_on_hour) + ",";
+    json += "\"led_off_hour\":" + String(led_off_hour) + ",";
+    json += "\"fan1_min_limit\":" + String(fan1_min_limit) + ",";
+    json += "\"fan1_max_limit\":" + String(fan1_max_limit) + ",";
+    json += "\"fan2_min_limit\":" + String(fan2_min_limit) + ",";
+    json += "\"fan2_max_limit\":" + String(fan2_max_limit) + ",";
+    json += "\"led_min_limit\":" + String(led_min_limit) + ",";
+    json += "\"led_max_limit\":" + String(led_max_limit) + ","; 
+    json += "\"start_time\":" + String(start_timestamp) + ",";
+    json += "\"watering_days\":" + String(watering_days) + ",";
+    json += "\"watering_hour\":" + String(watering_hour) + ",";
+    json += "\"watering_minute\":" + String(watering_minute) + ",";
+    json += "\"watering_duration\":" + String(watering_duration_sec) + ",";
+    json += "\"rtc_time\":\"" + String(buf) + "\"";
+    json += "}";
+    request->send(200, "application/json", json);
+  });
+
+  server.on("/save-settings", HTTP_POST, [](AsyncWebServerRequest *request){
+    if (request->hasParam("temp_target", true))  preferences.putFloat("temp_target", request->getParam("temp_target", true)->value().toFloat());
+    if (request->hasParam("temp_delta", true))   preferences.putFloat("temp_delta", request->getParam("temp_delta", true)->value().toFloat());
+    if (request->hasParam("max_hum_night", true)) preferences.putFloat("max_hum_night", request->getParam("max_hum_night", true)->value().toFloat());
+    if (request->hasParam("led_on_hour", true))   preferences.putInt("led_on_hour", request->getParam("led_on_hour", true)->value().toInt());
+    if (request->hasParam("led_off_hour", true))  preferences.putInt("led_off_hour", request->getParam("led_off_hour", true)->value().toInt());
+    if (request->hasParam("fan1_min_limit", true)) preferences.putInt("fan1_min_limit", request->getParam("fan1_min_limit", true)->value().toInt());
+    if (request->hasParam("fan1_max_limit", true)) preferences.putInt("fan1_max_limit", request->getParam("fan1_max_limit", true)->value().toInt());
+    if (request->hasParam("fan2_min_limit", true)) preferences.putInt("fan2_min_limit", request->getParam("fan2_min_limit", true)->value().toInt());
+    if (request->hasParam("fan2_max_limit", true)) preferences.putInt("fan2_max_limit", request->getParam("fan2_max_limit", true)->value().toInt());
+    if (request->hasParam("led_min_limit", true)) preferences.putInt("led_min_limit", request->getParam("led_min_limit", true)->value().toInt());
+    if (request->hasParam("led_max_limit", true)) preferences.putInt("led_max_limit", request->getParam("led_max_limit", true)->value().toInt());
+
+    if (request->hasParam("watering_days", true)) preferences.putUChar("watering_days", (uint8_t)request->getParam("watering_days", true)->value().toInt());
+    if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", request->getParam("watering_hour", true)->value().toInt());
+    if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", request->getParam("watering_minute", true)->value().toInt());
+    if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", request->getParam("watering_duration", true)->value().toInt());
+
+    if (request->hasParam("start_date", true)) {
+      String dateStr = request->getParam("start_date", true)->value(); 
+      if (dateStr.length() >= 10) {
+        DateTime startDate(dateStr.substring(0,4).toInt(), dateStr.substring(5,7).toInt(), dateStr.substring(8,10).toInt(), 0, 0, 0);
+        preferences.putUInt("start_time", startDate.unixtime());
+      }
+    }
+    
+    temp_target = preferences.getFloat("temp_target", 25.0);
+    temp_delta = preferences.getFloat("temp_delta", 2.0);
+    max_hum_night = preferences.getFloat("max_hum_night", 60.0);
+    led_on_hour = preferences.getInt("led_on_hour", 6);
+    led_off_hour = preferences.getInt("led_off_hour", 18);
+    fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
+    fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
+    fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
+    fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
+    led_min_limit = preferences.getInt("led_min_limit", 10);
+    led_max_limit = preferences.getInt("led_max_limit", 100);
+    start_timestamp = preferences.getUInt("start_time", 0);
+
+    watering_days = preferences.getUChar("watering_days", 0);
+    watering_hour = preferences.getInt("watering_hour", 8);
+    watering_minute = preferences.getInt("watering_minute", 0);
+    watering_duration_sec = preferences.getInt("watering_dur", 30);
+
+    request->redirect("/settings");
+  });
+
+  server.on("/set-time", HTTP_POST, [](AsyncWebServerRequest *request){
+    if (request->hasParam("datetime", true)) {
+      String dtStr = request->getParam("datetime", true)->value(); 
+      DateTime userTime(dtStr.substring(0,4).toInt(), dtStr.substring(5,7).toInt(), dtStr.substring(8,10).toInt(), dtStr.substring(11,13).toInt(), dtStr.substring(14,16).toInt(), 0);
+      if (rtc_online) {
+        rtc.adjust(userTime);
+      } else {
+        backup_unixtime = userTime.unixtime();
+        last_rtc_check_ms = millis();
+      }
+    }
+    request->redirect("/settings");
+  });
+
+  server.begin();
+
+  ledcAttach(LED_PWM_PIN, PWM_FREQ, PWM_RES);
+  ledcAttach(FAN1_PWM_PIN, PWM_FREQ, PWM_RES);
+  ledcAttach(FAN2_PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop() {
+  static unsigned long lastLogTime = 0;
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - lastLogTime >= 10000) {
+    lastLogTime = currentMillis;
+
+    DateTime now = getSafeDateTime();
+    int current_hour = now.hour();
+    
+    if (led_on_hour < led_off_hour) is_day = (current_hour >= led_on_hour && current_hour < led_off_hour);
+    else is_day = (current_hour >= led_on_hour || current_hour < led_off_hour);
+
+    int pwm_fan1_min = map(fan1_min_limit, 0, 100, 0, 255);
+    int pwm_fan1_max = map(fan1_max_limit, 0, 100, 0, 255);
+    int pwm_fan2_min = map(fan2_min_limit, 0, 100, 0, 255);
+    int pwm_fan2_max = map(fan2_max_limit, 0, 100, 0, 255);
+    int pwm_led_min = map(led_min_limit, 0, 100, 0, 255);
+    int pwm_led_max = map(led_max_limit, 0, 100, 0, 255);
+
+    int target_led, target_fan1, target_fan2;
+    float read_temp = 0.0;
+    float read_hum = 0.0;
+
+    // Чтение датчика с проверкой на ошибку
+    sensors_event_t humidity, temp;
+    if (sht_online && sht40.getEvent(&humidity, &temp)) {
+      read_temp = temp.temperature;
+      read_hum = humidity.relative_humidity;
+      
+      // Защита от "зависших" нереалистичных данных (за пределами работы датчика)
+      if (read_temp < -20.0 || read_temp > 80.0 || read_hum < 0.0 || read_hum > 100.0) {
+        sht_online = false; 
+      }
+    } else {
+      sht_online = false;
+    }
+
+    // ЛОГИКА АВАРИЙНОГО РЕЖИМА ИЛИ НОРМАЛЬНОЙ РАБОТЫ
+    if (!sht_online) {
+      // --- АВАРИЯ: Датчик сломан. Включаем безопасный пресет ---
+      // Вентиляторы на 50% (средний обдув, чтобы не перегреть бокс)
+      target_fan1 = map(50, 0, 100, pwm_fan1_min, pwm_fan1_max);
+      target_fan2 = map(50, 0, 100, pwm_fan2_min, pwm_fan2_max);
+      // Светильник на минимальный уровень дня, чтобы не сжечь растения светом/жаром
+      target_led = is_day ? pwm_led_min : 0; 
+      
+      Serial.println("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
+    } 
+    else {
+      // --- НОРМАЛЬНАЯ РАБОТА ---
+      // Защита от temp_delta == 0, чтобы map() не делил на ноль
+      float safe_delta = max(temp_delta, 0.1f);
+      float current_min = temp_target - safe_delta;
+      float current_max = temp_target + safe_delta;
+
+      if (read_temp <= current_min) {
+        target_led = is_day ? pwm_led_max : 0;
+        target_fan1 = pwm_fan1_min;
+        target_fan2 = pwm_fan2_min;
+      } 
+      else if (read_temp >= current_max) {
+        target_led = is_day ? pwm_led_min : 0;
+        target_fan1 = pwm_fan1_max; 
+        target_fan2 = pwm_fan2_max;
+      } 
+      else {
+        target_led = is_day ? map(read_temp * 100, current_min * 100, current_max * 100, pwm_led_max, pwm_led_min) : 0;
+        target_fan1 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan1_min, pwm_fan1_max);
+        target_fan2 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan2_min, pwm_fan2_max);
+      }
+
+      if (!is_day && read_hum > max_hum_night) {
+        target_fan2 = pwm_fan2_max;
+      }
+    }
+
+    // Безопасно обновляем глобальные переменные под мьютексом
+    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+      current_temp = read_temp;
+      current_hum = read_hum;
+      current_led_pwm = target_led;
+      current_fan1_pwm = target_fan1;
+      current_fan2_pwm = target_fan2;
+      xSemaphoreGive(xMutex);
+    }
+
+    // Управляем исполнительными устройствами
+    ledcWrite(LED_PWM_PIN, current_led_pwm);
+    ledcWrite(FAN1_PWM_PIN, current_fan1_pwm);
+    ledcWrite(FAN2_PWM_PIN, current_fan2_pwm);
+
+    // Запись лога на SD-карту с флагами состояния
+    char logFilename[20];
+    snprintf(logFilename, sizeof(logFilename), "/%04d-%02d-%02d.csv", now.year(), now.month(), now.day());
+
+    bool fileExists = SD.exists(logFilename);
+    File logFile = SD.open(logFilename, FILE_APPEND);
+    if (logFile) {
+      if (!fileExists) logFile.println("timestamp;temp;hum;led;fan1;fan2;sht_ok;rtc_ok");
+      logFile.print(now.timestamp(DateTime::TIMESTAMP_FULL)); logFile.print(";");
+      logFile.print(current_temp, 2); logFile.print(";");
+      logFile.print(current_hum, 2); logFile.print(";");
+      logFile.print(current_led_pwm); logFile.print(";");
+      logFile.print(current_fan1_pwm); logFile.print(";");
+      logFile.print(current_fan2_pwm); logFile.print(";");
+      logFile.print(sht_online ? "1" : "0"); logFile.print(";");
+      logFile.println(rtc_online ? "1" : "0");
+      logFile.close();
+    }
+  }
+
+  // --- АВТОПОЛИВ ---
+  static unsigned long lastWaterCheck = 0;
+  if (currentMillis - lastWaterCheck >= 1000) {
+    lastWaterCheck = currentMillis;
+    DateTime now_w = getSafeDateTime();
+
+    // RTClib: dayOfTheWeek() возвращает 0=Вс...6=Сб. Переводим в формат watering_days: 0=Пн...6=Вс
+    int rtc_dow = now_w.dayOfTheWeek();
+    int iso_dow = (rtc_dow == 0) ? 6 : rtc_dow - 1;
+    uint32_t today_code = now_w.unixtime() / 86400;
+
+    if (!pump_active) {
+      bool day_enabled = (watering_days >> iso_dow) & 0x01;
+      if (day_enabled && now_w.hour() == watering_hour && now_w.minute() == watering_minute && last_watering_day != today_code) {
+        pump_active = true;
+        pump_start_time = now_w.unixtime();
+        last_watering_day = today_code;
+        digitalWrite(PUMP_PIN, HIGH);
+        Serial.println("[ПОЛИВ] Старт автополива");
+      }
+    } else {
+      if (now_w.unixtime() - pump_start_time >= (uint32_t)watering_duration_sec) {
+        pump_active = false;
+        digitalWrite(PUMP_PIN, LOW);
+        Serial.println("[ПОЛИВ] Полив завершён");
+      }
+    }
+  }
+
+  esp_task_wdt_reset();
+}
