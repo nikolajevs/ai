@@ -23,6 +23,7 @@
 #define FAN1_PWM_PIN  13
 #define FAN2_PWM_PIN  33
 #define PUMP_PIN      25 // реле/мосфет насоса полива — при необходимости смени на свободный GPIO
+#define HEATER_PIN    27 // реле обогревателя — при необходимости смени на свободный GPIO
 
 #define PWM_FREQ      5000
 #define PWM_RES       8
@@ -52,6 +53,11 @@ int watering_duration_sec = 30;
 bool pump_active = false;
 uint32_t pump_start_time = 0;
 uint32_t last_watering_day = 0;   // защита от повторного срабатывания в ту же минуту
+
+// --- Настройки обогрева ---
+// heater_mode: 0 = только день, 1 = только ночь, 2 = всегда
+int heater_mode = 2;
+bool heater_active = false;
 
 // --- Глобальные переменные состояния системы ---
 float current_temp = 0.0;
@@ -209,6 +215,7 @@ void setup() {
   watering_hour = preferences.getInt("watering_hour", 8);
   watering_minute = preferences.getInt("watering_minute", 0);
   watering_duration_sec = preferences.getInt("watering_dur", 30);
+  heater_mode = preferences.getInt("heater_mode", 2);
 
   // Безопасная инициализация датчиков с проверкой работоспособности
   if (!sht40.begin(&Wire)) {
@@ -227,6 +234,9 @@ void setup() {
 
   pinMode(PUMP_PIN, OUTPUT);
   digitalWrite(PUMP_PIN, LOW); // насос выключен при старте
+
+  pinMode(HEATER_PIN, OUTPUT);
+  digitalWrite(HEATER_PIN, LOW); // обогреватель выключен при старте
 
   WiFi.mode(WIFI_AP);
   WiFi.softAP("KiReal", "420420420");
@@ -263,7 +273,8 @@ void setup() {
     json += "\"grow_day\":" + String(grow_day) + ",";
     json += "\"sht_online\":" + String(s_ok ? "true" : "false") + ","; // Передаем статус в UI
     json += "\"rtc_online\":" + String(r_ok ? "true" : "false") + ",";
-    json += "\"pump_active\":" + String(pump_active ? "true" : "false");
+    json += "\"pump_active\":" + String(pump_active ? "true" : "false") + ",";
+    json += "\"heater_active\":" + String(heater_active ? "true" : "false");
     json += "}";
     request->send(200, "application/json", json);
   });
@@ -288,6 +299,7 @@ void setup() {
     json += "\"watering_hour\":" + String(watering_hour) + ",";
     json += "\"watering_minute\":" + String(watering_minute) + ",";
     json += "\"watering_duration\":" + String(watering_duration_sec) + ",";
+    json += "\"heater_mode\":" + String(heater_mode) + ",";
     json += "\"rtc_time\":\"" + String(buf) + "\"";
     json += "}";
     request->send(200, "application/json", json);
@@ -310,6 +322,7 @@ void setup() {
     if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", request->getParam("watering_hour", true)->value().toInt());
     if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", request->getParam("watering_minute", true)->value().toInt());
     if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", request->getParam("watering_duration", true)->value().toInt());
+    if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", request->getParam("heater_mode", true)->value().toInt());
 
     if (request->hasParam("start_date", true)) {
       String dateStr = request->getParam("start_date", true)->value(); 
@@ -336,6 +349,7 @@ void setup() {
     watering_hour = preferences.getInt("watering_hour", 8);
     watering_minute = preferences.getInt("watering_minute", 0);
     watering_duration_sec = preferences.getInt("watering_dur", 30);
+    heater_mode = preferences.getInt("heater_mode", 2);
 
     request->redirect("/settings");
   });
@@ -408,6 +422,10 @@ void loop() {
       // Светильник на минимальный уровень дня, чтобы не сжечь растения светом/жаром
       target_led = is_day ? pwm_led_min : 0; 
       
+      // Датчик недоступен — не доверяем показаниям, обогрев выключаем из соображений безопасности
+      heater_active = false;
+      digitalWrite(HEATER_PIN, LOW);
+      
       Serial.println("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
     } 
     else {
@@ -416,6 +434,17 @@ void loop() {
       float safe_delta = max(temp_delta, 0.1f);
       float current_min = temp_target - safe_delta;
       float current_max = temp_target + safe_delta;
+
+      // Обогрев: гистерезис по current_min/temp_target, ограниченный расписанием (день/ночь/всегда)
+      bool heater_schedule_ok = (heater_mode == 2) || (heater_mode == 0 && is_day) || (heater_mode == 1 && !is_day);
+      if (!heater_schedule_ok) {
+        heater_active = false;
+      } else if (!heater_active && read_temp <= current_min) {
+        heater_active = true;
+      } else if (heater_active && read_temp >= temp_target) {
+        heater_active = false;
+      }
+      digitalWrite(HEATER_PIN, heater_active ? HIGH : LOW);
 
       if (read_temp <= current_min) {
         target_led = is_day ? pwm_led_max : 0;

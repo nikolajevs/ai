@@ -19,6 +19,15 @@ async function updateStatus() {
             pumpEl.innerText = 'Ожидание';
             pumpEl.style.color = 'var(--text-muted)';
         }
+
+        const heaterEl = document.getElementById('heater-val');
+        if (data.heater_active) {
+            heaterEl.innerText = 'ВКЛЮЧЕН';
+            heaterEl.style.color = 'var(--warning)';
+        } else {
+            heaterEl.innerText = 'Выключен';
+            heaterEl.style.color = 'var(--text-muted)';
+        }
         
         // Первоначальное выставление даты в календаре, если пользователь её ещё не менял
         if (!currentSelectedDate) {

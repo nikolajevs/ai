@@ -45,6 +45,7 @@ async function loadCurrentSettings() {
         document.getElementById('watering_minute').value = data.watering_minute;
         document.getElementById('watering_duration').value = data.watering_duration;
         unpackWateringDays(data.watering_days);
+        document.getElementById('heater_mode').value = data.heater_mode;
         
         if (data.start_time > 0) {
             const d = new Date(data.start_time * 1000);

@@ -117,6 +117,21 @@
                 <button type="submit" class="btn-action btn-sync" style="margin-top: 10px;">Сохранить настройки полива</button>
             </form>
         </div>
+
+        <div class="form-section">
+            <h3>Обогрев</h3>
+            <form action="/save-settings" method="POST">
+                <div class="form-group">
+                    <label>Режим работы обогревателя</label>
+                    <select id="heater_mode" name="heater_mode">
+                        <option value="0">Только днём</option>
+                        <option value="1">Только ночью</option>
+                        <option value="2">Всегда</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-action btn-sync" style="margin-top: 10px;">Сохранить режим обогрева</button>
+            </form>
+        </div>
     </div>
     <script src="/settings.js"></script>
 </body>
