@@ -1,5 +1,0 @@
-// --- Настройки подключения к домашнему роутеру и Ubidots ---
-#define WIFI_SSID_ROUTER "B535_90A3-ext"      
-#define WIFI_PASS_ROUTER "d92Te5L78H3"  
-#define UBIDOTS_TOKEN    "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"   
-#define DEVICE_LABEL     "kireal" 
