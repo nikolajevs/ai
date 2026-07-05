@@ -420,11 +420,11 @@ void setup() {
 void loop() {
   static unsigned long lastLogTime = 0;
   unsigned long currentMillis = millis();
+  DateTime now = getSafeDateTime();
 
   if (currentMillis - lastLogTime >= 10000) {
     lastLogTime = currentMillis;
 
-    DateTime now = getSafeDateTime();
     int current_hour = now.hour();
     
     if (led_on_hour < led_off_hour) is_day = (current_hour >= led_on_hour && current_hour < led_off_hour);
@@ -523,8 +523,12 @@ void loop() {
     ledcWrite(LED_PWM_PIN, current_led_pwm);
     ledcWrite(FAN1_PWM_PIN, current_fan1_pwm);
     ledcWrite(FAN2_PWM_PIN, current_fan2_pwm);
+  }
 
-    // Запись лога на SD-карту с флагами состояния
+  // Запись лога на SD-карту с флагами состояния
+  static unsigned long lastLogBackupTime = 0;
+  if (currentMillis - lastLogBackupTime >= 300000) {
+    lastLogBackupTime = currentMillis;
     char logFilename[20];
     snprintf(logFilename, sizeof(logFilename), "/%04d-%02d-%02d.csv", now.year(), now.month(), now.day());
 
