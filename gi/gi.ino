@@ -157,7 +157,7 @@ DateTime getSafeDateTime() {
   if (rtc_online) {
     DateTime now = rtc.now();
     // Проверяем, не выдает ли RTC нулевой или ошибочный год (признак сбоя чтения)
-    if (now.year() >= 2026 && now.year() < 2100) {
+    if (now.minute() <= 60 && now.hour() <= 60) {
       backup_unixtime = now.unixtime(); // Синхронизируем бэкап
       return now;
     } else {
@@ -218,7 +218,7 @@ void setup() {
   heater_mode = preferences.getInt("heater_mode", 2);
 
   // Безопасная инициализация датчиков с проверкой работоспособности
-  if (!sht40.begin(&Wire)) {
+  if (!sht40.begin()) {
     Serial.println("ОШИБКА: SHT4x не найден!");
     sht_online = false;
   }
