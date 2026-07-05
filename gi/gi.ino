@@ -394,6 +394,22 @@ void setup() {
     request->redirect("/settings");
   });
 
+  server.on("/api/log", HTTP_GET, [](AsyncWebServerRequest *request){
+      String logDate = request->hasParam("date") ? request->getParam("date")->value() : "";
+      if (logDate == "") {
+        DateTime now = getSafeDateTime();
+        char buf[16];
+        snprintf(buf, sizeof(buf), "%04d-%02d-%02d", now.year(), now.month(), now.day());
+        logDate = String(buf);
+      }
+      String filename = "/" + logDate + ".csv";
+      if (SD.exists(filename)) {
+        request->send(SD, filename, "text/csv"); // Убедись, что тип text/csv
+      } else {
+        request->send(200, "text/plain", "timestamp;temp;hum;led;fan1;fan2\n");
+      }
+  });
+
   server.begin();
 
   ledcAttach(LED_PWM_PIN, PWM_FREQ, PWM_RES);
