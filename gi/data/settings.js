@@ -14,6 +14,11 @@ function unpackWateringDays(mask) {
     });
 }
 
+function togglePasswordField(id) {
+    const el = document.getElementById(id);
+    el.type = (el.type === 'password') ? 'text' : 'password';
+}
+
 function setCurrentTime() {
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
@@ -46,6 +51,11 @@ async function loadCurrentSettings() {
         document.getElementById('watering_duration').value = data.watering_duration;
         unpackWateringDays(data.watering_days);
         document.getElementById('heater_mode').value = data.heater_mode;
+
+        document.getElementById('wifi_ssid').value = data.wifi_ssid;
+        document.getElementById('wifi_pass').value = data.wifi_pass;
+        document.getElementById('ubidots_token').value = data.ubidots_token;
+        document.getElementById('device_label').value = data.device_label;
         
         if (data.start_time > 0) {
             const d = new Date(data.start_time * 1000);

@@ -12,10 +12,17 @@
 #include <HTTPClient.h>
 
 // --- Настройки подключения к домашнему роутеру и Ubidots ---
-#define WIFI_SSID_ROUTER "B535_90A3-ext"      
-#define WIFI_PASS_ROUTER "d92Te5L78H3"  
-#define UBIDOTS_TOKEN    "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"   
-#define DEVICE_LABEL     "kireal"         
+// Значения по умолчанию используются только при первой прошивке / если NVS пуст.
+// Реальные значения хранятся в Preferences и редактируются на вкладке "WiFi / Ubidots".
+#define DEFAULT_WIFI_SSID     "B535_90A3-ext"
+#define DEFAULT_WIFI_PASS     "d92Te5L78H3"
+#define DEFAULT_UBIDOTS_TOKEN "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"
+#define DEFAULT_DEVICE_LABEL  "kireal"
+
+String wifi_ssid;
+String wifi_pass;
+String ubidots_token;
+String device_label;
 
 // --- Распиновка периферии ---
 #define SD_CS_PIN     5
@@ -116,7 +123,7 @@ void vUbidotsTask(void *pvParameters) {
     }
 
     WiFi.mode(WIFI_AP_STA);
-    WiFi.begin(WIFI_SSID_ROUTER, WIFI_PASS_ROUTER);
+    WiFi.begin(wifi_ssid.c_str(), wifi_pass.c_str());
     
     int attempts = 0;
     while (WiFi.status() != WL_CONNECTED && attempts < 30) {
@@ -126,11 +133,11 @@ void vUbidotsTask(void *pvParameters) {
     
     if (WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
-      String url = "http://industrial.api.ubidots.com/api/v1.6/devices/" + String(DEVICE_LABEL);
+      String url = "http://industrial.api.ubidots.com/api/v1.6/devices/" + device_label;
       
       http.begin(url);
       http.addHeader("Content-Type", "application/json");
-      http.addHeader("X-Auth-Token", UBIDOTS_TOKEN);
+      http.addHeader("X-Auth-Token", ubidots_token);
       
       String payload = "{";
       if (localData.sht_ok) {
@@ -217,6 +224,11 @@ void setup() {
   watering_duration_sec = preferences.getInt("watering_dur", 30);
   heater_mode = preferences.getInt("heater_mode", 2);
 
+  wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
+  wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
+  ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
+  device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
+
   // Безопасная инициализация датчиков с проверкой работоспособности
   if (!sht40.begin()) {
     Serial.println("ОШИБКА: SHT4x не найден!");
@@ -300,6 +312,10 @@ void setup() {
     json += "\"watering_minute\":" + String(watering_minute) + ",";
     json += "\"watering_duration\":" + String(watering_duration_sec) + ",";
     json += "\"heater_mode\":" + String(heater_mode) + ",";
+    json += "\"wifi_ssid\":\"" + wifi_ssid + "\",";
+    json += "\"wifi_pass\":\"" + wifi_pass + "\",";
+    json += "\"ubidots_token\":\"" + ubidots_token + "\",";
+    json += "\"device_label\":\"" + device_label + "\",";
     json += "\"rtc_time\":\"" + String(buf) + "\"";
     json += "}";
     request->send(200, "application/json", json);
@@ -323,6 +339,11 @@ void setup() {
     if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", request->getParam("watering_minute", true)->value().toInt());
     if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", request->getParam("watering_duration", true)->value().toInt());
     if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", request->getParam("heater_mode", true)->value().toInt());
+
+    if (request->hasParam("wifi_ssid", true)) preferences.putString("wifi_ssid", request->getParam("wifi_ssid", true)->value());
+    if (request->hasParam("wifi_pass", true)) preferences.putString("wifi_pass", request->getParam("wifi_pass", true)->value());
+    if (request->hasParam("ubidots_token", true)) preferences.putString("ubidots_token", request->getParam("ubidots_token", true)->value());
+    if (request->hasParam("device_label", true)) preferences.putString("device_label", request->getParam("device_label", true)->value());
 
     if (request->hasParam("start_date", true)) {
       String dateStr = request->getParam("start_date", true)->value(); 
@@ -350,6 +371,11 @@ void setup() {
     watering_minute = preferences.getInt("watering_minute", 0);
     watering_duration_sec = preferences.getInt("watering_dur", 30);
     heater_mode = preferences.getInt("heater_mode", 2);
+
+    wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
+    wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
+    ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
+    device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
 
     request->redirect("/settings");
   });

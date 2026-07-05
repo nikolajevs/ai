@@ -21,6 +21,7 @@
             <button type="button" class="tab-btn" data-tab="tab-fans">Вентиляция</button>
             <button type="button" class="tab-btn" data-tab="tab-watering">Полив</button>
             <button type="button" class="tab-btn" data-tab="tab-heater">Обогрев</button>
+            <button type="button" class="tab-btn" data-tab="tab-network">WiFi / Ubidots</button>
         </div>
 
         <!-- ОБЩЕЕ -->
@@ -178,6 +179,56 @@
                         </select>
                     </div>
                     <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить режим обогрева</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- WIFI / UBIDOTS -->
+        <div class="tab-panel" id="tab-network">
+            <div class="form-section">
+                <h3>WiFi роутера (для выгрузки в облако)</h3>
+                <div style="font-size: 13px; margin-bottom: 15px; color: var(--text-muted)">
+                    Используется фоновой задачей на Core 0 для подключения к интернету и отправки данных в Ubidots.
+                    Точка доступа платы (AP) для локального доступа к этой странице не меняется.
+                </div>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>SSID сети</label>
+                            <input type="text" id="wifi_ssid" name="wifi_ssid" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>Пароль сети</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="password" id="wifi_pass" name="wifi_pass" autocomplete="off" style="flex: 1;">
+                                <button type="button" class="btn-action" onclick="togglePasswordField('wifi_pass')">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить WiFi</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Ubidots</h3>
+                <div style="font-size: 13px; margin-bottom: 15px; color: var(--text-muted)">
+                    Токен и лейбл устройства для API Ubidots (industrial.api.ubidots.com).
+                </div>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Device label</label>
+                            <input type="text" id="device_label" name="device_label" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>API токен</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" style="flex: 1;">
+                                <button type="button" class="btn-action" onclick="togglePasswordField('ubidots_token')">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить Ubidots</button>
                 </form>
             </div>
         </div>
