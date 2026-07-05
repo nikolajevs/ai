@@ -38,7 +38,7 @@ async function loadCurrentSettings() {
         document.getElementById('fan2_min_limit').value = data.fan2_min_limit;
         document.getElementById('fan2_max_limit').value = data.fan2_max_limit;
         document.getElementById('led_min_limit').value = data.led_min_limit; 
-        document.getElementById('led_max_limit').value = data.led_max_limit; // Подгружаем макс. лампы
+        document.getElementById('led_max_limit').value = data.led_max_limit;
         document.getElementById('rtc-time-label').innerText = data.rtc_time;
 
         document.getElementById('watering_hour').value = data.watering_hour;
@@ -60,8 +60,24 @@ async function loadCurrentSettings() {
     }
 }
 
+function initTabs() {
+    const buttons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+    });
+}
+
 window.onload = () => {
     setCurrentTime();
     loadCurrentSettings();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
+    initTabs();
 };

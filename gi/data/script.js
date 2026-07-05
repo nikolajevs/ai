@@ -9,7 +9,7 @@ async function updateStatus() {
         document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
-        document.getElementById('box-time').innerText = 'Системное время RTC: ' + data.time;
+        document.getElementById('box-time').innerText = data.time;
 
         const pumpEl = document.getElementById('pump-val');
         if (data.pump_active) {
@@ -40,12 +40,11 @@ async function updateStatus() {
         }
 
         const cycleEl = document.getElementById('cycle-str');
-        const phaseStr = data.is_day ? "ДЕНЬ" : "НОЧЬ";
         
         if (data.grow_day > 0) {
-            cycleEl.innerText = `ДЕНЬ ЦИКЛА: ${data.grow_day} (${phaseStr})`;
+            cycleEl.innerText = `ДЕНЬ ЦИКЛА: ${data.grow_day}`;
         } else {
-            cycleEl.innerText = `ЦИКЛ НЕ НАЧАТ (${phaseStr})`;
+            cycleEl.innerText = `ЦИКЛ НЕ НАЧАТ`;
         }
         
         if(data.is_day) {

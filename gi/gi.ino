@@ -99,7 +99,7 @@ void vUbidotsTask(void *pvParameters) {
   ClimateData localData;
   
   for (;;) {
-    vTaskDelay(pdMS_TO_TICKS(300000)); // 5 минут сна
+    vTaskDelay(pdMS_TO_TICKS(120000)); // 2 минут сна
     
     Serial.println("[Core 0] Пробуждение задачи Ubidots...");
 
@@ -193,7 +193,7 @@ void setup() {
     esp_task_wdt_init(4, true);
     esp_task_wdt_add(NULL);
   #endif
-  Wire.begin(21, 22); 
+  Wire.begin(); 
   
   xMutex = xSemaphoreCreateMutex();
 

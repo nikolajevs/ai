@@ -10,127 +10,176 @@
     <div class="dashboard">
         <header>
             <div>
-                <h1>Параметры Системы</h1>
-                <div class="subtitle">Конфигурация логики внутренней памяти NVS</div>
+                <h1>Параметры</h1>
             </div>
             <a href="/" class="btn-nav">← К мониторингу</a>
         </header>
 
-        <div class="form-section">
-            <h3>Синхронизация RTC модуля</h3>
-            <div style="font-size: 14px; margin-bottom: 15px; color: var(--text-muted)">
-                Текущее время на плате: <strong style="color: var(--warning)" id="rtc-time-label">Загрузка...</strong>
+        <div class="tabs" id="settings-tabs">
+            <button type="button" class="tab-btn active" data-tab="tab-general">Общее</button>
+            <button type="button" class="tab-btn" data-tab="tab-climate">Климат</button>
+            <button type="button" class="tab-btn" data-tab="tab-fans">Вентиляция</button>
+            <button type="button" class="tab-btn" data-tab="tab-watering">Полив</button>
+            <button type="button" class="tab-btn" data-tab="tab-heater">Обогрев</button>
+        </div>
+
+        <!-- ОБЩЕЕ -->
+        <div class="tab-panel active" id="tab-general">
+            <div class="form-section">
+                <h3>Синхронизация RTC модуля</h3>
+                <div style="font-size: 14px; margin-bottom: 15px; color: var(--text-muted)">
+                    Текущее время на плате: <strong style="color: var(--warning)" id="rtc-time-label">Загрузка...</strong>
+                </div>
+                <form action="/set-time" method="POST">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                        <input type="datetime-local" id="datetime" name="datetime" required>
+                        <button type="submit" class="btn-action btn-sync">Обновить время RTC</button>
+                        <button type="button" class="btn-action" onclick="setCurrentTime()">Заполнить текущим</button>
+                    </div>
+                </form>
             </div>
-            <form action="/set-time" method="POST">
-                <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                    <input type="datetime-local" id="datetime" name="datetime" required>
-                    <button type="submit" class="btn-action btn-sync">Обновить время RTC</button>
-                    <button type="button" class="btn-action" onclick="setCurrentTime()">Заполнить текущим</button>
-                </div>
-            </form>
+
+            <div class="form-section">
+                <h3>Гровинг</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Дата начала гровинга</label>
+                            <input type="date" id="start_date" name="start_date">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
         </div>
 
-        <div class="form-section">
-            <h3>Уставки автоматизации и лимиты</h3>
-            <form action="/save-settings" method="POST">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Дата начала гровинга</label>
-                        <input type="date" id="start_date" name="start_date">
+        <!-- КЛИМАТ -->
+        <div class="tab-panel" id="tab-climate">
+            <div class="form-section">
+                <h3>Температура и влажность</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Целевая температура, °C</label>
+                            <input type="number" step="0.1" id="temp_target" name="temp_target">
+                        </div>
+                        <div class="form-group">
+                            <label>Гистерезис (Дельта ±), °C</label>
+                            <input type="number" step="0.1" id="temp_delta" name="temp_delta">
+                        </div>
+                        <div class="form-group">
+                            <label>Ночной предел влажности, %</label>
+                            <input type="number" step="1" id="max_hum_night" name="max_hum_night">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Целевая температура, °C</label>
-                        <input type="number" step="0.1" id="temp_target" name="temp_target">
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Освещение</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Час включения света</label>
+                            <input type="number" min="0" max="23" id="led_on_hour" name="led_on_hour">
+                        </div>
+                        <div class="form-group">
+                            <label>Час выключения света</label>
+                            <input type="number" min="0" max="23" id="led_off_hour" name="led_off_hour">
+                        </div>
+                        <div class="form-group">
+                            <label>Мин. мощность лампы, %</label>
+                            <input type="number" min="0" max="100" id="led_min_limit" name="led_min_limit">
+                        </div>
+                        <div class="form-group">
+                            <label>Макс. мощность лампы, %</label>
+                            <input type="number" min="0" max="100" id="led_max_limit" name="led_max_limit">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Гистерезис (Дельта ±), °C</label>
-                        <input type="number" step="0.1" id="temp_delta" name="temp_delta">
-                    </div>
-                    <div class="form-group">
-                        <label>Ночной предел влажности, %</label>
-                        <input type="number" step="1" id="max_hum_night" name="max_hum_night">
-                    </div>
-                    <div class="form-group">
-                        <label>Час включения света</label>
-                        <input type="number" min="0" max="23" id="led_on_hour" name="led_on_hour">
-                    </div>
-                    <div class="form-group">
-                        <label>Час выключения света</label>
-                        <input type="number" min="0" max="23" id="led_off_hour" name="led_off_hour">
-                    </div>
-                    <div class="form-group">
-                        <label>Вентилятор 1: мин., % (0-100)</label>
-                        <input type="number" min="0" max="100" id="fan1_min_limit" name="fan1_min_limit">
-                    </div>
-                    <div class="form-group">
-                        <label>Вентилятор 1: макс., % (0-100)</label>
-                        <input type="number" min="0" max="100" id="fan1_max_limit" name="fan1_max_limit">
-                    </div>
-                    <div class="form-group">
-                        <label>Вентилятор 2: мин., % (0-100)</label>
-                        <input type="number" min="0" max="100" id="fan2_min_limit" name="fan2_min_limit">
-                    </div>
-                    <div class="form-group">
-                        <label>Вентилятор 2: макс., % (0-100)</label>
-                        <input type="number" min="0" max="100" id="fan2_max_limit" name="fan2_max_limit">
-                    </div>
-                    <div class="form-group">
-                        <label>Мин. мощность лампы, %</label>
-                        <input type="number" min="0" max="100" id="led_min_limit" name="led_min_limit">
-                    </div>
-                    <div class="form-group">
-                        <label>Макс. мощность лампы, %</label>
-                        <input type="number" min="0" max="100" id="led_max_limit" name="led_max_limit">
-                    </div>
-                </div>
-                <button type="submit" class="btn-action btn-sync" style="margin-top: 10px;">Сохранить параметры в NVS</button>
-            </form>
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
         </div>
 
-        <div class="form-section">
-            <h3>Автополив</h3>
-            <form action="/save-settings" method="POST" id="watering-form">
-                <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 15px;">
-                    <label><input type="checkbox" id="wd_mon"> Пн</label>
-                    <label><input type="checkbox" id="wd_tue"> Вт</label>
-                    <label><input type="checkbox" id="wd_wed"> Ср</label>
-                    <label><input type="checkbox" id="wd_thu"> Чт</label>
-                    <label><input type="checkbox" id="wd_fri"> Пт</label>
-                    <label><input type="checkbox" id="wd_sat"> Сб</label>
-                    <label><input type="checkbox" id="wd_sun"> Вс</label>
-                </div>
-                <input type="hidden" id="watering_days" name="watering_days">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Час полива</label>
-                        <input type="number" min="0" max="23" id="watering_hour" name="watering_hour">
+        <!-- ВЕНТИЛЯЦИЯ -->
+        <div class="tab-panel" id="tab-fans">
+            <div class="form-section">
+                <h3>Лимиты ШИМ вентиляторов</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Вентилятор 1: мин., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan1_min_limit" name="fan1_min_limit">
+                        </div>
+                        <div class="form-group">
+                            <label>Вентилятор 1: макс., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan1_max_limit" name="fan1_max_limit">
+                        </div>
+                        <div class="form-group">
+                            <label>Вентилятор 2: мин., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan2_min_limit" name="fan2_min_limit">
+                        </div>
+                        <div class="form-group">
+                            <label>Вентилятор 2: макс., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan2_max_limit" name="fan2_max_limit">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Минута полива</label>
-                        <input type="number" min="0" max="59" id="watering_minute" name="watering_minute">
-                    </div>
-                    <div class="form-group">
-                        <label>Длительность полива, сек</label>
-                        <input type="number" min="1" id="watering_duration" name="watering_duration">
-                    </div>
-                </div>
-                <button type="submit" class="btn-action btn-sync" style="margin-top: 10px;">Сохранить настройки полива</button>
-            </form>
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
         </div>
 
-        <div class="form-section">
-            <h3>Обогрев</h3>
-            <form action="/save-settings" method="POST">
-                <div class="form-group">
-                    <label>Режим работы обогревателя</label>
-                    <select id="heater_mode" name="heater_mode">
-                        <option value="0">Только днём</option>
-                        <option value="1">Только ночью</option>
-                        <option value="2">Всегда</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-action btn-sync" style="margin-top: 10px;">Сохранить режим обогрева</button>
-            </form>
+        <!-- ПОЛИВ -->
+        <div class="tab-panel" id="tab-watering">
+            <div class="form-section">
+                <h3>Автополив</h3>
+                <form action="/save-settings" method="POST" id="watering-form">
+                    <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <label><input type="checkbox" id="wd_mon"> Пн</label>
+                        <label><input type="checkbox" id="wd_tue"> Вт</label>
+                        <label><input type="checkbox" id="wd_wed"> Ср</label>
+                        <label><input type="checkbox" id="wd_thu"> Чт</label>
+                        <label><input type="checkbox" id="wd_fri"> Пт</label>
+                        <label><input type="checkbox" id="wd_sat"> Сб</label>
+                        <label><input type="checkbox" id="wd_sun"> Вс</label>
+                    </div>
+                    <input type="hidden" id="watering_days" name="watering_days">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Час полива</label>
+                            <input type="number" min="0" max="23" id="watering_hour" name="watering_hour">
+                        </div>
+                        <div class="form-group">
+                            <label>Минута полива</label>
+                            <input type="number" min="0" max="59" id="watering_minute" name="watering_minute">
+                        </div>
+                        <div class="form-group">
+                            <label>Длительность полива, сек</label>
+                            <input type="number" min="1" id="watering_duration" name="watering_duration">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить настройки полива</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ОБОГРЕВ -->
+        <div class="tab-panel" id="tab-heater">
+            <div class="form-section">
+                <h3>Обогрев</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-group">
+                        <label>Режим работы обогревателя</label>
+                        <select id="heater_mode" name="heater_mode">
+                            <option value="0">Только днём</option>
+                            <option value="1">Только ночью</option>
+                            <option value="2">Всегда</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить режим обогрева</button>
+                </form>
+            </div>
         </div>
     </div>
     <script src="/settings.js"></script>
