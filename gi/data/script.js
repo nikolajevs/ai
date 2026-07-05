@@ -1,4 +1,6 @@
 let currentSelectedDate = "";
+let chartPoints = [];
+let chartViewBox = { width: 1000, height: 400 };
 
 async function updateStatus() {
     try {
@@ -13,16 +15,16 @@ async function updateStatus() {
 
         const pumpEl = document.getElementById('pump-val');
         if (data.pump_active) {
-            pumpEl.innerText = 'ПОЛИВ ИДЁТ';
-            pumpEl.style.color = 'var(--primary)';
+            pumpEl.innerText = 'ВКЛЮЧЕН 💦';
+            pumpEl.style.color = 'var(--warning)';
         } else {
-            pumpEl.innerText = 'Ожидание';
+            pumpEl.innerText = 'Выключен';
             pumpEl.style.color = 'var(--text-muted)';
         }
 
         const heaterEl = document.getElementById('heater-val');
         if (data.heater_active) {
-            heaterEl.innerText = 'ВКЛЮЧЕН';
+            heaterEl.innerText = 'ВКЛЮЧЕН 🌞';
             heaterEl.style.color = 'var(--warning)';
         } else {
             heaterEl.innerText = 'Выключен';
@@ -42,7 +44,7 @@ async function updateStatus() {
         const cycleEl = document.getElementById('cycle-str');
         
         if (data.grow_day > 0) {
-            cycleEl.innerText = `ДЕНЬ ЦИКЛА: ${data.grow_day}`;
+            cycleEl.innerText = `ДЕНЬ: ${data.grow_day}`;
         } else {
             cycleEl.innerText = `ЦИКЛ НЕ НАЧАТ`;
         }
@@ -66,6 +68,7 @@ async function drawSvgChart() {
         // Проверяем, есть ли данные кроме заголовка
         if (lines.length <= 1) {
             document.getElementById('svgChart').innerHTML = `<text x="500" y="200" fill="var(--text-muted)" text-anchor="middle" font-size="16">Нет записей лога за выбранный день</text>`;
+            chartPoints = [];
             return;
         }
 
@@ -121,9 +124,71 @@ async function drawSvgChart() {
         }
         
         svgContent += `<path class="line-temp" d="${tempPath}" /><path class="line-hum" d="${humPath}" />`;
+
+        // Элементы наведения (изначально скрыты через opacity в CSS)
+        svgContent += `<line id="hoverLine" class="hover-line" x1="0" y1="${padding.top}" x2="0" y2="${height - padding.bottom}" />`;
+        svgContent += `<circle id="hoverDotTemp" class="hover-dot hover-dot-temp" cx="0" cy="0" />`;
+        svgContent += `<circle id="hoverDotHum" class="hover-dot hover-dot-hum" cx="0" cy="0" />`;
+        // Прозрачный слой поверх графика — ловит движения мыши по всей области
+        svgContent += `<rect class="chart-overlay" x="${padding.left}" y="${padding.top}" width="${chartWidth}" height="${chartHeight}" />`;
+
         svg.innerHTML = svgContent;
+
+        // Сохраняем точки для обработчика наведения мыши
+        chartViewBox = { width, height };
+        chartPoints = data.map((d, i) => ({
+            x: getX(i), yTemp: getYTemp(d.temp), yHum: fillYHum(d.hum),
+            time: d.time, temp: d.temp, hum: d.hum
+        }));
     } catch (e) { console.error("Ошибка построения графиков:", e); }
 }
+
+function handleChartHover(e) {
+    if (chartPoints.length === 0) return;
+    const svg = document.getElementById('svgChart');
+    const rect = svg.getBoundingClientRect();
+    const scaleX = chartViewBox.width / rect.width;
+
+    const mouseXsvg = (e.clientX - rect.left) * scaleX;
+
+    // Ищем ближайшую по X точку данных
+    let nearest = chartPoints[0], minDist = Infinity;
+    for (const p of chartPoints) {
+        const dist = Math.abs(p.x - mouseXsvg);
+        if (dist < minDist) { minDist = dist; nearest = p; }
+    }
+
+    document.getElementById('hoverLine').setAttribute('x1', nearest.x);
+    document.getElementById('hoverLine').setAttribute('x2', nearest.x);
+    document.getElementById('hoverLine').style.opacity = 1;
+
+    document.getElementById('hoverDotTemp').setAttribute('cx', nearest.x);
+    document.getElementById('hoverDotTemp').setAttribute('cy', nearest.yTemp);
+    document.getElementById('hoverDotTemp').style.opacity = 1;
+
+    document.getElementById('hoverDotHum').setAttribute('cx', nearest.x);
+    document.getElementById('hoverDotHum').setAttribute('cy', nearest.yHum);
+    document.getElementById('hoverDotHum').style.opacity = 1;
+
+    const tooltip = document.getElementById('chart-tooltip');
+    tooltip.innerHTML = `<div class="tt-time">${nearest.time}</div><div class="tt-temp">🌡 ${nearest.temp.toFixed(1)}°C</div><div class="tt-hum">💧 ${nearest.hum.toFixed(1)}%</div>`;
+    tooltip.style.left = (nearest.x / chartViewBox.width) * rect.width + 'px';
+    tooltip.style.top = ((nearest.yTemp < nearest.yHum ? nearest.yTemp : nearest.yHum) / chartViewBox.height) * rect.height + 'px';
+    tooltip.style.opacity = 1;
+}
+
+function handleChartLeave() {
+    const hoverLine = document.getElementById('hoverLine');
+    const hoverDotTemp = document.getElementById('hoverDotTemp');
+    const hoverDotHum = document.getElementById('hoverDotHum');
+    if (hoverLine) hoverLine.style.opacity = 0;
+    if (hoverDotTemp) hoverDotTemp.style.opacity = 0;
+    if (hoverDotHum) hoverDotHum.style.opacity = 0;
+    document.getElementById('chart-tooltip').style.opacity = 0;
+}
+
+document.getElementById('svgChart').addEventListener('mousemove', handleChartHover);
+document.getElementById('svgChart').addEventListener('mouseleave', handleChartLeave);
 
 // Слушатель ручного выбора даты в календаре
 document.getElementById('chart-date-selector').addEventListener('change', (e) => {
