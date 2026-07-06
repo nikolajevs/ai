@@ -72,6 +72,13 @@
                             <label>Ночной предел влажности, %</label>
                             <input type="number" step="1" id="max_hum_night" name="max_hum_night">
                         </div>
+                        <div class="form-group">
+                            <label>Влажность начала разгона вентиляторов ночью, %</label>
+                            <input type="number" step="1" id="min_hum_night" name="min_hum_night">
+                        </div>
+                    </div>
+                    <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
+                        Ночью оба вентилятора плавно набирают скорость от минимальной до максимальной (вкладка «Вентиляция») по мере роста влажности от нижнего до верхнего порога.
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
@@ -124,6 +131,27 @@
                         <div class="form-group">
                             <label>Вентилятор 2: макс., % (0-100)</label>
                             <input type="number" min="0" max="100" id="fan2_max_limit" name="fan2_max_limit">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Ночная вентиляция (по влажности)</h3>
+                <div style="font-size: 13px; margin-bottom: 15px; color: var(--text-muted)">
+                    Ночью оба вентилятора работают на одинаковой скорости для контроля влажности,
+                    плавно регулируясь в этом диапазоне (пороги влажности — вкладка «Климат»).
+                </div>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Ночью мин., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan_night_min_limit" name="fan_night_min_limit">
+                        </div>
+                        <div class="form-group">
+                            <label>Ночью макс., % (0-100)</label>
+                            <input type="number" min="0" max="100" id="fan_night_max_limit" name="fan_night_max_limit">
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>

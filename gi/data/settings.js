@@ -44,6 +44,9 @@ async function loadCurrentSettings() {
         document.getElementById('fan2_max_limit').value = data.fan2_max_limit;
         document.getElementById('led_min_limit').value = data.led_min_limit; 
         document.getElementById('led_max_limit').value = data.led_max_limit;
+        document.getElementById('min_hum_night').value = data.min_hum_night;
+        document.getElementById('fan_night_min_limit').value = data.fan_night_min_limit;
+        document.getElementById('fan_night_max_limit').value = data.fan_night_max_limit;
         document.getElementById('rtc-time-label').innerText = data.rtc_time;
 
         document.getElementById('watering_hour').value = data.watering_hour;

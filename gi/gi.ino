@@ -48,6 +48,9 @@ int fan2_min_limit = 30;
 int fan2_max_limit = 80;    
 int led_min_limit = 30;     
 int led_max_limit = 80;    
+int fan_night_min_limit = 30;   // Ночной минимум скорости обоих вентиляторов, % (при низкой влажности)
+int fan_night_max_limit = 100;  // Ночной максимум скорости обоих вентиляторов, % (при высокой влажности)
+float min_hum_night = 40.0;     // Влажность, ниже которой ночью вентиляторы держат минимум (верхняя граница — max_hum_night)
 uint32_t start_timestamp = 0; 
 
 // --- Настройки автополива ---
@@ -216,6 +219,9 @@ void setup() {
   fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
   led_min_limit = preferences.getInt("led_min_limit", 10); 
   led_max_limit = preferences.getInt("led_max_limit", 100);
+  fan_night_min_limit = preferences.getInt("fan_night_min", 30);
+  fan_night_max_limit = preferences.getInt("fan_night_max", 100);
+  min_hum_night = preferences.getFloat("min_hum_night", 40.0);
   start_timestamp = preferences.getUInt("start_time", 0);
 
   watering_days = preferences.getUChar("watering_days", 0);
@@ -306,6 +312,9 @@ void setup() {
     json += "\"fan2_max_limit\":" + String(fan2_max_limit) + ",";
     json += "\"led_min_limit\":" + String(led_min_limit) + ",";
     json += "\"led_max_limit\":" + String(led_max_limit) + ","; 
+    json += "\"fan_night_min_limit\":" + String(fan_night_min_limit) + ",";
+    json += "\"fan_night_max_limit\":" + String(fan_night_max_limit) + ",";
+    json += "\"min_hum_night\":" + String(min_hum_night, 1) + ",";
     json += "\"start_time\":" + String(start_timestamp) + ",";
     json += "\"watering_days\":" + String(watering_days) + ",";
     json += "\"watering_hour\":" + String(watering_hour) + ",";
@@ -333,6 +342,9 @@ void setup() {
     if (request->hasParam("fan2_max_limit", true)) preferences.putInt("fan2_max_limit", request->getParam("fan2_max_limit", true)->value().toInt());
     if (request->hasParam("led_min_limit", true)) preferences.putInt("led_min_limit", request->getParam("led_min_limit", true)->value().toInt());
     if (request->hasParam("led_max_limit", true)) preferences.putInt("led_max_limit", request->getParam("led_max_limit", true)->value().toInt());
+    if (request->hasParam("fan_night_min_limit", true)) preferences.putInt("fan_night_min", request->getParam("fan_night_min_limit", true)->value().toInt());
+    if (request->hasParam("fan_night_max_limit", true)) preferences.putInt("fan_night_max", request->getParam("fan_night_max_limit", true)->value().toInt());
+    if (request->hasParam("min_hum_night", true)) preferences.putFloat("min_hum_night", request->getParam("min_hum_night", true)->value().toFloat());
 
     if (request->hasParam("watering_days", true)) preferences.putUChar("watering_days", (uint8_t)request->getParam("watering_days", true)->value().toInt());
     if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", request->getParam("watering_hour", true)->value().toInt());
@@ -364,6 +376,9 @@ void setup() {
     fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
     led_min_limit = preferences.getInt("led_min_limit", 10);
     led_max_limit = preferences.getInt("led_max_limit", 100);
+    fan_night_min_limit = preferences.getInt("fan_night_min", 30);
+    fan_night_max_limit = preferences.getInt("fan_night_max", 100);
+    min_hum_night = preferences.getFloat("min_hum_night", 40.0);
     start_timestamp = preferences.getUInt("start_time", 0);
 
     watering_days = preferences.getUChar("watering_days", 0);
@@ -436,6 +451,8 @@ void loop() {
     int pwm_fan2_max = map(fan2_max_limit, 0, 100, 0, 255);
     int pwm_led_min = map(led_min_limit, 0, 100, 0, 255);
     int pwm_led_max = map(led_max_limit, 0, 100, 0, 255);
+    int pwm_fan_night_min = map(fan_night_min_limit, 0, 100, 0, 255);
+    int pwm_fan_night_max = map(fan_night_max_limit, 0, 100, 0, 255);
 
     int target_led, target_fan1, target_fan2;
     float read_temp = 0.0;
@@ -458,9 +475,14 @@ void loop() {
     // ЛОГИКА АВАРИЙНОГО РЕЖИМА ИЛИ НОРМАЛЬНОЙ РАБОТЫ
     if (!sht_online) {
       // --- АВАРИЯ: Датчик сломан. Включаем безопасный пресет ---
-      // Вентиляторы на 50% (средний обдув, чтобы не перегреть бокс)
-      target_fan1 = map(50, 0, 100, pwm_fan1_min, pwm_fan1_max);
-      target_fan2 = map(50, 0, 100, pwm_fan2_min, pwm_fan2_max);
+      // Вентиляторы на 50% выбранного диапазона (день — температурный диапазон, ночь — ночной диапазон)
+      if (is_day) {
+        target_fan1 = map(50, 0, 100, pwm_fan1_min, pwm_fan1_max);
+        target_fan2 = map(50, 0, 100, pwm_fan2_min, pwm_fan2_max);
+      } else {
+        target_fan1 = map(50, 0, 100, pwm_fan_night_min, pwm_fan_night_max);
+        target_fan2 = target_fan1;
+      }
       // Светильник на минимальный уровень дня, чтобы не сжечь растения светом/жаром
       target_led = is_day ? pwm_led_min : 0; 
       
@@ -504,8 +526,27 @@ void loop() {
         target_fan2 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan2_min, pwm_fan2_max);
       }
 
-      if (!is_day && read_hum > max_hum_night) {
-        target_fan2 = pwm_fan2_max;
+      if (!is_day) {
+        // НОЧЬ: оба вентилятора управляются влажностью с плавным (пропорциональным) регулированием скорости,
+        // независимо от дневной температурной логики выше. Диапазон скорости задаётся отдельно (fan_night_min/max_limit).
+        // min_hum_night — нижняя граница (мин. скорость), max_hum_night — верхняя граница (макс. скорость).
+        float night_hum_lo = min_hum_night;
+        float night_hum_hi = max_hum_night;
+        int night_fan_pwm;
+
+        if (night_hum_hi <= night_hum_lo) {
+          // Некорректная настройка (границы совпадают/перепутаны) — работаем по порогу без плавности
+          night_fan_pwm = (read_hum >= night_hum_hi) ? pwm_fan_night_max : pwm_fan_night_min;
+        } else if (read_hum <= night_hum_lo) {
+          night_fan_pwm = pwm_fan_night_min;
+        } else if (read_hum >= night_hum_hi) {
+          night_fan_pwm = pwm_fan_night_max;
+        } else {
+          night_fan_pwm = map(read_hum * 100, night_hum_lo * 100, night_hum_hi * 100, pwm_fan_night_min, pwm_fan_night_max);
+        }
+
+        target_fan1 = night_fan_pwm;
+        target_fan2 = night_fan_pwm;
       }
     }
 
