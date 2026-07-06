@@ -568,7 +568,7 @@ void loop() {
 
   // Запись лога на SD-карту с флагами состояния
   static unsigned long lastLogBackupTime = 0;
-  if (currentMillis - lastLogBackupTime >= 300000) {
+  if (currentMillis - lastLogBackupTime >= 600000) {
     lastLogBackupTime = currentMillis;
     char logFilename[20];
     snprintf(logFilename, sizeof(logFilename), "/%04d-%02d-%02d.csv", now.year(), now.month(), now.day());
