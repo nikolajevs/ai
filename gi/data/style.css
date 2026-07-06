@@ -45,6 +45,15 @@ h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
 .status-badge.day-badge { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
 .status-badge.night-badge { background: rgba(14, 165, 233, 0.15); color: var(--primary); border: 1px solid rgba(14, 165, 233, 0.3); }
 
+.time-badge { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: var(--text-muted); 
+    border: 1px solid var(--card-border); 
+    font-size: 16px;       /* Увеличиваем размер (было 14px) */
+    font-weight: 600;      /* Делаем жирнее */
+    font-variant-numeric: tabular-nums; /* Важно: делает ширину цифр одинаковой, чтобы время не "прыгало" */
+}
+
 /* Сетка карточек */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
 

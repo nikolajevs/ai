@@ -11,7 +11,12 @@ async function updateStatus() {
         document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
-        document.getElementById('box-time').innerText = data.time;
+
+        const timeEl = document.getElementById('box-time');
+        timeEl.innerText = data.time;
+        if (!timeEl.classList.contains('status-badge')) {
+            timeEl.className = "status-badge time-badge";
+        }
 
         const pumpEl = document.getElementById('pump-val');
         if (data.pump_active) {
