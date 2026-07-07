@@ -42,7 +42,7 @@ String ap_pass;   // Пароль локальной точки доступа (
 // --- Переменные параметров климата и автоматизации ---
 float temp_target = 25.0; 
 float temp_delta = 2.0;   
-float temp_target_night = 25.0; // Целевая температура для обогревателя ночью (гистерезис temp_delta общий)
+float temp_target_night = 20.0; // Целевая температура для обогревателя ночью (гистерезис temp_delta общий)
 float max_hum_night = 60.0; 
 
 int led_on_hour = 6;        
@@ -73,7 +73,7 @@ uint32_t last_watering_day = 0;   // защита от повторного ср
 
 // --- Настройки обогрева ---
 // heater_mode: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
-int heater_mode = 2;
+int heater_mode = 3;
 bool heater_active = false;
 
 // --- Глобальные переменные состояния системы ---
@@ -277,7 +277,7 @@ void setup() {
   preferences.begin("grow-box", false);
   temp_target = preferences.getFloat("temp_target", 25.0);
   temp_delta = preferences.getFloat("temp_delta", 2.0);
-  temp_target_night = preferences.getFloat("temp_target_night", 25.0);
+  temp_target_night = preferences.getFloat("temp_target_night", 20.0);
   max_hum_night = preferences.getFloat("max_hum_night", 60.0);
   led_on_hour = preferences.getInt("led_on_hour", 6);
   led_off_hour = preferences.getInt("led_off_hour", 18);
@@ -502,7 +502,7 @@ void setup() {
     
     temp_target = preferences.getFloat("temp_target", 25.0);
     temp_delta = preferences.getFloat("temp_delta", 2.0);
-    temp_target_night = preferences.getFloat("temp_target_night", 25.0);
+    temp_target_night = preferences.getFloat("temp_target_night", 20.0);
     max_hum_night = preferences.getFloat("max_hum_night", 60.0);
     led_on_hour = preferences.getInt("led_on_hour", 6);
     led_off_hour = preferences.getInt("led_off_hour", 18);
