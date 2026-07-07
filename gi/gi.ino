@@ -46,6 +46,8 @@ float max_hum_night = 60.0;
 
 int led_on_hour = 6;        
 int led_off_hour = 23;      
+int led_on_minute = 0;
+int led_off_minute = 0;
 int fan1_min_limit = 30;    
 int fan1_max_limit = 80;    
 int fan2_min_limit = 30;    
@@ -277,6 +279,8 @@ void setup() {
   max_hum_night = preferences.getFloat("max_hum_night", 60.0);
   led_on_hour = preferences.getInt("led_on_hour", 6);
   led_off_hour = preferences.getInt("led_off_hour", 18);
+  led_on_minute = preferences.getInt("led_on_minute", 0);
+  led_off_minute = preferences.getInt("led_off_minute", 0);
   fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
   fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
   fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
@@ -375,6 +379,8 @@ void setup() {
     json += "\"max_hum_night\":" + String(max_hum_night, 1) + ",";
     json += "\"led_on_hour\":" + String(led_on_hour) + ",";
     json += "\"led_off_hour\":" + String(led_off_hour) + ",";
+    json += "\"led_on_minute\":" + String(led_on_minute) + ",";
+    json += "\"led_off_minute\":" + String(led_off_minute) + ",";
     json += "\"fan1_min_limit\":" + String(fan1_min_limit) + ",";
     json += "\"fan1_max_limit\":" + String(fan1_max_limit) + ",";
     json += "\"fan2_min_limit\":" + String(fan2_min_limit) + ",";
@@ -407,6 +413,8 @@ void setup() {
     if (request->hasParam("temp_delta", true))   preferences.putFloat("temp_delta", clampFloat(request->getParam("temp_delta", true)->value().toFloat(), 0.1, 20.0));
     if (request->hasParam("led_on_hour", true))   preferences.putInt("led_on_hour", clampInt(request->getParam("led_on_hour", true)->value().toInt(), 0, 23));
     if (request->hasParam("led_off_hour", true))  preferences.putInt("led_off_hour", clampInt(request->getParam("led_off_hour", true)->value().toInt(), 0, 23));
+    if (request->hasParam("led_on_minute", true))  preferences.putInt("led_on_minute", clampInt(request->getParam("led_on_minute", true)->value().toInt(), 0, 59));
+    if (request->hasParam("led_off_minute", true)) preferences.putInt("led_off_minute", clampInt(request->getParam("led_off_minute", true)->value().toInt(), 0, 59));
 
     // Пары мин/макс: клэмпим в диапазон 0-100 и, если границы перепутаны местами, меняем их местами
     if (request->hasParam("fan1_min_limit", true) && request->hasParam("fan1_max_limit", true)) {
@@ -493,6 +501,8 @@ void setup() {
     max_hum_night = preferences.getFloat("max_hum_night", 60.0);
     led_on_hour = preferences.getInt("led_on_hour", 6);
     led_off_hour = preferences.getInt("led_off_hour", 18);
+    led_on_minute = preferences.getInt("led_on_minute", 0);
+    led_off_minute = preferences.getInt("led_off_minute", 0);
     fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
     fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
     fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
@@ -579,9 +589,13 @@ void loop() {
     lastLogTime = currentMillis;
 
     int current_hour = now.hour();
-    
-    if (led_on_hour < led_off_hour) is_day = (current_hour >= led_on_hour && current_hour < led_off_hour);
-    else is_day = (current_hour >= led_on_hour || current_hour < led_off_hour);
+    int current_minutes = current_hour * 60 + now.minute();
+    int on_minutes = led_on_hour * 60 + led_on_minute;
+    int off_minutes = led_off_hour * 60 + led_off_minute;
+
+    if (on_minutes == off_minutes) is_day = true; // время включения == времени выключения — считаем "весь день"
+    else if (on_minutes < off_minutes) is_day = (current_minutes >= on_minutes && current_minutes < off_minutes);
+    else is_day = (current_minutes >= on_minutes || current_minutes < off_minutes);
 
     int pwm_fan1_min = map(fan1_min_limit, 0, 100, 0, 255);
     int pwm_fan1_max = map(fan1_max_limit, 0, 100, 0, 255);

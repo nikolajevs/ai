@@ -88,12 +88,16 @@
                     <div id="light-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Час включения света</label>
-                            <input type="number" min="0" max="23" id="led_on_hour" name="led_on_hour" required>
+                            <label>Время включения света</label>
+                            <input type="time" id="led_on_time" required>
+                            <input type="hidden" id="led_on_hour" name="led_on_hour">
+                            <input type="hidden" id="led_on_minute" name="led_on_minute">
                         </div>
                         <div class="form-group">
-                            <label>Час выключения света</label>
-                            <input type="number" min="0" max="23" id="led_off_hour" name="led_off_hour" required>
+                            <label>Время выключения света</label>
+                            <input type="time" id="led_off_time" required>
+                            <input type="hidden" id="led_off_hour" name="led_off_hour">
+                            <input type="hidden" id="led_off_minute" name="led_off_minute">
                         </div>
                         <div class="form-group">
                             <label>Мин. мощность лампы, %</label>

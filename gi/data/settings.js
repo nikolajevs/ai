@@ -14,6 +14,21 @@ function unpackWateringDays(mask) {
     });
 }
 
+// "6" / "0" -> "06:00", для подстановки в <input type="time">
+function formatTime(hour, minute) {
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+// Перекладывает выбранное время из <input type="time"> в скрытые поля часов/минут перед отправкой формы
+function packLedTimes() {
+    const [onHour, onMinute] = document.getElementById('led_on_time').value.split(':');
+    const [offHour, offMinute] = document.getElementById('led_off_time').value.split(':');
+    document.getElementById('led_on_hour').value = onHour;
+    document.getElementById('led_on_minute').value = onMinute;
+    document.getElementById('led_off_hour').value = offHour;
+    document.getElementById('led_off_minute').value = offMinute;
+}
+
 function togglePasswordField(id) {
     const el = document.getElementById(id);
     el.type = (el.type === 'password') ? 'text' : 'password';
@@ -101,8 +116,8 @@ async function loadCurrentSettings() {
         document.getElementById('temp_target').value = data.temp_target;
         document.getElementById('temp_delta').value = data.temp_delta;
         document.getElementById('max_hum_night').value = data.max_hum_night;
-        document.getElementById('led_on_hour').value = data.led_on_hour;
-        document.getElementById('led_off_hour').value = data.led_off_hour;
+        document.getElementById('led_on_time').value = formatTime(data.led_on_hour, data.led_on_minute);
+        document.getElementById('led_off_time').value = formatTime(data.led_off_hour, data.led_off_minute);
         document.getElementById('fan1_min_limit').value = data.fan1_min_limit;
         document.getElementById('fan1_max_limit').value = data.fan1_max_limit;
         document.getElementById('fan2_min_limit').value = data.fan2_min_limit;
@@ -162,6 +177,7 @@ window.onload = () => {
     setCurrentTime();
     loadCurrentSettings();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
+    document.getElementById('light-form').addEventListener('submit', packLedTimes);
     initTabs();
     showServerErrors();
 

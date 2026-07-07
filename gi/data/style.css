@@ -120,14 +120,17 @@ label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transf
 .btn-sync { background: rgba(14, 165, 233, 0.15); color: var(--primary); border: 1px solid rgba(14, 165, 233, 0.3); }
 .btn-sync:hover { background: rgba(14, 165, 233, 0.3); }
 
-input[type="number"], input[type="date"], input[type="datetime-local"],
+input[type="number"], input[type="date"], input[type="datetime-local"], input[type="time"],
 input[type="text"], input[type="password"], select {
     background: #1f2937; color: var(--text-main); border: 1px solid var(--card-border);
     padding: 12px 14px; border-radius: 10px; outline: none; font-size: 14px; transition: border-color 0.2s;
     width: 100%; /* Чтобы поле занимало всю ширину ячейки */
 }
-input[type="number"]:focus, input[type="date"]:focus, input[type="datetime-local"]:focus,
+input[type="number"]:focus, input[type="date"]:focus, input[type="datetime-local"]:focus, input[type="time"]:focus,
 input[type="text"]:focus, input[type="password"]:focus, select:focus { border-color: var(--primary); }
+
+/* Иконку часов у нативного time-picker перекрашиваем под тёмную тему */
+input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
 select { appearance: none; cursor: pointer; }
 
