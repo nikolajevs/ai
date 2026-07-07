@@ -66,6 +66,10 @@
                             <input type="number" step="0.1" min="0" max="50" id="temp_target" name="temp_target" required>
                         </div>
                         <div class="form-group">
+                            <label>Целевая температура ночью, °C</label>
+                            <input type="number" step="0.1" min="0" max="50" id="temp_target_night" name="temp_target_night" required>
+                        </div>
+                        <div class="form-group">
                             <label>Гистерезис (Дельта ±), °C</label>
                             <input type="number" step="0.1" min="0.1" max="20" id="temp_delta" name="temp_delta" required>
                         </div>
@@ -77,6 +81,9 @@
                             <label>Нижний ночной предел влажности, %</label>
                             <input type="number" step="1" min="0" max="100" id="min_hum_night" name="min_hum_night" required>
                         </div>
+                    </div>
+                    <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
+                        Гистерезис (Дельта) общий для дня и ночи. Режим работы обогревателя — на вкладке «Обогрев».
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
@@ -199,23 +206,17 @@
             <div class="form-section">
                 <h3>Обогрев</h3>
                 <form action="/save-settings" method="POST">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Режим работы обогревателя</label>
-                            <select id="heater_mode" name="heater_mode" required>
-                                <option value="0">Только днём</option>
-                                <option value="1">Только ночью</option>
-                                <option value="2">Всегда</option>
-                                <option value="3">Никогда</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Целевая температура ночью, °C</label>
-                            <input type="number" step="0.1" min="0" max="50" id="temp_target_night" name="temp_target_night" required>
-                        </div>
+                    <div class="form-group">
+                        <label>Режим работы обогревателя</label>
+                        <select id="heater_mode" name="heater_mode" required>
+                            <option value="0">Только днём</option>
+                            <option value="1">Только ночью</option>
+                            <option value="2">Всегда</option>
+                            <option value="3">Никогда</option>
+                        </select>
                     </div>
                     <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
-                        Гистерезис общий с дневным (вкладка «Климат»). Днём обогреватель ориентируется на целевую температуру со вкладки «Климат», ночью — на значение выше.
+                        Целевая температура (днём и ночью) и гистерезис — на вкладке «Климат».
                     </div>
                     <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить режим обогрева</button>
                 </form>
