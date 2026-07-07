@@ -18,11 +18,15 @@
 #define DEFAULT_WIFI_PASS     "d92Te5L78H3"
 #define DEFAULT_UBIDOTS_TOKEN "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"
 #define DEFAULT_DEVICE_LABEL  "kireal"
+#define DEFAULT_AP_SSID       "KiReal"
+#define DEFAULT_AP_PASS       "420420420"
 
 String wifi_ssid;
 String wifi_pass;
 String ubidots_token;
 String device_label;
+String ap_ssid;   // Имя локальной точки доступа (Wi-Fi, к которой подключается телефон/ноутбук)
+String ap_pass;   // Пароль локальной точки доступа (пусто = открытая сеть, иначе >= 8 символов)
 
 // --- Распиновка периферии ---
 #define SD_CS_PIN     5
@@ -65,7 +69,7 @@ uint32_t pump_start_time = 0;
 uint32_t last_watering_day = 0;   // защита от повторного срабатывания в ту же минуту
 
 // --- Настройки обогрева ---
-// heater_mode: 0 = только день, 1 = только ночь, 2 = всегда
+// heater_mode: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
 int heater_mode = 2;
 bool heater_active = false;
 
@@ -94,6 +98,57 @@ Adafruit_SHT4x sht40 = Adafruit_SHT4x();
 RTC_DS3231 rtc;
 AsyncWebServer server(80);
 Preferences preferences;
+
+// --- Хелперы валидации входных данных (защита от некорректных значений из веб-формы) ---
+int clampInt(int v, int lo, int hi) {
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
+}
+
+float clampFloat(float v, float lo, float hi) {
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
+}
+
+// SSID точки доступа: 1-32 символа (ограничение стандарта 802.11)
+bool isValidApSsid(const String &s) {
+  return s.length() >= 1 && s.length() <= 32;
+}
+
+// Пароль точки доступа: пусто (открытая сеть) или 8-63 символа (требование WPA2)
+bool isValidApPass(const String &p) {
+  return p.length() == 0 || (p.length() >= 8 && p.length() <= 63);
+}
+
+// SSID роутера (STA): можно оставить пустым (означает "не подключаться"), максимум 32 символа
+bool isValidStaSsid(const String &s) {
+  return s.length() <= 32;
+}
+
+// Пароль роутера (STA): пусто (открытая сеть) или 8-63 символа (требование WPA2)
+bool isValidStaPass(const String &p) {
+  return p.length() == 0 || (p.length() >= 8 && p.length() <= 63);
+}
+
+// Подстраховка на случай, если пришли "перевёрнутые" границы (min > max) —
+// меняем местами, чтобы устройство не осталось с невозможным диапазоном.
+void clampPairInt(Preferences &prefs, const char *keyMin, const char *keyMax, int a, int b, int lo, int hi) {
+  int vMin = clampInt(a, lo, hi);
+  int vMax = clampInt(b, lo, hi);
+  if (vMin > vMax) { int t = vMin; vMin = vMax; vMax = t; }
+  prefs.putInt(keyMin, vMin);
+  prefs.putInt(keyMax, vMax);
+}
+
+void clampPairFloat(Preferences &prefs, const char *keyMin, const char *keyMax, float a, float b, float lo, float hi) {
+  float vMin = clampFloat(a, lo, hi);
+  float vMax = clampFloat(b, lo, hi);
+  if (vMin > vMax) { float t = vMin; vMin = vMax; vMax = t; }
+  prefs.putFloat(keyMin, vMin);
+  prefs.putFloat(keyMax, vMax);
+}
 
 struct ClimateData {
   float temp;
@@ -234,6 +289,11 @@ void setup() {
   wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
   ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
   device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
+  ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
+  ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
+  // На случай испорченных/некорректных значений в NVS откатываемся на дефолт, чтобы не остаться без доступа к плате
+  if (!isValidApSsid(ap_ssid)) ap_ssid = DEFAULT_AP_SSID;
+  if (!isValidApPass(ap_pass)) ap_pass = DEFAULT_AP_PASS;
 
   // Безопасная инициализация датчиков с проверкой работоспособности
   if (!sht40.begin()) {
@@ -257,7 +317,7 @@ void setup() {
   digitalWrite(HEATER_PIN, LOW); // обогреватель выключен при старте
 
   WiFi.mode(WIFI_AP);
-  WiFi.softAP("KiReal", "420420420");
+  WiFi.softAP(ap_ssid.c_str(), ap_pass.length() > 0 ? ap_pass.c_str() : NULL);
 
   xTaskCreatePinnedToCore(vUbidotsTask, "UbidotsTask", 8192, NULL, 1, &UbidotsTaskHandle, 0);
 
@@ -325,37 +385,91 @@ void setup() {
     json += "\"wifi_pass\":\"" + wifi_pass + "\",";
     json += "\"ubidots_token\":\"" + ubidots_token + "\",";
     json += "\"device_label\":\"" + device_label + "\",";
+    json += "\"ap_ssid\":\"" + ap_ssid + "\",";
+    json += "\"ap_pass\":\"" + ap_pass + "\",";
     json += "\"rtc_time\":\"" + String(buf) + "\"";
     json += "}";
     request->send(200, "application/json", json);
   });
 
   server.on("/save-settings", HTTP_POST, [](AsyncWebServerRequest *request){
-    if (request->hasParam("temp_target", true))  preferences.putFloat("temp_target", request->getParam("temp_target", true)->value().toFloat());
-    if (request->hasParam("temp_delta", true))   preferences.putFloat("temp_delta", request->getParam("temp_delta", true)->value().toFloat());
-    if (request->hasParam("max_hum_night", true)) preferences.putFloat("max_hum_night", request->getParam("max_hum_night", true)->value().toFloat());
-    if (request->hasParam("led_on_hour", true))   preferences.putInt("led_on_hour", request->getParam("led_on_hour", true)->value().toInt());
-    if (request->hasParam("led_off_hour", true))  preferences.putInt("led_off_hour", request->getParam("led_off_hour", true)->value().toInt());
-    if (request->hasParam("fan1_min_limit", true)) preferences.putInt("fan1_min_limit", request->getParam("fan1_min_limit", true)->value().toInt());
-    if (request->hasParam("fan1_max_limit", true)) preferences.putInt("fan1_max_limit", request->getParam("fan1_max_limit", true)->value().toInt());
-    if (request->hasParam("fan2_min_limit", true)) preferences.putInt("fan2_min_limit", request->getParam("fan2_min_limit", true)->value().toInt());
-    if (request->hasParam("fan2_max_limit", true)) preferences.putInt("fan2_max_limit", request->getParam("fan2_max_limit", true)->value().toInt());
-    if (request->hasParam("led_min_limit", true)) preferences.putInt("led_min_limit", request->getParam("led_min_limit", true)->value().toInt());
-    if (request->hasParam("led_max_limit", true)) preferences.putInt("led_max_limit", request->getParam("led_max_limit", true)->value().toInt());
-    if (request->hasParam("fan_night_min_limit", true)) preferences.putInt("fan_night_min", request->getParam("fan_night_min_limit", true)->value().toInt());
-    if (request->hasParam("fan_night_max_limit", true)) preferences.putInt("fan_night_max", request->getParam("fan_night_max_limit", true)->value().toInt());
-    if (request->hasParam("min_hum_night", true)) preferences.putFloat("min_hum_night", request->getParam("min_hum_night", true)->value().toFloat());
+    // --- Валидация и сохранение (значения клэмпятся в разумные пределы, даже если запрос пришёл в обход веб-формы) ---
+    if (request->hasParam("temp_target", true))  preferences.putFloat("temp_target", clampFloat(request->getParam("temp_target", true)->value().toFloat(), 0.0, 50.0));
+    if (request->hasParam("temp_delta", true))   preferences.putFloat("temp_delta", clampFloat(request->getParam("temp_delta", true)->value().toFloat(), 0.1, 20.0));
+    if (request->hasParam("led_on_hour", true))   preferences.putInt("led_on_hour", clampInt(request->getParam("led_on_hour", true)->value().toInt(), 0, 23));
+    if (request->hasParam("led_off_hour", true))  preferences.putInt("led_off_hour", clampInt(request->getParam("led_off_hour", true)->value().toInt(), 0, 23));
 
-    if (request->hasParam("watering_days", true)) preferences.putUChar("watering_days", (uint8_t)request->getParam("watering_days", true)->value().toInt());
-    if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", request->getParam("watering_hour", true)->value().toInt());
-    if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", request->getParam("watering_minute", true)->value().toInt());
-    if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", request->getParam("watering_duration", true)->value().toInt());
-    if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", request->getParam("heater_mode", true)->value().toInt());
+    // Пары мин/макс: клэмпим в диапазон 0-100 и, если границы перепутаны местами, меняем их местами
+    if (request->hasParam("fan1_min_limit", true) && request->hasParam("fan1_max_limit", true)) {
+      clampPairInt(preferences, "fan1_min_limit", "fan1_max_limit",
+        request->getParam("fan1_min_limit", true)->value().toInt(),
+        request->getParam("fan1_max_limit", true)->value().toInt(), 0, 100);
+    }
+    if (request->hasParam("fan2_min_limit", true) && request->hasParam("fan2_max_limit", true)) {
+      clampPairInt(preferences, "fan2_min_limit", "fan2_max_limit",
+        request->getParam("fan2_min_limit", true)->value().toInt(),
+        request->getParam("fan2_max_limit", true)->value().toInt(), 0, 100);
+    }
+    if (request->hasParam("led_min_limit", true) && request->hasParam("led_max_limit", true)) {
+      clampPairInt(preferences, "led_min_limit", "led_max_limit",
+        request->getParam("led_min_limit", true)->value().toInt(),
+        request->getParam("led_max_limit", true)->value().toInt(), 0, 100);
+    }
+    if (request->hasParam("fan_night_min_limit", true) && request->hasParam("fan_night_max_limit", true)) {
+      clampPairInt(preferences, "fan_night_min", "fan_night_max",
+        request->getParam("fan_night_min_limit", true)->value().toInt(),
+        request->getParam("fan_night_max_limit", true)->value().toInt(), 0, 100);
+    }
+    if (request->hasParam("min_hum_night", true) && request->hasParam("max_hum_night", true)) {
+      clampPairFloat(preferences, "min_hum_night", "max_hum_night",
+        request->getParam("min_hum_night", true)->value().toFloat(),
+        request->getParam("max_hum_night", true)->value().toFloat(), 0.0, 100.0);
+    }
 
-    if (request->hasParam("wifi_ssid", true)) preferences.putString("wifi_ssid", request->getParam("wifi_ssid", true)->value());
-    if (request->hasParam("wifi_pass", true)) preferences.putString("wifi_pass", request->getParam("wifi_pass", true)->value());
+    if (request->hasParam("watering_days", true)) preferences.putUChar("watering_days", (uint8_t)clampInt(request->getParam("watering_days", true)->value().toInt(), 0, 127));
+    if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", clampInt(request->getParam("watering_hour", true)->value().toInt(), 0, 23));
+    if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", clampInt(request->getParam("watering_minute", true)->value().toInt(), 0, 59));
+    if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", clampInt(request->getParam("watering_duration", true)->value().toInt(), 1, 3600));
+    if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", clampInt(request->getParam("heater_mode", true)->value().toInt(), 0, 3));
+
+    // WiFi роутера: сохраняем, только если длины корректны (SSID <= 32, пароль пусто либо 8-63 — требование WPA2)
+    bool wifi_rejected = false;
+    if (request->hasParam("wifi_ssid", true)) {
+      String newSsid = request->getParam("wifi_ssid", true)->value();
+      newSsid.trim();
+      if (isValidStaSsid(newSsid)) preferences.putString("wifi_ssid", newSsid);
+      else wifi_rejected = true;
+    }
+    if (request->hasParam("wifi_pass", true)) {
+      String newPass = request->getParam("wifi_pass", true)->value();
+      if (isValidStaPass(newPass)) preferences.putString("wifi_pass", newPass);
+      else wifi_rejected = true;
+    }
     if (request->hasParam("ubidots_token", true)) preferences.putString("ubidots_token", request->getParam("ubidots_token", true)->value());
     if (request->hasParam("device_label", true)) preferences.putString("device_label", request->getParam("device_label", true)->value());
+
+    // Точка доступа: сохраняем, только если значения корректны — иначе можно остаться без доступа к плате
+    bool ap_changed = false;
+    bool ap_rejected = false;
+    if (request->hasParam("ap_ssid", true)) {
+      String newSsid = request->getParam("ap_ssid", true)->value();
+      newSsid.trim();
+      if (isValidApSsid(newSsid)) {
+        preferences.putString("ap_ssid", newSsid);
+        ap_changed = true;
+      } else {
+        ap_rejected = true;
+      }
+    }
+    if (request->hasParam("ap_pass", true)) {
+      String newPass = request->getParam("ap_pass", true)->value();
+      if (isValidApPass(newPass)) {
+        preferences.putString("ap_pass", newPass);
+        ap_changed = true;
+      } else {
+        ap_rejected = true;
+      }
+    }
 
     if (request->hasParam("start_date", true)) {
       String dateStr = request->getParam("start_date", true)->value(); 
@@ -391,8 +505,23 @@ void setup() {
     wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
     ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
     device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
+    ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
+    ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
 
-    request->redirect("/settings");
+    // Применяем новые SSID/пароль точки доступа немедленно, без перезагрузки платы.
+    // Текущие клиенты AP при этом отключатся и должны будут подключиться заново с новыми данными.
+    if (ap_changed) {
+      WiFi.softAP(ap_ssid.c_str(), ap_pass.length() > 0 ? ap_pass.c_str() : NULL);
+    }
+
+    if (ap_rejected || wifi_rejected) {
+      String errParam = "";
+      if (ap_rejected) errParam += "ap";
+      if (wifi_rejected) errParam += String(errParam.length() ? "," : "") + "wifi";
+      request->redirect("/settings?error=" + errParam);
+    } else {
+      request->redirect("/settings");
+    }
   });
 
   server.on("/set-time", HTTP_POST, [](AsyncWebServerRequest *request){

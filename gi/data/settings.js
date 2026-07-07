@@ -19,6 +19,71 @@ function togglePasswordField(id) {
     el.type = (el.type === 'password') ? 'text' : 'password';
 }
 
+// Показываем баннер ошибки, если сервер отклонил сохранение (?error=ap,wifi в адресе после редиректа)
+function showServerErrors() {
+    const params = new URLSearchParams(window.location.search);
+    const errors = (params.get('error') || '').split(',').filter(Boolean);
+    if (errors.includes('ap')) {
+        document.getElementById('ap-error-banner').style.display = 'block';
+        document.querySelector('[data-tab="tab-network"]').click();
+    }
+    if (errors.includes('wifi')) {
+        document.getElementById('wifi-error-banner').style.display = 'block';
+        document.querySelector('[data-tab="tab-network"]').click();
+    }
+    if (errors.length) {
+        // Убираем ?error=... из адресной строки, чтобы баннер не всплывал повторно при обновлении страницы
+        window.history.replaceState({}, '', window.location.pathname);
+    }
+}
+
+// Показывает текстовое сообщение в баннере ошибки конкретной формы и не даёт её отправить
+function showFieldError(bannerId, message) {
+    const banner = document.getElementById(bannerId);
+    banner.textContent = message;
+    banner.style.display = 'block';
+}
+
+function clearFieldError(bannerId) {
+    const banner = document.getElementById(bannerId);
+    banner.style.display = 'none';
+    banner.textContent = '';
+}
+
+// Проверка, что значение поля "мин" не превышает значение поля "макс"; при ошибке — блокирует отправку формы
+function attachMinMaxValidation(formId, minId, maxId, bannerId, label) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+        const minVal = parseFloat(document.getElementById(minId).value);
+        const maxVal = parseFloat(document.getElementById(maxId).value);
+        if (isNaN(minVal) || isNaN(maxVal) || minVal > maxVal) {
+            e.preventDefault();
+            showFieldError(bannerId, `${label}: минимальное значение не может быть больше максимального.`);
+        } else {
+            clearFieldError(bannerId);
+        }
+    });
+}
+
+// WiFi роутера: та же логика валидации, что и на сервере (SSID до 32 символов, пароль пусто или 8-63 символа)
+function attachWifiValidation() {
+    const form = document.getElementById('wifi-form');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+        const ssid = document.getElementById('wifi_ssid').value.trim();
+        const pass = document.getElementById('wifi_pass').value;
+        const ssidOk = ssid.length <= 32;
+        const passOk = pass.length === 0 || (pass.length >= 8 && pass.length <= 63);
+        if (!ssidOk || !passOk) {
+            e.preventDefault();
+            showFieldError('wifi-error-banner', 'Имя сети — до 32 символов, пароль — пусто (открытая сеть) или от 8 до 63 символов.');
+        } else {
+            clearFieldError('wifi-error-banner');
+        }
+    });
+}
+
 function setCurrentTime() {
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
@@ -59,6 +124,8 @@ async function loadCurrentSettings() {
         document.getElementById('wifi_pass').value = data.wifi_pass;
         document.getElementById('ubidots_token').value = data.ubidots_token;
         document.getElementById('device_label').value = data.device_label;
+        document.getElementById('ap_ssid').value = data.ap_ssid;
+        document.getElementById('ap_pass').value = data.ap_pass;
         
         if (data.start_time > 0) {
             const d = new Date(data.start_time * 1000);
@@ -67,6 +134,9 @@ async function loadCurrentSettings() {
             const dd = String(d.getDate()).padStart(2, '0');
             document.getElementById('start_date').value = `${yyyy}-${mm}-${dd}`;
         }
+        const today = new Date();
+        document.getElementById('start_date').max =
+            `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     } catch (e) {
         console.error("Ошибка загрузки настроек:", e);
         document.getElementById('rtc-time-label').innerText = "Ошибка связи";
@@ -93,4 +163,29 @@ window.onload = () => {
     loadCurrentSettings();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
     initTabs();
+    showServerErrors();
+
+    attachMinMaxValidation('climate-form', 'min_hum_night', 'max_hum_night', 'climate-error-banner', 'Ночная влажность (нижний/верхний предел)');
+    attachMinMaxValidation('light-form', 'led_min_limit', 'led_max_limit', 'light-error-banner', 'Мощность лампы (мин/макс)');
+    attachMinMaxValidation('fans-night-form', 'fan_night_min_limit', 'fan_night_max_limit', 'fans-night-error-banner', 'Ночная вентиляция (мин/макс)');
+    attachWifiValidation();
+
+    // Форма "Лимиты вентиляторов" содержит сразу 2 пары мин/макс (вентилятор 1 и 2) — проверяем обе одним обработчиком
+    document.getElementById('fans-limits-form').addEventListener('submit', (e) => {
+        const fan1Min = parseFloat(document.getElementById('fan1_min_limit').value);
+        const fan1Max = parseFloat(document.getElementById('fan1_max_limit').value);
+        const fan2Min = parseFloat(document.getElementById('fan2_min_limit').value);
+        const fan2Max = parseFloat(document.getElementById('fan2_max_limit').value);
+        if (!isNaN(fan1Min) && !isNaN(fan1Max) && fan1Min > fan1Max) {
+            e.preventDefault();
+            showFieldError('fans-limits-error-banner', 'Вентилятор 1 (мин/макс): минимальное значение не может быть больше максимального.');
+            return;
+        }
+        if (!isNaN(fan2Min) && !isNaN(fan2Max) && fan2Min > fan2Max) {
+            e.preventDefault();
+            showFieldError('fans-limits-error-banner', 'Вентилятор 2 (мин/макс): минимальное значение не может быть больше максимального.');
+            return;
+        }
+        clearFieldError('fans-limits-error-banner');
+    });
 };

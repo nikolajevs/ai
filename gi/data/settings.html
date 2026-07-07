@@ -58,23 +58,24 @@
         <div class="tab-panel" id="tab-climate">
             <div class="form-section">
                 <h3>Температура и влажность</h3>
-                <form action="/save-settings" method="POST">
+                <form action="/save-settings" method="POST" id="climate-form">
+                    <div id="climate-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Целевая температура, °C</label>
-                            <input type="number" step="0.1" id="temp_target" name="temp_target">
+                            <input type="number" step="0.1" min="0" max="50" id="temp_target" name="temp_target" required>
                         </div>
                         <div class="form-group">
                             <label>Гистерезис (Дельта ±), °C</label>
-                            <input type="number" step="0.1" id="temp_delta" name="temp_delta">
+                            <input type="number" step="0.1" min="0.1" max="20" id="temp_delta" name="temp_delta" required>
                         </div>
                         <div class="form-group">
                             <label>Верхний ночной предел влажности, %</label>
-                            <input type="number" step="1" id="max_hum_night" name="max_hum_night">
+                            <input type="number" step="1" min="0" max="100" id="max_hum_night" name="max_hum_night" required>
                         </div>
                         <div class="form-group">
                             <label>Нижний ночной предел влажности, %</label>
-                            <input type="number" step="1" id="min_hum_night" name="min_hum_night">
+                            <input type="number" step="1" min="0" max="100" id="min_hum_night" name="min_hum_night" required>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
@@ -83,23 +84,24 @@
 
             <div class="form-section">
                 <h3>Освещение</h3>
-                <form action="/save-settings" method="POST">
+                <form action="/save-settings" method="POST" id="light-form">
+                    <div id="light-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Час включения света</label>
-                            <input type="number" min="0" max="23" id="led_on_hour" name="led_on_hour">
+                            <input type="number" min="0" max="23" id="led_on_hour" name="led_on_hour" required>
                         </div>
                         <div class="form-group">
                             <label>Час выключения света</label>
-                            <input type="number" min="0" max="23" id="led_off_hour" name="led_off_hour">
+                            <input type="number" min="0" max="23" id="led_off_hour" name="led_off_hour" required>
                         </div>
                         <div class="form-group">
                             <label>Мин. мощность лампы, %</label>
-                            <input type="number" min="0" max="100" id="led_min_limit" name="led_min_limit">
+                            <input type="number" min="0" max="100" id="led_min_limit" name="led_min_limit" required>
                         </div>
                         <div class="form-group">
                             <label>Макс. мощность лампы, %</label>
-                            <input type="number" min="0" max="100" id="led_max_limit" name="led_max_limit">
+                            <input type="number" min="0" max="100" id="led_max_limit" name="led_max_limit" required>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
@@ -111,23 +113,24 @@
         <div class="tab-panel" id="tab-fans">
             <div class="form-section">
                 <h3>Лимиты вентиляторов</h3>
-                <form action="/save-settings" method="POST">
+                <form action="/save-settings" method="POST" id="fans-limits-form">
+                    <div id="fans-limits-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Вентилятор 1: мин., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan1_min_limit" name="fan1_min_limit">
+                            <input type="number" min="0" max="100" id="fan1_min_limit" name="fan1_min_limit" required>
                         </div>
                         <div class="form-group">
                             <label>Вентилятор 1: макс., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan1_max_limit" name="fan1_max_limit">
+                            <input type="number" min="0" max="100" id="fan1_max_limit" name="fan1_max_limit" required>
                         </div>
                         <div class="form-group">
                             <label>Вентилятор 2: мин., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan2_min_limit" name="fan2_min_limit">
+                            <input type="number" min="0" max="100" id="fan2_min_limit" name="fan2_min_limit" required>
                         </div>
                         <div class="form-group">
                             <label>Вентилятор 2: макс., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan2_max_limit" name="fan2_max_limit">
+                            <input type="number" min="0" max="100" id="fan2_max_limit" name="fan2_max_limit" required>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
@@ -136,15 +139,16 @@
 
             <div class="form-section">
                 <h3>Ночная вентиляция (по влажности)</h3>
-                <form action="/save-settings" method="POST">
+                <form action="/save-settings" method="POST" id="fans-night-form">
+                    <div id="fans-night-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Ночью мин., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan_night_min_limit" name="fan_night_min_limit">
+                            <input type="number" min="0" max="100" id="fan_night_min_limit" name="fan_night_min_limit" required>
                         </div>
                         <div class="form-group">
                             <label>Ночью макс., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan_night_max_limit" name="fan_night_max_limit">
+                            <input type="number" min="0" max="100" id="fan_night_max_limit" name="fan_night_max_limit" required>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
@@ -170,15 +174,15 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Час полива</label>
-                            <input type="number" min="0" max="23" id="watering_hour" name="watering_hour">
+                            <input type="number" min="0" max="23" id="watering_hour" name="watering_hour" required>
                         </div>
                         <div class="form-group">
                             <label>Минута полива</label>
-                            <input type="number" min="0" max="59" id="watering_minute" name="watering_minute">
+                            <input type="number" min="0" max="59" id="watering_minute" name="watering_minute" required>
                         </div>
                         <div class="form-group">
                             <label>Длительность полива, сек</label>
-                            <input type="number" min="1" id="watering_duration" name="watering_duration">
+                            <input type="number" min="1" max="3600" id="watering_duration" name="watering_duration" required>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить настройки полива</button>
@@ -193,10 +197,11 @@
                 <form action="/save-settings" method="POST">
                     <div class="form-group">
                         <label>Режим работы обогревателя</label>
-                        <select id="heater_mode" name="heater_mode">
+                        <select id="heater_mode" name="heater_mode" required>
                             <option value="0">Только днём</option>
                             <option value="1">Только ночью</option>
                             <option value="2">Всегда</option>
+                            <option value="3">Никогда</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить режим обогрева</button>
@@ -207,17 +212,47 @@
         <!-- WIFI / UBIDOTS -->
         <div class="tab-panel" id="tab-network">
             <div class="form-section">
+                <h3>Точка доступа платы (локальный WiFi)</h3>
+                <div style="font-size: 13px; margin-bottom: 15px; color: var(--text-muted)">
+                    Сеть, к которой подключается твой телефон/ноутбук для доступа к этой странице.
+                    После сохранения текущее подключение к плате оборвётся — переподключись с новыми данными.
+                </div>
+                <div id="ap-error-banner" class="form-error" style="display: none;">
+                    Не удалось сохранить точку доступа: имя от 1 до 32 символов, пароль — пусто (открытая сеть) или от 8 до 63 символов. Изменения не применены.
+                </div>
+                <form action="/save-settings" method="POST" id="ap-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Имя сети (SSID)</label>
+                            <input type="text" id="ap_ssid" name="ap_ssid" autocomplete="off" required minlength="1" maxlength="32">
+                        </div>
+                        <div class="form-group">
+                            <label>Пароль (пусто = открытая сеть)</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="password" id="ap_pass" name="ap_pass" autocomplete="off" minlength="8" maxlength="63" style="flex: 1;">
+                                <button type="button" class="btn-action" onclick="togglePasswordField('ap_pass')">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить точку доступа</button>
+                </form>
+            </div>
+
+            <div class="form-section">
                 <h3>WiFi роутера (для выгрузки в облако)</h3>
-                <form action="/save-settings" method="POST">
+                <div id="wifi-error-banner" class="form-error" style="display: none;">
+                    Не удалось сохранить WiFi роутера: имя сети — до 32 символов, пароль — пусто (открытая сеть) или от 8 до 63 символов. Изменения не применены.
+                </div>
+                <form action="/save-settings" method="POST" id="wifi-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label>SSID сети</label>
-                            <input type="text" id="wifi_ssid" name="wifi_ssid" autocomplete="off">
+                            <input type="text" id="wifi_ssid" name="wifi_ssid" autocomplete="off" maxlength="32">
                         </div>
                         <div class="form-group">
                             <label>Пароль сети</label>
                             <div style="display: flex; gap: 8px;">
-                                <input type="password" id="wifi_pass" name="wifi_pass" autocomplete="off" style="flex: 1;">
+                                <input type="password" id="wifi_pass" name="wifi_pass" autocomplete="off" minlength="8" maxlength="63" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('wifi_pass')">👁</button>
                             </div>
                         </div>
@@ -235,12 +270,12 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Device label</label>
-                            <input type="text" id="device_label" name="device_label" autocomplete="off">
+                            <input type="text" id="device_label" name="device_label" autocomplete="off" maxlength="64">
                         </div>
                         <div class="form-group">
                             <label>API токен</label>
                             <div style="display: flex; gap: 8px;">
-                                <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" style="flex: 1;">
+                                <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" maxlength="128" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('ubidots_token')">👁</button>
                             </div>
                         </div>
