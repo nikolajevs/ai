@@ -277,7 +277,7 @@ void setup() {
   preferences.begin("grow-box", false);
   temp_target = preferences.getFloat("temp_target", 25.0);
   temp_delta = preferences.getFloat("temp_delta", 2.0);
-  temp_target_night = preferences.getFloat("temp_target_night", 20.0);
+  temp_target_night = preferences.getFloat("temp_night", 20.0);
   max_hum_night = preferences.getFloat("max_hum_night", 60.0);
   led_on_hour = preferences.getInt("led_on_hour", 6);
   led_off_hour = preferences.getInt("led_off_hour", 18);
@@ -451,7 +451,7 @@ void setup() {
     if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", clampInt(request->getParam("watering_minute", true)->value().toInt(), 0, 59));
     if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", clampInt(request->getParam("watering_duration", true)->value().toInt(), 1, 3600));
     if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", clampInt(request->getParam("heater_mode", true)->value().toInt(), 0, 3));
-    if (request->hasParam("temp_target_night", true)) preferences.putFloat("temp_target_night", clampFloat(request->getParam("temp_target_night", true)->value().toFloat(), 0.0, 50.0));
+    if (request->hasParam("temp_target_night", true)) preferences.putFloat("temp_night", clampFloat(request->getParam("temp_target_night", true)->value().toFloat(), 0.0, 50.0));
 
     // WiFi роутера: сохраняем, только если длины корректны (SSID <= 32, пароль пусто либо 8-63 — требование WPA2)
     bool wifi_rejected = false;
@@ -502,7 +502,7 @@ void setup() {
     
     temp_target = preferences.getFloat("temp_target", 25.0);
     temp_delta = preferences.getFloat("temp_delta", 2.0);
-    temp_target_night = preferences.getFloat("temp_target_night", 20.0);
+    temp_target_night = preferences.getFloat("temp_night", 20.0);
     max_hum_night = preferences.getFloat("max_hum_night", 60.0);
     led_on_hour = preferences.getInt("led_on_hour", 6);
     led_off_hour = preferences.getInt("led_off_hour", 18);
