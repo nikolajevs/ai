@@ -42,6 +42,7 @@ String ap_pass;   // Пароль локальной точки доступа (
 // --- Переменные параметров климата и автоматизации ---
 float temp_target = 25.0; 
 float temp_delta = 2.0;   
+float temp_target_night = 25.0; // Целевая температура для обогревателя ночью (гистерезис temp_delta общий)
 float max_hum_night = 60.0; 
 
 int led_on_hour = 6;        
@@ -276,6 +277,7 @@ void setup() {
   preferences.begin("grow-box", false);
   temp_target = preferences.getFloat("temp_target", 25.0);
   temp_delta = preferences.getFloat("temp_delta", 2.0);
+  temp_target_night = preferences.getFloat("temp_target_night", 25.0);
   max_hum_night = preferences.getFloat("max_hum_night", 60.0);
   led_on_hour = preferences.getInt("led_on_hour", 6);
   led_off_hour = preferences.getInt("led_off_hour", 18);
@@ -376,6 +378,7 @@ void setup() {
     String json = "{";
     json += "\"temp_target\":" + String(temp_target, 1) + ",";
     json += "\"temp_delta\":" + String(temp_delta, 1) + ",";
+    json += "\"temp_target_night\":" + String(temp_target_night, 1) + ",";
     json += "\"max_hum_night\":" + String(max_hum_night, 1) + ",";
     json += "\"led_on_hour\":" + String(led_on_hour) + ",";
     json += "\"led_off_hour\":" + String(led_off_hour) + ",";
@@ -448,6 +451,7 @@ void setup() {
     if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", clampInt(request->getParam("watering_minute", true)->value().toInt(), 0, 59));
     if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", clampInt(request->getParam("watering_duration", true)->value().toInt(), 1, 3600));
     if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", clampInt(request->getParam("heater_mode", true)->value().toInt(), 0, 3));
+    if (request->hasParam("temp_target_night", true)) preferences.putFloat("temp_target_night", clampFloat(request->getParam("temp_target_night", true)->value().toFloat(), 0.0, 50.0));
 
     // WiFi роутера: сохраняем, только если длины корректны (SSID <= 32, пароль пусто либо 8-63 — требование WPA2)
     bool wifi_rejected = false;
@@ -498,6 +502,7 @@ void setup() {
     
     temp_target = preferences.getFloat("temp_target", 25.0);
     temp_delta = preferences.getFloat("temp_delta", 2.0);
+    temp_target_night = preferences.getFloat("temp_target_night", 25.0);
     max_hum_night = preferences.getFloat("max_hum_night", 60.0);
     led_on_hour = preferences.getInt("led_on_hour", 6);
     led_off_hour = preferences.getInt("led_off_hour", 18);
@@ -651,13 +656,17 @@ void loop() {
       float current_min = temp_target - safe_delta;
       float current_max = temp_target + safe_delta;
 
-      // Обогрев: гистерезис по current_min/temp_target, ограниченный расписанием (день/ночь/всегда)
+      // Обогрев: своя цель ночью (temp_target_night), днём — общая temp_target.
+      // На вентиляторы/лампу (current_min/current_max выше) это не влияет — они всегда считаются от дневной temp_target.
+      float heater_target = is_day ? temp_target : temp_target_night;
+      float heater_min = heater_target - safe_delta;
+
       bool heater_schedule_ok = (heater_mode == 2) || (heater_mode == 0 && is_day) || (heater_mode == 1 && !is_day);
       if (!heater_schedule_ok) {
         heater_active = false;
-      } else if (!heater_active && read_temp <= current_min) {
+      } else if (!heater_active && read_temp <= heater_min) {
         heater_active = true;
-      } else if (heater_active && read_temp >= temp_target) {
+      } else if (heater_active && read_temp >= heater_target) {
         heater_active = false;
       }
       digitalWrite(HEATER_PIN, heater_active ? HIGH : LOW);

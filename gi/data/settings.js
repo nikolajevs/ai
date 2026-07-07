@@ -134,6 +134,7 @@ async function loadCurrentSettings() {
         document.getElementById('watering_duration').value = data.watering_duration;
         unpackWateringDays(data.watering_days);
         document.getElementById('heater_mode').value = data.heater_mode;
+        document.getElementById('temp_target_night').value = data.temp_target_night;
 
         document.getElementById('wifi_ssid').value = data.wifi_ssid;
         document.getElementById('wifi_pass').value = data.wifi_pass;
