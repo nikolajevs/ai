@@ -35,6 +35,8 @@ String ap_pass;   // Пароль локальной точки доступа (
 #define FAN2_PWM_PIN  33
 #define PUMP_PIN      25 // реле/мосфет насоса полива — при необходимости смени на свободный GPIO
 #define HEATER_PIN    27 // реле обогревателя — при необходимости смени на свободный GPIO
+#define I2C_SDA_PIN   21 // Стандартные пины I2C для ESP32 (то, что использует Wire.begin() без аргументов)
+#define I2C_SCL_PIN   22
 
 #define PWM_FREQ      5000
 #define PWM_RES       8
@@ -229,6 +231,52 @@ void vUbidotsTask(void *pvParameters) {
 }
 
 // Функция получения безопасного времени (из RTC или программного бэкапа)
+// Принудительное восстановление I2C-шины: если одно из устройств (SHT4x/RTC) зависло
+// посреди транзакции и держит SDA в LOW, обычный Wire.begin()/sensor.begin() это НЕ чинит —
+// нужно вручную "протактовать" SCL, чтобы slave-устройство доотправило начатый байт и
+// освободило линию, затем сформировать STOP и переинициализировать Wire.
+void recoverI2CBus() {
+  pinMode(I2C_SDA_PIN, INPUT_PULLUP);
+  pinMode(I2C_SCL_PIN, OUTPUT);
+  digitalWrite(I2C_SCL_PIN, HIGH);
+
+  if (digitalRead(I2C_SDA_PIN) == HIGH) {
+    // Шина уже свободна — восстанавливать нечего, просто переинициализируем Wire
+    Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+    return;
+  }
+
+  Serial.println("[I2C] SDA удерживается в LOW — пробуем восстановить шину...");
+
+  // До 9 тактов SCL — по спецификации I2C этого достаточно, чтобы slave, зависший
+  // в середине передачи байта, дотактовал его до конца и отпустил SDA
+  for (int i = 0; i < 9 && digitalRead(I2C_SDA_PIN) == LOW; i++) {
+    digitalWrite(I2C_SCL_PIN, LOW);
+    delayMicroseconds(5);
+    digitalWrite(I2C_SCL_PIN, HIGH);
+    delayMicroseconds(5);
+  }
+
+  // Формируем STOP-условие вручную (SDA LOW->HIGH, пока SCL HIGH), чтобы сбросить
+  // внутренний автомат состояний slave-устройства в исходное состояние
+  pinMode(I2C_SDA_PIN, OUTPUT);
+  digitalWrite(I2C_SDA_PIN, LOW);
+  delayMicroseconds(5);
+  digitalWrite(I2C_SCL_PIN, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(I2C_SDA_PIN, HIGH);
+  delayMicroseconds(5);
+
+  pinMode(I2C_SDA_PIN, INPUT_PULLUP);
+  if (digitalRead(I2C_SDA_PIN) == LOW) {
+    Serial.println("[I2C] Восстановить шину не удалось — SDA всё ещё LOW.");
+  } else {
+    Serial.println("[I2C] Шина восстановлена.");
+  }
+
+  Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+}
+
 DateTime getSafeDateTime() {
   if (rtc_online) {
     DateTime now = rtc.now();
@@ -259,6 +307,7 @@ void tryRecoverRTC(unsigned long currentMillis) {
   if (rtc_online) return;
   if (currentMillis - last_rtc_retry < RTC_RETRY_INTERVAL_MS) return;
   last_rtc_retry = currentMillis;
+  recoverI2CBus(); // Освобождаем шину на случай, если она физически "залипла"
 
   bool retry_ok = false;
   if (rtc.begin()) {
@@ -301,6 +350,9 @@ void setup() {
     esp_task_wdt_add(NULL);
   #endif
   Wire.begin(); 
+  delay(300); // Даём I2C-шине и датчикам (SHT4x/RTC) стабилизироваться после подачи питания —
+              // без этой паузы begin() может провалиться из-за гонки при старте платы
+  recoverI2CBus(); // На случай, если шина осталась "залипшей" ещё с прошлого включения
   
   xMutex = xSemaphoreCreateMutex();
 
@@ -340,15 +392,31 @@ void setup() {
   if (!isValidApSsid(ap_ssid)) ap_ssid = DEFAULT_AP_SSID;
   if (!isValidApPass(ap_pass)) ap_pass = DEFAULT_AP_PASS;
 
-  // Безопасная инициализация датчиков с проверкой работоспособности
-  if (!sht40.begin()) {
-    Serial.println("ОШИБКА: SHT4x не найден!");
-    sht_online = false;
+  // Безопасная инициализация датчиков с проверкой работоспособности.
+  // Пробуем несколько раз с паузой — при старте платы I2C-шина/датчик могут быть
+  // ещё не готовы (просадка питания от одновременного старта WiFi/вентиляторов/SD).
+  sht_online = false;
+  for (int i = 0; i < 5 && !sht_online; i++) {
+    if (sht40.begin()) {
+      sht_online = true;
+    } else {
+      Serial.printf("[SHT4x] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
+      delay(200);
+    }
   }
-  
-  if (!rtc.begin()) {
-    Serial.println("ОШИБКА: RTC DS3231 не найден!");
-    rtc_online = false;
+  if (!sht_online) Serial.println("ОШИБКА: SHT4x не найден после 5 попыток!");
+
+  rtc_online = false;
+  for (int i = 0; i < 5 && !rtc_online; i++) {
+    if (rtc.begin()) {
+      rtc_online = true;
+    } else {
+      Serial.printf("[RTC] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
+      delay(200);
+    }
+  }
+  if (!rtc_online) {
+    Serial.println("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
     last_rtc_check_ms = millis();
   }
 
@@ -670,6 +738,7 @@ void loop() {
     // SHT_RETRY_INTERVAL_MS, прежде чем снова начать доверять показаниям.
     if (!sht_online && (currentMillis - last_sht_retry >= SHT_RETRY_INTERVAL_MS)) {
       last_sht_retry = currentMillis;
+      recoverI2CBus(); // Освобождаем шину на случай, если она физически "залипла"
       sensors_event_t retryHumidity, retryTemp;
       bool retry_ok = sht40.begin() && sht40.getEvent(&retryHumidity, &retryTemp) &&
                        retryTemp.temperature >= -20.0 && retryTemp.temperature <= 80.0 &&
