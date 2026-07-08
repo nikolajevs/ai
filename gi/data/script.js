@@ -2,6 +2,30 @@ let currentSelectedDate = "";
 let chartPoints = [];
 let chartViewBox = { width: 1000, height: 400 };
 
+let lastConsoleLength = -1;
+
+async function updateConsole() {
+    try {
+        const res = await fetch('/api/log');
+        const text = await res.text();
+        if (text.length === lastConsoleLength) return; // Ничего нового — не дёргаем DOM зря
+        lastConsoleLength = text.length;
+
+        const el = document.getElementById('serial-console');
+        const autoscroll = document.getElementById('console-autoscroll').checked;
+        // Автопрокрутка срабатывает, только если пользователь и так был внизу (не мешаем читать историю)
+        const wasAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
+
+        el.textContent = text.length ? text : "(лог пуст)";
+
+        if (autoscroll && wasAtBottom) {
+            el.scrollTop = el.scrollHeight;
+        }
+    } catch (e) {
+        // Тихо игнорируем — не хотим спамить ошибками поверх самой консоли логов
+    }
+}
+
 async function updateStatus() {
     try {
         const res = await fetch('/api/status');
@@ -210,6 +234,9 @@ document.getElementById('chart-date-selector').addEventListener('change', (e) =>
 
 setInterval(updateStatus, 3000);
 updateStatus(); 
+
+setInterval(updateConsole, 3000);
+updateConsole();
 
 // Автоматически раз в 5 минут обновляем текущий график, если смотрим сегодняшний день
 setInterval(() => {

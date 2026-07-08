@@ -80,6 +80,16 @@
                 <div id="chart-tooltip" class="chart-tooltip"></div>
             </div>
         </div>
+
+        <div class="analytics-section">
+            <div class="chart-header-row">
+                <div class="chart-title">Консоль (Serial.print с платы)</div>
+                <label style="font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                    <input type="checkbox" id="console-autoscroll" checked> автопрокрутка
+                </label>
+            </div>
+            <pre id="serial-console" class="serial-console">Загрузка лога...</pre>
+        </div>
     </div>
     <script src="/script.js"></script>
 </body>

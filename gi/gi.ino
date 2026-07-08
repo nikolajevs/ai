@@ -1,5 +1,6 @@
 #include <esp_task_wdt.h>
 #include <Arduino.h>
+#include <stdarg.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <SD.h>
@@ -37,6 +38,60 @@ String ap_pass;   // Пароль локальной точки доступа (
 #define HEATER_PIN    27 // реле обогревателя — при необходимости смени на свободный GPIO
 #define I2C_SDA_PIN   21 // Стандартные пины I2C для ESP32 (то, что использует Wire.begin() без аргументов)
 #define I2C_SCL_PIN   22
+
+// --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/log) ---
+#define LOG_BUFFER_SIZE 4096
+static char logBuffer[LOG_BUFFER_SIZE];
+static volatile size_t logHead = 0;
+static volatile bool logWrapped = false;
+static portMUX_TYPE logMux = portMUX_INITIALIZER_UNLOCKED;
+
+void logRaw(const char *data, size_t len) {
+  portENTER_CRITICAL(&logMux);
+  for (size_t i = 0; i < len; i++) {
+    logBuffer[logHead] = data[i];
+    logHead = (logHead + 1) % LOG_BUFFER_SIZE;
+    if (logHead == 0) logWrapped = true;
+  }
+  portEXIT_CRITICAL(&logMux);
+}
+
+// Замена logPrintln()/logPrintf() — пишет и на аппаратный UART, и в буфер для веба.
+// Core 0 (задача Ubidots) и Core 1 (loop/setup) могут писать одновременно, поэтому буфер
+// защищён спинлоком (portENTER_CRITICAL), а не мьютексом — запись короткая и частая.
+void logPrintln(const String &msg) {
+  Serial.println(msg);
+  String line = msg + "\n";
+  logRaw(line.c_str(), line.length());
+}
+
+void logPrintf(const char *fmt, ...) {
+  char buf[192];
+  va_list args;
+  va_start(args, fmt);
+  vsnprintf(buf, sizeof(buf), fmt, args);
+  va_end(args);
+  Serial.print(buf);
+  logRaw(buf, strlen(buf));
+}
+
+// Возвращает содержимое буфера в правильном хронологическом порядке одной строкой
+String getLogSnapshot() {
+  portENTER_CRITICAL(&logMux);
+  size_t head = logHead;
+  bool wrapped = logWrapped;
+  String snapshot;
+  if (!wrapped) {
+    snapshot.reserve(head);
+    for (size_t i = 0; i < head; i++) snapshot += logBuffer[i];
+  } else {
+    snapshot.reserve(LOG_BUFFER_SIZE);
+    for (size_t i = head; i < LOG_BUFFER_SIZE; i++) snapshot += logBuffer[i];
+    for (size_t i = 0; i < head; i++) snapshot += logBuffer[i];
+  }
+  portEXIT_CRITICAL(&logMux);
+  return snapshot;
+}
 
 #define PWM_FREQ      5000
 #define PWM_RES       8
@@ -179,7 +234,7 @@ void vUbidotsTask(void *pvParameters) {
   for (;;) {
     vTaskDelay(pdMS_TO_TICKS(120000)); // 2 минуты сна
 
-    Serial.println("[Core 0] Пробуждение задачи Ubidots...");
+    logPrintln("[Core 0] Пробуждение задачи Ubidots...");
 
     if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(1000)) == pdTRUE) {
       localData.temp = current_temp;
@@ -246,7 +301,7 @@ void recoverI2CBus() {
     return;
   }
 
-  Serial.println("[I2C] SDA удерживается в LOW — пробуем восстановить шину...");
+  logPrintln("[I2C] SDA удерживается в LOW — пробуем восстановить шину...");
 
   // До 9 тактов SCL — по спецификации I2C этого достаточно, чтобы slave, зависший
   // в середине передачи байта, дотактовал его до конца и отпустил SDA
@@ -269,9 +324,9 @@ void recoverI2CBus() {
 
   pinMode(I2C_SDA_PIN, INPUT_PULLUP);
   if (digitalRead(I2C_SDA_PIN) == LOW) {
-    Serial.println("[I2C] Восстановить шину не удалось — SDA всё ещё LOW.");
+    logPrintln("[I2C] Восстановить шину не удалось — SDA всё ещё LOW.");
   } else {
-    Serial.println("[I2C] Шина восстановлена.");
+    logPrintln("[I2C] Шина восстановлена.");
   }
 
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
@@ -285,7 +340,7 @@ DateTime getSafeDateTime() {
       backup_unixtime = now.unixtime(); // Синхронизируем бэкап
       return now;
     } else {
-      Serial.println("[КРИТИКА] RTC вернул некорректную дату! Переход на программный таймер.");
+      logPrintln("[КРИТИКА] RTC вернул некорректную дату! Переход на программный таймер.");
       rtc_online = false;
     }
   }
@@ -317,13 +372,13 @@ void tryRecoverRTC(unsigned long currentMillis) {
     if (now.minute() <= 60 && now.hour() <= 60 && now.year() >= 2024 && now.year() <= 2099) {
       retry_ok = true;
       rtc_recovery_streak++;
-      Serial.printf("[RTC] Попытка восстановления %d/%d успешна\n", rtc_recovery_streak, RTC_RECOVERY_STREAK_NEEDED);
+      logPrintf("[RTC] Попытка восстановления %d/%d успешна\n", rtc_recovery_streak, RTC_RECOVERY_STREAK_NEEDED);
       if (rtc_recovery_streak >= RTC_RECOVERY_STREAK_NEEDED) {
         rtc_online = true;
         backup_unixtime = now.unixtime();
         last_rtc_check_ms = millis();
         rtc_recovery_streak = 0;
-        Serial.println("[RTC] DS3231 восстановлен, выходим из программного таймера.");
+        logPrintln("[RTC] DS3231 восстановлен, выходим из программного таймера.");
       }
     }
   }
@@ -400,28 +455,28 @@ void setup() {
     if (sht40.begin()) {
       sht_online = true;
     } else {
-      Serial.printf("[SHT4x] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
+      logPrintf("[SHT4x] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
       delay(200);
     }
   }
-  if (!sht_online) Serial.println("ОШИБКА: SHT4x не найден после 5 попыток!");
+  if (!sht_online) logPrintln("ОШИБКА: SHT4x не найден после 5 попыток!");
 
   rtc_online = false;
   for (int i = 0; i < 5 && !rtc_online; i++) {
     if (rtc.begin()) {
       rtc_online = true;
     } else {
-      Serial.printf("[RTC] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
+      logPrintf("[RTC] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
       delay(200);
     }
   }
   if (!rtc_online) {
-    Serial.println("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
+    logPrintln("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
     last_rtc_check_ms = millis();
   }
 
-  if (!SD.begin(SD_CS_PIN)) Serial.println("SD-карта не обнаружена.");
-  if (!SPIFFS.begin(true)) Serial.println("Ошибка SPIFFS!");
+  if (!SD.begin(SD_CS_PIN)) logPrintln("SD-карта не обнаружена.");
+  if (!SPIFFS.begin(true)) logPrintln("Ошибка SPIFFS!");
 
   pinMode(PUMP_PIN, OUTPUT);
   digitalWrite(PUMP_PIN, LOW); // насос выключен при старте
@@ -468,6 +523,12 @@ void setup() {
     json += "\"heater_active\":" + String(heater_active ? "true" : "false");
     json += "}";
     request->send(200, "application/json", json);
+  });
+
+  // Отдаёт содержимое кольцевого буфера Serial.print()-сообщений как обычный текст —
+  // без JSON-обёртки, чтобы не думать про экранирование кавычек/переводов строк в логах
+  server.on("/api/log", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(200, "text/plain; charset=utf-8", getLogSnapshot());
   });
 
   server.on("/api/settings", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -746,14 +807,14 @@ void loop() {
 
       if (retry_ok) {
         sht_recovery_streak++;
-        Serial.printf("[SHT4x] Попытка восстановления %d/%d успешна\n", sht_recovery_streak, SHT_RECOVERY_STREAK_NEEDED);
+        logPrintf("[SHT4x] Попытка восстановления %d/%d успешна\n", sht_recovery_streak, SHT_RECOVERY_STREAK_NEEDED);
         if (sht_recovery_streak >= SHT_RECOVERY_STREAK_NEEDED) {
           sht_online = true;
           got_valid_reading = true;
           read_temp = retryTemp.temperature;
           read_hum = retryHumidity.relative_humidity;
           sht_recovery_streak = 0;
-          Serial.println("[SHT4x] Датчик восстановлен, выходим из аварийного режима.");
+          logPrintln("[SHT4x] Датчик восстановлен, выходим из аварийного режима.");
         }
       } else {
         sht_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
@@ -778,7 +839,7 @@ void loop() {
       heater_active = false;
       digitalWrite(HEATER_PIN, LOW);
       
-      Serial.println("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
+      logPrintln("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
     } 
     else {
       // --- НОРМАЛЬНАЯ РАБОТА ---
@@ -899,13 +960,13 @@ void loop() {
         pump_start_time = now_w.unixtime();
         last_watering_day = today_code;
         digitalWrite(PUMP_PIN, HIGH);
-        Serial.println("[ПОЛИВ] Старт автополива");
+        logPrintln("[ПОЛИВ] Старт автополива");
       }
     } else {
       if (now_w.unixtime() - pump_start_time >= (uint32_t)watering_duration_sec) {
         pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
-        Serial.println("[ПОЛИВ] Полив завершён");
+        logPrintln("[ПОЛИВ] Полив завершён");
       }
     }
   }
