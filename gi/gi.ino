@@ -91,6 +91,10 @@ const unsigned long SHT_RETRY_INTERVAL_MS = 30000; // Пауза между по
 int sht_recovery_streak = 0;                     // Счётчик подряд успешных попыток восстановления
 const int SHT_RECOVERY_STREAK_NEEDED = 3;        // Сколько подряд удачных попыток нужно, чтобы снова доверять датчику
 bool rtc_online = true;
+unsigned long last_rtc_retry = 0;                // Когда последний раз пытались восстановить RTC
+const unsigned long RTC_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
+int rtc_recovery_streak = 0;                     // Счётчик подряд успешных попыток восстановления
+const int RTC_RECOVERY_STREAK_NEEDED = 3;        // Сколько подряд удачных попыток нужно, чтобы снова доверять RTC
 
 // Переменные для программного дублирования времени (на случай отказа RTC)
 uint32_t backup_unixtime = 1774838400; // Дефолтный 2026 год, если RTC умер сразу при старте
@@ -255,6 +259,37 @@ DateTime getSafeDateTime() {
     last_rtc_check_ms += elapsed_seconds * 1000;
   }
   return DateTime(backup_unixtime);
+}
+
+// Периодически пробует восстановить RTC после сбоя, без перезагрузки платы —
+// та же схема, что и для датчика SHT4x. Нужно несколько подряд успешных
+// попыток чтения вменяемой даты, прежде чем снова начать доверять RTC.
+void tryRecoverRTC(unsigned long currentMillis) {
+  if (rtc_online) return;
+  if (currentMillis - last_rtc_retry < RTC_RETRY_INTERVAL_MS) return;
+  last_rtc_retry = currentMillis;
+
+  bool retry_ok = false;
+  if (rtc.begin()) {
+    DateTime now = rtc.now();
+    // 2024..2099 — грубая защита от "проснувшегося после разряда батарейки" RTC,
+    // который обычно сбрасывается на заводскую дату (например, 2000 или 2021 год)
+    if (now.minute() <= 60 && now.hour() <= 60 && now.year() >= 2024 && now.year() <= 2099) {
+      retry_ok = true;
+      rtc_recovery_streak++;
+      Serial.printf("[RTC] Попытка восстановления %d/%d успешна\n", rtc_recovery_streak, RTC_RECOVERY_STREAK_NEEDED);
+      if (rtc_recovery_streak >= RTC_RECOVERY_STREAK_NEEDED) {
+        rtc_online = true;
+        backup_unixtime = now.unixtime();
+        last_rtc_check_ms = millis();
+        rtc_recovery_streak = 0;
+        Serial.println("[RTC] DS3231 восстановлен, выходим из программного таймера.");
+      }
+    }
+  }
+  if (!retry_ok) {
+    rtc_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
+  }
 }
 
 void setup() {
@@ -592,6 +627,7 @@ void setup() {
 void loop() {
   static unsigned long lastLogTime = 0;
   unsigned long currentMillis = millis();
+  tryRecoverRTC(currentMillis); // Не блокирует: сам ограничивает частоту попыток внутри
   DateTime now = getSafeDateTime();
 
   if (currentMillis - lastLogTime >= 10000) {
