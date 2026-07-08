@@ -172,16 +172,10 @@ struct ClimateData {
 
 // Фоновая задача на Core 0 для работы с облаком Ubidots
 void vUbidotsTask(void *pvParameters) {
-  esp_task_wdt_add(NULL); // Регистрируем эту задачу (Core 0) в watchdog — раньше следили только за loop()
   ClimateData localData;
 
   for (;;) {
-    // 2 минуты сна короткими интервалами по 500мс с "подкормкой" watchdog на каждом шаге —
-    // иначе один долгий vTaskDelay(120000) сам по себе превысит 15-секундный таймаут TWDT
-    for (int i = 0; i < 240; i++) {
-      vTaskDelay(pdMS_TO_TICKS(500));
-      esp_task_wdt_reset();
-    }
+    vTaskDelay(pdMS_TO_TICKS(120000)); // 2 минуты сна
 
     Serial.println("[Core 0] Пробуждение задачи Ubidots...");
 
@@ -203,7 +197,6 @@ void vUbidotsTask(void *pvParameters) {
     int attempts = 0;
     while (WiFi.status() != WL_CONNECTED && attempts < 30) {
       vTaskDelay(pdMS_TO_TICKS(500)); 
-      esp_task_wdt_reset();
       attempts++;
     }
     
@@ -227,13 +220,11 @@ void vUbidotsTask(void *pvParameters) {
       payload += "}";
       
       int httpResponseCode = http.POST(payload);
-      esp_task_wdt_reset(); // HTTPClient блокирует до ~5с по таймауту — подстраховываемся после запроса
       http.end();
     }
     
     WiFi.disconnect(true);
     WiFi.mode(WIFI_AP);
-    esp_task_wdt_reset();
   }
 }
 
