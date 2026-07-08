@@ -413,7 +413,7 @@ void setup() {
 
   server.on("/api/settings", HTTP_GET, [](AsyncWebServerRequest *request){
     DateTime now = getSafeDateTime();
-    char buf[16]; snprintf(buf, sizeof(buf), "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+    char buf[24]; snprintf(buf, sizeof(buf), "%02d.%02d.%04d %02d:%02d:%02d", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
     String json = "{";
     json += "\"temp_target\":" + String(temp_target, 1) + ",";
     json += "\"temp_delta\":" + String(temp_delta, 1) + ",";
