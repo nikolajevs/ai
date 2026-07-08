@@ -44,6 +44,7 @@ h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
 }
 .status-badge.day-badge { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
 .status-badge.night-badge { background: rgba(14, 165, 233, 0.15); color: var(--primary); border: 1px solid rgba(14, 165, 233, 0.3); }
+.status-badge.offline-badge { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
 
 .time-badge { 
     background: rgba(255, 255, 255, 0.05); 

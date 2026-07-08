@@ -86,6 +86,10 @@ bool is_day = true;
 
 // --- Статус здоровья периферии (Самодиагностика) ---
 bool sht_online = true;
+unsigned long last_sht_retry = 0;               // Когда последний раз пытались восстановить датчик
+const unsigned long SHT_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
+int sht_recovery_streak = 0;                     // Счётчик подряд успешных попыток восстановления
+const int SHT_RECOVERY_STREAK_NEEDED = 3;        // Сколько подряд удачных попыток нужно, чтобы снова доверять датчику
 bool rtc_online = true;
 
 // Переменные для программного дублирования времени (на случай отказа RTC)
@@ -612,21 +616,52 @@ void loop() {
     int pwm_fan_night_max = map(fan_night_max_limit, 0, 100, 0, 255);
 
     int target_led, target_fan1, target_fan2;
-    float read_temp = 0.0;
-    float read_hum = 0.0;
+    float read_temp = current_temp; // По умолчанию — последнее известное валидное значение, а не 0.0
+    float read_hum = current_hum;
+    bool got_valid_reading = false;
 
     // Чтение датчика с проверкой на ошибку
     sensors_event_t humidity, temp;
-    if (sht_online && sht40.getEvent(&humidity, &temp)) {
-      read_temp = temp.temperature;
-      read_hum = humidity.relative_humidity;
-      
-      // Защита от "зависших" нереалистичных данных (за пределами работы датчика)
-      if (read_temp < -20.0 || read_temp > 80.0 || read_hum < 0.0 || read_hum > 100.0) {
-        sht_online = false; 
+    if (sht_online) {
+      if (sht40.getEvent(&humidity, &temp)) {
+        read_temp = temp.temperature;
+        read_hum = humidity.relative_humidity;
+
+        // Защита от "зависших" нереалистичных данных (за пределами работы датчика)
+        if (read_temp < -20.0 || read_temp > 80.0 || read_hum < 0.0 || read_hum > 100.0) {
+          sht_online = false;
+        } else {
+          got_valid_reading = true;
+        }
+      } else {
+        sht_online = false;
       }
-    } else {
-      sht_online = false;
+    }
+
+    // Датчик офлайн — периодически пробуем восстановиться, не дожидаясь перезагрузки платы.
+    // Нужно несколько (SHT_RECOVERY_STREAK_NEEDED) подряд успешных попыток с интервалом
+    // SHT_RETRY_INTERVAL_MS, прежде чем снова начать доверять показаниям.
+    if (!sht_online && (currentMillis - last_sht_retry >= SHT_RETRY_INTERVAL_MS)) {
+      last_sht_retry = currentMillis;
+      sensors_event_t retryHumidity, retryTemp;
+      bool retry_ok = sht40.begin() && sht40.getEvent(&retryHumidity, &retryTemp) &&
+                       retryTemp.temperature >= -20.0 && retryTemp.temperature <= 80.0 &&
+                       retryHumidity.relative_humidity >= 0.0 && retryHumidity.relative_humidity <= 100.0;
+
+      if (retry_ok) {
+        sht_recovery_streak++;
+        Serial.printf("[SHT4x] Попытка восстановления %d/%d успешна\n", sht_recovery_streak, SHT_RECOVERY_STREAK_NEEDED);
+        if (sht_recovery_streak >= SHT_RECOVERY_STREAK_NEEDED) {
+          sht_online = true;
+          got_valid_reading = true;
+          read_temp = retryTemp.temperature;
+          read_hum = retryHumidity.relative_humidity;
+          sht_recovery_streak = 0;
+          Serial.println("[SHT4x] Датчик восстановлен, выходим из аварийного режима.");
+        }
+      } else {
+        sht_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
+      }
     }
 
     // ЛОГИКА АВАРИЙНОГО РЕЖИМА ИЛИ НОРМАЛЬНОЙ РАБОТЫ

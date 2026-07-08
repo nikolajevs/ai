@@ -23,7 +23,10 @@
                 <h3>Датчик КЛИМАТА</h3>
                 <div class="metrics-row">
                     <div class="metric-box">
-                        <span class="label">Температура</span>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px;">
+                            <span class="label" style="margin-bottom: 0;">Температура</span>
+                            <span id="sensor-status-badge" class="status-badge offline-badge" style="display: none; padding: 2px 8px;">офлайн</span>
+                        </div>
                         <div class="value" id="t-val">--.-<span class="unit">°C</span></div>
                     </div>
                     <div class="metric-box">

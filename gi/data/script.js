@@ -6,8 +6,15 @@ async function updateStatus() {
     try {
         const res = await fetch('/api/status');
         const data = await res.json();
-        document.getElementById('t-val').innerHTML = data.temp.toFixed(1) + '<span class="unit">°C</span>';
-        document.getElementById('h-val').innerHTML = data.hum.toFixed(1) + '<span class="unit">%</span>';
+        if (data.sht_online) {
+            document.getElementById('t-val').innerHTML = data.temp.toFixed(1) + '<span class="unit">°C</span>';
+            document.getElementById('h-val').innerHTML = data.hum.toFixed(1) + '<span class="unit">%</span>';
+            document.getElementById('sensor-status-badge').style.display = 'none';
+        } else {
+            document.getElementById('t-val').innerHTML = '--:--';
+            document.getElementById('h-val').innerHTML = '--:--';
+            document.getElementById('sensor-status-badge').style.display = 'inline-block';
+        }
         document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
         document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
