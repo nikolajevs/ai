@@ -6,7 +6,7 @@ let lastConsoleLength = -1;
 
 async function updateConsole() {
     try {
-        const res = await fetch('/api/log');
+        const res = await fetch('/api/console');
         const text = await res.text();
         if (text.length === lastConsoleLength) return; // Ничего нового — не дёргаем DOM зря
         lastConsoleLength = text.length;

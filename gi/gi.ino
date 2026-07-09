@@ -526,8 +526,9 @@ void setup() {
   });
 
   // Отдаёт содержимое кольцевого буфера Serial.print()-сообщений как обычный текст —
-  // без JSON-обёртки, чтобы не думать про экранирование кавычек/переводов строк в логах
-  server.on("/api/log", HTTP_GET, [](AsyncWebServerRequest *request){
+  // без JSON-обёртки, чтобы не думать про экранирование кавычек/переводов строк в логах.
+  // Названо /api/console, а не /api/log — последний уже занят историей CSV с SD-карты для графика.
+  server.on("/api/console", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(200, "text/plain; charset=utf-8", getLogSnapshot());
   });
 
