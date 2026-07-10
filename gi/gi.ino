@@ -387,6 +387,45 @@ void tryRecoverRTC(unsigned long currentMillis) {
   }
 }
 
+// Единая точка загрузки всех настроек из NVS (Preferences) — вызывается и при старте платы,
+// и сразу после сохранения на /save-settings, чтобы не держать два места с одинаковым списком
+// полей в ручную синхронизации (именно так на днях "потерялась" temp_target_night в одном из
+// трёх мест при переименовании NVS-ключа). preferences.begin() сюда не входит — вызывается один
+// раз в setup() до первого использования этой функции.
+void loadAllSettingsFromNVS() {
+  temp_target = preferences.getFloat("temp_target", 25.0);
+  temp_delta = preferences.getFloat("temp_delta", 2.0);
+  temp_target_night = preferences.getFloat("temp_night", 20.0);
+  max_hum_night = preferences.getFloat("max_hum_night", 60.0);
+  led_on_hour = preferences.getInt("led_on_hour", 6);
+  led_off_hour = preferences.getInt("led_off_hour", 18);
+  led_on_minute = preferences.getInt("led_on_minute", 0);
+  led_off_minute = preferences.getInt("led_off_minute", 0);
+  fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
+  fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
+  fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
+  fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
+  led_min_limit = preferences.getInt("led_min_limit", 10);
+  led_max_limit = preferences.getInt("led_max_limit", 100);
+  fan_night_min_limit = preferences.getInt("fan_night_min", 30);
+  fan_night_max_limit = preferences.getInt("fan_night_max", 100);
+  min_hum_night = preferences.getFloat("min_hum_night", 40.0);
+  start_timestamp = preferences.getUInt("start_time", 0);
+
+  watering_days = preferences.getUChar("watering_days", 0);
+  watering_hour = preferences.getInt("watering_hour", 8);
+  watering_minute = preferences.getInt("watering_minute", 0);
+  watering_duration_sec = preferences.getInt("watering_dur", 30);
+  heater_mode = preferences.getInt("heater_mode", 2);
+
+  wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
+  wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
+  ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
+  device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
+  ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
+  ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
+}
+
 void setup() {
   Serial.begin(115200);
   // Внутри setup() после инициализации Serial
@@ -412,37 +451,7 @@ void setup() {
   xMutex = xSemaphoreCreateMutex();
 
   preferences.begin("grow-box", false);
-  temp_target = preferences.getFloat("temp_target", 25.0);
-  temp_delta = preferences.getFloat("temp_delta", 2.0);
-  temp_target_night = preferences.getFloat("temp_night", 20.0);
-  max_hum_night = preferences.getFloat("max_hum_night", 60.0);
-  led_on_hour = preferences.getInt("led_on_hour", 6);
-  led_off_hour = preferences.getInt("led_off_hour", 18);
-  led_on_minute = preferences.getInt("led_on_minute", 0);
-  led_off_minute = preferences.getInt("led_off_minute", 0);
-  fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
-  fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
-  fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
-  fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
-  led_min_limit = preferences.getInt("led_min_limit", 10); 
-  led_max_limit = preferences.getInt("led_max_limit", 100);
-  fan_night_min_limit = preferences.getInt("fan_night_min", 30);
-  fan_night_max_limit = preferences.getInt("fan_night_max", 100);
-  min_hum_night = preferences.getFloat("min_hum_night", 40.0);
-  start_timestamp = preferences.getUInt("start_time", 0);
-
-  watering_days = preferences.getUChar("watering_days", 0);
-  watering_hour = preferences.getInt("watering_hour", 8);
-  watering_minute = preferences.getInt("watering_minute", 0);
-  watering_duration_sec = preferences.getInt("watering_dur", 30);
-  heater_mode = preferences.getInt("heater_mode", 2);
-
-  wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
-  wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
-  ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
-  device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
-  ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
-  ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
+  loadAllSettingsFromNVS();
   // На случай испорченных/некорректных значений в NVS откатываемся на дефолт, чтобы не остаться без доступа к плате
   if (!isValidApSsid(ap_ssid)) ap_ssid = DEFAULT_AP_SSID;
   if (!isValidApPass(ap_pass)) ap_pass = DEFAULT_AP_PASS;
@@ -660,37 +669,7 @@ void setup() {
       }
     }
     
-    temp_target = preferences.getFloat("temp_target", 25.0);
-    temp_delta = preferences.getFloat("temp_delta", 2.0);
-    temp_target_night = preferences.getFloat("temp_night", 20.0);
-    max_hum_night = preferences.getFloat("max_hum_night", 60.0);
-    led_on_hour = preferences.getInt("led_on_hour", 6);
-    led_off_hour = preferences.getInt("led_off_hour", 18);
-    led_on_minute = preferences.getInt("led_on_minute", 0);
-    led_off_minute = preferences.getInt("led_off_minute", 0);
-    fan1_min_limit = preferences.getInt("fan1_min_limit", 20);
-    fan1_max_limit = preferences.getInt("fan1_max_limit", 100);
-    fan2_min_limit = preferences.getInt("fan2_min_limit", 20);
-    fan2_max_limit = preferences.getInt("fan2_max_limit", 100);
-    led_min_limit = preferences.getInt("led_min_limit", 10);
-    led_max_limit = preferences.getInt("led_max_limit", 100);
-    fan_night_min_limit = preferences.getInt("fan_night_min", 30);
-    fan_night_max_limit = preferences.getInt("fan_night_max", 100);
-    min_hum_night = preferences.getFloat("min_hum_night", 40.0);
-    start_timestamp = preferences.getUInt("start_time", 0);
-
-    watering_days = preferences.getUChar("watering_days", 0);
-    watering_hour = preferences.getInt("watering_hour", 8);
-    watering_minute = preferences.getInt("watering_minute", 0);
-    watering_duration_sec = preferences.getInt("watering_dur", 30);
-    heater_mode = preferences.getInt("heater_mode", 2);
-
-    wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
-    wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
-    ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
-    device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
-    ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
-    ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
+    loadAllSettingsFromNVS();
 
     // Применяем новые SSID/пароль точки доступа немедленно, без перезагрузки платы.
     // Текущие клиенты AP при этом отключатся и должны будут подключиться заново с новыми данными.
