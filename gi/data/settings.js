@@ -160,10 +160,62 @@ async function loadCurrentSettings() {
         const today = new Date();
         document.getElementById('start_date').max =
             `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+        if (data.sdTotal !== undefined) {
+            const usedPct = data.sdTotal > 0 ? Math.round((data.sdUsed / data.sdTotal) * 100) : 0;
+            document.getElementById('sd-status').innerText = `${formatBytes(data.sdUsed)} / ${formatBytes(data.sdTotal)} (${usedPct}%)`;
+            document.getElementById('sd-free').innerText = formatBytes(data.sdFree);
+            document.getElementById('sd-bar-fill').style.width = Math.min(100, usedPct) + '%';
+        }
     } catch (e) {
         console.error("Ошибка загрузки настроек:", e);
         document.getElementById('rtc-time-label').innerText = "Ошибка связи";
     }
+}
+
+// ---------- Обслуживание SD-карты ----------
+function formatBytes(n) {
+    if (n < 1024) return n + " Б";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " КБ";
+    return (n / 1024 / 1024).toFixed(2) + " МБ";
+}
+
+function loadSdFiles() {
+    const box = document.getElementById('sd-files-list');
+    if (!box) return;
+    box.innerText = "Запрос...";
+
+    fetch('/api/files')
+        .then(res => res.json())
+        .then(data => {
+            if (!data.files || data.files.length === 0) {
+                box.innerHTML = '<div class="sd-empty">На карте нет файлов в корне.</div>';
+                return;
+            }
+            let html = data.files.map(f =>
+                `<div class="sd-file-row"><span class="sd-file-name">${f.name.replace(/</g, '&lt;')}</span>`
+                + `<span class="sd-file-size">${formatBytes(f.size)}</span></div>`
+            ).join('');
+            if (data.total > data.files.length) {
+                html += `<div class="sd-empty">…показаны последние ${data.files.length} из ${data.total}</div>`;
+            }
+            box.innerHTML = html;
+        })
+        .catch(err => {
+            box.innerHTML = '<div class="sd-empty">Ошибка запроса /api/files</div>';
+            console.error("Ошибка загрузки списка файлов:", err);
+        });
+}
+
+function clearSDLogs() {
+    if (!confirm("Уничтожить весь лог истории климата на SD-карте? Действие необратимо.")) return;
+    fetch('/api/clearlogs').then(res => {
+        if (res.ok) {
+            alert("Удалено");
+            loadCurrentSettings(); // Перечитываем занятость SD и обновляем прогресс-бар
+            loadSdFiles();
+        }
+    });
 }
 
 function initTabs() {
@@ -184,6 +236,7 @@ function initTabs() {
 window.onload = () => {
     setCurrentTime();
     loadCurrentSettings();
+    loadSdFiles();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
     document.getElementById('watering-form').addEventListener('submit', packWaterSensor);
     document.getElementById('light-form').addEventListener('submit', packLedTimes);

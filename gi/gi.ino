@@ -11,6 +11,7 @@
 #include <ESPAsyncWebServer.h>
 #include <Preferences.h>
 #include <HTTPClient.h>
+#include <vector>
 
 // --- Настройки подключения к домашнему роутеру и Ubidots ---
 // Значения по умолчанию используются только при первой прошивке / если NVS пуст.
@@ -92,6 +93,60 @@ String getLogSnapshot() {
   }
   portEXIT_CRITICAL(&logMux);
   return snapshot;
+}
+
+// Экранирование строки для безопасной вставки в JSON (используется для имён файлов SD —
+// теоретически может содержать что угодно, в отличие от контролируемых нами полей настроек)
+String jsonEscape(const char* s) {
+  String out;
+  for (int i = 0; s[i] != '\0'; i++) {
+    char c = s[i];
+    if (c == '"' || c == '\\') { out += '\\'; out += c; }
+    else if (c == '\n' || c == '\r' || c == '\t') { out += ' '; }
+    else if ((uint8_t)c < 0x20) { /* прочие control-символы пропускаем */ }
+    else out += c;
+  }
+  return out;
+}
+
+// uint64_t -> String: обычный String(uint64_t) в Arduino не поддерживается,
+// а SD.totalBytes()/usedBytes() возвращают именно uint64_t
+String u64str(uint64_t v) {
+  if (v == 0) return "0";
+  char buf[21];
+  int i = 20;
+  buf[i] = '\0';
+  while (v > 0 && i > 0) { buf[--i] = '0' + (char)(v % 10); v /= 10; }
+  return String(&buf[i]);
+}
+
+// Рекурсивно удаляет ВСЁ содержимое каталога (файлы и вложенные папки).
+// Сначала собираем список детей, потом удаляем — чтобы не ломать обход FatFS во время итерации.
+void wipePath(const String &path, int &files, int &dirs) {
+  File dir = SD.open(path);
+  if (!dir) return;
+  if (!dir.isDirectory()) { dir.close(); return; }
+
+  std::vector<String> childFiles;
+  std::vector<String> childDirs;
+
+  File entry = dir.openNextFile();
+  while (entry) {
+    String full = String(entry.path()); // абсолютный путь (ESP32 core 3.x)
+    if (entry.isDirectory()) childDirs.push_back(full);
+    else                     childFiles.push_back(full);
+    entry.close();
+    entry = dir.openNextFile();
+  }
+  dir.close();
+
+  for (size_t i = 0; i < childFiles.size(); i++) {
+    if (SD.remove(childFiles[i])) files++;
+  }
+  for (size_t i = 0; i < childDirs.size(); i++) {
+    wipePath(childDirs[i], files, dirs); // сперва опустошаем вложенную папку
+    if (SD.rmdir(childDirs[i])) dirs++;  // затем удаляем её саму
+  }
 }
 
 #define PWM_FREQ      5000
@@ -589,7 +644,14 @@ void setup() {
     json += "\"device_label\":\"" + device_label + "\",";
     json += "\"ap_ssid\":\"" + ap_ssid + "\",";
     json += "\"ap_pass\":\"" + ap_pass + "\",";
-    json += "\"rtc_time\":\"" + String(buf) + "\"";
+    json += "\"rtc_time\":\"" + String(buf) + "\",";
+
+    uint64_t sdTotal = SD.totalBytes();
+    uint64_t sdUsed  = SD.usedBytes();
+    uint64_t sdFree  = (sdTotal > sdUsed) ? (sdTotal - sdUsed) : 0;
+    json += "\"sdTotal\":" + u64str(sdTotal) + ",";
+    json += "\"sdUsed\":"  + u64str(sdUsed)  + ",";
+    json += "\"sdFree\":"  + u64str(sdFree);
     json += "}";
     request->send(200, "application/json", json);
   });
@@ -731,6 +793,49 @@ void setup() {
       } else {
         request->send(200, "text/plain", "timestamp;temp;hum;led;fan1;fan2\n");
       }
+  });
+
+  // Список последних файлов в корне SD (для вкладки "Общее" на странице настроек)
+  server.on("/api/files", HTTP_GET, [](AsyncWebServerRequest *request){
+    std::vector<String> names;
+    std::vector<uint32_t> sizes;
+
+    File root = SD.open("/");
+    if (root && root.isDirectory()) {
+      File entry = root.openNextFile();
+      while (entry) {
+        if (!entry.isDirectory()) {
+          String n = String(entry.name());
+          int slash = n.lastIndexOf('/');
+          if (slash >= 0) n = n.substring(slash + 1); // только имя, без пути
+          names.push_back(n);
+          sizes.push_back((uint32_t)entry.size());
+        }
+        entry.close();
+        entry = root.openNextFile();
+      }
+      root.close();
+    }
+
+    // Файлы датированы YYYY-MM-DD.csv — идут по возрастанию, значит "последние" = конец списка
+    int total = names.size();
+    int start = total > 10 ? total - 10 : 0;
+
+    String json = "{\"total\":" + String(total) + ",\"files\":[";
+    for (int i = start; i < total; i++) {
+      if (i > start) json += ",";
+      json += "{\"name\":\"" + jsonEscape(names[i].c_str()) + "\",\"size\":" + String(sizes[i]) + "}";
+    }
+    json += "]}";
+    request->send(200, "application/json", json);
+  });
+
+  // Полное удаление ВСЕГО содержимого SD-карты (любые файлы и вложенные папки)
+  server.on("/api/clearlogs", HTTP_GET, [](AsyncWebServerRequest *request){
+    int files = 0, dirs = 0;
+    wipePath("/", files, dirs);
+    logPrintln("Полная очистка SD: файлов " + String(files) + ", папок " + String(dirs));
+    request->send(200, "text/plain", "OK");
   });
 
   server.begin();

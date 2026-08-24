@@ -52,6 +52,23 @@
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
             </div>
+
+            <div class="form-section">
+                <h3>Обслуживание SD-карты</h3>
+                <div class="status-row"><span>Занято:</span><span id="sd-status" class="status-badge">Запрос...</span></div>
+                <div class="status-row"><span>Свободно:</span><strong id="sd-free">--</strong></div>
+                <div class="sd-bar"><div id="sd-bar-fill" class="sd-bar-fill"></div></div>
+                <button type="button" class="btn-action btn-danger" style="margin-top: 15px;" onclick="clearSDLogs()">Очистить все накопленные логи</button>
+            </div>
+
+            <div class="form-section">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">Файлы на SD-карте</h3>
+                    <button type="button" class="btn-action" onclick="loadSdFiles()">Обновить</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Последние 10 файлов в корне карты (для проверки логирования).</div>
+                <div id="sd-files-list" class="sd-files">Запрос...</div>
+            </div>
         </div>
 
         <!-- КЛИМАТ -->
