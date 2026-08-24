@@ -196,7 +196,12 @@
                             <input type="number" min="1" max="3600" id="watering_duration" name="watering_duration" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn-action btn-sync">Сохранить настройки полива</button>
+                    <label style="display: flex; align-items: center; gap: 8px; margin-top: 15px; cursor: pointer;">
+                        <input type="checkbox" id="water_sensor_checkbox">
+                        Учитывать датчик уровня воды (не поливать/прервать полив, если воды в баке нет)
+                    </label>
+                    <input type="hidden" id="water_sensor_enabled" name="water_sensor_enabled" value="0">
+                    <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить настройки полива</button>
                 </form>
             </div>
         </div>

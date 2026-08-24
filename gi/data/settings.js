@@ -14,6 +14,12 @@ function unpackWateringDays(mask) {
     });
 }
 
+// Переносит состояние чекбокса "учитывать датчик воды" в скрытое поле перед отправкой формы —
+// та же схема, что и у дней недели полива
+function packWaterSensor() {
+    document.getElementById('water_sensor_enabled').value = document.getElementById('water_sensor_checkbox').checked ? '1' : '0';
+}
+
 // "6" / "0" -> "06:00", для подстановки в <input type="time">
 function formatTime(hour, minute) {
     return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
@@ -133,6 +139,7 @@ async function loadCurrentSettings() {
         document.getElementById('watering_minute').value = data.watering_minute;
         document.getElementById('watering_duration').value = data.watering_duration;
         unpackWateringDays(data.watering_days);
+        document.getElementById('water_sensor_checkbox').checked = !!data.water_sensor_enabled;
         document.getElementById('heater_mode').value = data.heater_mode;
         document.getElementById('temp_target_night').value = data.temp_target_night;
 
@@ -178,6 +185,7 @@ window.onload = () => {
     setCurrentTime();
     loadCurrentSettings();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
+    document.getElementById('watering-form').addEventListener('submit', packWaterSensor);
     document.getElementById('light-form').addEventListener('submit', packLedTimes);
     initTabs();
     showServerErrors();

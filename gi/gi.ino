@@ -38,6 +38,7 @@ String ap_pass;   // Пароль локальной точки доступа (
 #define HEATER_PIN    27 // реле обогревателя — при необходимости смени на свободный GPIO
 #define I2C_SDA_PIN   21 // Стандартные пины I2C для ESP32 (то, что использует Wire.begin() без аргументов)
 #define I2C_SCL_PIN   22
+#define WATER_LEVEL_PIN 32 // Датчик уровня воды в баке (свободный GPIO, не занят другой периферией)
 
 // --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/log) ---
 #define LOG_BUFFER_SIZE 4096
@@ -122,6 +123,7 @@ uint8_t watering_days = 0;        // битовая маска: бит0=Пн, б
 int watering_hour = 8;
 int watering_minute = 0;
 int watering_duration_sec = 30;
+bool water_sensor_enabled = false; // Учитывать ли датчик уровня воды перед стартом/во время полива
 
 // --- Состояние насоса ---
 bool pump_active = false;
@@ -332,6 +334,13 @@ void recoverI2CBus() {
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
 }
 
+// Читает датчик уровня воды. Предполагаемая схема: пин подтянут к VCC (INPUT_PULLUP),
+// датчик замыкает его на GND, когда вода есть — LOW = "вода в норме", HIGH = "воды нет".
+// Если у конкретного датчика логика обратная — поменяй местами LOW/HIGH здесь, в одном месте.
+bool isWaterAvailable() {
+  return digitalRead(WATER_LEVEL_PIN) == LOW;
+}
+
 DateTime getSafeDateTime() {
   if (rtc_online) {
     DateTime now = rtc.now();
@@ -416,6 +425,7 @@ void loadAllSettingsFromNVS() {
   watering_hour = preferences.getInt("watering_hour", 8);
   watering_minute = preferences.getInt("watering_minute", 0);
   watering_duration_sec = preferences.getInt("watering_dur", 30);
+  water_sensor_enabled = preferences.getBool("water_sensor", false);
   heater_mode = preferences.getInt("heater_mode", 2);
 
   wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
@@ -493,6 +503,10 @@ void setup() {
   pinMode(HEATER_PIN, OUTPUT);
   digitalWrite(HEATER_PIN, LOW); // обогреватель выключен при старте
 
+  // Датчик уровня воды: подтяжка к VCC, замыкание на GND = "вода есть".
+  // Если у твоего датчика логика обратная (замыкание = "воды нет") — поменяй LOW на HIGH в isWaterAvailable().
+  pinMode(WATER_LEVEL_PIN, INPUT_PULLUP);
+
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ap_ssid.c_str(), ap_pass.length() > 0 ? ap_pass.c_str() : NULL);
 
@@ -567,6 +581,7 @@ void setup() {
     json += "\"watering_hour\":" + String(watering_hour) + ",";
     json += "\"watering_minute\":" + String(watering_minute) + ",";
     json += "\"watering_duration\":" + String(watering_duration_sec) + ",";
+    json += "\"water_sensor_enabled\":" + String(water_sensor_enabled ? "true" : "false") + ",";
     json += "\"heater_mode\":" + String(heater_mode) + ",";
     json += "\"wifi_ssid\":\"" + wifi_ssid + "\",";
     json += "\"wifi_pass\":\"" + wifi_pass + "\",";
@@ -619,6 +634,7 @@ void setup() {
     if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", clampInt(request->getParam("watering_hour", true)->value().toInt(), 0, 23));
     if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", clampInt(request->getParam("watering_minute", true)->value().toInt(), 0, 59));
     if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", clampInt(request->getParam("watering_duration", true)->value().toInt(), 1, 3600));
+    if (request->hasParam("water_sensor_enabled", true)) preferences.putBool("water_sensor", request->getParam("water_sensor_enabled", true)->value() == "1");
     if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", clampInt(request->getParam("heater_mode", true)->value().toInt(), 0, 3));
     if (request->hasParam("temp_target_night", true)) preferences.putFloat("temp_night", clampFloat(request->getParam("temp_target_night", true)->value().toFloat(), 0.0, 50.0));
 
@@ -933,17 +949,30 @@ void loop() {
     int iso_dow = (rtc_dow == 0) ? 6 : rtc_dow - 1;
     uint32_t today_code = now_w.unixtime() / 86400;
 
+    // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
+    bool water_ok = !water_sensor_enabled || isWaterAvailable();
+
     if (!pump_active) {
       bool day_enabled = (watering_days >> iso_dow) & 0x01;
       if (day_enabled && now_w.hour() == watering_hour && now_w.minute() == watering_minute && last_watering_day != today_code) {
-        pump_active = true;
-        pump_start_time = now_w.unixtime();
-        last_watering_day = today_code;
-        digitalWrite(PUMP_PIN, HIGH);
-        logPrintln("[ПОЛИВ] Старт автополива");
+        if (water_ok) {
+          pump_active = true;
+          pump_start_time = now_w.unixtime();
+          last_watering_day = today_code;
+          digitalWrite(PUMP_PIN, HIGH);
+          logPrintln("[ПОЛИВ] Старт автополива");
+        } else {
+          last_watering_day = today_code; // Не пробуем каждую секунду до конца минуты — ждём до завтра
+          logPrintln("[ПОЛИВ] Пропущен: датчик не видит воду в баке");
+        }
       }
     } else {
-      if (now_w.unixtime() - pump_start_time >= (uint32_t)watering_duration_sec) {
+      if (!water_ok) {
+        // Аварийная остановка: вода закончилась прямо во время полива — не гоняем насос всухую
+        pump_active = false;
+        digitalWrite(PUMP_PIN, LOW);
+        logPrintln("[ПОЛИВ] Аварийная остановка: вода закончилась во время полива");
+      } else if (now_w.unixtime() - pump_start_time >= (uint32_t)watering_duration_sec) {
         pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
         logPrintln("[ПОЛИВ] Полив завершён");
