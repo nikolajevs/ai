@@ -1,0 +1,16 @@
+# Сборка Arduino IDE / arduino-cli
+build/
+*.bin
+*.elf
+*.map
+*.hex
+
+# Локальные настройки редакторов
+.vscode/
+.idea/
+.pio/
+*.code-workspace
+
+# Системный мусор
+.DS_Store
+Thumbs.db

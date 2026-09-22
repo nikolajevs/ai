@@ -35,6 +35,29 @@ function packLedTimes() {
     document.getElementById('led_off_minute').value = offMinute;
 }
 
+// Плата больше не отдаёт пароли и токен наружу — в поле показываем только факт,
+// что значение задано. Пустое поле при сохранении означает "оставить как есть".
+function setSecretPlaceholder(id, isSet) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = '';
+    el.placeholder = isSet ? '•••••••• сохранено, пусто = не менять' : 'не задано';
+}
+
+// Галочка "сеть без пароля" — единственный способ стереть сохранённый пароль,
+// раз пустое поле теперь означает "не менять"
+function attachClearPassToggles() {
+    [['ap_pass_clear', 'ap_pass'], ['wifi_pass_clear', 'wifi_pass']].forEach(([cbId, inputId]) => {
+        const cb = document.getElementById(cbId);
+        const input = document.getElementById(inputId);
+        if (!cb || !input) return;
+        cb.addEventListener('change', () => {
+            input.disabled = cb.checked;
+            if (cb.checked) input.value = '';
+        });
+    });
+}
+
 function togglePasswordField(id) {
     const el = document.getElementById(id);
     el.type = (el.type === 'password') ? 'text' : 'password';
@@ -51,6 +74,9 @@ function showServerErrors() {
     if (errors.includes('wifi')) {
         document.getElementById('wifi-error-banner').style.display = 'block';
         document.querySelector('[data-tab="tab-network"]').click();
+    }
+    if (errors.includes('time')) {
+        document.getElementById('time-error-banner').style.display = 'block';
     }
     if (errors.length) {
         // Убираем ?error=... из адресной строки, чтобы баннер не всплывал повторно при обновлении страницы
@@ -144,11 +170,11 @@ async function loadCurrentSettings() {
         document.getElementById('temp_target_night').value = data.temp_target_night;
 
         document.getElementById('wifi_ssid').value = data.wifi_ssid;
-        document.getElementById('wifi_pass').value = data.wifi_pass;
-        document.getElementById('ubidots_token').value = data.ubidots_token;
         document.getElementById('device_label').value = data.device_label;
         document.getElementById('ap_ssid').value = data.ap_ssid;
-        document.getElementById('ap_pass').value = data.ap_pass;
+        setSecretPlaceholder('wifi_pass', data.wifi_pass_set);
+        setSecretPlaceholder('ubidots_token', data.ubidots_token_set);
+        setSecretPlaceholder('ap_pass', data.ap_pass_set);
         
         if (data.start_time > 0) {
             const d = new Date(data.start_time * 1000);
@@ -209,7 +235,8 @@ function loadSdFiles() {
 
 function clearSDLogs() {
     if (!confirm("Уничтожить весь лог истории климата на SD-карте? Действие необратимо.")) return;
-    fetch('/api/clearlogs').then(res => {
+    // Именно POST: GET-версию этого запроса можно было вызвать со стороннней страницы
+    fetch('/api/clearlogs', { method: 'POST' }).then(res => {
         if (res.ok) {
             alert("Удалено");
             loadCurrentSettings(); // Перечитываем занятость SD и обновляем прогресс-бар
@@ -247,6 +274,7 @@ window.onload = () => {
     attachMinMaxValidation('light-form', 'led_min_limit', 'led_max_limit', 'light-error-banner', 'Мощность лампы (мин/макс)');
     attachMinMaxValidation('fans-night-form', 'fan_night_min_limit', 'fan_night_max_limit', 'fans-night-error-banner', 'Ночная вентиляция (мин/макс)');
     attachWifiValidation();
+    attachClearPassToggles();
 
     // Форма "Лимиты вентиляторов" содержит сразу 2 пары мин/макс (вентилятор 1 и 2) — проверяем обе одним обработчиком
     document.getElementById('fans-limits-form').addEventListener('submit', (e) => {

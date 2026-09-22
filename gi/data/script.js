@@ -4,9 +4,17 @@ let chartViewBox = { width: 1000, height: 400 };
 
 let lastConsoleLength = -1;
 
+// Флаги "запрос в полёте": на медленной точке доступа опрос раз в 3 секунды успевал
+// накопить очередь из десятков незавершённых запросов к плате
+let consoleInFlight = false;
+let statusInFlight = false;
+
 async function updateConsole() {
+    if (consoleInFlight || document.hidden) return;
+    consoleInFlight = true;
     try {
         const res = await fetch('/api/console');
+        if (!res.ok) return;
         const text = await res.text();
         if (text.length === lastConsoleLength) return; // Ничего нового — не дёргаем DOM зря
         lastConsoleLength = text.length;
@@ -23,12 +31,18 @@ async function updateConsole() {
         }
     } catch (e) {
         // Тихо игнорируем — не хотим спамить ошибками поверх самой консоли логов
+    } finally {
+        consoleInFlight = false;
     }
 }
 
 async function updateStatus() {
+    if (statusInFlight || document.hidden) return;
+    statusInFlight = true;
     try {
         const res = await fetch('/api/status');
+        // 503 — плата не успела отдать когерентный снимок состояния; просто пропускаем тик
+        if (!res.ok) return;
         const data = await res.json();
         if (data.sht_online) {
             document.getElementById('t-val').innerHTML = data.temp.toFixed(1) + '<span class="unit">°C</span>';
@@ -90,14 +104,18 @@ async function updateStatus() {
         } else {
             cycleEl.className = "status-badge night-badge";
         }
-    } catch (e) { console.error("Ошибка API:", e); }
+    } catch (e) {
+        console.error("Ошибка API:", e);
+    } finally {
+        statusInFlight = false;
+    }
 }
 
 async function drawSvgChart() {
     if (!currentSelectedDate) return;
     try {
         // Запрашиваем конкретный файл лога через API
-        const res = await fetch(`/api/log?date=${currentSelectedDate}`);
+        const res = await fetch(`/api/log?date=${encodeURIComponent(currentSelectedDate)}`);
         const text = await res.text();
         const lines = text.trim().split('\n');
         
