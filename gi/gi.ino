@@ -1,6 +1,7 @@
 #include <esp_task_wdt.h>
 #include <Arduino.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <SD.h>
@@ -24,13 +25,6 @@
 #define DEFAULT_AP_SSID       "KiReal"
 #define DEFAULT_AP_PASS       "420420420"
 
-String wifi_ssid;
-String wifi_pass;
-String ubidots_token;
-String device_label;
-String ap_ssid;   // Имя локальной точки доступа (Wi-Fi, к которой подключается телефон/ноутбук)
-String ap_pass;   // Пароль локальной точки доступа (пусто = открытая сеть, иначе >= 8 символов)
-
 // --- Распиновка периферии ---
 #define SD_CS_PIN     5
 #define LED_PWM_PIN   4
@@ -42,7 +36,115 @@ String ap_pass;   // Пароль локальной точки доступа (
 #define I2C_SCL_PIN   22
 #define WATER_LEVEL_PIN 32 // Датчик уровня воды в баке (свободный GPIO, не занят другой периферией)
 
-// --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/log) ---
+#define PWM_FREQ      5000
+#define PWM_RES       8
+
+// --- Ограничения длины строковых настроек ---
+#define WIFI_SSID_MAX 32   // стандарт 802.11
+#define WIFI_PASS_MAX 63   // WPA2
+#define TOKEN_MAX     128
+#define LABEL_MAX     64
+
+// =====================================================================================
+// ДАННЫЕ ПРОШИВКИ: НАСТРОЙКИ И СОСТОЯНИЕ
+// =====================================================================================
+// Раньше это были ~50 отдельных глобальных переменных, которые три задачи на двух ядрах
+// (loop, веб-сервер, Ubidots) читали и писали кто как, — отсюда была большая часть гонок.
+// Теперь правило одно:
+//   * Settings — то, что задал пользователь. Меняет только обработчик /save-settings:
+//     разбирает форму в свою копию и публикует её целиком (publishSettings()).
+//     Все остальные работают со своей копией (settingsSnapshot()).
+//   * State — то, что происходит сейчас. Пишет только loop() в рабочую копию `state`
+//     и публикует её (publishState()); веб и Ubidots читают stateSnapshot().
+// Обе структуры — простые данные без String и указателей, поэтому копируются одним memcpy
+// под спинлоком: без аллокаций, без таймаутов и без 503 на ровном месте.
+//
+// Типы объявлены до первой функции файла намеренно: Arduino IDE вставляет свои
+// автоматические прототипы функций именно туда, и типы из их сигнатур должны быть известны.
+
+struct Settings {
+  // Климат
+  float temp_target;        // Целевая температура дня, °C (от неё считаются лампа и вентиляторы)
+  float temp_delta;         // Полуширина рабочего диапазона и гистерезис обогрева, °C
+  float temp_target_night;  // Цель обогревателя ночью, °C (гистерезис temp_delta общий)
+  float min_hum_night;      // Ночью ниже этой влажности вентиляторы держат минимум, %
+  float max_hum_night;      // ...а выше этой — максимум, %
+
+  // Свет
+  int led_on_hour, led_on_minute;
+  int led_off_hour, led_off_minute;
+  int led_min_limit, led_max_limit;              // Мощность лампы днём, %
+
+  // Вентиляция
+  int fan1_min_limit, fan1_max_limit;            // Днём, по температуре, %
+  int fan2_min_limit, fan2_max_limit;
+  int fan_night_min_limit, fan_night_max_limit;  // Ночью, обоими вентиляторами по влажности, %
+
+  // Обогрев: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
+  int heater_mode;
+
+  // Автополив
+  uint8_t watering_days;       // Битовая маска: бит0=Пн, бит1=Вт, ... бит6=Вс
+  int watering_hour, watering_minute;
+  int watering_duration_sec;
+  bool water_sensor_enabled;   // Учитывать ли датчик уровня воды перед стартом/во время полива
+
+  uint32_t start_timestamp;    // Начало цикла выращивания (unixtime), 0 = цикл не начат
+
+  // Сеть и облако
+  char wifi_ssid[WIFI_SSID_MAX + 1];
+  char wifi_pass[WIFI_PASS_MAX + 1];
+  char ubidots_token[TOKEN_MAX + 1];
+  char device_label[LABEL_MAX + 1];
+  char ap_ssid[WIFI_SSID_MAX + 1];   // Точка доступа платы — к ней подключается телефон/ноутбук
+  char ap_pass[WIFI_PASS_MAX + 1];   // Пусто = открытая сеть
+};
+
+struct State {
+  float temp;           // Последнее валидное показание SHT4x, °C
+  float hum;            // ...и влажности, %
+  int led_pwm;          // Текущий ШИМ, 0-255
+  int fan1_pwm;
+  int fan2_pwm;
+  bool is_day;
+  bool sht_online;
+  bool rtc_online;
+  bool pump_active;
+  bool heater_active;
+};
+
+// Описание одной настройки для таблицы SETTING_DEFS (см. ниже)
+enum SettingType : uint8_t { ST_FLOAT, ST_INT, ST_U8, ST_BOOL, ST_U32, ST_STRING };
+
+enum SettingFlags : uint8_t {
+  SF_SECRET  = 1 << 0,  // Наружу не отдаётся (только <param>_set), пустое поле формы = "не менять"
+  SF_TRIM    = 1 << 1,  // Обрезать пробелы по краям
+  SF_NO_FORM = 1 << 2,  // Из формы автоматически не разбирается (для поля есть особый обработчик)
+};
+
+struct SettingDef {
+  const char *param;     // Имя поля в форме и в JSON /api/settings
+  const char *nvsKey;    // Ключ в NVS (до 15 символов!) — исторически не везде совпадает с param
+  SettingType type;
+  uint16_t offset;       // Где поле лежит внутри Settings
+  uint16_t size;         // Его размер (для строк — размер буфера)
+  float lo, hi;          // Числа: диапазон клэмпа. Строки: допустимая длина непустого значения
+  float def;             // Значение по умолчанию для чисел
+  const char *defStr;    // ...и для строк
+  uint8_t flags;
+  const char *errGroup;  // Строки: какой баннер ошибки показать на странице, если значение отклонено
+};
+
+// Рабочая копия состояния. Трогает ТОЛЬКО loop() (и setup() до старта остальных задач)
+State state = {};
+
+// Опубликованные копии для остальных задач — доступ только через функции ниже
+static State stateShared = {};
+static portMUX_TYPE stateMux = portMUX_INITIALIZER_UNLOCKED;
+static Settings settingsShared = {};
+static portMUX_TYPE settingsMux = portMUX_INITIALIZER_UNLOCKED;
+
+// --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/console) ---
 #define LOG_BUFFER_SIZE 4096
 static char logBuffer[LOG_BUFFER_SIZE];
 static volatile size_t logHead = 0;
@@ -106,8 +208,8 @@ String getLogSnapshot() {
   return String(snapshotCopy);
 }
 
-// Экранирование строки для безопасной вставки в JSON (используется для имён файлов SD —
-// теоретически может содержать что угодно, в отличие от контролируемых нами полей настроек)
+// Экранирование строки для безопасной вставки в JSON: имена файлов SD, а также SSID,
+// имя устройства и прочее, что вводит пользователь (одна кавычка ломала разбор на странице)
 String jsonEscape(const char* s) {
   String out;
   for (int i = 0; s[i] != '\0'; i++) {
@@ -119,10 +221,6 @@ String jsonEscape(const char* s) {
   }
   return out;
 }
-
-// Та же защита для String: SSID, пароль AP и device_label вводит пользователь,
-// и одна кавычка внутри ломала разбор JSON на странице настроек.
-String jsonEscape(const String &s) { return jsonEscape(s.c_str()); }
 
 // uint64_t -> String: обычный String(uint64_t) в Arduino не поддерживается,
 // а SD.totalBytes()/usedBytes() возвращают именно uint64_t
@@ -166,91 +264,18 @@ int clearCsvLogs() {
   return removed;
 }
 
-#define PWM_FREQ      5000
-#define PWM_RES       8
-
-// --- Значения по умолчанию для настроек (единый источник правды) ---
-// Используются и при объявлении переменных, и как fallback в loadAllSettingsFromNVS().
-// Раньше два списка расходились: led_off_hour был 23 в объявлении и 18 в NVS, heater_mode — 3 и 2.
-#define DEF_TEMP_TARGET       25.0f
-#define DEF_TEMP_DELTA        2.0f
-#define DEF_TEMP_NIGHT        20.0f
-#define DEF_MAX_HUM_NIGHT     60.0f
-#define DEF_MIN_HUM_NIGHT     40.0f
-#define DEF_LED_ON_HOUR       6
-#define DEF_LED_OFF_HOUR      18
-#define DEF_LED_ON_MINUTE     0
-#define DEF_LED_OFF_MINUTE    0
-#define DEF_FAN_MIN_LIMIT     20
-#define DEF_FAN_MAX_LIMIT     100
-#define DEF_LED_MIN_LIMIT     10
-#define DEF_LED_MAX_LIMIT     100
-#define DEF_FAN_NIGHT_MIN     30
-#define DEF_FAN_NIGHT_MAX     100
-#define DEF_WATERING_DAYS     0
-#define DEF_WATERING_HOUR     8
-#define DEF_WATERING_MINUTE   0
-#define DEF_WATERING_DUR_SEC  30
-#define DEF_WATER_SENSOR      false
-#define DEF_HEATER_MODE       2
-
-// --- Переменные параметров климата и автоматизации ---
-float temp_target = DEF_TEMP_TARGET;
-float temp_delta = DEF_TEMP_DELTA;
-float temp_target_night = DEF_TEMP_NIGHT;  // Целевая температура для обогревателя ночью (гистерезис temp_delta общий)
-float max_hum_night = DEF_MAX_HUM_NIGHT;
-
-int led_on_hour = DEF_LED_ON_HOUR;
-int led_off_hour = DEF_LED_OFF_HOUR;
-int led_on_minute = DEF_LED_ON_MINUTE;
-int led_off_minute = DEF_LED_OFF_MINUTE;
-int fan1_min_limit = DEF_FAN_MIN_LIMIT;
-int fan1_max_limit = DEF_FAN_MAX_LIMIT;
-int fan2_min_limit = DEF_FAN_MIN_LIMIT;
-int fan2_max_limit = DEF_FAN_MAX_LIMIT;
-int led_min_limit = DEF_LED_MIN_LIMIT;
-int led_max_limit = DEF_LED_MAX_LIMIT;
-int fan_night_min_limit = DEF_FAN_NIGHT_MIN;  // Ночной минимум скорости обоих вентиляторов, % (при низкой влажности)
-int fan_night_max_limit = DEF_FAN_NIGHT_MAX;  // Ночной максимум скорости обоих вентиляторов, % (при высокой влажности)
-float min_hum_night = DEF_MIN_HUM_NIGHT;  // Влажность, ниже которой ночью вентиляторы держат минимум (верхняя граница — max_hum_night)
-uint32_t start_timestamp = 0; 
-
-// --- Настройки автополива ---
-uint8_t watering_days = DEF_WATERING_DAYS;  // битовая маска: бит0=Пн, бит1=Вт, ... бит6=Вс
-int watering_hour = DEF_WATERING_HOUR;
-int watering_minute = DEF_WATERING_MINUTE;
-int watering_duration_sec = DEF_WATERING_DUR_SEC;
-bool water_sensor_enabled = DEF_WATER_SENSOR;  // Учитывать ли датчик уровня воды перед стартом/во время полива
-
-// --- Состояние насоса ---
-bool pump_active = false;
+// --- Внутреннее состояние loop(): никто, кроме loop() и setup(), эти переменные не трогает ---
 unsigned long pump_start_ms = 0;   // Отсчёт длительности полива по millis(), а не по RTC
-uint32_t last_watering_day = 0;   // защита от повторного срабатывания в ту же минуту
+uint32_t last_watering_day = 0;    // Защита от повторного срабатывания в тот же день (хранится в NVS)
 
-// --- Настройки обогрева ---
-// heater_mode: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
-int heater_mode = DEF_HEATER_MODE;
-bool heater_active = false;
-
-// --- Глобальные переменные состояния системы ---
-float current_temp = 0.0;
-float current_hum = 0.0;
-int current_led_pwm = 255;
-int current_fan1_pwm = 51; 
-int current_fan2_pwm = 51; 
-bool is_day = true;
-
-// --- Статус здоровья периферии (Самодиагностика) ---
-bool sht_online = true;
-unsigned long last_sht_retry = 0;               // Когда последний раз пытались восстановить датчик
+unsigned long last_sht_retry = 0;                  // Когда последний раз пытались восстановить датчик
 const unsigned long SHT_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
-int sht_recovery_streak = 0;                     // Счётчик подряд успешных попыток восстановления
-const int SHT_RECOVERY_STREAK_NEEDED = 3;        // Сколько подряд удачных попыток нужно, чтобы снова доверять датчику
-bool rtc_online = true;
-unsigned long last_rtc_retry = 0;                // Когда последний раз пытались восстановить RTC
+int sht_recovery_streak = 0;                       // Счётчик подряд успешных попыток восстановления
+const int SHT_RECOVERY_STREAK_NEEDED = 3;          // Сколько подряд удачных попыток нужно, чтобы снова доверять датчику
+unsigned long last_rtc_retry = 0;                  // Когда последний раз пытались восстановить RTC
 const unsigned long RTC_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
-int rtc_recovery_streak = 0;                     // Счётчик подряд успешных попыток восстановления
-const int RTC_RECOVERY_STREAK_NEEDED = 3;        // Сколько подряд удачных попыток нужно, чтобы снова доверять RTC
+int rtc_recovery_streak = 0;                       // Счётчик подряд успешных попыток восстановления
+const int RTC_RECOVERY_STREAK_NEEDED = 3;          // Сколько подряд удачных попыток нужно, чтобы снова доверять RTC
 
 // Переменные для программного дублирования времени (на случай отказа RTC)
 uint32_t backup_unixtime = 1774838400; // Дефолтный 2026 год, если RTC умер сразу при старте
@@ -264,7 +289,6 @@ volatile uint32_t pending_time_set = 0; // Запрос "выставить ча
 
 // --- Хендлы FreeRTOS для многоядерности ---
 TaskHandle_t UbidotsTaskHandle = NULL;
-SemaphoreHandle_t xMutex = NULL; 
 
 // --- Инициализация объектов ---
 Adafruit_SHT4x sht40 = Adafruit_SHT4x();
@@ -283,26 +307,6 @@ float clampFloat(float v, float lo, float hi) {
   if (v < lo) return lo;
   if (v > hi) return hi;
   return v;
-}
-
-// SSID точки доступа: 1-32 символа (ограничение стандарта 802.11)
-bool isValidApSsid(const String &s) {
-  return s.length() >= 1 && s.length() <= 32;
-}
-
-// Пароль точки доступа: пусто (открытая сеть) или 8-63 символа (требование WPA2)
-bool isValidApPass(const String &p) {
-  return p.length() == 0 || (p.length() >= 8 && p.length() <= 63);
-}
-
-// SSID роутера (STA): можно оставить пустым (означает "не подключаться"), максимум 32 символа
-bool isValidStaSsid(const String &s) {
-  return s.length() <= 32;
-}
-
-// Пароль роутера (STA): пусто (открытая сеть) или 8-63 символа (требование WPA2)
-bool isValidStaPass(const String &p) {
-  return p.length() == 0 || (p.length() >= 8 && p.length() <= 63);
 }
 
 // "YYYY-MM-DD" -> компоненты. Раньше даты брались из формы как есть: короткая или
@@ -343,71 +347,334 @@ bool isValidLogDate(const String &str) {
   return str.length() == 10 && parseDate(str, y, m, d);
 }
 
-// Подстраховка на случай, если пришли "перевёрнутые" границы (min > max) —
-// меняем местами, чтобы устройство не осталось с невозможным диапазоном.
-void clampPairInt(Preferences &prefs, const char *keyMin, const char *keyMax, int a, int b, int lo, int hi) {
-  int vMin = clampInt(a, lo, hi);
-  int vMax = clampInt(b, lo, hi);
-  if (vMin > vMax) { int t = vMin; vMin = vMax; vMax = t; }
-  prefs.putInt(keyMin, vMin);
-  prefs.putInt(keyMax, vMax);
+// =====================================================================================
+// ОБМЕН ДАННЫМИ МЕЖДУ ЗАДАЧАМИ
+// =====================================================================================
+// Спинлок, а не мьютекс: под ним только memcpy (~40 байт State, ~500 байт Settings —
+// единицы микросекунд), поэтому захват не может "не успеть", и читателям не нужен
+// запасной путь на случай таймаута.
+
+State stateSnapshot() {
+  State s;
+  portENTER_CRITICAL(&stateMux);
+  memcpy(&s, &stateShared, sizeof(State));
+  portEXIT_CRITICAL(&stateMux);
+  return s;
 }
 
-void clampPairFloat(Preferences &prefs, const char *keyMin, const char *keyMax, float a, float b, float lo, float hi) {
-  float vMin = clampFloat(a, lo, hi);
-  float vMax = clampFloat(b, lo, hi);
-  if (vMin > vMax) { float t = vMin; vMin = vMax; vMax = t; }
-  prefs.putFloat(keyMin, vMin);
-  prefs.putFloat(keyMax, vMax);
+// Публикует рабочую копию loop() для остальных задач, если она изменилась. Вызывается
+// в конце каждой итерации loop(): сравнить 40 байт дешевле, чем помнить, где именно
+// состояние поменялось. Читать stateShared без спинлока здесь можно — кроме этой
+// функции, его никто не пишет.
+void publishState() {
+  if (memcmp(&state, &stateShared, sizeof(State)) == 0) return;
+  portENTER_CRITICAL(&stateMux);
+  memcpy(&stateShared, &state, sizeof(State));
+  portEXIT_CRITICAL(&stateMux);
 }
 
-struct ClimateData {
-  float temp;
-  float hum;
-  int led;
-  int fan1;
-  int fan2;
-  bool sht_ok;
+Settings settingsSnapshot() {
+  Settings s;
+  portENTER_CRITICAL(&settingsMux);
+  memcpy(&s, &settingsShared, sizeof(Settings));
+  portEXIT_CRITICAL(&settingsMux);
+  return s;
+}
+
+void publishSettings(const Settings &s) {
+  portENTER_CRITICAL(&settingsMux);
+  memcpy(&settingsShared, &s, sizeof(Settings));
+  portEXIT_CRITICAL(&settingsMux);
+}
+
+// =====================================================================================
+// ТАБЛИЦА НАСТРОЕК
+// =====================================================================================
+// Единственное место, где описана каждая настройка: имя в форме/JSON, ключ NVS, диапазон
+// и значение по умолчанию. Из неё работают загрузка из NVS, разбор формы, сохранение и
+// выдача в /api/settings. Раньше каждое поле было выписано руками в трёх местах, и они
+// расходились (так "терялась" temp_target_night, так разъехались дефолты led_off_hour).
+//
+// Чтобы добавить настройку: поле в struct Settings + одна строка здесь. Всё.
+//
+// Ключи NVS менять нельзя: по ним уже прошитые платы читают сохранённые значения.
+
+// Проверка типов на этапе компиляции. Эти функции только объявлены и используются
+// исключительно внутри sizeof(), то есть никогда не вызываются. Если тип в строке таблицы
+// не совпадает с типом поля (скажем, SET_INT для uint8_t), сборка упадёт с ошибкой —
+// вместо того чтобы молча записать 4 байта в однобайтовое поле.
+char requireFloat(float *);
+char requireInt(int *);
+char requireU8(uint8_t *);
+char requireBool(bool *);
+char requireU32(uint32_t *);
+char requireChars(char *);
+
+#define S_PTR(field) (&((Settings *)0)->field)
+#define S_LOC(field) (uint16_t)offsetof(Settings, field), (uint16_t)sizeof(((Settings *)0)->field)
+
+#define SET_FLOAT(param, key, field, lo, hi, def) \
+  { param, key, ST_FLOAT, S_LOC(field) + 0 * sizeof(requireFloat(S_PTR(field))), lo, hi, def, nullptr, 0, nullptr }
+#define SET_INT(param, key, field, lo, hi, def) \
+  { param, key, ST_INT, S_LOC(field) + 0 * sizeof(requireInt(S_PTR(field))), lo, hi, def, nullptr, 0, nullptr }
+#define SET_U8(param, key, field, lo, hi, def) \
+  { param, key, ST_U8, S_LOC(field) + 0 * sizeof(requireU8(S_PTR(field))), lo, hi, def, nullptr, 0, nullptr }
+#define SET_BOOL(param, key, field, def) \
+  { param, key, ST_BOOL, S_LOC(field) + 0 * sizeof(requireBool(S_PTR(field))), 0, 1, (def) ? 1 : 0, nullptr, 0, nullptr }
+#define SET_U32_NOFORM(param, key, field) \
+  { param, key, ST_U32, S_LOC(field) + 0 * sizeof(requireU32(S_PTR(field))), 0, 0, 0, nullptr, SF_NO_FORM, nullptr }
+// Для строк заодно проверяется, что максимальная длина влезает в буфер поля
+#define SET_STR(param, key, field, minLen, maxLen, def, flags, errGroup) \
+  { param, key, ST_STRING, S_LOC(field) + 0 * sizeof(requireChars(((Settings *)0)->field)) \
+      + 0 * sizeof(char[(maxLen) < sizeof(((Settings *)0)->field) ? 1 : -1]), \
+    minLen, maxLen, 0, def, flags, errGroup }
+
+static const SettingDef SETTING_DEFS[] = {
+  //        param (форма/JSON)     ключ NVS           поле                   мин   макс   по умолч.
+  // --- Климат ---
+  SET_FLOAT("temp_target",         "temp_target",     temp_target,           0,    50,    25),
+  SET_FLOAT("temp_delta",          "temp_delta",      temp_delta,            0.1,  20,    2),
+  SET_FLOAT("temp_target_night",   "temp_night",      temp_target_night,     0,    50,    20),
+  SET_FLOAT("min_hum_night",       "min_hum_night",   min_hum_night,         0,    100,   40),
+  SET_FLOAT("max_hum_night",       "max_hum_night",   max_hum_night,         0,    100,   60),
+  // --- Свет ---
+  SET_INT  ("led_on_hour",         "led_on_hour",     led_on_hour,           0,    23,    6),
+  SET_INT  ("led_on_minute",       "led_on_minute",   led_on_minute,         0,    59,    0),
+  SET_INT  ("led_off_hour",        "led_off_hour",    led_off_hour,          0,    23,    18),
+  SET_INT  ("led_off_minute",      "led_off_minute",  led_off_minute,        0,    59,    0),
+  SET_INT  ("led_min_limit",       "led_min_limit",   led_min_limit,         0,    100,   10),
+  SET_INT  ("led_max_limit",       "led_max_limit",   led_max_limit,         0,    100,   100),
+  // --- Вентиляция ---
+  SET_INT  ("fan1_min_limit",      "fan1_min_limit",  fan1_min_limit,        0,    100,   20),
+  SET_INT  ("fan1_max_limit",      "fan1_max_limit",  fan1_max_limit,        0,    100,   100),
+  SET_INT  ("fan2_min_limit",      "fan2_min_limit",  fan2_min_limit,        0,    100,   20),
+  SET_INT  ("fan2_max_limit",      "fan2_max_limit",  fan2_max_limit,        0,    100,   100),
+  SET_INT  ("fan_night_min_limit", "fan_night_min",   fan_night_min_limit,   0,    100,   30),
+  SET_INT  ("fan_night_max_limit", "fan_night_max",   fan_night_max_limit,   0,    100,   100),
+  // --- Обогрев ---
+  SET_INT  ("heater_mode",         "heater_mode",     heater_mode,           0,    3,     2),
+  // --- Автополив ---
+  SET_U8   ("watering_days",       "watering_days",   watering_days,         0,    127,   0),
+  SET_INT  ("watering_hour",       "watering_hour",   watering_hour,         0,    23,    8),
+  SET_INT  ("watering_minute",     "watering_minute", watering_minute,       0,    59,    0),
+  SET_INT  ("watering_duration",   "watering_dur",    watering_duration_sec, 1,    3600,  30),
+  SET_BOOL ("water_sensor_enabled","water_sensor",    water_sensor_enabled,               false),
+  // --- Цикл выращивания: из формы приходит строкой start_date, разбирается в /save-settings ---
+  SET_U32_NOFORM("start_time",     "start_time",      start_timestamp),
+  // --- Сеть и облако. Мин./макс. — допустимая длина непустого значения ---
+  //        param                  ключ NVS           поле            мин  макс            по умолч.              флаги                баннер
+  SET_STR  ("wifi_ssid",           "wifi_ssid",       wifi_ssid,      0,   WIFI_SSID_MAX,  DEFAULT_WIFI_SSID,     SF_TRIM,             "wifi"),
+  SET_STR  ("wifi_pass",           "wifi_pass",       wifi_pass,      8,   WIFI_PASS_MAX,  DEFAULT_WIFI_PASS,     SF_SECRET,           "wifi"),
+  SET_STR  ("ubidots_token",       "ubidots_token",   ubidots_token,  1,   TOKEN_MAX,      DEFAULT_UBIDOTS_TOKEN, SF_SECRET | SF_TRIM, nullptr),
+  SET_STR  ("device_label",        "device_label",    device_label,   0,   LABEL_MAX,      DEFAULT_DEVICE_LABEL,  SF_TRIM,             nullptr),
+  SET_STR  ("ap_ssid",             "ap_ssid",         ap_ssid,        1,   WIFI_SSID_MAX,  DEFAULT_AP_SSID,       SF_TRIM,             "ap"),
+  SET_STR  ("ap_pass",             "ap_pass",         ap_pass,        8,   WIFI_PASS_MAX,  DEFAULT_AP_PASS,       SF_SECRET,           "ap"),
 };
+static const size_t SETTING_DEFS_COUNT = sizeof(SETTING_DEFS) / sizeof(SETTING_DEFS[0]);
+
+uint8_t *fieldAddr(Settings &s, const SettingDef &d) {
+  return (uint8_t *)&s + d.offset;
+}
+
+const uint8_t *fieldAddr(const Settings &s, const SettingDef &d) {
+  return (const uint8_t *)&s + d.offset;
+}
+
+// Допустима ли строка. Пустая — только если это разрешено (мин. длина 0) или это секрет:
+// пустой пароль = открытая сеть, пустой токен = телеметрия выключена.
+bool settingStringValid(const SettingDef &d, const char *v) {
+  size_t len = strlen(v);
+  if (len == 0) return d.lo == 0 || (d.flags & SF_SECRET);
+  return len >= (size_t)d.lo && len <= (size_t)d.hi;
+}
+
+void orderRange(int &lo, int &hi) {
+  if (lo > hi) { int t = lo; lo = hi; hi = t; }
+}
+
+void orderRange(float &lo, float &hi) {
+  if (lo > hi) { float t = lo; lo = hi; hi = t; }
+}
+
+// Подстраховка от "перевёрнутых" границ (min > max): меняем местами, чтобы устройство
+// не осталось с невозможным диапазоном. Срабатывает и на форму, и на испорченный NVS.
+void normalizeRanges(Settings &s) {
+  orderRange(s.led_min_limit, s.led_max_limit);
+  orderRange(s.fan1_min_limit, s.fan1_max_limit);
+  orderRange(s.fan2_min_limit, s.fan2_max_limit);
+  orderRange(s.fan_night_min_limit, s.fan_night_max_limit);
+  orderRange(s.min_hum_night, s.max_hum_night);
+}
+
+// Загрузка всех настроек из NVS. Числа клэмпятся и здесь — на случай испорченных
+// значений; строки недопустимой длины откатываются на дефолт (раньше так защищалась
+// только точка доступа, чтобы не остаться без доступа к плате).
+void loadSettingsFromNVS(Settings &s) {
+  memset(&s, 0, sizeof(Settings));
+  for (size_t i = 0; i < SETTING_DEFS_COUNT; i++) {
+    const SettingDef &d = SETTING_DEFS[i];
+    uint8_t *p = fieldAddr(s, d);
+    switch (d.type) {
+      case ST_FLOAT:
+        *(float *)p = clampFloat(preferences.getFloat(d.nvsKey, d.def), d.lo, d.hi);
+        break;
+      case ST_INT:
+        *(int *)p = clampInt(preferences.getInt(d.nvsKey, (int)d.def), (int)d.lo, (int)d.hi);
+        break;
+      case ST_U8:
+        *(uint8_t *)p = (uint8_t)clampInt(preferences.getUChar(d.nvsKey, (uint8_t)d.def), (int)d.lo, (int)d.hi);
+        break;
+      case ST_BOOL:
+        *(bool *)p = preferences.getBool(d.nvsKey, d.def != 0);
+        break;
+      case ST_U32:
+        *(uint32_t *)p = preferences.getUInt(d.nvsKey, (uint32_t)d.def);
+        break;
+      case ST_STRING: {
+        String v = preferences.getString(d.nvsKey, d.defStr);
+        if (!settingStringValid(d, v.c_str())) v = d.defStr;
+        strlcpy((char *)p, v.c_str(), d.size);
+        break;
+      }
+    }
+  }
+  normalizeRanges(s);
+}
+
+// "ap,wifi" — без повторов, если в одной группе отклонено сразу несколько полей
+void addErrorGroup(String &list, const char *group) {
+  String padded = "," + list + ",";
+  if (padded.indexOf("," + String(group) + ",") >= 0) return;
+  if (list.length()) list += ",";
+  list += group;
+}
+
+// Применяет поля формы к копии настроек (значения клэмпятся в разумные пределы, даже если
+// запрос пришёл в обход веб-формы). Возвращает отклонённые группы через запятую — по ним
+// страница показывает баннеры ошибок.
+String applyFormToSettings(AsyncWebServerRequest *request, Settings &s) {
+  String rejected;
+  for (size_t i = 0; i < SETTING_DEFS_COUNT; i++) {
+    const SettingDef &d = SETTING_DEFS[i];
+    if (d.flags & SF_NO_FORM) continue;
+    uint8_t *p = fieldAddr(s, d);
+
+    if (d.type == ST_STRING && (d.flags & SF_SECRET)) {
+      // Пустое поле пароля = "оставить как есть" (форма его не подставляет). Стереть
+      // пароль можно только явно — галочкой <param>_clear ("сеть без пароля").
+      String clearParam = String(d.param) + "_clear";
+      if (request->hasParam(clearParam, true) && request->getParam(clearParam, true)->value() == "1") {
+        ((char *)p)[0] = '\0';
+        continue;
+      }
+    }
+
+    if (!request->hasParam(d.param, true)) continue;
+    String v = request->getParam(d.param, true)->value();
+
+    switch (d.type) {
+      case ST_FLOAT: *(float *)p = clampFloat(v.toFloat(), d.lo, d.hi); break;
+      case ST_INT:   *(int *)p = clampInt(v.toInt(), (int)d.lo, (int)d.hi); break;
+      case ST_U8:    *(uint8_t *)p = (uint8_t)clampInt(v.toInt(), (int)d.lo, (int)d.hi); break;
+      case ST_BOOL:  *(bool *)p = (v == "1"); break;
+      case ST_U32:   *(uint32_t *)p = strtoul(v.c_str(), nullptr, 10); break;
+      case ST_STRING:
+        if (d.flags & SF_TRIM) v.trim();
+        if ((d.flags & SF_SECRET) && v.length() == 0) break;  // пусто = не менять
+        if (settingStringValid(d, v.c_str())) strlcpy((char *)p, v.c_str(), d.size);
+        else if (d.errGroup) addErrorGroup(rejected, d.errGroup);
+        break;
+    }
+  }
+  normalizeRanges(s);
+  return rejected;
+}
+
+// Пишет в NVS только изменившиеся поля: неизменные значения не переписываются на каждое
+// сохранение любой из форм, и флеш изнашивается меньше
+void saveChangedSettings(const Settings &prev, const Settings &next) {
+  for (size_t i = 0; i < SETTING_DEFS_COUNT; i++) {
+    const SettingDef &d = SETTING_DEFS[i];
+    const uint8_t *a = fieldAddr(prev, d);
+    const uint8_t *b = fieldAddr(next, d);
+    bool changed = (d.type == ST_STRING) ? strcmp((const char *)a, (const char *)b) != 0
+                                         : memcmp(a, b, d.size) != 0;
+    if (!changed) continue;
+    switch (d.type) {
+      case ST_FLOAT:  preferences.putFloat(d.nvsKey, *(const float *)b); break;
+      case ST_INT:    preferences.putInt(d.nvsKey, *(const int *)b); break;
+      case ST_U8:     preferences.putUChar(d.nvsKey, *(const uint8_t *)b); break;
+      case ST_BOOL:   preferences.putBool(d.nvsKey, *(const bool *)b); break;
+      case ST_U32:    preferences.putUInt(d.nvsKey, *(const uint32_t *)b); break;
+      case ST_STRING: preferences.putString(d.nvsKey, (const char *)b); break;
+    }
+  }
+}
+
+// Поля настроек для /api/settings. Секреты наружу не отдаём: страницу настроек открывает
+// любой, кто подключился к точке доступа, — вместо значения только флаг <param>_set.
+void appendSettingsJson(String &json, const Settings &s) {
+  for (size_t i = 0; i < SETTING_DEFS_COUNT; i++) {
+    const SettingDef &d = SETTING_DEFS[i];
+    const uint8_t *p = fieldAddr(s, d);
+    json += "\"";
+    json += d.param;
+    if (d.type == ST_STRING && (d.flags & SF_SECRET)) {
+      json += "_set\":";
+      json += (((const char *)p)[0] != '\0') ? "true" : "false";
+      json += ",";
+      continue;
+    }
+    json += "\":";
+    switch (d.type) {
+      case ST_FLOAT:  json += String(*(const float *)p, 1); break;
+      case ST_INT:    json += String(*(const int *)p); break;
+      case ST_U8:     json += String((int)*(const uint8_t *)p); break;
+      case ST_BOOL:   json += (*(const bool *)p) ? "true" : "false"; break;
+      case ST_U32:    json += String((unsigned long)*(const uint32_t *)p); break;
+      case ST_STRING: json += "\""; json += jsonEscape((const char *)p); json += "\""; break;
+    }
+    json += ",";
+  }
+}
 
 // Фоновая задача на Core 0 для работы с облаком Ubidots
 void vUbidotsTask(void *pvParameters) {
-  ClimateData localData;
-  // Копии строковых настроек: работаем с ними, а не с глобалками, которые
-  // в любой момент может перезаписать обработчик /save-settings с другого ядра
-  String ssid, pass, token, label;
+  // С какими данными роутера поднято текущее STA-соединение
+  char connectedSsid[WIFI_SSID_MAX + 1] = "";
+  char connectedPass[WIFI_PASS_MAX + 1] = "";
 
   for (;;) {
     vTaskDelay(pdMS_TO_TICKS(120000)); // 2 минуты сна
 
     logPrintln("[Core 0] Пробуждение задачи Ubidots...");
 
-    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(1000)) == pdTRUE) {
-      localData.temp = current_temp;
-      localData.hum = current_hum;
-      localData.led = current_led_pwm;
-      localData.fan1 = current_fan1_pwm;
-      localData.fan2 = current_fan2_pwm;
-      localData.sht_ok = sht_online;
-      ssid = wifi_ssid;
-      pass = wifi_pass;
-      token = ubidots_token;
-      label = device_label;
-      xSemaphoreGive(xMutex); 
-    } else {
-      continue; 
-    }
+    // Свои копии: глобальные данные других задач здесь напрямую не читаются
+    Settings cfg = settingsSnapshot();
+    State st = stateSnapshot();
 
-    if (ssid.length() == 0) {
+    if (cfg.wifi_ssid[0] == '\0') {
+      if (WiFi.status() == WL_CONNECTED) WiFi.disconnect();
       logPrintln("[Core 0] Wi-Fi роутера не настроен — телеметрия пропущена.");
       continue;
+    }
+
+    // Данные роутера поменяли через веб — рвём старое соединение. Иначе плата так и
+    // сидела бы на прежней сети до первого обрыва связи.
+    bool credsChanged = strcmp(cfg.wifi_ssid, connectedSsid) != 0 || strcmp(cfg.wifi_pass, connectedPass) != 0;
+    if (credsChanged && WiFi.status() == WL_CONNECTED) {
+      logPrintln("[Core 0] Настройки Wi-Fi изменились — переподключаемся.");
+      WiFi.disconnect();
+      vTaskDelay(pdMS_TO_TICKS(200));
     }
 
     // Режим AP+STA поднят один раз в setup() и больше не переключается. Раньше задача
     // каждые 2 минуты делала mode()/disconnect(true), из-за чего точка доступа
     // передёргивалась и телефон отваливался от веб-интерфейса прямо во время работы.
     if (WiFi.status() != WL_CONNECTED) {
-      WiFi.begin(ssid.c_str(), pass.c_str());
+      WiFi.begin(cfg.wifi_ssid, cfg.wifi_pass);
+      strlcpy(connectedSsid, cfg.wifi_ssid, sizeof(connectedSsid));
+      strlcpy(connectedPass, cfg.wifi_pass, sizeof(connectedPass));
       int attempts = 0;
       while (WiFi.status() != WL_CONNECTED && attempts < 30) {
         vTaskDelay(pdMS_TO_TICKS(500));
@@ -421,14 +688,14 @@ void vUbidotsTask(void *pvParameters) {
     }
 
     String payload = "{";
-    if (localData.sht_ok) {
-      payload += "\"temperature\":" + String(localData.temp, 2) + ",";
-      payload += "\"humidity\":" + String(localData.hum, 2) + ",";
+    if (st.sht_online) {
+      payload += "\"temperature\":" + String(st.temp, 2) + ",";
+      payload += "\"humidity\":" + String(st.hum, 2) + ",";
     }
-    payload += "\"led-power\":" + String(round(localData.led / 2.55)) + ",";
-    payload += "\"fan1-power\":" + String(round(localData.fan1 / 2.55)) + ",";
-    payload += "\"fan2-power\":" + String(round(localData.fan2 / 2.55)) + ",";
-    payload += "\"sensor-status\":" + String(localData.sht_ok ? 1 : 0); // Статус датчика в облако
+    payload += "\"led-power\":" + String(round(st.led_pwm / 2.55)) + ",";
+    payload += "\"fan1-power\":" + String(round(st.fan1_pwm / 2.55)) + ",";
+    payload += "\"fan2-power\":" + String(round(st.fan2_pwm / 2.55)) + ",";
+    payload += "\"sensor-status\":" + String(st.sht_online ? 1 : 0); // Статус датчика в облако
     payload += "}";
 
     // HTTPS вместо HTTP: токен больше не уходит открытым текстом по эфиру.
@@ -438,9 +705,9 @@ void vUbidotsTask(void *pvParameters) {
     HTTPClient http;
     http.setTimeout(10000);
 
-    if (http.begin(client, "https://industrial.api.ubidots.com/api/v1.6/devices/" + label)) {
+    if (http.begin(client, String("https://industrial.api.ubidots.com/api/v1.6/devices/") + cfg.device_label)) {
       http.addHeader("Content-Type", "application/json");
-      http.addHeader("X-Auth-Token", token);
+      http.addHeader("X-Auth-Token", cfg.ubidots_token);
       int code = http.POST(payload);
       // Раньше код ответа присваивался и молча выбрасывался — узнать, дошла ли
       // телеметрия и не протух ли токен, было невозможно
@@ -453,7 +720,6 @@ void vUbidotsTask(void *pvParameters) {
   }
 }
 
-// Функция получения безопасного времени (из RTC или программного бэкапа)
 // Принудительное восстановление I2C-шины: если одно из устройств (SHT4x/RTC) зависло
 // посреди транзакции и держит SDA в LOW, обычный Wire.begin()/sensor.begin() это НЕ чинит —
 // нужно вручную "протактовать" SCL, чтобы slave-устройство доотправило начатый байт и
@@ -516,8 +782,9 @@ bool isPlausibleDateTime(const DateTime &t) {
          t.year() >= 2024 && t.year() <= 2099;
 }
 
+// Безопасное время: из RTC или из программного бэкапа. Вызывается только из setup()/loop().
 DateTime getSafeDateTime() {
-  if (rtc_online) {
+  if (state.rtc_online) {
     DateTime now = rtc.now();
     if (isPlausibleDateTime(now)) {
       backup_unixtime = now.unixtime(); // Синхронизируем бэкап
@@ -525,7 +792,7 @@ DateTime getSafeDateTime() {
       return now;
     }
     logPrintln("[КРИТИКА] RTC вернул некорректную дату! Переход на программный таймер.");
-    rtc_online = false;
+    state.rtc_online = false;
     last_rtc_check_ms = millis(); // Иначе первый же расчёт ниже прыгнет на часы вперёд
   }
 
@@ -548,7 +815,7 @@ DateTime getWebDateTime() {
 // та же схема, что и для датчика SHT4x. Нужно несколько подряд успешных
 // попыток чтения вменяемой даты, прежде чем снова начать доверять RTC.
 void tryRecoverRTC(unsigned long currentMillis) {
-  if (rtc_online) return;
+  if (state.rtc_online) return;
   if (currentMillis - last_rtc_retry < RTC_RETRY_INTERVAL_MS) return;
   last_rtc_retry = currentMillis;
   recoverI2CBus(); // Освобождаем шину на случай, если она физически "залипла"
@@ -563,7 +830,7 @@ void tryRecoverRTC(unsigned long currentMillis) {
       rtc_recovery_streak++;
       logPrintf("[RTC] Попытка восстановления %d/%d успешна\n", rtc_recovery_streak, RTC_RECOVERY_STREAK_NEEDED);
       if (rtc_recovery_streak >= RTC_RECOVERY_STREAK_NEEDED) {
-        rtc_online = true;
+        state.rtc_online = true;
         backup_unixtime = now.unixtime();
         last_rtc_check_ms = millis();
         rtc_recovery_streak = 0;
@@ -574,54 +841,6 @@ void tryRecoverRTC(unsigned long currentMillis) {
   if (!retry_ok) {
     rtc_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
   }
-}
-
-// Единая точка загрузки всех настроек из NVS (Preferences) — вызывается и при старте платы,
-// и сразу после сохранения на /save-settings, чтобы не держать два места с одинаковым списком
-// полей в ручную синхронизации (именно так на днях "потерялась" temp_target_night в одном из
-// трёх мест при переименовании NVS-ключа). preferences.begin() сюда не входит — вызывается один
-// раз в setup() до первого использования этой функции.
-void loadAllSettingsFromNVS() {
-  // Вызывается из setup() и из обработчика /save-settings, то есть из задачи веб-сервера.
-  // Строковые настройки берём под мьютексом: присваивание String освобождает старый буфер,
-  // а задача Ubidots в этот момент может читать wifi_ssid.c_str() — это use-after-free.
-  bool locked = (xMutex != NULL) && (xSemaphoreTake(xMutex, pdMS_TO_TICKS(100)) == pdTRUE);
-
-  temp_target = preferences.getFloat("temp_target", DEF_TEMP_TARGET);
-  temp_delta = preferences.getFloat("temp_delta", DEF_TEMP_DELTA);
-  temp_target_night = preferences.getFloat("temp_night", DEF_TEMP_NIGHT);
-  max_hum_night = preferences.getFloat("max_hum_night", DEF_MAX_HUM_NIGHT);
-  led_on_hour = preferences.getInt("led_on_hour", DEF_LED_ON_HOUR);
-  led_off_hour = preferences.getInt("led_off_hour", DEF_LED_OFF_HOUR);
-  led_on_minute = preferences.getInt("led_on_minute", DEF_LED_ON_MINUTE);
-  led_off_minute = preferences.getInt("led_off_minute", DEF_LED_OFF_MINUTE);
-  fan1_min_limit = preferences.getInt("fan1_min_limit", DEF_FAN_MIN_LIMIT);
-  fan1_max_limit = preferences.getInt("fan1_max_limit", DEF_FAN_MAX_LIMIT);
-  fan2_min_limit = preferences.getInt("fan2_min_limit", DEF_FAN_MIN_LIMIT);
-  fan2_max_limit = preferences.getInt("fan2_max_limit", DEF_FAN_MAX_LIMIT);
-  led_min_limit = preferences.getInt("led_min_limit", DEF_LED_MIN_LIMIT);
-  led_max_limit = preferences.getInt("led_max_limit", DEF_LED_MAX_LIMIT);
-  fan_night_min_limit = preferences.getInt("fan_night_min", DEF_FAN_NIGHT_MIN);
-  fan_night_max_limit = preferences.getInt("fan_night_max", DEF_FAN_NIGHT_MAX);
-  min_hum_night = preferences.getFloat("min_hum_night", DEF_MIN_HUM_NIGHT);
-  start_timestamp = preferences.getUInt("start_time", 0);
-
-  last_watering_day = preferences.getUInt("last_water", 0);
-  watering_days = preferences.getUChar("watering_days", DEF_WATERING_DAYS);
-  watering_hour = preferences.getInt("watering_hour", DEF_WATERING_HOUR);
-  watering_minute = preferences.getInt("watering_minute", DEF_WATERING_MINUTE);
-  watering_duration_sec = preferences.getInt("watering_dur", DEF_WATERING_DUR_SEC);
-  water_sensor_enabled = preferences.getBool("water_sensor", DEF_WATER_SENSOR);
-  heater_mode = preferences.getInt("heater_mode", DEF_HEATER_MODE);
-
-  wifi_ssid = preferences.getString("wifi_ssid", DEFAULT_WIFI_SSID);
-  wifi_pass = preferences.getString("wifi_pass", DEFAULT_WIFI_PASS);
-  ubidots_token = preferences.getString("ubidots_token", DEFAULT_UBIDOTS_TOKEN);
-  device_label = preferences.getString("device_label", DEFAULT_DEVICE_LABEL);
-  ap_ssid = preferences.getString("ap_ssid", DEFAULT_AP_SSID);
-  ap_pass = preferences.getString("ap_pass", DEFAULT_AP_PASS);
-
-  if (locked) xSemaphoreGive(xMutex);
 }
 
 void setup() {
@@ -641,43 +860,43 @@ void setup() {
     esp_task_wdt_init(4, true);
     esp_task_wdt_add(NULL);
   #endif
-  Wire.begin(); 
+  Wire.begin();
   delay(300); // Даём I2C-шине и датчикам (SHT4x/RTC) стабилизироваться после подачи питания —
               // без этой паузы begin() может провалиться из-за гонки при старте платы
   recoverI2CBus(); // На случай, если шина осталась "залипшей" ещё с прошлого включения
-  
-  xMutex = xSemaphoreCreateMutex();
 
   preferences.begin("grow-box", false);
-  loadAllSettingsFromNVS();
-  // На случай испорченных/некорректных значений в NVS откатываемся на дефолт, чтобы не остаться без доступа к плате
-  if (!isValidApSsid(ap_ssid)) ap_ssid = DEFAULT_AP_SSID;
-  if (!isValidApPass(ap_pass)) ap_pass = DEFAULT_AP_PASS;
+  Settings cfg;
+  loadSettingsFromNVS(cfg);
+  publishSettings(cfg);
+  last_watering_day = preferences.getUInt("last_water", 0);
+
+  state.is_day = true;
 
   // Безопасная инициализация датчиков с проверкой работоспособности.
   // Пробуем несколько раз с паузой — при старте платы I2C-шина/датчик могут быть
   // ещё не готовы (просадка питания от одновременного старта WiFi/вентиляторов/SD).
-  sht_online = false;
-  for (int i = 0; i < 5 && !sht_online; i++) {
+  state.sht_online = false;
+  for (int i = 0; i < 5 && !state.sht_online; i++) {
     if (sht40.begin()) {
-      sht_online = true;
+      state.sht_online = true;
     } else {
       logPrintf("[SHT4x] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
       delay(200);
     }
   }
-  if (!sht_online) logPrintln("ОШИБКА: SHT4x не найден после 5 попыток!");
+  if (!state.sht_online) logPrintln("ОШИБКА: SHT4x не найден после 5 попыток!");
 
-  rtc_online = false;
-  for (int i = 0; i < 5 && !rtc_online; i++) {
+  state.rtc_online = false;
+  for (int i = 0; i < 5 && !state.rtc_online; i++) {
     if (rtc.begin()) {
-      rtc_online = true;
+      state.rtc_online = true;
     } else {
       logPrintf("[RTC] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
       delay(200);
     }
   }
-  if (!rtc_online) {
+  if (!state.rtc_online) {
     logPrintln("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
     last_rtc_check_ms = millis();
   }
@@ -697,7 +916,10 @@ void setup() {
 
   // AP+STA сразу и навсегда: точка доступа больше не передёргивается задачей телеметрии
   WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP(ap_ssid.c_str(), ap_pass.length() > 0 ? ap_pass.c_str() : NULL);
+  WiFi.softAP(cfg.ap_ssid, cfg.ap_pass[0] ? cfg.ap_pass : NULL);
+
+  cached_unixtime = getSafeDateTime().unixtime(); // Веб-обработчики читают только этот снимок
+  publishState(); // Первое состояние — до старта задач, которые его читают
 
   xTaskCreatePinnedToCore(vUbidotsTask, "UbidotsTask", 12288, NULL, 1, &UbidotsTaskHandle, 0); // 12 КБ: mbedTLS не влезает в 8
 
@@ -708,34 +930,25 @@ void setup() {
   // регистрируется ниже, после API-маршрутов, чтобы точно не перехватывать /api/*
 
   server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest *request){
-    // Снимок состояния строго под мьютексом: раньше при неудачном захвате (таймаут 10 мс)
-    // переменные оставались неинициализированными и в JSON уезжал мусор из стека.
-    float t, h; int l, f1, f2; bool s_ok, r_ok;
-    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(50)) != pdTRUE) {
-      request->send(503, "application/json", "{\"error\":\"busy\"}");
-      return;
-    }
-    t = current_temp; h = current_hum; l = current_led_pwm; f1 = current_fan1_pwm; f2 = current_fan2_pwm;
-    s_ok = sht_online; r_ok = rtc_online;
-    xSemaphoreGive(xMutex);
-
+    State st = stateSnapshot();
+    uint32_t start_ts = settingsSnapshot().start_timestamp;
     DateTime now = getWebDateTime();
-    int grow_day = (start_timestamp > 0 && now.unixtime() >= start_timestamp) ? ((now.unixtime() - start_timestamp) / 86400) + 1 : 0;
+    int grow_day = (start_ts > 0 && now.unixtime() >= start_ts) ? ((now.unixtime() - start_ts) / 86400) + 1 : 0;
 
     String json = "{";
-    json += "\"temp\":" + String(t, 2) + ",";
-    json += "\"hum\":" + String(h, 2) + ",";
-    json += "\"led\":" + String(l) + ",";
-    json += "\"fan1\":" + String(f1) + ",";
-    json += "\"fan2\":" + String(f2) + ",";
+    json += "\"temp\":" + String(st.temp, 2) + ",";
+    json += "\"hum\":" + String(st.hum, 2) + ",";
+    json += "\"led\":" + String(st.led_pwm) + ",";
+    json += "\"fan1\":" + String(st.fan1_pwm) + ",";
+    json += "\"fan2\":" + String(st.fan2_pwm) + ",";
     json += "\"time\":\"" + now.timestamp(DateTime::TIMESTAMP_TIME) + "\",";
     json += "\"date\":\"" + now.timestamp(DateTime::TIMESTAMP_DATE) + "\",";
-    json += "\"is_day\":" + String(is_day ? "true" : "false") + ",";
+    json += "\"is_day\":" + String(st.is_day ? "true" : "false") + ",";
     json += "\"grow_day\":" + String(grow_day) + ",";
-    json += "\"sht_online\":" + String(s_ok ? "true" : "false") + ","; // Передаем статус в UI
-    json += "\"rtc_online\":" + String(r_ok ? "true" : "false") + ",";
-    json += "\"pump_active\":" + String(pump_active ? "true" : "false") + ",";
-    json += "\"heater_active\":" + String(heater_active ? "true" : "false");
+    json += "\"sht_online\":" + String(st.sht_online ? "true" : "false") + ","; // Передаем статус в UI
+    json += "\"rtc_online\":" + String(st.rtc_online ? "true" : "false") + ",";
+    json += "\"pump_active\":" + String(st.pump_active ? "true" : "false") + ",";
+    json += "\"heater_active\":" + String(st.heater_active ? "true" : "false");
     json += "}";
     request->send(200, "application/json", json);
   });
@@ -748,41 +961,12 @@ void setup() {
   });
 
   server.on("/api/settings", HTTP_GET, [](AsyncWebServerRequest *request){
+    Settings cfg = settingsSnapshot();
     DateTime now = getWebDateTime();
     char buf[24]; snprintf(buf, sizeof(buf), "%02d.%02d.%04d %02d:%02d:%02d", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
+
     String json = "{";
-    json += "\"temp_target\":" + String(temp_target, 1) + ",";
-    json += "\"temp_delta\":" + String(temp_delta, 1) + ",";
-    json += "\"temp_target_night\":" + String(temp_target_night, 1) + ",";
-    json += "\"max_hum_night\":" + String(max_hum_night, 1) + ",";
-    json += "\"led_on_hour\":" + String(led_on_hour) + ",";
-    json += "\"led_off_hour\":" + String(led_off_hour) + ",";
-    json += "\"led_on_minute\":" + String(led_on_minute) + ",";
-    json += "\"led_off_minute\":" + String(led_off_minute) + ",";
-    json += "\"fan1_min_limit\":" + String(fan1_min_limit) + ",";
-    json += "\"fan1_max_limit\":" + String(fan1_max_limit) + ",";
-    json += "\"fan2_min_limit\":" + String(fan2_min_limit) + ",";
-    json += "\"fan2_max_limit\":" + String(fan2_max_limit) + ",";
-    json += "\"led_min_limit\":" + String(led_min_limit) + ",";
-    json += "\"led_max_limit\":" + String(led_max_limit) + ","; 
-    json += "\"fan_night_min_limit\":" + String(fan_night_min_limit) + ",";
-    json += "\"fan_night_max_limit\":" + String(fan_night_max_limit) + ",";
-    json += "\"min_hum_night\":" + String(min_hum_night, 1) + ",";
-    json += "\"start_time\":" + String(start_timestamp) + ",";
-    json += "\"watering_days\":" + String(watering_days) + ",";
-    json += "\"watering_hour\":" + String(watering_hour) + ",";
-    json += "\"watering_minute\":" + String(watering_minute) + ",";
-    json += "\"watering_duration\":" + String(watering_duration_sec) + ",";
-    json += "\"water_sensor_enabled\":" + String(water_sensor_enabled ? "true" : "false") + ",";
-    json += "\"heater_mode\":" + String(heater_mode) + ",";
-    json += "\"wifi_ssid\":\"" + jsonEscape(wifi_ssid) + "\",";
-    // Пароли и токен наружу не отдаём: страницу настроек открывает любой, кто подключился
-    // к точке доступа. Вместо значения — флаг "задано/не задано"; пустое поле формы = не менять.
-    json += "\"wifi_pass_set\":" + String(wifi_pass.length() > 0 ? "true" : "false") + ",";
-    json += "\"ubidots_token_set\":" + String(ubidots_token.length() > 0 ? "true" : "false") + ",";
-    json += "\"device_label\":\"" + jsonEscape(device_label) + "\",";
-    json += "\"ap_ssid\":\"" + jsonEscape(ap_ssid) + "\",";
-    json += "\"ap_pass_set\":" + String(ap_pass.length() > 0 ? "true" : "false") + ",";
+    appendSettingsJson(json, cfg);
     json += "\"rtc_time\":\"" + String(buf) + "\",";
 
     uint64_t sdTotal = SD.totalBytes();
@@ -796,132 +980,33 @@ void setup() {
   });
 
   server.on("/save-settings", HTTP_POST, [](AsyncWebServerRequest *request){
-    // --- Валидация и сохранение (значения клэмпятся в разумные пределы, даже если запрос пришёл в обход веб-формы) ---
-    if (request->hasParam("temp_target", true))  preferences.putFloat("temp_target", clampFloat(request->getParam("temp_target", true)->value().toFloat(), 0.0, 50.0));
-    if (request->hasParam("temp_delta", true))   preferences.putFloat("temp_delta", clampFloat(request->getParam("temp_delta", true)->value().toFloat(), 0.1, 20.0));
-    if (request->hasParam("led_on_hour", true))   preferences.putInt("led_on_hour", clampInt(request->getParam("led_on_hour", true)->value().toInt(), 0, 23));
-    if (request->hasParam("led_off_hour", true))  preferences.putInt("led_off_hour", clampInt(request->getParam("led_off_hour", true)->value().toInt(), 0, 23));
-    if (request->hasParam("led_on_minute", true))  preferences.putInt("led_on_minute", clampInt(request->getParam("led_on_minute", true)->value().toInt(), 0, 59));
-    if (request->hasParam("led_off_minute", true)) preferences.putInt("led_off_minute", clampInt(request->getParam("led_off_minute", true)->value().toInt(), 0, 59));
+    // Работаем с копией: разбираем форму, проверяем, пишем в NVS и только потом публикуем
+    // целиком — loop() и Ubidots никогда не видят наполовину применённые настройки.
+    // Обработчики AsyncWebServer выполняются по одному, так что два сохранения
+    // одновременно не случаются и изменения друг друга не затирают.
+    Settings prev = settingsSnapshot();
+    Settings next = prev;
+    String rejected = applyFormToSettings(request, next);
 
-    // Пары мин/макс: клэмпим в диапазон 0-100 и, если границы перепутаны местами, меняем их местами
-    if (request->hasParam("fan1_min_limit", true) && request->hasParam("fan1_max_limit", true)) {
-      clampPairInt(preferences, "fan1_min_limit", "fan1_max_limit",
-        request->getParam("fan1_min_limit", true)->value().toInt(),
-        request->getParam("fan1_max_limit", true)->value().toInt(), 0, 100);
-    }
-    if (request->hasParam("fan2_min_limit", true) && request->hasParam("fan2_max_limit", true)) {
-      clampPairInt(preferences, "fan2_min_limit", "fan2_max_limit",
-        request->getParam("fan2_min_limit", true)->value().toInt(),
-        request->getParam("fan2_max_limit", true)->value().toInt(), 0, 100);
-    }
-    if (request->hasParam("led_min_limit", true) && request->hasParam("led_max_limit", true)) {
-      clampPairInt(preferences, "led_min_limit", "led_max_limit",
-        request->getParam("led_min_limit", true)->value().toInt(),
-        request->getParam("led_max_limit", true)->value().toInt(), 0, 100);
-    }
-    if (request->hasParam("fan_night_min_limit", true) && request->hasParam("fan_night_max_limit", true)) {
-      clampPairInt(preferences, "fan_night_min", "fan_night_max",
-        request->getParam("fan_night_min_limit", true)->value().toInt(),
-        request->getParam("fan_night_max_limit", true)->value().toInt(), 0, 100);
-    }
-    if (request->hasParam("min_hum_night", true) && request->hasParam("max_hum_night", true)) {
-      clampPairFloat(preferences, "min_hum_night", "max_hum_night",
-        request->getParam("min_hum_night", true)->value().toFloat(),
-        request->getParam("max_hum_night", true)->value().toFloat(), 0.0, 100.0);
-    }
-
-    if (request->hasParam("watering_days", true)) preferences.putUChar("watering_days", (uint8_t)clampInt(request->getParam("watering_days", true)->value().toInt(), 0, 127));
-    if (request->hasParam("watering_hour", true)) preferences.putInt("watering_hour", clampInt(request->getParam("watering_hour", true)->value().toInt(), 0, 23));
-    if (request->hasParam("watering_minute", true)) preferences.putInt("watering_minute", clampInt(request->getParam("watering_minute", true)->value().toInt(), 0, 59));
-    if (request->hasParam("watering_duration", true)) preferences.putInt("watering_dur", clampInt(request->getParam("watering_duration", true)->value().toInt(), 1, 3600));
-    if (request->hasParam("water_sensor_enabled", true)) preferences.putBool("water_sensor", request->getParam("water_sensor_enabled", true)->value() == "1");
-    if (request->hasParam("heater_mode", true)) preferences.putInt("heater_mode", clampInt(request->getParam("heater_mode", true)->value().toInt(), 0, 3));
-    if (request->hasParam("temp_target_night", true)) preferences.putFloat("temp_night", clampFloat(request->getParam("temp_target_night", true)->value().toFloat(), 0.0, 50.0));
-
-    // WiFi роутера: сохраняем, только если длины корректны (SSID <= 32, пароль пусто либо 8-63 — требование WPA2)
-    bool wifi_rejected = false;
-    if (request->hasParam("wifi_ssid", true)) {
-      String newSsid = request->getParam("wifi_ssid", true)->value();
-      newSsid.trim();
-      if (isValidStaSsid(newSsid)) preferences.putString("wifi_ssid", newSsid);
-      else wifi_rejected = true;
-    }
-    // Пустое поле пароля = "оставить как есть" (форма его больше не подставляет).
-    // Чтобы явно сделать сеть открытой, ставится галочка wifi_pass_clear.
-    bool wifi_pass_clear = request->hasParam("wifi_pass_clear", true) &&
-                           request->getParam("wifi_pass_clear", true)->value() == "1";
-    if (wifi_pass_clear) {
-      preferences.putString("wifi_pass", "");
-    } else if (request->hasParam("wifi_pass", true)) {
-      String newPass = request->getParam("wifi_pass", true)->value();
-      if (newPass.length() > 0) {
-        if (isValidStaPass(newPass)) preferences.putString("wifi_pass", newPass);
-        else wifi_rejected = true;
-      }
-    }
-    if (request->hasParam("ubidots_token", true)) {
-      String newToken = request->getParam("ubidots_token", true)->value();
-      newToken.trim();
-      if (newToken.length() > 0) preferences.putString("ubidots_token", newToken);
-    }
-    if (request->hasParam("device_label", true)) preferences.putString("device_label", request->getParam("device_label", true)->value());
-
-    // Точка доступа: сохраняем, только если значения корректны — иначе можно остаться без доступа к плате
-    bool ap_changed = false;
-    bool ap_rejected = false;
-    if (request->hasParam("ap_ssid", true)) {
-      String newSsid = request->getParam("ap_ssid", true)->value();
-      newSsid.trim();
-      if (isValidApSsid(newSsid)) {
-        preferences.putString("ap_ssid", newSsid);
-        ap_changed = true;
-      } else {
-        ap_rejected = true;
-      }
-    }
-    bool ap_pass_clear = request->hasParam("ap_pass_clear", true) &&
-                         request->getParam("ap_pass_clear", true)->value() == "1";
-    if (ap_pass_clear) {
-      preferences.putString("ap_pass", "");
-      ap_changed = true;
-    } else if (request->hasParam("ap_pass", true)) {
-      String newPass = request->getParam("ap_pass", true)->value();
-      if (newPass.length() > 0) {
-        if (isValidApPass(newPass)) {
-          preferences.putString("ap_pass", newPass);
-          ap_changed = true;
-        } else {
-          ap_rejected = true;
-        }
-      }
-    }
-
+    // Дата начала цикла приходит строкой YYYY-MM-DD — в таблицу не укладывается
     if (request->hasParam("start_date", true)) {
-      String dateStr = request->getParam("start_date", true)->value();
       int y, m, d;
-      if (parseDate(dateStr, y, m, d)) {
-        DateTime startDate(y, m, d, 0, 0, 0);
-        preferences.putUInt("start_time", startDate.unixtime());
+      if (parseDate(request->getParam("start_date", true)->value(), y, m, d)) {
+        next.start_timestamp = DateTime(y, m, d, 0, 0, 0).unixtime();
       }
     }
-    
-    loadAllSettingsFromNVS();
 
-    // Применяем новые SSID/пароль точки доступа немедленно, без перезагрузки платы.
-    // Текущие клиенты AP при этом отключатся и должны будут подключиться заново с новыми данными.
-    if (ap_changed) {
-      WiFi.softAP(ap_ssid.c_str(), ap_pass.length() > 0 ? ap_pass.c_str() : NULL);
+    saveChangedSettings(prev, next);
+    publishSettings(next);
+
+    // Новые SSID/пароль точки доступа применяем сразу, без перезагрузки платы.
+    // Текущие клиенты при этом отключатся и должны подключиться заново с новыми данными.
+    if (strcmp(prev.ap_ssid, next.ap_ssid) != 0 || strcmp(prev.ap_pass, next.ap_pass) != 0) {
+      WiFi.softAP(next.ap_ssid, next.ap_pass[0] ? next.ap_pass : NULL);
     }
 
-    if (ap_rejected || wifi_rejected) {
-      String errParam = "";
-      if (ap_rejected) errParam += "ap";
-      if (wifi_rejected) errParam += String(errParam.length() ? "," : "") + "wifi";
-      request->redirect("/settings?error=" + errParam);
-    } else {
-      request->redirect("/settings");
-    }
+    if (rejected.length()) request->redirect("/settings?error=" + rejected);
+    else request->redirect("/settings");
   });
 
   server.on("/set-time", HTTP_POST, [](AsyncWebServerRequest *request){
@@ -1006,7 +1091,6 @@ void setup() {
   server.serveStatic("/", SPIFFS, "/").setCacheControl("max-age=600");
   server.onNotFound([](AsyncWebServerRequest *request){ request->send(404, "text/plain", "Not found"); });
 
-  cached_unixtime = getSafeDateTime().unixtime(); // Веб-обработчики читают только этот снимок
   server.begin();
 
   ledcAttach(LED_PWM_PIN, PWM_FREQ, PWM_RES);
@@ -1015,19 +1099,22 @@ void setup() {
 }
 
 void loop() {
-  static unsigned long lastLogTime = 0;
+  static unsigned long lastClimateTime = 0;
   unsigned long currentMillis = millis();
   tryRecoverRTC(currentMillis); // Не блокирует: сам ограничивает частоту попыток внутри
 
   // Время читаем раз в секунду, а не на каждой итерации loop(): rtc.now() — полноценная
   // транзакция по I2C, и раньше она крутилась тысячи раз в секунду на той же шине,
-  // по которой опрашивается SHT4x.
+  // по которой опрашивается SHT4x. Там же обновляем свою копию настроек: изменения из
+  // веба вступают в силу не позже чем через секунду, а весь цикл видит одну цельную версию.
   static DateTime now((uint32_t)0);
+  static Settings cfg;
   static unsigned long lastTimeRead = 0;
   if (lastTimeRead == 0 || currentMillis - lastTimeRead >= 1000) {
     lastTimeRead = currentMillis;
     now = getSafeDateTime();
     cached_unixtime = now.unixtime(); // Снимок, который отдают веб-обработчики
+    cfg = settingsSnapshot();
   }
 
   // Часы, выставленные из веб-формы, применяем здесь: в I2C ходит только loop()
@@ -1035,7 +1122,7 @@ void loop() {
   if (requested != 0) {
     pending_time_set = 0;
     DateTime userTime(requested);
-    if (rtc_online) rtc.adjust(userTime);
+    if (state.rtc_online) rtc.adjust(userTime);
     backup_unixtime = requested;
     last_rtc_check_ms = millis();
     now = userTime;
@@ -1043,54 +1130,52 @@ void loop() {
     logPrintln("[RTC] Часы выставлены вручную через веб-интерфейс");
   }
 
-  if (currentMillis - lastLogTime >= 10000) {
-    lastLogTime = currentMillis;
+  if (currentMillis - lastClimateTime >= 10000) {
+    lastClimateTime = currentMillis;
 
     int current_hour = now.hour();
     int current_minutes = current_hour * 60 + now.minute();
-    int on_minutes = led_on_hour * 60 + led_on_minute;
-    int off_minutes = led_off_hour * 60 + led_off_minute;
+    int on_minutes = cfg.led_on_hour * 60 + cfg.led_on_minute;
+    int off_minutes = cfg.led_off_hour * 60 + cfg.led_off_minute;
 
-    if (on_minutes == off_minutes) is_day = true; // время включения == времени выключения — считаем "весь день"
-    else if (on_minutes < off_minutes) is_day = (current_minutes >= on_minutes && current_minutes < off_minutes);
-    else is_day = (current_minutes >= on_minutes || current_minutes < off_minutes);
+    if (on_minutes == off_minutes) state.is_day = true; // время включения == времени выключения — считаем "весь день"
+    else if (on_minutes < off_minutes) state.is_day = (current_minutes >= on_minutes && current_minutes < off_minutes);
+    else state.is_day = (current_minutes >= on_minutes || current_minutes < off_minutes);
+    const bool is_day = state.is_day;
 
-    int pwm_fan1_min = map(fan1_min_limit, 0, 100, 0, 255);
-    int pwm_fan1_max = map(fan1_max_limit, 0, 100, 0, 255);
-    int pwm_fan2_min = map(fan2_min_limit, 0, 100, 0, 255);
-    int pwm_fan2_max = map(fan2_max_limit, 0, 100, 0, 255);
-    int pwm_led_min = map(led_min_limit, 0, 100, 0, 255);
-    int pwm_led_max = map(led_max_limit, 0, 100, 0, 255);
-    int pwm_fan_night_min = map(fan_night_min_limit, 0, 100, 0, 255);
-    int pwm_fan_night_max = map(fan_night_max_limit, 0, 100, 0, 255);
+    int pwm_fan1_min = map(cfg.fan1_min_limit, 0, 100, 0, 255);
+    int pwm_fan1_max = map(cfg.fan1_max_limit, 0, 100, 0, 255);
+    int pwm_fan2_min = map(cfg.fan2_min_limit, 0, 100, 0, 255);
+    int pwm_fan2_max = map(cfg.fan2_max_limit, 0, 100, 0, 255);
+    int pwm_led_min = map(cfg.led_min_limit, 0, 100, 0, 255);
+    int pwm_led_max = map(cfg.led_max_limit, 0, 100, 0, 255);
+    int pwm_fan_night_min = map(cfg.fan_night_min_limit, 0, 100, 0, 255);
+    int pwm_fan_night_max = map(cfg.fan_night_max_limit, 0, 100, 0, 255);
 
     int target_led, target_fan1, target_fan2;
-    float read_temp = current_temp; // По умолчанию — последнее известное валидное значение, а не 0.0
-    float read_hum = current_hum;
-    bool got_valid_reading = false;
+    float read_temp = state.temp; // По умолчанию — последнее известное валидное значение, а не 0.0
+    float read_hum = state.hum;
 
     // Чтение датчика с проверкой на ошибку
     sensors_event_t humidity, temp;
-    if (sht_online) {
+    if (state.sht_online) {
       if (sht40.getEvent(&humidity, &temp)) {
         read_temp = temp.temperature;
         read_hum = humidity.relative_humidity;
 
         // Защита от "зависших" нереалистичных данных (за пределами работы датчика)
         if (read_temp < -20.0 || read_temp > 80.0 || read_hum < 0.0 || read_hum > 100.0) {
-          sht_online = false;
-        } else {
-          got_valid_reading = true;
+          state.sht_online = false;
         }
       } else {
-        sht_online = false;
+        state.sht_online = false;
       }
     }
 
     // Датчик офлайн — периодически пробуем восстановиться, не дожидаясь перезагрузки платы.
     // Нужно несколько (SHT_RECOVERY_STREAK_NEEDED) подряд успешных попыток с интервалом
     // SHT_RETRY_INTERVAL_MS, прежде чем снова начать доверять показаниям.
-    if (!sht_online && (currentMillis - last_sht_retry >= SHT_RETRY_INTERVAL_MS)) {
+    if (!state.sht_online && (currentMillis - last_sht_retry >= SHT_RETRY_INTERVAL_MS)) {
       last_sht_retry = currentMillis;
       recoverI2CBus(); // Освобождаем шину на случай, если она физически "залипла"
       sensors_event_t retryHumidity, retryTemp;
@@ -1102,8 +1187,7 @@ void loop() {
         sht_recovery_streak++;
         logPrintf("[SHT4x] Попытка восстановления %d/%d успешна\n", sht_recovery_streak, SHT_RECOVERY_STREAK_NEEDED);
         if (sht_recovery_streak >= SHT_RECOVERY_STREAK_NEEDED) {
-          sht_online = true;
-          got_valid_reading = true;
+          state.sht_online = true;
           read_temp = retryTemp.temperature;
           read_hum = retryHumidity.relative_humidity;
           sht_recovery_streak = 0;
@@ -1115,7 +1199,7 @@ void loop() {
     }
 
     // ЛОГИКА АВАРИЙНОГО РЕЖИМА ИЛИ НОРМАЛЬНОЙ РАБОТЫ
-    if (!sht_online) {
+    if (!state.sht_online) {
       // --- АВАРИЯ: Датчик сломан. Включаем безопасный пресет ---
       // Вентиляторы на 50% выбранного диапазона (день — температурный диапазон, ночь — ночной диапазон)
       if (is_day) {
@@ -1126,46 +1210,46 @@ void loop() {
         target_fan2 = target_fan1;
       }
       // Светильник на минимальный уровень дня, чтобы не сжечь растения светом/жаром
-      target_led = is_day ? pwm_led_min : 0; 
-      
+      target_led = is_day ? pwm_led_min : 0;
+
       // Датчик недоступен — не доверяем показаниям, обогрев выключаем из соображений безопасности
-      heater_active = false;
+      state.heater_active = false;
       digitalWrite(HEATER_PIN, LOW);
-      
+
       logPrintln("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
-    } 
+    }
     else {
       // --- НОРМАЛЬНАЯ РАБОТА ---
       // Защита от temp_delta == 0, чтобы map() не делил на ноль
-      float safe_delta = max(temp_delta, 0.1f);
-      float current_min = temp_target - safe_delta;
-      float current_max = temp_target + safe_delta;
+      float safe_delta = max(cfg.temp_delta, 0.1f);
+      float current_min = cfg.temp_target - safe_delta;
+      float current_max = cfg.temp_target + safe_delta;
 
       // Обогрев: своя цель ночью (temp_target_night), днём — общая temp_target.
       // На вентиляторы/лампу (current_min/current_max выше) это не влияет — они всегда считаются от дневной temp_target.
-      float heater_target = is_day ? temp_target : temp_target_night;
+      float heater_target = is_day ? cfg.temp_target : cfg.temp_target_night;
       float heater_min = heater_target - safe_delta;
 
-      bool heater_schedule_ok = (heater_mode == 2) || (heater_mode == 0 && is_day) || (heater_mode == 1 && !is_day);
+      bool heater_schedule_ok = (cfg.heater_mode == 2) || (cfg.heater_mode == 0 && is_day) || (cfg.heater_mode == 1 && !is_day);
       if (!heater_schedule_ok) {
-        heater_active = false;
-      } else if (!heater_active && read_temp <= heater_min) {
-        heater_active = true;
-      } else if (heater_active && read_temp >= heater_target) {
-        heater_active = false;
+        state.heater_active = false;
+      } else if (!state.heater_active && read_temp <= heater_min) {
+        state.heater_active = true;
+      } else if (state.heater_active && read_temp >= heater_target) {
+        state.heater_active = false;
       }
-      digitalWrite(HEATER_PIN, heater_active ? HIGH : LOW);
+      digitalWrite(HEATER_PIN, state.heater_active ? HIGH : LOW);
 
       if (read_temp <= current_min) {
         target_led = is_day ? pwm_led_max : 0;
         target_fan1 = pwm_fan1_min;
         target_fan2 = pwm_fan2_min;
-      } 
+      }
       else if (read_temp >= current_max) {
         target_led = is_day ? pwm_led_min : 0;
-        target_fan1 = pwm_fan1_max; 
+        target_fan1 = pwm_fan1_max;
         target_fan2 = pwm_fan2_max;
-      } 
+      }
       else {
         target_led = is_day ? map(read_temp * 100, current_min * 100, current_max * 100, pwm_led_max, pwm_led_min) : 0;
         target_fan1 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan1_min, pwm_fan1_max);
@@ -1176,8 +1260,8 @@ void loop() {
         // НОЧЬ: оба вентилятора управляются влажностью с плавным (пропорциональным) регулированием скорости,
         // независимо от дневной температурной логики выше. Диапазон скорости задаётся отдельно (fan_night_min/max_limit).
         // min_hum_night — нижняя граница (мин. скорость), max_hum_night — верхняя граница (макс. скорость).
-        float night_hum_lo = min_hum_night;
-        float night_hum_hi = max_hum_night;
+        float night_hum_lo = cfg.min_hum_night;
+        float night_hum_hi = cfg.max_hum_night;
         int night_fan_pwm;
 
         if (night_hum_hi <= night_hum_lo) {
@@ -1201,19 +1285,12 @@ void loop() {
     target_fan1 = clampInt(target_fan1, 0, 255);
     target_fan2 = clampInt(target_fan2, 0, 255);
 
-    // Безопасно обновляем глобальные переменные под мьютексом (их читают веб и Ubidots)
-    if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(50)) == pdTRUE) {
-      current_temp = read_temp;
-      current_hum = read_hum;
-      current_led_pwm = target_led;
-      current_fan1_pwm = target_fan1;
-      current_fan2_pwm = target_fan2;
-      xSemaphoreGive(xMutex);
-    }
+    state.temp = read_temp;
+    state.hum = read_hum;
+    state.led_pwm = target_led;
+    state.fan1_pwm = target_fan1;
+    state.fan2_pwm = target_fan2;
 
-    // Управляем исполнительными устройствами. Пишем ИМЕННО вычисленные значения:
-    // раньше здесь стояли глобалки, и при неудачном захвате мьютекса весь расчёт цикла
-    // молча терялся — ШИМ оставался прежним, хотя температура уже изменилась.
     ledcWrite(LED_PWM_PIN, target_led);
     ledcWrite(FAN1_PWM_PIN, target_fan1);
     ledcWrite(FAN2_PWM_PIN, target_fan2);
@@ -1231,13 +1308,13 @@ void loop() {
     if (logFile) {
       if (!fileExists) logFile.println("timestamp;temp;hum;led;fan1;fan2;sht_ok;rtc_ok");
       logFile.print(now.timestamp(DateTime::TIMESTAMP_FULL)); logFile.print(";");
-      logFile.print(current_temp, 2); logFile.print(";");
-      logFile.print(current_hum, 2); logFile.print(";");
-      logFile.print(current_led_pwm); logFile.print(";");
-      logFile.print(current_fan1_pwm); logFile.print(";");
-      logFile.print(current_fan2_pwm); logFile.print(";");
-      logFile.print(sht_online ? "1" : "0"); logFile.print(";");
-      logFile.println(rtc_online ? "1" : "0");
+      logFile.print(state.temp, 2); logFile.print(";");
+      logFile.print(state.hum, 2); logFile.print(";");
+      logFile.print(state.led_pwm); logFile.print(";");
+      logFile.print(state.fan1_pwm); logFile.print(";");
+      logFile.print(state.fan2_pwm); logFile.print(";");
+      logFile.print(state.sht_online ? "1" : "0"); logFile.print(";");
+      logFile.println(state.rtc_online ? "1" : "0");
       logFile.close();
     }
   }
@@ -1246,21 +1323,20 @@ void loop() {
   static unsigned long lastWaterCheck = 0;
   if (currentMillis - lastWaterCheck >= 1000) {
     lastWaterCheck = currentMillis;
-    DateTime now_w = now; // Время уже обновлено выше, повторно дёргать RTC незачем
 
     // RTClib: dayOfTheWeek() возвращает 0=Вс...6=Сб. Переводим в формат watering_days: 0=Пн...6=Вс
-    int rtc_dow = now_w.dayOfTheWeek();
+    int rtc_dow = now.dayOfTheWeek();
     int iso_dow = (rtc_dow == 0) ? 6 : rtc_dow - 1;
-    uint32_t today_code = now_w.unixtime() / 86400;
+    uint32_t today_code = now.unixtime() / 86400;
 
     // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
-    bool water_ok = !water_sensor_enabled || isWaterAvailable();
+    bool water_ok = !cfg.water_sensor_enabled || isWaterAvailable();
 
-    if (!pump_active) {
-      bool day_enabled = (watering_days >> iso_dow) & 0x01;
-      if (day_enabled && now_w.hour() == watering_hour && now_w.minute() == watering_minute && last_watering_day != today_code) {
+    if (!state.pump_active) {
+      bool day_enabled = (cfg.watering_days >> iso_dow) & 0x01;
+      if (day_enabled && now.hour() == cfg.watering_hour && now.minute() == cfg.watering_minute && last_watering_day != today_code) {
         if (water_ok) {
-          pump_active = true;
+          state.pump_active = true;
           pump_start_ms = currentMillis;
           last_watering_day = today_code;
           // Запоминаем день в NVS: иначе ресет (или срабатывание watchdog) внутри
@@ -1277,19 +1353,20 @@ void loop() {
     } else {
       if (!water_ok) {
         // Аварийная остановка: вода закончилась прямо во время полива — не гоняем насос всухую
-        pump_active = false;
+        state.pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
         logPrintln("[ПОЛИВ] Аварийная остановка: вода закончилась во время полива");
-      } else if (currentMillis - pump_start_ms >= (unsigned long)watering_duration_sec * 1000UL) {
+      } else if (currentMillis - pump_start_ms >= (unsigned long)cfg.watering_duration_sec * 1000UL) {
         // Длительность — по millis(), а не по RTC: если посреди полива восстановится RTC
         // (tryRecoverRTC) и время прыгнет, насос иначе либо выключится мгновенно, либо
         // будет лить, пока не сработает датчик уровня воды.
-        pump_active = false;
+        state.pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
         logPrintln("[ПОЛИВ] Полив завершён");
       }
     }
   }
 
+  publishState(); // Сравнение с опубликованной копией; если ничего не менялось — no-op
   esp_task_wdt_reset();
 }
