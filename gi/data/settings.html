@@ -18,6 +18,7 @@
         <div class="tabs" id="settings-tabs">
             <button type="button" class="tab-btn active" data-tab="tab-general">Общее</button>
             <button type="button" class="tab-btn" data-tab="tab-climate">Климат</button>
+            <button type="button" class="tab-btn" data-tab="tab-light">Освещение</button>
             <button type="button" class="tab-btn" data-tab="tab-fans">Вентиляция</button>
             <button type="button" class="tab-btn" data-tab="tab-watering">Полив</button>
             <button type="button" class="tab-btn" data-tab="tab-heater">Обогрев</button>
@@ -109,6 +110,10 @@
                 </form>
             </div>
 
+        </div>
+
+        <!-- ОСВЕЩЕНИЕ -->
+        <div class="tab-panel" id="tab-light">
             <div class="form-section">
                 <h3>Освещение</h3>
                 <form action="/save-settings" method="POST" id="light-form">
@@ -316,11 +321,11 @@
                         </div>
                         <div class="form-group">
                             <label>API токен (пусто = не менять)</label>
-                            <label><input type="checkbox" id="ubidots_token_clear" name="ubidots_token_clear" value="1"> Отключить облако: удалить токен</label>
                             <div style="display: flex; gap: 8px;">
                                 <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" maxlength="128" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('ubidots_token')">👁</button>
                             </div>
+                            <label><input type="checkbox" id="ubidots_token_clear" name="ubidots_token_clear" value="1"> Отключить облако: удалить токен</label>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить Ubidots</button>

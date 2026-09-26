@@ -870,6 +870,28 @@ String randomSecret() {
   return String(value);
 }
 
+// Eight easy-to-type characters; keep the longer randomSecret() for CSRF.
+String randomPassword() {
+  static const char alphabet[] = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+  char password[9];
+  for (size_t i = 0; i < 8; ++i) {
+    uint8_t sample;
+    esp_fill_random(&sample, 1);
+    password[i] = alphabet[sample & 31];
+  }
+  password[8] = '\0';
+  return String(password);
+}
+
+bool isLegacyGeneratedPassword(const String &password) {
+  if (password.length() != 32) return false;
+  for (size_t i = 0; i < password.length(); ++i) {
+    char c = password[i];
+    if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'))) return false;
+  }
+  return true;
+}
+
 bool authorize(AsyncWebServerRequest *request) {
   if (!request->authenticate("admin", admin_password.c_str(), "GI")) {
     request->requestAuthentication("GI", true);
@@ -920,15 +942,15 @@ void setup() {
   }
   // A one-time upgrade rotates the old publicly documented AP password.
   if (!preferences.getBool("security_v1", false)) {
-    String generated = randomSecret();
+    String generated = randomPassword();
     if (!preferences.putString("ap_pass", generated) || !preferences.putBool("security_v1", true)) {
       Serial.println("Cannot persist AP password");
       while (true) delay(1000);
     }
   }
   admin_password = preferences.getString("admin_pass", "");
-  if (admin_password.length() < 16) {
-    admin_password = randomSecret();
+  if (admin_password.length() != 8) {
+    admin_password = randomPassword();
     if (!preferences.putString("admin_pass", admin_password)) {
       Serial.println("Cannot persist admin password");
       while (true) delay(1000);
@@ -936,10 +958,21 @@ void setup() {
   }
   csrf_token = randomSecret();
 
+  // One-time migration of the previous generator's 32-character hex AP password.
+  if (!preferences.getBool("short_pass_v1", false)) {
+    String previous = preferences.getString("ap_pass", "");
+    if (isLegacyGeneratedPassword(previous) && !preferences.putString("ap_pass", randomPassword())) {
+      Serial.println("Cannot persist AP password"); while (true) delay(1000);
+    }
+    if (!preferences.putBool("short_pass_v1", true)) {
+      Serial.println("Cannot persist password migration"); while (true) delay(1000);
+    }
+  }
+
   Settings cfg;
   loadSettingsFromNVS(cfg);
   if (strlen(cfg.ap_pass) < 8) {
-    String generated = randomSecret();
+    String generated = randomPassword();
     strlcpy(cfg.ap_pass, generated.c_str(), sizeof(cfg.ap_pass));
     if (!preferences.putString("ap_pass", cfg.ap_pass)) {
       Serial.println("Cannot persist AP password"); while (true) delay(1000);
