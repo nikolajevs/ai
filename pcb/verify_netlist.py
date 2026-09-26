@@ -49,6 +49,32 @@ groups = [
     [('J401', 4), ('R409', 2), ('C401', 1), ('C402', 1)] + [(r, 1) for r in ['R405', 'R406', 'R407', 'R408', 'R410']],
     [('J401', 6), ('J401', 'SH'), ('U201', 1)] + [(r, 3) for r in ['D301', 'D302', 'D401', 'D402', 'D403']],
 ]
+# Output polarity, gate drive and connector pinout.
+groups += [
+    [('U201', 12), ('R209', 1), ('R521', 1)],
+    [('R521', 2), ('R522', 1), ('Q521', 1)],
+    [('Q521', 3), ('J521', 2), ('D521', 2)],
+    [('U101', 3), ('J521', 1), ('D521', 1), ('J601', 1), ('U601', 6)],
+    [('U201', 13), ('R210', 1), ('U601', 2)],
+    [('U601', 7), ('R601', 1)],
+    [('R601', 2), ('R602', 1), ('Q601', 4)],
+    [('Q601', 5), ('J601', 2), ('D601', 1)],
+    [('U201', 2), ('U601', 1)],
+    [('U201', 1), ('Q601', 1), ('Q601', 2), ('Q601', 3), ('R602', 2),
+     ('D601', 2), ('U601', 3), ('U601', 4), ('U601', 8), ('Q521', 2)],
+]
+for suffix, pwm_pin, tach_pin, pull in [(501, 10, 6, 'R207'), (511, 11, 7, 'R208')]:
+    j,q,r,d = f'J{suffix}', f'Q{suffix}', f'R{suffix}', f'D{suffix}'
+    groups += [
+        [('U201', pwm_pin), (r, 1)],
+        [(r, 2), (q, 1), (f'R{suffix+1}', 1)],
+        [(q, 3), (j, 4), (d, 1)],
+        [('U201', tach_pin), (pull, 2), (f'R{suffix+2}', 1)],
+        [(f'R{suffix+2}', 2), (j, 3), (d, 2)],
+        [('U201', 1), (q, 2), (j, 1), (d, 3)],
+        [('U101', 3), (j, 2)],
+    ]
+
 for group in groups:
     name, actual = net_of(*group[0])
     expected = {(ref, str(pin)) for ref, pin in group}
@@ -66,5 +92,8 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 64
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery isolation, UART reference separation, 64 components.')
+assert len(root.findall('.//components/comp')) == 90
+
+for drain in [('Q601', 5), ('Q521', 3)]:
+    assert net_of(*drain)[0] not in (net_of('U201', 1)[0], net_of('U101', 3)[0])
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery isolation, UART reference separation, 90 components.')

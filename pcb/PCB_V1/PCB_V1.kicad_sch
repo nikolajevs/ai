@@ -7,9 +7,9 @@
 	(title_block
 		(title "01 - Logic power / 12 V to 3.3 V")
 		(date "2026-09-26")
-		(rev "0.2-DRAFT")
+		(rev "0.3-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Logic first; power loads not yet implemented")
+		(comment 1 "Draft: input protection and LED drivers pending")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
@@ -977,7 +977,7 @@
 		)
 		(uuid "a559b4a3-72b9-5b8c-9e44-abdc36e95f10")
 	)
-	(text "Ревизия 0.2: RTC, microSD и датчики добавлены; силовая часть ещё не разработана."
+	(text "Ревизия 0.3: выходы FAN/PUMP/PTC добавлены. Входная защита и LED-драйверы ещё не разработаны."
 		(exclude_from_sim no)
 		(at 20.32 25.4 0)
 		(effects
@@ -1392,16 +1392,6 @@
 		)
 		(uuid "118a9b05-efe7-5a7d-895b-f09c3145b4a6")
 	)
-	(label "+12V_PROTECTED"
-		(at 25.4 170.18 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "2486abf5-d6f2-57fa-af98-f1a538c80fbe")
-	)
 	(label "BUCK_FB"
 		(at 243.84 85.09 0)
 		(effects
@@ -1421,16 +1411,6 @@
 			(justify left bottom)
 		)
 		(uuid "9d7e1e7b-adff-5591-9e91-4d80751634ba")
-	)
-	(label "+12V_PROTECTED"
-		(at 25.4 50.8 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "a3dd55c5-7e1c-5e19-975e-5c30ba585dfc")
 	)
 	(label "BUCK_SW"
 		(at 125.73 63.5 0)
@@ -1520,6 +1500,28 @@
 		(uuid "18f6bb8f-4e39-5081-b269-d7be595f5f50")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 93.98 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "+12V_PROTECTED"
+		(shape bidirectional)
+		(at 25.4 170.18 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "2486abf5-d6f2-57fa-af98-f1a538c80fbe")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 25.4 170.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1630,6 +1632,28 @@
 		(uuid "a1926ad4-1551-5b3a-80e1-7d075eb0aa1f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 149.86 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "+12V_PROTECTED"
+		(shape bidirectional)
+		(at 25.4 50.8 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "a3dd55c5-7e1c-5e19-975e-5c30ba585dfc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 25.4 50.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3019,8 +3043,54 @@
 		)
 	)
 	(sheet
+		(at 200.66 151.13)
+		(size 66.04 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "094b27f9-0b26-500d-bd76-df142bab7fb7")
+		(property "Sheetname" "Outputs"
+			(at 200.66 150.495 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Outputs.kicad_sch"
+			(at 200.66 159.385 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 200.66 132.08)
-		(size 66.04 22.86)
+		(size 66.04 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3046,7 +3116,7 @@
 			)
 		)
 		(property "Sheetfile" "MCU.kicad_sch"
-			(at 200.66 155.575 0)
+			(at 200.66 140.335 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

@@ -9,7 +9,7 @@
 		(date "2026-09-26")
 		(rev "0.2-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Peripheral draft; power loads not yet implemented")
+		(comment 1 "Draft: input protection and LED drivers pending")
 	)
 	(lib_symbols
 		(symbol "Connector:Micro_SD_Card_Det2"
