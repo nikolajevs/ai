@@ -1,3 +1,4 @@
+let csrfToken = "";
 const wateringDayIds = ["wd_mon", "wd_tue", "wd_wed", "wd_thu", "wd_fri", "wd_sat", "wd_sun"];
 
 function packWateringDays() {
@@ -47,7 +48,7 @@ function setSecretPlaceholder(id, isSet) {
 // Галочка "сеть без пароля" — единственный способ стереть сохранённый пароль,
 // раз пустое поле теперь означает "не менять"
 function attachClearPassToggles() {
-    [['ap_pass_clear', 'ap_pass'], ['wifi_pass_clear', 'wifi_pass']].forEach(([cbId, inputId]) => {
+    [['wifi_pass_clear', 'wifi_pass'], ['ubidots_token_clear', 'ubidots_token']].forEach(([cbId, inputId]) => {
         const cb = document.getElementById(cbId);
         const input = document.getElementById(inputId);
         if (!cb || !input) return;
@@ -144,7 +145,18 @@ async function loadCurrentSettings() {
         if (!res.ok) throw new Error("Ошибка ответа сервера");
         
         const data = await res.json();
+        csrfToken = data.csrf_token;
+        document.querySelectorAll('form[method="POST"]').forEach(form => {
+            let input = form.querySelector('input[name="csrf_token"]');
+            if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden'; input.name = 'csrf_token'; form.appendChild(input);
+            }
+            input.value = csrfToken;
+        });
         
+
+
         document.getElementById('temp_target').value = data.temp_target;
         document.getElementById('temp_delta').value = data.temp_delta;
         document.getElementById('max_hum_night').value = data.max_hum_night;
@@ -235,14 +247,16 @@ function loadSdFiles() {
 
 function clearSDLogs() {
     if (!confirm("Уничтожить весь лог истории климата на SD-карте? Действие необратимо.")) return;
-    // Именно POST: GET-версию этого запроса можно было вызвать со стороннней страницы
-    fetch('/api/clearlogs', { method: 'POST' }).then(res => {
+    if (!csrfToken) { alert("Сначала дождитесь загрузки настроек."); return; }
+    fetch('/api/clearlogs', { method: 'POST', headers: { 'X-CSRF-Token': csrfToken } }).then(res => {
         if (res.ok) {
             alert("Удалено");
             loadCurrentSettings(); // Перечитываем занятость SD и обновляем прогресс-бар
             loadSdFiles();
+        } else {
+            alert("Удаление не выполнено. Обновите страницу и повторите.");
         }
-    });
+    }).catch(() => alert("Ошибка связи при удалении."));
 }
 
 function initTabs() {
@@ -261,6 +275,9 @@ function initTabs() {
 }
 
 window.onload = () => {
+    document.querySelectorAll('form').forEach(form => form.addEventListener('submit', e => {
+        if (!csrfToken) { e.preventDefault(); alert("Сначала дождитесь загрузки настроек."); }
+    }));
     setCurrentTime();
     loadCurrentSettings();
     loadSdFiles();

@@ -14,16 +14,25 @@
 #include <HTTPClient.h>
 #include <WiFiClientSecure.h>
 #include <vector>
+#include <atomic>
+#include <esp_random.h>
+#include <time.h>
+#include "Safety.h"
+#include "SafetyTests.h"
+#include "UbidotsCA.h"
 
 // --- Настройки подключения к домашнему роутеру и Ubidots ---
 // Значения по умолчанию используются только при первой прошивке / если NVS пуст.
 // Реальные значения хранятся в Preferences и редактируются на вкладке "WiFi / Ubidots".
-#define DEFAULT_WIFI_SSID     "B535_90A3-ext"
-#define DEFAULT_WIFI_PASS     "d92Te5L78H3"
-#define DEFAULT_UBIDOTS_TOKEN "BBUS-SjTUV0ChXNMezQpTFz1fOeZvHKTvjU"
+#define DEFAULT_WIFI_SSID ""
+#define DEFAULT_WIFI_PASS ""
+#define DEFAULT_UBIDOTS_TOKEN ""
 #define DEFAULT_DEVICE_LABEL  "kireal"
 #define DEFAULT_AP_SSID       "KiReal"
-#define DEFAULT_AP_PASS       "420420420"
+#define DEFAULT_AP_PASS ""
+
+String admin_password; // Immutable after setup, never returned through HTTP.
+String csrf_token;
 
 // --- Распиновка периферии ---
 #define SD_CS_PIN     5
@@ -97,7 +106,7 @@ struct Settings {
   char ubidots_token[TOKEN_MAX + 1];
   char device_label[LABEL_MAX + 1];
   char ap_ssid[WIFI_SSID_MAX + 1];   // Точка доступа платы — к ней подключается телефон/ноутбук
-  char ap_pass[WIFI_PASS_MAX + 1];   // Пусто = открытая сеть
+  char ap_pass[WIFI_PASS_MAX + 1];   // WPA2 only; empty form means keep existing password
 };
 
 struct State {
@@ -109,6 +118,7 @@ struct State {
   bool is_day;
   bool sht_online;
   bool rtc_online;
+  bool clock_trusted;
   bool pump_active;
   bool heater_active;
 };
@@ -265,7 +275,8 @@ int clearCsvLogs() {
 }
 
 // --- Внутреннее состояние loop(): никто, кроме loop() и setup(), эти переменные не трогает ---
-unsigned long pump_start_ms = 0;   // Отсчёт длительности полива по millis(), а не по RTC
+uint32_t pump_start_ms = 0;   // Отсчёт длительности полива по millis(), а не по RTC
+uint32_t pump_duration_ms = 0;
 uint32_t last_watering_day = 0;    // Защита от повторного срабатывания в тот же день (хранится в NVS)
 
 unsigned long last_sht_retry = 0;                  // Когда последний раз пытались восстановить датчик
@@ -279,13 +290,13 @@ const int RTC_RECOVERY_STREAK_NEEDED = 3;          // Сколько подря�
 
 // Переменные для программного дублирования времени (на случай отказа RTC)
 uint32_t backup_unixtime = 1774838400; // Дефолтный 2026 год, если RTC умер сразу при старте
-unsigned long last_rtc_check_ms = 0;
+uint32_t last_rtc_check_ms = 0;
 
 // Время и запросы к RTC трогает только loop(). Веб-обработчики крутятся в задаче
 // AsyncWebServer (другое ядро): раньше они звали getSafeDateTime() и rtc.adjust() напрямую,
 // то есть лезли в I2C параллельно с опросом SHT4x и одновременно правили rtc_online/backup_unixtime.
-volatile uint32_t cached_unixtime = 0;  // Снимок времени для веб-обработчиков, обновляет loop()
-volatile uint32_t pending_time_set = 0; // Запрос "выставить часы" с формы; применяет loop()
+std::atomic<uint32_t> cached_unixtime{0};  // Снимок времени для веб-обработчиков, обновляет loop()
+std::atomic<uint32_t> pending_time_set{0}; // Запрос "выставить часы" с формы; применяет loop()
 
 // --- Хендлы FreeRTOS для многоядерности ---
 TaskHandle_t UbidotsTaskHandle = NULL;
@@ -321,14 +332,14 @@ bool parseDate(const String &str, int &y, int &m, int &d) {
   y = str.substring(0, 4).toInt();
   m = str.substring(5, 7).toInt();
   d = str.substring(8, 10).toInt();
-  return y >= 2000 && y <= 2099 && m >= 1 && m <= 12 && d >= 1 && d <= 31;
+  return validCalendar(y, m, d, 0, 0, 0);
 }
 
 // "YYYY-MM-DDTHH:MM" — формат, который отдаёт <input type="datetime-local">
 bool parseDateTimeLocal(const String &str, DateTime &out) {
   int y, m, d;
   if (!parseDate(str, y, m, d)) return false;
-  if (str.length() < 16 || str[13] != ':') return false;
+  if (str.length() != 16 || str[10] != 'T' || str[13] != ':') return false;
   for (int i = 11; i < 16; i++) {
     if (i == 13) continue;
     if (str[i] < '0' || str[i] > '9') return false;
@@ -452,7 +463,7 @@ static const SettingDef SETTING_DEFS[] = {
   SET_INT  ("fan_night_min_limit", "fan_night_min",   fan_night_min_limit,   0,    100,   30),
   SET_INT  ("fan_night_max_limit", "fan_night_max",   fan_night_max_limit,   0,    100,   100),
   // --- Обогрев ---
-  SET_INT  ("heater_mode",         "heater_mode",     heater_mode,           0,    3,     2),
+  SET_INT  ("heater_mode",         "heater_mode",     heater_mode,           0,    3,     3),
   // --- Автополив ---
   SET_U8   ("watering_days",       "watering_days",   watering_days,         0,    127,   0),
   SET_INT  ("watering_hour",       "watering_hour",   watering_hour,         0,    23,    8),
@@ -480,11 +491,11 @@ const uint8_t *fieldAddr(const Settings &s, const SettingDef &d) {
   return (const uint8_t *)&s + d.offset;
 }
 
-// Допустима ли строка. Пустая — только если это разрешено (мин. длина 0) или это секрет:
-// пустой пароль = открытая сеть, пустой токен = телеметрия выключена.
+// Empty router password means an open upstream network; empty token disables cloud.
+// The device AP itself always requires WPA2.
 bool settingStringValid(const SettingDef &d, const char *v) {
   size_t len = strlen(v);
-  if (len == 0) return d.lo == 0 || (d.flags & SF_SECRET);
+  if (len == 0) return strcmp(d.param, "ap_pass") != 0 && (d.lo == 0 || (d.flags & SF_SECRET));
   return len >= (size_t)d.lo && len <= (size_t)d.hi;
 }
 
@@ -564,6 +575,7 @@ String applyFormToSettings(AsyncWebServerRequest *request, Settings &s) {
       // пароль можно только явно — галочкой <param>_clear ("сеть без пароля").
       String clearParam = String(d.param) + "_clear";
       if (request->hasParam(clearParam, true) && request->getParam(clearParam, true)->value() == "1") {
+        if (strcmp(d.param, "ap_pass") == 0) { addErrorGroup(rejected, "ap"); continue; }
         ((char *)p)[0] = '\0';
         continue;
       }
@@ -611,8 +623,7 @@ void saveChangedSettings(const Settings &prev, const Settings &next) {
   }
 }
 
-// Поля настроек для /api/settings. Секреты наружу не отдаём: страницу настроек открывает
-// любой, кто подключился к точке доступа, — вместо значения только флаг <param>_set.
+// Even authenticated clients receive only <param>_set flags, never stored secrets.
 void appendSettingsJson(String &json, const Settings &s) {
   for (size_t i = 0; i < SETTING_DEFS_COUNT; i++) {
     const SettingDef &d = SETTING_DEFS[i];
@@ -698,10 +709,14 @@ void vUbidotsTask(void *pvParameters) {
     payload += "\"sensor-status\":" + String(st.sht_online ? 1 : 0); // Статус датчика в облако
     payload += "}";
 
-    // HTTPS вместо HTTP: токен больше не уходит открытым текстом по эфиру.
-    // setInsecure() — без проверки сертификата (корневых CA на плате нет), но канал зашифрован.
+    if (!cfg.ubidots_token[0] || !cfg.device_label[0]) continue;
+    // System UTC for certificate validation; never modifies the local DS3231 schedule.
+    configTime(0, 0, "pool.ntp.org", "time.cloudflare.com");
+    for (int i = 0; time(nullptr) < 1704067200 && i < 40; ++i) vTaskDelay(pdMS_TO_TICKS(250));
+    if (time(nullptr) < 1704067200) { logPrintln("[TLS] Waiting for UTC time; telemetry skipped."); continue; }
     WiFiClientSecure client;
-    client.setInsecure();
+    client.setCACert(UBIDOTS_ROOT_CA);
+    client.setHandshakeTimeout(15);
     HTTPClient http;
     http.setTimeout(10000);
 
@@ -725,8 +740,9 @@ void vUbidotsTask(void *pvParameters) {
 // нужно вручную "протактовать" SCL, чтобы slave-устройство доотправило начатый байт и
 // освободило линию, затем сформировать STOP и переинициализировать Wire.
 void recoverI2CBus() {
+  Wire.end(); // Stop the driver before temporarily taking over its GPIOs.
   pinMode(I2C_SDA_PIN, INPUT_PULLUP);
-  pinMode(I2C_SCL_PIN, OUTPUT);
+  pinMode(I2C_SCL_PIN, OUTPUT_OPEN_DRAIN);
   digitalWrite(I2C_SCL_PIN, HIGH);
 
   if (digitalRead(I2C_SDA_PIN) == HIGH) {
@@ -748,7 +764,7 @@ void recoverI2CBus() {
 
   // Формируем STOP-условие вручную (SDA LOW->HIGH, пока SCL HIGH), чтобы сбросить
   // внутренний автомат состояний slave-устройства в исходное состояние
-  pinMode(I2C_SDA_PIN, OUTPUT);
+  pinMode(I2C_SDA_PIN, OUTPUT_OPEN_DRAIN);
   digitalWrite(I2C_SDA_PIN, LOW);
   delayMicroseconds(5);
   digitalWrite(I2C_SCL_PIN, HIGH);
@@ -773,36 +789,38 @@ bool isWaterAvailable() {
   return digitalRead(WATER_LEVEL_PIN) == LOW;
 }
 
-// Грубая, но честная проверка правдоподобности времени из RTC. Прежнее условие
-// (now.minute() <= 60 && now.hour() <= 60) не ловило ничего: оба поля — uint8_t и в
-// принципе не могут быть больше 60. Год отсекает DS3231 с севшей батарейкой —
-// такой просыпается на заводской дате (2000 или 2021 год).
-bool isPlausibleDateTime(const DateTime &t) {
-  return t.isValid() && t.hour() < 24 && t.minute() < 60 && t.second() < 60 &&
-         t.year() >= 2024 && t.year() <= 2099;
+// Do not use rtc.now() for failure detection: its API does not report I2C errors.
+bool readRTC(DateTime &result) {
+  uint8_t raw[7];
+  Wire.beginTransmission(0x68);
+  Wire.write(uint8_t(0));
+  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(uint8_t(0x68), size_t(7), true) != 7) return false;
+  for (int i = 0; i < 7; ++i) raw[i] = Wire.read();
+  Wire.beginTransmission(0x68);
+  Wire.write(uint8_t(0x0f));
+  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(uint8_t(0x68), size_t(1), true) != 1) return false;
+  RtcFields fields{};
+  if (!decodeRtc(raw, Wire.read(), fields)) return false;
+  result = DateTime(fields.year, fields.month, fields.day, fields.hour, fields.minute, fields.second);
+  return true;
 }
 
 // Безопасное время: из RTC или из программного бэкапа. Вызывается только из setup()/loop().
 DateTime getSafeDateTime() {
   if (state.rtc_online) {
-    DateTime now = rtc.now();
-    if (isPlausibleDateTime(now)) {
+    DateTime now;
+    if (readRTC(now)) {
+      state.clock_trusted = true;
       backup_unixtime = now.unixtime(); // Синхронизируем бэкап
       last_rtc_check_ms = millis();     // ...и точку отсчёта программного таймера
       return now;
     }
     logPrintln("[КРИТИКА] RTC вернул некорректную дату! Переход на программный таймер.");
     state.rtc_online = false;
-    last_rtc_check_ms = millis(); // Иначе первый же расчёт ниже прыгнет на часы вперёд
   }
 
   // Если RTC сломан, рассчитываем время программно на основе millis()
-  unsigned long ms = millis();
-  uint32_t elapsed_seconds = (ms - last_rtc_check_ms) / 1000;
-  if (elapsed_seconds > 0) {
-    backup_unixtime += elapsed_seconds;
-    last_rtc_check_ms += elapsed_seconds * 1000;
-  }
+  advanceBackupClock(millis(), last_rtc_check_ms, backup_unixtime);
   return DateTime(backup_unixtime);
 }
 
@@ -822,15 +840,16 @@ void tryRecoverRTC(unsigned long currentMillis) {
 
   bool retry_ok = false;
   if (rtc.begin()) {
-    DateTime now = rtc.now();
+    DateTime now;
     // 2024..2099 — грубая защита от "проснувшегося после разряда батарейки" RTC,
     // который обычно сбрасывается на заводскую дату (например, 2000 или 2021 год)
-    if (isPlausibleDateTime(now)) {
+    if (readRTC(now)) {
       retry_ok = true;
       rtc_recovery_streak++;
       logPrintf("[RTC] Попытка восстановления %d/%d успешна\n", rtc_recovery_streak, RTC_RECOVERY_STREAK_NEEDED);
       if (rtc_recovery_streak >= RTC_RECOVERY_STREAK_NEEDED) {
         state.rtc_online = true;
+        state.clock_trusted = true;
         backup_unixtime = now.unixtime();
         last_rtc_check_ms = millis();
         rtc_recovery_streak = 0;
@@ -843,7 +862,36 @@ void tryRecoverRTC(unsigned long currentMillis) {
   }
 }
 
+String randomSecret() {
+  char value[33];
+  uint8_t bytes[16];
+  esp_fill_random(bytes, sizeof(bytes));
+  for (int i = 0; i < 16; ++i) snprintf(value + i * 2, 3, "%02x", bytes[i]);
+  return String(value);
+}
+
+bool authorize(AsyncWebServerRequest *request) {
+  if (!request->authenticate("admin", admin_password.c_str(), "GI")) {
+    request->requestAuthentication("GI", true);
+    return false;
+  }
+  if (request->method() == HTTP_POST) {
+    String token;
+    if (request->hasHeader("X-CSRF-Token")) token = request->getHeader("X-CSRF-Token")->value();
+    else if (request->hasParam("csrf_token", true)) token = request->getParam("csrf_token", true)->value();
+    if (token != csrf_token) {
+      request->send(403, "text/plain", "Reload settings and retry");
+      return false;
+    }
+  }
+  return true;
+}
+
 void setup() {
+  pinMode(PUMP_PIN, OUTPUT);
+  digitalWrite(PUMP_PIN, LOW);
+  pinMode(HEATER_PIN, OUTPUT);
+  digitalWrite(HEATER_PIN, LOW);
   Serial.begin(115200);
   // Внутри setup() после инициализации Serial
   #ifdef ESP_IDF_VERSION_VAL
@@ -853,7 +901,7 @@ void setup() {
         .idle_core_mask = (1 << 0) | (1 << 1), // Мониторим оба ядра
         .trigger_panic = true
     };
-    esp_task_wdt_reconfigure(&wdt_config);
+    if (esp_task_wdt_reconfigure(&wdt_config) == ESP_ERR_INVALID_STATE) esp_task_wdt_init(&wdt_config);
     esp_task_wdt_add(NULL); // Добавляем текущую задачу (loop)
   #else
     // Старый метод для более старых версий (2.x)
@@ -865,9 +913,40 @@ void setup() {
               // без этой паузы begin() может провалиться из-за гонки при старте платы
   recoverI2CBus(); // На случай, если шина осталась "залипшей" ещё с прошлого включения
 
-  preferences.begin("grow-box", false);
+  WiFi.mode(WIFI_STA); // RF entropy before generating passwords, no open AP.
+  if (!preferences.begin("grow-box", false)) {
+    Serial.println("Cannot initialize settings; outputs remain off.");
+    while (true) delay(1000);
+  }
+  // A one-time upgrade rotates the old publicly documented AP password.
+  if (!preferences.getBool("security_v1", false)) {
+    String generated = randomSecret();
+    if (!preferences.putString("ap_pass", generated) || !preferences.putBool("security_v1", true)) {
+      Serial.println("Cannot persist AP password");
+      while (true) delay(1000);
+    }
+  }
+  admin_password = preferences.getString("admin_pass", "");
+  if (admin_password.length() < 16) {
+    admin_password = randomSecret();
+    if (!preferences.putString("admin_pass", admin_password)) {
+      Serial.println("Cannot persist admin password");
+      while (true) delay(1000);
+    }
+  }
+  csrf_token = randomSecret();
+
   Settings cfg;
   loadSettingsFromNVS(cfg);
+  if (strlen(cfg.ap_pass) < 8) {
+    String generated = randomSecret();
+    strlcpy(cfg.ap_pass, generated.c_str(), sizeof(cfg.ap_pass));
+    if (!preferences.putString("ap_pass", cfg.ap_pass)) {
+      Serial.println("Cannot persist AP password"); while (true) delay(1000);
+    }
+  }
+  // USB only: credentials never enter the HTTP console buffer.
+  Serial.printf("AP password: %s\nWeb login: admin / %s\n", cfg.ap_pass, admin_password.c_str());
   publishSettings(cfg);
   last_watering_day = preferences.getUInt("last_water", 0);
 
@@ -889,7 +968,11 @@ void setup() {
 
   state.rtc_online = false;
   for (int i = 0; i < 5 && !state.rtc_online; i++) {
-    if (rtc.begin()) {
+    DateTime initialTime;
+    if (rtc.begin() && readRTC(initialTime)) {
+      backup_unixtime = initialTime.unixtime();
+      last_rtc_check_ms = millis();
+      state.clock_trusted = true;
       state.rtc_online = true;
     } else {
       logPrintf("[RTC] Попытка инициализации %d/5 не удалась, повтор через 200мс...\n", i + 1);
@@ -923,6 +1006,14 @@ void setup() {
 
   xTaskCreatePinnedToCore(vUbidotsTask, "UbidotsTask", 12288, NULL, 1, &UbidotsTaskHandle, 0); // 12 КБ: mbedTLS не влезает в 8
 
+  // The same guard covers pages, static assets, APIs and future routes.
+  server.addMiddleware([](AsyncWebServerRequest *request, ArMiddlewareNext next) {
+    if (authorize(request)) next();
+  });
+  DefaultHeaders::Instance().addHeader("Cache-Control", "no-store");
+  DefaultHeaders::Instance().addHeader("X-Frame-Options", "DENY");
+  DefaultHeaders::Instance().addHeader("X-Content-Type-Options", "nosniff");
+
   // --- МАРШРУТИЗАЦИЯ ВЕБ-СЕРВЕРА ---
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/index.html", "text/html"); });
   server.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(SPIFFS, "/settings.html", "text/html"); });
@@ -947,6 +1038,7 @@ void setup() {
     json += "\"grow_day\":" + String(grow_day) + ",";
     json += "\"sht_online\":" + String(st.sht_online ? "true" : "false") + ","; // Передаем статус в UI
     json += "\"rtc_online\":" + String(st.rtc_online ? "true" : "false") + ",";
+    json += "\"clock_trusted\":" + String(st.clock_trusted ? "true" : "false") + ",";
     json += "\"pump_active\":" + String(st.pump_active ? "true" : "false") + ",";
     json += "\"heater_active\":" + String(st.heater_active ? "true" : "false");
     json += "}";
@@ -967,6 +1059,7 @@ void setup() {
 
     String json = "{";
     appendSettingsJson(json, cfg);
+    json += "\"csrf_token\":\"" + csrf_token + "\",";
     json += "\"rtc_time\":\"" + String(buf) + "\",";
 
     uint64_t sdTotal = SD.totalBytes();
@@ -991,8 +1084,11 @@ void setup() {
     // Дата начала цикла приходит строкой YYYY-MM-DD — в таблицу не укладывается
     if (request->hasParam("start_date", true)) {
       int y, m, d;
-      if (parseDate(request->getParam("start_date", true)->value(), y, m, d)) {
+      if (isValidLogDate(request->getParam("start_date", true)->value()) &&
+          parseDate(request->getParam("start_date", true)->value(), y, m, d)) {
         next.start_timestamp = DateTime(y, m, d, 0, 0, 0).unixtime();
+      } else {
+        request->send(400, "text/plain", "Invalid start date"); return;
       }
     }
 
@@ -1088,7 +1184,7 @@ void setup() {
 
   // Статика регистрируется последней: так обработчик "/" гарантированно не встанет
   // перед /api/* ни в одной из версий ESPAsyncWebServer
-  server.serveStatic("/", SPIFFS, "/").setCacheControl("max-age=600");
+  server.serveStatic("/", SPIFFS, "/").setCacheControl("no-store");
   server.onNotFound([](AsyncWebServerRequest *request){ request->send(404, "text/plain", "Not found"); });
 
   server.begin();
@@ -1101,6 +1197,11 @@ void setup() {
 void loop() {
   static unsigned long lastClimateTime = 0;
   unsigned long currentMillis = millis();
+  if (state.pump_active && elapsedMs(currentMillis, pump_start_ms) >= pump_duration_ms) {
+    state.pump_active = false;
+    digitalWrite(PUMP_PIN, LOW);
+    logPrintln("[Watering] Pump stopped at deadline.");
+  }
   tryRecoverRTC(currentMillis); // Не блокирует: сам ограничивает частоту попыток внутри
 
   // Время читаем раз в секунду, а не на каждой итерации loop(): rtc.now() — полноценная
@@ -1118,11 +1219,17 @@ void loop() {
   }
 
   // Часы, выставленные из веб-формы, применяем здесь: в I2C ходит только loop()
-  uint32_t requested = pending_time_set;
+  uint32_t requested = pending_time_set.exchange(0);
   if (requested != 0) {
-    pending_time_set = 0;
     DateTime userTime(requested);
-    if (state.rtc_online) rtc.adjust(userTime);
+    state.rtc_online = false;
+    if (rtc.begin()) {
+      rtc.adjust(userTime);
+      DateTime checked;
+      state.rtc_online = readRTC(checked) && checked.unixtime() >= requested && checked.unixtime() - requested <= 2;
+    }
+    state.clock_trusted = true;
+    rtc_recovery_streak = 0;
     backup_unixtime = requested;
     last_rtc_check_ms = millis();
     now = userTime;
@@ -1334,19 +1441,19 @@ void loop() {
 
     if (!state.pump_active) {
       bool day_enabled = (cfg.watering_days >> iso_dow) & 0x01;
-      if (day_enabled && now.hour() == cfg.watering_hour && now.minute() == cfg.watering_minute && last_watering_day != today_code) {
-        if (water_ok) {
+      if (day_enabled && now.hour() == cfg.watering_hour && now.minute() == cfg.watering_minute && wateringDayAllowed(state.clock_trusted, today_code, last_watering_day)) {
+        // Persist before energizing the pump; reboot during this minute must not repeat it.
+        last_watering_day = today_code;
+        if (preferences.putUInt("last_water", today_code) != sizeof(uint32_t)) {
+          logPrintln("[Watering] NVS write failed; pump remains off.");
+        } else if (water_ok) {
           state.pump_active = true;
-          pump_start_ms = currentMillis;
-          last_watering_day = today_code;
-          // Запоминаем день в NVS: иначе ресет (или срабатывание watchdog) внутри
-          // поливочной минуты запускал полив по второму разу
-          preferences.putUInt("last_water", today_code);
+          pump_start_ms = millis();
+          pump_duration_ms = uint32_t(cfg.watering_duration_sec) * 1000U;
           digitalWrite(PUMP_PIN, HIGH);
           logPrintln("[ПОЛИВ] Старт автополива");
         } else {
           last_watering_day = today_code; // Не пробуем каждую секунду до конца минуты — ждём до завтра
-          preferences.putUInt("last_water", today_code);
           logPrintln("[ПОЛИВ] Пропущен: датчик не видит воду в баке");
         }
       }
@@ -1356,7 +1463,7 @@ void loop() {
         state.pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
         logPrintln("[ПОЛИВ] Аварийная остановка: вода закончилась во время полива");
-      } else if (currentMillis - pump_start_ms >= (unsigned long)cfg.watering_duration_sec * 1000UL) {
+      } else if (elapsedMs(millis(), pump_start_ms) >= pump_duration_ms) {
         // Длительность — по millis(), а не по RTC: если посреди полива восстановится RTC
         // (tryRecoverRTC) и время прыгнет, насос иначе либо выключится мгновенно, либо
         // будет лить, пока не сработает датчик уровня воды.
@@ -1369,4 +1476,5 @@ void loop() {
 
   publishState(); // Сравнение с опубликованной копией; если ничего не менялось — no-op
   esp_task_wdt_reset();
+  delay(1); // Yield to the monitored idle task.
 }

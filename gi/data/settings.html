@@ -257,7 +257,7 @@
                     После сохранения текущее подключение к плате оборвётся — переподключись с новыми данными.
                 </div>
                 <div id="ap-error-banner" class="form-error" style="display: none;">
-                    Не удалось сохранить точку доступа: имя от 1 до 32 символов, пароль — пусто (открытая сеть) или от 8 до 63 символов. Изменения не применены.
+                    Не удалось сохранить часть настроек точки доступа: имя от 1 до 32 символов, новый пароль от 8 до 63 символов. Пустое поле сохраняет прежний пароль.
                 </div>
                 <form action="/save-settings" method="POST" id="ap-form">
                     <div class="form-grid">
@@ -271,9 +271,6 @@
                                 <input type="password" id="ap_pass" name="ap_pass" autocomplete="off" minlength="8" maxlength="63" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('ap_pass')">👁</button>
                             </div>
-                            <label style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--text-muted);">
-                                <input type="checkbox" id="ap_pass_clear" name="ap_pass_clear" value="1"> Открытая сеть, без пароля
-                            </label>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить точку доступа</button>
@@ -319,6 +316,7 @@
                         </div>
                         <div class="form-group">
                             <label>API токен (пусто = не менять)</label>
+                            <label><input type="checkbox" id="ubidots_token_clear" name="ubidots_token_clear" value="1"> Отключить облако: удалить токен</label>
                             <div style="display: flex; gap: 8px;">
                                 <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" maxlength="128" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('ubidots_token')">👁</button>
