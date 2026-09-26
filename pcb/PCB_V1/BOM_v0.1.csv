@@ -1,11 +1,11 @@
 Ref,Qty,Function,Recommended MPN/series,Footprint,Status,Notes
 U101,1,12V to 3V3 buck,TPS54202DDCR,SOT-23-6,CANDIDATE,Check thermal/effective capacitance
-Q101,1,Reverse polarity,Vishay SiSS5623DN,PowerPAK SO-8 VERIFY,VERIFY,Check SOA and RDS(on) at 25A
-D101,1,Input TVS,SMBJ18A-E3/52,SMB,CANDIDATE,TVS does not replace fuse
-D102,1,Q101 VGS clamp,MMSZ5242B-7-F,SOD-323,CANDIDATE,12V zener
-F101,1,Input fuse,Bourns SF-2923HC-C 25A variant,2920/7451,VERIFY,Exact PN and I2t pending
-F102,1,Loads fuse,Bourns SF-2923HC-C 15-20A variant,2920/7451,VERIFY,20A preliminary
-F103,1,LED fuse,Bourns SF-2923HC-C 10A variant,2920/7451,VERIFY,10A preliminary
+Q901,1,Reverse polarity,Vishay SiSS5623DN,PowerPAK SO-8 VERIFY,VERIFY,Check SOA and RDS(on) at 25A
+D901,1,Input TVS,SMBJ18A-E3/52,SMB,CANDIDATE,TVS does not replace fuse
+D902,1,Q901 VGS clamp,MMSZ5242B-7-F,SOD-323,CANDIDATE,12V zener
+F901,1,Input fuse,Bourns SF-2923HC-C 25A variant,2920/7451,VERIFY,Exact PN and I2t pending
+F902,1,Loads fuse,Bourns SF-2923HC-C 15-20A variant,2920/7451,VERIFY,20A preliminary
+F903,1,LED fuse,Bourns SF-2923HC-C 10A variant,2920/7451,VERIFY,10A preliminary
 U710/U720/U730,3,LED boost controller,LT3756EMSE-2#PBF,MSOP-16+EP,CANDIDATE,Verify compensation and frequency
 Q711/Q721/Q731,3,Boost MOSFET,TI CSD19532Q5B,SON/VSON 5x6,CANDIDATE,100V 4.9mOhm
 D711/D721/D731,3,Boost diode,STPS5H100SF,PSMC/TO-277A,CANDIDATE,100V 5A
@@ -22,7 +22,7 @@ U301,1,RTC,DS3231SN#,SOIC-16W,CANDIDATE,No CR2032 charging
 J401,1,microSD,Molex 104031-0811,microSD,CANDIDATE,4MHz initial SPI
 J301,1,SHT4x connector,JST XH B4B-XH-A,JST-XH 2.50,CANDIDATE,0.5m cable and 100kHz I2C
 BT301,1,RTC battery holder,Keystone 3002,CR2032 THT,CANDIDATE,No charger
-J101,1,12V input terminal,2-pin >=25A,5.08mm,VERIFY,Exact family and current rating pending
+J901,1,12V input terminal,2-pin >=25A,5.08mm,VERIFY,Exact family and current rating pending
 J501/J511,2,4-wire fan terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Check mechanical drawing and rating
 J521/J601/J711/J721/J731,5,2-wire power terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Consider 5.08mm for PTC/LED
 J201,1,Programming header,1x06 pin header,2.54mm,CANDIDATE,External USB-UART programmer

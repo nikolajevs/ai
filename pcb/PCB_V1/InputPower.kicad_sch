@@ -2580,7 +2580,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "07bb22a2-7f67-53e1-87ae-de09b3c57de5")
-		(property "Reference" "C101"
+		(property "Reference" "C901"
 			(at 236.68 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2645,7 +2645,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "C101")
+					(reference "C901")
 					(unit 1)
 				)
 			)
@@ -2662,7 +2662,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0f4d444d-a82d-5828-8248-de61fb7bc788")
-		(property "Reference" "F103"
+		(property "Reference" "F903"
 			(at 355.6 48.26 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2727,7 +2727,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "F103")
+					(reference "F903")
 					(unit 1)
 				)
 			)
@@ -2744,7 +2744,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1ace4113-c250-5de5-8b94-da14ba665ba3")
-		(property "Reference" "R101"
+		(property "Reference" "R901"
 			(at 150.32 44.45 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2809,7 +2809,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "R101")
+					(reference "R901")
 					(unit 1)
 				)
 			)
@@ -2907,7 +2907,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "28bd959d-f3f1-58ac-bb70-8e509aac83d1")
-		(property "Reference" "F102"
+		(property "Reference" "F902"
 			(at 309.88 48.26 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2972,7 +2972,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "F102")
+					(reference "F902")
 					(unit 1)
 				)
 			)
@@ -2989,7 +2989,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2d91f04e-b33f-56fe-99fd-65f99bb92144")
-		(property "Reference" "D101"
+		(property "Reference" "D901"
 			(at 127 60.96 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3054,7 +3054,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "D101")
+					(reference "D901")
 					(unit 1)
 				)
 			)
@@ -3071,7 +3071,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "36c17776-14bc-5cd3-ac0f-23837725472e")
-		(property "Reference" "C102"
+		(property "Reference" "C902"
 			(at 267.16 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3136,7 +3136,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "C102")
+					(reference "C902")
 					(unit 1)
 				)
 			)
@@ -3153,7 +3153,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7578d274-4630-53d1-8a27-8a3d8f9f0d7a")
-		(property "Reference" "Q101"
+		(property "Reference" "Q901"
 			(at 177.8 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3221,7 +3221,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "Q101")
+					(reference "Q901")
 					(unit 1)
 				)
 			)
@@ -3238,7 +3238,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7c1324c9-4733-5fd5-bd00-605f74c83bd2")
-		(property "Reference" "TP602"
+		(property "Reference" "TP902"
 			(at 277.32 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3300,7 +3300,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "TP602")
+					(reference "TP902")
 					(unit 1)
 				)
 			)
@@ -3317,7 +3317,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "97b2518b-a585-5f0c-bdc3-91855dc4af02")
-		(property "Reference" "F101"
+		(property "Reference" "F901"
 			(at 91.44 48.26 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3382,7 +3382,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "F101")
+					(reference "F901")
 					(unit 1)
 				)
 			)
@@ -3399,7 +3399,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a72922b2-c74b-5a00-a6c7-02f9c36a7a89")
-		(property "Reference" "R102"
+		(property "Reference" "R902"
 			(at 150.32 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3464,7 +3464,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "R102")
+					(reference "R902")
 					(unit 1)
 				)
 			)
@@ -3481,7 +3481,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b9e6e030-7a49-5a1d-a2a6-829009d8869a")
-		(property "Reference" "D102"
+		(property "Reference" "D902"
 			(at 205.74 76.2 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3546,7 +3546,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "D102")
+					(reference "D902")
 					(unit 1)
 				)
 			)
@@ -3563,7 +3563,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c9dbffcd-6e99-55a8-8ac8-1e629e8621e8")
-		(property "Reference" "J101"
+		(property "Reference" "J901"
 			(at 35.56 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3628,7 +3628,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "J101")
+					(reference "J901")
 					(unit 1)
 				)
 			)
@@ -3645,7 +3645,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e23a2be7-1451-5fa3-b9d8-13624bc1c528")
-		(property "Reference" "TP603"
+		(property "Reference" "TP903"
 			(at 312.88 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3707,7 +3707,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "TP603")
+					(reference "TP903")
 					(unit 1)
 				)
 			)
@@ -3805,7 +3805,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fb0e59c7-76be-5e04-816b-36e088744c21")
-		(property "Reference" "TP601"
+		(property "Reference" "TP901"
 			(at 241.76 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3867,7 +3867,7 @@
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "TP601")
+					(reference "TP901")
 					(unit 1)
 				)
 			)
