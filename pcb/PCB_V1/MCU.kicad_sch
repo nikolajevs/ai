@@ -7,7 +7,7 @@
 	(title_block
 		(title "02 - ESP32 and programming")
 		(date "2026-09-26")
-		(rev "0.3-DRAFT")
+		(rev "0.4-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -2251,16 +2251,6 @@
 		)
 		(uuid "0eb534c4-ca11-51aa-a11f-9afb12e19023")
 	)
-	(label "LIGHT_PWM"
-		(at 124.46 101.6 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "39ea82e0-a3f4-59b4-be2e-fb8c467eb352")
-	)
 	(label "BOOT_VDD_SDIO"
 		(at 55.88 113.03 0)
 		(effects
@@ -2310,16 +2300,6 @@
 			(justify left bottom)
 		)
 		(uuid "592757b9-6789-5ae5-958e-73f912a8ad1c")
-	)
-	(label "LIGHT_PWM"
-		(at 137.16 151.13 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "5aee8934-7abc-589e-9811-1b217c62275a")
 	)
 	(label "ESP_EN"
 		(at 30.48 90.17 0)
@@ -2401,16 +2381,6 @@
 		)
 		(uuid "ba9fffce-0b86-5ab4-99cd-45aef588789a")
 	)
-	(label "LIGHT_ENABLE"
-		(at 124.46 76.2 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "c027370e-a405-576f-846c-7b2a21e47dcf")
-	)
 	(label "PROG_TX_FROM_ESP"
 		(at 233.68 76.2 180)
 		(effects
@@ -2450,16 +2420,6 @@
 			(justify left bottom)
 		)
 		(uuid "d58bc97c-4626-5988-b652-eb2af6ba3e4d")
-	)
-	(label "LIGHT_ENABLE"
-		(at 165.1 151.13 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "ef776ce9-a884-501e-b145-0eeae0b359f9")
 	)
 	(label "PROG_RX_TO_ESP"
 		(at 236.22 95.25 0)
@@ -2735,6 +2695,28 @@
 			)
 		)
 	)
+	(global_label "LIGHT_PWM"
+		(shape bidirectional)
+		(at 124.46 101.6 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "39ea82e0-a3f4-59b4-be2e-fb8c467eb352")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 124.46 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "FAN2_PWM"
 		(shape bidirectional)
 		(at 124.46 96.52 0)
@@ -2791,6 +2773,28 @@
 		(uuid "4a02ac06-2310-5d06-8e64-6e4464749805")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 246.38 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "LIGHT_PWM"
+		(shape bidirectional)
+		(at 137.16 151.13 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "5aee8934-7abc-589e-9811-1b217c62275a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 137.16 151.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3021,6 +3025,28 @@
 			)
 		)
 	)
+	(global_label "LIGHT_ENABLE"
+		(shape bidirectional)
+		(at 124.46 76.2 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "c027370e-a405-576f-846c-7b2a21e47dcf")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 124.46 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "I2C_SDA"
 		(shape bidirectional)
 		(at 124.46 86.36 0)
@@ -3209,6 +3235,28 @@
 		(uuid "ef673584-3932-516f-8212-77ed632ccadb")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 137.16 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "LIGHT_ENABLE"
+		(shape bidirectional)
+		(at 165.1 151.13 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "ef776ce9-a884-501e-b145-0eeae0b359f9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 165.1 151.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

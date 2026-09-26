@@ -7,7 +7,7 @@
 	(title_block
 		(title "05 - PTC heater switch")
 		(date "2026-09-26")
-		(rev "0.3-DRAFT")
+		(rev "0.4-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -1588,7 +1588,7 @@
 		)
 		(uuid "f9cf8e91-c0b6-5676-a808-a6fa835579b0")
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 30.48 92.71 0)
 		(effects
@@ -1654,7 +1654,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 88.9 48.26 0)
 		(effects
@@ -1786,7 +1786,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 30.48 57.15 0)
 		(effects
@@ -1808,7 +1808,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 228.6 48.26 0)
 		(effects

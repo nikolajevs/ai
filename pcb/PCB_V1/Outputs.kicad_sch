@@ -7,7 +7,7 @@
 	(title_block
 		(title "04 - Fans and pump")
 		(date "2026-09-26")
-		(rev "0.3-DRAFT")
+		(rev "0.4-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -2482,7 +2482,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 355.6 60.96 0)
 		(effects
@@ -2504,7 +2504,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 154.94 228.6 0)
 		(effects
@@ -2614,7 +2614,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 157.48 60.96 0)
 		(effects
@@ -2636,7 +2636,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 160.02 191.77 0)
 		(effects
@@ -2680,7 +2680,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V_LOADS"
 		(shape bidirectional)
 		(at 101.6 234.95 0)
 		(effects
