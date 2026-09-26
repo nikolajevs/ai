@@ -1,0 +1,12 @@
+# KiCad local state, locks, autosaves and recovery copies
+*.kicad_prl
+*.lck
+~*
+_autosave-*
+*-backups/
+backups/
+*.bak
+*.kicad_sch-bak
+*.kicad_pcb-bak
+fp-info-cache
+__pycache__/
