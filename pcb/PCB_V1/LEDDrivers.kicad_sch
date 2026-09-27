@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - AL8853 cost-down LED drivers")
 		(date "2026-09-27")
-		(rev "0.9-DRAFT")
+		(rev "0.10-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "AL8853 cost-down prototype; not fabrication ready")
 	)
@@ -1221,6 +1221,307 @@
 						)
 					)
 					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "GrowBox:DMT10H009LK3"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "DMT10H009LK3-13"
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "GrowBox:Diodes_TO252_DMT10H009LK3"
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.diodes.com/datasheet/download/DMT10H009LK3.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "N-MOSFET transistor, gate/drain/source"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "DMT10H009LK3_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.921 0.381) (xy 3.683 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "DMT10H009LK3_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -9905,7 +10206,7 @@
 		)
 	)
 	(symbol
-		(lib_id "GrowBox:NMOS_PowerPAK_Candidate")
+		(lib_id "GrowBox:DMT10H009LK3")
 		(at 224.79 218.44 0)
 		(unit 1)
 		(body_style 1)
@@ -9926,7 +10227,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Si7454DDP-T1-GE3"
+		(property "Value" "DMT10H009LK3-13"
 			(at 234.95 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9937,7 +10238,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:PowerPAK_SO-8_Single"
+		(property "Footprint" "GrowBox:Diodes_TO252_DMT10H009LK3"
 			(at 224.79 218.44 0)
 			(hide yes)
 			(show_name no)
@@ -9949,7 +10250,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.diodes.com/datasheet/download/DMT10H009LK3.pdf"
 			(at 224.79 218.44 0)
 			(hide yes)
 			(show_name no)
@@ -9971,20 +10272,14 @@
 				)
 			)
 		)
-		(pin "4"
+		(pin "1"
 			(uuid "145b99bf-ea49-5974-9080-ee0631455ef9")
 		)
-		(pin "5"
+		(pin "2"
 			(uuid "44dcedaf-3942-56c1-be15-046af71fb035")
 		)
-		(pin "1"
-			(uuid "15d85885-3a1c-5eb4-aa4e-f02a70049ff7")
-		)
-		(pin "2"
-			(uuid "b645b455-0b92-5fe9-ba6d-b559227b4dad")
-		)
 		(pin "3"
-			(uuid "51fe9f45-8d0a-5156-b0ac-1023e44c4773")
+			(uuid "15d85885-3a1c-5eb4-aa4e-f02a70049ff7")
 		)
 		(instances
 			(project "PCB_V1"
@@ -10752,7 +11047,7 @@
 		)
 	)
 	(symbol
-		(lib_id "GrowBox:NMOS_PowerPAK_Candidate")
+		(lib_id "GrowBox:DMT10H009LK3")
 		(at 224.79 317.5 0)
 		(unit 1)
 		(body_style 1)
@@ -10773,7 +11068,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Si7454DDP-T1-GE3"
+		(property "Value" "DMT10H009LK3-13"
 			(at 234.95 318.77 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10784,7 +11079,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:PowerPAK_SO-8_Single"
+		(property "Footprint" "GrowBox:Diodes_TO252_DMT10H009LK3"
 			(at 224.79 317.5 0)
 			(hide yes)
 			(show_name no)
@@ -10796,7 +11091,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.diodes.com/datasheet/download/DMT10H009LK3.pdf"
 			(at 224.79 317.5 0)
 			(hide yes)
 			(show_name no)
@@ -10818,20 +11113,14 @@
 				)
 			)
 		)
-		(pin "4"
+		(pin "1"
 			(uuid "3a0b6fb1-1c1a-57cb-9c0a-43fdb1c31fa3")
 		)
-		(pin "5"
+		(pin "2"
 			(uuid "08dfdcdd-35c1-5bf1-b768-2c0fa7bc8a96")
 		)
-		(pin "1"
-			(uuid "b1dba4cf-5efb-5d6a-b7bf-0c0f1dd53c3d")
-		)
-		(pin "2"
-			(uuid "ff6f20ec-58d5-51fe-8d85-355bbeffa848")
-		)
 		(pin "3"
-			(uuid "585b4cfd-dd8d-587b-b082-77e42e39b28d")
+			(uuid "b1dba4cf-5efb-5d6a-b7bf-0c0f1dd53c3d")
 		)
 		(instances
 			(project "PCB_V1"

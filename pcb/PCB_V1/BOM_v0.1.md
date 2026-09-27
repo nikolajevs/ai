@@ -1,4 +1,4 @@
-# PCB_V1 — подбор компонентов, ревизия 0.9
+# PCB_V1 — подбор компонентов, ревизия 0.10
 
 Цель пользователя: компоненты одной платы до $30, без PCB и внешнего БП. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
 
@@ -15,7 +15,7 @@ LT3756 исключён из активной схемы. Текущий све�
 | F903 | 1 | LED fuse | 10A fuse MPN pending | footprint pending | VERIFY | 10A preliminary |
 | U710/U720/U730 | 3 | LED boost controller | AL8853S-13 | SOIC-8 3.9x4.9 P1.27 | PROTOTYPE | LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot |
 | Q711 | 1 | Panel boost MOSFET | SiR106ADP-T1-RE3 | PowerPAK_SO-8_Single | PROTOTYPE | Gate drive and thermal validation pending |
-| Q721/Q731 | 2 | Strip boost MOSFET | Si7454DDP-T1-GE3 | PowerPAK_SO-8_Single | PROTOTYPE | 120kHz design; thermal validation pending |
+| Q721/Q731 | 2 | Strip boost MOSFET | DMT10H009LK3-13 | GrowBox:Diodes_TO252_DMT10H009LK3 | PROTOTYPE | LCSC C6540284; $1.3242/шт.; G1/D2/S3; проверить переключение |
 | D711/D721/D731 | 3 | Boost diode | 100V 5A Schottky MPN pending | SMC placeholder | VERIFY | Previous STPS5H100SF package was incompatible; qualify exact part |
 | L711 | 1 | Panel boost inductor | 47uH Isat>=14A Irms>=7A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Existing footprint is not a qualified 47uH part; reselect for 120kHz |
 | L721/L731 | 2 | Strip boost inductor | 100uH Isat>=5A Irms>=2A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Recalculate with inductance under bias and temperature |

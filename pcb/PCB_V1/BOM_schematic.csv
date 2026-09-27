@@ -80,8 +80,8 @@ Q511,AO3400A,Package_TO_SOT_SMD:SOT-23,http://www.aosmd.com/pdfs/datasheet/AO340
 Q521,AO3400A,Package_TO_SOT_SMD:SOT-23,http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf,/Outputs/,ENGINEERING DRAFT - DO NOT ORDER
 Q601,NTMFS5C628NLT1G,Package_SO:ONSemi_SO-8FL_488AA,https://www.onsemi.com/download/data-sheet/pdf/ntmfs5c628nl-d.pdf,/Outputs/Heater/,ENGINEERING DRAFT - DO NOT ORDER
 Q711,SiR106ADP-T1-RE3,Package_SO:PowerPAK_SO-8_Single,,/LEDDrivers/,ENGINEERING DRAFT - DO NOT ORDER
-Q721,Si7454DDP-T1-GE3,Package_SO:PowerPAK_SO-8_Single,,/LEDDrivers/,ENGINEERING DRAFT - DO NOT ORDER
-Q731,Si7454DDP-T1-GE3,Package_SO:PowerPAK_SO-8_Single,,/LEDDrivers/,ENGINEERING DRAFT - DO NOT ORDER
+Q721,DMT10H009LK3-13,GrowBox:Diodes_TO252_DMT10H009LK3,https://www.diodes.com/datasheet/download/DMT10H009LK3.pdf,/LEDDrivers/,ENGINEERING DRAFT - DO NOT ORDER
+Q731,DMT10H009LK3-13,GrowBox:Diodes_TO252_DMT10H009LK3,https://www.diodes.com/datasheet/download/DMT10H009LK3.pdf,/LEDDrivers/,ENGINEERING DRAFT - DO NOT ORDER
 Q901,P-MOSFET reverse-polarity / MPN pending,Package_SO:PowerPAK_SO-8L_Single,,/InputPower/,ENGINEERING DRAFT - DO NOT ORDER
 R101,100k 0.1%,Resistor_SMD:R_0603_1608Metric,,/,ENGINEERING DRAFT - DO NOT ORDER
 R102,22k 0.1%,Resistor_SMD:R_0603_1608Metric,,/,ENGINEERING DRAFT - DO NOT ORDER

@@ -27,7 +27,8 @@ for gi,(sheet,items) in enumerate(groups.items()):
  label(sheet,gx+55,gy-10)
  for i,c in enumerate(items):
   lib,name=c.findtext('footprint').split(':',1)
-  fp=p.FootprintLoad(str(libs/(lib+'.pretty')),name)
+  footprint_dir = output.parent/'libraries'/'GrowBox.pretty' if lib == 'GrowBox' else libs/(lib+'.pretty')
+  fp=p.FootprintLoad(str(footprint_dir),name)
   assert fp, c.get('ref')
   fp.SetReference(c.get('ref'));fp.SetValue(c.findtext('value'));fp.SetPosition(point(gx+(i%5)*50,gy+(i//5)*50))
   path=p.KIID_PATH()
