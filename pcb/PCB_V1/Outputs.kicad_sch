@@ -5,11 +5,11 @@
 	(uuid "fbefa5e5-8dfd-5c02-aec7-34a843963d8a")
 	(paper "A3")
 	(title_block
-		(title "04 - Fans and pump")
+		(title "04 - Fans (12 V aux) and pump (24 V)")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Prototype design; branch fault and thermal qualification pending")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -1779,7 +1779,7 @@
 		)
 		(uuid "36f7a621-f554-5fa4-a6b4-9b8cf9e3cea6")
 	)
-	(text "Flyback: катод к PUMP_12V после F521, анод к PUMP_DRAIN.\nQ521 управляется 3.3V, НЕ драйвером 12V.\nR209 на MCU удерживает PUMP_EN=LOW при reset.\nПроверить пуск/заклинивание помпы и нагрев на макете."
+	(text "D521 SS36: cathode to PUMP_24V AFTER F521, anode to PUMP_DRAIN.\nQ521 AO3422: 55 V, GPIO 3.3 V drive, RDS <=200 mOhm at VGS=2.5 V.\nPump 24 V / 6 W = 0.25 A; startup/stall current still requires measurement.\nMCU R209 holds PUMP_EN low at reset."
 		(exclude_from_sim no)
 		(at 20.32 265.43 0)
 		(effects
@@ -1790,7 +1790,7 @@
 		)
 		(uuid "43f81e76-36bb-59b4-b553-22f12ff81f70")
 	)
-	(text "0.14 DRAFT. Individual 12 V branch fuses fitted; fan/pump startup and stall tests still required."
+	(text "0.15 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -1801,7 +1801,7 @@
 		)
 		(uuid "48367ee0-7335-55a6-a655-bd9f1e0b8d24")
 	)
-	(text "03  НАСОС / 12 V / 0.5 A / ON-OFF"
+	(text "03  НАСОС / 24 V / ON-OFF"
 		(exclude_from_sim no)
 		(at 20.32 168.91 0)
 		(effects
@@ -1812,7 +1812,7 @@
 		)
 		(uuid "780d8615-bdd3-5896-b0a3-6366ab4da2d6")
 	)
-	(text "Каналы насоса и PTC: low-side, минус нагрузки не соединять\nс корпусом/GND в обход ключа.\nПредохранители ветвей добавлены; токи отказа ещё проверить.\nГабариты и ток клеммников сверить для фактического DA803R.\nСвет: три независимых CC-драйвера, будут добавлены отдельно."
+	(text "Pump/PTC are low-side switched: do not bypass the switches with GND.\nIndividual branch fuses are provisional pending PSU fault tests.\nConnector geometry/current must match the purchased parts.\nLight: CH1 panel; CH2 two bars with shared current regulation."
 		(exclude_from_sim no)
 		(at 218.44 232.41 0)
 		(effects
@@ -1856,7 +1856,7 @@
 		)
 		(uuid "de9e8b5c-a3c7-5ae6-9dc8-4c2bfb0eaf27")
 	)
-	(text "ВЫХОДЫ / ДВА 4-WIRE FAN + НАСОС 12 V"
+	(text "ВЫХОДЫ / ДВА 4-WIRE FAN 12 V + НАСОС 24 V"
 		(exclude_from_sim no)
 		(at 20.32 15.24 0)
 		(effects
@@ -2699,7 +2699,7 @@
 		)
 		(uuid "7593f213-95e0-55ef-a66a-a77526ccd26f")
 	)
-	(label "PUMP_12V"
+	(label "PUMP_24V"
 		(at 154.94 228.6 0)
 		(effects
 			(font
@@ -2807,7 +2807,7 @@
 		)
 		(uuid "a86c5b2e-021b-59ec-83a0-6939cbdfe2d5")
 	)
-	(label "PUMP_12V"
+	(label "PUMP_24V"
 		(at 160.02 191.77 0)
 		(effects
 			(font
@@ -2839,7 +2839,7 @@
 			)
 		)
 	)
-	(label "PUMP_12V"
+	(label "PUMP_24V"
 		(at 101.6 234.95 0)
 		(effects
 			(font
@@ -3145,7 +3145,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SS34-E3/57T"
+		(property "Value" "SS36-E3/57T"
 			(at 154.94 214.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3204,6 +3204,39 @@
 				)
 			)
 		)
+
+		(property "LCSC" "C35722"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "SS36-E3/57T"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "Vishay"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -3227,7 +3260,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "FAN1 / WAGO 2601"
+		(property "Value" "FAN1 / 3.5 mm"
 			(at 160.02 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3238,7 +3271,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
 			(at 182.88 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3290,6 +3323,39 @@
 					(reference "J501")
 					(unit 1)
 				)
+			)
+		)
+
+		(property "LCSC" "C2757925"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "DB125-3.5-4P-GN-S"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "DORABO"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3649,7 +3715,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PUMP + / switched -"
+		(property "Value" "PUMP 24V / 6W"
 			(at 165.1 184.15 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3660,7 +3726,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
 			(at 185.42 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -3708,6 +3774,36 @@
 				)
 			)
 		)
+		(property "LCSC" "C466970"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "DB125-3.5-2P-GN-S"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "DORABO"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -3731,7 +3827,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "FAN2 / WAGO 2601"
+		(property "Value" "FAN2 / 3.5 mm"
 			(at 358.14 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3742,7 +3838,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
 			(at 381 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3794,6 +3890,39 @@
 					(reference "J511")
 					(unit 1)
 				)
+			)
+		)
+
+		(property "LCSC" "C2757925"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "DB125-3.5-4P-GN-S"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "DORABO"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -4235,7 +4364,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u / 25V X7R"
+		(property "Value" "10u / 50V X7R"
 			(at 104.6 245.11 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4294,6 +4423,39 @@
 				)
 			)
 		)
+
+		(property "LCSC" "C77102"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "GRM32ER71H106KA12L"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "Murata"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Transistor_FET:AO3400A")
@@ -4317,7 +4479,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3400A"
+		(property "Value" "AO3422"
 			(at 106.68 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4377,6 +4539,39 @@
 					(reference "Q521")
 					(unit 1)
 				)
+			)
+		)
+
+		(property "LCSC" "C37130"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "AO3422"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "AOS"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -4609,9 +4804,9 @@
 			(width 0)
 			(type default)
 		)
-		(uuid 1a9792d9-2418-5f77-8255-fb104663efbd)
+		(uuid 00eeac5a-d840-5d24-8806-19e6bd8ce5d4)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 77.47 151.13 180)
 		(effects
@@ -4620,7 +4815,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid ac6bcaba-d5f8-5279-841e-c07c6c93dcfb)
+		(uuid 28182887-9065-54a2-b67e-a729255e175c)
 	)
 	(wire
 		(pts
@@ -4631,7 +4826,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid 08601e41-f906-5678-95ec-f0bcd18a560d)
+		(uuid 15cffaae-b644-5da9-a793-d8b1b4dfc6f6)
 	)
 	(label "FAN1_12V"
 		(at 118.11 151.13 0)
@@ -4641,7 +4836,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid 59b94627-d20a-580e-bf25-abb6ce094c0a)
+		(uuid 88679c00-f3f4-52a0-b2c9-c56d9cac1f7b)
 	)
 	(symbol
 		(lib_id "Device:Fuse")
@@ -4744,9 +4939,9 @@
 			(width 0)
 			(type default)
 		)
-		(uuid eb955103-f167-52db-a896-84014096bd26)
+		(uuid 7f29ace2-3f75-5f0e-bd58-e39c4ce533db)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 278.13 151.13 180)
 		(effects
@@ -4755,7 +4950,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid b4b0cb29-0ec4-557a-961d-193e212bd40d)
+		(uuid f157ad57-1acf-588d-83f2-b338a5937668)
 	)
 	(wire
 		(pts
@@ -4766,7 +4961,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid 4f9620fc-361d-5e57-8958-90a86d05bd08)
+		(uuid 595babee-fb76-5e4c-ae91-cacd068a028e)
 	)
 	(label "FAN2_12V"
 		(at 318.77 151.13 0)
@@ -4776,7 +4971,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid 8e4d29af-5190-5933-bc6f-5994b19deefe)
+		(uuid 247c463b-91a8-5bb4-809e-41d8a370e241)
 	)
 	(symbol
 		(lib_id "Device:Fuse")
@@ -4788,7 +4983,7 @@
 		(dnp no)
 		(uuid 8b2a0bf6-b838-5b71-b1af-36c9038a45f5)
 		(property "Reference" "F521"
-			(at 241.3 254.00000000000003 90)
+			(at 241.3 254.0 90)
 			(effects
 				(font
 					(size 1 1)
@@ -4796,7 +4991,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2A / 0451002.MRL"
+		(property "Value" "1A / 0451001.MRL"
 			(at 241.3 256.54 90)
 			(effects
 				(font
@@ -4849,7 +5044,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0451002.MRL"
+		(property "MPN" "0451001.MRL"
 			(at 254.0 264.16 90)
 			(effects
 				(font
@@ -4859,7 +5054,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C99547"
+		(property "LCSC" "C3099"
 			(at 254.0 264.16 90)
 			(effects
 				(font
@@ -4879,9 +5074,9 @@
 			(width 0)
 			(type default)
 		)
-		(uuid 48dd9282-cf73-521e-8b19-5cd5e672c161)
+		(uuid b3b91c9f-db84-5064-af1a-8011440cd1ce)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+24V_LOADS"
 		(shape bidirectional)
 		(at 229.87 264.16 180)
 		(effects
@@ -4890,7 +5085,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid e18d6a67-e990-50fb-af5d-e817573ff763)
+		(uuid ee5ffbe7-62ec-55b5-9215-222cd930f610)
 	)
 	(wire
 		(pts
@@ -4901,9 +5096,9 @@
 			(width 0)
 			(type default)
 		)
-		(uuid 968dc6b6-357b-5040-9816-33186ce70872)
+		(uuid 163d8eb1-478c-5361-8ace-f223b780b317)
 	)
-	(label "PUMP_12V"
+	(label "PUMP_24V"
 		(at 270.51 264.16 0)
 		(effects
 			(font
@@ -4911,6 +5106,6 @@
 			)
 			(justify left bottom)
 		)
-		(uuid c06b84e5-711c-57f3-9013-cc56f2853d38)
+		(uuid 663b7f14-5ea5-5ad6-bbd2-96727950281b)
 	)
 )

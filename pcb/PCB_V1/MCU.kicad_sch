@@ -1501,7 +1501,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "UART: adapter TX -> J201.4; RX -> J201.3; common GND.\nJ201.2 = reference only through 1k; leave open on a simple adapter.\nPower board from its own 12 V source. No 5 V UART signals.\nHold BOOT, pulse RESET, release BOOT to flash.\nEN / IO0: manual buttons or open-drain programmer outputs."
+	(text "UART: adapter TX -> J201.4; RX -> J201.3; common GND.\\nJ201.2 = reference only through 1k; leave open on a simple adapter.\\nPower board from its own 24 V source. No 5 V UART signals.\\nHold BOOT, pulse RESET, release BOOT to flash.\\nEN / IO0: manual buttons or open-drain programmer outputs."
 		(exclude_from_sim no)
 		(at 177.8 121.92 0)
 		(effects
@@ -4288,7 +4288,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
 			(at 236.22 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -4336,6 +4336,39 @@
 				)
 			)
 		)
+
+		(property "LCSC" "C318884"
+			(at 236.22 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "TS-1187A-B-A-B"
+			(at 236.22 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "XKB Connection"
+			(at 236.22 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
@@ -4370,7 +4403,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
 			(at 182.88 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -4416,6 +4449,39 @@
 					(reference "SW201")
 					(unit 1)
 				)
+			)
+		)
+
+		(property "LCSC" "C318884"
+			(at 182.88 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "MPN" "TS-1187A-B-A-B"
+			(at 182.88 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+
+		(property "Manufacturer" "XKB Connection"
+			(at 182.88 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)

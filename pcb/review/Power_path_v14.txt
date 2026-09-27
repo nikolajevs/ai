@@ -1,0 +1,32 @@
+GrowBox v0.14 power path (24 V input) sizing
+CONDITIONAL ESTIMATES from datasheet limits; not a fault, surge or thermal qualification.
+
+Branch currents (A):
+  F902 +24V_LOADS: PTC 4.17 (cold +15% 4.79) + pump budget 1.00 = 5.79 -> 58% of 10 A ATM
+  F903 +24V_LED: nominal 3.55; worst-case estimate 4.45 -> 59% of 7.5 A ATM
+  12 V aux: fans 1.00 + TPS54202 input 0.19 + driver 0.01 = 1.20 A at 12 V; 0.79 A from 24 V at 21.6 V (unfused branch, PSU OCP only)
+  Input total: nominal ~9.1 A, worst-case estimate 11.0 A; 300 W PSU = 12.5 A; XT60 rated 30 A continuous class.
+
+TVS screening (datasheet 10/1000 us, 25 C):
+  D901 SMBJ26CA: VWM 26 V > PSU max 25.0 V; VBR min 28.9 V; VC 42.1 V at 14.3 A
+    margin to AL8853 VIN abs max 43 V: 0.9 V (thin; typical surges clamp lower)
+    margin to LMR16020 VIN abs max 65 V: 22.9 V
+  D601 SMBJ30A: VWM 30 V > 25.0 V; VC 48.4 V vs Q601 VDS 60 V: margin 11.6 V
+  Q521 AO3422 55 V: flyback D521 to +24V_LOADS, VDS <= 25.8 V + input clamp; worst 42.9 V -> margin 12.1 V
+  No electronic reverse protection: keyed XT60 only. A reversed PSU cable destroys the board.
+
+12 V aux buck LMR16020 (datasheet SNVSAH8A):
+  Vout nominal 12.03 V; envelope 11.57..12.50 V (FB 0.735..0.765 V, 1 % resistors)
+    UCC27524A VDD 4.5..18 V ok; TPS54202 VIN <= 28 V ok; PC fan 12 V +/-5 % = 11.4..12.6 V ok
+  fsw 500 kHz (RT 49.9k, table 1); L 22 uH ripple 0.567 A p-p at 25.0 V, 0.485 A at 21.6 V
+  Peak at 1.20 A load: 1.49 A < current limit min 2.5 A; SRP1265A-220M Isat 9 A > limit max 3.8 A
+  EN UVLO 560k/47k: start 14.9 V typ (13.0..17.3 V over EN threshold), stop 12.9 V typ
+  D902 SS36 average 0.53 A at 21.6 V; conduction ~0.27 W at Vf 0.5 V
+
+Q601 NTMFS5C628NL with ~12 V gate (UCC27524A VDD = 12 V aux), 2.4 mOhm max at VGS 10 V, 25 C:
+condition   I_A  loss_25C_W  loss_Rx1.7_W
+   steady  4.167       0.042         0.071
+cold_+15%  4.792       0.055         0.094
+
+Unresolved: real pump current, fuse interrupt rating and I2t with the actual PSU, cable gauge,
+surge energy of D901, buck loop stability/thermal on the real layout, LED boost startup and OVP events.

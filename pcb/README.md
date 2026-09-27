@@ -1,11 +1,9 @@
 # GrowBox controller PCB
 
-Hardware source of truth: `pcb/PCB_V1/PCB_V1.kicad_pro` (KiCad 10).
+Hardware source of truth: `pcb/PCB_V1/PCB_V1.kicad_pro` (KiCad 10). All hardware changes belong in this directory. Current work continues branch `pcb-24v` from `dacd659`.
 
-Save subsequent schematic, board, custom-library and design-note changes in this directory and commit them to this repository. Do not use the original desktop prototype as a second working copy.
+Revision 0.15: external 24 V input (24.0 V set point, design ceiling 25 V), XT60PW-M with no electronic reverse-polarity protection. One 24 V/100 W PTC, one 24 V/6 W pump, two 12 V four-wire fans. LMR16020 creates 12 V for fans, gate/LED controllers and the 3.3 V buck. Two constant-current LED power stages share one brightness command: panel and two paralleled bars. AL8853 IC bias is now 12 V, separately from the 24 V power stage. Six individual branch fuses added; CH2 total current limited to 0.465 A nominal / 0.484 A tolerance corner. Sharing between bars is not guaranteed.
 
-The project is in schematic development. The PCB is not routed and is not ready for fabrication. See the project notes for completed blocks and remaining verification.
+169 schematic components. The priced subset is USD31.3786 for 53 parts; 116 parts remain unpriced. This is not a complete board cost. Around USD30 is a cost-control guide. Details: [design and calculations](PCB_V1/REDESIGN_24V.md), [BOM](PCB_V1/BOM_v0.1.md), [price audit](review/BOM_cost_v15.txt).
 
-Target: external 12 V supply, <=100 x 100 mm, four copper layers, mixed SMT/THT, ESP32-WROOM-32E, one 100 W PTC, two four-wire PC fans, one 12 V pump, three constant-current LED outputs with common dimming and <=80 W combined output.
-
-Current revision 0.14 adds six individually fused load branches, a 15 A common LED fuse and a DEGSON DG636 input terminal. See [branch protection and its limits](PCB_V1/BRANCH_PROTECTION.md). The v0.13 ideal-diode input and 5 V heater-driver supply remain. The priced subset is USD32.2914 for 33 of 181 components; 148 remain unpriced. Around USD30 is a cost-control guide, already exceeded by the priced subset. Placement/routing and protection qualification are unfinished. See [current design status](PCB_V1/README.md).
+ERC: 0 errors/warnings; netlist/board checks pass. PCB 100x100 mm, four layers: footprints remain in staging outside the outline, placement/routing are unfinished. Not ready for fabrication. See [current status](PCB_V1/README.md).

@@ -2,7 +2,7 @@
 	(version 20260206)
 	(generator "pcbnew")
 	(layer "F.Cu")
-	(descr "Littelfuse 451 direct solder; 1.96x3.15 pads, 2.95 gap; DS page4")
+	(descr "Littelfuse 451 direct solder; 1.96x3.15 pads, 2.95 gap; manufacturer recommended lands")
 	(attr smd)
 	(property "Reference" "REF**"
 		(at 0 -2.545 0)

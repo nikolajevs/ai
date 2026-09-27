@@ -1,0 +1,398 @@
+{
+  "description": "Partial unit-use cost only, excludes unpriced parts, battery, fuse inserts and external items.",
+  "lines": [
+    {
+      "refs": [
+        "J901"
+      ],
+      "unit_usd": 0.6072,
+      "part": "Amass XT60PW-M",
+      "source": "https://www.lcsc.com/product-detail/C98732.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D901"
+      ],
+      "unit_usd": 0.0985,
+      "part": "SMBJ26CA-E3/52",
+      "source": "https://www.lcsc.com/product-detail/C515606.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C901"
+      ],
+      "unit_usd": 0.5157,
+      "part": "Panasonic EEEFK1H221P 220uF 50V",
+      "source": "https://www.lcsc.com/product-detail/C178549.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F902",
+        "F903"
+      ],
+      "unit_usd": 0.2637,
+      "part": "XFCN XF-508P-B-B + ATM mini blade fuse 10A (loads) / 7.5A (LED)",
+      "source": "https://www.lcsc.com/product-detail/C19727305.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "U902"
+      ],
+      "unit_usd": 0.8159,
+      "part": "TI LMR16020PDDAR",
+      "source": "https://www.lcsc.com/product-detail/C190006.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "L902"
+      ],
+      "unit_usd": 1.1784,
+      "part": "Bourns SRP1265A-220M",
+      "source": "https://www.lcsc.com/product-detail/C2041465.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D902"
+      ],
+      "unit_usd": 0.3337,
+      "part": "Vishay SS36-E3/57T",
+      "source": "https://www.lcsc.com/product-detail/C35722.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C905",
+        "C906"
+      ],
+      "unit_usd": 0.3304,
+      "part": "Murata GRM32ER71H106KA12L",
+      "source": "https://www.lcsc.com/product-detail/C77102.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C910"
+      ],
+      "unit_usd": 0.3569,
+      "part": "Samsung CL32B226KAJNNNE",
+      "source": "https://www.lcsc.com/product-detail/C309062.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "U710",
+        "U720"
+      ],
+      "unit_usd": 0.9392,
+      "part": "AL8853S-13",
+      "source": "https://www.lcsc.com/product-detail/C3192318.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "Q711"
+      ],
+      "unit_usd": 0.9862,
+      "part": "TI CSD19534Q5A",
+      "source": "https://www.lcsc.com/product-detail/C114200.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "Q721"
+      ],
+      "unit_usd": 1.0754,
+      "part": "TI CSD19538Q3A",
+      "source": "https://www.lcsc.com/product-detail/C478471.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D711"
+      ],
+      "unit_usd": 0.5802,
+      "part": "STPS5H100B-TR",
+      "source": "https://www.lcsc.com/product-detail/C10648.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D721"
+      ],
+      "unit_usd": 0.4753,
+      "part": "STPS2H100AFY",
+      "source": "https://www.lcsc.com/product-detail/C3757915.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "L711"
+      ],
+      "unit_usd": 1.1226,
+      "part": "Bourns SRP1265A-470M",
+      "source": "https://www.lcsc.com/product-detail/C840530.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "L721"
+      ],
+      "unit_usd": 1.1226,
+      "part": "Bourns SRP1265A-470M",
+      "source": "https://www.lcsc.com/product-detail/C840530.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C716",
+        "C717",
+        "C718",
+        "C719",
+        "C726",
+        "C727",
+        "C728"
+      ],
+      "unit_usd": 0.8941,
+      "part": "Samsung CL32Y106KCV6PNE",
+      "source": "https://www.lcsc.com/product-detail/C22380050.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C710",
+        "C715",
+        "C725"
+      ],
+      "unit_usd": 0.3304,
+      "part": "Murata GRM32ER71H106KA12L",
+      "source": "https://www.lcsc.com/product-detail/C77102.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "C711",
+        "C721"
+      ],
+      "unit_usd": 0.04,
+      "part": "Samsung CL21B105KBFNNNE",
+      "source": "https://www.lcsc.com/product-detail/C28323.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "Q601"
+      ],
+      "unit_usd": 0.7717,
+      "part": "NTMFS5C628NLT1G",
+      "source": "https://www.lcsc.com/product-detail/C145537.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D601"
+      ],
+      "unit_usd": 0.1731,
+      "part": "SMBJ30A-E3/52",
+      "source": "https://www.lcsc.com/product-detail/C1973126.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "Q521"
+      ],
+      "unit_usd": 0.1356,
+      "part": "AOS AO3422",
+      "source": "https://www.lcsc.com/product-detail/C37130.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "D521"
+      ],
+      "unit_usd": 0.3337,
+      "part": "Vishay SS36-E3/57T",
+      "source": "https://www.lcsc.com/product-detail/C35722.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "U201"
+      ],
+      "unit_usd": 3.7644,
+      "part": "ESP32-WROOM-32E-N4",
+      "source": "https://www.lcsc.com/product-detail/C701341.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "U301"
+      ],
+      "unit_usd": 3.2976,
+      "part": "DS3231MZ+TRL",
+      "source": "https://www.lcsc.com/product-detail/C107410.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "J501",
+        "J511"
+      ],
+      "unit_usd": 0.3584,
+      "part": "DORABO DB125-3.5-4P-GN-S",
+      "source": "https://www.lcsc.com/product-detail/C2757925.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "J302",
+        "J521",
+        "J601"
+      ],
+      "unit_usd": 0.1631,
+      "part": "DORABO DB125-3.5-2P-GN-S",
+      "source": "https://www.lcsc.com/product-detail/C466970.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "J711",
+        "J721",
+        "J731"
+      ],
+      "unit_usd": 0.1258,
+      "part": "KANGNEX WJ500V-5.08-2P",
+      "source": "https://www.lcsc.com/product-detail/C8465.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "SW201",
+        "SW202"
+      ],
+      "unit_usd": 0.0207,
+      "part": "XKB TS-1187A-B-A-B",
+      "source": "https://www.lcsc.com/product-detail/C318884.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "unit snapshot; tier not recorded",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F501",
+        "F511"
+      ],
+      "unit_usd": 0.2536,
+      "part": "Littelfuse 0451001.MRL",
+      "source": "https://www.lcsc.com/product-detail/C3099.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "5+",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F521"
+      ],
+      "unit_usd": 0.2536,
+      "part": "Littelfuse 0451001.MRL",
+      "source": "https://www.lcsc.com/product-detail/C3099.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "5+",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F711"
+      ],
+      "unit_usd": 0.2516,
+      "part": "Littelfuse 045106.3MRL",
+      "source": "https://www.lcsc.com/product-detail/C178982.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "5+",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F721"
+      ],
+      "unit_usd": 0.2556,
+      "part": "Littelfuse 0451003.MRL",
+      "source": "https://www.lcsc.com/product-detail/C13982.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "5+",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    },
+    {
+      "refs": [
+        "F904"
+      ],
+      "unit_usd": 0.3445,
+      "part": "Littelfuse 0451002.MRL",
+      "source": "https://www.lcsc.com/product-detail/C99547.html",
+      "basis": "2026-09-27 inherited engineering price snapshot, not a live quote",
+      "tier": "5+",
+      "note": "No MOQ, shipping, tax, PCB or assembly. Availability not rechecked."
+    }
+  ]
+}
