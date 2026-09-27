@@ -6,13 +6,14 @@ D902,1,Q901 VGS clamp,12V zener MPN pending,SOD-323,CANDIDATE,12V zener
 F901,1,Input fuse,Bourns SF-2923HC-C 25A variant,footprint pending,VERIFY,Exact PN and I2t pending
 F902,1,Loads fuse,20A fuse MPN pending,footprint pending,VERIFY,20A preliminary
 F903,1,LED fuse,10A fuse MPN pending,footprint pending,VERIFY,10A preliminary
-U710/U720/U730,3,LED boost controller,LT3756EMSE-2#PBF,MSOP-16+EP,CANDIDATE,Verify compensation and frequency
-Q711/Q721/Q731,3,Boost MOSFET,Vishay Si7454DDP-T1-GE3,Package_SO:PowerPAK_SO-8_Single,PROTOTYPE,100V; thermal and sourcing pending
-D711/D721/D731,3,Boost diode,STPS5H100SF,PSMC/TO-277A,CANDIDATE,100V 5A
-L711,1,LED1 inductor,Bourns SRP1265A-220M,13.5x12.5mm,CANDIDATE,22uH Isat about 12A
-L721/L731,2,LED2/3 inductor,Bourns SRP1265A-470M,13.5x12.5mm,CANDIDATE,47uH; verify Irms and Isat separately
-R716,1,LED1 sense,0.091 ohm 1%,2512,CANDIDATE,Target threshold about 100mV
-R726/R736,2,LED2/3 sense,0.40 ohm 1%,0603 (текущая схема),CANDIDATE,Check dissipation
+U710/U720/U730,3,LED boost controller,AL8853S-13,SOIC-8 3.9x4.9 P1.27,PROTOTYPE,LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot
+Q711,1,Panel boost MOSFET,SiR106ADP-T1-RE3,PowerPAK_SO-8_Single,PROTOTYPE,Gate drive and thermal validation pending
+Q721/Q731,2,Strip boost MOSFET,Si7454DDP-T1-GE3,PowerPAK_SO-8_Single,PROTOTYPE,120kHz design; thermal validation pending
+D711/D721/D731,3,Boost diode,100V 5A Schottky MPN pending,SMC placeholder,VERIFY,Previous STPS5H100SF package was incompatible; qualify exact part
+L711,1,Panel boost inductor,47uH Isat>=14A Irms>=7A MPN pending,SRP1245A PLACEHOLDER,VERIFY,Existing footprint is not a qualified 47uH part; reselect for 120kHz
+L721/L731,2,Strip boost inductor,100uH Isat>=5A Irms>=2A MPN pending,SRP1245A PLACEHOLDER,VERIFY,Recalculate with inductance under bias and temperature
+R716,1,Panel LED sense,0.182 ohm 1% >=1W MPN pending,2512,VERIFY,Low side; nominal 1.099A
+R726/R736,2,Strip LED sense,0.80 ohm 1% >=0.25W MPN pending,1206,VERIFY,Low side; nominal 0.25A each
 Q601,1,PTC MOSFET,NTMFS5C628NLT1G,SO-8FL,CANDIDATE,Add external thermostat/thermal fuse
 U601,1,PTC gate driver,UCC27524ADR,SOIC-8,CANDIDATE,Channel A
 Q501/Q511/Q521,3,Fan/pump MOSFET,AO3400A,SOT-23,CANDIDATE,Verify pump startup
@@ -26,3 +27,4 @@ J901,1,12V input terminal,2-pin >=25A,5.08mm,VERIFY,Exact family and current rat
 J501/J511,2,4-wire fan terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Check mechanical drawing and rating
 J521/J601/J711/J721/J731,5,2-wire power terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Consider 5.08mm for PTC/LED
 J201,1,Programming header,1x06 pin header,2.54mm,CANDIDATE,External USB-UART programmer
+U700,1,PWM and enable gate,SN74LVC1G08DBVR,SOT-23-5,PROTOTYPE,3.3V; pulldowns; LED_DIM = LIGHT_PWM AND LIGHT_ENABLE

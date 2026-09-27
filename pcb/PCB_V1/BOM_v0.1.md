@@ -1,80 +1,39 @@
-# PCB_V1 — BOM v0.1 (предварительный)
+# PCB_V1 — подбор компонентов, ревизия 0.9
 
-Этот файл фиксирует стартовые компоненты для ревизии схемы 0.4. Он не является заказным BOM: позиции со статусом `VERIFY` требуют сверки доступности, корпуса, теплового режима и измерений на макете.
+Цель пользователя: компоненты одной платы до $30, без PCB и внешнего БП. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
 
-## Расчётные режимы
+LT3756 исключён из активной схемы. Текущий световой каскад — три AL8853S-13. История прежних вариантов сохранена в Git.
 
-- Вход: внешний изолированный источник 12 V DC, около 300 W.
-- Нагрузка PTC: 100 W / 12 V = 8.33 A номинально; пусковой ток принят 9.6 A (+15%).
-- LED1: 16S18P, стартовый лимит 1.10 A, около 52.8 W при 48 V.
-- LED2/LED3: по 0.25 A, около 12 W каждый при 48 V.
-- Суммарная целевая мощность LED: около 76.8 W; ток со стороны 12 V зависит от КПД boost и составляет ориентировочно 7.5–8.5 A.
-- F902/F903 и входной ключ выбираются по реальному пусковому току, температуре меди и допустимому падению напряжения.
-
-## Силовые и преобразователи
-
-| Ref | Qty | Назначение | Кандидат MPN / серия | Корпус / footprint | Статус | Примечание |
+| Ref | Qty | Назначение | MPN/требование | Корпус | Статус | Примечание |
 |---|---:|---|---|---|---|---|
-| U101 | 1 | 12 V → 3.3 V buck | TPS54202DDCR | SOT-23-6 | CANDIDATE | Проверить тепловой режим при токе логики и effective C под DC bias. |
-| Q901 | 1 | защита от переполюсовки | Vishay SiSS5623DN, P-channel 60 V | PowerPAK 1212-8S / проверить drawing | VERIFY | Проверить RDS(on) при доступном VGS, SOA при 25 A и рассеяние на 4 слоях. |
-| D901 | 1 | TVS входа | SMBJ18A-E3/52 | SMB | CANDIDATE | TVS не заменяет fuse; проверить совместно с БП и проводом. |
-| D902 | 1 | ограничение VGS Q901 | 12 V zener — MPN pending | SOD-323 | CANDIDATE | Проверить ток через R902 и импульс при подключении БП. |
-| F901 | 1 | общий входной предохранитель | Bourns SF-2923HC-C series, 25 A variant | footprint pending | VERIFY | Утвердить конкретный part number и I²t; вариант зависит от источника 300 W. |
-| F902 | 1 | ветвь PTC/pump/fans | 20 A fuse — MPN pending | footprint pending | VERIFY | 20 A — стартовое значение, согласовать с кабелем и пуском PTC. |
-| F903 | 1 | ветвь LED boost | 10 A fuse — MPN pending | footprint pending | VERIFY | 10 A — стартовое значение; селективность относительно F901 проверить. |
-| U710/U720/U730 | 3 | контроллер boost CC | LT3756EMSE-2#PBF | MSOP-16 + EP | CANDIDATE | Версия -2 удобна для OPENLED; точную компенсацию и частоту проверить на макете. |
-| Q711/Q721/Q731 | 3 | внешний boost MOSFET | Vishay Si7454DDP-T1-GE3 | Package_SO:PowerPAK_SO-8_Single | PROTOTYPE | Корпус и площадки сверены; нагрев и закупка пока не подтверждены. |
-| D711/D721/D731 | 3 | boost rectifier | STPS5H100SF, 100 V / 5 A | PSMC (TO-277A) | CANDIDATE | Проверить посадочное место: PSMC не равен обычному SMA. |
-| L711 | 1 | дроссель LED1 | Bourns SRP1265A-220M, 22 µH | 13.5×12.5 mm | CANDIDATE | Isat около 12 A; подтвердить ripple/Irms в расчёте LT3756. |
-| L721/L731 | 2 | дроссель LED2/3 | Bourns SRP1265A-470M, 47 µH | 13.5×12.5 mm | CANDIDATE | Сверить отдельно Irms и Isat; прежнее значение Isat 6.5 A не подтверждено. |
-| R716 | 1 | LED1 current sense | 0.091 Ω, 1%, ≥1 W pulse-rated | 2512 | CANDIDATE | Номинал из целевого порога около 100 mV; сверить с выбранной версией LT3756. |
-| R726/R736 | 2 | LED2/3 current sense | 0.40 Ω, 1%, мощность уточнить по MPN | 0603 (текущая схема) | CANDIDATE | Проверить мощность и температурный коэффициент. |
-| Q601 | 1 | ключ PTC | NTMFS5C628NLT1G | SO-8FL | CANDIDATE | VDS и тепловой режим проверены для 12 V; добавить внешний термостат/термопредохранитель. |
-| U601 | 1 | драйвер затвора PTC | UCC27524ADR | SOIC-8 | CANDIDATE | Канал A; ENA удерживает выход выключенным при отсутствии 3.3 V. |
-| Q501/Q511/Q521 | 3 | вентиляторы/помпа | AO3400A | SOT-23 | CANDIDATE | Проверить ток запуска помпы и поведение 4-wire PWM вентиляторов. |
-| D521 | 1 | flyback помпы | SS34-E3/57T | SMC | CANDIDATE | Для фактического пускового/заклинившего тока нужна проверка осциллографом. |
+| U101 | 1 | 12V to 3V3 buck | TPS54202DDCR | SOT-23-6 | CANDIDATE | Check thermal/effective capacitance |
+| Q901 | 1 | Reverse polarity | Vishay SiSS5623DN | PowerPAK 1212-8S VERIFY | VERIFY | Check SOA and RDS(on) at 25A |
+| D901 | 1 | Input TVS | SMBJ18A-E3/52 | SMB | CANDIDATE | TVS does not replace fuse |
+| D902 | 1 | Q901 VGS clamp | 12V zener MPN pending | SOD-323 | CANDIDATE | 12V zener |
+| F901 | 1 | Input fuse | Bourns SF-2923HC-C 25A variant | footprint pending | VERIFY | Exact PN and I2t pending |
+| F902 | 1 | Loads fuse | 20A fuse MPN pending | footprint pending | VERIFY | 20A preliminary |
+| F903 | 1 | LED fuse | 10A fuse MPN pending | footprint pending | VERIFY | 10A preliminary |
+| U710/U720/U730 | 3 | LED boost controller | AL8853S-13 | SOIC-8 3.9x4.9 P1.27 | PROTOTYPE | LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot |
+| Q711 | 1 | Panel boost MOSFET | SiR106ADP-T1-RE3 | PowerPAK_SO-8_Single | PROTOTYPE | Gate drive and thermal validation pending |
+| Q721/Q731 | 2 | Strip boost MOSFET | Si7454DDP-T1-GE3 | PowerPAK_SO-8_Single | PROTOTYPE | 120kHz design; thermal validation pending |
+| D711/D721/D731 | 3 | Boost diode | 100V 5A Schottky MPN pending | SMC placeholder | VERIFY | Previous STPS5H100SF package was incompatible; qualify exact part |
+| L711 | 1 | Panel boost inductor | 47uH Isat>=14A Irms>=7A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Existing footprint is not a qualified 47uH part; reselect for 120kHz |
+| L721/L731 | 2 | Strip boost inductor | 100uH Isat>=5A Irms>=2A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Recalculate with inductance under bias and temperature |
+| R716 | 1 | Panel LED sense | 0.182 ohm 1% >=1W MPN pending | 2512 | VERIFY | Low side; nominal 1.099A |
+| R726/R736 | 2 | Strip LED sense | 0.80 ohm 1% >=0.25W MPN pending | 1206 | VERIFY | Low side; nominal 0.25A each |
+| Q601 | 1 | PTC MOSFET | NTMFS5C628NLT1G | SO-8FL | CANDIDATE | Add external thermostat/thermal fuse |
+| U601 | 1 | PTC gate driver | UCC27524ADR | SOIC-8 | CANDIDATE | Channel A |
+| Q501/Q511/Q521 | 3 | Fan/pump MOSFET | AO3400A | SOT-23 | CANDIDATE | Verify pump startup |
+| D521 | 1 | Pump flyback | SS34-E3/57T | SMC | CANDIDATE | Verify stall current |
+| U201 | 1 | MCU | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Firmware GPIO adaptation required |
+| U301 | 1 | RTC | DS3231SN# | SOIC-16W | CANDIDATE | No CR2032 charging |
+| J401 | 1 | microSD | Molex 104031-0811 | microSD | CANDIDATE | 4MHz initial SPI |
+| J301 | 1 | SHT4x connector | JST XH B4B-XH-A | JST-XH 2.50 | CANDIDATE | 0.5m cable and 100kHz I2C |
+| BT301 | 1 | RTC battery holder | Keystone 3002 | CR2032 THT | CANDIDATE | No charger |
+| J901 | 1 | 12V input terminal | 2-pin >=25A | 5.08mm | VERIFY | Exact family and current rating pending |
+| J501/J511 | 2 | 4-wire fan terminal | DA803R/WAGO 2601-compatible | 3.50mm | VERIFY | Check mechanical drawing and rating |
+| J521/J601/J711/J721/J731 | 5 | 2-wire power terminal | DA803R/WAGO 2601-compatible | 3.50mm | VERIFY | Consider 5.08mm for PTC/LED |
+| J201 | 1 | Programming header | 1x06 pin header | 2.54mm | CANDIDATE | External USB-UART programmer |
+| U700 | 1 | PWM and enable gate | SN74LVC1G08DBVR | SOT-23-5 | PROTOTYPE | 3.3V; pulldowns; LED_DIM = LIGHT_PWM AND LIGHT_ENABLE |
 
-## Логика и разъёмы
-
-| Ref | Qty | Кандидат | Корпус / footprint | Статус | Примечание |
-|---|---:|---|---|---|---|
-| U201 | 1 | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Требуется адаптация GPIO и инверсии FAN PWM в прошивке. |
-| U301 | 1 | DS3231SN# | SOIC-16W | CANDIDATE | CR2032 без зарядки; VBAT изолирована от 3.3 V. |
-| J401 | 1 | Molex 104031-0811 | microSD push-push | CANDIDATE | Начальная SPI частота 4 MHz, обязательна проверка на прототипе. |
-| J301 | 1 | JST XH B4B-XH-A | JST-XH 2.50 mm | CANDIDATE | Кабель SHT4x около 0.5 m; I²C 100 kHz, series 33 Ω. |
-| BT301 | 1 | Keystone 3002 | CR2032 THT | CANDIDATE | Плата не должна иметь цепь заряда батарейки. |
-| J901 | 1 | 2-pin power terminal, ≥25 A | 5.08 mm, exact family VERIFY | VERIFY | Phoenix MKDS-1,5 footprint пока только кандидат; для 25 A может понадобиться более крупный connector. |
-| J501/J511 | 2 | DA803R/WAGO 2601-compatible 4-pin | 3.50 mm | VERIFY | Сверить механический drawing и длительный ток конкретного продавца. |
-| J521/J601/J711/J721/J731 | 5 | DA803R/WAGO 2601-compatible 2-pin | 3.50 mm | VERIFY | Для PTC и LED проверить ток/нагрев контактов; при необходимости перейти на 5.08 mm. |
-| J201 | 1 | 1×06 pin header | 2.54 mm | CANDIDATE | Только UART/EN/IO0/3V3 reference; отдельный программатор. |
-
-## Обязательные решения перед PCB layout
-
-1. Заказать/получить фактические MPN Q901, F901–F903, Q711/Q721/Q731, D711/D721/D731 и дросселей из доступного поставщика.
-2. Сверить реальные посадочные места по drawings: Q901 и boost MOSFET, PSMC диоды, дроссели 13.5×12.5 mm, входной и силовые клеммники.
-3. На макете подтвердить частоту/компенсацию LT3756, токи 1.10/0.25/0.25 A, overshoot на SW и температуру MOSFET/диодов/дросселей.
-4. Измерить холодный старт PTC, запуск насоса и совместную работу входного БП; после этого утвердить fuse/I²t и ширину силовой меди.
-5. Только после пунктов 1–4 заменить placeholder footprints и начать placement/routing платы 4 слоя до 100×100 mm.
-
-## Источники
-
-- LT3756: https://www.analog.com/media/en/technical-documentation/data-sheets/lt3756-3756-1-3756-2.pdf
-- CSD19532Q5B: https://www.ti.com/product/CSD19532Q5B
-- STPS5H100SF: https://www.st.com/en/diodes-and-rectifiers/stps5h100sf.html
-- SiSS5623DN: https://www.vishay.com/en/product/62197/
-- SRP1265A: https://www.bourns.com/docs/product-datasheets/srp1265a.pdf
-- Littelfuse SMD fuses: https://www.littelfuse.com/products/fuses-overcurrent-protection/smd-fuses
-
-## Изменения схемы 0.6
-
-Приоритет над прежней таблицей: U710/U720/U730 = LT3756EMSE-2#PBF; R715 = 0.012 Ω/1%/≥2 W, R725/R735 = 0.047 Ω/1%/≥1 W (2512); R712/R722/R732 = 33k, R713/R723/R733 = 100k; RT = 21k. C712/C722/C732 = 4.7 µF/16 V X7R (0805).
-
-Добавлены C715/C725/C735 = 22 µF/25 V X7R (1210) и C716/C717/C726/C727/C736/C737 = 10 µF/100 V X7R (1210). MPN не утверждены: проверить DC bias, ripple current, температуру и геометрию. CSV остаётся частичным списком кандидатов, не полным экспортом схемы.
-
-## Уточнение 0.7
-
-Кандидаты SiSS5623DN и CSD19532Q5B пока НЕ совместимы с назначенными силовыми footprints; не заказывать их для текущей PCB без замены посадочных мест. Символы PowerPAK-кандидатов исправлены на S=1/2/3, G=4, D=5. R901 теперь 1M.
-
-## Уточнение 0.8
-
-Для Q711/Q721/Q731 назначен Si7454DDP-T1-GE3 и соответствующий PowerPAK_SO-8_Single в схеме и PCB. Прежний CSD19532Q5B не используется. Для Q711 тепловой расчёт выявил риск; вариант остаётся прототипным, окончательный силовой каскад не утверждён. Подробнее — README, раздел 0.8. Полный фактический список схемы: BOM_schematic.csv; эта таблица остаётся частичным подбором.
+Подробности расчёта и ограничений: `LED_COST_DOWN.md`. Кандидат Q901 всё ещё не совпадает с footprint в схеме. Не заказывать силовые детали, дроссели, предохранители и клеммы до завершения подбора.
