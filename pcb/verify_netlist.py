@@ -96,15 +96,15 @@ for idx in (1, 2, 3):
     r_fb1, r_rt, r_vref, r_ctrl, r_comp, r_is = (f'R7{idx}{n}' for n in (0, 1, 2, 3, 4, 5))
     r_led, r_ovp1, r_ovp2, r_fb2 = (f'R7{idx}{n}' for n in (6, 7, 8, 9))
     groups += [
-        [(u, 14), (f'C7{idx}1', 1), (l, 1), ('F903', 2)],
+        [(u, 14), (f'C7{idx}1', 1), (f'C7{idx}5', 1), (l, 1), ('F903', 2)],
         [(u, 16), (q, 1)],
         [(q, 2), (l, 2), (d, 2)],
         [(q, 3), (r_is, 1), (u, 15)],
         [(r_is, 2), (u, 17)],
         [(d, 1), (r_ovp1, 1), (r_fb2, 1)],
         [(j, 1), (r_led, 2), (u, 3)],
-        [(r_led, 1), (u, 4)],
-        [(j, 2), (u, 17)],
+        [(r_led, 1), (u, 4), (d, 1), (f'C7{idx}6', 1), (f'C7{idx}7', 1)],
+        [(j, 2), (u, 17), (f'C7{idx}5', 2), (f'C7{idx}6', 2), (f'C7{idx}7', 2)],
         [(u, 2), (r_fb1, 1), (r_fb2, 2)],
         [(u, 12), ('U201', 27)],
         [(u, 8), ('U201', 8)],
@@ -134,8 +134,8 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 161
+assert len(root.findall('.//components/comp')) == 170
 
 for drain in [('Q601', 5), ('Q521', 3)]:
     assert net_of(*drain)[0] not in (net_of('U201', 1)[0], net_of('U101', 3)[0])
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery isolation, UART reference separation, 161 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery isolation, UART reference separation, 170 components.')

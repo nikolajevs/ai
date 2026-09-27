@@ -64,3 +64,9 @@
 - SiSS5623DN: https://www.vishay.com/en/product/62197/
 - SRP1265A: https://www.bourns.com/docs/product-datasheets/srp1265a.pdf
 - Littelfuse SMD fuses: https://www.littelfuse.com/products/fuses-overcurrent-protection/smd-fuses
+
+## Изменения схемы 0.6
+
+Приоритет над прежней таблицей: U710/U720/U730 = LT3756EMSE-2#PBF; R715 = 0.012 Ω/1%/≥2 W, R725/R735 = 0.047 Ω/1%/≥1 W (2512); R712/R722/R732 = 33k, R713/R723/R733 = 100k; RT = 21k. C712/C722/C732 = 4.7 µF/16 V X7R (0805).
+
+Добавлены C715/C725/C735 = 22 µF/25 V X7R (1210) и C716/C717/C726/C727/C736/C737 = 10 µF/100 V X7R (1210). MPN не утверждены: проверить DC bias, ripple current, температуру и геометрию. CSV остаётся частичным списком кандидатов, не полным экспортом схемы.
