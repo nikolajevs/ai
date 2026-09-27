@@ -16,7 +16,7 @@ C401,22u / 10V X7R,Capacitor_SMD:C_0805_2012Metric,,/MCU / ESP32/Peripherals/,,,
 C402,100n / 16V,Capacitor_SMD:C_0603_1608Metric,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C521,10u / 50V X7R,Capacitor_SMD:C_1210_3225Metric,,/Outputs/,Murata,GRM32ER71H106KA12L,C77102,ENGINEERING DRAFT - DO NOT ORDER
 C601,100n / 25V,Capacitor_SMD:C_0603_1608Metric,,/Outputs/Heater/,,,,ENGINEERING DRAFT - DO NOT ORDER
-C602,2.2u / 25V X7R,Capacitor_SMD:C_0805_2012Metric,,/Outputs/Heater/,,,,ENGINEERING DRAFT - DO NOT ORDER
+C602,4.7u / 25V X7R,Capacitor_SMD:C_0805_2012Metric,,/Outputs/Heater/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C700,100n 16V,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C710,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,,/LEDDrivers/,Murata,GRM32ER71H106KA12L,C77102,ENGINEERING DRAFT - DO NOT ORDER
 C711,1u 50V X7R,Capacitor_SMD:C_0805_2012Metric,,/LEDDrivers/,Samsung,CL21B105KBFNNNE,C28323,ENGINEERING DRAFT - DO NOT ORDER
@@ -42,7 +42,7 @@ C905,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,,/InputPower/,Murata,GRM32ER71H
 C906,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,,/InputPower/,Murata,GRM32ER71H106KA12L,C77102,ENGINEERING DRAFT - DO NOT ORDER
 C907,100n 50V X7R,Capacitor_SMD:C_0603_1608Metric,,/InputPower/,Samsung,CL10B104KB8NNNC,C1591,ENGINEERING DRAFT - DO NOT ORDER
 C908,100n 50V X7R,Capacitor_SMD:C_0603_1608Metric,,/InputPower/,Samsung,CL10B104KB8NNNC,C1591,ENGINEERING DRAFT - DO NOT ORDER
-C909,22u 25V X7R,Capacitor_SMD:C_1210_3225Metric,,/InputPower/,Samsung,CL32B226KAJNNNE,C309062,ENGINEERING DRAFT - DO NOT ORDER
+C909,100u 25V polymer,Capacitor_SMD:CP_Elec_8x6.9,https://industrial.panasonic.com/cdbs/www-data/pdf/AAB8000/AAB8000C177.pdf,/InputPower/,Panasonic,25SVPF100M,C136279,ENGINEERING DRAFT - DO NOT ORDER
 C910,22u 25V X7R,Capacitor_SMD:C_1210_3225Metric,,/InputPower/,Samsung,CL32B226KAJNNNE,C309062,ENGINEERING DRAFT - DO NOT ORDER
 D301,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 D302,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -58,22 +58,28 @@ D721,STPS2H100AFY,Diode_SMD:D_SOD-128,https://www.st.com/resource/en/datasheet/s
 D901,SMBJ26CA-E3/52,Diode_SMD:D_SMB,,/InputPower/,Vishay,SMBJ26CA-E3/52,C515606,ENGINEERING DRAFT - DO NOT ORDER
 D902,SS36-E3/57T,Diode_SMD:D_SMC,,/InputPower/,Vishay,SS36-E3/57T,C35722,ENGINEERING DRAFT - DO NOT ORDER
 F301,PTC 0.10A / >=16V,Fuse:Fuse_1206_3216Metric,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
+F501,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451001.MRL,C3099,ENGINEERING DRAFT - DO NOT ORDER
+F511,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451001.MRL,C3099,ENGINEERING DRAFT - DO NOT ORDER
+F521,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451001.MRL,C3099,ENGINEERING DRAFT - DO NOT ORDER
+F711,6.3A / 045106.3MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,045106.3MRL,C178982,ENGINEERING DRAFT - DO NOT ORDER
+F721,3A / 0451003.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,0451003.MRL,C13982,ENGINEERING DRAFT - DO NOT ORDER
 F902,10A mini blade (ATM),GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,,/InputPower/,XFCN,XF-508P-B-B,C19727305,ENGINEERING DRAFT - DO NOT ORDER
 F903,7.5A mini blade (ATM),GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,,/InputPower/,XFCN,XF-508P-B-B,C19727305,ENGINEERING DRAFT - DO NOT ORDER
+F904,2A / 0451002.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/InputPower/,Littelfuse,0451002.MRL,C99547,ENGINEERING DRAFT - DO NOT ORDER
 J201,UART / 3V3 logic,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,/MCU / ESP32/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J301,SHT4x / XH 2.50,Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J302,FLOAT / 3.5 mm,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,/MCU / ESP32/Peripherals/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
 J401,Molex 104031-0811,Connector_Card:microSD_HC_Molex_104031-0811,https://www.hirose.com/en/product/document?clcode=&productname=&series=DM3&documenttype=Catalog&lang=en&documentid=D49662_en,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J501,FAN1 / 3.5 mm,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal",,/Outputs/,DORABO,DB125-3.5-4P-GN-S,C2757925,ENGINEERING DRAFT - DO NOT ORDER
 J511,FAN2 / 3.5 mm,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal",,/Outputs/,DORABO,DB125-3.5-4P-GN-S,C2757925,ENGINEERING DRAFT - DO NOT ORDER
-J521,PUMP + / switched - (3.5 mm),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,/Outputs/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
+J521,PUMP 24V / 6W,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,/Outputs/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
 J601,PTC + / switched - (3.5 mm),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,/Outputs/Heater/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
 J711,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,KANGNEX,WJ500V-5.08-2P,C8465,ENGINEERING DRAFT - DO NOT ORDER
 J721,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,KANGNEX,WJ500V-5.08-2P,C8465,ENGINEERING DRAFT - DO NOT ORDER
 J731,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,KANGNEX,WJ500V-5.08-2P,C8465,ENGINEERING DRAFT - DO NOT ORDER
 J901,XT60PW-M 24V IN,Connector_AMASS:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal,,/InputPower/,Changzhou Amass,XT60PW-M,C98732,ENGINEERING DRAFT - DO NOT ORDER
 L101,10uH / Isat >= 4.5A,Inductor_SMD:L_Coilcraft_XAL7050-XXX,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
-L711,47u SRP1770TA-470M,Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm,https://www.bourns.com/docs/Product-Datasheets/SRP1770TA.pdf,/LEDDrivers/,Bourns,SRP1770TA-470M,C2041872,ENGINEERING DRAFT - DO NOT ORDER
+L711,47u SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,https://www.bourns.com/docs/product-datasheets/srp1265a.pdf,/LEDDrivers/,Bourns,SRP1265A-470M,C840530,ENGINEERING DRAFT - DO NOT ORDER
 L721,47u SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,https://www.bourns.com/docs/Product-Datasheets/SRP1265A.pdf,/LEDDrivers/,Bourns,SRP1265A-470M,C840530,ENGINEERING DRAFT - DO NOT ORDER
 L902,22u SRP1265A-220M,GrowBox:L_Bourns_SRP1265A,,/InputPower/,Bourns,SRP1265A-220M,C2041465,ENGINEERING DRAFT - DO NOT ORDER
 Q501,AO3400A,Package_TO_SOT_SMD:SOT-23,http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf,/Outputs/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -129,7 +135,7 @@ R711,10R,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO 
 R712,1k 1% / slope tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R713,100k,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R714,10k / comp tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
-R715,0.027 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
+R715,0.043 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R716,0.182 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R717,316k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R718,10k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -138,11 +144,11 @@ R722,2.7k 1% / slope tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINE
 R723,100k,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R724,10k / comp tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R725,0.047 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
-R726,0.40 1% >=0.25W,Resistor_SMD:R_1206_3216Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
+R726,0.43 1% >=0.25W,Resistor_SMD:R_1206_3216Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R727,316k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R728,10k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
-R904,100k 1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
-R905,6.65k 1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
+R904,150k 0.1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
+R905,10k 0.1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R906,49.9k 1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R907,560k 1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R908,47k 1%,Resistor_SMD:R_0603_1608Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER

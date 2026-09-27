@@ -74,6 +74,13 @@ for ref, comp in sorted(comps.items()):
     fp = board.FindFootprintByReference(ref)
     fp.SetReference(ref)
     fp.SetValue(comp.findtext('value'))
+    fields = {f.get('name'):f.text or '' for f in comp.findall('fields/field')}
+    metadata = {k:fields.get(k,'') for k in ('Manufacturer','MPN','LCSC')}
+    metadata['Datasheet'] = comp.findtext('datasheet','')
+    for key,value in metadata.items():
+        if value or fp.HasField(key):
+            fp.SetField(key,value)
+            fp.GetField(key).SetVisible(False)
     path = p.KIID_PATH()
     for u in [root_uuid] + [u for u in comp.find('sheetpath').get('tstamps').split('/') if u] + [comp.findtext('tstamps')]:
         path.push_back(p.KIID(u))

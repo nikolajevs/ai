@@ -2,7 +2,7 @@
 
 Run after exporting the schematic as KiCad XML:
   python analyze_led_power.py netlist.xml
-Requires only the Python standard library. See LED_POWER_COMPONENTS.md for
+Requires only the Python standard library. See REDESIGN_24V.md for
 sources, modelling assumptions and the measurements still required.
 """
 import argparse
@@ -13,15 +13,17 @@ import xml.etree.ElementTree as ET
 
 
 CHANNELS = [
-    dict(n=1, led_r=.182, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
-         l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4,
+    dict(n=1, led_r=.182, cs_r=.043, slope_r=1000, l_mpn='SRP1265A-470M',
+         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=4,
          diode='STPS5H100B-TR', diode_vf=.85, diode_a=.51, diode_b=.02),
-    # CH2 drives the two identical LED bars (J721 || J731), 0.5 A total.
-    dict(n=2, led_r=.40, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
+    # CH2 has one CURRENT REGULATOR for J721 || J731, no guaranteed sharing.
+    # Even if one bar is open, the other stays below 0.5 A at the FB/R corner.
+    dict(n=2, led_r=.43, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
          l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=3,
          diode='STPS2H100AFY', diode_vf=.88, diode_a=.56, diode_b=.045),
 ]
-# LED rail voltage at the AL8853 VIN pins: 24 V PSU set point, 25 V ceiling,
+# POWER-stage input voltage, NOT the AL8853 VIN pins (now 12 V aux bias):
+# 24 V PSU set point, 25 V ceiling,
 # -10 % allowance for PSU tolerance, cable, fuse and connector drops.
 VIN_CASES = (21.6, 24.0, 25.0)
 CAP_MPN = 'CL32Y106KCV6PNE'
@@ -37,7 +39,7 @@ def check_schematic(path):
     for ch in CHANNELS:
         n = ch['n']
         expected = {f'L7{n}1': '47u', f'R7{n}5': str(ch['cs_r']),
-                    f'R7{n}6': '0.182' if n == 1 else '0.40',
+                    f'R7{n}6': '0.182' if n == 1 else '0.43',
                     f'R7{n}2': '1k' if n == 1 else '2.7k'}
         for ref, value in expected.items():
             assert comps[ref].findtext('value').split()[0] == value, (ref, value)
@@ -107,7 +109,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.14 LED sizing estimates (24 V input, 2 channels)',
+    out = ['PCB_V1 v0.15 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',
@@ -143,10 +145,13 @@ def report():
                 f"  Output-cap RMS screening max {hi('cap_rms'):.3f} A total", '']
     nominal = sum(.2 / c['led_r'] * 48 for c in CHANNELS)
     maximum = sum(.206 / (c['led_r'] * .99) * 48 for c in CHANNELS)
+    bar_max = .206 / (.43 * .99)
+    assert bar_max < .5, 'CH2 can exceed the single-bar rating if the other bar is open'
     out += [f'Combined LED power at 48 V: nominal {nominal:.2f} W; FB/R corner {maximum:.2f} W.',
+            f'CH2 sharing is NOT guaranteed. One remaining bar: <= {bar_max:.4f} A steady-state.',
             'Uncovered: faults/startup/OVP, gate delays, ramp tolerances, compensation loop,',
             'hot saturation and core loss, MLCC bias/temperature/aging interaction, layout.',
-            'Measure before fabrication release; branch-short protection is still required.']
+            'Input branch fuses are fitted; clearing time/I2t with the actual PSU is NOT qualified.']
     return '\n'.join(out) + '\n'
 
 

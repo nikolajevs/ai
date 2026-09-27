@@ -7,9 +7,9 @@
 	(title_block
 		(title "06 - 24 V input, branch fuses, 12 V auxiliary buck")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Prototype design; protection and thermal qualification pending")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -1216,7 +1216,7 @@
 			)
 			(embedded_fonts no)
 		)
-	
+
 		(symbol "GrowBox:LMR16020"
 		(pin_names
 			(offset 0.254)
@@ -3195,8 +3195,7 @@
 		)
 		(uuid 68e71c46-ab03-4a0e-8705-c50d2990fb1a)
 	)
-	(global_label "+24V"
-		(shape bidirectional)
+	(label "AUX_VIN"
 		(at 33.02 118.11 90)
 		(effects
 			(font
@@ -3329,8 +3328,7 @@
 		)
 		(uuid d68b080f-29ed-434c-8c38-85c29a5c4a4c)
 	)
-	(global_label "+24V"
-		(shape bidirectional)
+	(label "AUX_VIN"
 		(at 50.8 118.11 90)
 		(effects
 			(font
@@ -3463,8 +3461,7 @@
 		)
 		(uuid b550ca2a-1851-4ce6-8fc8-bb9a3a20670e)
 	)
-	(global_label "+24V"
-		(shape bidirectional)
+	(label "AUX_VIN"
 		(at 68.58 118.11 90)
 		(effects
 			(font
@@ -3567,8 +3564,7 @@
 		)
 		(uuid 96222ec3-5001-483d-ab0e-3eac199a9b9c)
 	)
-	(global_label "+24V"
-		(shape bidirectional)
+	(label "AUX_VIN"
 		(at 91.44 105.41 90)
 		(effects
 			(font
@@ -3824,8 +3820,7 @@
 		)
 		(uuid dd38dc1f-f4e8-41ae-a41c-ab6817c71af6)
 	)
-	(global_label "+24V"
-		(shape bidirectional)
+	(label "AUX_VIN"
 		(at 116.84 119.38 180)
 		(effects
 			(font
@@ -4500,7 +4495,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k 1%"
+		(property "Value" "150k 0.1%"
 			(at 224.79 115.57 0)
 			(effects
 				(font
@@ -4603,7 +4598,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6.65k 1%"
+		(property "Value" "10k 0.1%"
 			(at 224.79 153.67 0)
 			(effects
 				(font
@@ -4689,7 +4684,7 @@
 		(uuid 5f38c416-542d-4376-9976-2cf434e5f7c1)
 	)
 	(symbol
-		(lib_id "Device:C")
+		(lib_id "Device:C_Polarized")
 		(at 243.84 124.46 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4706,7 +4701,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22u 25V X7R"
+		(property "Value" "100u 25V polymer"
 			(at 247.65 125.73 0)
 			(effects
 				(font
@@ -4715,7 +4710,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:CP_Elec_8x6.9"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4725,7 +4720,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://industrial.panasonic.com/cdbs/www-data/pdf/AAB8000/AAB8000C177.pdf"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4735,7 +4730,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Panasonic"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4745,7 +4740,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B226KAJNNNE"
+		(property "MPN" "25SVPF100M"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4755,7 +4750,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C309062"
+		(property "LCSC" "C136279"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4824,7 +4819,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 261.62 124.46 0)
+		(at 281.94 124.46 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4832,7 +4827,7 @@
 		(dnp no)
 		(uuid b27f5bda-d9f0-4c55-9594-0726dc00a2c9)
 		(property "Reference" "C910"
-			(at 265.43 123.19 0)
+			(at 285.75 123.19 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4841,7 +4836,7 @@
 			)
 		)
 		(property "Value" "22u 25V X7R"
-			(at 265.43 125.73 0)
+			(at 285.75 125.73 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4850,7 +4845,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
-			(at 261.62 124.46 0)
+			(at 281.94 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4860,7 +4855,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 261.62 124.46 0)
+			(at 281.94 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4870,7 +4865,7 @@
 			)
 		)
 		(property "Manufacturer" "Samsung"
-			(at 261.62 124.46 0)
+			(at 281.94 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4880,7 +4875,7 @@
 			)
 		)
 		(property "MPN" "CL32B226KAJNNNE"
-			(at 261.62 124.46 0)
+			(at 281.94 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4890,7 +4885,7 @@
 			)
 		)
 		(property "LCSC" "C309062"
-			(at 261.62 124.46 0)
+			(at 281.94 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4916,7 +4911,8 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 120.65) (xy 261.62 118.11)
+			(xy 281.94 120.65)
+			(xy 281.94 118.11)
 		)
 		(stroke
 			(width 0)
@@ -4926,7 +4922,7 @@
 	)
 	(global_label "+12V"
 		(shape bidirectional)
-		(at 261.62 118.11 90)
+		(at 281.94 118.11 90)
 		(effects
 			(font
 				(size 1.0 1.0)
@@ -4937,7 +4933,8 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 128.27) (xy 261.62 130.81)
+			(xy 281.94 128.27)
+			(xy 281.94 130.81)
 		)
 		(stroke
 			(width 0)
@@ -4947,7 +4944,7 @@
 	)
 	(global_label "GND"
 		(shape bidirectional)
-		(at 261.62 130.81 270)
+		(at 281.94 130.81 270)
 		(effects
 			(font
 				(size 1.0 1.0)
@@ -4978,7 +4975,7 @@
 		)
 		(uuid b81cdfcd-6c93-4b4d-a77d-f243d9eb6a83)
 	)
-	(text "External PSU: 24.0 V set point, never above 25 V. D901 SMBJ26CA: standoff 26 V,\nVBR 28.9 V min, clamp 42.1 V at 14.3 A (10/1000 us) <= AL8853 43 V abs max; LMR16020 65 V.\nF902 10 A ATM: PTC 4.2 A (+15% cold) + pump. F903 7.5 A ATM: LED boost input 3.6 A nom / 4.5 A worst est.\nHolders XF-508P-B-B (<=5 mOhm). Fuse interrupt rating and cable I2t to be checked with the real PSU."
+	(text "External PSU: 24.0 V set point, <=25 V. D901 SMBJ26CA: 26 V standoff, 42.1 V clamp at 14.3 A (25 C).\nAL8853 VIN pins now use 12 V aux; their power inductors still use 24 V.\nF902 10 A loads; F903 7.5 A LED; F904 2 A aux. PSU must protect the unfused XT60/TVS input segment."
 		(exclude_from_sim no)
 		(at 20.32 83.82 0)
 		(effects
@@ -4989,7 +4986,7 @@
 		)
 		(uuid 338c23fd-a4ac-46f5-ab95-60b128b3e5c5)
 	)
-	(text "12 V AUX BUCK: fans, UCC27524A VDD, TPS54202 3.3 V input. LMR16020 500 kHz (RT 49.9k).\nVout = 0.75 V x (1 + 100k/6.65k) = 12.03 V. EN divider 560k/47k: start ~14.9 V (<=17.3 V), stop ~12.9 V.\nL902 22 uH: ripple ~0.57 App at 25 V in. Budget 1.5 A; IC current limit 2.5-3.8 A.\nD902 SS36 60 V/3 A. Keep the VIN-C907/C905-GND and SW-D902 loops short; EP to GND with vias."
+	(text "12 V AUX: two fans, UCC27524A, TPS54202 and both AL8853 VIN pins. LMR16020, 500 kHz, 22 uH.\nVout = 0.75 x (1 + 150k/10k) = 12.00 V; 0.1% divider, static range 11.74..12.26 V. Budget 1.2 A.\nEN divider 560k/47k retained. C909 100u polymer + C910 22u ceramic; verify startup/load steps and thermal vias.\nF904 and downstream fuses do not qualify fault clearing; test against the actual PSU and cables."
 		(exclude_from_sim no)
 		(at 20.32 172.72 0)
 		(effects
@@ -4999,5 +4996,222 @@
 			(justify left top)
 		)
 		(uuid a13ce5ee-bd19-41c1-9f3b-1d3e5df91115)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 302.26 83.82 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 1244e481-7641-5217-aa97-7c90beff6822)
+		(property "Reference" "F904"
+			(at 289.56 73.66 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "2A / 0451002.MRL"
+			(at 289.56 76.19999999999999 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 302.26 83.82 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 302.26 83.82 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid b6b751c0-0f9d-5822-af7e-d976e8c37a7d)
+		)
+		(pin "2"
+			(uuid 0f4ef9f8-d2ef-54d0-90be-d2e4225d08d4)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "F904")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 302.26 83.82 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451002.MRL"
+			(at 302.26 83.82 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C99547"
+			(at 302.26 83.82 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 298.45 83.82)
+			(xy 278.13 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 720721ac-f278-5694-bae3-9304cd7a801d)
+	)
+	(global_label "+24V"
+		(shape bidirectional)
+		(at 278.13 83.82 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid f3c62771-322e-5011-8a67-da19e5f1eb8e)
+	)
+	(wire
+		(pts
+			(xy 306.07 83.82)
+			(xy 318.77 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 6ca3fa75-c724-595b-8193-4954c17236a3)
+	)
+	(label "AUX_VIN"
+		(at 318.77 83.82 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 3f286a57-be0e-534d-bfd8-a566ab5bc0e8)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 355.6 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 4021401a-80fb-504d-9be5-03b1a5f29337)
+		(property "Reference" "#FLG0604"
+			(at 358.6 82.55 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 358.6 85.08999999999999 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 355.6 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 355.6 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 2dea753d-598c-5b4f-8eb3-e2880a99b193)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "#FLG0604")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 355.6 83.82)
+			(xy 355.6 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f0952f07-1e53-5de3-b074-1849e971a55c)
+	)
+	(label "AUX_VIN"
+		(at 355.6 88.9 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 858c913e-1a7c-52bc-8880-95bf82127fa3)
 	)
 )

@@ -12,6 +12,9 @@ for comp in root.findall('.//components/comp'):
  ref=comp.get('ref');fp=fps[ref];identity=fp.GetFPID()
  assert fp.GetValue()==comp.findtext('value'),(ref,'value differs')
  assert str(identity.GetLibNickname())+':'+str(identity.GetLibItemName())==comp.findtext('footprint'),(ref,'footprint differs')
+ fields={f.get('name'):f.text or '' for f in comp.findall('fields/field')}
+ for key in ('Manufacturer','MPN','LCSC'):
+  assert (fp.GetFieldText(key) if fp.HasField(key) else '')==fields.get(key,''),(ref,key,'metadata differs')
  # XML omits the schematic root UUID; the PCB path includes it. This catches
  # newly added footprints that would otherwise be duplicated on Update PCB.
  suffix=comp.find('sheetpath').get('tstamps').rstrip('/')+'/'+comp.findtext('tstamps').strip()
@@ -78,7 +81,7 @@ assert nodes[('D711','3')]==nodes[('Q711','5')]
 assert nodes[('D711','1')].startswith('unconnected-')
 assert str(fps['D711'].GetFPID().GetLibItemName())=='TO-252-2'
 assert str(fps['D721'].GetFPID().GetLibItemName())=='D_SOD-128'
-for ref,sz in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
+for ref,sz in [('L711',(3.1,5.0)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
  pads=[p for p in fps[ref].Pads() if p.GetNumber()]
  assert {p.GetNumber() for p in pads}=={'1','2'}
  for pad in pads:
@@ -90,7 +93,8 @@ print('PASS: all values/footprints agree; LED diode polarity/NC, CH2 parallel ba
 # 24 V input and 12 V aux buck.
 gnd=nodes[('U201','1')]
 assert str(fps['J901'].GetFPID().GetLibItemName())=='AMASS_XT60PW-M_1x02_P7.20mm_Horizontal'
-assert nodes[('J901','1')]==gnd and nodes[('J901','2')]==nodes[('U902','2')],'XT60 polarity'
+assert nodes[('J901','1')]==gnd and nodes[('J901','2')]==nodes[('F904','1')],'XT60 polarity'
+assert nodes[('F904','2')]==nodes[('U902','2')],'buck must be after auxiliary fuse'
 for ref in ['F902','F903']:
  pads=numbered(ref)
  assert str(fps[ref].GetFPID().GetLibItemName())=='Fuseholder_Blade_Mini_XFCN_XF-508P'
@@ -108,4 +112,15 @@ assert nodes[('D902','1')]==nodes[('U902','8')]==nodes[('L902','1')],'catch diod
 assert nodes[('D902','2')]==gnd
 assert nodes[('L902','2')]==nodes[('U101','3')]==nodes[('U601','6')],'12 V aux feeds 3.3 V buck and gate driver'
 assert str(fps['L902'].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
-print('PASS: schematic instance paths; XT60 polarity, mini-blade holders, LMR16020 DDA pads and 12 V aux wiring')
+assert nodes[('U710','1')]==nodes[('U720','1')]==nodes[('L902','2')],'AL8853 bias must use 12 V'
+assert str(fps['C909'].GetFPID().GetLibItemName())=='CP_Elec_8x6.9'
+assert nodes[('C909','1')]==nodes[('L902','2')] and nodes[('C909','2')]==gnd,'C909 polymer polarity'
+assert all(size(p)==(4.15,1.9) for v in numbered('C909').values() for p in v),'C909 E7 lands'
+for ref in ['F501','F511','F521','F711','F721','F904']:
+ pads=numbered(ref)
+ assert str(fps[ref].GetFPID().GetLibItemName())=='Fuse_Littelfuse_451'
+ assert set(pads)=={'1','2'} and all(len(v)==1 for v in pads.values()),(ref,'fuse terminals')
+ assert nodes[(ref,'1')]!=nodes[(ref,'2')],(ref,'fuse bypass')
+ for v in pads.values():assert size(v[0])==(1.96,3.15),(ref,'451 recommended lands')
+ assert abs(pcbnew.ToMM(pads['1'][0].GetPosition().x-pads['2'][0].GetPosition().x))==4.91,(ref,'pad span')
+print('PASS: schematic instance paths; XT60 polarity, mini-blade holders, six SMT fuses, LMR16020 DDA and 12 V bias wiring')

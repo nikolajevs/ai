@@ -7,9 +7,9 @@
 	(title_block
 		(title "01 - Logic power / 12 V aux to 3.3 V")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Draft: input protection and LED drivers pending")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"

@@ -7,9 +7,9 @@
 	(title_block
 		(title "07 - AL8853 LED drivers, 24 V input, 2 channels")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "AL8853 cost-down prototype; not fabrication ready")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "74xGxx:74LVC1G08"
@@ -2152,364 +2152,636 @@
 			)
 			(embedded_fonts no)
 		)
-	
 		(symbol "GrowBox:CSD19534Q5A"
-		(pin_names
-			(offset 0)
-			(hide yes)
-		)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(duplicate_pin_numbers_are_jumpers no)
-		(property "Reference" "Q"
-			(at 5.08 1.905 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "CSD19534Q5A"
-			(at 5.08 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "GrowBox:TI_DQJ0008A_CSD19534Q5A"
-			(at 5.08 2.54 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/csd19534q5a.pdf"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "N-MOSFET transistor, gate/drain/source"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(symbol "CSD19534Q5A_0_1"
-			(polyline
-				(pts
-					(xy 0.254 1.905)
-					(xy 0.254 -1.905)
-				)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.254 0)
-					(xy -2.54 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.762 2.286)
-					(xy 0.762 1.27)
-				)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.762 0.508)
-					(xy 0.762 -0.508)
-				)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.762 -1.27)
-					(xy 0.762 -2.286)
-				)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.762 -1.778)
-					(xy 3.302 -1.778)
-					(xy 3.302 1.778)
-					(xy 0.762 1.778)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.016 0)
-					(xy 2.032 0.381)
-					(xy 2.032 -0.381)
-					(xy 1.016 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 1.651 0)
-				(radius 2.794)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 2.54 2.54)
-					(xy 2.54 1.778)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 2.54 1.778)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 2.54 -1.778)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(polyline
-				(pts
-					(xy 2.54 -2.54)
-					(xy 2.54 0)
-					(xy 0.762 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 2.921 0.381)
-					(xy 3.683 0.381)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 3.302 0.381)
-					(xy 2.921 -0.254)
-					(xy 3.683 -0.254)
-					(xy 3.302 0.381)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-		)
-		(symbol "CSD19534Q5A_1_1"
-			(pin input line
-				(at -5.08 0 0)
-				(length 2.54)
-				(name "G"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 2.54 5.08 270)
-				(length 2.54)
-				(name "D"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 2.54 -5.08 90)
-				(length 2.54)
-				(name "S"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 2.54 -5.08 90)
-				(length 2.54)
-				(name "S"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
+			(pin_names
+				(offset 0)
 				(hide yes)
 			)
-			(pin passive line
-				(at 2.54 -5.08 90)
-				(length 2.54)
-				(name "S"
-					(effects
-						(font
-							(size 1.27 1.27)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "CSD19534Q5A"
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "GrowBox:TI_DQJ0008A_CSD19534Q5A"
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/csd19534q5a.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "N-MOSFET transistor, gate/drain/source"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "CSD19534Q5A_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905)
+						(xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0)
+						(xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286)
+						(xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508)
+						(xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27)
+						(xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778)
+						(xy 3.302 -1.778)
+						(xy 3.302 1.778)
+						(xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0)
+						(xy 2.032 0.381)
+						(xy 2.032 -0.381)
+						(xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54)
+						(xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54)
+						(xy 2.54 0)
+						(xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.921 0.381)
+						(xy 3.683 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381)
+						(xy 2.921 -0.254)
+						(xy 3.683 -0.254)
+						(xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "CSD19534Q5A_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
 						)
 					)
 				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
 						)
 					)
 				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(hide yes)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(hide yes)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:Fuse"
+			(pin_numbers
 				(hide yes)
 			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "F"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Fuse"
+				(at -1.905 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*Fuse*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Fuse_0_1"
+				(rectangle
+					(start -0.762 -2.54)
+					(end 0.762 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54)
+						(xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Fuse_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
 		)
-		(embedded_fonts no)
-	)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0)
+						(xy 0 1.27)
+						(xy -1.016 1.905)
+						(xy 0 2.54)
+						(xy 1.016 1.905)
+						(xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "PWM 20 kHz initial / analog current dimming. Enable low or reset: DIM low. LED returns MUST remain separate."
 		(exclude_from_sim no)
@@ -2522,7 +2794,7 @@
 		)
 		(uuid "19d9c77c-34d6-5168-ba34-4c5b712a3901")
 	)
-	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V power parts; selected MPNs and sizing: LED_POWER_COMPONENTS.md."
+	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V output parts. Current calculations: REDESIGN_24V.md / LED_power_v15.txt."
 		(exclude_from_sim no)
 		(at 20.32 378.46 0)
 		(effects
@@ -2533,7 +2805,7 @@
 		)
 		(uuid "1cbdacf2-b455-5f84-9698-1639abfb366a")
 	)
-	(text "Do not connect LED- to GND. Only J721/J731 (same channel) share LED2_RETURN; never join CH1 and CH2 returns. Output short protection needs branch fuses/disconnect; boost diode conducts at shutdown."
+	(text "LED-: J721/J731 share CH2; never join CH1 to CH2 or GND. F711/F721 protect INPUT paths; boost diodes conduct at shutdown."
 		(exclude_from_sim no)
 		(at 20.32 383.54 0)
 		(effects
@@ -2555,7 +2827,7 @@
 		)
 		(uuid "3756db15-60bf-5c0e-9c9e-6f1cd04b5667")
 	)
-	(text "144 sizing cases at 24 V (2 ch x 72); typical ramp only. Startup/OCP, outer-loop stability, hot magnetics and thermal tests remain required."
+	(text "144 sizing cases: 24 V power / 12 V IC bias. Typical ramp only; startup, compensation, hot magnetics and fault clearing require tests."
 		(exclude_from_sim no)
 		(at 20.32 389.89 0)
 		(effects
@@ -2566,7 +2838,7 @@
 		)
 		(uuid "457b565c-27e5-5b0c-b86d-e09f080094ca")
 	)
-	(text "CH2: 0.500 A nominal / two identical bars in parallel (J721 + J731)"
+	(text "CH2: 0.465 A nominal TOTAL / J721 + J731 parallel; <=0.484 A at FB/R tolerance corner"
 		(exclude_from_sim no)
 		(at 20.32 180.34 0)
 		(effects
@@ -2588,7 +2860,7 @@
 		)
 		(uuid "9ef18ced-90dd-5e91-b645-7387875c89a3")
 	)
-	(text "J731: second bar on CH2, parallel with J721. Former CH3 removed in 0.14."
+	(text "J731: second bar on CH2, parallel with J721. Sharing need not be equal; one open bar leaves the other below 0.5 A (steady-state)."
 		(exclude_from_sim no)
 		(at 20.32 279.4 0)
 		(effects
@@ -2599,7 +2871,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.14 DRAFT: 24 V input. CH1 panel 1.099 A; CH2 two bars 0.5 A total. AL8853 / CSD19534Q5A / CSD19538Q3A."
+	(text "0.15 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 1.099 A; CH2 0.465 A total. Qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -4446,8 +4718,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 143.51 97.79 0)
 		(effects
 			(font
@@ -4456,17 +4727,6 @@
 			(justify left bottom)
 		)
 		(uuid "296e21a2-36bf-53cb-8bc6-2c8c8f834e36")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.75 97.79 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -4644,8 +4904,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 165.1 149.86 0)
 		(effects
 			(font
@@ -4654,19 +4913,8 @@
 			(justify left bottom)
 		)
 		(uuid "6f260d6d-5155-526b-9665-d8be5b3bf342")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1 149.86 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+24V_LED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 25.4 142.24 0)
 		(effects
@@ -4732,7 +4980,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 39.37 200.66 0)
 		(effects
@@ -4754,8 +5002,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 143.51 198.12 0)
 		(effects
 			(font
@@ -4764,17 +5011,6 @@
 			(justify left bottom)
 		)
 		(uuid "83da2aed-5a0c-505c-8c8a-45ec3d114776")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.75 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -4886,7 +5122,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 39.37 100.33 0)
 		(effects
@@ -4908,7 +5144,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 25.4 241.3 0)
 		(effects
@@ -5260,8 +5496,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 165.1 250.19 0)
 		(effects
 			(font
@@ -5270,17 +5505,6 @@
 			(justify left bottom)
 		)
 		(uuid "fa3d9615-3394-580f-9fd0-8828f922daa2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1 250.19 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "Device:D_Schottky")
@@ -5422,7 +5646,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.027 1% >=1W"
+		(property "Value" "0.043 1% >=1W"
 			(at 252.73 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5563,7 +5787,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C77102"
 			(at 165.1 156.21 0)
 			(effects
@@ -5574,7 +5798,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "GRM32ER71H106KA12L"
 			(at 165.1 156.21 0)
 			(effects
@@ -5585,7 +5809,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Murata"
 			(at 165.1 156.21 0)
 			(effects
@@ -5619,7 +5843,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.40 1% >=0.25W"
+		(property "Value" "0.43 1% >=0.25W"
 			(at 448.31 224.79 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5760,7 +5984,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C8465"
 			(at 449.58 298.45 0)
 			(effects
@@ -5771,7 +5995,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 298.45 0)
 			(effects
@@ -5782,7 +6006,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 298.45 0)
 			(effects
@@ -5898,7 +6122,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47u SRP1770TA-470M"
+		(property "Value" "47u SRP1265A-470M"
 			(at 149.86 87.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5909,7 +6133,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm"
+		(property "Footprint" "GrowBox:L_Bourns_SRP1265A"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -5921,7 +6145,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/SRP1770TA.pdf"
+		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp1265a.pdf"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -5969,7 +6193,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SRP1770TA-470M"
+		(property "MPN" "SRP1265A-470M"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -5981,7 +6205,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C2041872"
+		(property "LCSC" "C840530"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -7103,7 +7327,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C28323"
 			(at 25.4 247.65 0)
 			(effects
@@ -7114,7 +7338,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "CL21B105KBFNNNE"
 			(at 25.4 247.65 0)
 			(effects
@@ -7125,7 +7349,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Samsung"
 			(at 25.4 247.65 0)
 			(effects
@@ -7218,7 +7442,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C8465"
 			(at 449.58 198.12 0)
 			(effects
@@ -7229,7 +7453,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 198.12 0)
 			(effects
@@ -7240,7 +7464,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 198.12 0)
 			(effects
@@ -7900,7 +8124,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C28323"
 			(at 25.4 148.59 0)
 			(effects
@@ -7911,7 +8135,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "CL21B105KBFNNNE"
 			(at 25.4 148.59 0)
 			(effects
@@ -7922,7 +8146,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Samsung"
 			(at 25.4 148.59 0)
 			(effects
@@ -8261,7 +8485,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C8465"
 			(at 449.58 97.79 0)
 			(effects
@@ -8272,7 +8496,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 97.79 0)
 			(effects
@@ -8283,7 +8507,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 97.79 0)
 			(effects
@@ -8968,7 +9192,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C114200"
 			(at 224.79 118.11 0)
 			(effects
@@ -8979,7 +9203,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "CSD19534Q5A"
 			(at 224.79 118.11 0)
 			(effects
@@ -8990,7 +9214,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Texas Instruments"
 			(at 224.79 118.11 0)
 			(effects
@@ -9338,7 +9562,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C77102"
 			(at 165.1 256.54 0)
 			(effects
@@ -9349,7 +9573,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "GRM32ER71H106KA12L"
 			(at 165.1 256.54 0)
 			(effects
@@ -9360,7 +9584,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Murata"
 			(at 165.1 256.54 0)
 			(effects
@@ -10212,5 +10436,439 @@
 			(justify right)
 		)
 		(uuid f7707dbf-e7ca-4a4c-adbe-1c829919c0ba)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 480.06 153.67 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 84f24ac0-b05c-5467-af26-f38922c285c8)
+		(property "Reference" "F711"
+			(at 467.36 143.51 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "6.3A / 045106.3MRL"
+			(at 467.36 146.04999999999998 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid a3661ce6-a1da-5057-837c-fe32e2ad41e5)
+		)
+		(pin "2"
+			(uuid f778c77f-c84c-51f5-9f9b-1aef0f60e121)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "F711")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "045106.3MRL"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C178982"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 476.25 153.67)
+			(xy 455.93 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0efde195-fb80-579b-8a49-b60823977eb0)
+	)
+	(global_label "+24V_LED"
+		(shape bidirectional)
+		(at 455.93 153.67 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid a8e78df9-6561-5df0-8e6f-b418968cdac2)
+	)
+	(wire
+		(pts
+			(xy 483.87 153.67)
+			(xy 496.57 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 50cd4a44-57ff-51b0-8e3e-73938c30ffc6)
+	)
+	(label "LED1_VIN"
+		(at 496.57 153.67 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid b9070a9a-dc26-5615-a737-a468245e63f7)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 533.4 153.67 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 0c4d9320-a5b7-5dd7-ac43-7e84ec01f415)
+		(property "Reference" "#FLG0711"
+			(at 536.4 152.39999999999998 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 536.4 154.94 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 533.4 153.67 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 533.4 153.67 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid ebb87a55-9ff1-5f34-b297-084967a2ab25)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "#FLG0711")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 533.4 153.67)
+			(xy 533.4 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 159c7557-67cb-5067-9501-eebb8d133a0b)
+	)
+	(label "LED1_VIN"
+		(at 533.4 158.75 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 2aacb06a-0dce-5e9b-b579-e5ea253019c5)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 480.06 254.0 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid ffb661ae-5901-5409-9409-891f63879992)
+		(property "Reference" "F721"
+			(at 467.36 243.84 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "3A / 0451003.MRL"
+			(at 467.36 246.38 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid df65aefb-de0c-5c11-8e69-c45a4bf22e4e)
+		)
+		(pin "2"
+			(uuid 1c02766b-5146-5875-950c-4616ab81af83)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "F721")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451003.MRL"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C13982"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 476.25 254.0)
+			(xy 455.93 254.0)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid c0b2a5a5-d53c-5153-9015-db3917ae95ce)
+	)
+	(global_label "+24V_LED"
+		(shape bidirectional)
+		(at 455.93 254.0 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 943caf63-a7e2-5325-865b-3f8278777f8f)
+	)
+	(wire
+		(pts
+			(xy 483.87 254.0)
+			(xy 496.57 254.0)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 487b0115-b33e-5596-8805-fc30d30912c0)
+	)
+	(label "LED2_VIN"
+		(at 496.57 254.0 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid aec32a46-f76e-5e51-b703-53d63641bbc3)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 533.4 254.0 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 4ff375c6-af00-5d1b-9705-5eaaae3acf92)
+		(property "Reference" "#FLG0712"
+			(at 536.4 252.73 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 536.4 255.27 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 533.4 254.0 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 533.4 254.0 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid c2824882-d2f2-5b73-8b98-2359bcf2b1d3)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "#FLG0712")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 533.4 254.0)
+			(xy 533.4 259.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0b154b55-8ea0-52b2-9e44-91da138e6ff5)
+	)
+	(label "LED2_VIN"
+		(at 533.4 259.08 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid d230fe57-1351-5e9f-9c10-e962b1736e27)
 	)
 )

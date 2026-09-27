@@ -7,9 +7,9 @@
 	(title_block
 		(title "05 - PTC heater switch (24 V)")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Prototype design; protection and thermal qualification pending")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -1460,7 +1460,7 @@
 		)
 		(uuid "0239c72d-4d5d-5a05-a140-27900a5edf6a")
 	)
-	(text "PTC: низкочастотное ON/OFF. Внешний термостат/термопредохранитель\nпоследовательно с +PTC, с DC-рейтингом по току; температуру выбрать\nпо механике нагревателя. На этой схеме он НЕ установлен.\nTVS — от выбросов на проводах, не защита от КЗ. Предохранитель ещё нужен."
+	(text "PTC: низкочастотное ON/OFF. Внешний термостат/термопредохранитель\nпоследовательно с +PTC, с DC-рейтингом по току; температуру выбрать\nпо механике нагревателя. На этой схеме он НЕ установлен.\nTVS — от выбросов на проводах, не защита от КЗ. Ветвь защищена F902; отключение при КЗ требует проверки."
 		(exclude_from_sim no)
 		(at 20.32 175.26 0)
 		(effects
@@ -1493,7 +1493,7 @@
 		)
 		(uuid "b265a6f5-dfce-5b57-8983-a5f2e930067d")
 	)
-	(text "0.13 DRAFT: power/thermal limits remain subject to prototype validation."
+	(text "0.15 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -2529,7 +2529,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2u / 25V X7R"
+		(property "Value" "4.7u / 25V X7R"
 			(at 33.48 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2752,7 +2752,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C466970"
 			(at 254 48.26 0)
 			(effects
@@ -2763,7 +2763,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "DB125-3.5-2P-GN-S"
 			(at 254 48.26 0)
 			(effects
@@ -2774,7 +2774,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "DORABO"
 			(at 254 48.26 0)
 			(effects
@@ -2867,7 +2867,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C1973126"
 			(at 259.08 104.14 0)
 			(effects
@@ -2878,7 +2878,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "SMBJ30A-E3/52"
 			(at 259.08 104.14 0)
 			(effects
@@ -2889,7 +2889,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Vishay"
 			(at 259.08 104.14 0)
 			(effects

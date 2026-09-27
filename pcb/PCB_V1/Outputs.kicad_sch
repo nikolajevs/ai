@@ -7,9 +7,9 @@
 	(title_block
 		(title "04 - Fans (12 V aux) and pump (24 V)")
 		(date "2026-09-27")
-		(rev "0.14-DRAFT")
+		(rev "0.15-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Draft: input protection and LED drivers pending")
+		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -478,7 +478,8 @@
 			(symbol "C_0_1"
 				(polyline
 					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
+						(xy -2.032 0.762)
+						(xy 2.032 0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -490,7 +491,8 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
+						(xy -2.032 -0.762)
+						(xy 2.032 -0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -772,7 +774,12 @@
 			(symbol "SS34_0_1"
 				(polyline
 					(pts
-						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
+						(xy -1.905 0.635)
+						(xy -1.905 1.27)
+						(xy -1.27 1.27)
+						(xy -1.27 -1.27)
+						(xy -0.635 -1.27)
+						(xy -0.635 -0.635)
 					)
 					(stroke
 						(width 0.254)
@@ -784,7 +791,10 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 1.27) (xy 1.27 -1.27) (xy -1.27 0) (xy 1.27 1.27)
+						(xy 1.27 1.27)
+						(xy 1.27 -1.27)
+						(xy -1.27 0)
+						(xy 1.27 1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -796,7 +806,8 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 0) (xy -1.27 0)
+						(xy 1.27 0)
+						(xy -1.27 0)
 					)
 					(stroke
 						(width 0)
@@ -954,7 +965,10 @@
 				)
 				(polyline
 					(pts
-						(xy -3.556 3.81) (xy -4.064 3.048) (xy -3.048 3.048) (xy -3.556 3.81)
+						(xy -3.556 3.81)
+						(xy -4.064 3.048)
+						(xy -3.048 3.048)
+						(xy -3.556 3.81)
 					)
 					(stroke
 						(width 0)
@@ -977,7 +991,8 @@
 				)
 				(polyline
 					(pts
-						(xy -3.556 2.54) (xy -5.08 2.54)
+						(xy -3.556 2.54)
+						(xy -5.08 2.54)
 					)
 					(stroke
 						(width 0)
@@ -989,7 +1004,10 @@
 				)
 				(polyline
 					(pts
-						(xy -3.556 2.032) (xy -4.064 1.27) (xy -3.048 1.27) (xy -3.556 2.032)
+						(xy -3.556 2.032)
+						(xy -4.064 1.27)
+						(xy -3.048 1.27)
+						(xy -3.556 2.032)
 					)
 					(stroke
 						(width 0)
@@ -1001,7 +1019,8 @@
 				)
 				(polyline
 					(pts
-						(xy -3.048 3.81) (xy -4.064 3.81)
+						(xy -3.048 3.81)
+						(xy -4.064 3.81)
 					)
 					(stroke
 						(width 0)
@@ -1013,7 +1032,8 @@
 				)
 				(polyline
 					(pts
-						(xy -3.048 2.032) (xy -4.064 2.032)
+						(xy -3.048 2.032)
+						(xy -4.064 2.032)
 					)
 					(stroke
 						(width 0)
@@ -1036,7 +1056,10 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -1.27) (xy -2.54 -2.032) (xy -1.524 -2.032) (xy -2.032 -1.27)
+						(xy -2.032 -1.27)
+						(xy -2.54 -2.032)
+						(xy -1.524 -2.032)
+						(xy -2.032 -1.27)
 					)
 					(stroke
 						(width 0)
@@ -1059,7 +1082,8 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -2.54) (xy -5.08 -2.54)
+						(xy -2.032 -2.54)
+						(xy -5.08 -2.54)
 					)
 					(stroke
 						(width 0)
@@ -1071,7 +1095,10 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -3.048) (xy -2.54 -3.81) (xy -1.524 -3.81) (xy -2.032 -3.048)
+						(xy -2.032 -3.048)
+						(xy -2.54 -3.81)
+						(xy -1.524 -3.81)
+						(xy -2.032 -3.048)
 					)
 					(stroke
 						(width 0)
@@ -1094,7 +1121,8 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -4.318) (xy -2.032 4.318)
+						(xy -2.032 -4.318)
+						(xy -2.032 4.318)
 					)
 					(stroke
 						(width 0)
@@ -1106,7 +1134,8 @@
 				)
 				(polyline
 					(pts
-						(xy -1.524 -1.27) (xy -2.54 -1.27)
+						(xy -1.524 -1.27)
+						(xy -2.54 -1.27)
 					)
 					(stroke
 						(width 0)
@@ -1118,7 +1147,8 @@
 				)
 				(polyline
 					(pts
-						(xy -1.524 -3.048) (xy -2.54 -3.048)
+						(xy -1.524 -3.048)
+						(xy -2.54 -3.048)
 					)
 					(stroke
 						(width 0)
@@ -1130,7 +1160,10 @@
 				)
 				(polyline
 					(pts
-						(xy 0 1.016) (xy 1.016 -1.016) (xy -1.016 -1.016) (xy 0 1.016)
+						(xy 0 1.016)
+						(xy 1.016 -1.016)
+						(xy -1.016 -1.016)
+						(xy 0 1.016)
 					)
 					(stroke
 						(width 0)
@@ -1142,7 +1175,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0 -4.318) (xy 0 -5.08)
+						(xy 0 -4.318)
+						(xy 0 -5.08)
 					)
 					(stroke
 						(width 0)
@@ -1165,7 +1199,9 @@
 				)
 				(polyline
 					(pts
-						(xy 1.016 1.016) (xy -1.016 1.016) (xy -1.016 0.508)
+						(xy 1.016 1.016)
+						(xy -1.016 1.016)
+						(xy -1.016 0.508)
 					)
 					(stroke
 						(width 0)
@@ -1327,7 +1363,8 @@
 			(symbol "AO3400A_0_1"
 				(polyline
 					(pts
-						(xy 0.254 1.905) (xy 0.254 -1.905)
+						(xy 0.254 1.905)
+						(xy 0.254 -1.905)
 					)
 					(stroke
 						(width 0.254)
@@ -1339,7 +1376,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.254 0) (xy -2.54 0)
+						(xy 0.254 0)
+						(xy -2.54 0)
 					)
 					(stroke
 						(width 0)
@@ -1351,7 +1389,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 2.286) (xy 0.762 1.27)
+						(xy 0.762 2.286)
+						(xy 0.762 1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -1363,7 +1402,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 0.508) (xy 0.762 -0.508)
+						(xy 0.762 0.508)
+						(xy 0.762 -0.508)
 					)
 					(stroke
 						(width 0.254)
@@ -1375,7 +1415,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.27) (xy 0.762 -2.286)
+						(xy 0.762 -1.27)
+						(xy 0.762 -2.286)
 					)
 					(stroke
 						(width 0.254)
@@ -1387,7 +1428,10 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+						(xy 0.762 -1.778)
+						(xy 3.302 -1.778)
+						(xy 3.302 1.778)
+						(xy 0.762 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1399,7 +1443,10 @@
 				)
 				(polyline
 					(pts
-						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+						(xy 1.016 0)
+						(xy 2.032 0.381)
+						(xy 2.032 -0.381)
+						(xy 1.016 0)
 					)
 					(stroke
 						(width 0)
@@ -1422,7 +1469,8 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 2.54) (xy 2.54 1.778)
+						(xy 2.54 2.54)
+						(xy 2.54 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1456,7 +1504,9 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+						(xy 2.54 -2.54)
+						(xy 2.54 0)
+						(xy 0.762 0)
 					)
 					(stroke
 						(width 0)
@@ -1468,7 +1518,8 @@
 				)
 				(polyline
 					(pts
-						(xy 2.921 0.381) (xy 3.683 0.381)
+						(xy 2.921 0.381)
+						(xy 3.683 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1480,7 +1531,10 @@
 				)
 				(polyline
 					(pts
-						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+						(xy 3.302 0.381)
+						(xy 2.921 -0.254)
+						(xy 3.683 -0.254)
+						(xy 3.302 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1549,6 +1603,159 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:Fuse"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "F"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Fuse"
+				(at -1.905 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*Fuse*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Fuse_0_1"
+				(rectangle
+					(start -0.762 -2.54)
+					(end 0.762 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54)
+						(xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Fuse_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "04  PTC 100 W — отдельный лист Heater"
 		(exclude_from_sim no)
@@ -1572,7 +1779,7 @@
 		)
 		(uuid "36f7a621-f554-5fa4-a6b4-9b8cf9e3cea6")
 	)
-	(text "Flyback D521 SS36 (60 V): катод к +24V_LOADS, анод к PUMP_DRAIN.\nQ521 AO3422 (55 V) управляется 3.3V от GPIO.\nR209 на MCU удерживает PUMP_EN=LOW при reset.\nПроверить пуск/заклинивание помпы 24 В."
+	(text "D521 SS36: cathode to PUMP_24V AFTER F521, anode to PUMP_DRAIN.\nQ521 AO3422: 55 V, GPIO 3.3 V drive, RDS <=200 mOhm at VGS=2.5 V.\nPump 24 V / 6 W = 0.25 A; startup/stall current still requires measurement.\nMCU R209 holds PUMP_EN low at reset."
 		(exclude_from_sim no)
 		(at 20.32 265.43 0)
 		(effects
@@ -1583,7 +1790,7 @@
 		)
 		(uuid "43f81e76-36bb-59b4-b553-22f12ff81f70")
 	)
-	(text "0.14 DRAFT. Вентиляторы от +12V (aux buck, лист 06); помпа от +24V_LOADS (F902)."
+	(text "0.15 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -1605,7 +1812,7 @@
 		)
 		(uuid "780d8615-bdd3-5896-b0a3-6366ab4da2d6")
 	)
-	(text "Каналы насоса и PTC: low-side, минус нагрузки не соединять\nс корпусом/GND в обход ключа.\nПредохранители ветвей, общий ввод и OVP — следующий этап.\nГабариты и ток клеммников сверить для фактического DA803R.\nСвет: три независимых CC-драйвера, будут добавлены отдельно."
+	(text "Pump/PTC are low-side switched: do not bypass the switches with GND.\nIndividual branch fuses are provisional pending PSU fault tests.\nConnector geometry/current must match the purchased parts.\nLight: CH1 panel; CH2 two bars with shared current regulation."
 		(exclude_from_sim no)
 		(at 218.44 232.41 0)
 		(effects
@@ -2482,8 +2689,7 @@
 			)
 		)
 	)
-	(global_label "+12V"
-		(shape bidirectional)
+	(label "FAN2_12V"
 		(at 355.6 60.96 0)
 		(effects
 			(font
@@ -2492,20 +2698,8 @@
 			(justify left bottom)
 		)
 		(uuid "7593f213-95e0-55ef-a66a-a77526ccd26f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 355.6 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+24V_LOADS"
-		(shape bidirectional)
+	(label "PUMP_24V"
 		(at 154.94 228.6 0)
 		(effects
 			(font
@@ -2514,17 +2708,6 @@
 			(justify left bottom)
 		)
 		(uuid "7c3e0222-a27a-54c4-bf60-252a01f4a3c8")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 154.94 228.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -2614,8 +2797,7 @@
 			)
 		)
 	)
-	(global_label "+12V"
-		(shape bidirectional)
+	(label "FAN1_12V"
 		(at 157.48 60.96 0)
 		(effects
 			(font
@@ -2624,20 +2806,8 @@
 			(justify left bottom)
 		)
 		(uuid "a86c5b2e-021b-59ec-83a0-6939cbdfe2d5")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 157.48 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+24V_LOADS"
-		(shape bidirectional)
+	(label "PUMP_24V"
 		(at 160.02 191.77 0)
 		(effects
 			(font
@@ -2646,17 +2816,6 @@
 			(justify left bottom)
 		)
 		(uuid "ae6fdc4c-398d-5b73-af6d-a34c0dfcfb70")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 160.02 191.77 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -2680,8 +2839,7 @@
 			)
 		)
 	)
-	(global_label "+24V_LOADS"
-		(shape bidirectional)
+	(label "PUMP_24V"
 		(at 101.6 234.95 0)
 		(effects
 			(font
@@ -2690,17 +2848,6 @@
 			(justify left bottom)
 		)
 		(uuid "ba297985-c134-55ca-8685-3cd3662be270")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 101.6 234.95 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -3057,7 +3204,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C35722"
 			(at 154.94 219.71 0)
 			(effects
@@ -3068,7 +3215,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "SS36-E3/57T"
 			(at 154.94 219.71 0)
 			(effects
@@ -3079,7 +3226,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Vishay"
 			(at 154.94 219.71 0)
 			(effects
@@ -3178,7 +3325,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C2757925"
 			(at 182.88 60.96 0)
 			(effects
@@ -3189,7 +3336,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "DB125-3.5-4P-GN-S"
 			(at 182.88 60.96 0)
 			(effects
@@ -3200,7 +3347,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "DORABO"
 			(at 182.88 60.96 0)
 			(effects
@@ -3568,7 +3715,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PUMP + / switched - (3.5 mm)"
+		(property "Value" "PUMP 24V / 6W"
 			(at 165.1 184.15 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3627,7 +3774,6 @@
 				)
 			)
 		)
-	
 		(property "LCSC" "C466970"
 			(at 185.42 191.77 0)
 			(effects
@@ -3638,7 +3784,6 @@
 				(justify left)
 			)
 		)
-	
 		(property "MPN" "DB125-3.5-2P-GN-S"
 			(at 185.42 191.77 0)
 			(effects
@@ -3649,7 +3794,6 @@
 				(justify left)
 			)
 		)
-	
 		(property "Manufacturer" "DORABO"
 			(at 185.42 191.77 0)
 			(effects
@@ -3748,7 +3892,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C2757925"
 			(at 381 60.96 0)
 			(effects
@@ -3759,7 +3903,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "DB125-3.5-4P-GN-S"
 			(at 381 60.96 0)
 			(effects
@@ -3770,7 +3914,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "DORABO"
 			(at 381 60.96 0)
 			(effects
@@ -4279,7 +4423,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C77102"
 			(at 101.6 243.84 0)
 			(effects
@@ -4290,7 +4434,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "GRM32ER71H106KA12L"
 			(at 101.6 243.84 0)
 			(effects
@@ -4301,7 +4445,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "Murata"
 			(at 101.6 243.84 0)
 			(effects
@@ -4397,7 +4541,7 @@
 				)
 			)
 		)
-	
+
 		(property "LCSC" "C37130"
 			(at 101.6 208.28 0)
 			(effects
@@ -4408,7 +4552,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "MPN" "AO3422"
 			(at 101.6 208.28 0)
 			(effects
@@ -4419,7 +4563,7 @@
 				(justify left)
 			)
 		)
-	
+
 		(property "Manufacturer" "AOS"
 			(at 101.6 208.28 0)
 			(effects
@@ -4558,5 +4702,410 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 101.6 151.13 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 5fe3655a-4ec1-5342-be30-d92ea8b2a9bc)
+		(property "Reference" "F501"
+			(at 88.89999999999999 140.97 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "1A / 0451001.MRL"
+			(at 88.89999999999999 143.51 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 101.6 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 101.6 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid cd9e96df-421e-59a8-aca7-e907b82add60)
+		)
+		(pin "2"
+			(uuid acd264e8-d47a-5087-a02f-1e3579e94e2c)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7"
+					(reference "F501")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 101.6 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451001.MRL"
+			(at 101.6 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C3099"
+			(at 101.6 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 97.79 151.13)
+			(xy 77.47 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 00eeac5a-d840-5d24-8806-19e6bd8ce5d4)
+	)
+	(global_label "+12V"
+		(shape bidirectional)
+		(at 77.47 151.13 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 28182887-9065-54a2-b67e-a729255e175c)
+	)
+	(wire
+		(pts
+			(xy 105.41 151.13)
+			(xy 118.11 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 15cffaae-b644-5da9-a793-d8b1b4dfc6f6)
+	)
+	(label "FAN1_12V"
+		(at 118.11 151.13 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 88679c00-f3f4-52a0-b2c9-c56d9cac1f7b)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 302.26 151.13 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 13d4ef1f-527a-5007-9306-9683b7b611f8)
+		(property "Reference" "F511"
+			(at 289.56 140.97 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "1A / 0451001.MRL"
+			(at 289.56 143.51 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 302.26 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 302.26 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 8325ac00-e9d5-579e-97bb-22dcb2f3bdeb)
+		)
+		(pin "2"
+			(uuid 558f4498-18f7-5f6c-a7f6-a91f5d929123)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7"
+					(reference "F511")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 302.26 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451001.MRL"
+			(at 302.26 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C3099"
+			(at 302.26 151.13 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 298.45 151.13)
+			(xy 278.13 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 7f29ace2-3f75-5f0e-bd58-e39c4ce533db)
+	)
+	(global_label "+12V"
+		(shape bidirectional)
+		(at 278.13 151.13 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid f157ad57-1acf-588d-83f2-b338a5937668)
+	)
+	(wire
+		(pts
+			(xy 306.07 151.13)
+			(xy 318.77 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 595babee-fb76-5e4c-ae91-cacd068a028e)
+	)
+	(label "FAN2_12V"
+		(at 318.77 151.13 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 247c463b-91a8-5bb4-809e-41d8a370e241)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 254.0 264.16 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 8b2a0bf6-b838-5b71-b1af-36c9038a45f5)
+		(property "Reference" "F521"
+			(at 241.3 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "1A / 0451001.MRL"
+			(at 241.3 256.54 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 254.0 264.16 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 254.0 264.16 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 0aabde99-ff42-54c6-b100-532c3657b06d)
+		)
+		(pin "2"
+			(uuid 20ed28f8-b74b-5b7d-81ac-cdc2285fb31e)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7"
+					(reference "F521")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 254.0 264.16 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451001.MRL"
+			(at 254.0 264.16 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C3099"
+			(at 254.0 264.16 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 250.19 264.16)
+			(xy 229.87 264.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid b3b91c9f-db84-5064-af1a-8011440cd1ce)
+	)
+	(global_label "+24V_LOADS"
+		(shape bidirectional)
+		(at 229.87 264.16 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid ee5ffbe7-62ec-55b5-9215-222cd930f610)
+	)
+	(wire
+		(pts
+			(xy 257.81 264.16)
+			(xy 270.51 264.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 163d8eb1-478c-5361-8ace-f223b780b317)
+	)
+	(label "PUMP_24V"
+		(at 270.51 264.16 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 663b7f14-5ea5-5ad6-bbd2-96727950281b)
 	)
 )
