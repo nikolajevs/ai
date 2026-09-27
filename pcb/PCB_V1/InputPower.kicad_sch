@@ -1688,7 +1688,7 @@
 		)
 		(uuid "765fbe8f-541f-5c72-ae2b-4f5c526d4739")
 	)
-	(text "J101: use a connector and cable rated for the full input current; 3.5 mm clone terminals are not assumed to be 25 A."
+	(text "J901: use a connector and cable rated for the full input current; 3.5 mm clone terminals are not assumed to be 25 A."
 		(exclude_from_sim no)
 		(at 20.32 124.46 0)
 		(effects
@@ -1699,7 +1699,7 @@
 		)
 		(uuid "892546b0-aafd-5ee8-8906-1ec7f5f6795f")
 	)
-	(text "D101 is a surge clamp, not an over-current device. Q101 needs a P-channel MOSFET with VDS >= 30 V and low RDS(on) at the selected gate drive.\nR101/R102 define the default ON state; D102 limits |VGS|. Verify body-diode orientation, inrush, SOA and thermal rise."
+	(text "D901 is a surge clamp, not an over-current device. Q901 needs a P-channel MOSFET with VDS >= 30 V and low RDS(on) at the selected gate drive.\nR901/R902 define the default ON state; D902 limits |VGS|. Verify body-diode orientation, inrush, SOA and thermal rise."
 		(exclude_from_sim no)
 		(at 20.32 136 0)
 		(effects
@@ -1710,7 +1710,7 @@
 		)
 		(uuid "ae689d34-579b-5f39-8517-492948fdae1f")
 	)
-	(text "F102 protects the 12 V fans/pump/PTC branch. F103 protects the three LED boost channels. Fuse ratings and time-current curves are preliminary until cable and startup measurements."
+	(text "F902 protects the 12 V fans/pump/PTC branch. F903 protects the three LED boost channels. Fuse ratings and time-current curves are preliminary until cable and startup measurements."
 		(exclude_from_sim no)
 		(at 20.32 158 0)
 		(effects
@@ -2001,7 +2001,7 @@
 		)
 		(uuid "ed46f069-a4a7-5c5b-933a-4d46916c3cbf")
 	)
-	(label "Q101_GATE"
+	(label "Q901_GATE"
 		(at 170.18 60.96 180)
 		(effects
 			(font
@@ -2011,7 +2011,7 @@
 		)
 		(uuid "05849cba-aff9-57b3-a7f6-450d1ead5cdf")
 	)
-	(label "Q101_GATE"
+	(label "Q901_GATE"
 		(at 147.32 52.07 0)
 		(effects
 			(font
@@ -2021,7 +2021,7 @@
 		)
 		(uuid "3b3892ad-1016-5005-af67-617773c0d80f")
 	)
-	(label "Q101_GATE"
+	(label "Q901_GATE"
 		(at 147.32 77.47 0)
 		(effects
 			(font
@@ -2031,7 +2031,7 @@
 		)
 		(uuid "5c647382-df5e-58e6-b4d3-8b4f2b8779d2")
 	)
-	(label "Q101_GATE"
+	(label "Q901_GATE"
 		(at 205.74 77.47 0)
 		(effects
 			(font
@@ -2570,88 +2570,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C_Polarized")
-		(at 233.68 60.96 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "07bb22a2-7f67-53e1-87ae-de09b3c57de5")
-		(property "Reference" "C901"
-			(at 236.68 59.69 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "220u / 25 V low ESR"
-			(at 236.68 62.23 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:CP_Elec_10x10.5"
-			(at 233.68 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 233.68 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 233.68 60.96 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8fb27b1d-b7e5-53a9-bda4-80d48a399c0b")
-		)
-		(pin "2"
-			(uuid "d34519e7-bb8d-5fc8-a143-1d3af5590e60")
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "C901")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:Fuse")
 		(at 355.6 55.88 90)
 		(unit 1)
@@ -2728,88 +2646,6 @@
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
 					(reference "F903")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 147.32 45.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "1ace4113-c250-5de5-8b94-da14ba665ba3")
-		(property "Reference" "R901"
-			(at 150.32 44.45 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100k"
-			(at 150.32 46.99 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 147.32 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 147.32 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 147.32 45.72 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e1b3be6b-2b29-54a4-ad73-d11b6576f824")
-		)
-		(pin "2"
-			(uuid "baf99f74-0333-581a-962d-6c6307420d5f")
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "R901")
 					(unit 1)
 				)
 			)
@@ -3061,8 +2897,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 264.16 60.96 0)
+		(lib_id "Device:C_Polarized")
+		(at 233.68 60.96 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3070,9 +2906,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "36c17776-14bc-5cd3-ac0f-23837725472e")
-		(property "Reference" "C902"
-			(at 267.16 59.69 0)
+		(uuid "599ff5c0-b422-484f-9f0e-581c56ba1b50")
+		(property "Reference" "C901"
+			(at 236.68 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3082,8 +2918,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u / 25 V"
-			(at 267.16 62.23 0)
+		(property "Value" "220u / 25 V low ESR"
+			(at 236.68 62.23 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3093,8 +2929,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
-			(at 264.16 60.96 0)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_10x10.5"
+			(at 233.68 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3106,7 +2942,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 264.16 60.96 0)
+			(at 233.68 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3118,7 +2954,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 264.16 60.96 0)
+			(at 233.68 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3128,15 +2964,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "7c108441-fd43-5551-9c3d-ddff9a570e98")
+			(uuid "8fb27b1d-b7e5-53a9-bda4-80d48a399c0b")
 		)
 		(pin "2"
-			(uuid "9b272005-3657-5e98-80e5-2aae856b4702")
+			(uuid "d34519e7-bb8d-5fc8-a143-1d3af5590e60")
 		)
 		(instances
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "C902")
+					(reference "C901")
 					(unit 1)
 				)
 			)
@@ -3307,6 +3143,88 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 264.16 60.96 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "84a1cf66-f27f-44b1-b75a-b2ce0311e328")
+		(property "Reference" "C902"
+			(at 267.16 59.69 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1u / 25 V"
+			(at 267.16 62.23 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+			(at 264.16 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 264.16 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" ""
+			(at 264.16 60.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7c108441-fd43-5551-9c3d-ddff9a570e98")
+		)
+		(pin "2"
+			(uuid "9b272005-3657-5e98-80e5-2aae856b4702")
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "C902")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:Fuse")
 		(at 91.44 55.88 90)
 		(unit 1)
@@ -3383,88 +3301,6 @@
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
 					(reference "F901")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 147.32 83.82 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a72922b2-c74b-5a00-a6c7-02f9c36a7a89")
-		(property "Reference" "R902"
-			(at 150.32 82.55 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100k"
-			(at 150.32 85.09 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 147.32 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 147.32 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 147.32 83.82 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6841c304-1585-5ceb-8402-7dc8365d31fc")
-		)
-		(pin "2"
-			(uuid "2e999cd6-1324-5753-9627-1c8a69fd6f1d")
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "R902")
 					(unit 1)
 				)
 			)
@@ -3629,6 +3465,170 @@
 			(project "PCB_V1"
 				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
 					(reference "J901")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 147.32 45.72 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "cda471e6-e950-4539-a52b-8439c133a324")
+		(property "Reference" "R901"
+			(at 150.32 44.45 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 150.32 46.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 147.32 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 147.32 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" ""
+			(at 147.32 45.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e1b3be6b-2b29-54a4-ad73-d11b6576f824")
+		)
+		(pin "2"
+			(uuid "baf99f74-0333-581a-962d-6c6307420d5f")
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "R901")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 147.32 83.82 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d7fdf20c-fa3d-45e0-a3c4-9b76c84d4f1e")
+		(property "Reference" "R902"
+			(at 150.32 82.55 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 150.32 85.09 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 147.32 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 147.32 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" ""
+			(at 147.32 83.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6841c304-1585-5ceb-8402-7dc8365d31fc")
+		)
+		(pin "2"
+			(uuid "2e999cd6-1324-5753-9627-1c8a69fd6f1d")
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "R902")
 					(unit 1)
 				)
 			)

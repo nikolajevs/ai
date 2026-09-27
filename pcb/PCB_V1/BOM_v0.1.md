@@ -16,19 +16,19 @@
 | Ref | Qty | Назначение | Кандидат MPN / серия | Корпус / footprint | Статус | Примечание |
 |---|---:|---|---|---|---|---|
 | U101 | 1 | 12 V → 3.3 V buck | TPS54202DDCR | SOT-23-6 | CANDIDATE | Проверить тепловой режим при токе логики и effective C под DC bias. |
-| Q901 | 1 | защита от переполюсовки | Vishay SiSS5623DN, P-channel 60 V | PowerPAK SO-8 / по drawing | VERIFY | Проверить RDS(on) при доступном VGS, SOA при 25 A и рассеяние на 4 слоях. |
+| Q901 | 1 | защита от переполюсовки | Vishay SiSS5623DN, P-channel 60 V | PowerPAK 1212-8S / проверить drawing | VERIFY | Проверить RDS(on) при доступном VGS, SOA при 25 A и рассеяние на 4 слоях. |
 | D901 | 1 | TVS входа | SMBJ18A-E3/52 | SMB | CANDIDATE | TVS не заменяет fuse; проверить совместно с БП и проводом. |
-| D902 | 1 | ограничение |VGS| Q901 | MMSZ5242B-7-F, 12 V zener | SOD-323 | CANDIDATE | Проверить ток через R902 и импульс при подключении БП. |
-| F901 | 1 | общий входной предохранитель | Bourns SF-2923HC-C series, 25 A variant | 2920 / 7451 | VERIFY | Утвердить конкретный part number и I²t; вариант зависит от источника 300 W. |
-| F902 | 1 | ветвь PTC/pump/fans | SF-2923HC-C series, 15–20 A variant | 2920 / 7451 | VERIFY | 20 A — стартовое значение, согласовать с кабелем и пуском PTC. |
-| F903 | 1 | ветвь LED boost | SF-2923HC-C series, 10 A variant | 2920 / 7451 | VERIFY | 10 A — стартовое значение; селективность относительно F901 проверить. |
+| D902 | 1 | ограничение VGS Q901 | 12 V zener — MPN pending | SOD-323 | CANDIDATE | Проверить ток через R902 и импульс при подключении БП. |
+| F901 | 1 | общий входной предохранитель | Bourns SF-2923HC-C series, 25 A variant | footprint pending | VERIFY | Утвердить конкретный part number и I²t; вариант зависит от источника 300 W. |
+| F902 | 1 | ветвь PTC/pump/fans | 20 A fuse — MPN pending | footprint pending | VERIFY | 20 A — стартовое значение, согласовать с кабелем и пуском PTC. |
+| F903 | 1 | ветвь LED boost | 10 A fuse — MPN pending | footprint pending | VERIFY | 10 A — стартовое значение; селективность относительно F901 проверить. |
 | U710/U720/U730 | 3 | контроллер boost CC | LT3756EMSE-2#PBF | MSOP-16 + EP | CANDIDATE | Версия -2 удобна для OPENLED; точную компенсацию и частоту проверить на макете. |
 | Q711/Q721/Q731 | 3 | внешний boost MOSFET | TI CSD19532Q5B, 100 V, 4.9 mΩ | SON/VSON 5×6 mm | CANDIDATE | Использовать только footprint по оригинальному drawing; запас по VDS обязателен. |
 | D711/D721/D731 | 3 | boost rectifier | STPS5H100SF, 100 V / 5 A | PSMC (TO-277A) | CANDIDATE | Проверить посадочное место: PSMC не равен обычному SMA. |
-| L711 | 1 | дроссель LED1 | Bourns SRP1265A-220M, 22 µH | 13.5×12.5 mm | CANDIDATE | Isat около 12.5 A; подтвердить ripple/Irms в расчёте LT3756. |
+| L711 | 1 | дроссель LED1 | Bourns SRP1265A-220M, 22 µH | 13.5×12.5 mm | CANDIDATE | Isat около 12 A; подтвердить ripple/Irms в расчёте LT3756. |
 | L721/L731 | 2 | дроссель LED2/3 | Bourns SRP1265A-470M, 47 µH | 13.5×12.5 mm | CANDIDATE | Isat около 6.5 A; проверить режим при 0.25 A и выбранной частоте. |
 | R716 | 1 | LED1 current sense | 0.091 Ω, 1%, ≥1 W pulse-rated | 2512 | CANDIDATE | Номинал из целевого порога около 100 mV; сверить с выбранной версией LT3756. |
-| R726/R736 | 2 | LED2/3 current sense | 0.40 Ω, 1%, ≥0.25 W | 0603/0805 | CANDIDATE | Проверить мощность и температурный коэффициент. |
+| R726/R736 | 2 | LED2/3 current sense | 0.40 Ω, 1%, ≥0.25 W | 2512 (как в схеме) | CANDIDATE | Проверить мощность и температурный коэффициент. |
 | Q601 | 1 | ключ PTC | NTMFS5C628NLT1G | SO-8FL | CANDIDATE | VDS и тепловой режим проверены для 12 V; добавить внешний термостат/термопредохранитель. |
 | U601 | 1 | драйвер затвора PTC | UCC27524ADR | SOIC-8 | CANDIDATE | Канал A; ENA удерживает выход выключенным при отсутствии 3.3 V. |
 | Q501/Q511/Q521 | 3 | вентиляторы/помпа | AO3400A | SOT-23 | CANDIDATE | Проверить ток запуска помпы и поведение 4-wire PWM вентиляторов. |
@@ -38,7 +38,7 @@
 
 | Ref | Qty | Кандидат | Корпус / footprint | Статус | Примечание |
 |---|---:|---|---|---|---|
-| U201 | 1 | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Распиновка сохранена совместимой с текущей прошивкой. |
+| U201 | 1 | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Требуется адаптация GPIO и инверсии FAN PWM в прошивке. |
 | U301 | 1 | DS3231SN# | SOIC-16W | CANDIDATE | CR2032 без зарядки; VBAT изолирована от 3.3 V. |
 | J401 | 1 | Molex 104031-0811 | microSD push-push | CANDIDATE | Начальная SPI частота 4 MHz, обязательна проверка на прототипе. |
 | J301 | 1 | JST XH B4B-XH-A | JST-XH 2.50 mm | CANDIDATE | Кабель SHT4x около 0.5 m; I²C 100 kHz, series 33 Ω. |

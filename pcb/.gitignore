@@ -10,3 +10,5 @@ backups/
 *.kicad_pcb-bak
 fp-info-cache
 __pycache__/
+
+.history/

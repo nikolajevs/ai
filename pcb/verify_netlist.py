@@ -8,6 +8,9 @@ import sys
 import xml.etree.ElementTree as ET
 
 root = ET.parse(sys.argv[1])
+refs = [c.get('ref') for c in root.findall('.//components/comp')]
+assert len(refs) == len(set(refs)), 'Duplicate component references: PCB import is unsafe'
+assert all(ref and '?' not in ref for ref in refs), 'Unannotated components'
 nets = {n.get('name'): {(p.get('ref'), p.get('pin')) for p in n}
         for n in root.findall('.//nets/net')}
 
