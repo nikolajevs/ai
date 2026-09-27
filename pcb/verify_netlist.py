@@ -57,7 +57,8 @@ groups += [
     [('U201', 12), ('R209', 1), ('R521', 1)],
     [('R521', 2), ('R522', 1), ('Q521', 1)],
     [('Q521', 3), ('J521', 2), ('D521', 2)],
-    [('F902', 2), ('J521', 1), ('D521', 1), ('J601', 1), ('U602', 1), ('C603', 1)],
+    [('F521', 2), ('J521', 1), ('D521', 1), ('C521', 1)],
+    [('F902', 2), ('F521', 1), ('J601', 1), ('U602', 1), ('C603', 1)],
     [('U201', 13), ('R210', 1), ('U601', 2)],
     [('U601', 7), ('R601', 1)],
     [('R601', 2), ('R602', 1), ('Q601', 4)],
@@ -78,7 +79,7 @@ for suffix, pwm_pin, tach_pin, pull in [(501, 10, 6, 'R207'), (511, 11, 7, 'R208
         [('U201', tach_pin), (pull, 2), (f'R{suffix+2}', 1)],
         [(f'R{suffix+2}', 2), (j, 3), (d, 2)],
         [('U201', 1), (q, 2), (j, 1), (d, 3)],
-        [('F902', 2), (j, 2)],
+        [(f'F{suffix}', 2), (j, 2)],
     ]
 
 # Input protection and branch rails.
@@ -90,8 +91,8 @@ groups += [
     [('U901', 1), ('C904', 1)],
     [('Q901', 5), ('U901', 4), ('C901', 1), ('C902', 1), ('F902', 1), ('F903', 1), ('U101', 3), ('TP901', 1)],
     [('U901', 2), ('D901', 2), ('C903', 2), ('C901', 2), ('C902', 2), ('J901', 2), ('U201', 1)],
-    [('F902', 2), ('J501', 2), ('J511', 2), ('J521', 1), ('J601', 1), ('U602', 1)],
-    [('F903', 2), ('U710', 1), ('U720', 1), ('U730', 1)],
+    [('F902', 2), ('F501', 1), ('F511', 1), ('F521', 1), ('J601', 1), ('U602', 1)],
+    [('F903', 2), ('F711', 1), ('F721', 1), ('F731', 1)],
 ]
 
 # AL8853 low-side LED current sensing. Each return must be isolated.
@@ -111,7 +112,7 @@ for idx in (1, 2, 3):
     # STPS5H100B DPAK: NC1, cathode/tab2, anode3. SOD128: K1/A2.
     cathode, anode = (2, 3) if idx == 1 else (1, 2)
     groups += [
-        [(u, 1), (r('C',1), 1), (r('C',5), 1), (l, 1), ('F903', 2)],
+        [(u, 1), (r('C',1), 1), (r('C',5), 1), (l, 1), (r('F',1), 2)],
         [(u, 2), (r('R',1), 1)],
         [(r('R',1), 2), (q, gate), (r('R',3), 1)],
         [(q, drain), (l, 2), (d, anode)],
@@ -151,7 +152,30 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 175
+assert len(root.findall('.//components/comp')) == 181
+
+# Every downstream rail is separate and has no path around its fuse.
+branch_nets = []
+for ref, suffix, current in [('F501', 'FAN1_12V', 1), ('F511', 'FAN2_12V', 1),
+                             ('F521', 'PUMP_12V', 2), ('F711', 'LED1_VIN', 10),
+                             ('F721', 'LED2_VIN', 3), ('F731', 'LED3_VIN', 3)]:
+    name, actual = net_of(ref, 2)
+    branch_nets.append(name)
+    assert name.split('/')[-1] == suffix
+    assert name != net_of(ref, 1)[0], (ref, 'fuse bypassed')
+    if ref in ['F501', 'F511']:
+        expected = {(ref, '2'), ('J' + ref[1:], '2')}
+    elif ref == 'F521':
+        expected = {(ref, '2'), ('J521', '1'), ('D521', '1'), ('C521', '1')}
+    else:
+        k = ref[1:3]
+        expected = {(ref, '2'), (f'U{k}0', '1'), (f'L{k}1', '1'),
+                    (f'C{k}1', '1'), (f'C{k}5', '1')}
+    assert actual == expected, (ref, 'unexpected fused branch connection', actual ^ expected)
+    comp = next(c for c in root.findall('.//components/comp') if c.get('ref') == ref)
+    fields = {f.get('name'): f.text for f in comp.findall('fields/field')}
+    assert fields['MPN'] == f'0451{current:03d}.MRL', (ref, 'fuse changed; recheck coordination')
+assert len(set(branch_nets)) == 6, 'Fused branches joined'
 
 # Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable pins.
 assert net_of('U602', 4)[1] == {('U602', '4')}, 'TPS709 NC connected'
@@ -166,5 +190,6 @@ for ref, mpn in [('U901', 'LM74700QDBVRQ1'), ('U602', 'TPS70950DBVR'), ('Q901', 
 
 for drain in [('Q601', 5), ('Q521', 3)]:
     assert net_of(*drain)[0] not in (net_of('U201', 1)[0], net_of('U101', 3)[0])
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 175 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 181 components.')
 print('PASS: reverse-blocking MOSFET orientation, VCAP return, TPS709 pinout/enable and separate 5 V driver supply')
+print('PASS: six individually fused load rails; pump flyback/capacitor remain downstream of F521')

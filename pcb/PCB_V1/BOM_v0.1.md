@@ -1,17 +1,17 @@
-# PCB_V1 — подбор компонентов, ревизия 0.13
+# PCB_V1 — подбор компонентов, ревизия 0.14
 
-Ориентир пользователя: компоненты одной платы около $30, без PCB и внешнего БП. Это не жёсткий предел: задача — контролировать стоимость при достаточном запасе. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
+Около $30 — ориентир для контроля стоимости, не жёсткий предел. Оценена только часть BOM: **33 из 181 компонентов на $32,2914**, остальные 148 ещё не оценены. Это не цена готовой платы и не список для заказа. Полный экспорт схемы — `BOM_schematic.csv`.
 
-Вход: LM74700 с NTMFS5C628NL; питание драйвера PTC — 5 В от TPS70950. Световой каскад — три AL8853S-13, RTC — DS3231MZ+TRL. LT3756 и старый P-MOSFET входа исключены из активной схемы.
+В v0.14 выбраны входная клемма DEGSON DG636, семь предохранителей Littelfuse 451, включая шесть новых отдельных ветвей. F901/F902 и часть пассивных компонентов остаются кандидатными. [Подключение, расчёт и ограничения защиты](BRANCH_PROTECTION.md).
 
 | Ref | Qty | Назначение | MPN/требование | Корпус | Статус | Примечание |
 |---|---:|---|---|---|---|---|
 | U101 | 1 | 12V to 3V3 buck | TPS54202DDCR | SOT-23-6 | CANDIDATE | Check thermal/effective capacitance |
 | Q901 | 1 | Reverse polarity N-MOSFET | NTMFS5C628NLT1G | Package_SO:ONSemi_SO-8FL_488AA | PROTOTYPE | LCSC C145537 USD0.7717; source INPUT drain OUTPUT; inrush/SOA and 25A thermal design pending |
 | D901 | 1 | Input TVS | SMBJ14CA-E3/52 | SMB | PROTOTYPE | BIDIRECTIONAL before Q901; 14V standoff; 23.2V clamp at25.9A 10/1000us 25C; not sustained OVP |
-| F901 | 1 | Input fuse | Bourns SF-2923HC-C 25A variant | footprint pending | VERIFY | Exact PN and I2t pending |
+| F901 | 1 | Input fuse | 25A provisional; MPN pending | footprint pending | VERIFY | No 25A variant in SF-2923HC-C datasheet; choose after PSU/cable/temperature coordination |
 | F902 | 1 | Loads fuse | 20A fuse MPN pending | footprint pending | VERIFY | 20A preliminary |
-| F903 | 1 | LED fuse | 10A fuse MPN pending | footprint pending | VERIFY | 10A preliminary |
+| F903 | 1 | LED fuse | 0451015.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | 15A common LED feed; LCSC C44480 USD0.2472 at5+; fault coordination pending |
 | U710/U720/U730 | 3 | LED boost controller | AL8853S-13 | SOIC-8 3.9x4.9 P1.27 | PROTOTYPE | LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot |
 | Q711 | 1 | Panel boost MOSFET | SiR106ADP-T1-RE3 | PowerPAK_SO-8_Single | PROTOTYPE | Gate drive and thermal validation pending |
 | Q721/Q731 | 2 | Strip boost MOSFET | TI CSD19538Q3A | GrowBox:TI_DNH0008A_CSD19538Q3A | PROTOTYPE | LCSC C478471 USD1.0754 each; S1/2/3 G4 D5 aggregated; 100V; verify gate drive and temperature |
@@ -30,7 +30,7 @@
 | J401 | 1 | microSD | Molex 104031-0811 | microSD | CANDIDATE | 4MHz initial SPI |
 | J301 | 1 | SHT4x connector | JST XH B4B-XH-A | JST-XH 2.50 | CANDIDATE | 0.5m cable and 100kHz I2C |
 | BT301 | 1 | RTC battery holder | Keystone 3002 | CR2032 THT | CANDIDATE | No charger |
-| J901 | 1 | 12V input terminal | 2-pin >=25A | 5.08mm | VERIFY | Current Phoenix MKDS1.5 geometry is provisional; NOT a qualified25A terminal; exact part/cable pending |
+| J901 | 1 | 12V input terminal | DG636-7.62-02P-14-00A(H) | GrowBox:TerminalBlock_DEGSON_DG636_1x02_P7.62mm | PROTOTYPE | LCSC C581337 USD0.6408; IEC32A UL30A; pitch7.62 drill1.60; hot rating/cable pending |
 | J501/J511 | 2 | 4-wire fan terminal | DA803R/WAGO 2601-compatible | 3.50mm | VERIFY | Check mechanical drawing and rating |
 | J521/J601/J711/J721/J731 | 5 | 2-wire power terminal | DA803R/WAGO 2601-compatible | 3.50mm | VERIFY | Consider 5.08mm for PTC/LED |
 | J201 | 1 | Programming header | 1x06 pin header | 2.54mm | CANDIDATE | External USB-UART programmer |
@@ -50,5 +50,9 @@
 | C602 | 1 | Gate-driver local reservoir | 2.2u25V X7R MPN pending | Capacitor_SMD:C_0805_2012Metric | VERIFY | Effective >=1uF at5V; directly at U601 VDD/GND |
 | C603 | 1 | Gate LDO input bypass | 2.2u50V X7R MPN pending | Capacitor_SMD:C_0805_2012Metric | VERIFY | Directly at U602 IN/GND; confirm effective capacitance |
 | C604 | 1 | Gate LDO output reservoir | 10u16V X7R MPN pending | Capacitor_SMD:C_0805_2012Metric | VERIFY | Effective >=2.2uF at5V; ESR<=0.2ohm; total rail capacitance <=47uF |
+| F501/F511 | 2 | Individual fan input fuses | 0451001.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C3099 USD0.2536 each at5+; 1A; startup/fault test pending |
+| F521 | 1 | Pump input fuse | 0451002.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C99547 USD0.3445 at5+; 2A; flyback/cap after fuse; startup/stall pending |
+| F711 | 1 | Panel boost input fuse | 0451010.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C44479 USD0.2495 at5+; 10A; not guaranteed diode short protection |
+| F721/F731 | 2 | Strip boost input fuses | 0451003.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C13982 USD0.2556 each at5+; 3A; not guaranteed diode short protection |
 
-[Вход и питание драйвера](INPUT_PROTECTION.md); [LED и расчётные ограничения](LED_POWER_COMPONENTS.md). Оценены **25 из 175 компонентов на $29,7910**; остальные 150 ещё не оценены. Полная плата будет дороже. Q901 теперь соответствует конкретному MPN и footprint. Предохранители, силовые клеммы, эффективные ёмкости, компенсация и тепловой режим остаются неподтверждёнными; список не готов для заказа.
+Цены предохранителей указаны на ступени 5+, клеммы — 1+; для одного прототипа учесть минимальные количества покупки. [Вход](INPUT_PROTECTION.md), [LED](LED_POWER_COMPONENTS.md), [стоимость](LED_COST_DOWN.md). Полная плата будет дороже указанной суммы.

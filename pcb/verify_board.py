@@ -89,3 +89,21 @@ assert nodes[('Q901','5')]==nodes[('U901','4')]==nodes[('U101','3')]
 assert nodes[('U602','5')]==nodes[('U601','6')]
 assert nodes[('U602','4')].startswith('unconnected-')
 print('PASS: schematic instance paths; input MOSFET source/drain, LM74700 and TPS709 footprints')
+
+for ref in ['F501','F511','F521','F711','F721','F731','F903']:
+ assert str(fps[ref].GetFPID().GetLibItemName())=='Fuse_Littelfuse_451'
+ pads=list(fps[ref].Pads())
+ assert {p.GetNumber() for p in pads}=={'1','2'}
+ for p in pads:
+  size=p.GetSize()
+  assert abs(pcbnew.ToMM(size.x)-1.96)<.001 and abs(pcbnew.ToMM(size.y)-3.15)<.001,(ref,'451 recommended land')
+ assert abs(pcbnew.ToMM((pads[0].GetPosition()-pads[1].GetPosition()).EuclideanNorm())-4.91)<.001,(ref,'451 pad spacing')
+ assert nodes[(ref,'1')]!=nodes[(ref,'2')],(ref,'fuse bypassed')
+assert str(fps['J901'].GetFPID().GetLibItemName())=='TerminalBlock_DEGSON_DG636_1x02_P7.62mm'
+pads=list(fps['J901'].Pads())
+assert {p.GetNumber() for p in pads}=={'1','2'}
+assert abs(pcbnew.ToMM((pads[0].GetPosition()-pads[1].GetPosition()).EuclideanNorm())-7.62)<.001
+for p in pads:
+ assert abs(pcbnew.ToMM(p.GetDrillSize().x)-1.6)<.001
+ assert abs(pcbnew.ToMM(p.GetSize().x)-3.2)<.001
+print('PASS: Littelfuse 451 recommended lands and DEGSON DG636 pitch/drill')

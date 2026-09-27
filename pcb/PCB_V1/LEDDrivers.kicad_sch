@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - AL8853 cost-down LED drivers")
 		(date "2026-09-27")
-		(rev "0.12-DRAFT")
+		(rev "0.14-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "AL8853 cost-down prototype; not fabrication ready")
 	)
@@ -2152,6 +2152,279 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:Fuse"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "F"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Fuse"
+				(at -1.905 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "fuse"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*Fuse*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Fuse_0_1"
+				(rectangle
+					(start -0.762 -2.54)
+					(end 0.762 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54)
+						(xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Fuse_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0)
+						(xy 0 1.27)
+						(xy -1.016 1.905)
+						(xy 0 2.54)
+						(xy 1.016 1.905)
+						(xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "PWM 20 kHz initial / analog current dimming. Enable low or reset: DIM low. LED returns MUST remain separate."
 		(exclude_from_sim no)
@@ -2175,7 +2448,7 @@
 		)
 		(uuid "1cbdacf2-b455-5f84-9698-1639abfb366a")
 	)
-	(text "Do not connect LED- to GND or join LED returns. Output short protection needs branch fuses/disconnect; boost diode conducts at shutdown."
+	(text "LED- must stay isolated. F711/F721/F731 fuse each INPUT; boost diodes still conduct at shutdown. Verify fault clearing with the actual PSU."
 		(exclude_from_sim no)
 		(at 20.32 383.54 0)
 		(effects
@@ -2241,7 +2514,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.12 DRAFT; component budget around USD 30 is a guide, not a hard cap. AL8853 / CSD19538Q3A."
+	(text "0.14 DRAFT; branch fuses selected, fault clearing and thermal qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -4926,8 +5199,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 143.51 97.79 0)
 		(effects
 			(font
@@ -4936,17 +5208,6 @@
 			(justify left bottom)
 		)
 		(uuid "296e21a2-36bf-53cb-8bc6-2c8c8f834e36")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.75 97.79 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -5168,8 +5429,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 165.1 149.86 0)
 		(effects
 			(font
@@ -5178,20 +5438,8 @@
 			(justify left bottom)
 		)
 		(uuid "6f260d6d-5155-526b-9665-d8be5b3bf342")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1 149.86 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 25.4 142.24 0)
 		(effects
 			(font
@@ -5200,17 +5448,6 @@
 			(justify left bottom)
 		)
 		(uuid "70494d5c-68e9-5050-8b4a-57077aa77e14")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 25.4 142.24 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -5278,8 +5515,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 39.37 200.66 0)
 		(effects
 			(font
@@ -5288,20 +5524,8 @@
 			(justify left bottom)
 		)
 		(uuid "838eb15c-2115-5bd5-aed0-75f8768983d0")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 54.61 200.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 143.51 198.12 0)
 		(effects
 			(font
@@ -5310,17 +5534,6 @@
 			(justify left bottom)
 		)
 		(uuid "83da2aed-5a0c-505c-8c8a-45ec3d114776")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.75 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -5476,8 +5689,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED1_VIN"
 		(at 39.37 100.33 0)
 		(effects
 			(font
@@ -5486,20 +5698,8 @@
 			(justify left bottom)
 		)
 		(uuid "a6eebe37-4a87-5bb0-a7c5-d97627c3e292")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 54.61 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED3_VIN"
 		(at 25.4 341.63 0)
 		(effects
 			(font
@@ -5508,20 +5708,8 @@
 			(justify left bottom)
 		)
 		(uuid "aa22b99b-7dd0-5567-b4d4-5d14ec734eff")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 25.4 341.63 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 25.4 241.3 0)
 		(effects
 			(font
@@ -5530,17 +5718,6 @@
 			(justify left bottom)
 		)
 		(uuid "afbcd1db-4821-5e84-aad8-dfb8ea61838b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 25.4 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -5630,8 +5807,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED3_VIN"
 		(at 143.51 298.45 0)
 		(effects
 			(font
@@ -5640,17 +5816,6 @@
 			(justify left bottom)
 		)
 		(uuid "be56fe9c-394c-53ce-bde4-ca89d3f58410")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.75 298.45 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "GND"
 		(shape bidirectional)
@@ -5718,8 +5883,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED3_VIN"
 		(at 39.37 300.99 0)
 		(effects
 			(font
@@ -5728,20 +5892,8 @@
 			(justify left bottom)
 		)
 		(uuid "d25d4a35-d774-5ba0-a917-1087a3dc497a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 54.61 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED3_VIN"
 		(at 165.1 349.25 0)
 		(effects
 			(font
@@ -5750,17 +5902,6 @@
 			(justify left bottom)
 		)
 		(uuid "d5b511f4-2a2e-5045-b26e-e05d5a3b8816")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1 349.25 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(global_label "+3V3"
 		(shape bidirectional)
@@ -5982,8 +6123,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LED"
-		(shape bidirectional)
+	(label "LED2_VIN"
 		(at 165.1 250.19 0)
 		(effects
 			(font
@@ -5992,17 +6132,6 @@
 			(justify left bottom)
 		)
 		(uuid "fa3d9615-3394-580f-9fd0-8828f922daa2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1 250.19 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "Device:L")
@@ -12132,5 +12261,656 @@
 	(no_connect
 		(at 289.56 92.71)
 		(uuid "25224c09-fabb-4b40-98db-e7660137e511")
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 480.06 153.67 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 84f24ac0-b05c-5467-af26-f38922c285c8)
+		(property "Reference" "F711"
+			(at 467.36 143.51 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10A / 0451010.MRL"
+			(at 467.36 146.04999999999998 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid a3661ce6-a1da-5057-837c-fe32e2ad41e5)
+		)
+		(pin "2"
+			(uuid f778c77f-c84c-51f5-9f9b-1aef0f60e121)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "F711")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451010.MRL"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C44479"
+			(at 480.06 153.67 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 476.25 153.67)
+			(xy 455.93 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 856739a9-f687-57b2-a69e-e9f60661bbbe)
+	)
+	(global_label "+12V_LED"
+		(shape bidirectional)
+		(at 455.93 153.67 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 9d455c0d-9896-5f55-a7db-0d6fc984eb46)
+	)
+	(wire
+		(pts
+			(xy 483.87 153.67)
+			(xy 496.57 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f54ddc47-c496-5518-aef6-f31686d3accd)
+	)
+	(label "LED1_VIN"
+		(at 496.57 153.67 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid cd18ecbb-6b80-564e-bdcd-b37111087b43)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 533.4 153.67 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 0c4d9320-a5b7-5dd7-ac43-7e84ec01f415)
+		(property "Reference" "#FLG0711"
+			(at 536.4 152.39999999999998 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 536.4 154.94 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 533.4 153.67 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 533.4 153.67 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid ebb87a55-9ff1-5f34-b297-084967a2ab25)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "#FLG0711")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 533.4 153.67)
+			(xy 533.4 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid ecc9e41a-881e-5e51-b9ff-4999b178b459)
+	)
+	(label "LED1_VIN"
+		(at 533.4 158.75 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid f14c0b42-61c0-5878-b783-cd5a88e7116c)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 480.06 254.0 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid ffb661ae-5901-5409-9409-891f63879992)
+		(property "Reference" "F721"
+			(at 467.36 243.84 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "3A / 0451003.MRL"
+			(at 467.36 246.38 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid df65aefb-de0c-5c11-8e69-c45a4bf22e4e)
+		)
+		(pin "2"
+			(uuid 1c02766b-5146-5875-950c-4616ab81af83)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "F721")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451003.MRL"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C13982"
+			(at 480.06 254.0 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 476.25 254.0)
+			(xy 455.93 254.0)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 55f0100f-fad4-5979-af42-abc6b402cd1a)
+	)
+	(global_label "+12V_LED"
+		(shape bidirectional)
+		(at 455.93 254.0 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 302ea51c-edff-5433-9264-f40b7861d1ca)
+	)
+	(wire
+		(pts
+			(xy 483.87 254.0)
+			(xy 496.57 254.0)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f56d9ecc-4388-558d-9fc7-9998d4b28482)
+	)
+	(label "LED2_VIN"
+		(at 496.57 254.0 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid a0e93317-3e12-5b8a-8d7e-561d13d5b215)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 533.4 254.0 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 4ff375c6-af00-5d1b-9705-5eaaae3acf92)
+		(property "Reference" "#FLG0712"
+			(at 536.4 252.73 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 536.4 255.27 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 533.4 254.0 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 533.4 254.0 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid c2824882-d2f2-5b73-8b98-2359bcf2b1d3)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "#FLG0712")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 533.4 254.0)
+			(xy 533.4 259.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid cc1fbcbd-6948-5424-81e8-6f097a5d4aaa)
+	)
+	(label "LED2_VIN"
+		(at 533.4 259.08 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 2a536ff0-5037-5388-aab4-fd4c932a4f42)
+	)
+	(symbol
+		(lib_id "Device:Fuse")
+		(at 480.06 353.06 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 656e77d2-571f-52ad-b0f8-a2618de35e28)
+		(property "Reference" "F731"
+			(at 467.36 342.9 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "3A / 0451003.MRL"
+			(at 467.36 345.44 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
+			(at 480.06 353.06 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
+			(at 480.06 353.06 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 25b67e2b-8112-5d0c-9753-0565e216c7c2)
+		)
+		(pin "2"
+			(uuid d7850688-7579-5970-b48b-424317ff2bbb)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "F731")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 480.06 353.06 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451003.MRL"
+			(at 480.06 353.06 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C13982"
+			(at 480.06 353.06 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 476.25 353.06)
+			(xy 455.93 353.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 3598b66f-5bed-5829-8db9-a88b7cc52e31)
+	)
+	(global_label "+12V_LED"
+		(shape bidirectional)
+		(at 455.93 353.06 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid ae42fd69-47c5-51e6-9d01-620a5ec2fef4)
+	)
+	(wire
+		(pts
+			(xy 483.87 353.06)
+			(xy 496.57 353.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 2c6c5afb-69b8-55e9-85bf-fde9fcf928f9)
+	)
+	(label "LED3_VIN"
+		(at 496.57 353.06 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 0743bf93-205e-5667-9b56-b2c698136b69)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 533.4 353.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid ad02d2f0-f869-582f-812d-ab0fb172231c)
+		(property "Reference" "#FLG0713"
+			(at 536.4 351.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 536.4 354.33 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 533.4 353.06 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 533.4 353.06 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 511bf70a-eec9-5d91-9a15-0344c9587c33)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "#FLG0713")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 533.4 353.06)
+			(xy 533.4 358.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 407da7f3-ca0a-59d2-8f73-959dba6006b7)
+	)
+	(label "LED3_VIN"
+		(at 533.4 358.14 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 953e26a3-4576-5ec5-9a55-3fd896cc3ee4)
 	)
 )

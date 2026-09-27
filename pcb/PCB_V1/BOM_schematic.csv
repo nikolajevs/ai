@@ -61,9 +61,15 @@ D721,STPS2H100AFY,Diode_SMD:D_SOD-128,https://www.st.com/resource/en/datasheet/s
 D731,STPS2H100AFY,Diode_SMD:D_SOD-128,https://www.st.com/resource/en/datasheet/stps2h100-y.pdf,/LEDDrivers/,STMicroelectronics,STPS2H100AFY,C3757915,ENGINEERING DRAFT - DO NOT ORDER
 D901,SMBJ14CA-E3/52,Diode_SMD:D_SMB,https://www.vishay.com/docs/88392/smbj.pdf,/InputPower/,Vishay,SMBJ14CA-E3/52,,ENGINEERING DRAFT - DO NOT ORDER
 F301,PTC 0.10A / >=16V,Fuse:Fuse_1206_3216Metric,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
+F501,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451001.MRL,C3099,ENGINEERING DRAFT - DO NOT ORDER
+F511,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451001.MRL,C3099,ENGINEERING DRAFT - DO NOT ORDER
+F521,2A / 0451002.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/Outputs/,Littelfuse,0451002.MRL,C99547,ENGINEERING DRAFT - DO NOT ORDER
+F711,10A / 0451010.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,0451010.MRL,C44479,ENGINEERING DRAFT - DO NOT ORDER
+F721,3A / 0451003.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,0451003.MRL,C13982,ENGINEERING DRAFT - DO NOT ORDER
+F731,3A / 0451003.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,0451003.MRL,C13982,ENGINEERING DRAFT - DO NOT ORDER
 F901,25 A preliminary / verify I2t,Fuse:Fuse_2920_7451Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 F902,20 A loads / verify,Fuse:Fuse_2920_7451Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
-F903,10 A LED / verify,Fuse:Fuse_2920_7451Metric,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
+F903,15A / 0451015.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/InputPower/,Littelfuse,0451015.MRL,C44480,ENGINEERING DRAFT - DO NOT ORDER
 J201,UART / 3V3 logic,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,/MCU / ESP32/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J301,SHT4x / XH 2.50,Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J302,FLOAT / WAGO 2601,TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -75,7 +81,7 @@ J601,PTC + / switched -,TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1102_1x02_P3.
 J711,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J721,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J731,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
-J901,12 V IN / 25 A design,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
+J901,12V IN / DG636 32A,GrowBox:TerminalBlock_DEGSON_DG636_1x02_P7.62mm,https://datasheet.lcsc.com/datasheet/pdf/ccf46534a5d8f09b26d580ef5634ab2c.pdf?productCode=C581337,/InputPower/,DEGSON,DG636-7.62-02P-14-00A(H),C581337,ENGINEERING DRAFT - DO NOT ORDER
 L101,10uH / Isat >= 4.5A,Inductor_SMD:L_Coilcraft_XAL7050-XXX,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
 L711,47u SRP1770TA-470M,Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm,https://www.bourns.com/docs/Product-Datasheets/SRP1770TA.pdf,/LEDDrivers/,Bourns,SRP1770TA-470M,C2041872,ENGINEERING DRAFT - DO NOT ORDER
 L721,47u SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,https://www.bourns.com/docs/Product-Datasheets/SRP1265A.pdf,/LEDDrivers/,Bourns,SRP1265A-470M,C840530,ENGINEERING DRAFT - DO NOT ORDER

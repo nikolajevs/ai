@@ -7,7 +7,7 @@
 	(title_block
 		(title "06 - 12 V input protection and branch fuses")
 		(date "2026-09-27")
-		(rev "0.13-DRAFT")
+		(rev "0.14-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Prototype design; protection and thermal qualification pending")
 	)
@@ -1804,7 +1804,7 @@
 		)
 		(uuid b0100ca6-2aba-5fc7-b357-e533b843eadf)
 	)
-	(text "0.13 DRAFT. 12 V nominal, not 24 V. Fuses, terminals, inrush and fault energy are not yet qualified."
+	(text "0.14 DRAFT. 12 V nominal only. J901 and F903 selected; F901/F902, cable and fault coordination remain pending."
 		(at 20.32 24.13 0)
 		(effects
 			(font
@@ -1832,7 +1832,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "12 V IN / 25 A design"
+		(property "Value" "12V IN / DG636 32A"
 			(at 25.4 43.18 0)
 			(effects
 				(font
@@ -1841,7 +1841,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DEGSON_DG636_1x02_P7.62mm"
 			(at 55.88 60.96 0)
 			(effects
 				(font
@@ -1851,7 +1851,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/ccf46534a5d8f09b26d580ef5634ab2c.pdf?productCode=C581337"
 			(at 55.88 60.96 0)
 			(effects
 				(font
@@ -1873,6 +1873,36 @@
 					(reference "J901")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "DEGSON"
+			(at 55.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "DG636-7.62-02P-14-00A(H)"
+			(at 55.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C581337"
+			(at 55.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3276,7 +3306,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "10 A LED / verify"
+		(property "Value" "15A / 0451015.MRL"
 			(at 332.74 160.02 90)
 			(effects
 				(font
@@ -3285,7 +3315,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Fuse:Fuse_2920_7451Metric"
+		(property "Footprint" "GrowBox:Fuse_Littelfuse_451"
 			(at 353.06 170.18 90)
 			(effects
 				(font
@@ -3295,7 +3325,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1"
 			(at 353.06 170.18 90)
 			(effects
 				(font
@@ -3317,6 +3347,36 @@
 					(reference "F903")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 353.06 170.18 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0451015.MRL"
+			(at 353.06 170.18 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C44480"
+			(at 353.06 170.18 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3783,7 +3843,7 @@
 		)
 		(uuid 2160c02c-5e87-59c1-8dbb-7653f6d84e3d)
 	)
-	(text "D901: BIDIRECTIONAL 14 V TVS before Q901; 23.2 V clamp at 25.9 A / 10-1000 us / 25 C.\nNot sustained overvoltage protection. Confirm hot clamp, wiring overshoot and fuse clearing.\nOnly the controller stage is selected; J901 and F901/F902/F903 remain provisional."
+	(text "D901: BIDIRECTIONAL 14 V TVS before Q901; 23.2 V clamp at 25.9 A / 10-1000 us / 25 C.\nNot sustained overvoltage protection. Confirm hot clamp, wiring overshoot and fuse clearing.\nJ901: DG636, IEC 32 A / UL 30 A; F903: 15 A Littelfuse 451. F901/F902 remain provisional."
 		(at 20.32 200.66 0)
 		(effects
 			(font
