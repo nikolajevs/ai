@@ -12,6 +12,10 @@ for comp in root.findall('.//components/comp'):
  ref=comp.get('ref');fp=fps[ref];identity=fp.GetFPID()
  assert fp.GetValue()==comp.findtext('value'),(ref,'value differs')
  assert str(identity.GetLibNickname())+':'+str(identity.GetLibItemName())==comp.findtext('footprint'),(ref,'footprint differs')
+ # XML omits the schematic root UUID; the PCB path includes it. This catches
+ # newly added footprints that would otherwise be duplicated on Update PCB.
+ suffix=comp.find('sheetpath').get('tstamps').rstrip('/')+'/'+comp.findtext('tstamps').strip()
+ assert fp.GetPath().AsString().endswith(suffix),(ref,'schematic instance path differs')
 nodes={}
 for net in root.findall('.//nets/net'):
  for node in net.findall('node'):
@@ -75,3 +79,13 @@ for ref,size in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('L731',(3.1,5.0)),
 for ref in ['L721','L731']:
  assert str(fps[ref].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
 print('PASS: all values/footprints agree; LED diode polarity/NC and selected passive lands checked')
+
+for ref, name, pins in [('U901','SOT-23-6',set('123456')),('U602','SOT-23-5',set('12345'))]:
+ assert str(fps[ref].GetFPID().GetLibItemName())==name
+ assert {p.GetNumber() for p in fps[ref].Pads()}==pins
+assert str(fps['Q901'].GetFPID().GetLibItemName())=='ONSemi_SO-8FL_488AA'
+assert nodes[('Q901','1')]==nodes[('U901','6')]==nodes[('C904','2')]
+assert nodes[('Q901','5')]==nodes[('U901','4')]==nodes[('U101','3')]
+assert nodes[('U602','5')]==nodes[('U601','6')]
+assert nodes[('U602','4')].startswith('unconnected-')
+print('PASS: schematic instance paths; input MOSFET source/drain, LM74700 and TPS709 footprints')

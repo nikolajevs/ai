@@ -1,8 +1,7 @@
 Ref,Qty,Function,Recommended MPN/series,Footprint,Status,Notes
 U101,1,12V to 3V3 buck,TPS54202DDCR,SOT-23-6,CANDIDATE,Check thermal/effective capacitance
-Q901,1,Reverse polarity,Vishay SiSS5623DN,PowerPAK 1212-8S VERIFY,VERIFY,Check SOA and RDS(on) at 25A
-D901,1,Input TVS,SMBJ18A-E3/52,SMB,CANDIDATE,TVS does not replace fuse
-D902,1,Q901 VGS clamp,12V zener MPN pending,SOD-323,CANDIDATE,12V zener
+Q901,1,Reverse polarity N-MOSFET,NTMFS5C628NLT1G,Package_SO:ONSemi_SO-8FL_488AA,PROTOTYPE,LCSC C145537 USD0.7717; source INPUT drain OUTPUT; inrush/SOA and 25A thermal design pending
+D901,1,Input TVS,SMBJ14CA-E3/52,SMB,PROTOTYPE,BIDIRECTIONAL before Q901; 14V standoff; 23.2V clamp at25.9A 10/1000us 25C; not sustained OVP
 F901,1,Input fuse,Bourns SF-2923HC-C 25A variant,footprint pending,VERIFY,Exact PN and I2t pending
 F902,1,Loads fuse,20A fuse MPN pending,footprint pending,VERIFY,20A preliminary
 F903,1,LED fuse,10A fuse MPN pending,footprint pending,VERIFY,10A preliminary
@@ -15,8 +14,8 @@ L711,1,Panel boost inductor,SRP1770TA-470M,Inductor_SMD:L_Bourns_SRP1770TA_16.9x
 L721/L731,2,Strip boost inductor,SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,PROTOTYPE,LCSC C840530; 47uH; Irms6.5A; Isat9.5A at 20% drop; USD1.1226 each
 R716,1,Panel LED sense,0.182 ohm 1% >=1W MPN pending,2512,VERIFY,Low side; nominal 1.099A
 R726/R736,2,Strip LED sense,0.80 ohm 1% >=0.25W MPN pending,1206,VERIFY,Low side; nominal 0.25A each
-Q601,1,PTC MOSFET,NTMFS5C628NLT1G,SO-8FL,CANDIDATE,Add external thermostat/thermal fuse
-U601,1,PTC gate driver,UCC27524ADR,SOIC-8,CANDIDATE,Channel A
+Q601,1,PTC MOSFET,NTMFS5C628NLT1G,Package_SO:ONSemi_SO-8FL_488AA,PROTOTYPE,LCSC C145537 USD0.7717; gate now5V; 3.3mOhm max at4.5V; external thermal cutoff required
+U601,1,PTC gate driver,UCC27524ADR,SOIC-8,CANDIDATE,Channel A; VDD from TPS70950 +5V_GATE; SOIC-D startup threshold max4.65V
 Q501/Q511/Q521,3,Fan/pump MOSFET,AO3400A,SOT-23,CANDIDATE,Verify pump startup
 D521,1,Pump flyback,SS34-E3/57T,SMC,CANDIDATE,Verify stall current
 U201,1,MCU,ESP32-WROOM-32E-N4,RF module,CANDIDATE,Firmware GPIO adaptation required
@@ -24,7 +23,7 @@ U301,1,RTC,DS3231MZ+TRL,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,PROTOTYPE,LCSC C1074
 J401,1,microSD,Molex 104031-0811,microSD,CANDIDATE,4MHz initial SPI
 J301,1,SHT4x connector,JST XH B4B-XH-A,JST-XH 2.50,CANDIDATE,0.5m cable and 100kHz I2C
 BT301,1,RTC battery holder,Keystone 3002,CR2032 THT,CANDIDATE,No charger
-J901,1,12V input terminal,2-pin >=25A,5.08mm,VERIFY,Exact family and current rating pending
+J901,1,12V input terminal,2-pin >=25A,5.08mm,VERIFY,Current Phoenix MKDS1.5 geometry is provisional; NOT a qualified25A terminal; exact part/cable pending
 J501/J511,2,4-wire fan terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Check mechanical drawing and rating
 J521/J601/J711/J721/J731,5,2-wire power terminal,DA803R/WAGO 2601-compatible,3.50mm,VERIFY,Consider 5.08mm for PTC/LED
 J201,1,Programming header,1x06 pin header,2.54mm,CANDIDATE,External USB-UART programmer
@@ -34,3 +33,13 @@ R715,1,Panel switch current sense,0.027 ohm 1% >=2W MPN pending,Resistor_SMD:R_2
 R725/R735,2,Strip switch current sense,0.047 ohm 1% >=1W MPN pending,Resistor_SMD:R_2512_6332Metric,VERIFY,Paired with 47uH and Rsl2.7k in v0.12
 R712,1,Panel slope compensation,1k 1% MPN pending,Resistor_SMD:R_0603_1608Metric,VERIFY,Ramp tolerance and startup require measurement
 R722/R732,2,Strip slope compensation,2.7k 1% MPN pending,Resistor_SMD:R_0603_1608Metric,VERIFY,Ramp tolerance and startup require measurement
+U901,1,Ideal diode controller,LM74700QDBVRQ1,Package_TO_SOT_SMD:SOT-23-6,PROTOTYPE,LCSC C2941042 USD1.7389; no forward current limit or output disconnect
+U602,1,5V heater-driver supply,TPS70950DBVR,Package_TO_SOT_SMD:SOT-23-5,PROTOTYPE,LCSC C96028 USD0.6191; IN1 GND2 EN3 NC4 OUT5; reverse current protection; EN=3V3
+C901,1,Protected input bulk,220u35V low ESR MPN pending,Capacitor_SMD:CP_Elec_10x10.5,VERIFY,Confirm dimensions/ripple/inrush; higher voltage rating than v0.12
+C902,1,Protected input ceramic,1u50V X7R MPN pending,Capacitor_SMD:C_1210_3225Metric,VERIFY,Effective capacitance >=0.1uF at worst rail voltage
+C903,1,Ideal diode input bypass,100n50V X7R MPN pending,Capacitor_SMD:C_0805_2012Metric,VERIFY,ANODE to GND; effective >=22nF
+C904,1,Ideal diode charge pump,220n50V X7R MPN pending,Capacitor_SMD:C_0805_2012Metric,VERIFY,VCAP to ANODE; effective >=100nF at14V; never to GND
+R903,1,Input MOSFET gate link,0 ohm MPN pending,Resistor_SMD:R_0603_1608Metric,VERIFY,Do not increase without reverse-turnoff validation
+C602,1,Gate-driver local reservoir,2.2u25V X7R MPN pending,Capacitor_SMD:C_0805_2012Metric,VERIFY,Effective >=1uF at5V; directly at U601 VDD/GND
+C603,1,Gate LDO input bypass,2.2u50V X7R MPN pending,Capacitor_SMD:C_0805_2012Metric,VERIFY,Directly at U602 IN/GND; confirm effective capacitance
+C604,1,Gate LDO output reservoir,10u16V X7R MPN pending,Capacitor_SMD:C_0805_2012Metric,VERIFY,Effective >=2.2uF at5V; ESR<=0.2ohm; total rail capacitance <=47uF

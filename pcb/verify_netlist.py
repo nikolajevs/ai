@@ -57,7 +57,7 @@ groups += [
     [('U201', 12), ('R209', 1), ('R521', 1)],
     [('R521', 2), ('R522', 1), ('Q521', 1)],
     [('Q521', 3), ('J521', 2), ('D521', 2)],
-    [('F902', 2), ('J521', 1), ('D521', 1), ('J601', 1), ('U601', 6)],
+    [('F902', 2), ('J521', 1), ('D521', 1), ('J601', 1), ('U602', 1), ('C603', 1)],
     [('U201', 13), ('R210', 1), ('U601', 2)],
     [('U601', 7), ('R601', 1)],
     [('R601', 2), ('R602', 1), ('Q601', 4)],
@@ -65,6 +65,9 @@ groups += [
     [('U201', 2), ('U601', 1)],
     [('U201', 1), ('Q601', 1), ('Q601', 2), ('Q601', 3), ('R602', 2),
      ('D601', 2), ('U601', 3), ('U601', 4), ('U601', 8), ('Q521', 2)],
+    [('U602', 5), ('U601', 6), ('C601', 1), ('C602', 1), ('C604', 1)],
+    [('U602', 3), ('U201', 2), ('U601', 1)],
+    [('U602', 2), ('C603', 2), ('C604', 2), ('C601', 2), ('C602', 2), ('U201', 1)],
 ]
 for suffix, pwm_pin, tach_pin, pull in [(501, 10, 6, 'R207'), (511, 11, 7, 'R208')]:
     j,q,r,d = f'J{suffix}', f'Q{suffix}', f'R{suffix}', f'D{suffix}'
@@ -81,10 +84,13 @@ for suffix, pwm_pin, tach_pin, pull in [(501, 10, 6, 'R207'), (511, 11, 7, 'R208
 # Input protection and branch rails.
 groups += [
     [('J901', 1), ('F901', 1)],
-    [('F901', 2), ('Q901', 5)],
-    [('Q901', 4), ('R901', 2), ('R902', 1), ('D902', 2)],
-    [('Q901', 1), ('Q901', 2), ('Q901', 3), ('R901', 1), ('D901', 1), ('D902', 1), ('F902', 1), ('F903', 1), ('U101', 3)],
-    [('F902', 2), ('J501', 2), ('J511', 2), ('J521', 1), ('J601', 1), ('U601', 6)],
+    [('F901', 2), ('Q901', 1), ('Q901', 2), ('Q901', 3), ('U901', 6), ('U901', 3), ('C903', 1), ('C904', 2), ('D901', 1)],
+    [('Q901', 4), ('R903', 2)],
+    [('U901', 5), ('R903', 1)],
+    [('U901', 1), ('C904', 1)],
+    [('Q901', 5), ('U901', 4), ('C901', 1), ('C902', 1), ('F902', 1), ('F903', 1), ('U101', 3), ('TP901', 1)],
+    [('U901', 2), ('D901', 2), ('C903', 2), ('C901', 2), ('C902', 2), ('J901', 2), ('U201', 1)],
+    [('F902', 2), ('J501', 2), ('J511', 2), ('J521', 1), ('J601', 1), ('U602', 1)],
     [('F903', 2), ('U710', 1), ('U720', 1), ('U730', 1)],
 ]
 
@@ -145,8 +151,20 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 171
+assert len(root.findall('.//components/comp')) == 175
+
+# Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable pins.
+assert net_of('U602', 4)[1] == {('U602', '4')}, 'TPS709 NC connected'
+assert net_of('U602', 3)[0] != net_of('U602', 1)[0], 'TPS709 EN tied to 12 V'
+assert net_of('U601', 6)[0] not in {net_of('F902', 2)[0], net_of('U201', 2)[0]}, 'Driver has wrong supply'
+assert net_of('U901', 1)[1] == {('U901', '1'), ('C904', '1')}, 'Charge pump node misconnected'
+assert net_of('C904', 2)[0] != net_of('U201', 1)[0], 'VCAP capacitor must return to ANODE'
+assert not {'R901', 'R902', 'D902'} & set(refs), 'Obsolete P-MOS bias parts remain'
+for ref, mpn in [('U901', 'LM74700QDBVRQ1'), ('U602', 'TPS70950DBVR'), ('Q901', 'NTMFS5C628NLT1G')]:
+    comp = next(c for c in root.findall('.//components/comp') if c.get('ref') == ref)
+    assert comp.findtext('value') == mpn, (ref, 'unqualified substitute')
 
 for drain in [('Q601', 5), ('Q521', 3)]:
     assert net_of(*drain)[0] not in (net_of('U201', 1)[0], net_of('U101', 3)[0])
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 171 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 175 components.')
+print('PASS: reverse-blocking MOSFET orientation, VCAP return, TPS709 pinout/enable and separate 5 V driver supply')

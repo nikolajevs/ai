@@ -3,13 +3,13 @@
 	(generator "eeschema")
 	(generator_version "10.0")
 	(uuid "fa828295-f6b9-547a-b086-6dfb2bfcc3a5")
-	(paper "A4")
+	(paper "A3")
 	(title_block
 		(title "05 - PTC heater switch")
-		(date "2026-09-26")
-		(rev "0.4-DRAFT")
+		(date "2026-09-27")
+		(rev "0.13-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Draft: input protection and LED drivers pending")
+		(comment 1 "Prototype design; protection and thermal qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -262,7 +262,8 @@
 			(symbol "C_0_1"
 				(polyline
 					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
+						(xy -2.032 0.762)
+						(xy 2.032 0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -274,7 +275,8 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
+						(xy -2.032 -0.762)
+						(xy 2.032 -0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -416,7 +418,9 @@
 			(symbol "D_Zener_0_1"
 				(polyline
 					(pts
-						(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+						(xy -1.27 -1.27)
+						(xy -1.27 1.27)
+						(xy -0.762 1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -428,7 +432,8 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 0) (xy -1.27 0)
+						(xy 1.27 0)
+						(xy -1.27 0)
 					)
 					(stroke
 						(width 0)
@@ -440,7 +445,10 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+						(xy 1.27 -1.27)
+						(xy 1.27 1.27)
+						(xy -1.27 0)
+						(xy 1.27 -1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -968,7 +976,8 @@
 			(symbol "NTMFS5C628NL_0_1"
 				(polyline
 					(pts
-						(xy 0.254 1.905) (xy 0.254 -1.905)
+						(xy 0.254 1.905)
+						(xy 0.254 -1.905)
 					)
 					(stroke
 						(width 0.254)
@@ -980,7 +989,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.254 0) (xy -2.54 0)
+						(xy 0.254 0)
+						(xy -2.54 0)
 					)
 					(stroke
 						(width 0)
@@ -992,7 +1002,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 2.286) (xy 0.762 1.27)
+						(xy 0.762 2.286)
+						(xy 0.762 1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -1004,7 +1015,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 0.508) (xy 0.762 -0.508)
+						(xy 0.762 0.508)
+						(xy 0.762 -0.508)
 					)
 					(stroke
 						(width 0.254)
@@ -1016,7 +1028,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.27) (xy 0.762 -2.286)
+						(xy 0.762 -1.27)
+						(xy 0.762 -2.286)
 					)
 					(stroke
 						(width 0.254)
@@ -1028,7 +1041,10 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+						(xy 0.762 -1.778)
+						(xy 3.302 -1.778)
+						(xy 3.302 1.778)
+						(xy 0.762 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1040,7 +1056,10 @@
 				)
 				(polyline
 					(pts
-						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+						(xy 1.016 0)
+						(xy 2.032 0.381)
+						(xy 2.032 -0.381)
+						(xy 1.016 0)
 					)
 					(stroke
 						(width 0)
@@ -1063,7 +1082,8 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 2.54) (xy 2.54 1.778)
+						(xy 2.54 2.54)
+						(xy 2.54 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1097,7 +1117,9 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+						(xy 2.54 -2.54)
+						(xy 2.54 0)
+						(xy 0.762 0)
 					)
 					(stroke
 						(width 0)
@@ -1109,7 +1131,8 @@
 				)
 				(polyline
 					(pts
-						(xy 2.921 0.381) (xy 3.683 0.381)
+						(xy 2.921 0.381)
+						(xy 3.683 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1121,7 +1144,10 @@
 				)
 				(polyline
 					(pts
-						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+						(xy 3.302 0.381)
+						(xy 2.921 -0.254)
+						(xy 3.683 -0.254)
+						(xy 3.302 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1228,8 +1254,202 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "GrowBox:TPS70950"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(symbol "TPS70950_0_1"
+				(rectangle
+					(start -5.08 4.445)
+					(end 5.08 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "TPS70950_1_1"
+				(pin power_in line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "VIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "EN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at 5.08 0 180)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+			(property "Reference" "U"
+				(at -5.08 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "TPS70950DBVR"
+				(at 0 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+				(at 0 8.255 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps709.pdf"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "TI TPS70950 DBV, 5V LDO with reverse current protection; IN1 GND2 EN3 NC4 OUT5; not TPS709A/B"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "linear regulator ldo fixed positive"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23?5*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+		)
 	)
-	(text "U601: ENA от 3.3V, INA=HEATER_EN. Канал B отключён.\nC601/C602 вплотную к VDD/GND. Короткий контур OUTA-G-S-GND.\nR210 на MCU = 10k pull-down; R602 удерживает затвор без питания.\nПитание драйвера 4.5..18V; входная OVP должна обеспечить этот предел."
+	(text "U601: ENA=3.3 V, INA=HEATER_EN. Channel B disabled. VDD from local +5V_GATE.\nC601/C602 close to VDD/GND. Short OUTA-G-S-GND loop.\nMCU R210=10k pull-down; R602 discharges the gate when unpowered.\nVerify 5 V startup/droop: SOIC start threshold up to 4.65 V; never power directly from 12 V."
 		(exclude_from_sim no)
 		(at 20.32 127 0)
 		(effects
@@ -1262,7 +1482,7 @@
 		)
 		(uuid "82bb9dd5-212e-5170-a51a-f347edc95d74")
 	)
-	(text "Q601: G=4, S=1/2/3, D=5; SO-8FL, площадка D не GND.\nRds(on) max 2.4mOhm при Vgs=10V, Tj=25C.\nПроводимость: ~0.167W при 8.33A; ~0.220W при 9.58A.\nПри нагреве Rds возрастает; проверить тепло и выбросы на реальной PCB."
+	(text "Q601: G=4, S=1/2/3, D=5; SO-8FL exposed drain is not GND.\nRDS(on) max 3.3 mOhm at VGS=4.5 V, Tj=25 C.\nConduction ~0.229 W at 8.33 A / ~0.303 W at 9.58 A.\nHot resistance and switching overshoot still require thermal/scope checks."
 		(exclude_from_sim no)
 		(at 20.32 151.13 0)
 		(effects
@@ -1273,7 +1493,7 @@
 		)
 		(uuid "b265a6f5-dfce-5b57-8983-a5f2e930067d")
 	)
-	(text "0.3 DRAFT: номинальный ток не является подтверждённым допустимым током платы."
+	(text "0.13 DRAFT: power/thermal limits remain subject to prototype validation."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -1588,7 +1808,7 @@
 		)
 		(uuid "f9cf8e91-c0b6-5676-a808-a6fa835579b0")
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+5V_GATE"
 		(shape bidirectional)
 		(at 30.48 92.71 0)
 		(effects
@@ -1654,7 +1874,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+5V_GATE"
 		(shape bidirectional)
 		(at 88.9 48.26 0)
 		(effects
@@ -1786,7 +2006,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+5V_GATE"
 		(shape bidirectional)
 		(at 30.48 57.15 0)
 		(effects
@@ -2023,7 +2243,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524.pdf"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524a.pdf"
 			(at 88.9 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -2250,6 +2470,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "onsemi"
+			(at 208.28 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "NTMFS5C628NLT1G"
+			(at 208.28 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C145537"
+			(at 208.28 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -2273,7 +2529,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u / 25V"
+		(property "Value" "2.2u / 25V X7R"
 			(at 33.48 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2578,5 +2834,441 @@
 				)
 			)
 		)
+	)
+	(text "LOCAL 5 V GATE SUPPLY"
+		(at 287.02 40.64 0)
+		(effects
+			(font
+				(size 1.5 1.5)
+			)
+			(justify left top)
+		)
+		(uuid edbd8933-5d84-5522-922b-0c767dadd405)
+	)
+	(symbol
+		(lib_id "GrowBox:TPS70950")
+		(at 335.28 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 37116a62-6dd2-598a-aa39-83f7e7cbe601)
+		(property "Reference" "U602"
+			(at 325.12 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS70950DBVR"
+			(at 325.12 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 335.28 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps709.pdf"
+			(at 335.28 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 5645e5e3-e7a4-5389-a0b2-be2b80670dc3)
+		)
+		(pin "2"
+			(uuid 042dffb8-522f-5ba8-8463-d3716a781224)
+		)
+		(pin "3"
+			(uuid c5986f8c-152b-5886-b6ff-95c02f538e3e)
+		)
+		(pin "4"
+			(uuid f1426e24-7104-5fc1-a678-510e2a2b1171)
+		)
+		(pin "5"
+			(uuid 04f052d8-9fcc-52da-a1ba-4110ef2d7816)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
+					(reference "U602")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 335.28 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "TPS70950DBVR"
+			(at 335.28 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C96028"
+			(at 335.28 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 327.66 73.66)
+			(xy 314.96 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 7f00dd98-d8ae-53ce-acd0-747d02ee351a)
+	)
+	(global_label "+12V_LOADS"
+		(shape bidirectional)
+		(at 314.96 73.66 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid ba04cdd6-382d-5100-9e82-c41212098fea)
+	)
+	(wire
+		(pts
+			(xy 342.9 73.66)
+			(xy 355.6 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 8ac92894-d924-5308-acac-01668195bc7c)
+	)
+	(global_label "+5V_GATE"
+		(shape bidirectional)
+		(at 355.6 73.66 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid d8f8bd6d-aa48-5356-8a6e-8ae3c89d4887)
+	)
+	(wire
+		(pts
+			(xy 327.66 76.2)
+			(xy 312.42 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d03900ea-9e41-5778-9cdc-737c9a979a86)
+	)
+	(wire
+		(pts
+			(xy 312.42 76.2)
+			(xy 312.42 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 36c7e46b-496d-5b73-ac60-8ec6d21a73b7)
+	)
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 312.42 83.82 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid f0bd008d-b204-5a85-ad29-5336fa630179)
+	)
+	(wire
+		(pts
+			(xy 335.28 83.82)
+			(xy 335.28 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 7b40a6e7-f6d6-5a96-8b03-7bd5b0910cf4)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 335.28 88.9 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid af1fc7ce-4b70-5d95-8612-ff39147ba63c)
+	)
+	(no_connect
+		(at 340.36 76.2)
+		(uuid bce2f5b3-3c1d-5627-9916-cafeae448374)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 302.26 106.68 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 6d4eb634-2217-51b9-86c5-f0626961b89e)
+		(property "Reference" "C603"
+			(at 305.26 105.41000000000001 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2.2u / 50V X7R"
+			(at 305.26 107.95 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 302.26 106.68 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 302.26 106.68 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid de878236-8c05-571d-ae23-0c2b5536d38d)
+		)
+		(pin "2"
+			(uuid 040e1d0c-a39c-585f-8f46-5dcfa2b8c2ad)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
+					(reference "C603")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 302.26 102.87)
+			(xy 302.26 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 356d2cf5-abe1-5feb-82da-1dd6d423142d)
+	)
+	(global_label "+12V_LOADS"
+		(shape bidirectional)
+		(at 302.26 97.79 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid e491f63d-fc98-5177-b819-8424a5ddecca)
+	)
+	(wire
+		(pts
+			(xy 302.26 110.49)
+			(xy 302.26 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 1001c65b-c1af-5edd-b508-593d6591a644)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 302.26 115.57 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid bdc95bbc-3a46-52fd-a095-9fcd3427838d)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 370.84 106.68 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 14c92ec6-7f5f-560c-8e98-1414a00c73ab)
+		(property "Reference" "C604"
+			(at 373.84 105.41000000000001 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u / 16V X7R"
+			(at 373.84 107.95 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 370.84 106.68 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 370.84 106.68 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid df907456-170e-5980-869e-3be45564aa8e)
+		)
+		(pin "2"
+			(uuid 2759d56e-f870-5e41-8c47-f0e62deb91b4)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
+					(reference "C604")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 370.84 102.87)
+			(xy 370.84 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 7deb1e0b-0e95-5b4c-9c52-c3134d6b6d04)
+	)
+	(global_label "+5V_GATE"
+		(shape bidirectional)
+		(at 370.84 97.79 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 8f25b7e1-0509-5131-953a-0d9fb8800107)
+	)
+	(wire
+		(pts
+			(xy 370.84 110.49)
+			(xy 370.84 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid a0240f8a-46fb-5d97-ad82-2a7787351015)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 370.84 115.57 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 0ffc338e-16b5-5a12-b3b4-fd19279f8df4)
+	)
+	(text "EN = +3V3; do not connect EN to 12 V.\nTPS70950 has reverse-current protection.\nC604: >=2.2 uF effective at 5 V; ESR <=0.2 ohm.\nC602 >=1 uF effective, directly at driver.\nC603/C604 directly at LDO.\nGate supply budget <=5 mA; PTC ON/OFF <=1 Hz."
+		(at 287.02 127 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left top)
+		)
+		(uuid b60d9e27-3211-5b7c-88ee-a247243e1089)
 	)
 )

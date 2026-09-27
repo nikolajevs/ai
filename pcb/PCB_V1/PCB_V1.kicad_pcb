@@ -214,6 +214,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "6cebf00b-e105-4523-aa73-9d7955f4dbc7")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -222,6 +223,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "ab79241b-1278-482a-aec6-d1df76294f14")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -361,6 +363,7 @@
 			(roundrect_rratio 0.25)
 			(net "HEATER_EN")
 			(uuid "a7721c03-d97f-41aa-ba3d-593647141d6c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -369,6 +372,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "fc7a34d7-413c-4948-8704-5de238c42b65")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -508,6 +512,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "0531f5c8-d51e-4346-9cca-8e7a9f0af279")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -516,6 +521,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "76693711-cfe7-44e8-9b72-364894714098")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -655,6 +661,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_LED")
 			(uuid "47d4b2b2-5653-418e-9141-4a51271a239b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -663,6 +670,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "e7f54058-07e9-4e4b-9483-5baa80ef1337")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -802,6 +810,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_LED")
 			(uuid "46cbbe1d-608c-4216-b473-ec9c67970168")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -810,6 +819,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "acbdc00b-f9df-4e1f-94f2-75fda3af4993")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -949,6 +959,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN1_PWM")
 			(uuid "3c86d8b2-738b-410e-971a-d2484279c17c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -957,6 +968,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_GATE")
 			(uuid "2d4d3176-b31d-4f62-8026-b35e2c4fdf76")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -1088,7 +1100,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 5.47) (xy 0.44 6.08) (xy -0.44 6.08)
+				(xy 0 5.47)
+				(xy 0.44 6.08)
+				(xy -0.44 6.08)
 			)
 			(stroke
 				(width 0.12)
@@ -1178,6 +1192,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "7a5830e8-82fb-474b-a1db-034bb6a62912")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "1" thru_hole roundrect
 			(at 0 0)
@@ -1188,6 +1204,8 @@
 			(roundrect_rratio 0.166667)
 			(net "+12V_LOADS")
 			(uuid "1ac7ac7c-3287-4d25-a53e-617ffff2c5ee")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 -5)
@@ -1197,6 +1215,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/Heater/HEATER_DRAIN")
 			(uuid "293ea46c-b5a9-4b1f-8dc3-d1881ed9bfcf")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 0)
@@ -1206,6 +1226,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/Heater/HEATER_DRAIN")
 			(uuid "2ba82f0c-2352-425b-8f6c-35e2042c0f71")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_WAGO.3dshapes/TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal.step"
@@ -1345,6 +1367,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_DRV")
 			(uuid "c129bb99-f896-471d-ab8f-53ff933cc458")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -1353,6 +1376,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_GATE")
 			(uuid "74a44bcf-84b9-412e-b265-36cbc03d9cdd")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -1492,6 +1516,7 @@
 			(roundrect_rratio 0.222222)
 			(net "/LEDDrivers/LED3_RETURN")
 			(uuid "77702ea6-d8bf-442c-b170-524304044a3b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.4625 0)
@@ -1500,6 +1525,7 @@
 			(roundrect_rratio 0.222222)
 			(net "GND")
 			(uuid "570e81a6-0c75-4c2f-abf2-e74575b8ba21")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
@@ -1639,6 +1665,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "b492664c-f987-4306-930a-b4627bfa8f79")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -1647,6 +1674,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_DAT2")
 			(uuid "0e97a7b1-b807-4761-ab4f-dbce741e4ff4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -1786,6 +1814,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_COMP")
 			(uuid "a1da1a9f-ecc7-4671-a049-3aa9fc0d7f36")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -1794,6 +1823,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "c6c3947b-40d2-4d22-a97b-8c9793ef14a3")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -1933,6 +1963,7 @@
 			(roundrect_rratio 0.25)
 			(net "Net-(U101-BOOT)")
 			(uuid "d77f77ed-690c-4b4e-90d5-a1e9838c227e")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -1941,6 +1972,7 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_SW")
 			(uuid "a33576eb-096d-4b77-bb8d-28865c3f335e")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -2475,7 +2507,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524a.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -2574,7 +2606,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -2.6 -2.47) (xy -2.84 -2.8) (xy -2.36 -2.8)
+				(xy -2.6 -2.47)
+				(xy -2.84 -2.8)
+				(xy -2.36 -2.8)
 			)
 			(stroke
 				(width 0.12)
@@ -2706,7 +2740,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.975 -2.45) (xy 1.95 -2.45) (xy 1.95 2.45) (xy -1.95 2.45) (xy -1.95 -1.475)
+				(xy -0.975 -2.45)
+				(xy 1.95 -2.45)
+				(xy 1.95 2.45)
+				(xy -1.95 2.45)
+				(xy -1.95 -1.475)
 			)
 			(stroke
 				(width 0.1)
@@ -2734,6 +2772,8 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "237a4964-ba94-407b-b81e-6b930488a1c4")
+			(pinfunction "ENA_1")
+			(pintype "input")
 		)
 		(pad "2" smd roundrect
 			(at -2.475 -0.635)
@@ -2742,6 +2782,8 @@
 			(roundrect_rratio 0.25)
 			(net "HEATER_EN")
 			(uuid "6ebdc037-d6f5-4c4e-9a86-5ac10afc41f2")
+			(pinfunction "INA_2")
+			(pintype "input")
 		)
 		(pad "3" smd roundrect
 			(at -2.475 0.635)
@@ -2750,6 +2792,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "f44720c8-3d1b-4867-bab4-b7e116fbf227")
+			(pinfunction "GND_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at -2.475 1.905)
@@ -2758,6 +2802,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "6781ef42-4fba-4012-bab4-25be6cfceaf6")
+			(pinfunction "INB_4")
+			(pintype "input")
 		)
 		(pad "5" smd roundrect
 			(at 2.475 1.905)
@@ -2766,14 +2812,18 @@
 			(roundrect_rratio 0.25)
 			(net "unconnected-(U601-OUTB-Pad5)")
 			(uuid "966a5b3a-59a5-411f-a594-37ceff8e87cf")
+			(pinfunction "OUTB_5")
+			(pintype "output+no_connect")
 		)
 		(pad "6" smd roundrect
 			(at 2.475 0.635)
 			(size 1.95 0.6)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
-			(net "+12V_LOADS")
+			(net "+5V_GATE")
 			(uuid "690a02cd-3ed4-4b5c-a92f-2c5d957ce183")
+			(pinfunction "V_{DD}_6")
+			(pintype "power_in")
 		)
 		(pad "7" smd roundrect
 			(at 2.475 -0.635)
@@ -2782,6 +2832,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/Heater/HEATER_DRIVE")
 			(uuid "810d6a53-13b5-4fff-a00e-35c1ca4fa533")
+			(pinfunction "OUTA_7")
+			(pintype "output")
 		)
 		(pad "8" smd roundrect
 			(at 2.475 -1.905)
@@ -2790,6 +2842,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "6446a020-1357-442a-9302-f4a401e6f42b")
+			(pinfunction "ENB_8")
+			(pintype "input")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step"
@@ -2929,6 +2983,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "32c56cfb-f825-4b60-8a0f-365752e3ab1c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -2937,6 +2992,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "8cf162b0-ba6e-4cb7-96a8-fbdaa9b713f9")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -3076,6 +3132,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "567243e3-617f-4710-8b5a-aac191a049c9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -3084,6 +3141,7 @@
 			(roundrect_rratio 0.25)
 			(net "WATER_LEVEL")
 			(uuid "b2484749-c783-4a1d-8d1d-493286c2365c")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -3223,6 +3281,7 @@
 			(roundrect_rratio 0.204082)
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "54738716-3e51-447b-82d2-8e57ec51bdc9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.9625 0)
@@ -3231,6 +3290,7 @@
 			(roundrect_rratio 0.204082)
 			(net "GND")
 			(uuid "53a9c0af-b49d-4cb1-97ba-2aae504fe1b7")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_2512_6332Metric.step"
@@ -3370,6 +3430,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "9b93ae7c-e115-41ef-b0d7-eb5777bbc73c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -3378,6 +3439,7 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_FB")
 			(uuid "fdabab1e-6d0f-4758-83fb-c794d21ac22a")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -3517,6 +3579,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN1_TACH")
 			(uuid "6c11e878-41eb-4775-8218-bcc62a29668c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -3525,6 +3588,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_TACH_EXT")
 			(uuid "dace9a10-d550-402b-8019-b4a273416ee8")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -3664,6 +3728,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SHT_3V3")
 			(uuid "ab0e9ebd-e554-4ceb-aa2a-00009b7316a1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -3672,6 +3737,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "468e4c70-ce95-4c72-9451-c67b4ad26af8")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -3811,6 +3877,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_COMP")
 			(uuid "68526dd5-543e-470f-9e9a-a6237cd75f5b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -3819,6 +3886,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_COMP_RC")
 			(uuid "075c4317-b21c-4cda-9f09-41f354f92160")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -3958,6 +4026,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_GATE")
 			(uuid "76e68a7e-bcd0-4e30-9e11-940b1b101c6b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -3966,6 +4035,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "4de1be78-a1f1-4266-b9e4-c64e59dc9f15")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -4105,6 +4175,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_COMP_RC")
 			(uuid "6a9a9e80-6c6e-4019-b500-92a1c02119b8")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -4113,6 +4184,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "10e45db1-917d-4e0a-9eb2-e39532902937")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -4252,6 +4324,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "407a8a77-65fb-4d68-bbd6-4ac8cfe941b2")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -4260,6 +4333,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN1_TACH")
 			(uuid "10eed8b0-436e-4a25-a6e1-cc7c94c696eb")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -4370,6 +4444,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "+12V_PROTECTED")
 			(uuid "0b77ba75-6e46-4f83-a1fe-f5c0e847539d")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -4498,6 +4574,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN2_PWM")
 			(uuid "c1662e13-4365-4788-8934-74cdfc23b688")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -4506,6 +4583,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_GATE")
 			(uuid "805eb7f8-a597-4942-9017-e4bd6ac4e280")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -4645,6 +4723,7 @@
 			(roundrect_rratio 0.25)
 			(net "PUMP_EN")
 			(uuid "9c7b00a1-74d0-4dc6-980f-d901c6273074")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -4653,6 +4732,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/PUMP_GATE")
 			(uuid "031f2d05-e740-4426-b720-04600c390012")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -4792,6 +4872,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "95cc071f-f409-4bcd-b65e-99a510ba3998")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -4800,6 +4881,7 @@
 			(roundrect_rratio 0.25)
 			(net "I2C_SCL")
 			(uuid "0b63b2b6-eb3b-446f-87df-a6f36206ce11")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -4939,6 +5021,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_COMP_RC")
 			(uuid "452f25d8-3d95-4710-8369-29a858b65f94")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -4947,6 +5030,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "16b63d58-784d-4ab4-bddb-5852bfb40342")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -5086,6 +5170,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED3_OUT")
 			(uuid "4357f8dd-d802-49d3-8f10-faf20fadf351")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -5094,6 +5179,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "0e40b2cf-8150-4b52-89c4-e36751ec48c4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -5277,6 +5363,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "7edf2a6d-21cb-4c0c-a6df-dcb7e9c2a96b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -5285,6 +5372,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_OVP")
 			(uuid "8d71572c-08b5-4855-a2f2-bceace1e54b4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -5359,6 +5447,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SOURCE")
+			(pinfunction "S_1")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 -0.975)
@@ -5373,6 +5463,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SOURCE")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 -0.325)
@@ -5387,6 +5479,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SOURCE")
+			(pinfunction "S_3")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 0.325)
@@ -5401,6 +5495,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_GATE")
+			(pinfunction "G_4")
+			(pintype "input")
 		)
 		(pad "" smd roundrect
 			(at -1.55 0.975)
@@ -5415,6 +5511,8 @@
 			(roundrect_rratio 0.053333333)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd roundrect
 			(at 1.4825 -0.975)
@@ -5423,6 +5521,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 -0.975)
@@ -5437,6 +5537,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 -0.325)
@@ -5451,6 +5553,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 0.325)
@@ -5465,6 +5569,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED2_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 0.975)
@@ -5684,6 +5790,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_OVP")
 			(uuid "e35dc616-c76d-4561-9191-96f8a1c7eb6c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -5692,6 +5799,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "fe617cf7-d128-4df0-a0c6-0cb880d121ad")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -5853,7 +5961,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 4.72) (xy 0.44 5.33) (xy -0.44 5.33)
+				(xy 0 4.72)
+				(xy 0.44 5.33)
+				(xy -0.44 5.33)
 			)
 			(stroke
 				(width 0.12)
@@ -6036,6 +6146,8 @@
 			(roundrect_rratio 0.096154)
 			(net "/LEDDrivers/LED3_OUT")
 			(uuid "46485a63-1b6c-4ea4-8fdf-c787eea3b0dd")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole circle
 			(at 5.08 0)
@@ -6045,6 +6157,8 @@
 			(remove_unused_layers no)
 			(net "/LEDDrivers/LED3_RETURN")
 			(uuid "f788b48e-a803-424a-9e6e-ad885fa453bb")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
@@ -6566,6 +6680,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/RTC_VBAT")
 			(uuid "3142788c-78c6-4b62-8150-b793fb51337e")
+			(pinfunction "+_1")
+			(pintype "passive")
 		)
 		(pad "1" smd rect
 			(at 12.8 0)
@@ -6573,6 +6689,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/RTC_VBAT")
 			(uuid "47617fe2-5ef8-459a-bc97-7b7f1e0ff06c")
+			(pinfunction "+_1")
+			(pintype "passive")
 		)
 		(pad "2" smd circle
 			(at 0 0)
@@ -6580,6 +6698,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "GND")
 			(uuid "889e0c52-6e15-4b7c-8e05-52371ec202fb")
+			(pinfunction "-_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Battery.3dshapes/BatteryHolder_Keystone_3002_1x2032.step"
@@ -7052,6 +7172,7 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "4458ae6d-c8eb-44f8-a7c0-c65ba15261d4")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -7060,6 +7181,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "b39ff981-9dce-44e8-a842-93533457dbf4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -7199,6 +7321,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_COMP")
 			(uuid "a8a3bfbb-cbee-49e2-9c42-f977f6c77058")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -7207,6 +7330,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "16b55740-1f5d-492b-bcd3-8d7635b3258f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -7346,6 +7470,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "719a4372-8f61-4bf7-a70e-0b7af5bac5bc")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -7354,6 +7479,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MOSI_CARD")
 			(uuid "f088a3b2-70c8-4dca-990d-ca20ede0db0a")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -7493,6 +7619,7 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "c44a0f68-cc12-4e1b-8db1-9c9bda3fa108")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -7501,6 +7628,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "a06eb95e-c946-48a2-9d33-439c083d7cdb")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -7632,7 +7760,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 5.47) (xy 0.44 6.08) (xy -0.44 6.08)
+				(xy 0 5.47)
+				(xy 0.44 6.08)
+				(xy -0.44 6.08)
 			)
 			(stroke
 				(width 0.12)
@@ -7722,6 +7852,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "b8726f73-102a-4695-a6c9-4a5980304b4e")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "1" thru_hole roundrect
 			(at 0 0)
@@ -7732,6 +7864,8 @@
 			(roundrect_rratio 0.166667)
 			(net "+12V_LOADS")
 			(uuid "67055fbc-afc6-436c-bef2-e40c885fb39d")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 -5)
@@ -7741,6 +7875,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/PUMP_DRAIN")
 			(uuid "f0f6f494-8170-4ecb-a883-a2fe885d9e58")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 0)
@@ -7750,6 +7886,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/PUMP_DRAIN")
 			(uuid "0bb07949-c933-433d-89e8-28616c8b1264")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_WAGO.3dshapes/TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal.step"
@@ -7860,6 +7998,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "+3V3")
 			(uuid "cb6ec41f-93b0-4f19-9f9e-43fc79ef20a9")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -7988,6 +8128,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "bbf8306d-9b76-491a-804d-30d27cc20884")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -7996,156 +8137,10 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "e5f4dbe5-ad26-4201-b76b-1517c28bb3a9")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
-		(layer "F.Cu")
-		(uuid "402b6b07-5282-4699-9303-39b3ad41d83a")
-		(at 715 700)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
-		(tags "resistor")
-		(property "Reference" "R902"
-			(at 0 -1.43 0)
-			(layer "F.SilkS")
-			(uuid "11f68583-8c80-492d-a3ce-844c0b00ddde")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "100k"
-			(at 0 1.43 0)
-			(layer "F.Fab")
-			(uuid "28e32393-88f5-47a9-a738-5c00731c317b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "496b1229-cf27-4ee7-a743-865a227cce7d")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a956d9ce-3762-42e0-b7b5-884b0f07672f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "04b49502-2636-4aeb-bebc-4ab398802107")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/d7fdf20c-fa3d-45e0-a3c4-9b76c84d4f1e")
-		(attr smd)
-		(duplicate_pad_numbers_are_jumpers no)
-		(fp_line
-			(start -0.237258 -0.5225)
-			(end 0.237258 -0.5225)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "69066cae-4261-4873-933b-ed14bec46254")
-		)
-		(fp_line
-			(start -0.237258 0.5225)
-			(end 0.237258 0.5225)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "771defa5-5f9e-4e30-aa6c-4f56359ca599")
-		)
-		(fp_rect
-			(start -1.48 -0.73)
-			(end 1.48 0.73)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.CrtYd")
-			(uuid "809fe413-ace3-4088-94fc-a9fe57c20be6")
-		)
-		(fp_rect
-			(start -0.8 -0.4125)
-			(end 0.8 0.4125)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "bad696c3-ffb2-46ad-83ae-df06f30e6799")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "f1a59d2d-c3e9-4f41-9a94-8670fecfb109")
-			(effects
-				(font
-					(size 0.4 0.4)
-					(thickness 0.06)
-				)
-			)
-		)
-		(pad "1" smd roundrect
-			(at -0.825 0)
-			(size 0.8 0.95)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "/InputPower/Q901_GATE")
-			(uuid "db49a263-f52c-4d2d-897e-6ebb477a1502")
-		)
-		(pad "2" smd roundrect
-			(at 0.825 0)
-			(size 0.8 0.95)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "GND")
-			(uuid "14f2f7d8-2115-44cf-90af-8dfa750baa06")
-		)
-		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -8282,6 +8277,7 @@
 			(roundrect_rratio 0.25)
 			(net "SD_MISO")
 			(uuid "cbc7a2b5-953a-4f0b-b0eb-12f449bd3ded")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -8290,6 +8286,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MISO_CARD")
 			(uuid "7b15e4ab-02f4-49aa-b90b-5a24cbd10c59")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -8441,7 +8438,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.3 -0.38) (xy -1.06 -0.05) (xy -1.54 -0.05)
+				(xy -1.3 -0.38)
+				(xy -1.06 -0.05)
+				(xy -1.54 -0.05)
 			)
 			(stroke
 				(width 0.12)
@@ -8613,7 +8612,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.325 -1.45) (xy 0.65 -1.45) (xy 0.65 1.45) (xy -0.65 1.45) (xy -0.65 -1.125)
+				(xy -0.325 -1.45)
+				(xy 0.65 -1.45)
+				(xy 0.65 1.45)
+				(xy -0.65 1.45)
+				(xy -0.65 -1.125)
 			)
 			(stroke
 				(width 0.1)
@@ -8641,6 +8644,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_GATE")
 			(uuid "02496045-c6e0-4101-ae9d-896c3f4670a3")
+			(pinfunction "G_1")
+			(pintype "input")
 		)
 		(pad "2" smd roundrect
 			(at -0.9375 0.95)
@@ -8649,6 +8654,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "a7e03508-ca53-4375-af5d-15f9f1753c8a")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.9375 0)
@@ -8657,6 +8664,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_PWM_EXT")
 			(uuid "4a7c3029-a485-4bc6-9cd3-e93cd82db8e4")
+			(pinfunction "D_3")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
@@ -8798,7 +8807,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.45 -1.51) (xy -1.69 -1.84) (xy -1.21 -1.84)
+				(xy -1.45 -1.51)
+				(xy -1.69 -1.84)
+				(xy -1.21 -1.84)
 			)
 			(stroke
 				(width 0.12)
@@ -8930,7 +8941,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.4 -1.45) (xy 0.8 -1.45) (xy 0.8 1.45) (xy -0.8 1.45) (xy -0.8 -1.05)
+				(xy -0.4 -1.45)
+				(xy 0.8 -1.45)
+				(xy 0.8 1.45)
+				(xy -0.8 1.45)
+				(xy -0.8 -1.05)
 			)
 			(stroke
 				(width 0.1)
@@ -8958,6 +8973,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "a3fe1c72-46c0-41c1-8112-e9709f055cad")
+			(pinfunction "GND_1")
+			(pintype "power_in")
 		)
 		(pad "2" smd roundrect
 			(at -1.1375 0)
@@ -8966,6 +8983,8 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_SW")
 			(uuid "0170a513-9404-4295-9398-cb01edc4fbca")
+			(pinfunction "SW_2")
+			(pintype "power_out")
 		)
 		(pad "3" smd roundrect
 			(at -1.1375 0.95)
@@ -8974,6 +8993,8 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_PROTECTED")
 			(uuid "6be86483-186e-4a69-9bb6-a526d17b5eed")
+			(pinfunction "VIN_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at 1.1375 0.95)
@@ -8982,6 +9003,8 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_FB")
 			(uuid "e8c1097a-8e46-4e5f-b400-922b61ac441d")
+			(pinfunction "FB_4")
+			(pintype "input")
 		)
 		(pad "5" smd roundrect
 			(at 1.1375 0)
@@ -8990,6 +9013,8 @@
 			(roundrect_rratio 0.25)
 			(net "unconnected-(U101-EN-Pad5)")
 			(uuid "55d594d2-d4dd-47c0-9c24-1759c35a553e")
+			(pinfunction "EN_5")
+			(pintype "input+no_connect")
 		)
 		(pad "6" smd roundrect
 			(at 1.1375 -0.95)
@@ -8998,6 +9023,8 @@
 			(roundrect_rratio 0.25)
 			(net "Net-(U101-BOOT)")
 			(uuid "0478ed47-d280-4e3f-8d58-0238cc1c37a7")
+			(pinfunction "BOOT_6")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-6.step"
@@ -9129,7 +9156,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -9301,7 +9330,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -9329,6 +9362,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_DAT1")
 			(uuid "3b561d0d-42e6-4188-bab7-b5baa8afb879")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -9337,6 +9371,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_DAT2")
 			(uuid "f0a3a56e-ae0d-41fe-8ef7-5f45bc3fe680")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -9345,6 +9380,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "b790224b-f230-477b-ab1b-2fdc4332c6e7")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -9484,6 +9520,7 @@
 			(roundrect_rratio 0.2)
 			(net "+3V3")
 			(uuid "2b348c91-aad3-40b3-8316-70eb8941795d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.4 0)
@@ -9492,6 +9529,7 @@
 			(roundrect_rratio 0.2)
 			(net "/MCU / ESP32/Peripherals/SHT_3V3")
 			(uuid "64c34008-4b12-433d-903a-8778686edd45")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Fuse.3dshapes/Fuse_1206_3216Metric.step"
@@ -9631,6 +9669,7 @@
 			(roundrect_rratio 0.25)
 			(net "SD_SCK")
 			(uuid "b29a37c2-4b3d-465f-a993-d761472bb35c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -9639,276 +9678,10 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_SCK_CARD")
 			(uuid "4d0d5ba7-7783-4582-8012-3f9c9d9b98a5")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
-	(footprint "Diode_SMD:D_SOD-323"
-		(layer "F.Cu")
-		(uuid "4a743186-353e-4128-bae4-e6f8f809c55d")
-		(at 865 600)
-		(descr "SOD-323")
-		(tags "SOD-323")
-		(property "Reference" "D902"
-			(at 0 -1.85 0)
-			(layer "F.SilkS")
-			(uuid "1ac39625-c8a1-403b-99a4-69f39f938bbb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "12 V gate clamp / MPN pending"
-			(at 0.1 1.9 0)
-			(layer "F.Fab")
-			(uuid "38a40e19-b93e-4c63-bd2a-2228e4947aa0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2968e37c-1f82-42c0-9812-51c933e3ee45")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7af5b20c-dc45-491c-ad63-a6ee047ac341")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/b9e6e030-7a49-5a1d-a2a6-829009d8869a")
-		(attr smd)
-		(duplicate_pad_numbers_are_jumpers no)
-		(fp_line
-			(start -1.61 -0.85)
-			(end -1.61 0.85)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "663a43e5-6e81-4d57-84c0-40c4ff678687")
-		)
-		(fp_line
-			(start -1.61 -0.85)
-			(end 1.05 -0.85)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "f58fbe32-a408-45a0-9f59-9b95ac035c06")
-		)
-		(fp_line
-			(start -1.61 0.85)
-			(end 1.05 0.85)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "98a7184a-5733-4b45-bdba-a9eee66bd6cf")
-		)
-		(fp_line
-			(start -1.6 -0.95)
-			(end -1.6 0.95)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "e34cd40e-efe0-4cf0-bfea-7c4c1f7332c6")
-		)
-		(fp_line
-			(start -1.6 -0.95)
-			(end 1.6 -0.95)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "fe8e3fbe-cfb9-4fbb-9a15-1f74d0647317")
-		)
-		(fp_line
-			(start -1.6 0.95)
-			(end 1.6 0.95)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "a9361cf3-6906-4e31-845a-77b3eb054d21")
-		)
-		(fp_line
-			(start 1.6 -0.95)
-			(end 1.6 0.95)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "4336ecc4-010e-49d6-a92b-1d944f7d6733")
-		)
-		(fp_line
-			(start -0.9 -0.7)
-			(end 0.9 -0.7)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "e815a5ee-a571-4045-82f2-c6aaac0a577a")
-		)
-		(fp_line
-			(start -0.9 0.7)
-			(end -0.9 -0.7)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "63d9be47-f21f-48d8-8ce5-21c700e075a5")
-		)
-		(fp_line
-			(start -0.3 -0.35)
-			(end -0.3 0.35)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "e262ce6b-0497-4937-95b7-66af6dfa9e30")
-		)
-		(fp_line
-			(start -0.3 0)
-			(end -0.5 0)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "65a9cb90-bd01-4b12-af88-ae614cbbf170")
-		)
-		(fp_line
-			(start -0.3 0)
-			(end 0.2 -0.35)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "ef396c21-bb67-45f1-ac5e-360ec2b125f0")
-		)
-		(fp_line
-			(start 0.2 -0.35)
-			(end 0.2 0.35)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "6f758639-7908-41c8-998e-31fb1de1f82c")
-		)
-		(fp_line
-			(start 0.2 0)
-			(end 0.45 0)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "b0e387f0-0fd5-46e0-810e-5c6c5cb447eb")
-		)
-		(fp_line
-			(start 0.2 0.35)
-			(end -0.3 0)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "20318b85-5de7-4485-b352-9ac5e3636a2b")
-		)
-		(fp_line
-			(start 0.9 -0.7)
-			(end 0.9 0.7)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "b1eef3fd-c03a-4a03-96b7-ca274b5cef34")
-		)
-		(fp_line
-			(start 0.9 0.7)
-			(end -0.9 0.7)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "634a32b5-ad0b-485f-b20e-32409dc43f8d")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 -1.85 0)
-			(layer "F.Fab")
-			(uuid "3db7acec-8f4f-405c-8c3d-8614c45b4b43")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "1" smd roundrect
-			(at -1.05 0)
-			(size 0.6 0.45)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "+12V_PROTECTED")
-			(uuid "b75646a6-2152-47ab-91da-af9be6a01780")
-		)
-		(pad "2" smd roundrect
-			(at 1.05 0)
-			(size 0.6 0.45)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "/InputPower/Q901_GATE")
-			(uuid "1c21561f-4d2f-4507-a801-e14f49cbccc6")
-		)
-		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-323.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -10067,7 +9840,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 4.72) (xy 0.44 5.33) (xy -0.44 5.33)
+				(xy 0 4.72)
+				(xy 0.44 5.33)
+				(xy -0.44 5.33)
 			)
 			(stroke
 				(width 0.12)
@@ -10250,6 +10025,8 @@
 			(roundrect_rratio 0.096154)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "f0da8f3e-07f4-44af-8f68-7fc35bd36ef9")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole circle
 			(at 5.08 0)
@@ -10259,6 +10036,8 @@
 			(remove_unused_layers no)
 			(net "/LEDDrivers/LED1_RETURN")
 			(uuid "bb85f334-c000-4783-a8f9-086b0c0a9c41")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
@@ -10398,6 +10177,7 @@
 			(roundrect_rratio 0.25)
 			(net "I2C_SCL")
 			(uuid "b863c938-4d91-478e-a876-4f7d0e5bd72e")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -10406,6 +10186,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SHT_SCL_EXT")
 			(uuid "22633ab8-9522-4978-8f23-0462492caa99")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -10545,6 +10326,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/UART_TX0")
 			(uuid "de48b7d3-2714-4e4f-b056-d37839e02ea1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -10553,6 +10335,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/PROG_TX_FROM_ESP")
 			(uuid "6277d9c6-2ac9-4709-ad13-a5d1258330e4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -10704,7 +10487,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.3 -0.38) (xy -1.06 -0.05) (xy -1.54 -0.05)
+				(xy -1.3 -0.38)
+				(xy -1.06 -0.05)
+				(xy -1.54 -0.05)
 			)
 			(stroke
 				(width 0.12)
@@ -10876,7 +10661,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.325 -1.45) (xy 0.65 -1.45) (xy 0.65 1.45) (xy -0.65 1.45) (xy -0.65 -1.125)
+				(xy -0.325 -1.45)
+				(xy 0.65 -1.45)
+				(xy 0.65 1.45)
+				(xy -0.65 1.45)
+				(xy -0.65 -1.125)
 			)
 			(stroke
 				(width 0.1)
@@ -10904,6 +10693,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_GATE")
 			(uuid "c8e36db5-10b1-4d9b-a975-ca6e21fea5dd")
+			(pinfunction "G_1")
+			(pintype "input")
 		)
 		(pad "2" smd roundrect
 			(at -0.9375 0.95)
@@ -10912,6 +10703,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "c004bd1a-14af-44d5-8177-1fc9d7a74a97")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.9375 0)
@@ -10920,6 +10713,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_PWM_EXT")
 			(uuid "73c70f26-02b9-47d4-99fc-ca5b93be5acb")
+			(pinfunction "D_3")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
@@ -11034,7 +10829,10 @@
 		)
 		(fp_poly
 			(pts
-				(xy -9.2 -6) (xy -9.7 -6) (xy -9.2 -6.5) (xy -9.2 -6)
+				(xy -9.2 -6)
+				(xy -9.7 -6)
+				(xy -9.2 -6.5)
+				(xy -9.2 -6)
 			)
 			(stroke
 				(width 0.12)
@@ -11046,8 +10844,14 @@
 		)
 		(fp_poly
 			(pts
-				(xy -24.25 -28) (xy 24.25 -28) (xy 24.25 -6.31) (xy 9.75 -6.31) (xy 9.75 13.54) (xy -9.75 13.54)
-				(xy -9.75 -6.31) (xy -24.25 -6.31)
+				(xy -24.25 -28)
+				(xy 24.25 -28)
+				(xy 24.25 -6.31)
+				(xy 9.75 -6.31)
+				(xy 9.75 13.54)
+				(xy -9.75 13.54)
+				(xy -9.75 -6.31)
+				(xy -24.25 -6.31)
 			)
 			(stroke
 				(width 0.05)
@@ -11100,11 +10904,34 @@
 		)
 		(fp_poly
 			(pts
-				(xy -5 -9.75) (xy -3 -9.75) (xy -3 -12.25) (xy 0 -12.25) (xy 0 -9.75) (xy 2 -9.75) (xy 2 -12.25)
-				(xy 7.5 -12.25) (xy 7.5 -6.75) (xy 7 -6.75) (xy 7 -11.75) (xy 5 -11.75) (xy 5 -6.75) (xy 4.5 -6.75)
-				(xy 4.5 -11.75) (xy 2.5 -11.75) (xy 2.5 -9.25) (xy -0.5 -9.25) (xy -0.5 -11.75) (xy -2.5 -11.75)
-				(xy -2.5 -9.25) (xy -5.5 -9.25) (xy -5.5 -11.75) (xy -7.5 -11.75) (xy -7.5 -8.25) (xy -8 -8.25)
-				(xy -8 -12.25) (xy -5 -12.25)
+				(xy -5 -9.75)
+				(xy -3 -9.75)
+				(xy -3 -12.25)
+				(xy 0 -12.25)
+				(xy 0 -9.75)
+				(xy 2 -9.75)
+				(xy 2 -12.25)
+				(xy 7.5 -12.25)
+				(xy 7.5 -6.75)
+				(xy 7 -6.75)
+				(xy 7 -11.75)
+				(xy 5 -11.75)
+				(xy 5 -6.75)
+				(xy 4.5 -6.75)
+				(xy 4.5 -11.75)
+				(xy 2.5 -11.75)
+				(xy 2.5 -9.25)
+				(xy -0.5 -9.25)
+				(xy -0.5 -11.75)
+				(xy -2.5 -11.75)
+				(xy -2.5 -9.25)
+				(xy -5.5 -9.25)
+				(xy -5.5 -11.75)
+				(xy -7.5 -11.75)
+				(xy -7.5 -8.25)
+				(xy -8 -8.25)
+				(xy -8 -12.25)
+				(xy -5 -12.25)
 			)
 			(stroke
 				(width 0.1)
@@ -11131,6 +10958,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "7c34b510-d744-4ae4-9f23-40dcec79bdb6")
+			(pinfunction "GND_1")
+			(pintype "power_in")
 		)
 		(pad "2" smd rect
 			(at -8.75 -3.99)
@@ -11138,6 +10967,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "+3V3")
 			(uuid "4c2cbd53-6164-4a6b-b6c2-4dccba2a978c")
+			(pinfunction "VDD_2")
+			(pintype "power_in")
 		)
 		(pad "3" smd rect
 			(at -8.75 -2.72)
@@ -11145,6 +10976,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "bac5a818-6277-496f-b3a8-d731f396d0fa")
+			(pinfunction "EN_3")
+			(pintype "input")
 		)
 		(pad "4" smd rect
 			(at -8.75 -1.45)
@@ -11152,6 +10985,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-SENSOR_VP-Pad4)")
 			(uuid "5f82093c-afff-4830-887c-aa99b9134779")
+			(pinfunction "SENSOR_VP_4")
+			(pintype "input+no_connect")
 		)
 		(pad "5" smd rect
 			(at -8.75 -0.18)
@@ -11159,6 +10994,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-SENSOR_VN-Pad5)")
 			(uuid "bd080ba3-9c33-429d-9728-6ec2b5175279")
+			(pinfunction "SENSOR_VN_5")
+			(pintype "input+no_connect")
 		)
 		(pad "6" smd rect
 			(at -8.75 1.09)
@@ -11166,6 +11003,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "FAN1_TACH")
 			(uuid "b68b5b4c-6612-4e6f-a027-084ef17d36bb")
+			(pinfunction "IO34_6")
+			(pintype "input")
 		)
 		(pad "7" smd rect
 			(at -8.75 2.36)
@@ -11173,6 +11012,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "FAN2_TACH")
 			(uuid "d6261fbe-381c-44c2-9a0d-9732e068c3e2")
+			(pinfunction "IO35_7")
+			(pintype "input")
 		)
 		(pad "8" smd rect
 			(at -8.75 3.63)
@@ -11180,6 +11021,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "LIGHT_PWM")
 			(uuid "0e5d8d1b-fc08-4190-95bd-ebc55bc296e2")
+			(pinfunction "IO32_8")
+			(pintype "bidirectional")
 		)
 		(pad "9" smd rect
 			(at -8.75 4.9)
@@ -11187,6 +11030,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "WATER_LEVEL")
 			(uuid "350ce9ca-3a39-4050-9615-35738d00850e")
+			(pinfunction "IO33_9")
+			(pintype "bidirectional")
 		)
 		(pad "10" smd rect
 			(at -8.75 6.17)
@@ -11194,6 +11039,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "FAN1_PWM")
 			(uuid "2d8c61f1-79a4-44a5-9f18-817a993ec8a7")
+			(pinfunction "IO25_10")
+			(pintype "bidirectional")
 		)
 		(pad "11" smd rect
 			(at -8.75 7.44)
@@ -11201,6 +11048,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "FAN2_PWM")
 			(uuid "5e948c5e-6aa7-4050-9132-c3fbf22ec81d")
+			(pinfunction "IO26_11")
+			(pintype "bidirectional")
 		)
 		(pad "12" smd rect
 			(at -8.75 8.71)
@@ -11208,6 +11057,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "PUMP_EN")
 			(uuid "2125d468-60ce-40f0-94e7-39298a928b14")
+			(pinfunction "IO27_12")
+			(pintype "bidirectional")
 		)
 		(pad "13" smd rect
 			(at -8.75 9.98)
@@ -11215,6 +11066,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "HEATER_EN")
 			(uuid "d642149a-601e-4e31-b6e1-4d748d3a9d82")
+			(pinfunction "IO14_13")
+			(pintype "bidirectional")
 		)
 		(pad "14" smd rect
 			(at -8.75 11.25)
@@ -11222,6 +11075,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/BOOT_VDD_SDIO")
 			(uuid "301d5bbb-a528-4880-87c5-9e4e22c75fde")
+			(pinfunction "IO12_14")
+			(pintype "bidirectional")
 		)
 		(pad "15" smd rect
 			(at -5.715 12.5 90)
@@ -11229,6 +11084,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "896a3287-12d4-4315-8e7c-65fd27476927")
+			(pinfunction "GND_15")
+			(pintype "power_in")
 		)
 		(pad "16" smd rect
 			(at -4.445 12.5 90)
@@ -11236,6 +11093,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "SD_CS")
 			(uuid "dbe1dddb-2c4f-4abf-9df5-c513541e19f4")
+			(pinfunction "IO13_16")
+			(pintype "bidirectional")
 		)
 		(pad "17" smd rect
 			(at -3.175 12.5 90)
@@ -11243,6 +11102,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad17)")
 			(uuid "ac643a33-72bb-4000-9b2c-db1ea18cc96b")
+			(pinfunction "NC_17")
+			(pintype "no_connect")
 		)
 		(pad "18" smd rect
 			(at -1.905 12.5 90)
@@ -11250,6 +11111,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad18)")
 			(uuid "78b611ac-d534-4e10-bbf8-ee090a4cf83c")
+			(pinfunction "NC_18")
+			(pintype "no_connect")
 		)
 		(pad "19" smd rect
 			(at -0.635 12.5 90)
@@ -11257,6 +11120,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad19)")
 			(uuid "842b00de-cb15-4784-a59c-c48fddb3607f")
+			(pinfunction "NC_19")
+			(pintype "no_connect")
 		)
 		(pad "20" smd rect
 			(at 0.635 12.5 90)
@@ -11264,6 +11129,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad20)")
 			(uuid "d6c643d7-60ef-439b-8d87-0376394bf59b")
+			(pinfunction "NC_20")
+			(pintype "no_connect")
 		)
 		(pad "21" smd rect
 			(at 1.905 12.5 90)
@@ -11271,6 +11138,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad21)")
 			(uuid "e8b9a51f-6b6a-4902-9bc4-9df2639eceba")
+			(pinfunction "NC_21")
+			(pintype "no_connect")
 		)
 		(pad "22" smd rect
 			(at 3.175 12.5 90)
@@ -11278,6 +11147,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad22)")
 			(uuid "d45a4a65-6c8a-4ffa-9b3d-a0768f8ab384")
+			(pinfunction "NC_22")
+			(pintype "no_connect")
 		)
 		(pad "23" smd rect
 			(at 4.445 12.5 90)
@@ -11285,6 +11156,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-IO15-Pad23)")
 			(uuid "d4f7a75f-ee9e-4f56-8ffe-8658da0823c0")
+			(pinfunction "IO15_23")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "24" smd rect
 			(at 5.715 12.5 90)
@@ -11292,6 +11165,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-IO2-Pad24)")
 			(uuid "da1d6ba7-5780-4ddc-a15e-13f7ade7832e")
+			(pinfunction "IO2_24")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "25" smd rect
 			(at 8.75 11.25)
@@ -11299,6 +11174,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_IO0")
 			(uuid "f826276d-7972-4ac2-b7f0-c318977e4cad")
+			(pinfunction "IO0_25")
+			(pintype "bidirectional")
 		)
 		(pad "26" smd rect
 			(at 8.75 9.98)
@@ -11306,6 +11183,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-IO4-Pad26)")
 			(uuid "ae92f7e0-37c9-4c7b-98c8-f710fb7c27d7")
+			(pinfunction "IO4_26")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "27" smd rect
 			(at 8.75 8.71)
@@ -11313,6 +11192,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "LIGHT_ENABLE")
 			(uuid "44ed5c82-e40a-4522-a5f4-a645fc6b44ee")
+			(pinfunction "IO16_27")
+			(pintype "bidirectional")
 		)
 		(pad "28" smd rect
 			(at 8.75 7.44)
@@ -11320,6 +11201,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-IO17-Pad28)")
 			(uuid "5ed32227-0088-47d6-abbb-34c447e09a2a")
+			(pinfunction "IO17_28")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "29" smd rect
 			(at 8.75 6.17)
@@ -11327,6 +11210,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-IO5-Pad29)")
 			(uuid "c6032110-1135-46e2-b362-34616cae3d87")
+			(pinfunction "IO5_29")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "30" smd rect
 			(at 8.75 4.9)
@@ -11334,6 +11219,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "SD_SCK")
 			(uuid "36aca69f-a17f-4fb5-a3dd-b87c07b8cc0a")
+			(pinfunction "IO18_30")
+			(pintype "bidirectional")
 		)
 		(pad "31" smd rect
 			(at 8.75 3.63)
@@ -11341,6 +11228,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "SD_MISO")
 			(uuid "1d6136e6-4009-4492-b147-18a1dd59cf38")
+			(pinfunction "IO19_31")
+			(pintype "bidirectional")
 		)
 		(pad "32" smd rect
 			(at 8.75 2.36)
@@ -11348,6 +11237,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(U201-NC-Pad32)")
 			(uuid "61124b33-95f3-49c2-8a27-5de534e6344b")
+			(pinfunction "NC_32")
+			(pintype "no_connect")
 		)
 		(pad "33" smd rect
 			(at 8.75 1.09)
@@ -11355,6 +11246,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "I2C_SDA")
 			(uuid "95f29155-3b5b-49b1-a29b-148a9219f743")
+			(pinfunction "IO21_33")
+			(pintype "bidirectional")
 		)
 		(pad "34" smd rect
 			(at 8.75 -0.18)
@@ -11362,6 +11255,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/UART_RX0")
 			(uuid "8a6d292b-a1ab-47fc-be8b-ed2ddd49bf5e")
+			(pinfunction "RXD0/IO3_34")
+			(pintype "bidirectional")
 		)
 		(pad "35" smd rect
 			(at 8.75 -1.45)
@@ -11369,6 +11264,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/UART_TX0")
 			(uuid "fb02839d-8ed0-4b1e-84ea-5e7f0a6098cc")
+			(pinfunction "TXD0/IO1_35")
+			(pintype "bidirectional")
 		)
 		(pad "36" smd rect
 			(at 8.75 -2.72)
@@ -11376,6 +11273,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "I2C_SCL")
 			(uuid "164afb85-ff09-4e0c-8c85-06afbd35af22")
+			(pinfunction "IO22_36")
+			(pintype "bidirectional")
 		)
 		(pad "37" smd rect
 			(at 8.75 -3.99)
@@ -11383,6 +11282,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "SD_MOSI")
 			(uuid "89d7a500-14cc-41e3-82ef-5ebc91577234")
+			(pinfunction "IO23_37")
+			(pintype "bidirectional")
 		)
 		(pad "38" smd rect
 			(at 8.75 -5.26)
@@ -11390,6 +11291,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "d43bcc33-854c-4e51-83d4-3ac96482af20")
+			(pinfunction "GND_38")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -2.9 1.06)
@@ -11399,6 +11302,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "25be4c96-f27c-4d32-ac81-e4ba805aa3ca")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -2.9 1.76)
@@ -11410,6 +11315,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "57423d4a-037a-41d5-9aba-087930b9fad0")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -2.9 2.46)
@@ -11419,6 +11326,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "f0c9fe5f-0c74-4bf5-847f-8074fba7f54a")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -2.9 3.16)
@@ -11430,6 +11339,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "bc0b0a22-ce1f-4afe-b5c6-9808553ad58c")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -2.9 3.86)
@@ -11439,6 +11350,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "d1f6b09e-833c-4233-b878-9e51ec56aa22")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -2.2 1.06)
@@ -11450,6 +11363,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "10682a91-2ad1-49a0-844b-36dd5cce2e86")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -2.2 2.46)
@@ -11461,6 +11376,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "60c78677-62f3-41bb-89af-b079e2cf1fb4")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -2.2 3.86)
@@ -11472,6 +11389,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "8386178b-5b9b-4a40-a084-e821345e45d8")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -1.5 1.06)
@@ -11481,6 +11400,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "dfdaab0a-833f-48bd-8778-1d4a1d7d0155")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -1.5 1.76)
@@ -11492,6 +11413,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "ef029325-c16d-4463-be13-818c381b2138")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -1.5 2.46)
@@ -11501,6 +11424,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "958a8159-81de-49c1-a314-4c88ad10afe4")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -1.5 3.16)
@@ -11512,6 +11437,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "ef51e0ea-8744-4c07-ad2f-5c09e2bc9434")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -1.5 3.86)
@@ -11521,6 +11448,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "03fba6b1-8113-4291-91b4-48c806bd4cbc")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -0.8 1.06)
@@ -11532,6 +11461,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "5219b38e-b147-4184-ba16-395614a9c9ce")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -0.8 2.46)
@@ -11543,6 +11474,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "c75ec0fa-dc71-4e20-b3a3-3d33ba16f8df")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -0.8 3.86)
@@ -11554,6 +11487,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "3369ccb6-4ecb-44cb-8dcb-f054ac5c24c4")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -0.1 1.06)
@@ -11563,6 +11498,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "34ec6117-41bf-4258-80b5-9add6fb36e68")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -0.1 1.76)
@@ -11574,6 +11511,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "60353633-852a-4286-aa51-87394eabdac6")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -0.1 2.46)
@@ -11583,6 +11522,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "a31ea188-c98d-4e3b-8ed8-772e39cae6d0")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" thru_hole circle
 			(at -0.1 3.16)
@@ -11594,6 +11535,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "10f78c5d-729f-4d36-acbf-5a849ebc6369")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(pad "39" smd rect
 			(at -0.1 3.86)
@@ -11603,6 +11546,8 @@
 			(net "GND")
 			(zone_connect 2)
 			(uuid "52752a2e-75d9-4a90-8a3c-fd0aca54e25b")
+			(pinfunction "GND_39")
+			(pintype "power_in")
 		)
 		(zone
 			(layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
@@ -11630,159 +11575,15 @@
 			)
 			(polygon
 				(pts
-					(xy 571 172.25) (xy 619 172.25) (xy 619 193.44) (xy 571 193.44)
+					(xy 571 172.25)
+					(xy 619 172.25)
+					(xy 619 193.44)
+					(xy 571 193.44)
 				)
 			)
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/RF_Module.3dshapes/ESP32-WROOM-32E.step"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
-		(layer "F.Cu")
-		(uuid "4e723826-d4d5-4617-ad11-592c09447135")
-		(at 915 650)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
-		(tags "resistor")
-		(property "Reference" "R901"
-			(at 0 -1.43 0)
-			(layer "F.SilkS")
-			(uuid "cd83cd08-f3c1-4047-a326-ff90004a4302")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "1M / gate-source"
-			(at 0 1.43 0)
-			(layer "F.Fab")
-			(uuid "f1653bf3-42af-4d18-9969-e90a2e1eb290")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7e75f252-a296-4b88-be15-4fe3af309074")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5183c2ee-427c-41ac-aa38-339bc2f5bba1")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "50108d2a-ca90-4909-bdce-3375d66705fc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/cda471e6-e950-4539-a52b-8439c133a324")
-		(attr smd)
-		(duplicate_pad_numbers_are_jumpers no)
-		(fp_line
-			(start -0.237258 -0.5225)
-			(end 0.237258 -0.5225)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "d1a8b02a-fbef-4ca1-93d7-00bb6209e576")
-		)
-		(fp_line
-			(start -0.237258 0.5225)
-			(end 0.237258 0.5225)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "f21bc868-5aa1-4c85-9145-988409dbb653")
-		)
-		(fp_rect
-			(start -1.48 -0.73)
-			(end 1.48 0.73)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.CrtYd")
-			(uuid "42feb9b9-f3e6-4465-8cce-2efb6498df4d")
-		)
-		(fp_rect
-			(start -0.8 -0.4125)
-			(end 0.8 0.4125)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "0572f075-b4ce-4347-8340-fc662f3eb135")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "0c30a8ff-e1c6-4e03-b105-ae0f0aa58ab9")
-			(effects
-				(font
-					(size 0.4 0.4)
-					(thickness 0.06)
-				)
-			)
-		)
-		(pad "1" smd roundrect
-			(at -0.825 0)
-			(size 0.8 0.95)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "+12V_PROTECTED")
-			(uuid "433bbae4-5a0c-4b0d-8ac4-0b97f6e54772")
-		)
-		(pad "2" smd roundrect
-			(at 0.825 0)
-			(size 0.8 0.95)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "/InputPower/Q901_GATE")
-			(uuid "2f8d8875-2e60-47aa-b7a9-108b3787e70a")
-		)
-		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -11919,6 +11720,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "b37a8b3d-5dcd-4e20-9bfb-21be17b50e28")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -11927,6 +11729,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "066d9ca0-b228-4f40-af22-22383420714a")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -12066,6 +11869,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_PWM")
 			(uuid "475d63c0-ae5c-4441-ae8d-75d705845ab9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -12074,6 +11878,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "72013397-03df-4883-be52-8dac43513a21")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -12213,6 +12018,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_CS")
 			(uuid "7cd16ee5-2889-45d7-b58a-194ee259bbfe")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -12221,6 +12027,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "d99adc60-d298-47ce-a016-058eab6d4f0d")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -12360,6 +12167,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_DRV")
 			(uuid "68d55fee-f6b5-41e7-b9dc-e3a974e750fb")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -12368,6 +12176,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_GATE")
 			(uuid "9750e720-cd07-4c97-8d53-6955f140477c")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -12478,6 +12287,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "+12V_PROTECTED")
 			(uuid "031572c0-2728-468c-91c3-4a153e67a56b")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -12498,7 +12309,7 @@
 				)
 			)
 		)
-		(property "Value" "10 A LED branch / verify"
+		(property "Value" "10 A LED / verify"
 			(at 0 3.68 0)
 			(layer "F.Fab")
 			(uuid "f1d7a158-9f43-4fcd-8eb7-30e1dd9c3f64")
@@ -12606,6 +12417,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_PROTECTED")
 			(uuid "481df149-d02c-480b-83db-0d6ab1745279")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 3.3875 0)
@@ -12614,6 +12426,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_LED")
 			(uuid "f78eb9fb-0968-4772-b798-3acf445714fc")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Fuse.3dshapes/Fuse_2920_7451Metric.step"
@@ -12753,6 +12566,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_PROTECTED")
 			(uuid "870366f9-546a-4505-bc13-59579b6a28c9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -12761,6 +12575,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "64afc0c3-aee2-43b1-a90c-f5d8c75efeb7")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -12900,6 +12715,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_GATE")
 			(uuid "9c78347b-0622-47cc-9005-d43ef13d4e0e")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -12908,6 +12724,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_SOURCE")
 			(uuid "957214fe-da0c-4f55-b1e7-023283f4f973")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -13047,6 +12864,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "f26ffbd3-267f-469c-9c67-1e00f53fd2b9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -13055,6 +12873,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "282233a5-674c-4c20-a0b7-5fef25ee4eb4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -13238,6 +13057,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_COMP")
 			(uuid "3b001b45-abe6-4175-a27f-8305cea41b3d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -13246,6 +13066,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "62bb2a71-ac13-4ffe-99b5-82ddc9e492eb")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -13356,6 +13177,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "+12V_LED")
 			(uuid "ae377f97-0e9c-4ff9-8e99-68f4fe6923b9")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -13376,7 +13199,7 @@
 				)
 			)
 		)
-		(property "Value" "SMBJ18A-E3/52"
+		(property "Value" "SMBJ14CA-E3/52"
 			(at 0 3.1 0)
 			(layer "F.Fab")
 			(uuid "9224ce94-c1b1-4f64-a4af-18f9b6de90f0")
@@ -13387,7 +13210,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/88392/smbj.pdf"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -13602,8 +13425,10 @@
 			(size 2.5 2.3)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.1086956522)
-			(net "+12V_PROTECTED")
+			(net "+12V_FUSED")
 			(uuid "de3f40f9-0f7b-44a7-89f6-9b24bc3a9130")
+			(pinfunction "A1_1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.15 0)
@@ -13612,6 +13437,8 @@
 			(roundrect_rratio 0.1086956522)
 			(net "GND")
 			(uuid "413e7749-d423-4015-9713-c3d4e6d8bfd0")
+			(pinfunction "A2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMB.step"
@@ -13623,6 +13450,58 @@
 			)
 			(rotate
 				(xyz 0 0 0)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMB"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "08a2d016-3edb-4741-a0d0-6edd3b974a74")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "08a2d016-3edb-4741-a0d0-6edd3b974a74")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "SMBJ14CA-E3/52"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "08a2d016-3edb-4741-a0d0-6edd3b974a74")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "08a2d016-3edb-4741-a0d0-6edd3b974a74")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
 			)
 		)
 	)
@@ -13743,7 +13622,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 5.47) (xy 0.44 6.08) (xy -0.44 6.08)
+				(xy 0 5.47)
+				(xy 0.44 6.08)
+				(xy -0.44 6.08)
 			)
 			(stroke
 				(width 0.12)
@@ -13833,6 +13714,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "0b214d7a-0241-4e14-8717-3f165185e3a5")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "1" thru_hole roundrect
 			(at 0 0)
@@ -13843,6 +13726,8 @@
 			(roundrect_rratio 0.166667)
 			(net "GND")
 			(uuid "3eb08925-d26d-4da3-ac82-2eb2afe67580")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 -5)
@@ -13852,6 +13737,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "33593af9-5db9-4f6f-a3e2-bec0736ea110")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 0)
@@ -13861,6 +13748,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "cfe8dc8f-52de-4686-ab3e-17e56e42fe39")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole oval
 			(at 7 -5)
@@ -13870,6 +13759,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN1_TACH_EXT")
 			(uuid "ace13fe7-6206-40ab-b26f-eb306643a500")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole oval
 			(at 7 0)
@@ -13879,6 +13770,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN1_TACH_EXT")
 			(uuid "59009d70-66e3-4f34-82ee-87b5240f5afa")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole oval
 			(at 10.5 -5)
@@ -13888,6 +13781,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN1_PWM_EXT")
 			(uuid "22e15d93-0f7b-4abb-b087-284d8c9adada")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole oval
 			(at 10.5 0)
@@ -13897,6 +13792,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN1_PWM_EXT")
 			(uuid "869e4c6e-114e-4a79-8294-062d3565fdda")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_WAGO.3dshapes/TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal.step"
@@ -14036,6 +13933,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_GATE")
 			(uuid "ccbd0cb0-f450-4a38-93c2-1d5c068788d6")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -14044,6 +13942,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_SOURCE")
 			(uuid "8ce93cf0-7dd8-4ca1-b491-5c618d49ce0e")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -14183,6 +14082,7 @@
 			(roundrect_rratio 0.204082)
 			(net "/LEDDrivers/LED3_SOURCE")
 			(uuid "0aba2922-9698-4db4-9217-90a8c7af5e44")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.9625 0)
@@ -14191,6 +14091,7 @@
 			(roundrect_rratio 0.204082)
 			(net "GND")
 			(uuid "ba5e1b02-2948-4792-9c2c-9703837c396b")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_2512_6332Metric.step"
@@ -14330,6 +14231,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED2_OUT")
 			(uuid "b5227056-cd1b-478a-8ec3-ff7e28f19821")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -14338,6 +14240,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "792c0aef-e0bf-4de7-b4ee-c1de09eb1f6b")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -14533,7 +14436,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.3 -0.38) (xy -1.06 -0.05) (xy -1.54 -0.05)
+				(xy -1.3 -0.38)
+				(xy -1.06 -0.05)
+				(xy -1.54 -0.05)
 			)
 			(stroke
 				(width 0.12)
@@ -14705,7 +14610,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.325 -1.45) (xy 0.65 -1.45) (xy 0.65 1.45) (xy -0.65 1.45) (xy -0.65 -1.125)
+				(xy -0.325 -1.45)
+				(xy 0.65 -1.45)
+				(xy 0.65 1.45)
+				(xy -0.65 1.45)
+				(xy -0.65 -1.125)
 			)
 			(stroke
 				(width 0.1)
@@ -14733,6 +14642,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/PUMP_GATE")
 			(uuid "c9199784-f864-4c33-8fbf-ffdf83e968f3")
+			(pinfunction "G_1")
+			(pintype "input")
 		)
 		(pad "2" smd roundrect
 			(at -0.9375 0.95)
@@ -14741,6 +14652,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "540e3d93-97cf-454a-bdb4-131c46aad3e7")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.9375 0)
@@ -14749,6 +14662,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/PUMP_DRAIN")
 			(uuid "49f5ca5c-91a5-4f98-bb10-643c60ceb10c")
+			(pinfunction "D_3")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
@@ -14888,6 +14803,7 @@
 			(roundrect_rratio 0.25)
 			(net "SD_MOSI")
 			(uuid "8248c68b-01fa-4da7-9102-732ac4fac954")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -14896,6 +14812,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MOSI_CARD")
 			(uuid "fb053066-8cd7-49f4-814b-a525be5b536f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -15035,6 +14952,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_OUT")
 			(uuid "7daf7a7c-f860-4d34-9131-91e873a89731")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -15043,6 +14961,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_OVP")
 			(uuid "dec79e36-78e9-48c0-bebd-97a753ce5205")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -15204,7 +15123,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 4.72) (xy 0.44 5.33) (xy -0.44 5.33)
+				(xy 0 4.72)
+				(xy 0.44 5.33)
+				(xy -0.44 5.33)
 			)
 			(stroke
 				(width 0.12)
@@ -15387,6 +15308,8 @@
 			(roundrect_rratio 0.096154)
 			(net "+12V_IN")
 			(uuid "22596c89-e612-4565-8923-422d50da99a9")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole circle
 			(at 5.08 0)
@@ -15396,6 +15319,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "5bd10652-21e7-4a6f-9a28-7f673d2054ef")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
@@ -15535,6 +15460,7 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "c193e78c-511e-43aa-a8b2-895cdd727e7d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -15543,6 +15469,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "d8084278-a64e-43b0-9095-c8f4f6410486")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -15927,6 +15854,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_DAT2")
 			(uuid "2146d90e-f83a-4c75-80ef-4df193f1d877")
+			(pinfunction "DAT2_1")
+			(pintype "bidirectional")
 		)
 		(pad "2" smd rect
 			(at -2.005 -5.45)
@@ -15934,6 +15863,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_CS_CARD")
 			(uuid "0a414be8-838a-43bc-a0fd-1593622a52a1")
+			(pinfunction "DAT3/CD_2")
+			(pintype "bidirectional")
 		)
 		(pad "3" smd rect
 			(at -0.905 -5.45)
@@ -15941,6 +15872,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_MOSI_CARD")
 			(uuid "aa573472-f227-4894-a2c8-1a9d2720ffbd")
+			(pinfunction "CMD_3")
+			(pintype "input")
 		)
 		(pad "4" smd rect
 			(at 0.195 -5.45)
@@ -15948,6 +15881,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "d72162a6-09ec-482f-a78b-9b4827ea95b1")
+			(pinfunction "VDD_4")
+			(pintype "power_in")
 		)
 		(pad "5" smd rect
 			(at 1.295 -5.45)
@@ -15955,6 +15890,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_SCK_CARD")
 			(uuid "b4b40d34-883f-4e30-af2b-6f6a722947e4")
+			(pinfunction "CLK_5")
+			(pintype "input")
 		)
 		(pad "6" smd rect
 			(at 2.395 -5.45)
@@ -15962,6 +15899,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "d4e9a691-d539-497a-afc9-a797551d35b9")
+			(pinfunction "VSS_6")
+			(pintype "power_in")
 		)
 		(pad "7" smd rect
 			(at 3.495 -5.45)
@@ -15969,6 +15908,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_MISO_CARD")
 			(uuid "4c7f7cea-8091-4731-ab3a-343276600d13")
+			(pinfunction "DAT0_7")
+			(pintype "bidirectional")
 		)
 		(pad "8" smd rect
 			(at 4.545 -5.45)
@@ -15976,6 +15917,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/Peripherals/SD_DAT1")
 			(uuid "d03a574c-d617-47eb-a853-c3022b76fddb")
+			(pinfunction "DAT1_8")
+			(pintype "bidirectional")
 		)
 		(pad "9" smd rect
 			(at -5.74 0.7)
@@ -15983,6 +15926,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(J401-DET_B-Pad9)")
 			(uuid "37e9bbe1-ad4b-4f91-8d69-d1c2020a165d")
+			(pinfunction "DET_B_9")
+			(pintype "passive+no_connect")
 		)
 		(pad "10" smd rect
 			(at -5.74 4.4)
@@ -15990,6 +15935,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "unconnected-(J401-DET_A-Pad10)")
 			(uuid "cf3347d3-8533-4c37-8313-48ab6bbd1bd6")
+			(pinfunction "DET_A_10")
+			(pintype "passive+no_connect")
 		)
 		(pad "SH" smd rect
 			(at -5.565 -5.325)
@@ -15997,6 +15944,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "40b44559-0083-4a0b-9a7c-bba3cbf8cc11")
+			(pinfunction "SHIELD_SH")
+			(pintype "passive")
 		)
 		(pad "SH" smd rect
 			(at -2.24 5.375)
@@ -16004,6 +15953,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "a750e109-3158-430f-98fa-5a040af57b5f")
+			(pinfunction "SHIELD_SH")
+			(pintype "passive")
 		)
 		(pad "SH" smd rect
 			(at 3.73 5.375)
@@ -16011,6 +15962,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "52976a15-b883-4d79-88fa-96ff13020454")
+			(pinfunction "SHIELD_SH")
+			(pintype "passive")
 		)
 		(pad "SH" smd rect
 			(at 5.755 -5.1)
@@ -16018,6 +15971,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "ae359ada-1dee-4588-9468-57b043b8a848")
+			(pinfunction "SHIELD_SH")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Connector_Card.3dshapes/microSD_HC_Molex_104031-0811.step"
@@ -16157,6 +16112,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_OUT")
 			(uuid "88668cc9-846c-46a0-a61b-e8dbcce7fa56")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -16165,6 +16121,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_OVP")
 			(uuid "f78f05ce-4da6-488c-a51a-26cf1cdc6acf")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -16304,6 +16261,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "980d403c-22b5-43a2-895d-10e430465171")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -16312,6 +16270,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "915520be-f665-4c73-a688-02c98838ff59")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -16497,7 +16456,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -2.6 -2.47) (xy -2.84 -2.8) (xy -2.36 -2.8)
+				(xy -2.6 -2.47)
+				(xy -2.84 -2.8)
+				(xy -2.36 -2.8)
 			)
 			(stroke
 				(width 0.12)
@@ -16629,7 +16590,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.975 -2.45) (xy 1.95 -2.45) (xy 1.95 2.45) (xy -1.95 2.45) (xy -1.95 -1.475)
+				(xy -0.975 -2.45)
+				(xy 1.95 -2.45)
+				(xy 1.95 2.45)
+				(xy -1.95 2.45)
+				(xy -1.95 -1.475)
 			)
 			(stroke
 				(width 0.1)
@@ -16657,6 +16622,8 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "5097f65d-8c91-4a51-81d2-ee9da9f69741")
+			(pinfunction "VIN_1")
+			(pintype "power_in")
 		)
 		(pad "2" smd roundrect
 			(at -2.475 -0.635)
@@ -16665,6 +16632,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_DRV")
 			(uuid "1b136291-adc1-4ee5-a4bb-2ac0cc15c04c")
+			(pinfunction "GATE_2")
+			(pintype "output")
 		)
 		(pad "3" smd roundrect
 			(at -2.475 0.635)
@@ -16673,6 +16642,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "df08098d-0e63-4b63-ab64-8e3b7d115070")
+			(pinfunction "GND_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at -2.475 1.905)
@@ -16681,6 +16652,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_CS")
 			(uuid "800b5a9b-80ff-4f9f-a8e7-396ac0411ea5")
+			(pinfunction "CS_4")
+			(pintype "input")
 		)
 		(pad "5" smd roundrect
 			(at 2.475 1.905)
@@ -16689,6 +16662,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_RETURN")
 			(uuid "29036740-c454-417c-a271-14e9607c5d7d")
+			(pinfunction "FB_5")
+			(pintype "input")
 		)
 		(pad "6" smd roundrect
 			(at 2.475 0.635)
@@ -16697,6 +16672,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_COMP")
 			(uuid "d9f73dc6-36fe-4977-b971-766b94d9c183")
+			(pinfunction "COMP_6")
+			(pintype "passive")
 		)
 		(pad "7" smd roundrect
 			(at 2.475 -0.635)
@@ -16705,6 +16682,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_OVP")
 			(uuid "894a4f19-bcc4-40b6-91fc-c82ab3cfd015")
+			(pinfunction "OVP_7")
+			(pintype "input")
 		)
 		(pad "8" smd roundrect
 			(at 2.475 -1.905)
@@ -16713,6 +16692,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED_DIM")
 			(uuid "6dd50ff6-b0f8-44cc-8735-366e6a9911e5")
+			(pinfunction "PWM_8")
+			(pintype "input")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step"
@@ -16852,6 +16833,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_COMP_RC")
 			(uuid "cf6aaf8d-ec68-48f1-9b21-401e19fa1d6d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -16860,6 +16842,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "4952e846-7be6-4743-b0a1-65d730a18f97")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -16999,6 +16982,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "13595f74-b88c-4174-abeb-90a4b3dd7d9b")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -17007,6 +16991,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_DAT1")
 			(uuid "0cc116c6-ce72-447e-9842-d1eb958a42fa")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -17100,7 +17085,10 @@
 		)
 		(fp_poly
 			(pts
-				(xy -3.575 -1.925) (xy -3.905 -2.165) (xy -3.905 -1.685) (xy -3.575 -1.925)
+				(xy -3.575 -1.925)
+				(xy -3.905 -2.165)
+				(xy -3.905 -1.685)
+				(xy -3.575 -1.925)
 			)
 			(stroke
 				(width 0.12)
@@ -17217,6 +17205,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "76339677-1442-4bca-96fa-e5710dbfaea3")
+			(pinfunction "S_1")
+			(pintype "passive")
 		)
 		(pad "2" smd rect
 			(at -2.67 -0.635)
@@ -17224,6 +17214,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "d8224ae5-2c3a-47f8-bac9-5e77ddcc359a")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "3" smd rect
 			(at -2.67 0.635)
@@ -17231,6 +17223,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "c793084a-b78c-4bdf-bcc0-fec19b7a45c7")
+			(pinfunction "S_3")
+			(pintype "passive")
 		)
 		(pad "4" smd rect
 			(at -2.67 1.905)
@@ -17238,6 +17232,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_GATE")
 			(uuid "929c15de-5ee2-4c7b-bacf-7476e81a236a")
+			(pinfunction "G_4")
+			(pintype "input")
 		)
 		(pad "5" smd rect
 			(at 0.69 0)
@@ -17245,6 +17241,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SW")
 			(uuid "fc5efddb-0ef9-453a-8804-398dcaaf5ca6")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd rect
 			(at 2.795 -1.905)
@@ -17252,6 +17250,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SW")
 			(uuid "1597be54-7027-419f-b729-b5ffb3cd173a")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd rect
 			(at 2.795 -0.635)
@@ -17259,6 +17259,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SW")
 			(uuid "e5910acd-a587-4d9f-abcc-950aaac25856")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd rect
 			(at 2.795 0.635)
@@ -17266,6 +17268,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SW")
 			(uuid "76fa843f-b4e8-43bb-9584-4d9e3a4ce8c2")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd rect
 			(at 2.795 1.905)
@@ -17273,6 +17277,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/LEDDrivers/LED1_SW")
 			(uuid "30c05c2f-d798-4ace-b4ff-02ce67914b66")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/PowerPAK_SO-8_Single.step"
@@ -17412,6 +17418,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_CS")
 			(uuid "ce1f1169-6b45-41d9-8fc3-dc87ed7e27d7")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -17420,6 +17427,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "8aed6178-868e-46af-879b-ed8633b31f2e")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -17559,6 +17567,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "10307c22-be4e-466d-b61e-356cfc35fad9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -17567,6 +17576,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "dd2a8d39-af0c-4420-bab5-b60571d0d505")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -17706,6 +17716,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_GATE")
 			(uuid "18baf5ab-423c-486a-84f2-10a1aa7a804a")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -17714,6 +17725,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "5e7a87db-f93f-4a04-acc7-a602c59a56e7")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -17853,6 +17865,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED_DIM")
 			(uuid "7844d441-9955-4f87-99f1-6e1abe886330")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -17861,6 +17874,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "00432344-f06e-453d-a05b-23c880df34fe")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -17992,7 +18006,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -18164,7 +18180,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -18192,6 +18212,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_CS_CARD")
 			(uuid "d72ee290-ea76-4d6a-b946-4a9958b9a8df")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -18200,6 +18221,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MISO_CARD")
 			(uuid "391ade72-cf65-43d7-871b-b3f99761cfb1")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -18208,6 +18230,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "f70b92c6-7a41-4d75-8f50-e0bd8f51fcf3")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -18347,6 +18370,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/PROG_RX_TO_ESP")
 			(uuid "6c04c8d8-5211-4aea-b333-7dfc06af56d5")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -18355,6 +18379,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/UART_RX0")
 			(uuid "155fa8e1-ce4b-49b7-b23a-f990cfdc046d")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -18494,6 +18519,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_OVP")
 			(uuid "b50a294d-0757-4bd6-a703-f6cc76ffc8f1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -18502,6 +18528,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "70e50039-ea93-4988-a96a-59d6efa968ad")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -19133,6 +19160,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_GATE")
 			(uuid "383d2490-a3d2-40be-9f73-719c0274bb2d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -19141,6 +19169,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "326376b9-5189-408e-85d0-2d4ef9bbdfe6")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -19280,6 +19309,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "a4f917b9-f897-4c18-a56e-5fbd808f23c8")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -19288,6 +19318,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN2_TACH")
 			(uuid "09203c56-9520-496c-9a18-44d3aa724366")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -19427,6 +19458,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "a46b82e3-9d8d-4eaa-a91a-5aeb00d467ba")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -19435,6 +19467,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/ESP_IO0")
 			(uuid "98cf12b7-eb03-4a9a-b2d8-baf3c565a65f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -19566,7 +19599,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 5.47) (xy 0.44 6.08) (xy -0.44 6.08)
+				(xy 0 5.47)
+				(xy 0.44 6.08)
+				(xy -0.44 6.08)
 			)
 			(stroke
 				(width 0.12)
@@ -19656,6 +19691,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/Peripherals/WATER_EXT")
 			(uuid "51f2438d-999d-40ed-a644-9ba9bfdc1d3b")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "1" thru_hole roundrect
 			(at 0 0)
@@ -19666,6 +19703,8 @@
 			(roundrect_rratio 0.166667)
 			(net "/MCU / ESP32/Peripherals/WATER_EXT")
 			(uuid "af2f6c7b-d2ee-4c1a-ae3f-d352a4928ddc")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 -5)
@@ -19675,6 +19714,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "236e8d03-a6e9-4ffc-9b1e-bd141d8cc41c")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 0)
@@ -19684,6 +19725,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "ecfda110-5666-4a02-a7d8-b19b97d845a1")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_WAGO.3dshapes/TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal.step"
@@ -19823,6 +19866,7 @@
 			(roundrect_rratio 0.25)
 			(net "WATER_LEVEL")
 			(uuid "c262461a-2ffc-4c19-9ffa-66a9504d1bff")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -19831,6 +19875,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/WATER_EXT")
 			(uuid "ab6fde5c-2c4c-4566-93dc-0bae9f05f1a1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -19970,6 +20015,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_PWM")
 			(uuid "dff20e91-d028-47ad-a6ed-9f78d4e981fa")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -19978,6 +20024,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "6bb26578-a9eb-4714-93b0-8fcb3cc9c890")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -20117,6 +20164,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "6a3cac29-2de6-48b1-9c19-8ae3bd801ac8")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -20125,6 +20173,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/VREF_3V3")
 			(uuid "56fafcd1-6058-49fb-a22d-60eb2e3fc127")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -20286,7 +20335,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 4.72) (xy 0.44 5.33) (xy -0.44 5.33)
+				(xy 0 4.72)
+				(xy 0.44 5.33)
+				(xy -0.44 5.33)
 			)
 			(stroke
 				(width 0.12)
@@ -20469,6 +20520,8 @@
 			(roundrect_rratio 0.096154)
 			(net "/LEDDrivers/LED2_OUT")
 			(uuid "f8d11ea4-a534-4c45-9f3a-f36437b845a8")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole circle
 			(at 5.08 0)
@@ -20478,6 +20531,8 @@
 			(remove_unused_layers no)
 			(net "/LEDDrivers/LED2_RETURN")
 			(uuid "1464d725-ec1a-42a0-a342-4d8a4fe462a0")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
@@ -20609,7 +20664,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -20781,7 +20838,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -20809,6 +20870,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_PWM_EXT")
 			(uuid "b547c171-f8bc-47ff-ba1b-b9186ba59880")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -20817,6 +20879,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN1_TACH_EXT")
 			(uuid "e79c813d-6b95-4122-b955-b14f78d8ff6b")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -20825,6 +20888,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "b2851014-a346-4f52-bc69-dec7490e8929")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -21051,6 +21115,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "unconnected-(U301-32kHz-Pad1)")
+			(pinfunction "32kHz_1")
+			(pintype "open_collector+no_connect")
 		)
 		(pad "2" smd roundrect
 			(at -2.475 -0.635)
@@ -21058,6 +21124,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "+3V3")
+			(pinfunction "VCC_2")
+			(pintype "power_in")
 		)
 		(pad "3" smd roundrect
 			(at -2.475 0.635)
@@ -21065,6 +21133,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "unconnected-(U301-~{INT}/SQW-Pad3)")
+			(pinfunction "~{INT}/SQW_3")
+			(pintype "open_collector+no_connect")
 		)
 		(pad "4" smd roundrect
 			(at -2.475 1.905)
@@ -21072,6 +21142,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "unconnected-(U301-~{RST}-Pad4)")
+			(pinfunction "~{RST}_4")
+			(pintype "bidirectional+no_connect")
 		)
 		(pad "5" smd roundrect
 			(at 2.475 1.905)
@@ -21079,6 +21151,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "GND")
+			(pinfunction "GND_5")
+			(pintype "power_in")
 		)
 		(pad "6" smd roundrect
 			(at 2.475 0.635)
@@ -21086,6 +21160,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/RTC_VBAT")
+			(pinfunction "VBAT_6")
+			(pintype "power_in")
 		)
 		(pad "7" smd roundrect
 			(at 2.475 -0.635)
@@ -21093,6 +21169,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "I2C_SDA")
+			(pinfunction "SDA_7")
+			(pintype "bidirectional")
 		)
 		(pad "8" smd roundrect
 			(at 2.475 -1.905)
@@ -21100,6 +21178,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
 			(net "I2C_SCL")
+			(pinfunction "SCL_8")
+			(pintype "input")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step"
@@ -21298,6 +21378,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_IN")
 			(uuid "f1b25323-761b-4b1a-b997-0c840a1be6c1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 3.3875 0)
@@ -21306,6 +21387,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_FUSED")
 			(uuid "a4c9325f-abea-4191-9d39-5c1ffb044744")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Fuse.3dshapes/Fuse_2920_7451Metric.step"
@@ -21445,6 +21527,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_COMP")
 			(uuid "74ea7cf0-0bed-4bef-92d1-dc6c3386a5f3")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -21453,6 +21536,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_COMP_RC")
 			(uuid "8954f1ee-b043-4a10-973a-ceac6ff2d2be")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -21592,6 +21676,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/Heater/HEATER_GATE")
 			(uuid "f7fec812-47b0-425e-8852-6cb3941380bf")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -21600,6 +21685,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "3a7dd6e5-6054-4cb9-bd9f-b8b343447c44")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -21631,7 +21717,7 @@
 				)
 			)
 		)
-		(property "Value" "20 A loads branch / verify"
+		(property "Value" "20 A loads / verify"
 			(at 0 3.68 0)
 			(layer "F.Fab")
 			(uuid "0fd76709-dac4-45fa-9081-072cf76c73e5")
@@ -21739,6 +21825,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_PROTECTED")
 			(uuid "037adf28-1c9d-41e0-9e78-ce51ca3bf4d5")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 3.3875 0)
@@ -21747,6 +21834,7 @@
 			(roundrect_rratio 0.12987)
 			(net "+12V_LOADS")
 			(uuid "8a19a3a7-04c3-4a94-bb4e-fb1743765317")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Fuse.3dshapes/Fuse_2920_7451Metric.step"
@@ -21886,6 +21974,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/PUMP_GATE")
 			(uuid "cf354020-7331-4b7d-ad56-789005aea21a")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -21894,6 +21983,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "ece2c5ce-105f-49ea-b5ac-b3666fea6c7c")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -22031,8 +22121,9 @@
 			(size 0.9 0.95)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
-			(net "+12V_LOADS")
+			(net "+5V_GATE")
 			(uuid "9a5d7d9c-af9d-4cb7-b127-9cebd558e38a")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -22041,6 +22132,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "1ca5ce75-93c1-4684-9d3f-a57311e11567")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -22180,6 +22272,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_ENABLE")
 			(uuid "2cee810d-a382-49c6-b897-21ab9ac6cb0c")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -22188,6 +22281,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "05c92c3f-01f0-4265-a9cc-59ff2ec49d7f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -22327,6 +22421,7 @@
 			(roundrect_rratio 0.243902)
 			(net "+3V3")
 			(uuid "83b3a27b-5917-4c20-a868-45cd42c7a0ff")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.9125 0)
@@ -22335,6 +22430,7 @@
 			(roundrect_rratio 0.243902)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "76d7b770-54ea-4713-862d-37d7f24935ff")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
@@ -22474,6 +22570,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "202b725e-e6d0-43c7-8325-d56ecf3a7c89")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -22482,6 +22579,7 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_FB")
 			(uuid "8eb7ad59-1584-4653-af58-34c46d64304e")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -22621,6 +22719,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_SOURCE")
 			(uuid "f08e65bf-ebfc-448d-81b2-e9e4149bb87f")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -22629,6 +22728,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_CS")
 			(uuid "a081e754-cbf7-4e5a-bbee-b382366aa9dc")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -22739,6 +22839,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "GND")
 			(uuid "44017ce4-05bc-43cb-aeff-a76b55226f2e")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -22867,6 +22969,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_DRV")
 			(uuid "a0b5fd11-3c76-4772-b328-62d463781469")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -22875,6 +22978,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_GATE")
 			(uuid "48fb7d83-deeb-4593-a07a-9c4fc75892af")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -22906,7 +23010,7 @@
 				)
 			)
 		)
-		(property "Value" "1u / 25 V"
+		(property "Value" "1u / 50V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(uuid "e1c9a2ce-326c-481c-83b0-df05c7167d1f")
@@ -23014,6 +23118,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_PROTECTED")
 			(uuid "ed992b23-e67f-40a4-b7fe-ffb3950d4b06")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -23022,6 +23127,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "c468a121-6b2e-4730-8d18-3293a3bdea16")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -23620,6 +23726,7 @@
 			(roundrect_rratio 0.204082)
 			(net "/LEDDrivers/LED2_SOURCE")
 			(uuid "8b2d20c9-d106-4f98-b3a0-b9c3c38a9f56")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.9625 0)
@@ -23628,6 +23735,7 @@
 			(roundrect_rratio 0.204082)
 			(net "GND")
 			(uuid "efb47855-ba58-42ff-8eb2-f8aee349e7a2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_2512_6332Metric.step"
@@ -23787,6 +23895,8 @@
 			(roundrect_rratio 0.130208)
 			(net "/BUCK_SW")
 			(uuid "70803fbd-af29-4065-b848-a5a537e9a973")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.41 0)
@@ -23795,6 +23905,8 @@
 			(roundrect_rratio 0.130208)
 			(net "+3V3")
 			(uuid "c0ac8768-1c1f-4a85-861e-f8078f7a8fe0")
+			(pinfunction "2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Inductor_SMD.3dshapes/L_Coilcraft_XAL7050-XXX.step"
@@ -23934,6 +24046,7 @@
 			(roundrect_rratio 0.25)
 			(net "PUMP_EN")
 			(uuid "22745c79-59d6-43d0-907f-db2187dc4fb6")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -23942,6 +24055,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "05d5e23c-1824-4ee0-9c5d-bba50966cdde")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -24081,6 +24195,7 @@
 			(roundrect_rratio 0.222222)
 			(net "/LEDDrivers/LED2_RETURN")
 			(uuid "40ae24a3-4ea8-4058-82de-5d3f5d668ba9")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.4625 0)
@@ -24089,6 +24204,7 @@
 			(roundrect_rratio 0.222222)
 			(net "GND")
 			(uuid "5621654e-2b63-447d-b892-ae7d0d2b6b7f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
@@ -24228,6 +24344,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "49a4532e-b120-446a-aade-662a3f691240")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -24236,6 +24353,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "4b44c021-bf82-4295-ae3a-6bc9ff5349ab")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -24377,7 +24495,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -2.6 -2.47) (xy -2.84 -2.8) (xy -2.36 -2.8)
+				(xy -2.6 -2.47)
+				(xy -2.84 -2.8)
+				(xy -2.36 -2.8)
 			)
 			(stroke
 				(width 0.12)
@@ -24509,7 +24629,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.975 -2.45) (xy 1.95 -2.45) (xy 1.95 2.45) (xy -1.95 2.45) (xy -1.95 -1.475)
+				(xy -0.975 -2.45)
+				(xy 1.95 -2.45)
+				(xy 1.95 2.45)
+				(xy -1.95 2.45)
+				(xy -1.95 -1.475)
 			)
 			(stroke
 				(width 0.1)
@@ -24537,6 +24661,8 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "1a79a1c9-1898-4cd8-8b0e-2ea81b0f3f53")
+			(pinfunction "VIN_1")
+			(pintype "power_in")
 		)
 		(pad "2" smd roundrect
 			(at -2.475 -0.635)
@@ -24545,6 +24671,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_DRV")
 			(uuid "f3367999-b1c8-466e-95f0-029e8895ddf3")
+			(pinfunction "GATE_2")
+			(pintype "output")
 		)
 		(pad "3" smd roundrect
 			(at -2.475 0.635)
@@ -24553,6 +24681,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "dd88027a-6ad6-4769-bb1b-4697380733bf")
+			(pinfunction "GND_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at -2.475 1.905)
@@ -24561,6 +24691,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_CS")
 			(uuid "4cb307d6-88c9-4c2d-8f12-be4d323f2499")
+			(pinfunction "CS_4")
+			(pintype "input")
 		)
 		(pad "5" smd roundrect
 			(at 2.475 1.905)
@@ -24569,6 +24701,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_RETURN")
 			(uuid "7f6a5d0b-ea35-4375-a57c-32354a1481d3")
+			(pinfunction "FB_5")
+			(pintype "input")
 		)
 		(pad "6" smd roundrect
 			(at 2.475 0.635)
@@ -24577,6 +24711,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_COMP")
 			(uuid "c0f3c7ce-366f-439d-9c60-6344dca59752")
+			(pinfunction "COMP_6")
+			(pintype "passive")
 		)
 		(pad "7" smd roundrect
 			(at 2.475 -0.635)
@@ -24585,6 +24721,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_OVP")
 			(uuid "675721e3-be9a-4365-8b25-205add20e0b1")
+			(pinfunction "OVP_7")
+			(pintype "input")
 		)
 		(pad "8" smd roundrect
 			(at 2.475 -1.905)
@@ -24593,6 +24731,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED_DIM")
 			(uuid "ca0aea64-3b61-4ee6-8c5c-8e776f43479d")
+			(pinfunction "PWM_8")
+			(pintype "input")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step"
@@ -24724,7 +24864,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -24896,7 +25038,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -24924,6 +25070,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_PWM_EXT")
 			(uuid "986640ef-8442-45be-b3f6-0a0950a0e472")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -24932,6 +25079,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_TACH_EXT")
 			(uuid "f0154262-4cab-4ace-b70e-ce9e772611e6")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -24940,6 +25088,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "8749f387-d185-45bb-ad15-bfb2767f7833")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -25079,6 +25228,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "c7e03c37-41ab-4a4d-81e6-a3a8d9b06d0e")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -25087,6 +25237,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MISO_CARD")
 			(uuid "e76f8330-b491-41ff-9fcf-f62c8de715b2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -25226,6 +25377,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_LOADS")
 			(uuid "eeab6645-e8f3-4da8-aaf7-ae64a4f0e11a")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -25234,6 +25386,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "5b4f2fbd-9184-415e-aace-18acf436468c")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -25365,7 +25518,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -25537,7 +25692,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -25565,6 +25724,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SHT_SDA_EXT")
 			(uuid "8574169c-8fd1-44be-b220-b81a51f14660")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -25573,6 +25733,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SHT_SCL_EXT")
 			(uuid "0ac0f556-9795-40fa-8300-092a579d2a36")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -25581,6 +25742,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "c098c516-fb08-43b5-ac6d-f3e85f69fa29")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -25846,6 +26008,8 @@
 			(roundrect_rratio 0.147059)
 			(net "/MCU / ESP32/Peripherals/SHT_3V3")
 			(uuid "aa72dc69-4dad-4c36-b941-23846d2cefa2")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 2.5 0)
@@ -25855,6 +26019,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "fedfe0af-d923-44b9-b026-26de081b99bc")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole oval
 			(at 5 0)
@@ -25864,6 +26030,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/Peripherals/SHT_SDA_EXT")
 			(uuid "0370e99e-8eb3-4054-8498-079df6b8c0f2")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole oval
 			(at 7.5 0)
@@ -25873,6 +26041,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/Peripherals/SHT_SCL_EXT")
 			(uuid "caa36fc0-ac71-4c09-a57b-6e9df1f0cbc8")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical.step"
@@ -26012,6 +26182,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/Heater/HEATER_DRIVE")
 			(uuid "6c75f890-5dab-4e69-83fe-68fa95431235")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -26020,6 +26191,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/Heater/HEATER_GATE")
 			(uuid "769ae16a-ba18-4cdb-b200-1bfa04f8eb87")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -26171,7 +26343,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.45 -1.51) (xy -1.69 -1.84) (xy -1.21 -1.84)
+				(xy -1.45 -1.51)
+				(xy -1.69 -1.84)
+				(xy -1.21 -1.84)
 			)
 			(stroke
 				(width 0.12)
@@ -26343,7 +26517,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.4 -1.45) (xy 0.8 -1.45) (xy 0.8 1.45) (xy -0.8 1.45) (xy -0.8 -1.05)
+				(xy -0.4 -1.45)
+				(xy 0.8 -1.45)
+				(xy 0.8 1.45)
+				(xy -0.8 1.45)
+				(xy -0.8 -1.05)
 			)
 			(stroke
 				(width 0.1)
@@ -26371,6 +26549,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_PWM")
 			(uuid "bf3c4e92-7bb7-4c8a-8c62-6f294f7d8750")
+			(pintype "input")
 		)
 		(pad "2" smd roundrect
 			(at -1.1375 0)
@@ -26379,6 +26558,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_ENABLE")
 			(uuid "d985abcb-fc0a-4f54-a475-f750efcbdae9")
+			(pintype "input")
 		)
 		(pad "3" smd roundrect
 			(at -1.1375 0.95)
@@ -26387,6 +26567,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "16abba13-b3f6-4cc3-932b-5902ab1deefe")
+			(pinfunction "GND_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at 1.1375 0.95)
@@ -26395,6 +26577,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED_DIM")
 			(uuid "451054fa-d41a-4e9a-a834-9805efb2a51b")
+			(pintype "output")
 		)
 		(pad "5" smd roundrect
 			(at 1.1375 -0.95)
@@ -26403,6 +26586,8 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "a9f2bb84-9e66-4e04-8373-5e2206472b4f")
+			(pinfunction "VCC_5")
+			(pintype "power_in")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
@@ -26542,6 +26727,7 @@
 			(roundrect_rratio 0.25)
 			(net "/BUCK_FB")
 			(uuid "fe25d9dc-1b9f-40d7-b898-4900e2576b53")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -26550,6 +26736,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "98e60f5e-5ad7-4c52-9625-4e817899c30d")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -27089,6 +27276,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_IO0")
 			(uuid "b4725906-ebd4-451c-be8b-c1bf902c842c")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(pad "1" smd rect
 			(at 3.15 -1.9)
@@ -27096,6 +27285,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_IO0")
 			(uuid "61c3085c-a965-4000-b290-d79a8130d03f")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(pad "2" smd rect
 			(at -3.15 1.9)
@@ -27103,6 +27294,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "afc2e669-d96f-4a89-9413-d5fa4d674618")
+			(pinfunction "2_2")
+			(pintype "passive")
 		)
 		(pad "2" smd rect
 			(at 3.15 1.9)
@@ -27110,6 +27303,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "21d08ab8-12ee-4d2e-b0db-f9c44f8c08b3")
+			(pinfunction "2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_TL3342.step"
@@ -27241,7 +27436,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -27413,7 +27610,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -27441,6 +27642,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_SCK_CARD")
 			(uuid "e6907c75-492b-4fd9-9627-6969327339c6")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -27449,6 +27651,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_MOSI_CARD")
 			(uuid "3ae96620-7a46-45a8-87b9-fe5b23f526f1")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -27457,6 +27660,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "32d77e6e-9696-40ce-80bf-d54ee470a92e")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -27567,6 +27771,8 @@
 			(layers "F.Cu" "F.Mask")
 			(net "+12V_LOADS")
 			(uuid "eb3de29d-eb72-4186-a3c5-ce1dd9e82472")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 	)
@@ -27695,6 +27901,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "85c76842-8a5e-4a72-a978-ba730360e9f4")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -27703,6 +27910,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "071a07fb-d26f-466c-b820-184528b4a694")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -27717,12 +27925,477 @@
 			)
 		)
 	)
-	(footprint "Package_SO:PowerPAK_SO-8L_Single"
+	(footprint "Package_SO:ONSemi_SO-8FL_488AA"
 		(layer "F.Cu")
+		(descr "ON Semi DFN5 5x6mm 1.27P SO-8FL CASE 488A https://www.onsemi.com/pub/Collateral/488AA.PDF")
+		(tags "ON Semi DFN5 5x6mm 1.27P SO-8FL CASE 488A ")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -1.11825 -2.56)
+			(end -2.10325 -2.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "1e54849b-9f0a-49db-a8b5-45a67558d4b1")
+		)
+		(fp_line
+			(start -1.11825 2.56)
+			(end -2.10325 2.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "3142a278-6e14-4aaf-b1c3-86a3ae5f0a5a")
+		)
+		(fp_line
+			(start 3.07775 -2.56)
+			(end 0.30775 -2.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "7edb2b14-2587-400c-83a8-0a6ef9968d4c")
+		)
+		(fp_line
+			(start 3.07775 2.56)
+			(end 0.30775 2.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "628e335d-a3a0-4b42-a158-d605a2356581")
+		)
+		(fp_line
+			(start 3.10775 -1.27)
+			(end 3.10775 1.27)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "27126056-0256-4bb6-b46b-44ef695564cd")
+		)
+		(fp_poly
+			(pts
+				(xy -2.75 -2.55)
+				(xy -2.51 -2.88)
+				(xy -2.99 -2.88)
+				(xy -2.75 -2.55)
+			)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "d31e15d1-9eb3-42d6-8647-be32f348a17d")
+		)
+		(fp_line
+			(start -3.5 2.45)
+			(end -3.5 -2.45)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "79c7b6a9-b966-42d0-817a-c6451b8e4fc9")
+		)
+		(fp_line
+			(start -3.25 -2.7)
+			(end -1.11 -2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "3a2a358b-4e03-4e50-ba82-0bf64a0df370")
+		)
+		(fp_line
+			(start -3.25 2.7)
+			(end -1.11 2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "611119b2-888e-4b65-af05-498aa5271636")
+		)
+		(fp_line
+			(start -1.11 -2.78)
+			(end -1.11 -2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "a0fa3a23-13dc-479c-b20c-8b3f72901f19")
+		)
+		(fp_line
+			(start -1.11 2.7)
+			(end -1.11 2.78)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "3d1dfb27-4ee2-4931-95be-e8713b857c80")
+		)
+		(fp_line
+			(start -0.86 -3.03)
+			(end 0.05 -3.03)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "de6517a2-758a-4c51-9886-19eca0e89090")
+		)
+		(fp_line
+			(start -0.86 3.03)
+			(end 0.05 3.03)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "b347674f-3296-43fd-b5ab-c49134fd249d")
+		)
+		(fp_line
+			(start 0.3 -2.7)
+			(end 0.3 -2.78)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "d08da64a-da4a-46a3-8e9c-51b336ddb286")
+		)
+		(fp_line
+			(start 0.3 -2.7)
+			(end 3.25 -2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "6a70130d-1dfd-4d43-acb6-64326c7f3027")
+		)
+		(fp_line
+			(start 0.3 2.7)
+			(end 3.25 2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "603ee597-f993-49bf-ba16-ceac99ff1ed0")
+		)
+		(fp_line
+			(start 0.3 2.78)
+			(end 0.3 2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "8902e941-6ffc-44f9-bd8d-0fd6cc28f5dc")
+		)
+		(fp_line
+			(start 3.25 1.28)
+			(end 3.25 -1.28)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "1372595c-9ab3-45a1-9209-6495fbb4e746")
+		)
+		(fp_line
+			(start 3.5 -1.53)
+			(end 3.5 -2.45)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "a854b83e-956c-484f-9e51-6d66d1eb37a7")
+		)
+		(fp_line
+			(start 3.5 2.45)
+			(end 3.5 1.53)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "0e77f92b-ed78-4aa9-9a99-de2ee8d0a678")
+		)
+		(fp_arc
+			(start -3.5 -2.45)
+			(mid -3.426777 -2.626777)
+			(end -3.25 -2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "fd20235b-68a7-420f-9516-ace9ec8a54b9")
+		)
+		(fp_arc
+			(start -3.25 2.7)
+			(mid -3.426777 2.626777)
+			(end -3.5 2.45)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "cbe49002-1239-4a9f-960b-6918682f0782")
+		)
+		(fp_arc
+			(start -1.11 -2.78)
+			(mid -1.036777 -2.956777)
+			(end -0.86 -3.03)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "189baf12-4a36-4047-a57a-b168298e15fd")
+		)
+		(fp_arc
+			(start -0.86 3.03)
+			(mid -1.036777 2.956777)
+			(end -1.11 2.78)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "2586b611-7cc6-4cae-b156-71fd20ef3cdd")
+		)
+		(fp_arc
+			(start 0.05 -3.03)
+			(mid 0.226777 -2.956777)
+			(end 0.3 -2.78)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "a455fe44-813a-4a56-83a0-96e321927653")
+		)
+		(fp_arc
+			(start 0.3 2.78)
+			(mid 0.226777 2.956777)
+			(end 0.05 3.03)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "ea6519ea-334a-494e-ab96-6d2e56fe9d13")
+		)
+		(fp_arc
+			(start 3.25 -2.7)
+			(mid 3.426777 -2.626777)
+			(end 3.5 -2.45)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "c09d1288-694d-4bc3-ac4a-e6c5784b8f15")
+		)
+		(fp_arc
+			(start 3.25 1.28)
+			(mid 3.426777 1.353223)
+			(end 3.5 1.53)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "0f3ef66b-92fc-4501-9d2e-1d5a85526dae")
+		)
+		(fp_arc
+			(start 3.5 -1.53)
+			(mid 3.426777 -1.353223)
+			(end 3.25 -1.28)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "f9684f60-d722-4569-ad9f-86622edb4dda")
+		)
+		(fp_arc
+			(start 3.5 2.45)
+			(mid 3.426777 2.626777)
+			(end 3.25 2.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "68b775f0-2261-44be-87cb-e514e24439f8")
+		)
+		(fp_line
+			(start -2.90225 -1.275)
+			(end -2.90225 2.45)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "b2f1e06c-14da-4666-beea-98cf5827cb19")
+		)
+		(fp_line
+			(start -1.72725 -2.45)
+			(end -2.90225 -1.275)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "35c279c2-e854-4327-9537-f50c9e57f610")
+		)
+		(fp_line
+			(start 2.99775 -2.45)
+			(end -1.72725 -2.45)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "2d3e95e0-afe7-4f7e-a280-d911ea20970f")
+		)
+		(fp_line
+			(start 2.99775 -2.45)
+			(end 2.99775 2.45)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "fbdc8e2b-f677-42d7-888f-5ce77e5746fe")
+		)
+		(fp_line
+			(start 2.99775 2.45)
+			(end -2.90225 2.45)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "415035f4-8e1d-44de-95b7-ef91cee74752")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0.04775 0 0)
+			(layer "F.Fab")
+			(uuid "4c2b121b-5f5c-40a5-b9c9-e310cca9e425")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -2.74725 -1.905)
+			(size 1 0.75)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(uuid "59089acb-0084-4482-865a-caf10b54b9a6")
+			(net "+12V_FUSED")
+			(pinfunction "S_1")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at -2.74725 -0.635)
+			(size 1 0.75)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(uuid "caf78a69-f2d8-4efd-845a-265ae9459b21")
+			(net "+12V_FUSED")
+			(pinfunction "S_2")
+			(pintype "passive")
+		)
+		(pad "3" smd roundrect
+			(at -2.74725 0.635)
+			(size 1 0.75)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(uuid "d48473b9-7317-4cae-b410-08f82db7c07b")
+			(net "+12V_FUSED")
+			(pinfunction "S_3")
+			(pintype "passive")
+		)
+		(pad "4" smd roundrect
+			(at -2.74725 1.905)
+			(size 1 0.75)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(uuid "a3e5923e-3eb4-48d7-b795-1e32e663d721")
+			(net "/InputPower/REV_GATE")
+			(pinfunction "G_4")
+			(pintype "input")
+		)
+		(pad "5" smd custom
+			(at 0.745 0)
+			(size 4.055 4.56)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(zone_connect 0)
+			(thermal_bridge_angle 45)
+			(options
+				(clearance outline)
+				(anchor rect)
+			)
+			(primitives
+				(gr_poly
+					(pts
+						(xy -0.6975 -2.28)
+						(xy 2.5025 -2.28)
+						(xy 2.5025 -1.53)
+						(xy 1.905 -1.53)
+						(xy 1.905 1.53)
+						(xy 2.5025 1.53)
+						(xy 2.5025 2.28)
+						(xy -0.6975 2.28)
+						(xy -0.6975 2.775)
+						(xy -1.6025 2.775)
+						(xy -1.6025 -2.775)
+						(xy -0.6975 -2.775)
+					)
+					(width 0)
+					(fill yes)
+				)
+			)
+			(uuid "9ce0a5f1-5874-4434-8f0b-48a4c4f0e466")
+			(net "+12V_PROTECTED")
+			(pinfunction "D_5")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/ONSemi_SO-8FL_488AA.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 		(uuid "c85ca591-d9c0-4caa-85f9-77f609331093")
 		(at 865 650)
-		(descr "PowerPAK SO-8L Single (https://www.vishay.com/docs/64721/an913.pdf)")
-		(tags "PowerPAK SO-8L_Single")
 		(property "Reference" "Q901"
 			(at 0 -3.5 0)
 			(layer "F.SilkS")
@@ -27734,7 +28407,7 @@
 				)
 			)
 		)
-		(property "Value" "P-MOSFET reverse-polarity / MPN pending"
+		(property "Value" "NTMFS5C628NLT1G"
 			(at 0 3.5 0)
 			(layer "F.Fab")
 			(uuid "d3af0b54-4d11-4496-8529-7a14268f9258")
@@ -27745,7 +28418,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/ntmfs5c628nl-d.pdf"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -27772,282 +28445,56 @@
 			)
 		)
 		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/7578d274-4630-53d1-8a27-8a3d8f9f0d7a")
-		(attr smd)
-		(duplicate_pad_numbers_are_jumpers no)
-		(fp_line
-			(start -2.2 -2.825)
-			(end 3.335 -2.825)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "c2591e53-d93a-423a-b476-b5a363ba3106")
-		)
-		(fp_line
-			(start -2.2 2.825)
-			(end 3.335 2.825)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "e28091ae-3c38-47a8-9719-c16b9dc9abed")
-		)
-		(fp_line
-			(start 3.335 -2.825)
-			(end 3.335 2.825)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "cff17a66-8cb8-4825-8b94-6dcafb292c25")
-		)
-		(fp_poly
-			(pts
-				(xy -2.75 -2.5) (xy -2.51 -2.83) (xy -2.99 -2.83) (xy -2.75 -2.5)
-			)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(fill yes)
-			(layer "F.SilkS")
-			(uuid "7050c7ca-3d19-479e-b06a-ce6bf77aea51")
-		)
-		(fp_line
-			(start -3.88 -3.38)
-			(end -3.88 3.38)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "35ad0390-db57-479d-b6f2-67c7753366f0")
-		)
-		(fp_line
-			(start -3.88 -3.38)
-			(end 3.88 -3.38)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "389175c3-8281-4058-81d6-5dc254f59c65")
-		)
-		(fp_line
-			(start -3.88 3.38)
-			(end 3.88 3.38)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "9df93924-7d18-42f8-bf83-1b1194854af1")
-		)
-		(fp_line
-			(start 3.88 -3.38)
-			(end 3.88 3.38)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "ea5564b1-8a2e-4b48-ae8d-8ca98b9c511b")
-		)
-		(fp_line
-			(start -2.005 -1.45)
-			(end -1.005 -2.45)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(layer "F.Fab")
-			(uuid "7ee02240-605a-45b2-9cbd-80c0803653c0")
-		)
-		(fp_rect
-			(start -3.075 -2.11)
-			(end -2.005 -1.7)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "9f87571a-db21-4ec7-9604-d61ad4c0d9fc")
-		)
-		(fp_rect
-			(start -3.075 -0.84)
-			(end -2.005 -0.43)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "32797c71-69d2-48d1-ae48-44c67f934404")
-		)
-		(fp_rect
-			(start -3.075 0.43)
-			(end -2.005 0.84)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "857a0aa7-b83a-49a5-995f-073fb40472cf")
-		)
-		(fp_rect
-			(start -3.075 1.7)
-			(end -2.005 2.11)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "cd59f363-66af-419c-913f-c8cb38ed32fc")
-		)
-		(fp_rect
-			(start -2.005 -2.45)
-			(end 2.365 2.45)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "14846e11-52d6-4239-a9c8-53a0359aac22")
-		)
-		(fp_rect
-			(start 2.365 -2.45)
-			(end 3.075 2.45)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "c2c07d57-2492-451d-a5d0-77ad6019e4ee")
-		)
-		(fp_text user "${REFERENCE}"
+		(property "Footprint" "Package_SO:ONSemi_SO-8FL_488AA"
 			(at 0 0 0)
+			(unlocked yes)
 			(layer "F.Fab")
-			(uuid "21f7d0f4-a9c5-44d1-b9f0-abaa3e2946e6")
+			(hide yes)
+			(uuid "6891c276-b40a-4daf-a237-6eb59131b67d")
 			(effects
 				(font
-					(size 1 1)
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
 		)
-		(pad "" smd roundrect
-			(at 0.1075 -0.965)
-			(size 1.645 1.63)
-			(layers "F.Paste")
-			(roundrect_rratio 0.25)
-			(uuid "598d5d50-4b69-47e0-89f8-d3f229e57c8c")
-		)
-		(pad "" smd roundrect
-			(at 0.1075 0.965)
-			(size 1.645 1.63)
-			(layers "F.Paste")
-			(roundrect_rratio 0.25)
-			(uuid "b0a950c1-0c88-48ab-95a3-b6292ac42768")
-		)
-		(pad "" smd roundrect
-			(at 2.0525 -0.965)
-			(size 1.645 1.63)
-			(layers "F.Paste")
-			(roundrect_rratio 0.25)
-			(uuid "01f57d6a-fd61-4cfd-8e51-79ce31efba7e")
-		)
-		(pad "" smd roundrect
-			(at 2.0525 0.965)
-			(size 1.645 1.63)
-			(layers "F.Paste")
-			(roundrect_rratio 0.25)
-			(uuid "edc5a997-e1f9-45cf-b814-d4799158d0f2")
-		)
-		(pad "1" smd roundrect
-			(at -2.715 -1.905)
-			(size 0.72 0.41)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "+12V_PROTECTED")
-			(uuid "1986fecf-a82d-4bef-a1e6-346556ff27e1")
-		)
-		(pad "2" smd roundrect
-			(at -2.715 -0.635)
-			(size 0.72 0.41)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "+12V_PROTECTED")
-			(uuid "e39e3de2-208d-4908-927c-a0313a5254ea")
-		)
-		(pad "3" smd roundrect
-			(at -2.715 0.635)
-			(size 0.72 0.41)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "+12V_PROTECTED")
-			(uuid "c689c988-33f0-4b67-b490-d929ba7759c0")
-		)
-		(pad "4" smd roundrect
-			(at -2.715 1.905)
-			(size 0.72 0.41)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.25)
-			(net "/InputPower/Q901_GATE")
-			(uuid "181175ce-3e05-4591-90c8-a6a9d2cf7262")
-		)
-		(pad "5" smd rect
-			(at 0 -2.2725)
-			(size 0.51 0.585)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "+12V_FUSED")
-			(uuid "676688a7-68b7-4cf0-bae1-39e93b2410de")
-		)
-		(pad "5" smd rect
-			(at 0 2.2725)
-			(size 0.51 0.585)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "+12V_FUSED")
-			(uuid "687c9171-1bfb-4c2c-bceb-e5c834ab98bd")
-		)
-		(pad "5" smd rect
-			(at 1.08 0)
-			(size 3.99 3.96)
-			(layers "F.Cu" "F.Mask")
-			(net "+12V_FUSED")
-			(uuid "a1f7fe6d-b9ab-4454-9a5f-b72d260724dc")
-		)
-		(pad "5" smd rect
-			(at 2.87 -2.215)
-			(size 0.41 0.47)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "+12V_FUSED")
-			(uuid "e9aa5511-763f-4a34-aaa5-48ce52cc292f")
-		)
-		(pad "5" smd rect
-			(at 2.87 2.215)
-			(size 0.41 0.47)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "+12V_FUSED")
-			(uuid "1b2667d7-bae6-4f83-8837-cb8eff2b3175")
-		)
-		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/PowerPAK_SO-8L_Single.step"
-			(offset
-				(xyz 0 0 0)
+		(property "Manufacturer" "onsemi"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6891c276-b40a-4daf-a237-6eb59131b67d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
 			)
-			(scale
-				(xyz 1 1 1)
+		)
+		(property "MPN" "NTMFS5C628NLT1G"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6891c276-b40a-4daf-a237-6eb59131b67d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
 			)
-			(rotate
-				(xyz 0 0 0)
+		)
+		(property "LCSC" "C145537"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6891c276-b40a-4daf-a237-6eb59131b67d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
 			)
 		)
 	)
@@ -28909,6 +29356,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "b9e17e2a-6c8d-4e37-a856-07f317213a00")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(pad "1" smd rect
 			(at 3.15 -1.9)
@@ -28916,6 +29365,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "d5cff599-9bd1-4ad6-9538-f9c58414c0e1")
+			(pinfunction "1_1")
+			(pintype "passive")
 		)
 		(pad "2" smd rect
 			(at -3.15 1.9)
@@ -28923,6 +29374,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "396d43b9-afbc-4295-8286-fadffee8865b")
+			(pinfunction "2_2")
+			(pintype "passive")
 		)
 		(pad "2" smd rect
 			(at 3.15 1.9)
@@ -28930,6 +29383,8 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
 			(uuid "aba43c79-7599-48c0-9ace-ad9c60bd309c")
+			(pinfunction "2_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_TL3342.step"
@@ -29069,6 +29524,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_SOURCE")
 			(uuid "6da2597a-d0c8-4bee-b993-46e16f3d33df")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -29077,6 +29533,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_CS")
 			(uuid "e908365b-c021-4c08-ae8b-4fb480ce6d5b")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -29216,6 +29673,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED3_OUT")
 			(uuid "990ceb03-d69a-4c14-b839-e900eabbda40")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -29224,6 +29682,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "1e94958b-279a-42cc-b75c-902bec272d85")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -29407,6 +29866,7 @@
 			(roundrect_rratio 0.204082)
 			(net "/LEDDrivers/LED1_RETURN")
 			(uuid "f8818df8-8a86-4be9-8099-276e84683007")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.9625 0)
@@ -29415,6 +29875,7 @@
 			(roundrect_rratio 0.204082)
 			(net "GND")
 			(uuid "ff2e3a3f-64c2-49e7-b0fb-07c90cd92779")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_2512_6332Metric.step"
@@ -29554,6 +30015,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "f8ff7741-65e5-4754-a360-aeede7b7208d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -29562,6 +30024,7 @@
 			(roundrect_rratio 0.25)
 			(net "I2C_SDA")
 			(uuid "b5ec194f-6637-4e82-81f8-9bb6ba290153")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -29693,7 +30156,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy 0 5.47) (xy 0.44 6.08) (xy -0.44 6.08)
+				(xy 0 5.47)
+				(xy 0.44 6.08)
+				(xy -0.44 6.08)
 			)
 			(stroke
 				(width 0.12)
@@ -29783,6 +30248,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "dde67b76-bb0f-4594-93d3-6099e743643d")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "1" thru_hole roundrect
 			(at 0 0)
@@ -29793,6 +30260,8 @@
 			(roundrect_rratio 0.166667)
 			(net "GND")
 			(uuid "663b8044-71a1-46a6-94bb-7ecefc21bf3a")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 -5)
@@ -29802,6 +30271,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "27ead793-09bb-4dbd-a5a7-b7de2359ffb9")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole oval
 			(at 3.5 0)
@@ -29811,6 +30282,8 @@
 			(remove_unused_layers no)
 			(net "+12V_LOADS")
 			(uuid "0195455e-3d17-46d1-85a2-9b297a941705")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole oval
 			(at 7 -5)
@@ -29820,6 +30293,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN2_TACH_EXT")
 			(uuid "69dfd0a7-bfc3-4652-aba8-156faeda42aa")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole oval
 			(at 7 0)
@@ -29829,6 +30304,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN2_TACH_EXT")
 			(uuid "a0e68769-1e45-4a71-98c3-12176722fb75")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole oval
 			(at 10.5 -5)
@@ -29838,6 +30315,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN2_PWM_EXT")
 			(uuid "32942434-32bd-4119-bf51-08780770d465")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole oval
 			(at 10.5 0)
@@ -29847,6 +30326,8 @@
 			(remove_unused_layers no)
 			(net "/Outputs/FAN2_PWM_EXT")
 			(uuid "49adedaf-10ea-4d74-b2d4-86d0bdab34d7")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/TerminalBlock_WAGO.3dshapes/TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal.step"
@@ -30106,6 +30587,8 @@
 			(roundrect_rratio 0.1)
 			(net "+12V_LOADS")
 			(uuid "5fba608d-3032-488e-a548-a8dcb997a3b6")
+			(pinfunction "K_1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 3.4 0 90)
@@ -30114,6 +30597,8 @@
 			(roundrect_rratio 0.1)
 			(net "/Outputs/PUMP_DRAIN")
 			(uuid "1d1537f1-37d6-44e2-8999-1e6900d91efb")
+			(pinfunction "A_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMC.step"
@@ -30253,6 +30738,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "8365d28e-b24b-4b0a-939b-94d215f66d72")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -30261,6 +30747,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "2e223f2f-8659-4ab8-99e1-5c3fa3aaf157")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -30335,6 +30822,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SOURCE")
+			(pinfunction "S_1")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 -0.975)
@@ -30349,6 +30838,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SOURCE")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 -0.325)
@@ -30363,6 +30854,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SOURCE")
+			(pinfunction "S_3")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at -1.55 0.325)
@@ -30377,6 +30870,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_GATE")
+			(pinfunction "G_4")
+			(pintype "input")
 		)
 		(pad "" smd roundrect
 			(at -1.55 0.975)
@@ -30391,6 +30886,8 @@
 			(roundrect_rratio 0.053333333)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "5" smd roundrect
 			(at 1.4825 -0.975)
@@ -30399,6 +30896,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 -0.975)
@@ -30413,6 +30912,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 -0.325)
@@ -30427,6 +30928,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 0.325)
@@ -30441,6 +30944,8 @@
 			(roundrect_rratio 0.250000000)
 			(solder_mask_margin -0.05)
 			(net "/LEDDrivers/LED3_SW")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(pad "" smd roundrect
 			(at 1.55 0.975)
@@ -30660,6 +31165,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_COMP")
 			(uuid "55e6aca5-a927-42bd-bbbc-8c27887cb3ff")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -30668,6 +31174,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_COMP_RC")
 			(uuid "a792e59a-aca4-4d30-b493-78a133daa90d")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -31137,7 +31644,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -1.18 -0.16) (xy -1.04 0.03) (xy -1.32 0.03)
+				(xy -1.18 -0.16)
+				(xy -1.04 0.03)
+				(xy -1.32 0.03)
 			)
 			(stroke
 				(width 0.12)
@@ -31309,7 +31818,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.3125 -1) (xy 0.625 -1) (xy 0.625 1) (xy -0.625 1) (xy -0.625 -0.6875)
+				(xy -0.3125 -1)
+				(xy 0.625 -1)
+				(xy 0.625 1)
+				(xy -0.625 1)
+				(xy -0.625 -0.6875)
 			)
 			(stroke
 				(width 0.1)
@@ -31337,6 +31850,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/WATER_EXT")
 			(uuid "4e6513ed-f580-42d4-ac58-08116ff687f7")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -0.8875 0.65)
@@ -31345,6 +31859,7 @@
 			(roundrect_rratio 0.25)
 			(net "unconnected-(D302-Pad2)")
 			(uuid "809b0b25-ee27-432b-b77c-25a3c65a50dd")
+			(pintype "passive+no_connect")
 		)
 		(pad "3" smd roundrect
 			(at 0.8875 0)
@@ -31353,6 +31868,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "8d353062-3e35-47f9-9b6c-b43155f81830")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-323_SC-70.step"
@@ -31492,6 +32008,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_CS")
 			(uuid "d221daf7-ba52-4d49-b4bb-04e81ba54aa5")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -31500,6 +32017,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "73e4e2dd-b400-42b3-b2b3-5c97e1144bb4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -31639,6 +32157,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/+3V3_SD")
 			(uuid "e0286501-05e3-4bd9-90d9-067a47a8e454")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -31647,6 +32166,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_CS_CARD")
 			(uuid "fa68a465-30e7-4991-bfde-660d5819b960")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -31786,6 +32306,7 @@
 			(roundrect_rratio 0.25)
 			(net "LIGHT_ENABLE")
 			(uuid "8ce0c460-a86e-4062-a1f0-7e6cecedf193")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -31794,6 +32315,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "a50beccc-61b6-49fd-af8c-8ab77d09f713")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -31933,6 +32455,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED2_OUT")
 			(uuid "79ad6ffd-f401-4fb6-b12d-e447001feb4f")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -31941,6 +32464,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "28a49725-a628-44b5-9360-04767b6e457f")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -32016,7 +32540,7 @@
 				)
 			)
 		)
-		(property "Value" "1u / 25V"
+		(property "Value" "2.2u / 25V X7R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "d43b22b7-0465-4a40-a176-af2fca105d27")
@@ -32122,8 +32646,9 @@
 			(size 1 1.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.25)
-			(net "+12V_LOADS")
+			(net "+5V_GATE")
 			(uuid "e90af0d3-c5f9-4ad8-b2bf-b38e29653871")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.95 0)
@@ -32132,6 +32657,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "429c80ae-e46e-43c4-9e41-a129a31e0d25")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
@@ -32351,6 +32877,8 @@
 			(remove_unused_layers no)
 			(net "GND")
 			(uuid "544447d6-c744-4ce8-a420-9b0b6d167201")
+			(pinfunction "Pin_1_1")
+			(pintype "passive")
 		)
 		(pad "2" thru_hole circle
 			(at 0 2.54)
@@ -32360,6 +32888,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/VREF_3V3")
 			(uuid "2fbc2db1-aea6-40f0-a248-4aa11a5547e8")
+			(pinfunction "Pin_2_2")
+			(pintype "passive")
 		)
 		(pad "3" thru_hole circle
 			(at 0 5.08)
@@ -32369,6 +32899,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/PROG_TX_FROM_ESP")
 			(uuid "b1541007-413d-41af-b11a-a48573f3fdf6")
+			(pinfunction "Pin_3_3")
+			(pintype "passive")
 		)
 		(pad "4" thru_hole circle
 			(at 0 7.62)
@@ -32378,6 +32910,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/PROG_RX_TO_ESP")
 			(uuid "271a49bd-aa31-416b-b612-11e00adf9ecb")
+			(pinfunction "Pin_4_4")
+			(pintype "passive")
 		)
 		(pad "5" thru_hole circle
 			(at 0 10.16)
@@ -32387,6 +32921,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/ESP_EN")
 			(uuid "5531dbcf-77f9-40a2-b9a2-a092e69d700a")
+			(pinfunction "Pin_5_5")
+			(pintype "passive")
 		)
 		(pad "6" thru_hole circle
 			(at 0 12.7)
@@ -32396,6 +32932,8 @@
 			(remove_unused_layers no)
 			(net "/MCU / ESP32/ESP_IO0")
 			(uuid "e1c29f56-5c58-4226-a27f-fbf5134c99f0")
+			(pinfunction "Pin_6_6")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x06_P2.54mm_Vertical.step"
@@ -32535,6 +33073,7 @@
 			(roundrect_rratio 0.25)
 			(net "+3V3")
 			(uuid "979ebb9c-b39f-4f54-9dc3-1d7c294da222")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -32543,6 +33082,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "c63e6a92-9209-47c6-919c-73b5c78119b9")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -32682,6 +33222,7 @@
 			(roundrect_rratio 0.25)
 			(net "FAN2_TACH")
 			(uuid "1cf0942c-e5e0-4930-b95e-c6085fe052cc")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -32690,6 +33231,7 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/FAN2_TACH_EXT")
 			(uuid "3a4161a7-b337-4560-a325-d202c2205284")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -32829,6 +33371,7 @@
 			(roundrect_rratio 0.25)
 			(net "WATER_LEVEL")
 			(uuid "5685d382-c71a-4ea4-99a2-c191ac8d2c87")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -32837,6 +33380,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "c15b77ca-ed49-4eb7-b9b6-7ab714cca792")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -32976,6 +33520,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED3_OVP")
 			(uuid "4633912a-2f48-463f-b8ef-5a2de58f208e")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -32984,6 +33529,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "74dce4c6-eb6f-4522-9212-bff09df09abc")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -33123,6 +33669,7 @@
 			(roundrect_rratio 0.217391)
 			(net "+12V_LED")
 			(uuid "9310014d-9af9-41a8-a98d-1644a8bf8441")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -33131,6 +33678,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "5733678b-30bb-4aea-b093-0b91127a2555")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -33390,6 +33938,8 @@
 			(roundrect_rratio 0.1086956522)
 			(net "/Outputs/Heater/HEATER_DRAIN")
 			(uuid "bfe97edc-eb84-4057-bb77-59b0e0bf1763")
+			(pinfunction "K_1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 2.15 0)
@@ -33398,6 +33948,8 @@
 			(roundrect_rratio 0.1086956522)
 			(net "GND")
 			(uuid "cb407b1d-d8c9-4c84-9f45-3fbc4447af38")
+			(pinfunction "A_2")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMB.step"
@@ -33537,6 +34089,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/BOOT_VDD_SDIO")
 			(uuid "c9a67088-ba66-4d0d-9f98-ba9f980f6359")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -33545,6 +34098,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "6591bc8d-54e3-4482-8b3c-26ab37a82dbe")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -33576,7 +34130,7 @@
 				)
 			)
 		)
-		(property "Value" "220u / 25 V low ESR"
+		(property "Value" "220u / 35V low ESR"
 			(at 0 6.3 0)
 			(layer "F.Fab")
 			(uuid "e8e2b25b-c559-4f47-af5b-ff4e26cd4670")
@@ -33973,6 +34527,7 @@
 			(roundrect_rratio 0.1)
 			(net "+12V_PROTECTED")
 			(uuid "2fbcef81-bf13-42ae-8044-c11e6ac7d71a")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 4.2 0)
@@ -33981,6 +34536,7 @@
 			(roundrect_rratio 0.1)
 			(net "GND")
 			(uuid "66c0fada-4583-49a9-bb54-46cf3a58c3fd")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/CP_Elec_10x10.5.step"
@@ -34120,6 +34676,7 @@
 			(roundrect_rratio 0.25)
 			(net "I2C_SDA")
 			(uuid "1ee2d37a-9f3e-40da-a38a-32ac5dc078b3")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -34128,6 +34685,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SHT_SDA_EXT")
 			(uuid "147a22cd-ddb7-42cd-b816-018b78d8b4e5")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -34170,7 +34728,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/ntmfs5c628nl-d.pdf"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -34251,7 +34809,10 @@
 		)
 		(fp_poly
 			(pts
-				(xy -2.75 -2.55) (xy -2.51 -2.88) (xy -2.99 -2.88) (xy -2.75 -2.55)
+				(xy -2.75 -2.55)
+				(xy -2.51 -2.88)
+				(xy -2.99 -2.88)
+				(xy -2.75 -2.55)
 			)
 			(stroke
 				(width 0.12)
@@ -34579,6 +35140,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "30740d35-c2ca-41d3-bfcb-6e687bfa99d4")
+			(pinfunction "S_1")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at -2.74725 -0.635)
@@ -34587,6 +35150,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "1a00e35a-af0c-4522-b594-b95adaedb9a6")
+			(pinfunction "S_2")
+			(pintype "passive")
 		)
 		(pad "3" smd roundrect
 			(at -2.74725 0.635)
@@ -34595,6 +35160,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "d2b1c9c3-6e8e-4bc7-96ce-5440a48f9e00")
+			(pinfunction "S_3")
+			(pintype "passive")
 		)
 		(pad "4" smd roundrect
 			(at -2.74725 1.905)
@@ -34603,6 +35170,8 @@
 			(roundrect_rratio 0.25)
 			(net "/Outputs/Heater/HEATER_GATE")
 			(uuid "a60d96c1-494e-4955-811c-dec08dd8a03e")
+			(pinfunction "G_4")
+			(pintype "input")
 		)
 		(pad "5" smd custom
 			(at 0.745 0)
@@ -34618,14 +35187,26 @@
 			(primitives
 				(gr_poly
 					(pts
-						(xy -0.6975 -2.28) (xy 2.5025 -2.28) (xy 2.5025 -1.53) (xy 1.905 -1.53) (xy 1.905 1.53) (xy 2.5025 1.53)
-						(xy 2.5025 2.28) (xy -0.6975 2.28) (xy -0.6975 2.775) (xy -1.6025 2.775) (xy -1.6025 -2.775) (xy -0.6975 -2.775)
+						(xy -0.6975 -2.28)
+						(xy 2.5025 -2.28)
+						(xy 2.5025 -1.53)
+						(xy 1.905 -1.53)
+						(xy 1.905 1.53)
+						(xy 2.5025 1.53)
+						(xy 2.5025 2.28)
+						(xy -0.6975 2.28)
+						(xy -0.6975 2.775)
+						(xy -1.6025 2.775)
+						(xy -1.6025 -2.775)
+						(xy -0.6975 -2.775)
 					)
 					(width 0)
 					(fill yes)
 				)
 			)
 			(uuid "60391977-4cab-4ea3-96e4-5976770ec916")
+			(pinfunction "D_5")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/ONSemi_SO-8FL_488AA.step"
@@ -34637,6 +35218,58 @@
 			)
 			(rotate
 				(xyz 0 0 0)
+			)
+		)
+		(property "Footprint" "Package_SO:ONSemi_SO-8FL_488AA"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "NTMFS5C628NLT1G"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C145537"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
 			)
 		)
 	)
@@ -34767,7 +35400,9 @@
 		)
 		(fp_poly
 			(pts
-				(xy -2.6 -2.47) (xy -2.84 -2.8) (xy -2.36 -2.8)
+				(xy -2.6 -2.47)
+				(xy -2.84 -2.8)
+				(xy -2.36 -2.8)
 			)
 			(stroke
 				(width 0.12)
@@ -34899,7 +35534,11 @@
 		)
 		(fp_poly
 			(pts
-				(xy -0.975 -2.45) (xy 1.95 -2.45) (xy 1.95 2.45) (xy -1.95 2.45) (xy -1.95 -1.475)
+				(xy -0.975 -2.45)
+				(xy 1.95 -2.45)
+				(xy 1.95 2.45)
+				(xy -1.95 2.45)
+				(xy -1.95 -1.475)
 			)
 			(stroke
 				(width 0.1)
@@ -34927,6 +35566,8 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_LED")
 			(uuid "6df33fab-c609-46bb-b9d5-2c7744cbedb6")
+			(pinfunction "VIN_1")
+			(pintype "power_in")
 		)
 		(pad "2" smd roundrect
 			(at -2.475 -0.635)
@@ -34935,6 +35576,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_DRV")
 			(uuid "725a4172-388a-401b-b189-f192f8905558")
+			(pinfunction "GATE_2")
+			(pintype "output")
 		)
 		(pad "3" smd roundrect
 			(at -2.475 0.635)
@@ -34943,6 +35586,8 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "3a8aebe3-26fd-4d4b-baac-8055e76748ac")
+			(pinfunction "GND_3")
+			(pintype "power_in")
 		)
 		(pad "4" smd roundrect
 			(at -2.475 1.905)
@@ -34951,6 +35596,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_CS")
 			(uuid "f3c019ed-8d83-4049-b9a9-30db2c6576ef")
+			(pinfunction "CS_4")
+			(pintype "input")
 		)
 		(pad "5" smd roundrect
 			(at 2.475 1.905)
@@ -34959,6 +35606,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_RETURN")
 			(uuid "f55720ae-d7d2-4100-8524-ae0b3d769f11")
+			(pinfunction "FB_5")
+			(pintype "input")
 		)
 		(pad "6" smd roundrect
 			(at 2.475 0.635)
@@ -34967,6 +35616,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_COMP")
 			(uuid "1af4e9cc-7fe6-4c4e-93d5-bbff2d778bb3")
+			(pinfunction "COMP_6")
+			(pintype "passive")
 		)
 		(pad "7" smd roundrect
 			(at 2.475 -0.635)
@@ -34975,6 +35626,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED2_OVP")
 			(uuid "8363e739-ac51-4d96-bd3e-627f65344349")
+			(pinfunction "OVP_7")
+			(pintype "input")
 		)
 		(pad "8" smd roundrect
 			(at 2.475 -1.905)
@@ -34983,6 +35636,8 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED_DIM")
 			(uuid "6fd18745-b0c0-4c02-8205-4bcc2bec1d8a")
+			(pinfunction "PWM_8")
+			(pintype "input")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step"
@@ -35122,6 +35777,7 @@
 			(roundrect_rratio 0.25)
 			(net "SD_CS")
 			(uuid "b1e9476d-5a57-4997-84b4-de646b08502d")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -35130,6 +35786,7 @@
 			(roundrect_rratio 0.25)
 			(net "/MCU / ESP32/Peripherals/SD_CS_CARD")
 			(uuid "898dfae6-45d4-4233-b237-732a21dc9596")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -35269,6 +35926,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_SOURCE")
 			(uuid "8eb5ada9-e20b-4c4e-b9d7-30af353055b4")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.825 0)
@@ -35277,6 +35935,7 @@
 			(roundrect_rratio 0.25)
 			(net "/LEDDrivers/LED1_CS")
 			(uuid "621f3e42-6f3b-42b2-9fbe-8f7bf20f22a4")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
@@ -35416,6 +36075,7 @@
 			(roundrect_rratio 0.25)
 			(net "+12V_PROTECTED")
 			(uuid "1ac6d9b0-4843-4604-9674-0586a66aa378")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 0.775 0)
@@ -35424,6 +36084,7 @@
 			(roundrect_rratio 0.25)
 			(net "GND")
 			(uuid "2a52f191-ecd2-4322-b92d-451e753fdef1")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
@@ -35694,6 +36355,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "c0c362be-9487-4644-ba7c-4486a9af6422")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -35702,6 +36364,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "26a67577-5a48-4523-85d5-c385ba02d0a8")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -35885,6 +36548,7 @@
 			(roundrect_rratio 0.217391)
 			(net "/LEDDrivers/LED1_OUT")
 			(uuid "c8fe3fdc-720b-4ed7-af68-ba9b93c45947")
+			(pintype "passive")
 		)
 		(pad "2" smd roundrect
 			(at 1.475 0)
@@ -35893,6 +36557,7 @@
 			(roundrect_rratio 0.217391)
 			(net "GND")
 			(uuid "682ebdfb-63aa-4bbd-a636-00498e475d39")
+			(pintype "passive")
 		)
 		(embedded_fonts no)
 		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_1210_3225Metric.step"
@@ -35947,6 +36612,1515 @@
 			(effects
 				(font
 					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(footprint "Capacitor_SMD:C_0805_2012Metric"
+		(layer "F.Cu")
+		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)")
+		(tags "capacitor")
+		(property "Reference" "C603"
+			(at 0 -1.68 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "2.2u / 50V X7R"
+			(at 0 1.68 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.261252 -0.735)
+			(end 0.261252 -0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.261252 0.735)
+			(end 0.261252 0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_rect
+			(start -1.7 -0.98)
+			(end 1.7 0.98)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+		)
+		(fp_rect
+			(start -1 -0.625)
+			(end 1 0.625)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.5 0.5)
+					(thickness 0.08)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_LOADS")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at 0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "GND")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "76a15009-988e-43b6-90c9-174a81047ba7")
+		(at 575 1700)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b/6d4eb634-2217-51b9-86c5-f0626961b89e")
+		(sheetname "Heater")
+		(sheetfile "Heater.kicad_sch")
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Capacitor_SMD:C_0805_2012Metric"
+		(layer "F.Cu")
+		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)")
+		(tags "capacitor")
+		(property "Reference" "C604"
+			(at 0 -1.68 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "10u / 16V X7R"
+			(at 0 1.68 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.261252 -0.735)
+			(end 0.261252 -0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.261252 0.735)
+			(end 0.261252 0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_rect
+			(start -1.7 -0.98)
+			(end 1.7 0.98)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+		)
+		(fp_rect
+			(start -1 -0.625)
+			(end 1 0.625)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.5 0.5)
+					(thickness 0.08)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+5V_GATE")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at 0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "GND")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "5531b683-69e9-4ff8-bf25-08b8a5cb69fd")
+		(at 625 1700)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b/14c92ec6-7f5f-560c-8e98-1414a00c73ab")
+		(sheetname "Heater")
+		(sheetfile "Heater.kicad_sch")
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Package_TO_SOT_SMD:SOT-23-5"
+		(layer "F.Cu")
+		(descr "SOT, 5 Pin (JEDEC MO-178 Var AA https://www.jedec.org/document_search?search_api_views_fulltext=MO-178)")
+		(tags "SOT TO_SOT_SMD")
+		(property "Reference" "U602"
+			(at 0 -2.4 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "TPS70950DBVR"
+			(at 0 2.4 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "package/gullwing"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.91 -1.56)
+			(end 0.91 -1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.91 -1.51)
+			(end -0.91 -1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.91 1.56)
+			(end -0.91 1.51)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 -1.56)
+			(end 0.91 -1.51)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 -0.39)
+			(end 0.91 0.39)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 1.51)
+			(end 0.91 1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 1.56)
+			(end -0.91 1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_poly
+			(pts
+				(xy -1.45 -1.51)
+				(xy -1.69 -1.84)
+				(xy -1.21 -1.84)
+			)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -2.05 -1.5)
+			(end -1.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -2.05 1.5)
+			(end -2.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 -1.7)
+			(end 1.05 -1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 -1.5)
+			(end -1.05 -1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 1.5)
+			(end -2.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 1.7)
+			(end -1.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 -1.7)
+			(end 1.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 -1.5)
+			(end 2.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 -0.39)
+			(end 1.05 0.39)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 0.39)
+			(end 2.05 0.39)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 1.5)
+			(end 1.05 1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 1.7)
+			(end -1.05 1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 -1.5)
+			(end 2.05 -0.39)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 -0.39)
+			(end 1.05 -0.39)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 0.39)
+			(end 2.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 1.5)
+			(end 1.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_poly
+			(pts
+				(xy -0.4 -1.45)
+				(xy 0.8 -1.45)
+				(xy 0.8 1.45)
+				(xy -0.8 1.45)
+				(xy -0.8 -1.05)
+			)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 90)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.72 0.72)
+					(thickness 0.11)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -1.1375 -0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_LOADS")
+			(pinfunction "VIN_1")
+			(pintype "power_in")
+		)
+		(pad "2" smd roundrect
+			(at -1.1375 0)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "GND")
+			(pinfunction "GND_2")
+			(pintype "power_in")
+		)
+		(pad "3" smd roundrect
+			(at -1.1375 0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+3V3")
+			(pinfunction "EN_3")
+			(pintype "input")
+		)
+		(pad "4" smd roundrect
+			(at 1.1375 0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "unconnected-(U602-NC-Pad4)")
+			(pinfunction "NC_4")
+			(pintype "no_connect")
+		)
+		(pad "5" smd roundrect
+			(at 1.1375 -0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+5V_GATE")
+			(pinfunction "VOUT_5")
+			(pintype "power_out")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "5799cd6c-9ad1-4914-9e7f-8f86936a6577")
+		(at 525 1700)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b/37116a62-6dd2-598a-aa39-83f7e7cbe601")
+		(sheetname "Heater")
+		(sheetfile "Heater.kicad_sch")
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps709.pdf"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "TPS70950DBVR"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C96028"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Capacitor_SMD:C_0805_2012Metric"
+		(layer "F.Cu")
+		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)")
+		(tags "capacitor")
+		(property "Reference" "C903"
+			(at 0 -1.68 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "100n / 50V X7R"
+			(at 0 1.68 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.261252 -0.735)
+			(end 0.261252 -0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.261252 0.735)
+			(end 0.261252 0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_rect
+			(start -1.7 -0.98)
+			(end 1.7 0.98)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+		)
+		(fp_rect
+			(start -1 -0.625)
+			(end 1 0.625)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.5 0.5)
+					(thickness 0.08)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_FUSED")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at 0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "GND")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "d454b9da-21ab-4355-ba5f-2b2d3c88a380")
+		(at 575 1600)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/6794dab0-8f16-5d85-ab54-4527e39061bd")
+		(sheetname "InputPower")
+		(sheetfile "InputPower.kicad_sch")
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Capacitor_SMD:C_0805_2012Metric"
+		(layer "F.Cu")
+		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)")
+		(tags "capacitor")
+		(property "Reference" "C904"
+			(at 0 -1.68 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "220n / 50V X7R"
+			(at 0 1.68 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.261252 -0.735)
+			(end 0.261252 -0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.261252 0.735)
+			(end 0.261252 0.735)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_rect
+			(start -1.7 -0.98)
+			(end 1.7 0.98)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+		)
+		(fp_rect
+			(start -1 -0.625)
+			(end 1 0.625)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.5 0.5)
+					(thickness 0.08)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "/InputPower/REV_VCAP")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at 0.95 0)
+			(size 1 1.45)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_FUSED")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "92ff3dac-3fcf-4744-88d5-7ed681238e7f")
+		(at 625 1600)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/10d6910d-5418-5ef1-814f-aa374c7d8d7d")
+		(sheetname "InputPower")
+		(sheetfile "InputPower.kicad_sch")
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Resistor_SMD:R_0603_1608Metric"
+		(layer "F.Cu")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
+		(tags "resistor")
+		(property "Reference" "R903"
+			(at 0 -1.43 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "0 / gate link"
+			(at 0 1.43 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "SMD_2terminal_chip_molded"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.237258 -0.5225)
+			(end 0.237258 -0.5225)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.237258 0.5225)
+			(end 0.237258 0.5225)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_rect
+			(start -1.48 -0.73)
+			(end 1.48 0.73)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+		)
+		(fp_rect
+			(start -0.8 -0.4125)
+			(end 0.8 0.4125)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.4 0.4)
+					(thickness 0.06)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -0.825 0)
+			(size 0.8 0.95)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "/InputPower/REV_DRIVE")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at 0.825 0)
+			(size 0.8 0.95)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "/InputPower/REV_GATE")
+			(pintype "passive")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "0537fcee-4574-4fdc-a046-c478aad8b264")
+		(at 675 1600)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/059991b8-bdf9-570e-baad-4184a766755b")
+		(sheetname "InputPower")
+		(sheetfile "InputPower.kicad_sch")
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(footprint "Package_TO_SOT_SMD:SOT-23-6"
+		(layer "F.Cu")
+		(descr "SOT, 6 Pin (JEDEC MO-178 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=MO-178)")
+		(tags "SOT TO_SOT_SMD")
+		(property "Reference" "U901"
+			(at 0 -2.4 0)
+			(layer "F.SilkS")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "LM74700QDBVRQ1"
+			(at 0 2.4 0)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "KiLib_Generator" "package/gullwing"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_line
+			(start -0.91 -1.56)
+			(end 0.91 -1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.91 -1.51)
+			(end -0.91 -1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -0.91 1.56)
+			(end -0.91 1.51)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 -1.56)
+			(end 0.91 -1.51)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 1.51)
+			(end 0.91 1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start 0.91 1.56)
+			(end -0.91 1.56)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+		)
+		(fp_poly
+			(pts
+				(xy -1.45 -1.51)
+				(xy -1.69 -1.84)
+				(xy -1.21 -1.84)
+			)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+		)
+		(fp_line
+			(start -2.05 -1.5)
+			(end -1.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -2.05 1.5)
+			(end -2.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 -1.7)
+			(end 1.05 -1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 -1.5)
+			(end -1.05 -1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 1.5)
+			(end -2.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start -1.05 1.7)
+			(end -1.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 -1.7)
+			(end 1.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 -1.5)
+			(end 2.05 -1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 1.5)
+			(end 1.05 1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 1.05 1.7)
+			(end -1.05 1.7)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 -1.5)
+			(end 2.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_line
+			(start 2.05 1.5)
+			(end 1.05 1.5)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+		)
+		(fp_poly
+			(pts
+				(xy -0.4 -1.45)
+				(xy 0.8 -1.45)
+				(xy 0.8 1.45)
+				(xy -0.8 1.45)
+				(xy -0.8 -1.05)
+			)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 90)
+			(layer "F.Fab")
+			(effects
+				(font
+					(size 0.72 0.72)
+					(thickness 0.11)
+				)
+			)
+		)
+		(pad "1" smd roundrect
+			(at -1.1375 -0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "/InputPower/REV_VCAP")
+			(pinfunction "VCAP_1")
+			(pintype "passive")
+		)
+		(pad "2" smd roundrect
+			(at -1.1375 0)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "GND")
+			(pinfunction "GND_2")
+			(pintype "power_in")
+		)
+		(pad "3" smd roundrect
+			(at -1.1375 0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_FUSED")
+			(pinfunction "EN_3")
+			(pintype "input")
+		)
+		(pad "4" smd roundrect
+			(at 1.1375 0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_PROTECTED")
+			(pinfunction "CATHODE_4")
+			(pintype "input")
+		)
+		(pad "5" smd roundrect
+			(at 1.1375 0)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "/InputPower/REV_DRIVE")
+			(pinfunction "GATE_5")
+			(pintype "output")
+		)
+		(pad "6" smd roundrect
+			(at 1.1375 -0.95)
+			(size 1.325 0.6)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(roundrect_rratio 0.25)
+			(net "+12V_FUSED")
+			(pinfunction "ANODE_6")
+			(pintype "power_in")
+		)
+		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-6.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(uuid "a86cdaa0-a7cc-47b3-b656-e82be9fa2ae3")
+		(at 525 1600)
+		(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b/2ae97a6a-b26b-56af-aead-699c5f8dc707")
+		(sheetname "InputPower")
+		(sheetfile "InputPower.kicad_sch")
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "LM74700QDBVRQ1"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C2941042"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69f67ec4-e6e4-46b2-a8b5-ef980fad4fb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
 				)
 			)
 		)
