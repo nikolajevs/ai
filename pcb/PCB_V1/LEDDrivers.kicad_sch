@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - Three independent LED constant-current boost channels")
 		(date "2026-09-26")
-		(rev "0.6-DRAFT")
+		(rev "0.7-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Logic first; power loads not yet implemented")
 	)
@@ -1203,6 +1203,345 @@
 						)
 					)
 					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "GrowBox:NMOS_PowerPAK_Candidate"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Q_NMOS_GDS"
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "N-MOSFET transistor, gate/drain/source"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "NMOS_PowerPAK_Candidate_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.921 0.381) (xy 3.683 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "NMOS_PowerPAK_Candidate_1_1"
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(hide yes)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(hide yes)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10275,7 +10614,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:Q_NMOS_GDS")
+		(lib_id "GrowBox:NMOS_PowerPAK_Candidate")
 		(at 121.92 114.3 0)
 		(unit 1)
 		(body_style 1)
@@ -10341,14 +10680,20 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "4"
 			(uuid "623eff41-36c4-5de7-b042-5f010d10abbb")
 		)
-		(pin "2"
+		(pin "5"
 			(uuid "f25e566f-9c32-5f0b-b14b-48c278faf731")
 		)
-		(pin "3"
+		(pin "1"
 			(uuid "41b8db90-2ca6-582c-a3e2-3a8427792b0b")
+		)
+		(pin "2"
+			(uuid "4cd6a0cb-208f-4e6f-b9d9-ad8fec43b56a")
+		)
+		(pin "3"
+			(uuid "b0aab3bb-56ea-4433-824a-13e66102a321")
 		)
 		(instances
 			(project "PCB_V1"
@@ -10360,7 +10705,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:Q_NMOS_GDS")
+		(lib_id "GrowBox:NMOS_PowerPAK_Candidate")
 		(at 121.92 289.56 0)
 		(unit 1)
 		(body_style 1)
@@ -10426,14 +10771,20 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "4"
 			(uuid "15d85885-3a1c-5eb4-aa4e-f02a70049ff7")
 		)
-		(pin "2"
+		(pin "5"
 			(uuid "b645b455-0b92-5fe9-ba6d-b559227b4dad")
 		)
-		(pin "3"
+		(pin "1"
 			(uuid "51fe9f45-8d0a-5156-b0ac-1023e44c4773")
+		)
+		(pin "2"
+			(uuid "7d0692a6-cadc-4c52-a7e6-76f00e788cc5")
+		)
+		(pin "3"
+			(uuid "59116aad-d58f-4eee-93b8-e9e7c5ce083c")
 		)
 		(instances
 			(project "PCB_V1"
@@ -11310,7 +11661,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:Q_NMOS_GDS")
+		(lib_id "GrowBox:NMOS_PowerPAK_Candidate")
 		(at 121.92 464.82 0)
 		(unit 1)
 		(body_style 1)
@@ -11376,14 +11727,20 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "4"
 			(uuid "b1dba4cf-5efb-5d6a-b7bf-0c0f1dd53c3d")
 		)
-		(pin "2"
+		(pin "5"
 			(uuid "ff6f20ec-58d5-51fe-8d85-355bbeffa848")
 		)
-		(pin "3"
+		(pin "1"
 			(uuid "585b4cfd-dd8d-587b-b082-77e42e39b28d")
+		)
+		(pin "2"
+			(uuid "cf1ac571-b5ad-4009-b8d7-e5aa2cd59b21")
+		)
+		(pin "3"
+			(uuid "571c1014-e413-4e67-8947-a219f77bb516")
 		)
 		(instances
 			(project "PCB_V1"
