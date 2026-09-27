@@ -282,6 +282,7 @@ uint32_t last_watering_day = 0;    // Защита от повторного с�
 unsigned long last_sht_retry = 0;                  // Когда последний раз пытались восстановить датчик
 const unsigned long SHT_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
 int sht_recovery_streak = 0;                       // Счётчик подряд успешных попыток восстановления
+unsigned long last_emergency_log_ms = 0;           // Когда последний раз писали в консоль про аварийный режим (0 = ещё не писали)
 const int SHT_RECOVERY_STREAK_NEEDED = 3;          // Сколько подряд удачных попыток нужно, чтобы снова доверять датчику
 unsigned long last_rtc_retry = 0;                  // Когда последний раз пытались восстановить RTC
 const unsigned long RTC_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
@@ -789,6 +790,63 @@ bool isWaterAvailable() {
   return digitalRead(WATER_LEVEL_PIN) == LOW;
 }
 
+// --- Диагностика I2C и SHT4x. Всё пишется в веб-консоль, чтобы причину отказа было видно без USB ---
+
+// Какие устройства отвечают на шине. Печатается при каждом старте и при отказе датчика.
+void logI2CScan() {
+  String found;
+  int count = 0;
+  bool sawSht = false, sawShtB = false;
+  for (uint8_t addr = 0x08; addr < 0x78; addr++) {
+    Wire.beginTransmission(addr);
+    if (Wire.endTransmission() != 0) continue;
+    const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" :
+                       addr == 0x68 ? " (DS3231)" : addr == 0x57 ? " (EEPROM модуля RTC)" : "";
+    char item[40];
+    snprintf(item, sizeof(item), " 0x%02X%s", addr, name);
+    found += item;
+    count++;
+    if (addr == 0x44) sawSht = true;
+    if (addr == 0x45) sawShtB = true;
+  }
+  String line = "[I2C] Отвечают устройств: " + String(count);
+  if (count) { line += ":"; line += found; }
+  logPrintln(line);
+  if (sawShtB && !sawSht) {
+    logPrintln("[I2C] На 0x45 отвечает устройство — похоже на SHT4x варианта B (-BD1B). Прошивка ищет датчик на 0x44.");
+  }
+}
+
+// Adafruit getEvent() на любую ошибку отвечает одним false. Здесь то же измерение
+// делается вручную, и в лог пишется, на каком шаге оно ломается: нет ответа,
+// короткое чтение, ошибка CRC или значения вне рабочего диапазона.
+void logSht4xDiagnosis() {
+  const uint8_t addr = 0x44;
+  Wire.beginTransmission(addr);
+  Wire.write(uint8_t(0xFD)); // Измерение с высокой точностью, как у Adafruit по умолчанию
+  uint8_t err = Wire.endTransmission();
+  if (err != 0) {
+    // 2 — адрес не подтверждён (датчика не слышно на шине), 5 — таймаут, 4 — прочее
+    logPrintf("[SHT4x] Диагностика: нет ответа на 0x44 (код I2C %u)\n", (unsigned)err);
+    return;
+  }
+  delay(10);
+  uint8_t raw[6] = {0};
+  size_t n = Wire.requestFrom(addr, size_t(6), true);
+  for (size_t i = 0; i < n && i < sizeof(raw); i++) raw[i] = Wire.read();
+  if (n != 6) {
+    logPrintf("[SHT4x] Диагностика: команда принята, но прочитано %u байт из 6\n", (unsigned)n);
+    return;
+  }
+  bool crcT = sensirionCrc8(raw, 2) == raw[2];
+  bool crcH = sensirionCrc8(raw + 3, 2) == raw[5];
+  float t = -45.0f + 175.0f * (float)((raw[0] << 8) | raw[1]) / 65535.0f;
+  float h = -6.0f + 125.0f * (float)((raw[3] << 8) | raw[4]) / 65535.0f;
+  logPrintf("[SHT4x] Диагностика: %02X %02X %02X %02X %02X %02X, CRC %s/%s, T=%.2f RH=%.2f\n",
+            raw[0], raw[1], raw[2], raw[3], raw[4], raw[5],
+            crcT ? "ok" : "ОШИБКА", crcH ? "ok" : "ОШИБКА", t, h);
+}
+
 // Do not use rtc.now() for failure detection: its API does not report I2C errors.
 bool readRTC(DateTime &result) {
   uint8_t raw[7];
@@ -997,7 +1055,10 @@ void setup() {
       delay(200);
     }
   }
-  if (!state.sht_online) logPrintln("ОШИБКА: SHT4x не найден после 5 попыток!");
+  if (!state.sht_online) {
+    logPrintln("ОШИБКА: SHT4x не найден после 5 попыток!");
+    logSht4xDiagnosis();
+  }
 
   state.rtc_online = false;
   for (int i = 0; i < 5 && !state.rtc_online; i++) {
@@ -1016,6 +1077,7 @@ void setup() {
     logPrintln("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
     last_rtc_check_ms = millis();
   }
+  logI2CScan(); // Одна строка при каждом старте: кто вообще отвечает на шине
 
   if (!SD.begin(SD_CS_PIN)) logPrintln("SD-карта не обнаружена.");
   if (!SPIFFS.begin(true)) logPrintln("Ошибка SPIFFS!");
@@ -1306,9 +1368,16 @@ void loop() {
         // Защита от "зависших" нереалистичных данных (за пределами работы датчика)
         if (read_temp < -20.0 || read_temp > 80.0 || read_hum < 0.0 || read_hum > 100.0) {
           state.sht_online = false;
+          logPrintf("[SHT4x] Показания вне рабочего диапазона: T=%.2f RH=%.2f\n", read_temp, read_hum);
         }
       } else {
         state.sht_online = false;
+        logPrintln("[SHT4x] Датчик перестал отвечать (getEvent вернул ошибку).");
+      }
+      if (!state.sht_online) {
+        // Причину пишем один раз, в момент отказа, — дальше её подтверждают попытки восстановления
+        logSht4xDiagnosis();
+        logI2CScan();
       }
     }
 
@@ -1331,10 +1400,12 @@ void loop() {
           read_temp = retryTemp.temperature;
           read_hum = retryHumidity.relative_humidity;
           sht_recovery_streak = 0;
+          last_emergency_log_ms = 0; // Следующий отказ снова будет залогирован сразу
           logPrintln("[SHT4x] Датчик восстановлен, выходим из аварийного режима.");
         }
       } else {
         sht_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
+        logSht4xDiagnosis();     // Раз в 30 секунд — на каком шаге датчик по-прежнему не отвечает
       }
     }
 
@@ -1356,7 +1427,12 @@ void loop() {
       state.heater_active = false;
       digitalWrite(HEATER_PIN, LOW);
 
-      logPrintln("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
+      // Раньше эта строка писалась каждые 10 секунд и за пару минут вытесняла из 4-килобайтной
+      // веб-консоли всё остальное — включая сообщения о том, почему датчик отказал
+      if (last_emergency_log_ms == 0 || currentMillis - last_emergency_log_ms >= 300000) {
+        last_emergency_log_ms = currentMillis;
+        logPrintln("[АВАРИЙНЫЙ РЕЖИМ]: Отказ SHT4x! Климат зафиксирован на безопасных уровнях.");
+      }
     }
     else {
       // --- НОРМАЛЬНАЯ РАБОТА ---
@@ -1425,8 +1501,12 @@ void loop() {
     target_fan1 = clampInt(target_fan1, 0, 255);
     target_fan2 = clampInt(target_fan2, 0, 255);
 
-    state.temp = read_temp;
-    state.hum = read_hum;
+    // Храним только валидные показания: иначе значения вне диапазона (из-за которых датчик
+    // и признан отказавшим) уезжали в CSV и становились "последним известным" для следующего цикла
+    if (state.sht_online) {
+      state.temp = read_temp;
+      state.hum = read_hum;
+    }
     state.led_pwm = target_led;
     state.fan1_pwm = target_fan1;
     state.fan2_pwm = target_fan2;

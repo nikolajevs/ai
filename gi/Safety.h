@@ -23,6 +23,16 @@ constexpr bool wateringDayAllowed(bool clockTrusted, uint32_t today, uint32_t la
   return clockTrusted && today > lastDay;
 }
 
+// Sensirion CRC-8 (SHT4x datasheet: polynomial 0x31, init 0xFF).
+constexpr uint8_t sensirionCrc8(const uint8_t *data, int len) {
+  uint8_t crc = 0xFF;
+  for (int i = 0; i < len; ++i) {
+    crc ^= data[i];
+    for (int bit = 0; bit < 8; ++bit) crc = (crc & 0x80) ? uint8_t((crc << 1) ^ 0x31) : uint8_t(crc << 1);
+  }
+  return crc;
+}
+
 struct RtcFields { int year, month, day, hour, minute, second; };
 
 // DS3231 register format. Reject OSF, malformed BCD and impossible calendar dates.
