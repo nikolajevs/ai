@@ -2232,7 +2232,7 @@
 			)
 		)
 	)
-	(text "Разомкнутый вход/обрыв кабеля = нет воды.\nLOW ~0.30 V; фильтр + программный debounce 20..50 ms.\nJ302: WAGO 2601-1102; совместимость DA803R сверить по чертежу."
+	(text "Разомкнутый вход/обрыв кабеля = нет воды.\\nLOW ~0.30 V; фильтр + программный debounce 20..50 ms.\\nJ302: винтовая клемма 3.5 мм DORABO DB125-3.5-2P-GN-S."
 		(exclude_from_sim no)
 		(at 20.32 268 0)
 		(effects
@@ -5499,7 +5499,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "FLOAT / WAGO 2601"
+		(property "Value" "FLOAT / 3.5 mm"
 			(at 173.99 241.3 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5510,7 +5510,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
 			(at 193.04 247.65 0)
 			(hide yes)
 			(show_name no)
@@ -5556,6 +5556,39 @@
 					(reference "J302")
 					(unit 1)
 				)
+			)
+		)
+	
+		(property "LCSC" "C466970"
+			(at 193.04 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "DB125-3.5-2P-GN-S"
+			(at 193.04 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "DORABO"
+			(at 193.04 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)

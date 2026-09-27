@@ -5,9 +5,9 @@
 	(uuid "7c30e6d8-4e60-4647-b4d3-d05e639d6467")
 	(paper "A4")
 	(title_block
-		(title "01 - Logic power / 12 V to 3.3 V")
-		(date "2026-09-26")
-		(rev "0.4-DRAFT")
+		(title "01 - Logic power / 12 V aux to 3.3 V")
+		(date "2026-09-27")
+		(rev "0.14-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -944,7 +944,7 @@
 		)
 		(uuid "53e7dfe3-5fc4-53e4-8eb6-d7e84fc07e28")
 	)
-	(text "ПИТАНИЕ ЛОГИКИ  /  12 V -> 3.3 V"
+	(text "ПИТАНИЕ ЛОГИКИ  /  +12V (aux buck, лист 06) -> 3.3 V"
 		(exclude_from_sim no)
 		(at 20.32 17.78 0)
 		(effects
@@ -1500,7 +1500,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 25.4 170.18 0)
 		(effects
@@ -1632,7 +1632,7 @@
 			)
 		)
 	)
-	(global_label "+12V_PROTECTED"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 25.4 50.8 0)
 		(effects
@@ -2557,7 +2557,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "+12V_PROTECTED"
+		(property "Value" "+12V"
 			(at 28.4 166.37 0)
 			(show_name no)
 			(do_not_autoplace no)

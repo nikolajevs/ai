@@ -5,9 +5,9 @@
 	(uuid "fbefa5e5-8dfd-5c02-aec7-34a843963d8a")
 	(paper "A3")
 	(title_block
-		(title "04 - Fans and pump")
-		(date "2026-09-26")
-		(rev "0.4-DRAFT")
+		(title "04 - Fans (12 V aux) and pump (24 V)")
+		(date "2026-09-27")
+		(rev "0.14-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -1572,7 +1572,7 @@
 		)
 		(uuid "36f7a621-f554-5fa4-a6b4-9b8cf9e3cea6")
 	)
-	(text "Flyback: катод к +12V, анод к PUMP_DRAIN.\nQ521 управляется 3.3V, НЕ драйвером 12V.\nR209 на MCU удерживает PUMP_EN=LOW при reset.\nПроверить пуск/заклинивание помпы и нагрев на макете."
+	(text "Flyback D521 SS36 (60 V): катод к +24V_LOADS, анод к PUMP_DRAIN.\nQ521 AO3422 (55 V) управляется 3.3V от GPIO.\nR209 на MCU удерживает PUMP_EN=LOW при reset.\nПроверить пуск/заклинивание помпы 24 В."
 		(exclude_from_sim no)
 		(at 20.32 265.43 0)
 		(effects
@@ -1583,7 +1583,7 @@
 		)
 		(uuid "43f81e76-36bb-59b4-b553-22f12ff81f70")
 	)
-	(text "0.3 DRAFT. Питание +12V_PROTECTED условное: входная защита и предохранители ещё не разработаны."
+	(text "0.14 DRAFT. Вентиляторы от +12V (aux buck, лист 06); помпа от +24V_LOADS (F902)."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -1594,7 +1594,7 @@
 		)
 		(uuid "48367ee0-7335-55a6-a655-bd9f1e0b8d24")
 	)
-	(text "03  НАСОС / 12 V / 0.5 A / ON-OFF"
+	(text "03  НАСОС / 24 V / ON-OFF"
 		(exclude_from_sim no)
 		(at 20.32 168.91 0)
 		(effects
@@ -1649,7 +1649,7 @@
 		)
 		(uuid "de9e8b5c-a3c7-5ae6-9dc8-4c2bfb0eaf27")
 	)
-	(text "ВЫХОДЫ / ДВА 4-WIRE FAN + НАСОС 12 V"
+	(text "ВЫХОДЫ / ДВА 4-WIRE FAN 12 V + НАСОС 24 V"
 		(exclude_from_sim no)
 		(at 20.32 15.24 0)
 		(effects
@@ -2482,7 +2482,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 355.6 60.96 0)
 		(effects
@@ -2504,7 +2504,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+24V_LOADS"
 		(shape bidirectional)
 		(at 154.94 228.6 0)
 		(effects
@@ -2614,7 +2614,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+12V"
 		(shape bidirectional)
 		(at 157.48 60.96 0)
 		(effects
@@ -2636,7 +2636,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+24V_LOADS"
 		(shape bidirectional)
 		(at 160.02 191.77 0)
 		(effects
@@ -2680,7 +2680,7 @@
 			)
 		)
 	)
-	(global_label "+12V_LOADS"
+	(global_label "+24V_LOADS"
 		(shape bidirectional)
 		(at 101.6 234.95 0)
 		(effects
@@ -2998,7 +2998,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SS34-E3/57T"
+		(property "Value" "SS36-E3/57T"
 			(at 154.94 214.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3057,6 +3057,39 @@
 				)
 			)
 		)
+	
+		(property "LCSC" "C35722"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "SS36-E3/57T"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "Vishay"
+			(at 154.94 219.71 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -3080,7 +3113,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "FAN1 / WAGO 2601"
+		(property "Value" "FAN1 / 3.5 mm"
 			(at 160.02 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3091,7 +3124,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
 			(at 182.88 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3143,6 +3176,39 @@
 					(reference "J501")
 					(unit 1)
 				)
+			)
+		)
+	
+		(property "LCSC" "C2757925"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "DB125-3.5-4P-GN-S"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "DORABO"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3502,7 +3568,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PUMP + / switched -"
+		(property "Value" "PUMP + / switched - (3.5 mm)"
 			(at 165.1 184.15 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3513,7 +3579,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1102_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
 			(at 185.42 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -3561,6 +3627,39 @@
 				)
 			)
 		)
+	
+		(property "LCSC" "C466970"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "DB125-3.5-2P-GN-S"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "DORABO"
+			(at 185.42 191.77 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -3584,7 +3683,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "FAN2 / WAGO 2601"
+		(property "Value" "FAN2 / 3.5 mm"
 			(at 358.14 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3595,7 +3694,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_WAGO:TerminalBlock_WAGO_2601-1104_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
 			(at 381 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3647,6 +3746,39 @@
 					(reference "J511")
 					(unit 1)
 				)
+			)
+		)
+	
+		(property "LCSC" "C2757925"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "DB125-3.5-4P-GN-S"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "DORABO"
+			(at 381 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -4088,7 +4220,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u / 25V X7R"
+		(property "Value" "10u / 50V X7R"
 			(at 104.6 245.11 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4147,6 +4279,39 @@
 				)
 			)
 		)
+	
+		(property "LCSC" "C77102"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "GRM32ER71H106KA12L"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "Murata"
+			(at 101.6 243.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Transistor_FET:AO3400A")
@@ -4170,7 +4335,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3400A"
+		(property "Value" "AO3422"
 			(at 106.68 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4230,6 +4395,39 @@
 					(reference "Q521")
 					(unit 1)
 				)
+			)
+		)
+	
+		(property "LCSC" "C37130"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "AO3422"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "AOS"
+			(at 101.6 208.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)

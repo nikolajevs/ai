@@ -16,13 +16,14 @@ CHANNELS = [
     dict(n=1, led_r=.182, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
          l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4,
          diode='STPS5H100B-TR', diode_vf=.85, diode_a=.51, diode_b=.02),
-    dict(n=2, led_r=.80, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
-         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=2,
-         diode='STPS2H100AFY', diode_vf=.88, diode_a=.56, diode_b=.045),
-    dict(n=3, led_r=.80, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
-         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=2,
+    # CH2 drives the two identical LED bars (J721 || J731), 0.5 A total.
+    dict(n=2, led_r=.40, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
+         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=3,
          diode='STPS2H100AFY', diode_vf=.88, diode_a=.56, diode_b=.045),
 ]
+# LED rail voltage at the AL8853 VIN pins: 24 V PSU set point, 25 V ceiling,
+# -10 % allowance for PSU tolerance, cable, fuse and connector drops.
+VIN_CASES = (21.6, 24.0, 25.0)
 CAP_MPN = 'CL32Y106KCV6PNE'
 # Samsung typical curve, 25 C, 1 kHz/1 Vrms; rounded DOWN at 49 V.
 # 49 V covers 48 V LED + FB voltage. These are design allowances, not
@@ -36,14 +37,14 @@ def check_schematic(path):
     for ch in CHANNELS:
         n = ch['n']
         expected = {f'L7{n}1': '47u', f'R7{n}5': str(ch['cs_r']),
-                    f'R7{n}6': '0.182' if n == 1 else '0.80',
+                    f'R7{n}6': '0.182' if n == 1 else '0.40',
                     f'R7{n}2': '1k' if n == 1 else '2.7k'}
         for ref, value in expected.items():
             assert comps[ref].findtext('value').split()[0] == value, (ref, value)
         assert comps[f'D7{n}1'].findtext('value') == ch['diode']
         fields = {f.get('name'): f.text for f in comps[f'L7{n}1'].findall('fields/field')}
         assert fields.get('MPN') == ch['l_mpn'], (n, 'inductor MPN')
-        cap_refs = [f'C7{n}6', f'C7{n}7'] + (['C718', 'C719'] if n == 1 else [])
+        cap_refs = [f'C7{n}6', f'C7{n}7'] + (['C718', 'C719'] if n == 1 else ['C728'])
         for ref in cap_refs:
             assert comps[ref].findtext('value') == '10u 100V X7S'
             fields = {f.get('name'): f.text for f in comps[ref].findall('fields/field')}
@@ -106,19 +107,21 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.12 LED sizing estimates',
+    out = ['PCB_V1 v0.14 LED sizing estimates (24 V input, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
-           'VIN 10.8/12/13.2 V at the LED rail; LED Vf 40/44/48 V;',
+           'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',
            'L -20% initial plus bias allowance; winding resistance at 100 C.', '']
     for ch in CHANNELS:
         cases = [estimate(ch, *p) for p in itertools.product(
-            (10.8, 12, 13.2), (40, 44, 48), (110e3, 130e3), (.85, .90), (False, True))]
+            VIN_CASES, (40, 44, 48), (110e3, 130e3), (.85, .90), (False, True))]
         hi = lambda k: max(c[k] for c in cases if c[k] is not None)
         lo = lambda k: min(c[k] for c in cases if c[k] is not None)
         assert hi('peak') < ch['isat'], 'Normal peak exceeds selected Isat point'
         assert hi('il_rms') < ch['irms'], 'Normal RMS exceeds selected thermal rating'
-        assert hi('ratio') < 1, 'CCM subharmonic screening failed'
+        ratios = [c['ratio'] for c in cases if c['ratio'] is not None]
+        assert not ratios or max(ratios) < 1, 'CCM subharmonic screening failed'
+        ratio_txt = f'{max(ratios):.3f} (<1; typical ramp only)' if ratios else 'n/a (all cases DCM)'
         assert lo('headroom') > 0, 'Estimated minimum OCP clips normal peak'
         assert hi('ocp_high') < ch['isat'], 'Estimated operating-duty OCP exceeds Isat'
         out += [f"CH{ch['n']}: {ch['l_mpn']}; {len(cases)} cases; "
@@ -127,7 +130,7 @@ def report():
                 f"  L effective allowance {47*.8*ch['l_bias']:.2f} uH; "
                 f"Ipeak max {hi('peak'):.3f} A; ILrms max {hi('il_rms'):.3f} A",
                 f"  IQrms max {hi('iq_rms'):.3f} A; IDrms max {hi('id_rms'):.3f} A",
-                f"  CCM subharmonic ratio max {hi('ratio'):.3f} (<1; typical ramp only)",
+                f"  CCM subharmonic ratio max {ratio_txt}",
                 f"  OCP estimate {lo('ocp_low'):.3f}..{hi('ocp_high'):.3f} A; "
                 f"minimum paired peak headroom {lo('headroom'):.3f} A",
                 f"  Winding copper loss at 100 C max {hi('p_copper_100c'):.3f} W "
