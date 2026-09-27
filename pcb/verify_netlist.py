@@ -32,11 +32,11 @@ groups = [
     [('U201', 35), ('R205', 1)], [('R205', 2), ('J201', 3)],
     [('U201', 34), ('R206', 2)], [('R206', 1), ('J201', 4)],
     [('R204', 2), ('J201', 2)], [('R204', 1), ('U201', 2)],
-    [('U201', 33), ('U301', 15), ('R301', 2), ('R303', 1)],
-    [('U201', 36), ('U301', 16), ('R302', 2), ('R304', 1)],
-    [('U301', 14), ('BT301', 1)],
+    [('U201', 33), ('U301', 7), ('R301', 2), ('R303', 1)],
+    [('U201', 36), ('U301', 8), ('R302', 2), ('R304', 1)],
+    [('U301', 6), ('BT301', 1)],
     [('U301', 2), ('C301', 1), ('U201', 2)],
-    [('U301', 13), ('BT301', 2)] + [('U301', pin) for pin in range(5, 13)],
+    [('U301', 5), ('BT301', 2)],
     [('J301', 1), ('F301', 2), ('C302', 1)],
     [('J301', 2), ('J302', 2), ('U201', 1)],
     [('J301', 3), ('R303', 2), ('D301', 1)],
@@ -100,7 +100,8 @@ returns = []
 for idx in (1, 2, 3):
     r = lambda kind, n: f'{kind}7{idx}{n}'
     u, q, l, d, j = (r(k, n) for k, n in [('U',0),('Q',1),('L',1),('D',1),('J',1)])
-    gate, drain, sources = (4, 5, [1, 2, 3]) if idx == 1 else (1, 2, [3])
+    # PowerPAK and the NexFET footprint both aggregate drain contacts as pad 5.
+    gate, drain, sources = 4, 5, [1, 2, 3]
     groups += [
         [(u, 1), (r('C',1), 1), (r('C',5), 1), (l, 1), ('F903', 2)],
         [(u, 2), (r('R',1), 1)],
@@ -128,7 +129,7 @@ for group in groups:
     assert expected <= actual, (name, expected - actual)
 
 # Battery must never share a power net with the 3.3 V rail or peripheral supply.
-assert net_of('BT301', 1)[1] == {('BT301', '1'), ('U301', '14')}
+assert net_of('BT301', 1)[1] == {('BT301', '1'), ('U301', '6')}
 assert net_of('J201', 2)[0] != net_of('U201', 2)[0]
 assert net_of('U101', 2)[0] != net_of('U201', 2)[0]
 

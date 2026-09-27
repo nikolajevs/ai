@@ -8,4 +8,4 @@ The project is in schematic development. The PCB is not routed and is not ready 
 
 Target: external 12 V supply, <=100 x 100 mm, four copper layers, mixed SMT/THT, ESP32-WROOM-32E, one 100 W PTC, two four-wire PC fans, one 12 V pump, three constant-current LED outputs with common dimming and <=80 W combined output.
 
-Current cost-down revision: three AL8853 LED controllers; total component cost target <=USD30, not yet met or quoted. See PCB_V1/LED_COST_DOWN.md.
+Current revision 0.11: three AL8853 LED controllers, DS3231MZ+TRL RTC, CSD19538Q3A strip-channel MOSFETs. Around USD30 is a cost-control guide, not a hard cap; the complete BOM has not been priced. See PCB_V1/LED_COST_DOWN.md.

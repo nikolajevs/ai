@@ -8,7 +8,7 @@ F902,1,Loads fuse,20A fuse MPN pending,footprint pending,VERIFY,20A preliminary
 F903,1,LED fuse,10A fuse MPN pending,footprint pending,VERIFY,10A preliminary
 U710/U720/U730,3,LED boost controller,AL8853S-13,SOIC-8 3.9x4.9 P1.27,PROTOTYPE,LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot
 Q711,1,Panel boost MOSFET,SiR106ADP-T1-RE3,PowerPAK_SO-8_Single,PROTOTYPE,Gate drive and thermal validation pending
-Q721/Q731,2,Strip boost MOSFET,DMT10H009LK3-13,GrowBox:Diodes_TO252_DMT10H009LK3,PROTOTYPE,LCSC C6540284 USD1.3242 each; G1 D2 S3; 100V; verify switching losses
+Q721/Q731,2,Strip boost MOSFET,TI CSD19538Q3A,GrowBox:TI_DNH0008A_CSD19538Q3A,PROTOTYPE,LCSC C478471 USD1.0754 each; S1/2/3 G4 D5 aggregated; 100V; verify gate drive and temperature
 D711/D721/D731,3,Boost diode,100V 5A Schottky MPN pending,SMC placeholder,VERIFY,Previous STPS5H100SF package was incompatible; qualify exact part
 L711,1,Panel boost inductor,47uH Isat>=14A Irms>=7A MPN pending,SRP1245A PLACEHOLDER,VERIFY,Existing footprint is not a qualified 47uH part; reselect for 120kHz
 L721/L731,2,Strip boost inductor,100uH Isat>=5A Irms>=2A MPN pending,SRP1245A PLACEHOLDER,VERIFY,Recalculate with inductance under bias and temperature
@@ -19,7 +19,7 @@ U601,1,PTC gate driver,UCC27524ADR,SOIC-8,CANDIDATE,Channel A
 Q501/Q511/Q521,3,Fan/pump MOSFET,AO3400A,SOT-23,CANDIDATE,Verify pump startup
 D521,1,Pump flyback,SS34-E3/57T,SMC,CANDIDATE,Verify stall current
 U201,1,MCU,ESP32-WROOM-32E-N4,RF module,CANDIDATE,Firmware GPIO adaptation required
-U301,1,RTC,DS3231SN#,SOIC-16W,CANDIDATE,No CR2032 charging
+U301,1,RTC,DS3231MZ+TRL,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,PROTOTYPE,LCSC C107410 USD3.2976; existing RTC code compatible; CR2032 to VBAT6 without charging
 J401,1,microSD,Molex 104031-0811,microSD,CANDIDATE,4MHz initial SPI
 J301,1,SHT4x connector,JST XH B4B-XH-A,JST-XH 2.50,CANDIDATE,0.5m cable and 100kHz I2C
 BT301,1,RTC battery holder,Keystone 3002,CR2032 THT,CANDIDATE,No charger

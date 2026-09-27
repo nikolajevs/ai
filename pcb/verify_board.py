@@ -14,21 +14,37 @@ for net in root.findall('.//nets/net'):
   key=(node.get('ref'),node.get('pin'));nodes[key]=net.get('name')
   pads=[p for p in fps[key[0]].Pads() if p.GetNumber()==key[1]]
   assert pads and all(p.GetNetname()==net.get('name') for p in pads),key
-for ref in ['Q901','Q711','Q721','Q731','Q601']:
+for ref in ['U301','Q901','Q711','Q721','Q731','Q601']:
  for pad in fps[ref].Pads():
   number=pad.GetNumber()
   if number:assert (ref,number) in nodes and pad.GetNetname()==nodes[(ref,number)],(ref,number)
- source_pins, gate, drain = (['3'], '1', '2') if ref in ['Q721','Q731'] else (['1','2','3'], '4', '5')
+ if ref == 'U301':continue
+ source_pins, gate, drain = ['1','2','3'], '4', '5'
  source=[nodes[(ref,n)] for n in source_pins]
  assert len(set(source))==1,(ref,'source pads differ')
  assert len({source[0],nodes[(ref,gate)],nodes[(ref,drain)]})==3,(ref,'G/D/S short')
 print(f'PASS: {len(fps)} footprints, {len(nodes)} nodes; every numbered power MOSFET pad checked')
 
-# Pin mapping and copper dimensions from Diodes DS42130 Rev3 p6.
+# TI SLPS583B top view: S1/2/3, G4, D5/6/7/8 plus exposed drain.
+# Project DNH0008A footprint combines all drain copper under number 5.
 for ref in ['Q721','Q731']:
- pads={p.GetNumber():p for p in fps[ref].Pads() if p.GetNumber()}
- assert set(pads)=={'1','2','3'}, (ref,'DPAK pin count')
- for number, size in {'1':(1.06,2.6),'2':(5.632,5.7),'3':(1.06,2.6)}.items():
-  got=pads[number].GetSize()
+ pads={}
+ for p in fps[ref].Pads():
+  if p.GetNumber():pads.setdefault(p.GetNumber(),[]).append(p)
+ assert str(fps[ref].GetFPID().GetLibItemName())=='TI_DNH0008A_CSD19538Q3A'
+ assert fps[ref].GetValue()=='CSD19538Q3A'
+ assert set(pads)=={'1','2','3','4','5'}, (ref,'NexFET pin count')
+ for number in ['1','2','3','4']:
+  assert len(pads[number])==1
+  got=pads[number][0].GetSize();size=(.7,.4)
   assert abs(pcbnew.ToMM(got.x)-size[0])<0.001 and abs(pcbnew.ToMM(got.y)-size[1])<0.001,(ref,number,'pad geometry')
-print('PASS: DPAK G1/D2/S3 pin mapping and manufacturer copper dimensions')
+ assert len(pads['5'])==5, (ref,'drain core plus four connected fingers')
+ sizes=sorted((round(pcbnew.ToMM(p.GetSize().x),4),round(pcbnew.ToMM(p.GetSize().y),4)) for p in pads['5'])
+ assert sizes==[(.835,.4)]*4+[(1.875,2.55)],(ref,'drain geometry')
+ for ps in pads.values():
+  for p in ps:
+   assert abs(pcbnew.ToMM(p.GetLocalSolderMaskMargin())+.05)<.001,(ref,'mask-defined land')
+assert str(fps['U301'].GetFPID().GetLibItemName())=='SOIC-8_3.9x4.9mm_P1.27mm'
+assert fps['U301'].GetValue()=='DS3231MZ+TRL'
+assert {p.GetNumber() for p in fps['U301'].Pads()}==set('12345678')
+print('PASS: NexFET S1/2/3 G4 D5 and SOIC-8 RTC package/pin mapping')

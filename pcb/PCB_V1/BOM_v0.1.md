@@ -1,6 +1,6 @@
-# PCB_V1 — подбор компонентов, ревизия 0.10
+# PCB_V1 — подбор компонентов, ревизия 0.11
 
-Цель пользователя: компоненты одной платы до $30, без PCB и внешнего БП. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
+Ориентир пользователя: компоненты одной платы около $30, без PCB и внешнего БП. Это не жёсткий предел: задача — контролировать стоимость при достаточном запасе. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
 
 LT3756 исключён из активной схемы. Текущий световой каскад — три AL8853S-13. История прежних вариантов сохранена в Git.
 
@@ -15,7 +15,7 @@ LT3756 исключён из активной схемы. Текущий све�
 | F903 | 1 | LED fuse | 10A fuse MPN pending | footprint pending | VERIFY | 10A preliminary |
 | U710/U720/U730 | 3 | LED boost controller | AL8853S-13 | SOIC-8 3.9x4.9 P1.27 | PROTOTYPE | LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot |
 | Q711 | 1 | Panel boost MOSFET | SiR106ADP-T1-RE3 | PowerPAK_SO-8_Single | PROTOTYPE | Gate drive and thermal validation pending |
-| Q721/Q731 | 2 | Strip boost MOSFET | DMT10H009LK3-13 | GrowBox:Diodes_TO252_DMT10H009LK3 | PROTOTYPE | LCSC C6540284; $1.3242/шт.; G1/D2/S3; проверить переключение |
+| Q721/Q731 | 2 | Strip boost MOSFET | TI CSD19538Q3A | VSON-8 3.3×3.3 NexFET | PROTOTYPE | LCSC C478471; $1.0754/шт.; S1/2/3 G4 D5 объединён; проверить VGS и нагрев |
 | D711/D721/D731 | 3 | Boost diode | 100V 5A Schottky MPN pending | SMC placeholder | VERIFY | Previous STPS5H100SF package was incompatible; qualify exact part |
 | L711 | 1 | Panel boost inductor | 47uH Isat>=14A Irms>=7A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Existing footprint is not a qualified 47uH part; reselect for 120kHz |
 | L721/L731 | 2 | Strip boost inductor | 100uH Isat>=5A Irms>=2A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Recalculate with inductance under bias and temperature |
@@ -26,7 +26,7 @@ LT3756 исключён из активной схемы. Текущий све�
 | Q501/Q511/Q521 | 3 | Fan/pump MOSFET | AO3400A | SOT-23 | CANDIDATE | Verify pump startup |
 | D521 | 1 | Pump flyback | SS34-E3/57T | SMC | CANDIDATE | Verify stall current |
 | U201 | 1 | MCU | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Firmware GPIO adaptation required |
-| U301 | 1 | RTC | DS3231SN# | SOIC-16W | CANDIDATE | No CR2032 charging |
+| U301 | 1 | RTC | DS3231MZ+TRL | SOIC-8 3.9×4.9 P1.27 | PROTOTYPE | LCSC C107410; $3.2976; RTC-код совместим; CR2032 -> VBAT6, без зарядки |
 | J401 | 1 | microSD | Molex 104031-0811 | microSD | CANDIDATE | 4MHz initial SPI |
 | J301 | 1 | SHT4x connector | JST XH B4B-XH-A | JST-XH 2.50 | CANDIDATE | 0.5m cable and 100kHz I2C |
 | BT301 | 1 | RTC battery holder | Keystone 3002 | CR2032 THT | CANDIDATE | No charger |
