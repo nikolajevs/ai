@@ -21,6 +21,9 @@ static_assert(elapsedMs(29999, 0) < 30000, "pump must run for requested duration
 static_assert(elapsedMs(30000, 0) >= 30000, "pump must stop at deadline");
 static_assert(elapsedMs(0x20, 0xfffffff0) == 48, "millis wrap must be safe");
 
+constexpr uint8_t kSensirionCrcExample[2] = {0xBE, 0xEF};
+static_assert(sensirionCrc8(kSensirionCrcExample, 2) == 0x92, "SHT4x CRC must match the datasheet example");
+
 constexpr bool backupRegression() {
   uint32_t anchor = 21600000, timestamp = 1775000000;
   advanceBackupClock(21601500, anchor, timestamp);
