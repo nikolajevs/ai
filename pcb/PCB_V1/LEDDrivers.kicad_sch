@@ -10635,7 +10635,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100 V N-MOSFET / MPN pending"
+		(property "Value" "Si7454DDP-T1-GE3"
 			(at 121.92 104.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10646,7 +10646,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:PowerPAK_SO-8L_Single"
+		(property "Footprint" "Package_SO:PowerPAK_SO-8_Single"
 			(at 121.92 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10658,7 +10658,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/67883/si7454ddp.pdf"
 			(at 121.92 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10726,7 +10726,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100 V N-MOSFET / MPN pending"
+		(property "Value" "Si7454DDP-T1-GE3"
 			(at 121.92 279.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10737,7 +10737,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:PowerPAK_SO-8L_Single"
+		(property "Footprint" "Package_SO:PowerPAK_SO-8_Single"
 			(at 121.92 289.56 0)
 			(hide yes)
 			(show_name no)
@@ -10749,7 +10749,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/67883/si7454ddp.pdf"
 			(at 121.92 289.56 0)
 			(hide yes)
 			(show_name no)
@@ -11682,7 +11682,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100 V N-MOSFET / MPN pending"
+		(property "Value" "Si7454DDP-T1-GE3"
 			(at 121.92 454.66 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11693,7 +11693,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:PowerPAK_SO-8L_Single"
+		(property "Footprint" "Package_SO:PowerPAK_SO-8_Single"
 			(at 121.92 464.82 0)
 			(hide yes)
 			(show_name no)
@@ -11705,7 +11705,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.vishay.com/docs/67883/si7454ddp.pdf"
 			(at 121.92 464.82 0)
 			(hide yes)
 			(show_name no)

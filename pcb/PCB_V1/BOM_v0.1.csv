@@ -7,12 +7,12 @@ F901,1,Input fuse,Bourns SF-2923HC-C 25A variant,footprint pending,VERIFY,Exact 
 F902,1,Loads fuse,20A fuse MPN pending,footprint pending,VERIFY,20A preliminary
 F903,1,LED fuse,10A fuse MPN pending,footprint pending,VERIFY,10A preliminary
 U710/U720/U730,3,LED boost controller,LT3756EMSE-2#PBF,MSOP-16+EP,CANDIDATE,Verify compensation and frequency
-Q711/Q721/Q731,3,Boost MOSFET,TI CSD19532Q5B,SON/VSON 5x6,CANDIDATE,100V 4.9mOhm
+Q711/Q721/Q731,3,Boost MOSFET,Vishay Si7454DDP-T1-GE3,Package_SO:PowerPAK_SO-8_Single,PROTOTYPE,100V; thermal and sourcing pending
 D711/D721/D731,3,Boost diode,STPS5H100SF,PSMC/TO-277A,CANDIDATE,100V 5A
 L711,1,LED1 inductor,Bourns SRP1265A-220M,13.5x12.5mm,CANDIDATE,22uH Isat about 12A
-L721/L731,2,LED2/3 inductor,Bourns SRP1265A-470M,13.5x12.5mm,CANDIDATE,47uH Isat about 6.5A
+L721/L731,2,LED2/3 inductor,Bourns SRP1265A-470M,13.5x12.5mm,CANDIDATE,47uH; verify Irms and Isat separately
 R716,1,LED1 sense,0.091 ohm 1%,2512,CANDIDATE,Target threshold about 100mV
-R726/R736,2,LED2/3 sense,0.40 ohm 1%,2512 (как в схеме),CANDIDATE,Check dissipation
+R726/R736,2,LED2/3 sense,0.40 ohm 1%,0603 (текущая схема),CANDIDATE,Check dissipation
 Q601,1,PTC MOSFET,NTMFS5C628NLT1G,SO-8FL,CANDIDATE,Add external thermostat/thermal fuse
 U601,1,PTC gate driver,UCC27524ADR,SOIC-8,CANDIDATE,Channel A
 Q501/Q511/Q521,3,Fan/pump MOSFET,AO3400A,SOT-23,CANDIDATE,Verify pump startup
