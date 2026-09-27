@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - AL8853 LED drivers, 24 V input, 2 channels")
 		(date "2026-09-27")
-		(rev "0.15-DRAFT")
+		(rev "0.16-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -2816,7 +2816,7 @@
 		)
 		(uuid "3213a992-47ba-5b6a-8b5f-ab3b1d97ef23")
 	)
-	(text "TWO CONSTANT-CURRENT BOOST CHANNELS FROM +24V_LED / COMMON DIMMING"
+	(text "TWO CONSTANT-CURRENT BOOST CHANNELS FROM +24V (EACH CHANNEL FUSED: F711, F721) / COMMON DIMMING"
 		(exclude_from_sim no)
 		(at 20.32 15.24 0)
 		(effects
@@ -2871,7 +2871,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.15 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 1.099 A; CH2 0.465 A total. Qualification pending."
+	(text "0.16 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.099 A; CH2 0.465 A total. Qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -5646,7 +5646,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.043 1% >=1W"
+		(property "Value" "0.027 1% >=1W"
 			(at 252.73 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6122,7 +6122,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47u SRP1265A-470M"
+		(property "Value" "47u SRP1770TA-470M"
 			(at 149.86 87.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6133,7 +6133,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:L_Bourns_SRP1265A"
+		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -6193,7 +6193,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SRP1265A-470M"
+		(property "MPN" "SRP1770TA-470M"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -6205,7 +6205,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C840530"
+		(property "LCSC" "C2041872"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -10272,7 +10272,7 @@
 		)
 		(uuid b535325f-3611-4528-b9e0-0cbb862e5cf8)
 	)
-	(global_label "+24V_LED"
+	(global_label "+24V"
 		(shape bidirectional)
 		(at 40.64 142.24 90)
 		(effects
@@ -10540,7 +10540,7 @@
 		)
 		(uuid 0efde195-fb80-579b-8a49-b60823977eb0)
 	)
-	(global_label "+24V_LED"
+	(global_label "+24V"
 		(shape bidirectional)
 		(at 455.93 153.67 180)
 		(effects
@@ -10757,7 +10757,7 @@
 		)
 		(uuid c0b2a5a5-d53c-5153-9015-db3917ae95ce)
 	)
-	(global_label "+24V_LED"
+	(global_label "+24V"
 		(shape bidirectional)
 		(at 455.93 254.0 180)
 		(effects

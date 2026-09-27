@@ -3,25 +3,25 @@ J901,1,24V input connector (keyed),Amass XT60PW-M,Connector_AMASS:AMASS_XT60PW-M
 D901,1,Input TVS,SMBJ26CA-E3/52,Diode_SMD:D_SMB,PROTOTYPE,"LCSC C515606 USD0.0985 historical unit snapshot; 26V standoff, 42.1V clamp at 14.3A/25C; AL8853 now biased from 12V; hot transient qualification pending"
 C901,1,Input bulk,Panasonic EEEFK1H221P 220uF 50V,Capacitor_SMD:CP_Elec_10x10.5,PROTOTYPE,LCSC C178549 USD0.5157; 502mA ripple at 120Hz
 C902,1,Input ceramic,1uF 50V X7R 1210 MPN pending,Capacitor_SMD:C_1210_3225Metric,VERIFY,Effective capacitance at 25V
-F902/F903,2,Branch fuse holders,XFCN XF-508P-B-B + ATM mini blade fuse 10A (loads) / 7.5A (LED),GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,PROTOTYPE,LCSC C19727305 USD0.2637 each; contact <=5mOhm; fuses are consumables; check interrupt rating and I2t with the real PSU
+F902,1,Loads fuse holder (PTC + pump),XFCN XF-508P-B-B + ATM mini blade fuse 10A,GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,PROTOTYPE,LCSC C19727305 USD0.2637; contact <=5mOhm; insert MPN pending; check interrupt rating and I2t with the real PSU. Former F903 (LED) removed in 0.16: F711/F721 fuse the LED channels
 U902,1,24V to 12V aux buck,TI LMR16020PDDAR,Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm,PROTOTYPE,"LCSC C190006 USD0.8159 historical snapshot; 500kHz, Vout12.000V; EN560k/47k; EP to GND with thermal vias; output C909 polymer/C910 ceramic"
 L902,1,Aux buck inductor,Bourns SRP1265A-220M,GrowBox:L_Bourns_SRP1265A,PROTOTYPE,LCSC C2041465 USD1.1784; 22uH Isat 9A > IC limit 3.8A
 D902,1,Aux buck catch diode,Vishay SS36-E3/57T,Diode_SMD:D_SMC,PROTOTYPE,LCSC C35722 USD0.3337; 60V 3A
 C905/C906,2,Aux buck input,Murata GRM32ER71H106KA12L,Capacitor_SMD:C_1210_3225Metric,PROTOTYPE,LCSC C77102 USD0.3304 each; 10uF 50V X7R
 C910,1,Aux buck output,Samsung CL32B226KAJNNNE,Capacitor_SMD:C_1210_3225Metric,PROTOTYPE,LCSC C309062 USD0.3569 historical snapshot; 22uF 25V X7R; retained in parallel with new polymer C909
-R904/R905/R906/R907/R908,5,Aux buck FB/RT/EN,150k/10k 0.1% FB; 49.9k/560k/47k 1% RT/EN; MPN pending,Resistor_SMD:R_0603_1608Metric,VERIFY,"12.000V nominal, 11.738..12.263V static; see Power_path_v15.txt"
+R904/R905/R906/R907/R908,5,Aux buck FB/RT/EN,150k/10k 0.1% FB; 49.9k/560k/47k 1% RT/EN; MPN pending,Resistor_SMD:R_0603_1608Metric,VERIFY,"12.000V nominal, 11.738..12.263V static; see review/Power_path_v16.txt"
 U101,1,12V aux to 3V3 buck,TPS54202DDCR,SOT-23-6,CANDIDATE,Now fed from +12V aux (28V max part isolated from 24V transients)
 U710/U720,2,LED boost controller,AL8853S-13,SOIC-8 3.9x4.9 P1.27,PROTOTYPE,"LCSC C3192318 USD0.9392 each historical snapshot; VIN pins on 12V aux, boost inductors on individually fused 24V; analog dimming via PWM"
 Q711,1,Panel boost MOSFET,TI CSD19534Q5A,GrowBox:TI_DQJ0008A_CSD19534Q5A,PROTOTYPE,"LCSC C114200 USD0.9862 historical snapshot; 100V; AL8853 now biased from 12V, measure gate swing/fronts and hot losses"
 Q721,1,Bars boost MOSFET,TI CSD19538Q3A,GrowBox:TI_DNH0008A_CSD19538Q3A,PROTOTYPE,LCSC C478471 USD1.0754
 D711,1,Panel boost diode,STPS5H100B-TR,Package_TO_SOT_SMD:TO-252-2,PROTOTYPE,LCSC C10648 USD0.5802; NC1 K2 A3
 D721,1,Bars boost diode,STPS2H100AFY,Diode_SMD:D_SOD-128,PROTOTYPE,"LCSC C3757915 USD0.4753 historical snapshot; 0.465A nominal CH2, shared by two bars"
-L711,1,Panel boost inductor,Bourns SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,PROTOTYPE,"LCSC C840530 USD1.1226 historical snapshot; 47uH; 9.5A Isat point; 6.5A Irms; 1.22W winding estimate at 100C, core loss excluded; R715 now 0.043 ohm"
+L711,1,Panel boost inductor,Bourns SRP1770TA-470M,Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm,PROTOTYPE,"LCSC C2041872 USD2.9304 historical snapshot, limited stock; 47uH; DCR 55mOhm; Isat 16A at -30%; 0.77W winding estimate at 100C, core loss excluded; restored in 0.16 with R715 0.027 ohm"
 L721,1,Bars boost inductor,Bourns SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,PROTOTYPE,LCSC C840530 USD1.1226; DCM at 24V
 C716/C717/C718/C719/C726/C727/C728,7,LED output capacitance,Samsung CL32Y106KCV6PNE,Capacitor_SMD:C_1210_3225Metric,PROTOTYPE,LCSC C22380050 USD0.8941 each; 10uF 100V X7S; ~2.6uF each at 48V
 C710/C715/C725,3,LED boost input,Murata GRM32ER71H106KA12L,Capacitor_SMD:C_1210_3225Metric,PROTOTYPE,LCSC C77102 USD0.3304 each; 10uF 50V X7R
 C711/C721,2,AL8853 VIN decoupling,Samsung CL21B105KBFNNNE,Capacitor_SMD:C_0805_2012Metric,PROTOTYPE,LCSC C28323 USD0.04; 1uF 50V X7R
-R715,1,Panel switch current sense,0.043 ohm 1% >=1W MPN pending,Resistor_SMD:R_2512_6332Metric,VERIFY,"0.254W maximum screening at 24V; Kelvin sense; paired OCP headroom 0.339A, verify on bench"
+R715,1,Panel switch current sense,0.027 ohm 1% >=1W MPN pending,Resistor_SMD:R_2512_6332Metric,VERIFY,"0.165W maximum screening at 24V; Kelvin sense; OCP 8.3..14.1A, headroom 3.17A over working peak"
 R716,1,Panel LED sense,0.182 ohm 1% >=1W MPN pending,Resistor_SMD:R_2512_6332Metric,VERIFY,Low side; nominal 1.099A
 R725,1,Bars switch current sense,0.047 ohm 1% >=1W MPN pending,Resistor_SMD:R_2512_6332Metric,VERIFY,With Rsl 2.7k
 R726,1,Bars LED sense,0.43 ohm 1% >=0.25W MPN pending,Resistor_SMD:R_1206_3216Metric,VERIFY,"0.465A total nominal, <=0.484A FB/R corner; current sharing between J721/J731 not guaranteed"
@@ -33,7 +33,7 @@ Q501/Q511,2,Fan PWM open-drain,AO3400A,SOT-23,CANDIDATE,Fan PWM line only (<=5V)
 Q521,1,Pump switch,AOS AO3422,SOT-23,PROTOTYPE,"LCSC C37130 USD0.1356 historical snapshot; 55V, RDS max200mOhm at 2.5V gate; pump confirmed 24V/6W; design budget0.5A, startup/stall unmeasured"
 D521,1,Pump flyback,Vishay SS36-E3/57T,Diode_SMD:D_SMC,PROTOTYPE,LCSC C35722 USD0.3337; 60V
 C521,1,Pump branch bypass,Murata GRM32ER71H106KA12L,Capacitor_SMD:C_1210_3225Metric,PROTOTYPE,LCSC C77102; 10uF 50V
-U201,1,MCU,ESP32-WROOM-32E-N4,RF module,CANDIDATE,LCSC C701341 USD3.7644; GPIO map unchanged
+U201,1,MCU,ESP32-WROOM-32E-N4,GrowBox:ESP32-WROOM-32E_NoVias,CANDIDATE,"LCSC C701341 USD3.7644; GPIO map unchanged; footprint without the 12 in-pad 0.2mm vias, add GND vias to fab rules during layout"
 U301,1,RTC,DS3231MZ+TRL,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,PROTOTYPE,LCSC C107410 USD3.2976; existing RTC code compatible
 J401,1,microSD,Molex 104031-0811,microSD,CANDIDATE,4MHz initial SPI
 J301,1,SHT4x connector,JST XH B4B-XH-A,JST-XH 2.50,CANDIDATE,0.5m cable and 100kHz I2C

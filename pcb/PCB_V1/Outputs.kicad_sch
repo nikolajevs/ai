@@ -7,7 +7,7 @@
 	(title_block
 		(title "04 - Fans (12 V aux) and pump (24 V)")
 		(date "2026-09-27")
-		(rev "0.15-DRAFT")
+		(rev "0.16-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -1790,7 +1790,7 @@
 		)
 		(uuid "43f81e76-36bb-59b4-b553-22f12ff81f70")
 	)
-	(text "0.15 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
+	(text "0.16 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects

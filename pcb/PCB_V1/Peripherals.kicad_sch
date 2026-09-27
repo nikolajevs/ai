@@ -7,7 +7,7 @@
 	(title_block
 		(title "03 - RTC / microSD / external sensors")
 		(date "2026-09-26")
-		(rev "0.11-DRAFT")
+		(rev "0.16-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)

@@ -7,7 +7,7 @@
 	(title_block
 		(title "02 - ESP32 and programming")
 		(date "2026-09-26")
-		(rev "0.4-DRAFT")
+		(rev "0.16-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -4022,7 +4022,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RF_Module:ESP32-WROOM-32E"
+		(property "Footprint" "GrowBox:ESP32-WROOM-32E_NoVias"
 			(at 101.6 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -4170,6 +4170,39 @@
 					(reference "U201")
 					(unit 1)
 				)
+			)
+		)
+	
+		(property "LCSC" "C701341"
+			(at 101.6 81.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "MPN" "ESP32-WROOM-32E-N4"
+			(at 101.6 81.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	
+		(property "Manufacturer" "Espressif"
+			(at 101.6 81.28 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)

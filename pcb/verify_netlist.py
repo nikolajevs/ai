@@ -85,12 +85,12 @@ for suffix, pwm_pin, tach_pin, pull in [(501, 10, 6, 'R207'), (511, 11, 7, 'R208
 
 # 24 V input, branch fuses and 12 V auxiliary buck (LMR16020).
 groups += [
-    [('J901', 2), ('D901', 1), ('C901', 1), ('C902', 1), ('F902', 1), ('F903', 1), ('F904', 1), ('TP901', 1)],
+    [('J901', 2), ('D901', 1), ('C901', 1), ('C902', 1), ('F902', 1), ('F904', 1), ('TP901', 1),
+     ('F711', 1), ('F721', 1), ('C710', 1)],
     [('F904', 2), ('U902', 2), ('C905', 1), ('C906', 1), ('C907', 1), ('R907', 1)],
     [('J901', 1), ('D901', 2), ('C901', 2), ('C902', 2), ('C905', 2), ('C906', 2), ('C907', 2),
      ('R908', 2), ('R906', 2), ('R905', 2), ('D902', 2), ('C909', 2), ('C910', 2),
      ('U902', 7), ('U902', 9), ('U201', 1)],
-    [('F903', 2), ('F711', 1), ('F721', 1), ('C710', 1), ('TP903', 1)],
     [('U902', 1), ('C908', 1)],
     [('U902', 8), ('C908', 2), ('D902', 1), ('L902', 1)],
     [('U902', 3), ('R907', 2), ('R908', 1)],
@@ -158,19 +158,20 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 169
+assert len(root.findall('.//components/comp')) == 167
 
 # Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable nets.
 v24, v24_loads, v12, v33, gnd = (net_of('J901', 2)[0], net_of('F902', 2)[0], net_of('L902', 2)[0],
                                  net_of('U201', 2)[0], net_of('U201', 1)[0])
-assert len({v24, v24_loads, net_of('F903', 2)[0], net_of('F904', 2)[0], v12, v33, gnd}) == 7, 'supply rails merged'
+assert len({v24, v24_loads, net_of('F904', 2)[0], v12, v33, gnd}) == 6, 'supply rails merged'
 assert net_of('J901', 1)[0] == gnd, 'XT60 pin 1 must be GND (KiCad AMASS footprint "-")'
 assert net_of('U601', 6)[0] == v12, 'UCC27524A VDD must be the 12 V aux rail (18 V max)'
 assert net_of('U101', 3)[0] == v12, 'TPS54202 (28 V max) must be fed from the 12 V aux rail'
 assert net_of('F501', 1)[0] == net_of('F511', 1)[0] == v12, 'PC fans must be fused from 12 V'
 assert net_of('U710', 1)[0] == net_of('U720', 1)[0] == v12, 'AL8853 bias must be isolated from 24 V transients'
 assert net_of('U902', 6)[1] == {('U902', '6')}, 'LMR16020 PGOOD is unused'
-obsolete = {'U901', 'Q901', 'F901', 'R903', 'C903', 'C904', 'U602', 'C603', 'C604', 'U730', 'Q731', 'L731', 'D731'}
+obsolete = {'U901', 'Q901', 'F901', 'R903', 'C903', 'C904', 'U602', 'C603', 'C604', 'U730', 'Q731', 'L731', 'D731',
+            'F903', 'TP903'}
 assert not obsolete & set(refs), ('obsolete parts remain', obsolete & set(refs))
 for ref, mpn in [('U902', 'LMR16020PDDAR'), ('D901', 'SMBJ26CA-E3/52'), ('D601', 'SMBJ30A-E3/52'),
                  ('Q711', 'CSD19534Q5A'), ('Q721', 'CSD19538Q3A'), ('Q521', 'AO3422'), ('D521', 'SS36-E3/57T')]:
@@ -192,10 +193,10 @@ for ref, expected in fused_nodes.items():
  assert net_of(ref,1)[0] != net_of(ref,2)[0], (ref,'fuse shorted')
 assert len({net_of(ref,2)[0] for ref in fused_nodes}) == 6, 'branch outputs merged'
 comps = {c.get('ref'):c for c in root.findall('.//components/comp')}
-for ref, value in {'R726':'0.43 1% >=0.25W','R715':'0.043 1% >=1W',
+for ref, value in {'R726':'0.43 1% >=0.25W','R715':'0.027 1% >=1W','L711':'47u SRP1770TA-470M',
                   'R904':'150k 0.1%','R905':'10k 0.1%'}.items():
  assert comps[ref].findtext('value') == value, (ref,'wrong design value')
 assert comps['C909'].findtext('value')=='100u 25V polymer'
 assert net_of('C909',1)[0]==v12 and net_of('C909',2)[0]==gnd, 'C909 polymer polarity'
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 169 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 167 components.')
 print('PASS: 24 V input polarity, separate power/bias domains, LMR16020 wiring, CH2 parallel bars, six unbypassed branch fuses')

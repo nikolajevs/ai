@@ -64,7 +64,6 @@ F521,1A / 0451001.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/ass
 F711,6.3A / 045106.3MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,045106.3MRL,C178982,ENGINEERING DRAFT - DO NOT ORDER
 F721,3A / 0451003.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/LEDDrivers/,Littelfuse,0451003.MRL,C13982,ENGINEERING DRAFT - DO NOT ORDER
 F902,10A mini blade (ATM),GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,,/InputPower/,XFCN,XF-508P-B-B,C19727305,ENGINEERING DRAFT - DO NOT ORDER
-F903,7.5A mini blade (ATM),GrowBox:Fuseholder_Blade_Mini_XFCN_XF-508P,,/InputPower/,XFCN,XF-508P-B-B,C19727305,ENGINEERING DRAFT - DO NOT ORDER
 F904,2A / 0451002.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/assetdocs/fuse-451-and-453-datasheet?assetguid=533cd5cc-956c-4243-867f-6ab5a62f6ba1,/InputPower/,Littelfuse,0451002.MRL,C99547,ENGINEERING DRAFT - DO NOT ORDER
 J201,UART / 3V3 logic,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,/MCU / ESP32/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J301,SHT4x / XH 2.50,Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -79,7 +78,7 @@ J721,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS
 J731,LED +/- (return isolated),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",,/LEDDrivers/,KANGNEX,WJ500V-5.08-2P,C8465,ENGINEERING DRAFT - DO NOT ORDER
 J901,XT60PW-M 24V IN,Connector_AMASS:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal,,/InputPower/,Changzhou Amass,XT60PW-M,C98732,ENGINEERING DRAFT - DO NOT ORDER
 L101,10uH / Isat >= 4.5A,Inductor_SMD:L_Coilcraft_XAL7050-XXX,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
-L711,47u SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,https://www.bourns.com/docs/product-datasheets/srp1265a.pdf,/LEDDrivers/,Bourns,SRP1265A-470M,C840530,ENGINEERING DRAFT - DO NOT ORDER
+L711,47u SRP1770TA-470M,Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm,https://www.bourns.com/docs/product-datasheets/srp1265a.pdf,/LEDDrivers/,Bourns,SRP1770TA-470M,C2041872,ENGINEERING DRAFT - DO NOT ORDER
 L721,47u SRP1265A-470M,GrowBox:L_Bourns_SRP1265A,https://www.bourns.com/docs/Product-Datasheets/SRP1265A.pdf,/LEDDrivers/,Bourns,SRP1265A-470M,C840530,ENGINEERING DRAFT - DO NOT ORDER
 L902,22u SRP1265A-220M,GrowBox:L_Bourns_SRP1265A,,/InputPower/,Bourns,SRP1265A-220M,C2041465,ENGINEERING DRAFT - DO NOT ORDER
 Q501,AO3400A,Package_TO_SOT_SMD:SOT-23,http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf,/Outputs/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -135,7 +134,7 @@ R711,10R,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO 
 R712,1k 1% / slope tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R713,100k,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R714,10k / comp tune,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
-R715,0.043 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
+R715,0.027 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R716,0.182 1% >=1W,Resistor_SMD:R_2512_6332Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R717,316k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 R718,10k 1%,Resistor_SMD:R_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
@@ -159,9 +158,8 @@ TP102,+3V3,TestPoint:TestPoint_Pad_D2.0mm,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP103,GND,TestPoint:TestPoint_Pad_D2.0mm,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP901,+24V,TestPoint:TestPoint_Pad_D2.0mm,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP902,+24V_LOADS,TestPoint:TestPoint_Pad_D2.0mm,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
-TP903,+24V_LED,TestPoint:TestPoint_Pad_D2.0mm,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 U101,TPS54202DDCR,Package_TO_SOT_SMD:SOT-23-6,http://www.ti.com/lit/ds/symlink/tps54202.pdf,/,,,,ENGINEERING DRAFT - DO NOT ORDER
-U201,ESP32-WROOM-32E-N4,RF_Module:ESP32-WROOM-32E,https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf,/MCU / ESP32/,,,,ENGINEERING DRAFT - DO NOT ORDER
+U201,ESP32-WROOM-32E-N4,GrowBox:ESP32-WROOM-32E_NoVias,https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf,/MCU / ESP32/,Espressif,ESP32-WROOM-32E-N4,C701341,ENGINEERING DRAFT - DO NOT ORDER
 U301,DS3231MZ+TRL,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231M.pdf,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 U601,UCC27524ADR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,https://www.ti.com/lit/ds/symlink/ucc27524a.pdf,/Outputs/Heater/,,,,ENGINEERING DRAFT - DO NOT ORDER
 U700,SN74LVC1G08DBVR,Package_TO_SOT_SMD:SOT-23-5,https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER

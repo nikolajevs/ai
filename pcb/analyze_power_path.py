@@ -1,6 +1,6 @@
-"""v0.15 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.16 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
-Sources/assumptions: PCB_V1/REDESIGN_24V.md.
+Sources/assumptions: PCB_V1/DESIGN.md.
 """
 import argparse, itertools, math
 from pathlib import Path
@@ -15,7 +15,7 @@ def report(netlist):
                 'R907':'560k 1%','R908':'47k 1%','L902':'22u SRP1265A-220M','D902':'SS36-E3/57T',
                 'D901':'SMBJ26CA-E3/52','D601':'SMBJ30A-E3/52','Q601':'NTMFS5C628NLT1G',
                 'U601':'UCC27524ADR','C901':'220u / 50V','F902':'10A mini blade (ATM)',
-                'F903':'7.5A mini blade (ATM)','Q521':'AO3422','D521':'SS36-E3/57T','C602':'4.7u / 25V X7R',
+                'Q521':'AO3422','D521':'SS36-E3/57T','C602':'4.7u / 25V X7R',
                 'C909':'100u 25V polymer','C910':'22u 25V X7R'}
     for ref,value in expected.items():
         assert comps[ref].findtext('value') == value,(ref,'sizing does not match schematic')
@@ -51,7 +51,7 @@ def report(netlist):
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.15 power path (pcb-24v)',
+    out = ['GrowBox v0.16 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
@@ -65,15 +65,15 @@ def report(netlist):
            'Fuse loading: 0.75 continuous x 0.90 engineering hot-board allowance.',
            'ref     rating_A  load_bound_A  derated_A  spare_A']
     loading = {'F501':fans/2,'F511':fans/2,'F521':pump_budget,'F711':led_rms[0],'F721':led_rms[1],
-               'F904':aux_rms,'F902':ptc_screen+pump_budget,'F903':sum(led_rms)}
-    ratings = {r:a for r,(a,_) in fuses.items()} | {'F902':10,'F903':7.5}
+               'F904':aux_rms,'F902':ptc_screen+pump_budget}
+    ratings = {r:a for r,(a,_) in fuses.items()} | {'F902':10}
     for r in sorted(loading):
         allowed=ratings[r]*.75*.9
         assert loading[r] < allowed,(r,'continuous-loading screen failed')
         out.append(f'{r:6} {ratings[r]:9.2f} {loading[r]:13.3f} {allowed:10.3f} {allowed-loading[r]:8.3f}')
-    out += ['F902/F903 are holders: DC fuse INSERT MPNs remain to be selected.',
+    out += ['F902 is a holder: the DC fuse INSERT MPN remains to be selected.',
             'SMT fuse ratings here are >=125 V; loading does not prove I2t, interruption or selective clearing.',
-            'F903 has the smallest continuous margin: reassess temperature after placement.',
+            'v0.16: former F903 (7.5 A, redundant with F711+F721, smallest margin) removed; LED channels are fused individually.',
             'XT60-to-TVS/bulk segment has no onboard fuse; upstream PSU/cable protection must be qualified.', '',
             'TVS screen: 25 C, 10/1000 us; no wire overshoot included.',
             'D901 SMBJ26CA: standoff 26 V >25 V; clamp 42.1 V at 14.3 A.',

@@ -2,7 +2,7 @@
 
 Run after exporting the schematic as KiCad XML:
   python analyze_led_power.py netlist.xml
-Requires only the Python standard library. See REDESIGN_24V.md for
+Requires only the Python standard library. See PCB_V1/DESIGN.md for
 sources, modelling assumptions and the measurements still required.
 """
 import argparse
@@ -13,8 +13,9 @@ import xml.etree.ElementTree as ET
 
 
 CHANNELS = [
-    dict(n=1, led_r=.182, cs_r=.043, slope_r=1000, l_mpn='SRP1265A-470M',
-         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=4,
+    # v0.16: back to the 16.9 mm SRP1770TA-470M; restores OCP headroom and lowers copper loss.
+    dict(n=1, led_r=.182, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
+         l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4,
          diode='STPS5H100B-TR', diode_vf=.85, diode_a=.51, diode_b=.02),
     # CH2 has one CURRENT REGULATOR for J721 || J731, no guaranteed sharing.
     # Even if one bar is open, the other stays below 0.5 A at the FB/R corner.
@@ -109,7 +110,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.15 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
+    out = ['PCB_V1 v0.16 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',

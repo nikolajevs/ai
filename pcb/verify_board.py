@@ -81,12 +81,13 @@ assert nodes[('D711','3')]==nodes[('Q711','5')]
 assert nodes[('D711','1')].startswith('unconnected-')
 assert str(fps['D711'].GetFPID().GetLibItemName())=='TO-252-2'
 assert str(fps['D721'].GetFPID().GetLibItemName())=='D_SOD-128'
-for ref,sz in [('L711',(3.1,5.0)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
+for ref,sz in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
  pads=[p for p in fps[ref].Pads() if p.GetNumber()]
  assert {p.GetNumber() for p in pads}=={'1','2'}
  for pad in pads:
   assert size(pad)==sz,(ref,'land dimensions')
 assert str(fps['L721'].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
+assert str(fps['L711'].GetFPID().GetLibItemName())=='L_Bourns_SRP1770TA_16.9x16.9mm'
 assert nodes[('J721','1')]==nodes[('J731','1')] and nodes[('J721','2')]==nodes[('J731','2')],'CH2 bars not paralleled'
 print('PASS: all values/footprints agree; LED diode polarity/NC, CH2 parallel bars and selected passive lands checked')
 
@@ -95,7 +96,7 @@ gnd=nodes[('U201','1')]
 assert str(fps['J901'].GetFPID().GetLibItemName())=='AMASS_XT60PW-M_1x02_P7.20mm_Horizontal'
 assert nodes[('J901','1')]==gnd and nodes[('J901','2')]==nodes[('F904','1')],'XT60 polarity'
 assert nodes[('F904','2')]==nodes[('U902','2')],'buck must be after auxiliary fuse'
-for ref in ['F902','F903']:
+for ref in ['F902']:
  pads=numbered(ref)
  assert str(fps[ref].GetFPID().GetLibItemName())=='Fuseholder_Blade_Mini_XFCN_XF-508P'
  assert set(pads)=={'1','2'} and all(len(v)==2 for v in pads.values()),(ref,'4-pin holder')
@@ -123,4 +124,7 @@ for ref in ['F501','F511','F521','F711','F721','F904']:
  assert nodes[(ref,'1')]!=nodes[(ref,'2')],(ref,'fuse bypass')
  for v in pads.values():assert size(v[0])==(1.96,3.15),(ref,'451 recommended lands')
  assert abs(pcbnew.ToMM(pads['1'][0].GetPosition().x-pads['2'][0].GetPosition().x))==4.91,(ref,'pad span')
-print('PASS: schematic instance paths; XT60 polarity, mini-blade holders, six SMT fuses, LMR16020 DDA and 12 V bias wiring')
+assert str(fps['U201'].GetFPID().GetLibItemName())=='ESP32-WROOM-32E_NoVias'
+assert not [p for p in fps['U201'].Pads() if p.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and pcbnew.ToMM(p.GetDrillSize().x)<0.3],'ESP32 sub-0.3 mm vias'
+assert {p.GetNumber() for p in fps['U201'].Pads() if p.GetNumber()}==set(str(i) for i in range(1,40)),'ESP32 pads'
+print('PASS: schematic instance paths; XT60 polarity, mini-blade holder, six SMT fuses, LMR16020 DDA, 12 V bias wiring, ESP32 without 0.2 mm vias')
