@@ -8,6 +8,10 @@ root=ET.parse(sys.argv[1]);board=pcbnew.LoadBoard(sys.argv[2])
 fps={f.GetReference():f for f in board.GetFootprints()}
 refs=[c.get('ref') for c in root.findall('.//components/comp')]
 assert set(refs)==set(fps),'Board and schematic component sets differ'
+for comp in root.findall('.//components/comp'):
+ ref=comp.get('ref');fp=fps[ref];identity=fp.GetFPID()
+ assert fp.GetValue()==comp.findtext('value'),(ref,'value differs')
+ assert str(identity.GetLibNickname())+':'+str(identity.GetLibItemName())==comp.findtext('footprint'),(ref,'footprint differs')
 nodes={}
 for net in root.findall('.//nets/net'):
  for node in net.findall('node'):
@@ -48,3 +52,26 @@ assert str(fps['U301'].GetFPID().GetLibItemName())=='SOIC-8_3.9x4.9mm_P1.27mm'
 assert fps['U301'].GetValue()=='DS3231MZ+TRL'
 assert {p.GetNumber() for p in fps['U301'].Pads()}==set('12345678')
 print('PASS: NexFET S1/2/3 G4 D5 and SOIC-8 RTC package/pin mapping')
+
+# Check selected LED passive packages, including the DPAK's otherwise unused lead.
+for ref in ['D711','D721','D731','L711','L721','L731']:
+ for pad in fps[ref].Pads():
+  if pad.GetNumber():
+   key=(ref,pad.GetNumber())
+   assert key in nodes and pad.GetNetname()==nodes[key],key
+assert nodes[('D711','2')]==nodes[('C716','1')]
+assert nodes[('D711','3')]==nodes[('Q711','5')]
+assert nodes[('D711','1')].startswith('unconnected-')
+assert str(fps['D711'].GetFPID().GetLibItemName())=='TO-252-2'
+for ref in ['D721','D731']:
+ assert str(fps[ref].GetFPID().GetLibItemName())=='D_SOD-128'
+for ref,size in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('L731',(3.1,5.0)),
+                 ('D721',(1.4,2.1)),('D731',(1.4,2.1))]:
+ pads=[p for p in fps[ref].Pads() if p.GetNumber()]
+ assert {p.GetNumber() for p in pads}=={'1','2'}
+ for pad in pads:
+  got=pad.GetSize()
+  assert abs(pcbnew.ToMM(got.x)-size[0])<.001 and abs(pcbnew.ToMM(got.y)-size[1])<.001,(ref,'land dimensions')
+for ref in ['L721','L731']:
+ assert str(fps[ref].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
+print('PASS: all values/footprints agree; LED diode polarity/NC and selected passive lands checked')

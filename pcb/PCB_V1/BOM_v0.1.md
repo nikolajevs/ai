@@ -1,4 +1,4 @@
-# PCB_V1 — подбор компонентов, ревизия 0.11
+# PCB_V1 — подбор компонентов, ревизия 0.12
 
 Ориентир пользователя: компоненты одной платы около $30, без PCB и внешнего БП. Это не жёсткий предел: задача — контролировать стоимость при достаточном запасе. Полная стоимость ещё не подтверждена; этот список частичный и не предназначен для заказа. Реальный полный экспорт — `BOM_schematic.csv`.
 
@@ -15,10 +15,11 @@ LT3756 исключён из активной схемы. Текущий све�
 | F903 | 1 | LED fuse | 10A fuse MPN pending | footprint pending | VERIFY | 10A preliminary |
 | U710/U720/U730 | 3 | LED boost controller | AL8853S-13 | SOIC-8 3.9x4.9 P1.27 | PROTOTYPE | LCSC C3192318; analog dimming via PWM; $0.9392 each snapshot |
 | Q711 | 1 | Panel boost MOSFET | SiR106ADP-T1-RE3 | PowerPAK_SO-8_Single | PROTOTYPE | Gate drive and thermal validation pending |
-| Q721/Q731 | 2 | Strip boost MOSFET | TI CSD19538Q3A | VSON-8 3.3×3.3 NexFET | PROTOTYPE | LCSC C478471; $1.0754/шт.; S1/2/3 G4 D5 объединён; проверить VGS и нагрев |
-| D711/D721/D731 | 3 | Boost diode | 100V 5A Schottky MPN pending | SMC placeholder | VERIFY | Previous STPS5H100SF package was incompatible; qualify exact part |
-| L711 | 1 | Panel boost inductor | 47uH Isat>=14A Irms>=7A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Existing footprint is not a qualified 47uH part; reselect for 120kHz |
-| L721/L731 | 2 | Strip boost inductor | 100uH Isat>=5A Irms>=2A MPN pending | SRP1245A PLACEHOLDER | VERIFY | Recalculate with inductance under bias and temperature |
+| Q721/Q731 | 2 | Strip boost MOSFET | TI CSD19538Q3A | GrowBox:TI_DNH0008A_CSD19538Q3A | PROTOTYPE | LCSC C478471 USD1.0754 each; S1/2/3 G4 D5 aggregated; 100V; verify gate drive and temperature |
+| D711 | 1 | Panel boost diode | STPS5H100B-TR | Package_TO_SOT_SMD:TO-252-2 | PROTOTYPE | LCSC C10648; NC1 K2 A3; USD0.5802 |
+| D721/D731 | 2 | Strip boost diode | STPS2H100AFY | Diode_SMD:D_SOD-128 | PROTOTYPE | LCSC C3757915; K1 A2; USD0.4753 each |
+| L711 | 1 | Panel boost inductor | SRP1770TA-470M | Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm | PROTOTYPE | LCSC C2041872; 47uH; Irms8.7A; Isat16A at 30% drop; USD2.9304 |
+| L721/L731 | 2 | Strip boost inductor | SRP1265A-470M | GrowBox:L_Bourns_SRP1265A | PROTOTYPE | LCSC C840530; 47uH; Irms6.5A; Isat9.5A at 20% drop; USD1.1226 each |
 | R716 | 1 | Panel LED sense | 0.182 ohm 1% >=1W MPN pending | 2512 | VERIFY | Low side; nominal 1.099A |
 | R726/R736 | 2 | Strip LED sense | 0.80 ohm 1% >=0.25W MPN pending | 1206 | VERIFY | Low side; nominal 0.25A each |
 | Q601 | 1 | PTC MOSFET | NTMFS5C628NLT1G | SO-8FL | CANDIDATE | Add external thermostat/thermal fuse |
@@ -26,7 +27,7 @@ LT3756 исключён из активной схемы. Текущий све�
 | Q501/Q511/Q521 | 3 | Fan/pump MOSFET | AO3400A | SOT-23 | CANDIDATE | Verify pump startup |
 | D521 | 1 | Pump flyback | SS34-E3/57T | SMC | CANDIDATE | Verify stall current |
 | U201 | 1 | MCU | ESP32-WROOM-32E-N4 | RF module | CANDIDATE | Firmware GPIO adaptation required |
-| U301 | 1 | RTC | DS3231MZ+TRL | SOIC-8 3.9×4.9 P1.27 | PROTOTYPE | LCSC C107410; $3.2976; RTC-код совместим; CR2032 -> VBAT6, без зарядки |
+| U301 | 1 | RTC | DS3231MZ+TRL | Package_SO:SOIC-8_3.9x4.9mm_P1.27mm | PROTOTYPE | LCSC C107410 USD3.2976; existing RTC code compatible; CR2032 to VBAT6 without charging |
 | J401 | 1 | microSD | Molex 104031-0811 | microSD | CANDIDATE | 4MHz initial SPI |
 | J301 | 1 | SHT4x connector | JST XH B4B-XH-A | JST-XH 2.50 | CANDIDATE | 0.5m cable and 100kHz I2C |
 | BT301 | 1 | RTC battery holder | Keystone 3002 | CR2032 THT | CANDIDATE | No charger |
@@ -35,5 +36,10 @@ LT3756 исключён из активной схемы. Текущий све�
 | J521/J601/J711/J721/J731 | 5 | 2-wire power terminal | DA803R/WAGO 2601-compatible | 3.50mm | VERIFY | Consider 5.08mm for PTC/LED |
 | J201 | 1 | Programming header | 1x06 pin header | 2.54mm | CANDIDATE | External USB-UART programmer |
 | U700 | 1 | PWM and enable gate | SN74LVC1G08DBVR | SOT-23-5 | PROTOTYPE | 3.3V; pulldowns; LED_DIM = LIGHT_PWM AND LIGHT_ENABLE |
+| C716/C717/C718/C719/C726/C727/C736/C737 | 8 | LED output capacitance | CL32Y106KCV6PNE | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C22380050; 10u100V X7S; 2.647uF typical at48V; USD0.8941 each |
+| R715 | 1 | Panel switch current sense | 0.027 ohm 1% >=2W MPN pending | Resistor_SMD:R_2512_6332Metric | VERIFY | OCP screening only; Kelvin connection |
+| R725/R735 | 2 | Strip switch current sense | 0.047 ohm 1% >=1W MPN pending | Resistor_SMD:R_2512_6332Metric | VERIFY | Paired with 47uH and Rsl2.7k in v0.12 |
+| R712 | 1 | Panel slope compensation | 1k 1% MPN pending | Resistor_SMD:R_0603_1608Metric | VERIFY | Ramp tolerance and startup require measurement |
+| R722/R732 | 2 | Strip slope compensation | 2.7k 1% MPN pending | Resistor_SMD:R_0603_1608Metric | VERIFY | Ramp tolerance and startup require measurement |
 
-Подробности расчёта и ограничений: `LED_COST_DOWN.md`. Кандидат Q901 всё ещё не совпадает с footprint в схеме. Не заказывать силовые детали, дроссели, предохранители и клеммы до завершения подбора.
+Подбор LED и расчётные ограничения: [LED_POWER_COMPONENTS.md](LED_POWER_COMPONENTS.md). Оценены 21 из171 компонентов на $25,8896; полная цена не определена. Кандидат Q901 всё ещё не совпадает с footprint в схеме. Входная защита, предохранители, клеммы, компенсация и тепловой режим не квалифицированы; список не готов для заказа.

@@ -102,14 +102,16 @@ for idx in (1, 2, 3):
     u, q, l, d, j = (r(k, n) for k, n in [('U',0),('Q',1),('L',1),('D',1),('J',1)])
     # PowerPAK and the NexFET footprint both aggregate drain contacts as pad 5.
     gate, drain, sources = 4, 5, [1, 2, 3]
+    # STPS5H100B DPAK: NC1, cathode/tab2, anode3. SOD128: K1/A2.
+    cathode, anode = (2, 3) if idx == 1 else (1, 2)
     groups += [
         [(u, 1), (r('C',1), 1), (r('C',5), 1), (l, 1), ('F903', 2)],
         [(u, 2), (r('R',1), 1)],
         [(r('R',1), 2), (q, gate), (r('R',3), 1)],
-        [(q, drain), (l, 2), (d, 2)],
+        [(q, drain), (l, 2), (d, anode)],
         [(q, pin) for pin in sources] + [(r('R',5), 1), (r('R',2), 1), (r('R',3), 2)],
         [(u, 4), (r('R',2), 2), (r('C',3), 1)],
-        [(d, 1), (j, 1), (r('R',7), 1), (r('C',6), 1), (r('C',7), 1)],
+        [(d, cathode), (j, 1), (r('R',7), 1), (r('C',6), 1), (r('C',7), 1)],
         [(u, 7), (r('R',7), 2), (r('R',8), 1)],
         [(j, 2), (u, 5), (r('R',6), 1)],
         [(u, 3), (r('R',5), 2), (r('R',6), 2), (r('R',8), 2), (r('C',1), 2),
@@ -122,6 +124,9 @@ for idx in (1, 2, 3):
     assert nodes == {(j, '2'), (u, '5'), (r('R',6), '1')}, (j, 'LED return bypassed')
     returns.append(name)
 assert len(set(returns + [net_of('U201',1)[0]])) == 4, 'LED returns shorted together or to ground'
+groups += [[('C716', 1), ('C718', 1), ('C719', 1)],
+           [('U201', 1), ('C718', 2), ('C719', 2)]]
+assert net_of('D711', 1)[1] == {('D711', '1')}, 'DPAK NC lead connected'
 
 for group in groups:
     name, actual = net_of(*group[0])
@@ -140,8 +145,8 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 169
+assert len(root.findall('.//components/comp')) == 171
 
 for drain in [('Q601', 5), ('Q521', 3)]:
     assert net_of(*drain)[0] not in (net_of('U201', 1)[0], net_of('U101', 3)[0])
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery isolation, UART reference separation, 169 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 171 components.')

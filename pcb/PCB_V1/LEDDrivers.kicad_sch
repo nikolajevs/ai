@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - AL8853 cost-down LED drivers")
 		(date "2026-09-27")
-		(rev "0.11-DRAFT")
+		(rev "0.12-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "AL8853 cost-down prototype; not fabrication ready")
 	)
@@ -1959,6 +1959,199 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "GrowBox:STPS5H100B"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "STPS5H100B-TR"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.st.com/resource/en/datasheet/stps5h100.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "100V 5A Schottky DPAK: 1 NC, 2 cathode/tab, 3 anode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode Schottky"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "STPS5H100B_0_1"
+				(polyline
+					(pts
+						(xy -1.905 0.635)
+						(xy -1.905 1.27)
+						(xy -1.27 1.27)
+						(xy -1.27 -1.27)
+						(xy -0.635 -1.27)
+						(xy -0.635 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27)
+						(xy 1.27 -1.27)
+						(xy -1.27 0)
+						(xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0)
+						(xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin no_connect line
+					(at 0 5.08 270)
+					(length 1.27)
+					(name "NC"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+			)
+			(symbol "STPS5H100B_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "PWM 20 kHz initial / analog current dimming. Enable low or reset: DIM low. LED returns MUST remain separate."
 		(exclude_from_sim no)
@@ -1971,7 +2164,7 @@
 		)
 		(uuid "19d9c77c-34d6-5168-ba34-4c5b712a3901")
 	)
-	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. All output power parts >=100 V. Inductor/diode footprints are placeholders."
+	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V power parts; selected MPNs and sizing: LED_POWER_COMPONENTS.md."
 		(exclude_from_sim no)
 		(at 20.32 378.46 0)
 		(effects
@@ -2004,7 +2197,7 @@
 		)
 		(uuid "3756db15-60bf-5c0e-9c9e-6f1cd04b5667")
 	)
-	(text "L saturation/current rating, slope compensation, transient response, output capacitance and thermal performance require verification."
+	(text "216 sizing cases checked; typical ramp only. Startup/OCP, outer-loop stability, hot magnetics and thermal tests remain required."
 		(exclude_from_sim no)
 		(at 20.32 389.89 0)
 		(effects
@@ -2048,7 +2241,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.11 DRAFT; component budget around USD 30 is a guide, not a hard cap. AL8853 / CSD19538Q3A."
+	(text "0.12 DRAFT; component budget around USD 30 is a guide, not a hard cap. AL8853 / CSD19538Q3A."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -5833,7 +6026,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100u / Isat>=5A / TBD"
+		(property "Value" "47u SRP1265A-470M"
 			(at 149.86 288.29 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5844,7 +6037,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1245A"
+		(property "Footprint" "GrowBox:L_Bourns_SRP1265A"
 			(at 165.1 298.45 90)
 			(hide yes)
 			(show_name no)
@@ -5856,7 +6049,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/SRP1265A.pdf"
 			(at 165.1 298.45 90)
 			(hide yes)
 			(show_name no)
@@ -5892,6 +6085,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Bourns"
+			(at 165.1 298.45 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "SRP1265A-470M"
+			(at 165.1 298.45 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C840530"
+			(at 165.1 298.45 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -5915,7 +6144,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 299.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5938,7 +6167,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 364.49 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -5972,6 +6201,42 @@
 					(reference "C737")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 364.49 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 364.49 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 364.49 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -6169,7 +6434,7 @@
 		(dnp no)
 		(uuid "18c3710f-a9fc-5919-bc76-28f4580cc5d7")
 		(property "Reference" "D721"
-			(at 299.72 196.85 0)
+			(at 276.86 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6179,8 +6444,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100V 5A / MPN TBD"
-			(at 299.72 199.39 0)
+		(property "Value" "STPS2H100AFY"
+			(at 276.86 187.96 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6190,7 +6455,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMC"
+		(property "Footprint" "Diode_SMD:D_SOD-128"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6202,7 +6467,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/stps2h100-y.pdf"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6236,6 +6501,42 @@
 					(reference "D721")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "STMicroelectronics"
+			(at 289.56 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "STPS2H100AFY"
+			(at 289.56 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C3757915"
+			(at 289.56 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -6917,7 +7218,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47u / Isat>=14A / TBD"
+		(property "Value" "47u SRP1770TA-470M"
 			(at 149.86 87.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6928,7 +7229,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1245A"
+		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -6940,7 +7241,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/SRP1770TA.pdf"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -6974,6 +7275,42 @@
 					(reference "L711")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Bourns"
+			(at 165.1 97.79 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "SRP1770TA-470M"
+			(at 165.1 97.79 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C2041872"
+			(at 165.1 97.79 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -7081,7 +7418,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100u / Isat>=5A / TBD"
+		(property "Value" "47u SRP1265A-470M"
 			(at 149.86 187.96 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7092,7 +7429,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Bourns_SRP1245A"
+		(property "Footprint" "GrowBox:L_Bourns_SRP1265A"
 			(at 165.1 198.12 90)
 			(hide yes)
 			(show_name no)
@@ -7104,7 +7441,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/SRP1265A.pdf"
 			(at 165.1 198.12 90)
 			(hide yes)
 			(show_name no)
@@ -7140,6 +7477,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Bourns"
+			(at 165.1 198.12 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "SRP1265A-470M"
+			(at 165.1 198.12 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C840530"
+			(at 165.1 198.12 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -7163,7 +7536,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7186,7 +7559,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -7220,6 +7593,42 @@
 					(reference "C726")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 320.04 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 320.04 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 320.04 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -7327,7 +7736,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k / slope tune"
+		(property "Value" "1k 1% / slope tune"
 			(at 123.19 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7737,7 +8146,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7760,7 +8169,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -7794,6 +8203,42 @@
 					(reference "C727")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 364.49 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 364.49 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 364.49 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -7973,7 +8418,7 @@
 		(dnp no)
 		(uuid "97bd051c-6d01-53e6-9e84-54f0d504ba0d")
 		(property "Reference" "D731"
-			(at 299.72 297.18 0)
+			(at 276.86 285.75 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7983,8 +8428,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100V 5A / MPN TBD"
-			(at 299.72 299.72 0)
+		(property "Value" "STPS2H100AFY"
+			(at 276.86 288.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7994,7 +8439,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMC"
+		(property "Footprint" "Diode_SMD:D_SOD-128"
 			(at 289.56 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -8006,7 +8451,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/stps2h100-y.pdf"
 			(at 289.56 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -8040,6 +8485,42 @@
 					(reference "D731")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "STMicroelectronics"
+			(at 289.56 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "STPS2H100AFY"
+			(at 289.56 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C3757915"
+			(at 289.56 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -8165,7 +8646,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k / slope tune"
+		(property "Value" "2.7k 1% / slope tune"
 			(at 123.19 257.81 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8390,7 +8871,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D_Schottky")
+		(lib_id "GrowBox:STPS5H100B")
 		(at 289.56 97.79 0)
 		(unit 1)
 		(body_style 1)
@@ -8401,7 +8882,7 @@
 		(dnp no)
 		(uuid "a6b0cacc-4a8b-539e-9c3e-741f160944ea")
 		(property "Reference" "D711"
-			(at 299.72 96.52 0)
+			(at 276.86 85.09 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8411,8 +8892,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100V 5A / MPN TBD"
-			(at 299.72 99.06 0)
+		(property "Value" "STPS5H100B-TR"
+			(at 276.86 87.63 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8422,7 +8903,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMC"
+		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -8434,7 +8915,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/stps5h100.pdf"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -8456,10 +8937,10 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "2"
 			(uuid "3f5652aa-9164-506f-8876-5c20e7007feb")
 		)
-		(pin "2"
+		(pin "3"
 			(uuid "5b32c60f-97af-51d6-8dad-aaf72d32a15c")
 		)
 		(instances
@@ -8469,6 +8950,45 @@
 					(unit 1)
 				)
 			)
+		)
+		(property "Manufacturer" "STMicroelectronics"
+			(at 289.56 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "STPS5H100B-TR"
+			(at 289.56 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C10648"
+			(at 289.56 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "14d3b49c-16c9-4f2a-87f7-8389bdad3a0e")
 		)
 	)
 	(symbol
@@ -8493,7 +9013,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8516,7 +9036,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -8550,6 +9070,42 @@
 					(reference "C717")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 364.49 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 364.49 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 364.49 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -10488,7 +11044,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.10 1% >=1W"
+		(property "Value" "0.047 1% >=1W"
 			(at 252.73 257.81 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10570,7 +11126,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k / slope tune"
+		(property "Value" "2.7k 1% / slope tune"
 			(at 123.19 356.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10734,7 +11290,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10757,7 +11313,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -10791,6 +11347,42 @@
 					(reference "C716")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 320.04 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 320.04 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 320.04 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -10998,7 +11590,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 299.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11021,7 +11613,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
 			(at 320.04 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -11057,6 +11649,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 320.04 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 320.04 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 320.04 298.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -11080,7 +11708,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.10 1% >=1W"
+		(property "Value" "0.047 1% >=1W"
 			(at 252.73 356.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11230,5 +11858,279 @@
 		(pin "5"
 			(uuid "96251b8d-04f7-47f2-b9c3-043bdab4ef48")
 		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 400.05 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid ee68d3d8-a405-5c44-8a20-d315b5376cbd)
+		(property "Reference" "C718"
+			(at 403.05 96.52000000000001 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u 100V X7S"
+			(at 403.05 99.06 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+			(at 400.05 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+			(at 400.05 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 38c90686-a12c-53b9-8e14-82fb8d235647)
+		)
+		(pin "2"
+			(uuid 2b3439a7-fdec-53f4-af06-de7fef536bab)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "C718")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 400.05 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 400.05 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 400.05 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 400.05 93.98)
+			(xy 400.05 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 2d5700a9-bfee-5db4-b34d-6abeb1c48921)
+	)
+	(label "LED1_OUT"
+		(at 400.05 88.9 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 1c956156-6455-593c-be12-1b51ac34de92)
+	)
+	(wire
+		(pts
+			(xy 400.05 101.6)
+			(xy 400.05 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 11844627-1e32-58c8-921e-51b6c2178e2e)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 400.05 106.68 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid f835bf4f-5665-53b2-9680-6c5dea7dcc97)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 400.05 123.19 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 66fde122-d63d-53aa-bc2a-7c36bd6efc59)
+		(property "Reference" "C719"
+			(at 403.05 121.92 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u 100V X7S"
+			(at 403.05 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+			(at 400.05 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+			(at 400.05 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 948872e0-aaf0-56c1-a42a-5ecb0c084cfd)
+		)
+		(pin "2"
+			(uuid 7563701e-d72d-5d80-936b-9e9541dc2e3f)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "C719")
+					(unit 1)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 400.05 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32Y106KCV6PNE"
+			(at 400.05 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22380050"
+			(at 400.05 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 400.05 119.38)
+			(xy 400.05 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid a7fe110e-aaa7-56ab-84cc-11ad69261cab)
+	)
+	(label "LED1_OUT"
+		(at 400.05 114.3 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 2639e199-a3c9-56c2-ac6a-54ecf8e21480)
+	)
+	(wire
+		(pts
+			(xy 400.05 127.0)
+			(xy 400.05 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid cea3fb7e-8769-5ddd-8988-797c3175af18)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 400.05 132.08 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 13ff9b64-ec91-5ee4-a979-5ddea684ff0b)
+	)
+	(no_connect
+		(at 289.56 92.71)
+		(uuid "25224c09-fabb-4b40-98db-e7660137e511")
 	)
 )

@@ -13,9 +13,13 @@ refs = [c.get('ref') for c in components]
 assert len(refs) == len(set(refs)), 'Duplicate reference designators'
 with Path(sys.argv[2]).open('w', encoding='utf-8-sig', newline='') as stream:
     writer = csv.writer(stream)
-    writer.writerow(['Reference', 'Value', 'Footprint', 'Datasheet', 'Sheet', 'Procurement status'])
+    writer.writerow(['Reference', 'Value', 'Footprint', 'Datasheet', 'Sheet',
+                     'Manufacturer', 'MPN', 'LCSC', 'Procurement status'])
     for comp in sorted(components, key=lambda c: c.get('ref')):
+        fields = {f.get('name'): f.text or '' for f in comp.findall('fields/field')}
         writer.writerow([comp.get('ref'), comp.findtext('value', ''),
                          comp.findtext('footprint', ''), comp.findtext('datasheet', ''),
-                         comp.find('sheetpath').get('names'), 'ENGINEERING DRAFT - DO NOT ORDER'])
+                         comp.find('sheetpath').get('names'),
+                         fields.get('Manufacturer', ''), fields.get('MPN', ''), fields.get('LCSC', ''),
+                         'ENGINEERING DRAFT - DO NOT ORDER'])
 print(f'Exported {len(components)} schematic components')
