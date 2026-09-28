@@ -839,3 +839,60 @@ DISPLAY=:1 kicad \
 cd ~/kicad/main/pcb
 KICAD_CLI=/usr/bin/kicad-cli KICAD_PYTHON=/usr/bin/python3 python3 check_all.py
 ```
+
+---
+
+# AI launchers
+
+На VPS установлены OpenAI Codex CLI и Claude Code.
+
+Безопасный запуск выполняется через wrapper-команды:
+
+```bash
+ai-codex <branch>
+ai-claude <branch>
+```
+
+Примеры:
+
+```bash
+ai-codex ai/power-fix
+ai-claude ai/layout-led
+```
+
+Wrapper:
+
+- обновляет ветки через `git fetch`;
+- запрещает работу напрямую в `main`;
+- создаёт отдельный worktree в `~/kicad/worktrees/`;
+- использует существующую ветку, если она уже есть;
+- иначе создаёт новую ветку от `origin/main`;
+- запускает агента внутри его worktree.
+
+Codex и Claude могут работать параллельно только в разных ветках/worktree.
+
+После запуска агент должен прочитать `AGENTS.md` и `vps-docs/README.md`.
+
+Проверка KiCad из worktree:
+
+```bash
+cd pcb
+KICAD_CLI=/usr/bin/kicad-cli \
+KICAD_PYTHON=/usr/bin/python3 \
+python3 check_all.py
+```
+
+Перед push:
+
+```bash
+git status
+git diff
+git push -u origin HEAD
+```
+
+После merge worktree можно удалить:
+
+```bash
+git -C ~/kicad/main worktree remove ~/kicad/worktrees/<worktree>
+git -C ~/kicad/main worktree prune
+```
