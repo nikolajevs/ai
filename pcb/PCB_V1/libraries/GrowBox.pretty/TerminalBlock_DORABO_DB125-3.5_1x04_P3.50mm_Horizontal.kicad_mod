@@ -1,0 +1,167 @@
+(footprint "TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "DORABO DB125-3.5-4P screw terminal block, pitch 3.5 mm, pins 0.50x0.85 mm, hole 1.20 mm; body 14 x 7.40 mm, height 8.60 mm; wire entry toward +Y, pin row 3.50 mm from the wire-entry face and 3.90 mm from the rear. Drawing DB125-3.5-XXP-C-S T0-1 2022-04-06, LCSC C2757925. Not interchangeable with Phoenix PT-1,5 (7.6 mm deep) or push-in DA803R/WAGO 2601 bodies.")
+	(tags "terminal block screw DORABO DB125 pitch 3.5mm")
+	(property "Reference" "REF**"
+		(at 5.25 -5.5 0)
+		(layer "F.SilkS")
+		(uuid "bd8db5a1-5a97-437b-be2b-822cc613e412")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "TerminalBlock_DORABO_DB125-3.5_1x04"
+		(at 5.25 4.8 0)
+		(layer "F.Fab")
+		(uuid "4c60d5ee-1d89-4a3a-ba1e-e964ff13343f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/7e0429065fbb8e93ee291287d4dd9c74.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ad280761-ef5f-4baf-ae38-6839d5d695e6")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cf8e8ed3-2853-4277-9c75-d5af9bf5117a")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start -1.86 -4.01)
+		(end 12.36 3.61)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "a2b12201-d7a4-42ee-8fbb-6a6796dabf1b")
+	)
+	(fp_poly
+		(pts
+			(xy 0 -4.26) (xy -0.4 -4.86) (xy 0.4 -4.86)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "bf1dd5ca-22a1-4804-b153-dc08c9db184e")
+	)
+	(fp_rect
+		(start -2.25 -4.4)
+		(end 12.75 4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "ef3d6219-e06e-44d9-924f-4324d9469bc9")
+	)
+	(fp_line
+		(start -1.75 2.7)
+		(end 12.25 2.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "25508391-d97b-41ce-a2c3-00e97fb58d55")
+	)
+	(fp_rect
+		(start -1.75 -3.9)
+		(end 12.25 3.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "e059f90a-f43c-4c8d-aa70-24ea56e488b0")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 5.25 -2.5 0)
+		(layer "F.Fab")
+		(uuid "6f09a33f-c957-424b-959e-8f5bf073652b")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "WIRE ENTRY"
+		(at 5.25 1.9 0)
+		(layer "F.Fab")
+		(uuid "b8d83dd2-793e-4d5c-ae8a-ef9c35a9708b")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.09)
+			)
+		)
+	)
+	(pad "1" thru_hole roundrect
+		(at 0 0)
+		(size 2.4 2.4)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.25)
+		(uuid "2d43197d-d0d6-4c4d-8904-89581f7f3f7b")
+	)
+	(pad "2" thru_hole circle
+		(at 3.5 0)
+		(size 2.4 2.4)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "11abfb7d-736a-4f94-8ef6-fa0382f48512")
+	)
+	(pad "3" thru_hole circle
+		(at 7 0)
+		(size 2.4 2.4)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "43bb8f2c-6656-4b64-9be0-519510b28f8b")
+	)
+	(pad "4" thru_hole circle
+		(at 10.5 0)
+		(size 2.4 2.4)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "ae238ef2-2602-4da4-9468-fa216ef877f0")
+	)
+	(embedded_fonts no)
+)
