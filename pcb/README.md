@@ -13,7 +13,7 @@ Hardware source of truth: `PCB_V1/PCB_V1.kicad_pro` (KiCad 10). All hardware cha
 Run from this directory (needs KiCad 10; `pymupdf` only for sheet images):
 
 ```text
-python check_all.py           # ERC, netlist + board verification, sizing reports, BOM export, price audit, DRC
+python check_all.py           # ERC, netlist + board verification, sizing reports, BOM export, price audit, JLC estimate, DRC
 python check_all.py --write   # also refresh review/*_v16, sheet images and PCB_V1/BOM_schematic.csv
 ```
 
@@ -27,6 +27,7 @@ python check_all.py --write   # also refresh review/*_v16, sheet images and PCB_
 | `export_bom.py` | Full schematic BOM to `PCB_V1/BOM_schematic.csv` |
 | `sync_board.py` | Update the unrouted staging board from the netlist (refuses routed boards) — KiCad Python |
 | `create_staging_board.py` | Create the initial staging board — KiCad Python |
+| `estimate_jlc_assembly.py` | JLCPCB PCB + Economic/Standard assembly estimate for 2 and 5 boards from `PCB_V1/jlc_snapshot_v16.json` |
 | `audit_bom_cost.py` | Whole-BOM LCSC price audit from the dated snapshot `PCB_V1/price_snapshot_v16.json` (1 and 5 boards, MOQ, EUR) |
 
 Typical edit loop: change the schematic → `kicad-cli sch export netlist --format kicadxml -o netlist.xml PCB_V1/PCB_V1.kicad_sch` → `"<KiCad>/bin/python.exe" sync_board.py netlist.xml PCB_V1/PCB_V1.kicad_pcb` → `python check_all.py --write`.
