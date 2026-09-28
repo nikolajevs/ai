@@ -4,12 +4,12 @@
   python check_all.py --write    # also refresh review/*_<REV> reports, sheet images and BOM_schematic.csv
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
--> BOM export comparison -> verify_board.py (KiCad Python) -> DRC.
-Without --write the deterministic reports (LED_power, Power_path, BOM_schematic.csv) must match
-the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and are
-not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
-are only counted while the board is unrouted). The price audit (audit_bom_cost.py) is paused and
-not run here.
+-> BOM export comparison -> audit_bom_cost.py -> verify_board.py (KiCad Python) -> DRC.
+Without --write the deterministic reports (LED_power, Power_path, BOM_cost, BOM_schematic.csv) must
+match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
+are not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
+are only counted while the board is unrouted). The price audit uses the committed dated snapshot
+PCB_V1/price_snapshot_<REV>.json; it fails when a schematic reference has no price line.
 
 KiCad tools are taken from KICAD_CLI / KICAD_PYTHON or the default KiCad 10 install. The stock
 KiCad symbol/footprint libraries must be in the global sym-lib-table / fp-lib-table (created on the
@@ -129,6 +129,11 @@ def main():
         run('export_bom.py', [sys.executable, 'export_bom.py', str(net), str(bom)])
         if bom.exists():
             compare_or_write('BOM_schematic.csv', bom, PROJECT / 'BOM_schematic.csv', args.write)
+        cost = tmp / f'BOM_cost_{REV}.txt'
+        run('audit_bom_cost.py', [sys.executable, 'audit_bom_cost.py', str(net),
+                                  str(PROJECT / f'price_snapshot_{REV}.json'), '--output', str(cost)])
+        if cost.exists():
+            compare_or_write('audit_bom_cost.py', cost, REVIEW / cost.name, args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
