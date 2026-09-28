@@ -1,21 +1,3 @@
-cd ~/kicad/main
-set -e
-
-git fetch origin --prune
-
-if git show-ref --verify --quiet refs/heads/docs/vps-docs; then
-    git switch docs/vps-docs
-elif git show-ref --verify --quiet refs/remotes/origin/docs/vps-docs; then
-    git switch -c docs/vps-docs --track origin/docs/vps-docs
-else
-    git switch main
-    git pull --ff-only
-    git switch -c docs/vps-docs
-fi
-
-mkdir -p vps-docs
-
-cat > vps-docs/README.md <<'EOF'
 # KiCad VPS workstation
 
 Удалённая рабочая станция для репозитория `nikolajevs/ai`.
@@ -857,17 +839,3 @@ DISPLAY=:1 kicad \
 cd ~/kicad/main/pcb
 KICAD_CLI=/usr/bin/kicad-cli KICAD_PYTHON=/usr/bin/python3 python3 check_all.py
 ```
-EOF
-
-git add vps-docs/README.md
-
-if ! git diff --cached --quiet; then
-    git commit -m "docs: add KiCad VPS setup guide"
-fi
-
-git push -u origin docs/vps-docs
-
-echo
-echo "=== DONE ==="
-git status
-git log -1 --oneline
