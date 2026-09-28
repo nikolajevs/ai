@@ -6,8 +6,8 @@
 	(paper "A2")
 	(title_block
 		(title "07 - AL8853 LED drivers, 24 V input, 2 channels")
-		(date "2026-09-27")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -2794,7 +2794,7 @@
 		)
 		(uuid "19d9c77c-34d6-5168-ba34-4c5b712a3901")
 	)
-	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V output parts. Current calculations: REDESIGN_24V.md / LED_power_v15.txt."
+	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V output parts. Current calculations: DESIGN.md / LED_power_v17.txt."
 		(exclude_from_sim no)
 		(at 20.32 378.46 0)
 		(effects
@@ -2849,7 +2849,7 @@
 		)
 		(uuid "5b22d8ef-1745-59fd-a5a1-c27e4ab2ce10")
 	)
-	(text "CH1: 1.099 A nominal / panel"
+	(text "CH1: 1.111 A nominal / panel"
 		(exclude_from_sim no)
 		(at 20.32 80.01 0)
 		(effects
@@ -2871,7 +2871,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.16 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.099 A; CH2 0.465 A total. Qualification pending."
+	(text "0.17 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.111 A; CH2 0.465 A total. Qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -5669,7 +5669,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/1e1d842ae9bed7ba5f7b9bc74b663d5b.pdf"
 			(at 250.19 156.21 0)
 			(hide yes)
 			(show_name no)
@@ -5703,6 +5703,42 @@
 					(reference "R715")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 250.19 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "LR123WF270MT4E"
+			(at 250.19 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C19633795"
+			(at 250.19 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -5866,7 +5902,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/fb9056c7c2bdf119444a6a2c20d137ad.pdf"
 			(at 444.5 223.52 0)
 			(hide yes)
 			(show_name no)
@@ -5900,6 +5936,42 @@
 					(reference "R726")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "TA-I"
+			(at 444.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "RLH12FTCR430"
+			(at 444.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C22464907"
+			(at 444.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -5936,7 +6008,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal"
 			(at 449.58 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -5984,7 +6056,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C8465"
 			(at 449.58 298.45 0)
 			(effects
@@ -5995,7 +6066,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 298.45 0)
 			(effects
@@ -6006,7 +6076,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 298.45 0)
 			(effects
@@ -6145,7 +6214,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp1265a.pdf"
+		(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/SRP1770TA.pdf"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -7394,7 +7463,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal"
 			(at 449.58 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -7442,7 +7511,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C8465"
 			(at 449.58 198.12 0)
 			(effects
@@ -7453,7 +7521,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 198.12 0)
 			(effects
@@ -7464,7 +7531,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 198.12 0)
 			(effects
@@ -7901,7 +7967,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.182 1% >=1W"
+		(property "Value" "0.18 1% 2W 50ppm"
 			(at 448.31 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7924,7 +7990,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/b47da348e6587de9f1f028172ba2b8ea.pdf"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7958,6 +8024,42 @@
 					(reference "R716")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 444.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "FRM252WFR180TM"
+			(at 444.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C48533605"
+			(at 444.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -8437,7 +8539,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal"
 			(at 449.58 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -8485,7 +8587,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C8465"
 			(at 449.58 97.79 0)
 			(effects
@@ -8496,7 +8597,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "WJ500V-5.08-2P"
 			(at 449.58 97.79 0)
 			(effects
@@ -8507,7 +8607,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "KANGNEX"
 			(at 449.58 97.79 0)
 			(effects
@@ -9444,7 +9543,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/4c5de85c3e790e36d40c067847f05fa3.pdf"
 			(at 250.19 256.54 0)
 			(hide yes)
 			(show_name no)
@@ -9478,6 +9577,42 @@
 					(reference "R725")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "RVR"
+			(at 250.19 256.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "HIXD25NR047F"
+			(at 250.19 256.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C52015951"
+			(at 250.19 256.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)

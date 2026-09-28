@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "04 - Fans (12 V aux) and pump (24 V)")
-		(date "2026-09-27")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -1790,7 +1790,7 @@
 		)
 		(uuid "43f81e76-36bb-59b4-b553-22f12ff81f70")
 	)
-	(text "0.16 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
+	(text "0.17 DRAFT. Fans: +12V aux via F501/F511 (1 A each). Pump: +24V_LOADS via F521 (1 A)."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -3271,7 +3271,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal"
 			(at 182.88 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3325,7 +3325,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C2757925"
 			(at 182.88 60.96 0)
 			(effects
@@ -3336,7 +3335,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "DB125-3.5-4P-GN-S"
 			(at 182.88 60.96 0)
 			(effects
@@ -3347,7 +3345,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "DORABO"
 			(at 182.88 60.96 0)
 			(effects
@@ -3726,7 +3723,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal"
 			(at 185.42 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -3838,7 +3835,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal"
 			(at 381 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -3892,7 +3889,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C2757925"
 			(at 381 60.96 0)
 			(effects
@@ -3903,7 +3899,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "DB125-3.5-4P-GN-S"
 			(at 381 60.96 0)
 			(effects
@@ -3914,7 +3909,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "DORABO"
 			(at 381 60.96 0)
 			(effects

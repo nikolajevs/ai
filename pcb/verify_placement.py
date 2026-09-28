@@ -59,7 +59,8 @@ else: raise AssertionError('Card opening is not aligned with a board edge')
 assert .2 <= gap <= 1.0, 'Card mouth must be accessible from its outward-facing edge'
 assert fps['BT301'].GetLayer() == p.B_Cu, 'Battery holder must remain accessible from underside'
 for pad in fps['BT301'].Pads():
-    assert pad.IsOnLayer(p.B_Cu) and not pad.IsOnLayer(p.F_Cu), 'Battery pad side does not match holder'
+    assert pad.GetAttribute() == p.PAD_ATTRIB_PTH, 'Selected battery holder uses through-hole leads'
+    assert pad.IsOnLayer(p.B_Cu) and pad.IsOnLayer(p.F_Cu), 'Battery through-hole pad missing copper side'
 
 zones = list(fps['U201'].Zones())
 assert len(zones) == 1 and zones[0].GetIsRuleArea(), 'ESP32 antenna keepout missing'

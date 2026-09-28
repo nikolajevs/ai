@@ -14,7 +14,8 @@ import xml.etree.ElementTree as ET
 
 CHANNELS = [
     # v0.16: back to the 16.9 mm SRP1770TA-470M; restores OCP headroom and lowers copper loss.
-    dict(n=1, led_r=.182, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
+    # v0.17: available low-TCR 0.18 ohm shunt, 1.111 A nominal panel current.
+    dict(n=1, led_r=.18, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
          l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4,
          diode='STPS5H100B-TR', diode_vf=.85, diode_a=.51, diode_b=.02),
     # CH2 has one CURRENT REGULATOR for J721 || J731, no guaranteed sharing.
@@ -40,7 +41,7 @@ def check_schematic(path):
     for ch in CHANNELS:
         n = ch['n']
         expected = {f'L7{n}1': '47u', f'R7{n}5': str(ch['cs_r']),
-                    f'R7{n}6': '0.182' if n == 1 else '0.43',
+                    f'R7{n}6': str(ch['led_r']),
                     f'R7{n}2': '1k' if n == 1 else '2.7k'}
         for ref, value in expected.items():
             assert comps[ref].findtext('value').split()[0] == value, (ref, value)
@@ -110,7 +111,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.16 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
+    out = ['PCB_V1 v0.17 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',

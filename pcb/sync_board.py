@@ -6,7 +6,7 @@ Run with KiCad's bundled Python:
 
 Equivalent of "Update PCB from Schematic" for the staging phase:
 - footprints whose reference disappeared from the schematic are removed;
-- a footprint whose library id changed is replaced in place (position/rotation kept);
+- a footprint whose library id changed is replaced in place (position, rotation and side kept);
 - new footprints are staged in a free row below the existing groups;
 - values and schematic instance paths are refreshed, every pad net is reassigned
   from the netlist and nets that no longer exist are dropped.
@@ -59,18 +59,23 @@ for ref, comp in sorted(comps.items()):
     old = board.FindFootprintByReference(ref) if ref in existing else None
     if old is None or lib_id(old) != fpid:
         fp = load(fpid)
+        fp.SetReference(ref)
+        # Flip needs the board's layer stack; calling it on an unattached
+        # footprint crashes KiCad 10's Python bindings.
+        board.Add(fp)
         if old is not None:
             pos, orient = p.VECTOR2I(old.GetPosition()), old.GetOrientation()
+            flipped = old.IsFlipped()
             board.Delete(old)
             fp.SetPosition(pos)
+            if flipped:
+                fp.Flip(pos, False)
             fp.SetOrientation(orient)
             replaced.append(ref)
         else:
             fp.SetPosition(p.VECTOR2I(p.FromMM(175 + (slot % 5) * 50), p.FromMM(staging_y + (slot // 5) * 50)))
             slot += 1
             added.append(ref)
-        fp.SetReference(ref)
-        board.Add(fp)
     fp = board.FindFootprintByReference(ref)
     fp.SetReference(ref)
     fp.SetValue(comp.findtext('value'))

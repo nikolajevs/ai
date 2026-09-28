@@ -94,6 +94,11 @@ print('PASS: all values/footprints agree; LED diode polarity/NC, CH2 parallel ba
 # 24 V input and 12 V aux buck.
 gnd=nodes[('U201','1')]
 assert str(fps['J901'].GetFPID().GetLibItemName())=='AMASS_XT60PW-M_1x02_P7.20mm_Horizontal'
+assert str(fps['J901'].GetFPID().GetLibNickname())=='GrowBox','Use reviewed XT60 lands, not older stock footprint'
+for pad in fps['J901'].Pads():
+ drill=pad.GetDrillSize()
+ drill=tuple(round(pcbnew.ToMM(v),3) for v in (drill.x,drill.y))
+ assert drill==((3.,3.) if pad.GetNumber() else (.9,2.)),('J901','contact or retaining slot',drill)
 assert nodes[('J901','1')]==gnd and nodes[('J901','2')]==nodes[('F904','1')],'XT60 polarity'
 assert nodes[('F904','2')]==nodes[('U902','2')],'buck must be after auxiliary fuse'
 for ref in ['F902']:
@@ -128,3 +133,25 @@ assert str(fps['U201'].GetFPID().GetLibItemName())=='ESP32-WROOM-32E_NoVias'
 assert not [p for p in fps['U201'].Pads() if p.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and pcbnew.ToMM(p.GetDrillSize().x)<0.3],'ESP32 sub-0.3 mm vias'
 assert {p.GetNumber() for p in fps['U201'].Pads() if p.GetNumber()}==set(str(i) for i in range(1,40)),'ESP32 pads'
 print('PASS: schematic instance paths; XT60 polarity, mini-blade holder, six SMT fuses, LMR16020 DDA, 12 V bias wiring, ESP32 without 0.2 mm vias')
+
+# Reviewed procurement changes: pitch alone does not establish terminal fit.
+for refs,kind,drill,land,count in [
+ (['J302','J521','J601'],'TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal',1.2,2.4,2),
+ (['J501','J511'],'TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal',1.2,2.4,4),
+ (['J711','J721','J731'],'TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal',1.5,2.8,2),
+]:
+ for ref in refs:
+  fp=fps[ref]
+  assert str(fp.GetFPID().GetLibNickname())=='GrowBox' and str(fp.GetFPID().GetLibItemName())==kind,ref
+  assert set(numbered(ref))==set(str(i) for i in range(1,count+1)),ref
+  for pad in fp.Pads():
+   assert abs(pcbnew.ToMM(pad.GetDrillSize().x)-drill)<.001 and size(pad)==(land,land),(ref,'terminal lands')
+assert str(fps['BT301'].GetFPID().GetLibItemName())=='BatteryHolder_MYOUNG_BS-07-A1BJ001_CR2032'
+assert len(list(fps['BT301'].Pads()))==2
+assert nodes[('BT301','2')]==gnd and nodes[('BT301','1')]!=gnd,'CR2032 polarity'
+for pad in fps['BT301'].Pads():
+ assert pad.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and abs(pcbnew.ToMM(pad.GetDrillSize().x)-1.5)<.001,'Battery holder lead hole'
+assert str(fps['L101'].GetFPID().GetLibItemName())=='L_Bourns_SRP7028A_7.3x6.6mm'
+assert fps['L101'].GetField('MPN').GetText()=='SRP7050TA-100M'
+assert all(size(pad)==(2.95,3.5) for pad in fps['L101'].Pads()),'SRP7050TA recommended lands'
+print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and SRP7050TA lands')

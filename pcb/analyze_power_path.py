@@ -1,4 +1,4 @@
-"""v0.16 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.17 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
 Sources/assumptions: PCB_V1/DESIGN.md.
 """
@@ -51,7 +51,7 @@ def report(netlist):
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.16 power path (24 V)',
+    out = ['GrowBox v0.17 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
@@ -71,7 +71,7 @@ def report(netlist):
         allowed=ratings[r]*.75*.9
         assert loading[r] < allowed,(r,'continuous-loading screen failed')
         out.append(f'{r:6} {ratings[r]:9.2f} {loading[r]:13.3f} {allowed:10.3f} {allowed-loading[r]:8.3f}')
-    out += ['F902 is a holder: the DC fuse INSERT MPN remains to be selected.',
+    out += ['F902 holder uses separately purchased Littelfuse 0297010.WXNV MINI 10 A / 32 V DC insert (curated BOM).',
             'SMT fuse ratings here are >=125 V; loading does not prove I2t, interruption or selective clearing.',
             'v0.16: former F903 (7.5 A, redundant with F711+F721, smallest margin) removed; LED channels are fused individually.',
             'XT60-to-TVS/bulk segment has no onboard fuse; upstream PSU/cable protection must be qualified.', '',
@@ -108,7 +108,7 @@ def report(netlist):
             'Switch conduction; hot x1.7 is a scenario, not a guaranteed bound:',
             f'Q601 2.4mOhm at VGS>=10 V: {ptc**2*.0024:.4f} W nominal; {cold**2*.0024:.4f} W cold; {cold**2*.0024*1.7:.4f} W hot scenario.',
             f'Q521 200mOhm at VGS=2.5 V: {pump**2*.2:.4f} W at 0.25 A; {pump_budget**2*.2*1.7:.4f} W at allowance/hot scenario.',
-            'C602: 4.7uF/25V, require >=1uF effective at 12.26 V near UCC27524A; MPN pending.',
+            'C602 CL21B475KAFNNNE: 4.7uF/25V, >=1uF effective target at 12.26 V; reviewed bias/tolerance/temperature screen ~1.29uF before aging.',
             'AL8853 gate drive at 12 V bias: verify VGS/fronts and MOSFET losses hot and at startup.',
             'Independent PTC thermal cutoff, fuse clearing, connector/PCB ampacity and hot TVS remain unqualified.']
     return '\n'.join(out)+'\n'

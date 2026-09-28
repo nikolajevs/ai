@@ -27,7 +27,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-REV = 'v16'
+REV = 'v17'
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE / 'PCB_V1'
 REVIEW = HERE / 'review'
@@ -145,8 +145,8 @@ def main():
             failures.append('DRC violations')
         if args.write:
             shutil.copyfile(erc, REVIEW / f'ERC_{REV}.rpt')
-            shutil.copyfile(drc, REVIEW / f'DRC_staging_{REV}.rpt')
-            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_staging_{REV}.rpt')
+            shutil.copyfile(drc, REVIEW / f'DRC_placement_{REV}.rpt')
+            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_placement_{REV}.rpt')
             svg_dir = tmp / 'svg'
             run('schematic SVG export', [KICAD_CLI, 'sch', 'export', 'svg', '-o', str(svg_dir), str(sch)])
             render_images(svg_dir)
