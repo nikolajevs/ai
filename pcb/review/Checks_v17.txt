@@ -10,6 +10,10 @@
 [OK] analyze_power_path.py reproduces review\Power_path_v17.txt
 [OK] export_bom.py
 [OK] BOM_schematic.csv reproduces PCB_V1\BOM_schematic.csv
+[OK] audit_bom_cost.py
+[OK] audit_bom_cost.py reproduces review\BOM_cost_v17.txt
+[OK] estimate_jlc_assembly.py
+[OK] estimate_jlc_assembly.py reproduces review\JLC_assembly_v17.txt
 [OK] verify_board.py (KiCad Python)
       PASS: 167 footprints, 443 nodes; every numbered power MOSFET pad checked
       PASS: NexFET S1/2/3 G4 D5 (Q711 DQJ, Q721 DNH) and SOIC-8 RTC package/pin mapping
