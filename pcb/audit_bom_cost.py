@@ -44,7 +44,9 @@ def label(refs, width=30):
 
 
 def report(netlist, snapshot):
-    comps = {c.get('ref'): c for c in ET.parse(netlist).findall('.//components/comp')}
+    root = ET.parse(netlist).getroot()
+    comps = {c.get('ref'): c for c in root.findall('.//components/comp')}
+    revision = root.findtext('./design/sheet/title_block/rev', 'unknown').removesuffix('-DRAFT')
     data = json.loads(snapshot.read_text(encoding='utf-8'))
     rate = Decimal(str(data['eur_usd']['rate']))
     seen = set()
@@ -79,7 +81,7 @@ def report(netlist, snapshot):
     assert not missing, ('schematic references without a price line', missing)
 
     date, src = data['captured'], data['source']
-    out = [f'PCB_V1 v0.16 BOM price audit, LCSC snapshot {date}',
+    out = [f'PCB_V1 v{revision} BOM price audit, LCSC snapshot {date}',
            f'{src}. EUR at ECB {data["eur_usd"]["date"]}: 1 EUR = {rate} USD.',
            'Per board = fitted parts x tier price; order = LCSC minimum/multiple applied (leftovers included).',
            'Not included: shipping, VAT/duty, PCB, assembly, promotional discounts, parts marked unpriced.', '',

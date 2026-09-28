@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "03 - RTC / microSD / external sensors")
-		(date "2026-09-26")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)
@@ -5346,7 +5346,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Battery:BatteryHolder_Keystone_3002_1x2032"
+		(property "Footprint" "Battery:BatteryHolder_MYOUNG_BS-07-A1BJ001_CR2032"
 			(at 134.62 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -5358,7 +5358,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/fcfe81010ef1b91d8aa89bbdaa7da201.pdf"
 			(at 134.62 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -5392,6 +5392,42 @@
 					(reference "BT301")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "MYOUNG"
+			(at 134.62 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "BS-07-A1BJ001"
+			(at 134.62 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C2979167"
+			(at 134.62 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -5510,7 +5546,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal"
 			(at 193.04 247.65 0)
 			(hide yes)
 			(show_name no)
@@ -5558,7 +5594,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C466970"
 			(at 193.04 247.65 0)
 			(effects
@@ -5569,7 +5604,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "DB125-3.5-2P-GN-S"
 			(at 193.04 247.65 0)
 			(effects
@@ -5580,7 +5614,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "DORABO"
 			(at 193.04 247.65 0)
 			(effects
@@ -7044,7 +7077,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.hirose.com/en/product/document?clcode=&productname=&series=DM3&documenttype=Catalog&lang=en&documentid=D49662_en"
+		(property "Datasheet" "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/104/104031/1040310811_sd.pdf"
 			(at 370.84 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7105,6 +7138,42 @@
 					(reference "J401")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Molex"
+			(at 370.84 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "1040310811"
+			(at 370.84 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C585350"
+			(at 370.84 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)

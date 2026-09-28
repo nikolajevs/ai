@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "02 - ESP32 and programming")
-		(date "2026-09-26")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Draft: input protection and LED drivers pending")
 	)

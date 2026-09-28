@@ -5,12 +5,16 @@
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
 -> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
-Python) -> DRC. Without --write the deterministic reports (LED_power, Power_path, BOM_cost,
+Python) -> verify_placement.py -> DRC. The placement check verifies the outline, edge connectors,
+antenna keepout, battery side and initial manufacturing setup.
+Without --write the deterministic reports (LED_power, Power_path, BOM_cost,
 JLC_assembly, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
 are not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
 are only counted while the board is unrouted). The price audit uses the committed dated snapshot
-PCB_V1/price_snapshot_<REV>.json; it fails when a schematic reference has no price line. The JLCPCB
-assembly estimate also needs PCB_V1/jlc_snapshot_<REV>.json (fees, part records, joints per footprint).
+PCB_V1/price_snapshot_<PRICE_REV>.json; it fails when a schematic reference has no price line or
+a selected MPN differs. The JLCPCB assembly estimate uses jlc_snapshot_<PRICE_REV>.json.
+Price snapshot dates are independent of the hardware/report revision; existing data are reused,
+not silently presented as a new quote.
 
 KiCad tools are taken from KICAD_CLI / KICAD_PYTHON or the default KiCad 10 install. The stock
 KiCad symbol/footprint libraries must be in the global sym-lib-table / fp-lib-table (created on the
@@ -26,7 +30,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-REV = 'v16'
+REV = 'v17'
+# The September 28 v16 snapshots already price the reviewed parts selected in v17.
+PRICE_REV = 'v16'
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE / 'PCB_V1'
 REVIEW = HERE / 'review'
@@ -132,16 +138,17 @@ def main():
             compare_or_write('BOM_schematic.csv', bom, PROJECT / 'BOM_schematic.csv', args.write)
         cost = tmp / f'BOM_cost_{REV}.txt'
         run('audit_bom_cost.py', [sys.executable, 'audit_bom_cost.py', str(net),
-                                  str(PROJECT / f'price_snapshot_{REV}.json'), '--output', str(cost)])
+                                  str(PROJECT / f'price_snapshot_{PRICE_REV}.json'), '--output', str(cost)])
         if cost.exists():
             compare_or_write('audit_bom_cost.py', cost, REVIEW / cost.name, args.write)
         jlc = tmp / f'JLC_assembly_{REV}.txt'
         run('estimate_jlc_assembly.py', [sys.executable, 'estimate_jlc_assembly.py', str(net),
-                                         str(PROJECT / f'price_snapshot_{REV}.json'),
-                                         str(PROJECT / f'jlc_snapshot_{REV}.json'), '--output', str(jlc)])
+                                         str(PROJECT / f'price_snapshot_{PRICE_REV}.json'),
+                                         str(PROJECT / f'jlc_snapshot_{PRICE_REV}.json'), '--output', str(jlc)])
         if jlc.exists():
             compare_or_write('estimate_jlc_assembly.py', jlc, REVIEW / jlc.name, args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
+        run('verify_placement.py (KiCad Python)', [KICAD_PYTHON, 'verify_placement.py', str(pcb)], capture=False)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
         unconnected = counters(drc, r'Found (\d+) unconnected pads')
@@ -154,8 +161,8 @@ def main():
             failures.append('DRC violations')
         if args.write:
             shutil.copyfile(erc, REVIEW / f'ERC_{REV}.rpt')
-            shutil.copyfile(drc, REVIEW / f'DRC_staging_{REV}.rpt')
-            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_staging_{REV}.rpt')
+            shutil.copyfile(drc, REVIEW / f'DRC_placement_{REV}.rpt')
+            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_placement_{REV}.rpt')
             svg_dir = tmp / 'svg'
             run('schematic SVG export', [KICAD_CLI, 'sch', 'export', 'svg', '-o', str(svg_dir), str(sch)])
             render_images(svg_dir)

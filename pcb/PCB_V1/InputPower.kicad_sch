@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "06 - 24 V input, fuses, 12 V auxiliary buck")
-		(date "2026-09-27")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -1863,7 +1863,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_AMASS:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal"
+		(property "Footprint" "GrowBox:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal"
 			(at 38.1 50.8 0)
 			(effects
 				(font
@@ -2275,7 +2275,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32B105KBHNNN.do"
 			(at 101.6 50.8 0)
 			(effects
 				(font
@@ -2297,6 +2297,36 @@
 					(reference "C902")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 101.6 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32B105KBHNNNE"
+			(at 101.6 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C40708"
+			(at 101.6 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3258,6 +3288,36 @@
 				)
 			)
 		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 91.44 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF5603T5E"
+			(at 91.44 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C23203"
+			(at 91.44 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(wire
 		(pts
@@ -3358,6 +3418,36 @@
 					(reference "R908")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 91.44 149.86 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "RC0603FR-0747KL"
+			(at 91.44 149.86 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C105579"
+			(at 91.44 149.86 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -3740,6 +3830,36 @@
 					(reference "R906")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 109.22 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF4992T5E"
+			(at 109.22 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C23184"
+			(at 109.22 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)
@@ -4243,6 +4363,36 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 220.98 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "RT0603BRD07150KL"
+			(at 220.98 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C326734"
+			(at 220.98 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(wire
 		(pts
@@ -4344,6 +4494,36 @@
 					(reference "R905")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 220.98 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "RT0603BRD0710KL"
+			(at 220.98 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C95204"
+			(at 220.98 152.4 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 	)

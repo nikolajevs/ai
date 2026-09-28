@@ -39,7 +39,9 @@ def lcsc_order(line, need):
 
 
 def report(netlist, price_snapshot, jlc_snapshot):
-    comps = {c.get('ref'): c for c in ET.parse(netlist).findall('.//components/comp')}
+    root = ET.parse(netlist).getroot()
+    comps = {c.get('ref'): c for c in root.findall('.//components/comp')}
+    revision = root.findtext('./design/sheet/title_block/rev', 'unknown').removesuffix('-DRAFT')
     prices = json.loads(price_snapshot.read_text(encoding='utf-8'))
     jlc = json.loads(jlc_snapshot.read_text(encoding='utf-8'))
     rate = D(prices['eur_usd']['rate'])
@@ -73,7 +75,7 @@ def report(netlist, price_snapshot, jlc_snapshot):
     n_all = sum(len(v) for v in types.values())
     smt1, tht1 = sum(i['smt'] for i in lines), sum(i['tht'] for i in lines)
     fees = jlc['fees']
-    out = [f'PCB_V1 v0.16 JLCPCB PCB + assembly estimate, JLC snapshot {jlc["captured"]}',
+    out = [f'PCB_V1 v{revision} JLCPCB PCB + assembly estimate, JLC snapshot {jlc["captured"]}',
            f'Fees: {jlc["sources"]["fees"]}. EUR at ECB {prices["eur_usd"]["date"]}: 1 EUR = {rate} USD.',
            f'PCB: {jlc["sources"]["pcb"]}: USD {jlc["pcb"]["usd"]:.2f} for {jlc["pcb"]["qty"]} pcs ({jlc["pcb"]["breakdown"]}).',
            f'Unique parts {n_all}: basic {len(types.get("B", ()))}, preferred {len(types.get("P", ()))}, extended '

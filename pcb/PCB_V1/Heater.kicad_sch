@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "05 - PTC heater switch (24 V)")
-		(date "2026-09-27")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -1493,7 +1493,7 @@
 		)
 		(uuid "b265a6f5-dfce-5b57-8983-a5f2e930067d")
 	)
-	(text "0.16 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
+	(text "0.17 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -2552,7 +2552,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21B475KAFNNN.do"
 			(at 30.48 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -2586,6 +2586,42 @@
 					(reference "C602")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 30.48 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL21B475KAFNNNE"
+			(at 30.48 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C98195"
+			(at 30.48 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2704,7 +2740,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal"
 			(at 254 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -2752,7 +2788,6 @@
 				)
 			)
 		)
-
 		(property "LCSC" "C466970"
 			(at 254 48.26 0)
 			(effects
@@ -2763,7 +2798,6 @@
 				(justify left)
 			)
 		)
-
 		(property "MPN" "DB125-3.5-2P-GN-S"
 			(at 254 48.26 0)
 			(effects
@@ -2774,7 +2808,6 @@
 				(justify left)
 			)
 		)
-
 		(property "Manufacturer" "DORABO"
 			(at 254 48.26 0)
 			(effects

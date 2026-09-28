@@ -1,0 +1,33 @@
+PCB_V1 v0.17 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)
+Not a manufacturing release or a guaranteed OCP/stability envelope.
+VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;
+fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;
+L -20% initial plus bias allowance; winding resistance at 100 C.
+
+CH1: SRP1770TA-470M; 72 cases; modes CCM
+  ILED max 1.1560 A; Iin estimate max 3.089 A
+  L effective allowance 26.32 uH; Ipeak max 5.177 A; ILrms max 3.316 A
+  IQrms max 2.480 A; IDrms max 2.200 A
+  CCM subharmonic ratio max 0.309 (<1; typical ramp only)
+  OCP estimate 8.314..14.087 A; minimum paired peak headroom 3.138 A
+  Winding copper loss at 100 C max 0.783 W (core loss NOT included)
+  CS shunt loss max 0.168 W; diode conduction estimate max 0.790 W (reverse/dynamic loss NOT included)
+  Output bank 4 x 10u/100V; C effective allowance 6.508 uF; whole-cycle discharge bound 1.615 Vpp
+  Output-cap RMS screening max 1.729 A total
+
+CH2: SRP1265A-470M; 72 cases; modes DCM
+  ILED max 0.4839 A; Iin estimate max 1.294 A
+  L effective allowance 30.08 uH; Ipeak max 3.075 A; ILrms max 1.629 A
+  IQrms max 1.219 A; IDrms max 1.080 A
+  CCM subharmonic ratio max n/a (all cases DCM)
+  OCP estimate 3.901..7.859 A; minimum paired peak headroom 0.943 A
+  Winding copper loss at 100 C max 0.309 W (core loss NOT included)
+  CS shunt loss max 0.071 W; diode conduction estimate max 0.371 W (reverse/dynamic loss NOT included)
+  Output bank 3 x 10u/100V; C effective allowance 4.881 uF; whole-cycle discharge bound 0.901 Vpp
+  Output-cap RMS screening max 0.918 A total
+
+Combined LED power at 48 V: nominal 75.66 W; FB/R corner 78.72 W.
+CH2 sharing is NOT guaranteed. One remaining bar: <= 0.4839 A steady-state.
+Uncovered: faults/startup/OVP, gate delays, ramp tolerances, compensation loop,
+hot saturation and core loss, MLCC bias/temperature/aging interaction, layout.
+Input branch fuses are fitted; clearing time/I2t with the actual PSU is NOT qualified.

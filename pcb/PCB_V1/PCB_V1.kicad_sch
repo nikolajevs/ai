@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "01 - Logic power / 12 V aux to 3.3 V")
-		(date "2026-09-27")
-		(rev "0.16-DRAFT")
+		(date "2026-09-28")
+		(rev "0.17-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
 	)
@@ -2972,7 +2972,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uH / Isat >= 4.5A"
+		(property "Value" "10u SRP7050TA-100M"
 			(at 130.81 58.42 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2983,7 +2983,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Coilcraft_XAL7050-XXX"
+		(property "Footprint" "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -2995,7 +2995,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp7050ta.pdf"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3029,6 +3029,42 @@
 					(reference "L101")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Bourns"
+			(at 139.7 63.5 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "SRP7050TA-100M"
+			(at 139.7 63.5 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C2041441"
+			(at 139.7 63.5 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
