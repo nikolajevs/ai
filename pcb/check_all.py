@@ -7,9 +7,14 @@ Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> ana
 -> BOM export comparison -> verify_board.py (KiCad Python) -> DRC.
 Without --write the deterministic reports (LED_power, Power_path, BOM_schematic.csv) must match
 the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and are
-compared by their counters only. The price audit (audit_bom_cost.py) is paused and not run here.
+not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
+are only counted while the board is unrouted). The price audit (audit_bom_cost.py) is paused and
+not run here.
 
-KiCad tools are taken from KICAD_CLI / KICAD_PYTHON or the default KiCad 10 install.
+KiCad tools are taken from KICAD_CLI / KICAD_PYTHON or the default KiCad 10 install. The stock
+KiCad symbol/footprint libraries must be in the global sym-lib-table / fp-lib-table (created on the
+first GUI start, or copied from KiCad's template directory); if they are missing, ERC/DRC report
+every standard symbol and footprint and the run fails with an ENVIRONMENT message instead.
 """
 import argparse
 import os
@@ -68,6 +73,25 @@ def counters(report, pattern):
     return tuple(int(x) for x in m.groups()) if m else None
 
 
+def check_libraries(label, report):
+    """Flag violations caused by stock libraries absent from the global library tables."""
+    if not Path(report).exists():
+        return 0
+    missing = re.findall(r'The current configuration does not include the (symbol|footprint) library \'([^\']+)\'',
+                         Path(report).read_text(encoding='utf-8', errors='replace'))
+    if not missing:
+        return 0
+    names = sorted({f'{kind} {name}' for kind, name in missing})
+    print(f'[FAIL] ENVIRONMENT: {len(missing)} {label} violations come from KiCad libraries missing in the '
+          f'global sym-lib-table / fp-lib-table ({len(names)} libraries: {", ".join(names[:6])}'
+          f'{", ..." if len(names) > 6 else ""})')
+    print('      Configure the stock KiCad libraries (Linux: copy /usr/share/kicad/template/{sym,fp}-lib-table '
+          'to ~/.config/kicad/10.0/, see vps-docs/README.md); these are not design violations')
+    if 'KiCad library tables' not in failures:
+        failures.append('KiCad library tables')
+    return len(missing)
+
+
 def render_images(svg_dir):
     try:
         import pymupdf
@@ -92,6 +116,7 @@ def main():
         erc, drc, net = tmp / 'erc.rpt', tmp / 'drc.rpt', tmp / 'netlist.xml'
         run('ERC', [KICAD_CLI, 'sch', 'erc', '--exit-code-violations', '-o', str(erc), str(sch)])
         print('      ' + str(counters(erc, r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)')) + ' (messages, errors, warnings)')
+        check_libraries('ERC', erc)
         run('netlist export', [KICAD_CLI, 'sch', 'export', 'netlist', '--format', 'kicadxml', '-o', str(net), str(sch)])
         run('verify_netlist.py', [sys.executable, 'verify_netlist.py', str(net)], capture=False)
         for label, script, name in [('analyze_led_power.py', 'analyze_led_power.py', f'LED_power_{REV}.txt'),
@@ -105,12 +130,15 @@ def main():
         if bom.exists():
             compare_or_write('BOM_schematic.csv', bom, PROJECT / 'BOM_schematic.csv', args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
-        run('DRC', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
+        run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
         unconnected = counters(drc, r'Found (\d+) unconnected pads')
+        drc_ok = bool(violations) and violations[0] == 0
+        print(f"[{'OK' if drc_ok else 'FAIL'}] DRC")
         print(f'      DRC violations {violations[0] if violations else "?"}; unconnected pads '
               f'{unconnected[0] if unconnected else "?"} (expected while the board is unrouted)')
-        if not violations or violations[0] != 0:
+        check_libraries('DRC', drc)
+        if not drc_ok:
             failures.append('DRC violations')
         if args.write:
             shutil.copyfile(erc, REVIEW / f'ERC_{REV}.rpt')
