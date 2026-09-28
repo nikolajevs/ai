@@ -5,6 +5,8 @@
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
 -> BOM export comparison -> verify_board.py (KiCad Python) -> DRC.
+The placement check additionally verifies the outline, edge connectors, antenna
+keepout, battery side and initial manufacturing setup.
 Without --write the deterministic reports (LED_power, Power_path, BOM_schematic.csv) must match
 the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and are
 not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
@@ -130,6 +132,7 @@ def main():
         if bom.exists():
             compare_or_write('BOM_schematic.csv', bom, PROJECT / 'BOM_schematic.csv', args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
+        run('verify_placement.py (KiCad Python)', [KICAD_PYTHON, 'verify_placement.py', str(pcb)], capture=False)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
         unconnected = counters(drc, r'Found (\d+) unconnected pads')

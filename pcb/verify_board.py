@@ -63,7 +63,7 @@ assert fps['Q711'].GetValue()=='CSD19534Q5A'
 assert set(pads)=={'1','2','3','4','5'}, ('Q711','NexFET pin count')
 for number in ['1','2','3','4']:
  assert len(pads[number])==1 and size(pads[number][0])==(.7,.7),('Q711',number,'pad geometry')
- assert abs(pcbnew.ToMM(pads[number][0].GetPosition().x-fps['Q711'].GetPosition().x)+2.8)<.001,('Q711','S/G row')
+ assert abs(pcbnew.ToMM(pads[number][0].GetFPRelativePosition().x)+2.8)<.001,('Q711','S/G row')
 assert sorted(size(p) for p in pads['5'])==[(.7,.7)]*4+[(4.35,4.51)],('Q711','drain geometry')
 assert str(fps['U301'].GetFPID().GetLibItemName())=='SOIC-8_3.9x4.9mm_P1.27mm'
 assert fps['U301'].GetValue()=='DS3231MZ+TRL'
@@ -102,7 +102,7 @@ for ref in ['F902']:
  assert set(pads)=={'1','2'} and all(len(v)==2 for v in pads.values()),(ref,'4-pin holder')
  for v in pads.values():
   for p in v:assert abs(pcbnew.ToMM(p.GetDrillSize().x)-1.8)<.001,(ref,'drill')
- xs=sorted({round(pcbnew.ToMM(p.GetPosition().x-fps[ref].GetPosition().x),3) for v in pads.values() for p in v})
+ xs=sorted({round(pcbnew.ToMM(p.GetFPRelativePosition().x),3) for v in pads.values() for p in v})
  assert xs==[0.0,9.8],(ref,'XF-508P pin pitch',xs)
 pads=numbered('U902')
 assert str(fps['U902'].GetFPID().GetLibItemName())=='SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm'
@@ -123,7 +123,7 @@ for ref in ['F501','F511','F521','F711','F721','F904']:
  assert set(pads)=={'1','2'} and all(len(v)==1 for v in pads.values()),(ref,'fuse terminals')
  assert nodes[(ref,'1')]!=nodes[(ref,'2')],(ref,'fuse bypass')
  for v in pads.values():assert size(v[0])==(1.96,3.15),(ref,'451 recommended lands')
- assert abs(pcbnew.ToMM(pads['1'][0].GetPosition().x-pads['2'][0].GetPosition().x))==4.91,(ref,'pad span')
+ assert abs(pcbnew.ToMM(pads['1'][0].GetFPRelativePosition().x-pads['2'][0].GetFPRelativePosition().x))==4.91,(ref,'pad span')
 assert str(fps['U201'].GetFPID().GetLibItemName())=='ESP32-WROOM-32E_NoVias'
 assert not [p for p in fps['U201'].Pads() if p.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and pcbnew.ToMM(p.GetDrillSize().x)<0.3],'ESP32 sub-0.3 mm vias'
 assert {p.GetNumber() for p in fps['U201'].Pads() if p.GetNumber()}==set(str(i) for i in range(1,40)),'ESP32 pads'
