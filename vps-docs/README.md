@@ -233,6 +233,32 @@ pgrep -a kicad
 
 KiCad специально не запускается автоматически после reboot, чтобы экономить RAM.
 
+## Глобальные таблицы библиотек
+
+В проекте подключена только библиотека `GrowBox`, а стандартные библиотеки KiCad (`Device`, `power`, `Resistor_SMD`, `Capacitor_SMD` и т.д.) берутся из глобальных таблиц:
+
+```text
+~/.config/kicad/10.0/sym-lib-table
+~/.config/kicad/10.0/fp-lib-table
+```
+
+Обычно их создаёт GUI KiCad при первом запуске. На VPS, где сначала использовался только `kicad-cli`, их нужно скопировать из шаблонов один раз:
+
+```bash
+cp --update=none \
+  /usr/share/kicad/template/sym-lib-table \
+  /usr/share/kicad/template/fp-lib-table \
+  ~/.config/kicad/10.0/
+```
+
+Проверка:
+
+```bash
+ls -l ~/.config/kicad/10.0/*lib-table
+```
+
+Если таблиц нет, ERC выдаёт сотни ложных предупреждений `lib_symbol_issues` / `footprint_link_issues`, а DRC — `lib_footprint_issues` с текстом `The current configuration does not include the ... library`. В этом случае `check_all.py` завершается с ошибкой `ENVIRONMENT` и сообщением `KiCad library tables`: это проблема настройки машины, а не нарушения проекта.
+
 ---
 
 # Проверка проекта
@@ -262,6 +288,8 @@ python3 check_all.py
 - проверку BOM;
 - проверку PCB;
 - DRC.
+
+Ожидаемый результат: `ALL CHECKS PASSED`, exit code `0`; ERC 0 нарушений, DRC 0 нарушений, неподключённые пады только подсчитываются, пока плата не разведена. Перед первым запуском на новой машине настройте глобальные таблицы библиотек (см. раздел KiCad выше).
 
 Для обновления committed review-файлов:
 
