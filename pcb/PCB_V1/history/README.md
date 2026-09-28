@@ -9,5 +9,6 @@
 | [LED_COST_DOWN.md](LED_COST_DOWN.md) | 0.9–0.11 | Переход с LT3756 на AL8853, первые шаги удешевления |
 | [LED_POWER_COMPONENTS.md](LED_POWER_COMPONENTS.md) | 0.12 | Силовые детали LED при 12 В и методика расчёта |
 | [INPUT_PROTECTION.md](INPUT_PROTECTION.md) | 0.13 | Вход 12 В с LM74700, LDO 5 В для драйвера PTC |
+| [price_snapshot_v15.json](price_snapshot_v15.json) | 0.15 | Частичный ценовой снимок (53 из 169 деталей), отчёт — `../../review/history/BOM_cost_v15.txt` |
 
 Отчёты и изображения этих ревизий — [../../review/history/](../../review/history).
