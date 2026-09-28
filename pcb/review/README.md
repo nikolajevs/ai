@@ -8,6 +8,7 @@ Current revision **v16** (PCB_V1 0.16). All files here are produced by `python c
 | `DRC_staging_v16.rpt` | KiCad DRC of the unrouted staging board (0 violations; unconnected pads expected) |
 | `LED_power_v16.txt` | `analyze_led_power.py` — LED boost sizing, 72 cases per channel |
 | `Power_path_v16.txt` | `analyze_power_path.py` — input, fuses, TVS margins, 12 V buck, switches |
+| `JLC_assembly_v16.txt` | `estimate_jlc_assembly.py` — JLCPCB PCB + assembly for 2 and 5 boards (fees, JLC part prices, joints, stock) |
 | `BOM_cost_v16.txt` | `audit_bom_cost.py` — every schematic reference priced from `PCB_V1/price_snapshot_v16.json` (1 and 5 boards, MOQ, EUR) |
 | `Root_v16.png` … `LEDDrivers_v16.png` | Schematic sheets rendered from KiCad SVG export |
 

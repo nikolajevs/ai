@@ -27,6 +27,7 @@
 | [COST_REVIEW.md](COST_REVIEW.md) | Стоимость компонентов: итог, склад, кандидаты на удешевление |
 | [PRE_LAYOUT_PARTS_REVIEW.md](PRE_LAYOUT_PARTS_REVIEW.md) | Проверка MPN, посадочных мест и габаритов перед размещением; правки схемы по Ref |
 | [RTC_COMPATIBILITY.md](RTC_COMPATIBILITY.md) | Совместимость DS3231MZ с прошивкой |
+| [jlc_snapshot_v16.json](jlc_snapshot_v16.json) | Тарифы и данные деталей JLCPCB для оценки сборки; отчёт — [../review/JLC_assembly_v16.txt](../review/JLC_assembly_v16.txt) |
 | [price_snapshot_v16.json](price_snapshot_v16.json) | Цены LCSC на все позиции схемы (снимок 2026-09-28); отчёт — [../review/BOM_cost_v16.txt](../review/BOM_cost_v16.txt) |
 | `libraries/` | Проектные символы (`GrowBox.kicad_sym`) и посадочные места (`GrowBox.pretty`) |
 | [history/](history) | Документы 12-вольтовой версии (0.1–0.13), не обновляются |

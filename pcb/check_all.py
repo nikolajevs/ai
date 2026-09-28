@@ -4,12 +4,13 @@
   python check_all.py --write    # also refresh review/*_<REV> reports, sheet images and BOM_schematic.csv
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
--> BOM export comparison -> audit_bom_cost.py -> verify_board.py (KiCad Python) -> DRC.
-Without --write the deterministic reports (LED_power, Power_path, BOM_cost, BOM_schematic.csv) must
-match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
+-> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
+Python) -> DRC. Without --write the deterministic reports (LED_power, Power_path, BOM_cost,
+JLC_assembly, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
 are not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
 are only counted while the board is unrouted). The price audit uses the committed dated snapshot
-PCB_V1/price_snapshot_<REV>.json; it fails when a schematic reference has no price line.
+PCB_V1/price_snapshot_<REV>.json; it fails when a schematic reference has no price line. The JLCPCB
+assembly estimate also needs PCB_V1/jlc_snapshot_<REV>.json (fees, part records, joints per footprint).
 
 KiCad tools are taken from KICAD_CLI / KICAD_PYTHON or the default KiCad 10 install. The stock
 KiCad symbol/footprint libraries must be in the global sym-lib-table / fp-lib-table (created on the
@@ -134,6 +135,12 @@ def main():
                                   str(PROJECT / f'price_snapshot_{REV}.json'), '--output', str(cost)])
         if cost.exists():
             compare_or_write('audit_bom_cost.py', cost, REVIEW / cost.name, args.write)
+        jlc = tmp / f'JLC_assembly_{REV}.txt'
+        run('estimate_jlc_assembly.py', [sys.executable, 'estimate_jlc_assembly.py', str(net),
+                                         str(PROJECT / f'price_snapshot_{REV}.json'),
+                                         str(PROJECT / f'jlc_snapshot_{REV}.json'), '--output', str(jlc)])
+        if jlc.exists():
+            compare_or_write('estimate_jlc_assembly.py', jlc, REVIEW / jlc.name, args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
