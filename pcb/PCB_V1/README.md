@@ -24,6 +24,7 @@
 | [CHANGELOG.md](CHANGELOG.md) | Журнал ревизий 0.1–0.16 |
 | [BOM_schematic.csv](BOM_schematic.csv) | Полный состав схемы, генерируется из netlist |
 | [BOM_v0.1.md](BOM_v0.1.md) / `.csv` | Подобранные детали с MPN и статусом (не заказной BOM) |
+| [PRE_LAYOUT_PARTS_REVIEW.md](PRE_LAYOUT_PARTS_REVIEW.md) | Проверка MPN, посадочных мест и габаритов перед размещением; правки схемы по Ref |
 | [RTC_COMPATIBILITY.md](RTC_COMPATIBILITY.md) | Совместимость DS3231MZ с прошивкой |
 | `price_snapshot_v15.json` | Частичный ценовой снимок 0.15; оценка цен отложена |
 | `libraries/` | Проектные символы (`GrowBox.kicad_sym`) и посадочные места (`GrowBox.pretty`) |
