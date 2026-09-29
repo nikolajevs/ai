@@ -6,10 +6,10 @@
 	(paper "A4")
 	(title_block
 		(title "02 - ESP32 and programming")
-		(date "2026-09-28")
-		(rev "0.17-DRAFT")
+		(date "2026-09-29")
+		(rev "0.18-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Draft: input protection and LED drivers pending")
+		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x06"
@@ -1501,7 +1501,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "UART: adapter TX -> J201.4; RX -> J201.3; common GND.\\nJ201.2 = reference only through 1k; leave open on a simple adapter.\\nPower board from its own 24 V source. No 5 V UART signals.\\nHold BOOT, pulse RESET, release BOOT to flash.\\nEN / IO0: manual buttons or open-drain programmer outputs."
+	(text "UART: adapter TX -> J201.4; RX -> J201.3; common GND.\nJ201.2 = reference only through 1k; leave open on a simple adapter.\nPower board from its own 24 V source. No 5 V UART signals.\nHold BOOT, pulse RESET, release BOOT to flash.\nEN / IO0: manual buttons or open-drain programmer outputs."
 		(exclude_from_sim no)
 		(at 177.8 121.92 0)
 		(effects
@@ -1523,7 +1523,7 @@
 		)
 		(uuid "14e6833b-037a-512a-8efd-a8c877f5352e")
 	)
-	(text "FAN PWM: 25 kHz, inverted by open-drain MOSFET. Reset -> fan full speed.\nGPIO34/35: input only. GPIO12 held LOW for 3.3 V flash.\nPCB: antenna keepout on all copper layers per module datasheet.\nPump / heater default OFF. LED drivers not yet implemented."
+	(text "FAN PWM: 25 kHz, inverted by open-drain MOSFET. Reset -> fan full speed.\nGPIO34/35: input only. GPIO12 held LOW for 3.3 V flash.\nPCB: antenna keepout on all copper layers per module datasheet.\nPump / heater default OFF. R211/R212 hold LIGHT_PWM/ENABLE low."
 		(exclude_from_sim no)
 		(at 20.32 180.34 0)
 		(effects
@@ -3601,7 +3601,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k / VREF only"
+		(property "Value" "1k 1%"
 			(at 185.88 74.93 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3660,6 +3660,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 182.88 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1001T5E"
+			(at 182.88 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 182.88 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -3683,7 +3719,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470"
+		(property "Value" "1k 1%"
 			(at 185.88 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3740,6 +3776,42 @@
 					(reference "R205")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 182.88 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1001T5E"
+			(at 182.88 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 182.88 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -4228,7 +4300,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n / 16V"
+		(property "Value" "100n 50V X7R"
 			(at 58.88 46.99 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4285,6 +4357,42 @@
 					(reference "C202")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 55.88 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 55.88 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 55.88 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -4880,7 +4988,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470"
+		(property "Value" "1k 1%"
 			(at 239.22 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4937,6 +5045,42 @@
 					(reference "R206")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 236.22 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1001T5E"
+			(at 236.22 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 236.22 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)

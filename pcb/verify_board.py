@@ -152,6 +152,6 @@ assert nodes[('BT301','2')]==gnd and nodes[('BT301','1')]!=gnd,'CR2032 polarity'
 for pad in fps['BT301'].Pads():
  assert pad.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and abs(pcbnew.ToMM(pad.GetDrillSize().x)-1.5)<.001,'Battery holder lead hole'
 assert str(fps['L101'].GetFPID().GetLibItemName())=='L_Bourns_SRP7028A_7.3x6.6mm'
-assert fps['L101'].GetField('MPN').GetText()=='SRP7050TA-100M'
-assert all(size(pad)==(2.95,3.5) for pad in fps['L101'].Pads()),'SRP7050TA recommended lands'
-print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and SRP7050TA lands')
+assert fps['L101'].GetField('MPN').GetText()=='SRP7028A-100M'
+assert all(size(pad)==(2.95,3.5) for pad in fps['L101'].Pads()),'SRP7028A lands'
+print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and SRP7028A lands')

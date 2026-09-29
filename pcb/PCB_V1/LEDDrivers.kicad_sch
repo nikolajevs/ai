@@ -6,10 +6,10 @@
 	(paper "A2")
 	(title_block
 		(title "07 - AL8853 LED drivers, 24 V input, 2 channels")
-		(date "2026-09-28")
-		(rev "0.17-DRAFT")
+		(date "2026-09-29")
+		(rev "0.18-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
+		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
 	(lib_symbols
 		(symbol "74xGxx:74LVC1G08"
@@ -2794,7 +2794,7 @@
 		)
 		(uuid "19d9c77c-34d6-5168-ba34-4c5b712a3901")
 	)
-	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V output parts. Current calculations: DESIGN.md / LED_power_v17.txt."
+	(text "DRAFT: 120 kHz; OVP nominal 65.2 V. 100 V output parts. Current calculations: DESIGN.md / LED_power_v18.txt."
 		(exclude_from_sim no)
 		(at 20.32 378.46 0)
 		(effects
@@ -2871,7 +2871,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.17 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.111 A; CH2 0.465 A total. Qualification pending."
+	(text "0.18 DRAFT: power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.111 A; CH2 0.465 A total. Qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -3294,16 +3294,6 @@
 	)
 	(wire
 		(pts
-			(xy 124.46 52.07) (xy 124.46 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "609b89df-352e-5c2d-bd2e-251450b24446")
-	)
-	(wire
-		(pts
 			(xy 250.19 152.4) (xy 250.19 149.86)
 		)
 		(stroke
@@ -3424,16 +3414,6 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 52.07) (xy 185.42 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "78db8f02-46f9-5d29-a010-fd6e88c5c0e4")
-	)
-	(wire
-		(pts
 			(xy 245.11 52.07) (xy 245.11 54.61)
 		)
 		(stroke
@@ -3481,16 +3461,6 @@
 			(type default)
 		)
 		(uuid "86795813-6355-5710-9577-c61f7d3ecf5a")
-	)
-	(wire
-		(pts
-			(xy 185.42 44.45) (xy 185.42 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "871e2a57-f26f-545d-baf2-63b4d20a4eaf")
 	)
 	(wire
 		(pts
@@ -3611,16 +3581,6 @@
 			(type default)
 		)
 		(uuid "9b657369-4140-5d20-9762-dca82fbf9a91")
-	)
-	(wire
-		(pts
-			(xy 124.46 44.45) (xy 124.46 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d856164-9b24-5019-8c42-07a7a139929b")
 	)
 	(wire
 		(pts
@@ -4696,28 +4656,6 @@
 			)
 		)
 	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 185.42 54.61 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "25e1cf41-a3da-5329-8e5c-8f5fe3ef230e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 185.42 54.61 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(label "LED1_VIN"
 		(at 143.51 97.79 0)
 		(effects
@@ -4794,28 +4732,6 @@
 			)
 		)
 	)
-	(global_label "LIGHT_ENABLE"
-		(shape bidirectional)
-		(at 185.42 41.91 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "49f956a0-a7c1-5a36-871e-4fb361c75494")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 185.42 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "GND"
 		(shape bidirectional)
 		(at 25.4 154.94 0)
@@ -4850,28 +4766,6 @@
 		(uuid "5fcd59e9-cba5-5ec3-8688-053e95d2505b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "LIGHT_PWM"
-		(shape bidirectional)
-		(at 124.46 41.91 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "6426aec6-0611-5843-a337-4eb1da82c6dd")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 41.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5376,28 +5270,6 @@
 		(uuid "db0fdbed-34d9-5869-b706-afdb4f9ae356")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 515.62 129.54 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 124.46 54.61 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "ddf0170a-98f7-5f47-bc6d-0a3a3a79f9ac")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.46 54.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6709,7 +6581,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k 1% / slope tune"
+		(property "Value" "1k 1%"
 			(at 123.19 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6768,6 +6640,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 119.38 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1001T5E"
+			(at 119.38 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 119.38 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -6791,7 +6699,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "100k 1%"
 			(at 193.04 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6848,6 +6756,42 @@
 					(reference "R713")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 190.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1003T5E"
+			(at 190.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C25803"
+			(at 190.5 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -7073,7 +7017,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "47k 1%"
 			(at 247.65 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7130,6 +7074,42 @@
 					(reference "R703")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "RC0603FR-0747KL"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C105579"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -7783,170 +7763,6 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 124.46 48.26 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "b0982380-b47f-5685-b371-ded22e75dc07")
-		(property "Reference" "R701"
-			(at 128.27 46.99 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "47k"
-			(at 128.27 49.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 124.46 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 124.46 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 124.46 48.26 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "37339621-da38-5d6d-96bd-78d655cb9288")
-		)
-		(pin "2"
-			(uuid "5b0e9393-9866-5a6f-a3c3-0faf48a4e826")
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
-					(reference "R701")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 185.42 48.26 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "b2734fd1-df61-5e4e-a078-a33b4ea3d778")
-		(property "Reference" "R702"
-			(at 187.96 46.99 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "47k"
-			(at 187.96 49.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 185.42 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 185.42 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 185.42 48.26 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e92e536d-a370-558a-bc98-f7f2cd6fac3e")
-		)
-		(pin "2"
-			(uuid "cf9b6b1a-b76a-5853-b019-8006edcc5369")
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
-					(reference "R702")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 444.5 123.19 0)
 		(unit 1)
 		(body_style 1)
@@ -8085,7 +7901,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "100k 1%"
 			(at 193.04 224.79 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8142,6 +7958,42 @@
 					(reference "R723")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 190.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1003T5E"
+			(at 190.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C25803"
+			(at 190.5 223.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -8446,7 +8298,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n 16V"
+		(property "Value" "100n 50V X7R"
 			(at 312.42 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8503,6 +8355,42 @@
 					(reference "C700")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 309.88 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 309.88 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 309.88 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)

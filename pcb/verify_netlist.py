@@ -43,14 +43,14 @@ groups = [
     [('J301', 4), ('R304', 2), ('D301', 2)],
     [('U201', 9), ('R305', 1), ('R306', 2), ('C303', 1)],
     [('J302', 1), ('R305', 2), ('D302', 1)],
-    [('U201', 30), ('R401', 1)], [('R401', 2), ('J401', 5), ('D401', 1)],
-    [('U201', 37), ('R402', 1)], [('R402', 2), ('J401', 3), ('D401', 2), ('R410', 2)],
-    [('U201', 16), ('R403', 1)], [('R403', 2), ('J401', 2), ('D402', 1), ('R408', 2)],
-    [('U201', 31), ('R404', 1)], [('R404', 2), ('J401', 7), ('D402', 2), ('R405', 2)],
-    [('J401', 8), ('R406', 2), ('D403', 1)],
-    [('J401', 1), ('R407', 2), ('D403', 2)],
-    [('J401', 4), ('R409', 2), ('C401', 1), ('C402', 1)] + [(r, 1) for r in ['R405', 'R406', 'R407', 'R408', 'R410']],
-    [('J401', 6), ('J401', 'SH'), ('U201', 1)] + [(r, 3) for r in ['D301', 'D302', 'D401', 'D402', 'D403']],
+    [('U201', 30), ('R401', 1)], [('R401', 2), ('J401', 5)],
+    [('U201', 37), ('R402', 1)], [('R402', 2), ('J401', 3), ('R410', 2)],
+    [('U201', 16), ('R403', 1)], [('R403', 2), ('J401', 2), ('R408', 2)],
+    [('U201', 31), ('R404', 1)], [('R404', 2), ('J401', 7), ('R405', 2)],
+    [('J401', 8), ('R406', 2)],
+    [('J401', 1), ('R407', 2)],
+    [('J401', 4), ('U201', 2), ('C401', 1), ('C402', 1)] + [(r, 1) for r in ['R405', 'R406', 'R407', 'R408', 'R410']],
+    [('J401', 6), ('J401', 'SH'), ('U201', 1), ('D301', 3), ('D302', 3)],
 ]
 # Output polarity, gate drive and connector pinout.
 groups += [
@@ -102,11 +102,11 @@ groups += [
 
 # AL8853 low-side LED current sensing. CH1 = panel; CH2 = two identical bars (J721 || J731).
 groups += [
-    [('U700', 1), ('U201', 8), ('R701', 1)],
-    [('U700', 2), ('U201', 27), ('R702', 1)],
+    [('U700', 1), ('U201', 8), ('R211', 1)],
+    [('U700', 2), ('U201', 27), ('R212', 1)],
     [('U700', 4), ('R703', 1), ('U710', 8), ('U720', 8)],
     [('U700', 5), ('C700', 1), ('U201', 2)],
-    [('U700', 3), ('C700', 2), ('R701', 2), ('R702', 2), ('R703', 2), ('U201', 1)],
+    [('U700', 3), ('C700', 2), ('R211', 2), ('R212', 2), ('R703', 2), ('U201', 1)],
 ]
 returns = []
 for idx in (1, 2):
@@ -158,7 +158,7 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 167
+assert len(root.findall('.//components/comp')) == 161
 
 # Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable nets.
 v24, v24_loads, v12, v33, gnd = (net_of('J901', 2)[0], net_of('F902', 2)[0], net_of('L902', 2)[0],
@@ -171,7 +171,7 @@ assert net_of('F501', 1)[0] == net_of('F511', 1)[0] == v12, 'PC fans must be fus
 assert net_of('U710', 1)[0] == net_of('U720', 1)[0] == v12, 'AL8853 bias must be isolated from 24 V transients'
 assert net_of('U902', 6)[1] == {('U902', '6')}, 'LMR16020 PGOOD is unused'
 obsolete = {'U901', 'Q901', 'F901', 'R903', 'C903', 'C904', 'U602', 'C603', 'C604', 'U730', 'Q731', 'L731', 'D731',
-            'F903', 'TP903'}
+            'F903', 'TP903', 'D401', 'D402', 'D403', 'R409', 'R701', 'R702'}
 assert not obsolete & set(refs), ('obsolete parts remain', obsolete & set(refs))
 for ref, mpn in [('U902', 'LMR16020PDDAR'), ('D901', 'SMBJ26CA-E3/52'), ('D601', 'SMBJ30A-E3/52'),
                  ('Q711', 'CSD19534Q5A'), ('Q721', 'CSD19538Q3A'), ('Q521', 'AO3422'), ('D521', 'SS36-E3/57T')]:
@@ -196,7 +196,9 @@ comps = {c.get('ref'):c for c in root.findall('.//components/comp')}
 for ref, value in {'R726':'0.43 1% >=0.25W','R715':'0.027 1% >=1W','L711':'47u SRP1770TA-470M',
                   'R904':'150k 0.1%','R905':'10k 0.1%'}.items():
  assert comps[ref].findtext('value') == value, (ref,'wrong design value')
+for ref in ['R211','R212','R405','R406','R407','R408','R410']:
+ assert comps[ref].findtext('value') in ('10k','10k 1%'), (ref,'required startup/SD pull resistor')
 assert comps['C909'].findtext('value')=='100u 25V polymer'
 assert net_of('C909',1)[0]==v12 and net_of('C909',2)[0]==gnd, 'C909 polymer polarity'
-print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, 167 components.')
+print(f'PASS: {len(groups)} connectivity groups, 15 GPIO mappings, battery/LED-return/NC isolation, UART reference separation, {len(refs)} components.')
 print('PASS: 24 V input polarity, separate power/bias domains, LMR16020 wiring, CH2 parallel bars, six unbypassed branch fuses')

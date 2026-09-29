@@ -6,10 +6,10 @@
 	(paper "A3")
 	(title_block
 		(title "06 - 24 V input, fuses, 12 V auxiliary buck")
-		(date "2026-09-28")
-		(rev "0.17-DRAFT")
+		(date "2026-09-29")
+		(rev "0.18-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
+		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -3789,7 +3789,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "49.9k 1%"
+		(property "Value" "47k 1%"
 			(at 113.03 153.67 0)
 			(effects
 				(font
@@ -3832,7 +3832,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL"
+		(property "Manufacturer" "Yageo"
 			(at 109.22 152.4 0)
 			(effects
 				(font
@@ -3842,7 +3842,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF4992T5E"
+		(property "MPN" "RC0603FR-0747KL"
 			(at 109.22 152.4 0)
 			(effects
 				(font
@@ -3852,7 +3852,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C23184"
+		(property "LCSC" "C105579"
 			(at 109.22 152.4 0)
 			(effects
 				(font
@@ -4860,7 +4860,7 @@
 		)
 		(uuid b81cdfcd-6c93-4b4d-a77d-f243d9eb6a83)
 	)
-	(text "External PSU: 24.0 V set point, <=25 V. D901 SMBJ26CA: 26 V standoff, 42.1 V clamp at 14.3 A (25 C).\\nAL8853 VIN pins now use 12 V aux; their power inductors still use 24 V.\\nF902 10 A loads; LED channels fused individually on sheet 07 (F711 6.3 A, F721 3 A); F904 2 A aux. PSU must protect the unfused XT60/TVS input segment."
+	(text "External PSU: 24.0 V set point, <=25 V. D901 SMBJ26CA: 26 V standoff, 42.1 V clamp at 14.3 A (25 C).\nAL8853 VIN pins now use 12 V aux; their power inductors still use 24 V.\nF902 10 A loads; LED channels fused individually on sheet 07 (F711 6.3 A, F721 3 A); F904 2 A aux. PSU must protect the unfused XT60/TVS input segment."
 		(exclude_from_sim no)
 		(at 20.32 83.82 0)
 		(effects
@@ -4871,7 +4871,7 @@
 		)
 		(uuid 338c23fd-a4ac-46f5-ab95-60b128b3e5c5)
 	)
-	(text "12 V AUX: two fans, UCC27524A, TPS54202 and both AL8853 VIN pins. LMR16020, 500 kHz, 22 uH.\nVout = 0.75 x (1 + 150k/10k) = 12.00 V; 0.1% divider, static range 11.74..12.26 V. Budget 1.2 A.\nEN divider 560k/47k retained. C909 100u polymer + C910 22u ceramic; verify startup/load steps and thermal vias.\nF904 and downstream fuses do not qualify fault clearing; test against the actual PSU and cables."
+	(text "12 V AUX: two fans, UCC27524A, TPS54202 and both AL8853 VIN pins. LMR16020, ~526 kHz (RT 47k), 22 uH.\nVout = 0.75 x (1 + 150k/10k) = 12.00 V; 0.1% divider, static range 11.74..12.26 V. Budget 1.2 A.\nEN divider 560k/47k retained. C909 100u polymer + C910 22u ceramic; verify startup/load steps and thermal vias.\nF904 and downstream fuses do not qualify fault clearing; test against the actual PSU and cables."
 		(exclude_from_sim no)
 		(at 20.32 172.72 0)
 		(effects

@@ -6,10 +6,10 @@
 	(paper "A3")
 	(title_block
 		(title "05 - PTC heater switch (24 V)")
-		(date "2026-09-28")
-		(rev "0.17-DRAFT")
+		(date "2026-09-29")
+		(rev "0.18-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
+		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -1493,7 +1493,7 @@
 		)
 		(uuid "b265a6f5-dfce-5b57-8983-a5f2e930067d")
 	)
-	(text "0.17 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
+	(text "0.18 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -2138,7 +2138,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "100k 1%"
 			(at 152.86 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2195,6 +2195,42 @@
 					(reference "R602")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 149.86 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1003T5E"
+			(at 149.86 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C25803"
+			(at 149.86 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2647,7 +2683,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n / 25V"
+		(property "Value" "100n 50V X7R"
 			(at 33.48 67.31 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2704,6 +2740,42 @@
 					(reference "C601")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 30.48 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 30.48 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 30.48 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
