@@ -18,7 +18,30 @@
 - Git
 - Python 3
 
-На VPS также работают существующие сайты, Node.js/PM2 и Telegram-бот.
+На VPS также работает Telegram-бот `ss-bot` (Node.js/PM2). Сайты `my-app` и `todo-app` установлены, но выключены ради экономии ресурсов — см. раздел [Telegram-бот и PM2](#telegram-бот-и-pm2).
+
+## Текущий режим: без графики
+
+С 2026-09-29 VPS работает без графической среды: `kicad-vnc` и `kicad-novnc` остановлены и убраны из автозапуска, Tailscale Serve для noVNC снят. Это освобождает около 200 MB RAM в простое и убирает пики до ~2 GB, когда в VNC-сессии открывался KiCad.
+
+Проверки проекта (`kicad-cli`, `check_all.py`) дисплей не требуют и работают как обычно. Разделы ниже про VNC/noVNC описывают конфигурацию на случай, если графика снова понадобится.
+
+Включить графику обратно:
+
+```bash
+sudo systemctl enable --now kicad-vnc.service kicad-novnc.service
+sudo tailscale serve --bg localhost:6080
+```
+
+Выключить снова:
+
+```bash
+sudo systemctl disable --now kicad-novnc.service kicad-vnc.service
+sudo tailscale serve reset
+sudo systemctl reset-failed kicad-vnc kicad-novnc
+```
+
+`reset-failed` убирает косметический статус `failed`: при остановке noVNC выходит с кодом 143, а `tigervncserver -kill` — с кодом 1, если X-сервер уже завершился.
 
 ---
 
@@ -217,7 +240,7 @@ kicad-cli version
 ~/kicad/main/pcb/PCB_V1/PCB_V1.kicad_pro
 ```
 
-Запуск KiCad из SSH в существующей VNC-сессии:
+Запуск KiCad из SSH в существующей VNC-сессии (только когда графика включена):
 
 ```bash
 DISPLAY=:1 kicad \
@@ -616,6 +639,70 @@ sudo find /home/administrator \
 
 ---
 
+# Telegram-бот и PM2
+
+Node.js установлен через `nvm`. В неинтерактивных shell (systemd, агенты, `ssh host cmd`) `pm2` может отсутствовать в `PATH`, поэтому используется полный путь:
+
+```bash
+export PATH=/home/administrator/.nvm/versions/node/v24.21.0/bin:$PATH
+```
+
+## Приложения
+
+| PM2 name | Путь | Статус |
+|---|---|---|
+| `ss-bot` | `/opt/SS_COM/src/index.js` | запущен, в автозапуске |
+| `pm2-logrotate` | модуль PM2 | запускается вместе с PM2 |
+| `my-app` | `/home/administrator/BRIDGE/server/index.js` | выключен |
+| `todo-app` | `/home/administrator/todo-app/server.js` | выключен |
+
+Бот читает `BOT_TOKEN` и остальные настройки из `/opt/SS_COM/.env` сам; SQLite — встроенный `node:sqlite` Node 24, пересборка `better-sqlite3` не нужна. Деплой бота описан в `/opt/SS_COM/DEPLOY.md`.
+
+## Автозапуск
+
+PM2 запускается systemd-сервисом `pm2-administrator.service` (создан через `pm2 startup`), который после reboot восстанавливает список из `~/.pm2/dump.pm2`. Сейчас в нём только `ss-bot`.
+
+```bash
+systemctl status pm2-administrator --no-pager
+pm2 status
+pm2 logs ss-bot --lines 50 --nostream
+```
+
+Процессы PM2 должны принадлежать `pm2-administrator.service`:
+
+```bash
+ps -eo pid,cgroup:50,args | grep -E 'God Daemon|SS_COM' | grep -v grep
+```
+
+Если `pm2` запустить вручную из сессии агента (например, `claude-remote.service`) при остановленном сервисе, демон окажется внутри этой сессии и погибнет при её перезапуске (`KillMode=control-group`). Правильный перезапуск:
+
+```bash
+pm2 kill
+sudo systemctl start pm2-administrator
+```
+
+Сервис привязан к `~/.nvm/versions/node/v24.21.0`. Если эту версию Node удалить или сменить, нужно заново выполнить `pm2 startup` (он выведет команду с `sudo`) и `pm2 save`.
+
+## Вернуть сайты
+
+Список процессов до выключения сайтов сохранён в:
+
+```text
+~/.pm2/dump.pm2.before-ss-bot-20260929-164457
+```
+
+Запустить сайт и добавить его в автозапуск:
+
+```bash
+cd /home/administrator/todo-app && pm2 start server.js --name todo-app
+cd /home/administrator/BRIDGE/server && pm2 start index.js --name my-app
+pm2 save
+```
+
+`todo-app` и `ss-bot` работали на Node 24.21.0, `my-app` — на 24.18.0.
+
+---
+
 # PM2 logs
 
 На VPS уже была проблема, когда PM2 logs заняли около 40 GB.
@@ -651,7 +738,13 @@ truncate -s 0 ~/.pm2/pm2.log
 
 # PM2 log rotation
 
-Рекомендуемая защита:
+Модуль `pm2-logrotate` уже установлен и запускается вместе с PM2. Проверить настройки:
+
+```bash
+pm2 conf pm2-logrotate
+```
+
+Первичная установка:
 
 ```bash
 pm2 install pm2-logrotate
@@ -791,9 +884,16 @@ pgrep -a kicad
 Проверить:
 
 ```bash
+systemctl status pm2-administrator --no-pager
+pm2 status
+tailscale status
+```
+
+Если графика включена, дополнительно:
+
+```bash
 systemctl status kicad-vnc.service --no-pager
 systemctl status kicad-novnc.service --no-pager
-tailscale status
 sudo tailscale serve status
 ```
 
@@ -833,18 +933,17 @@ free -h
 df -h /
 ```
 
-Проверить desktop:
+Проверить бота:
 
 ```bash
-systemctl status kicad-vnc.service --no-pager
-systemctl status kicad-novnc.service --no-pager
+systemctl status pm2-administrator --no-pager
+pm2 status
 ```
 
 Проверить Tailscale:
 
 ```bash
 tailscale status
-sudo tailscale serve status
 ```
 
 Проверить KiCad:
@@ -853,7 +952,7 @@ sudo tailscale serve status
 kicad-cli version
 ```
 
-Запустить KiCad:
+Запустить KiCad (только когда графика включена, см. «Текущий режим: без графики»):
 
 ```bash
 DISPLAY=:1 kicad \
