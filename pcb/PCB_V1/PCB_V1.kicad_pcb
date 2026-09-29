@@ -633,7 +633,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -667,7 +667,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -679,7 +679,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -691,7 +691,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -820,7 +820,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -854,7 +854,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -866,7 +866,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -878,7 +878,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -995,7 +995,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -4618,7 +4618,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -4769,7 +4769,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -7699,7 +7699,7 @@
 				)
 			)
 		)
-		(property "Value" "10u / 10V"
+		(property "Value" "10u / 25V X5R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -7711,7 +7711,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A106KAYNNN.do"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -7742,6 +7742,39 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "41c2de29-82b6-4fa8-a1fb-477d9ba78644")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL21A106KAYNNNE"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "6b222a8b-f03a-4df9-a489-1045f8f6d74e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C15850"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "b83c9a5c-10f4-422e-a9ed-05a68fd8b7e8")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -8013,7 +8046,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -8047,7 +8080,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8059,7 +8092,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8071,7 +8104,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9931,7 +9964,7 @@
 				)
 			)
 		)
-		(property "Value" "22u / 10V X7R"
+		(property "Value" "22u / 10V X5R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -9943,7 +9976,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A226MPQNNN.do"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -9974,6 +10007,39 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4ce876c5-6022-4946-b395-6f052cc8c924")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL21A226MPQNNNE"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4ecd6402-756e-4850-88aa-c5c989d38533")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C29277"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "c4763e6c-0e3e-4353-a799-9287785a76a2")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -10732,7 +10798,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -10744,7 +10810,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -10778,7 +10844,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -10790,7 +10856,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -10802,7 +10868,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -12373,7 +12439,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -12385,7 +12451,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -12419,7 +12485,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -12431,7 +12497,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -12443,7 +12509,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -14475,7 +14541,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -14487,7 +14553,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -14521,7 +14587,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -14533,7 +14599,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -14545,7 +14611,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -15863,7 +15929,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -15875,7 +15941,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -15909,7 +15975,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -15921,7 +15987,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -15933,7 +15999,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -19011,7 +19077,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -19023,7 +19089,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -19057,7 +19123,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -19069,7 +19135,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -19081,7 +19147,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -22093,7 +22159,7 @@
 				)
 			)
 		)
-		(property "Value" "22u / 10V X7R"
+		(property "Value" "22u / 10V X5R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -22105,7 +22171,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A226MPQNNN.do"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -22136,6 +22202,39 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "1cc91a11-4297-4a4a-8865-ae970f5e5e70")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL21A226MPQNNNE"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "a57d8339-476c-4248-a1ec-2fba38de3d72")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C29277"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "45018205-05fe-43f1-b102-f51ab4033967")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -23134,7 +23233,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -23168,7 +23267,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -23180,7 +23279,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -23192,7 +23291,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -23307,7 +23406,7 @@
 				)
 			)
 		)
-		(property "Value" "2A / 0451002.MRL"
+		(property "Value" "3A / 0451003.MRL"
 			(at 0 2.545 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -23353,7 +23452,7 @@
 				)
 			)
 		)
-		(property "MPN" "0451002.MRL"
+		(property "MPN" "0451003.MRL"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -23365,7 +23464,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C99547"
+		(property "LCSC" "C13982"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -25292,7 +25391,7 @@
 				)
 			)
 		)
-		(property "Value" "22u / 10V X7R"
+		(property "Value" "22u / 10V X5R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -25304,7 +25403,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A226MPQNNN.do"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -25335,6 +25434,39 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "b1b11ed1-4cc5-4b3b-bffa-6f646f61ac2d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL21A226MPQNNNE"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "ed0a6a58-1d25-4a8a-9d1b-d4b89acad468")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C29277"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "fc5c1f95-65d7-4ffc-9249-cb8477ee8bea")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -25455,7 +25587,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -25489,7 +25621,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -25501,7 +25633,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -25513,7 +25645,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -28652,7 +28784,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -28686,7 +28818,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -28698,7 +28830,7 @@
 				)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -28710,7 +28842,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -29475,7 +29607,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29487,7 +29619,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29521,7 +29653,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29533,7 +29665,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29545,7 +29677,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29813,7 +29945,7 @@
 				)
 			)
 		)
-		(property "Value" "10u 100V X7S"
+		(property "Value" "10u 100V X7R"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29825,7 +29957,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL32Y106KCV6PN.do"
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29859,7 +29991,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29871,7 +30003,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL32Y106KCV6PNE"
+		(property "MPN" "C3225X7R2A106K250AC"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -29883,7 +30015,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C22380050"
+		(property "LCSC" "C49296968"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -30000,7 +30132,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7u / 25V X7R"
+		(property "Value" "10u / 25V X5R"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -30012,7 +30144,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21B475KAFNNN.do"
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A106KAYNNN.do"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -30058,7 +30190,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21B475KAFNNNE"
+		(property "MPN" "CL21A106KAYNNNE"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -30070,7 +30202,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C98195"
+		(property "LCSC" "C15850"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -32295,7 +32427,7 @@
 				)
 			)
 		)
-		(property "Value" "SMBJ30A-E3/52"
+		(property "Value" "SMBJ26CA-E3/52"
 			(at 0 3.1 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -32345,7 +32477,7 @@
 				)
 			)
 		)
-		(property "MPN" "SMBJ30A-E3/52"
+		(property "MPN" "SMBJ26CA-E3/52"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -32357,7 +32489,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1973126"
+		(property "LCSC" "C515606"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)

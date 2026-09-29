@@ -15,4 +15,4 @@ Current revision **v19** (PCB_V1 0.19). Electrical, cost and assembly reports ar
 
 `history/` keeps the reports, images and partial cost audit of revisions 0.1–0.15 unchanged; historical documents in `../PCB_V1/history` link to them.
 
-Revision 0.19 changed the schematic only (same footprints and nets, see `../PCB_V1/COST_DOWN.md`). The board file was not edited, so the latest placement previews are still `Placement_v18_top.png` / `Placement_v18_bottom.png`, and `verify_board.py` reports 17 value differences until the board is synced. Reports with suffixes v16–v18 are kept for comparison.
+Revision 0.19 changed parts in the schematic only (same footprints and nets, see `../PCB_V1/COST_DOWN.md`); the board was synced for 17 values without moving any part, so the latest placement previews `Placement_v18_top.png` / `Placement_v18_bottom.png` still show the current geometry. Reports with suffixes v16–v18 are kept for comparison.
