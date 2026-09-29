@@ -2865,7 +2865,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2875,7 +2875,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2885,7 +2885,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2895,7 +2895,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2998,7 +2998,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3008,7 +3008,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3018,7 +3018,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3028,7 +3028,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -4900,7 +4900,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2A / 0451002.MRL"
+		(property "Value" "3A / 0451003.MRL"
 			(at 289.56 76.19999999999999 90)
 			(effects
 				(font
@@ -4953,7 +4953,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0451002.MRL"
+		(property "MPN" "0451003.MRL"
 			(at 302.26 83.82 90)
 			(effects
 				(font
@@ -4963,7 +4963,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C99547"
+		(property "LCSC" "C13982"
 			(at 302.26 83.82 90)
 			(effects
 				(font

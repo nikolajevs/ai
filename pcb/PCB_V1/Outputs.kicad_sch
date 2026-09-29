@@ -3099,7 +3099,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 248.92 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3414,7 +3414,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 50.8 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4561,7 +4561,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP"
 			(at 101.6 243.84 0)
 			(hide yes)
 			(show_name no)
@@ -4598,7 +4598,7 @@
 			)
 		)
 
-		(property "LCSC" "C77102"
+		(property "LCSC" "C386166"
 			(at 101.6 243.84 0)
 			(effects
 				(font
@@ -4609,7 +4609,7 @@
 			)
 		)
 
-		(property "MPN" "GRM32ER71H106KA12L"
+		(property "MPN" "UMK325AB7106KMHP"
 			(at 101.6 243.84 0)
 			(effects
 				(font
@@ -4620,7 +4620,7 @@
 			)
 		)
 
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Taiyo Yuden"
 			(at 101.6 243.84 0)
 			(effects
 				(font
@@ -4771,7 +4771,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "33"
 			(at 50.8 193.04 90)
 			(show_name no)
 			(do_not_autoplace no)

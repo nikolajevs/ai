@@ -1,4 +1,4 @@
-"""v0.18 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.19 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
 Sources/assumptions: PCB_V1/DESIGN.md.
 """
@@ -13,16 +13,16 @@ def report(netlist):
     comps = {c.get('ref'):c for c in ET.parse(netlist).findall('.//components/comp')}
     expected = {'U902':'LMR16020PDDAR','R904':'150k 0.1%','R905':'10k 0.1%','R906':'47k 1%',
                 'R907':'560k 1%','R908':'47k 1%','L902':'22u SRP1265A-220M','D902':'SS36-E3/57T',
-                'D901':'SMBJ26CA-E3/52','D601':'SMBJ30A-E3/52','Q601':'NTMFS5C628NLT1G',
+                'D901':'SMBJ26CA-E3/52','D601':'SMBJ26CA-E3/52','Q601':'NTMFS5C628NLT1G',
                 'U601':'UCC27524ADR','C901':'220u / 50V','F902':'10A mini blade (ATM)',
-                'Q521':'AO3422','D521':'SS36-E3/57T','C602':'4.7u / 25V X7R',
+                'Q521':'AO3422','D521':'SS36-E3/57T','C602':'10u / 25V X5R',
                 'C909':'100u 25V polymer','C910':'22u 25V X7R','C101':'22u 25V X7R',
                 'R101':'100k 1%','R102':'22k 1%','L101':'10u SRP7028A-100M',
                 'R205':'1k 1%','R206':'1k 1%'}
     for ref,value in expected.items():
         assert comps[ref].findtext('value') == value,(ref,'sizing does not match schematic')
     fuses = {'F501':(1,'0451001.MRL'),'F511':(1,'0451001.MRL'),'F521':(1,'0451001.MRL'),
-             'F711':(6.3,'045106.3MRL'),'F721':(3,'0451003.MRL'),'F904':(2,'0451002.MRL')}
+             'F711':(6.3,'045106.3MRL'),'F721':(3,'0451003.MRL'),'F904':(3,'0451003.MRL')}
     for ref,(amps,mpn) in fuses.items():
         assert comps[ref].findtext('value') == f'{amps}A / {mpn}',ref
         fields = {f.get('name'):f.text for f in comps[ref].findall('fields/field')}
@@ -66,7 +66,7 @@ def report(netlist):
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.18 power path (24 V)',
+    out = ['GrowBox v0.19 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
@@ -94,7 +94,8 @@ def report(netlist):
             'D901 SMBJ26CA: standoff 26 V >25 V; clamp 42.1 V at 14.3 A.',
             'Margin to LMR16020 input abs max 65 V: 22.9 V; to 50 V input capacitors: only 7.9 V.',
             f'AL8853 VIN static {vlo:.3f}..{vhi:.3f} V, no longer directly exposed to the input TVS clamp.',
-            'D601 SMBJ30A: 48.4 V clamp vs Q601 60 V. Q521 AO3422: 55 V, SS36 cathode after F521.',
+            'D601 SMBJ26CA (shared with D901): standoff 26 V > 25 V drain off-state; clamp 42.1 V vs Q601 60 V.',
+            'Q521 AO3422: 55 V, SS36 cathode after F521.',
             'Pump VDS screen 42.1+0.75=42.85 V, 12.15 V margin before wiring overshoot.',
             'No electronic reverse protection; verify the assembled XT60 cable polarity.', '',
             'LMR16020 12 V auxiliary buck:',
@@ -136,7 +137,8 @@ def report(netlist):
             'Switch conduction; hot x1.7 is a scenario, not a guaranteed bound:',
             f'Q601 2.4mOhm at VGS>=10 V: {ptc**2*.0024:.4f} W nominal; {cold**2*.0024:.4f} W cold; {cold**2*.0024*1.7:.4f} W hot scenario.',
             f'Q521 200mOhm at VGS=2.5 V: {pump**2*.2:.4f} W at 0.25 A; {pump_budget**2*.2*1.7:.4f} W at allowance/hot scenario.',
-            'C602 CL21B475KAFNNNE: 4.7uF/25V, >=1uF effective target at 12.26 V; reviewed bias/tolerance/temperature screen ~1.29uF before aging.',
+            'C602 CL21A106KAYNNNE (shared with C201): 10uF/25V X5R 0805; Samsung curve -81.7 % at 12.26 V = 1.83uF typ.;',
+            'with -10 % tolerance and -14.6 % at 85 C ~1.41uF before aging, above the >=1uF target at the UCC27524A.',
             'AL8853 gate drive at 12 V bias: verify VGS/fronts and MOSFET losses hot and at startup.',
             'Independent PTC thermal cutoff, fuse clearing, connector/PCB ampacity and hot TVS remain unqualified.']
     return '\n'.join(out)+'\n'

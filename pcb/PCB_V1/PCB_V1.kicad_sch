@@ -2022,7 +2022,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22u / 10V X7R"
+		(property "Value" "22u / 10V X5R"
 			(at 188.42 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2045,7 +2045,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A226MPQNNN.do"
 			(at 185.42 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -2065,6 +2065,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 185.42 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C29277"
+			(at 185.42 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL21A226MPQNNNE"
+			(at 185.42 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -2537,7 +2564,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22u / 10V X7R"
+		(property "Value" "22u / 10V X5R"
 			(at 168.1 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2560,7 +2587,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://product.samsungsem.com/mlcc/CL21A226MPQNNN.do"
 			(at 165.1 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -2580,6 +2607,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 165.1 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C29277"
+			(at 165.1 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL21A226MPQNNNE"
+			(at 165.1 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"

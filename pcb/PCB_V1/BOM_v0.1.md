@@ -1,8 +1,8 @@
-# PCB_V1 — подобранные компоненты, ревизия 0.18
+# PCB_V1 — подобранные компоненты, ревизия 0.19
 
 Список выбранных деталей с MPN и статусом. Полный состав схемы — [BOM_schematic.csv](BOM_schematic.csv), генерируется из netlist.
 
-Актуальная оценка — **$39,82/плату**, [BOM_cost_v18.txt](../review/BOM_cost_v18.txt). Неизменённые позиции оценены по снимку от 28.09; L101/R102 запрошены 29.09. Первые платы собираются вручную. Изменения 0.18, унификация и экономия — [SIMPLIFICATION.md](SIMPLIFICATION.md); механический обзор предыдущей ревизии — [PRE_LAYOUT_PARTS_REVIEW.md](PRE_LAYOUT_PARTS_REVIEW.md).
+Актуальная оценка — **$37,50/плату**, [BOM_cost_v19.txt](../review/BOM_cost_v19.txt); удешевление 0.19 — [COST_DOWN.md](COST_DOWN.md). Неизменённые позиции оценены по снимку от 28.09; L101/R102 запрошены 29.09. Первые платы собираются вручную. Изменения 0.18, унификация и экономия — [SIMPLIFICATION.md](SIMPLIFICATION.md); механический обзор предыдущей ревизии — [PRE_LAYOUT_PARTS_REVIEW.md](PRE_LAYOUT_PARTS_REVIEW.md).
 
 | Ref | Qty | Назначение | MPN/требование | Корпус | Статус | Примечание |
 |---|---:|---|---|---|---|---|
@@ -14,7 +14,7 @@
 | U902 | 1 | 24V to 12V aux buck | TI LMR16020PDDAR | Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm | PROTOTYPE | LCSC C190006 USD0.8159 historical snapshot; ~526kHz (RT47k), Vout12.000V; EN560k/47k; EP to GND with thermal vias; output C909 polymer/C910 ceramic |
 | L902 | 1 | Aux buck inductor | Bourns SRP1265A-220M | GrowBox:L_Bourns_SRP1265A | PROTOTYPE | LCSC C2041465 USD1.1784; 22uH Isat 9A > IC limit 3.8A |
 | D902 | 1 | Aux buck catch diode | Vishay SS36-E3/57T | Diode_SMD:D_SMC | PROTOTYPE | LCSC C35722 USD0.3337; 60V 3A |
-| C905/C906 | 2 | Aux buck input | Murata GRM32ER71H106KA12L | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C77102 USD0.3304 each; 10uF 50V X7R |
+| C905/C906 | 2 | Aux buck input | Taiyo Yuden UMK325AB7106KMHP | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C386166 USD0.2929 each; 10uF 50V X7R AEC-Q200; 0.19 replaces Murata GRM32ER71H106KA12L |
 | C910 | 1 | Aux buck output | Samsung CL32B226KAJNNNE | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C309062 USD0.3569 historical snapshot; 22uF 25V X7R; retained in parallel with new polymer C909 |
 | R904/R905/R906/R907/R908 | 5 | Aux buck FB/RT/EN | R904 Yageo RT0603BRD07150KL, R905 Yageo RT0603BRD0710KL (0.1% 25ppm thin film); R906 Yageo RC0603FR-0747KL, R907 UNI-ROYAL 0603WAF5603T5E, R908 Yageo RC0603FR-0747KL (1% 100ppm) | Resistor_SMD:R_0603_1608Metric | PROTOTYPE | LCSC C326734/C95204/C105579/C23203/C105579; 12.000V nominal, 11.738..12.263V static; see review/Power_path_v18.txt; <=1mW each; R907 <=25V static and 42.1V TVS clamp < 75V rating; UNI-ROYAL 47k C25819 out of stock; R906 shares 47k with R703/R908; FB 0.1% retained to preserve fan load-step margin |
 | U101 | 1 | 12V aux to 3V3 buck | TPS54202DDCR | SOT-23-6 | CANDIDATE | Now fed from +12V aux (28V max part isolated from 24V transients) |
@@ -26,8 +26,8 @@
 | D721 | 1 | Bars boost diode | STPS2H100AFY | Diode_SMD:D_SOD-128 | PROTOTYPE | LCSC C3757915 USD0.4753 historical snapshot; 0.465A nominal CH2, shared by two bars |
 | L711 | 1 | Panel boost inductor | Bourns SRP1770TA-470M | Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm | PROTOTYPE | LCSC C2041872 USD2.9304 historical snapshot, limited stock; 47uH; DCR 55mOhm; Isat 16A at -30%; 0.77W winding estimate at 100C, core loss excluded; restored in 0.16 with R715 0.027 ohm; only 26 in stock at LCSC 2026-09-28; KOHERelec MDA1870-470M is not a substitute (Isat 9.5A < OCP 14.1A) |
 | L721 | 1 | Bars boost inductor | Bourns SRP1265A-470M | GrowBox:L_Bourns_SRP1265A | PROTOTYPE | LCSC C840530 USD1.1226; DCM at 24V |
-| C716/C717/C718/C719/C726/C727/C728 | 7 | LED output capacitance | Samsung CL32Y106KCV6PNE | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C22380050 USD0.8941 each; 10uF 100V X7S; ~2.6uF each at 48V |
-| C710/C715/C725 | 3 | LED boost input | Murata GRM32ER71H106KA12L | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C77102 USD0.3304 each; 10uF 50V X7R |
+| C716/C717/C718/C719/C726/C727/C728 | 7 | LED output capacitance | TDK C3225X7R2A106K250AC | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C49296968 (listed as C3225X7R2A106KT000E) USD0.6878 each at 1+; 10uF 100V X7R; TDK curve ~2.35uF at 49V (Samsung CL32Y106KCV6PNE had 2.575uF, X7S); 0.19 cost-down, see COST_DOWN.md |
+| C710/C715/C725 | 3 | LED boost input | Taiyo Yuden UMK325AB7106KMHP | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C386166 USD0.2929 each; 10uF 50V X7R AEC-Q200; 0.19 replaces Murata GRM32ER71H106KA12L |
 | C711/C721 | 2 | AL8853 VIN decoupling | Samsung CL21B105KBFNNNE | Capacitor_SMD:C_0805_2012Metric | PROTOTYPE | LCSC C28323 USD0.04; 1uF 50V X7R |
 | R715 | 1 | Panel switch current sense | UNI-ROYAL LR123WF270MT4E | Resistor_SMD:R_2512_6332Metric | PROTOTYPE | LCSC C19633795; 27mOhm 1% 3W metal strip +-50ppm; 0.165W maximum screening at 24V; Kelvin sense; OCP 8.3..14.1A, headroom 3.17A over working peak; KiCad 2512 lands cover the 0.9mm terminations |
 | R716 | 1 | Panel LED sense | FOJAN FRM252WFR180TM | Resistor_SMD:R_2512_6332Metric | PROTOTYPE | LCSC C48533605; selected option B: 0.18 ohm 1%, 2W, alloy, +/-50ppm/K; panel 1.111A nominal / 1.156A FB-R corner; combined light 75.66/78.72W at 48V. Applied in revision 0.17 and sizing reports; Kelvin sense required. |
@@ -36,11 +36,11 @@
 | U700 | 1 | PWM and enable gate | SN74LVC1G08DBVR | SOT-23-5 | PROTOTYPE | 3.3V; LED_DIM = LIGHT_PWM AND LIGHT_ENABLE |
 | Q601 | 1 | PTC MOSFET | NTMFS5C628NLT1G | Package_SO:ONSemi_SO-8FL_488AA | PROTOTYPE | LCSC C145537 USD0.7717; 24V PTC 4.17A; gate ~12V; external thermal cutoff required |
 | U601 | 1 | PTC gate driver | UCC27524ADR | SOIC-8 | CANDIDATE | VDD = +12V aux (4.5..18V); channel A |
-| D601 | 1 | PTC drain TVS | SMBJ30A-E3/52 | Diode_SMD:D_SMB | PROTOTYPE | LCSC C1973126 USD0.1731; VWM30V; clamp 48.4V < 60V |
+| D601 | 1 | PTC drain TVS | SMBJ26CA-E3/52 | Diode_SMD:D_SMB | PROTOTYPE | LCSC C515606 (same as D901); standoff 26V > 25V off-state drain; clamp 42.1V < Q601 60V; 0.19 replaces SMBJ30A |
 | Q501/Q511 | 2 | Fan PWM open-drain | AO3400A | SOT-23 | CANDIDATE | Fan PWM line only (<=5V) |
 | Q521 | 1 | Pump switch | AOS AO3422 | SOT-23 | PROTOTYPE | LCSC C37130 USD0.1356 historical snapshot; 55V, RDS max200mOhm at 2.5V gate; pump confirmed 24V/6W; design budget0.5A, startup/stall unmeasured |
 | D521 | 1 | Pump flyback | Vishay SS36-E3/57T | Diode_SMD:D_SMC | PROTOTYPE | LCSC C35722 USD0.3337; 60V |
-| C521 | 1 | Pump branch bypass | Murata GRM32ER71H106KA12L | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C77102; 10uF 50V |
+| C521 | 1 | Pump branch bypass | Taiyo Yuden UMK325AB7106KMHP | Capacitor_SMD:C_1210_3225Metric | PROTOTYPE | LCSC C386166; 10uF 50V X7R; 0.19 replaces Murata GRM32ER71H106KA12L |
 | U201 | 1 | MCU | ESP32-WROOM-32E-N4 | GrowBox:ESP32-WROOM-32E_NoVias | CANDIDATE | LCSC C701341 USD3.7644; GPIO map unchanged; footprint without the 12 in-pad 0.2mm vias, add GND vias to fab rules during layout |
 | U301 | 1 | RTC | DS3231MZ+TRL | Package_SO:SOIC-8_3.9x4.9mm_P1.27mm | PROTOTYPE | LCSC C107410 USD3.2976; existing RTC code compatible |
 | J401 | 1 | microSD | Molex 104031-0811 (1040310811) | Connector_Card:microSD_HC_Molex_104031-0811 | PROTOTYPE | LCSC C585350; footprint matches Molex SD-104031-001; socket front at the board edge, card protrudes 4.0mm (push-pull, no ejector); 4MHz initial SPI; Molex datasheet assigned in schematic 0.17; v0.18 D401-D403 ESD arrays removed; R409 replaced by direct +3V3; keep CMD/DAT pull-ups |
@@ -52,12 +52,12 @@
 | J201 | 1 | Programming header | 1x06 pin header | 2.54mm | CANDIDATE | External USB-UART programmer |
 | SW201/SW202 | 2 | RESET/BOOT | XKB TS-1187A-B-A-B | Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A | PROTOTYPE | LCSC C318884 USD0.0207 |
 | C909 | 1 | Aux buck bulk output | Panasonic 25SVPF100M | Capacitor_SMD:CP_Elec_8x6.9 | PROTOTYPE | LCSC C136279; USD0.8670 at1+ snapshot2026-09-28; 100uF 25V polymer, E7 case8x6.9, ESR24mOhm at100..300kHz/20C; use64uF and48mOhm for screening; verify loop/thermal |
-| C602 | 1 | Heater gate-driver bypass | Samsung CL21B475KAFNNNE | Capacitor_SMD:C_0805_2012Metric | PROTOTYPE | LCSC C98195; 4.7uF 25V X7R; 1.50uF typical at 12.26V (Samsung -68.1%), ~1.29uF with -10% and 85C; requirement >=1uF effective at the UCC27524A pins |
+| C602 | 1 | Heater gate-driver bypass | Samsung CL21A106KAYNNNE | Capacitor_SMD:C_0805_2012Metric | PROTOTYPE | LCSC C15850 (same as C201); 10uF 25V X5R 0805; 1.83uF typical at 12.26V (Samsung -81.7%), ~1.41uF with -10% and 85C; requirement >=1uF effective at the UCC27524A pins; 0.19 |
 | F501/F511 | 2 | Individual fan fuses | Littelfuse 0451001.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C3099 USD0.2536 each at5+ historical snapshot; 1A; inrush/fault clearing unqualified |
 | F521 | 1 | Pump branch fuse | Littelfuse 0451001.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C3099 USD0.2536 at5+ historical snapshot; 1A; SS36 and C521 after fuse |
 | F711 | 1 | Panel boost input fuse | Littelfuse 045106.3MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C178982 USD0.2516 at5+ historical snapshot; 6.3A; not guaranteed semiconductor short protection |
 | F721 | 1 | Shared bars boost input fuse | Littelfuse 0451003.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C13982 USD0.2556 at5+ historical snapshot; 3A; protects shared CH2 input |
-| F904 | 1 | Aux buck input fuse | Littelfuse 0451002.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C99547 USD0.3445 at5+ historical snapshot; 2A; buck VIN capacitors and UVLO divider after fuse |
+| F904 | 1 | Aux buck input fuse | Littelfuse 0451003.MRL | GrowBox:Fuse_Littelfuse_451 | PROTOTYPE | LCSC C13982 (same as F721); 3A since 0.19 (was 2A 0451002.MRL); 1.09A RMS load vs 2.03A derated; buck VIN capacitors and UVLO divider after fuse |
 | R101/R102 | 2 | 3V3 buck feedback | UNI-ROYAL 0603WAF1003T5E / 0603WAF2202T5E | Resistor_SMD:R_0603_1608Metric | PROTOTYPE | 100k/22k 1%; C25803/C31850; nominal3.305V; static FB/R corner3.170..3.444V; see Power_path_v18 |
 | R204/R205/R206/R305/R503/R513/R712 | 7 | Common 1k resistors | UNI-ROYAL 0603WAF1001T5E | Resistor_SMD:R_0603_1608Metric | PROTOTYPE | C21190; 1k 1%; UART R205/R206 changed from470ohm; validate short programmer cable and baud rate |
 | C102/C103/C202/C301/C303/C402/C601/C700/C907/C908 | 10 | Common 100n decoupling | Samsung CL10B104KB8NNNC | Capacitor_SMD:C_0603_1608Metric | PROTOTYPE | C1591; 100nF50V X7R; all ten parts same explicit MPN |

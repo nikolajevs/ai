@@ -173,7 +173,7 @@ assert net_of('U902', 6)[1] == {('U902', '6')}, 'LMR16020 PGOOD is unused'
 obsolete = {'U901', 'Q901', 'F901', 'R903', 'C903', 'C904', 'U602', 'C603', 'C604', 'U730', 'Q731', 'L731', 'D731',
             'F903', 'TP903', 'D401', 'D402', 'D403', 'R409', 'R701', 'R702'}
 assert not obsolete & set(refs), ('obsolete parts remain', obsolete & set(refs))
-for ref, mpn in [('U902', 'LMR16020PDDAR'), ('D901', 'SMBJ26CA-E3/52'), ('D601', 'SMBJ30A-E3/52'),
+for ref, mpn in [('U902', 'LMR16020PDDAR'), ('D901', 'SMBJ26CA-E3/52'), ('D601', 'SMBJ26CA-E3/52'),
                  ('Q711', 'CSD19534Q5A'), ('Q721', 'CSD19538Q3A'), ('Q521', 'AO3422'), ('D521', 'SS36-E3/57T')]:
     comp = next(c for c in root.findall('.//components/comp') if c.get('ref') == ref)
     assert comp.findtext('value') == mpn, (ref, 'unqualified substitute')
