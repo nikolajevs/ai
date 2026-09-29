@@ -1,0 +1,97 @@
+PCB_V1 v0.18 JLCPCB PCB + assembly estimate, JLC snapshot 2026-09-28 (base); 2026-09-29 (L101/R102)
+Fees: https://jlcpcb.com/help/article/pcb-assembly-price (last updated 2026-09-09). EUR at ECB 2026-09-28: 1 EUR = 1.1378 USD.
+PCB: https://cart.jlcpcb.com/quote: FR-4, 4 layers, 100x100 mm, 5 pcs, 1.6 mm, 1 oz outer / 0.5 oz inner, green, LeadFree HASL: USD 36.50 for 5 pcs (engineering fee 25.00 + board 6.20 + LeadFree HASL 5.30; HASL with lead 31.20, ENIG 48.90).
+Unique parts 69: basic 14, preferred 2, extended 53 (45 placed by machine, 8 through-hole). Joints per board: SMT 433 (pads), through-hole 40. X-ray refs per board: Q601, Q711, Q721.
+Not included: shipping, VAT/duty, coupons, programming/testing. Leftover parts stay in the JLCPCB parts library.
+
+Order totals (5 PCBs made in every case; n boards assembled):
+  Economic PCBA, single-sided, 2 assembled: PCB 36.50 + assembly 163.98 + JLC parts 95.36 + separate 0.62 = USD 296.46 = EUR 260.55; USD 148.23 per assembled board
+      setup 8.18; stencil 1.53; SMT 866 joints 1.39; through-hole 80 joints 1.31; hand-soldering labour 3.58; extended part loading x45 138.15; X-ray 6 pcs 9.84
+  Economic PCBA, single-sided, 5 assembled: PCB 36.50 + assembly 170.48 + JLC parts 195.52 + separate 0.62 = USD 403.12 = EUR 354.30; USD 80.62 per assembled board
+      setup 8.18; stencil 1.53; SMT 2165 joints 3.46; through-hole 200 joints 3.28; hand-soldering labour 3.58; extended part loading x45 138.15; X-ray 15 pcs 12.30
+  Standard PCBA, double-sided, 2 assembled: PCB 36.50 + assembly 206.15 + JLC parts 95.36 + separate 0.62 = USD 338.63 = EUR 297.62; USD 169.32 per assembled board
+      setup 51.12; stencil 16.42; SMT 866 joints 1.39; through-hole 80 joints 1.31; hand-soldering labour 3.58; feeder loading x69 105.57; packing 0.51; fixtures 16.42; X-ray 6 pcs 9.84
+  Standard PCBA, double-sided, 5 assembled: PCB 36.50 + assembly 212.67 + JLC parts 195.52 + separate 0.62 = USD 445.31 = EUR 391.38; USD 89.06 per assembled board
+      setup 51.12; stencil 16.42; SMT 2165 joints 3.46; through-hole 200 joints 3.28; hand-soldering labour 3.58; feeder loading x69 105.57; packing 0.52; fixtures 16.42; X-ray 15 pcs 12.30
+
+refs                                 LCSC type qty  SMT  THT n=2 pcs     USD n=5 pcs     USD  part
+J901                               C98732 E      1    0    4       2    1.20       5    3.00  Amass XT60PW-M
+D901                              C515606 E      1    2    0       5    0.51       5    0.51  Vishay SMBJ26CA-E3/52
+C901                              C178549 E      1    2    0       2    1.02       5    2.55  Panasonic EEEFK1H221P
+C902                               C40708 E      1    2    0       5    0.65       7    0.91  Samsung CL32B105KBHNNNE
+F902                            C19727305 E      1    0    4       2    0.55       5    1.37  XFCN XF-508P-B-B
+F904                               C99547 E      1    2    0       5    1.70       7    2.39  Littelfuse 0451002.MRL
+U902                              C190006 E      1   14    0       2    1.61       5    4.04  TI LMR16020PDDAR
+L902                             C2041465 E      1    2    0       2    2.34       5    5.84  Bourns SRP1265A-220M
+D521,D902                          C35722 P      2    4    0       4    1.32      10    3.29  Vishay SS36-E3/57T
+C521,C710,C715,C725,C905,C906      C77102 E      6   12    0      12    3.93      30    9.82  Murata GRM32ER71H106KA12L
+C102..C908 (10)                     C1591 E     10   20    0      30    0.25      60    0.50  Samsung CL10B104KB8NNNC
+C909                              C136279 E      1    2    0       2    1.72       5    4.30  Panasonic 25SVPF100M
+C101,C910                         C309062 E      2    4    0       6    2.12      12    3.34  Samsung CL32B226KAJNNNE
+R904                              C326734 E      1    2    0      20    0.86      20    0.86  Yageo RT0603BRD07150KL
+R905                               C95204 E      1    2    0      20    0.65      20    0.65  Yageo RT0603BRD0710KL
+R907                               C23203 P      1    2    0      20    0.03      20    0.03  UNI-ROYAL 0603WAF5603T5E
+U101                              C191884 E      1    6    0       5    0.86       5    0.86  TI TPS54202DDCR
+C104,C105,C401                    C907991 E      3    6    0       8    2.01      17    4.28  Murata GRM21BZ71A226ME15L
+C201                               C15850 B      1    2    0      20    1.58      20    1.58  Samsung CL21A106KAYNNNE
+C203,C302                          C29936 E      2    4    0      20    0.35      20    0.35  Samsung CL10B105KA8NNNC
+U201                              C701341 E      1   47    0       2    7.46       5   18.65  Espressif ESP32-WROOM-32E-N4
+U301                              C107410 E      1    8    0       2    6.51       5   16.28  Maxim DS3231MZ+TRL
+BT301                            C2979167 E      1    0    2       2    0.79       5    1.97  MYOUNG BS-07-A1BJ001
+J201                               C37208 E      1    0    6       2    0.08       5    0.21  BOOMELE 2.54-1x6P
+J301                              C144395 E      1    0    4       3    0.18       6    0.37  JST B4B-XH-A(LF)(SN)
+J401                              C585350 E      1   14    0       2    1.65       5    4.13  Molex 1040310811
+D301,D302,D501,D511              C5350871 E      4   12    0      10    1.12      22    2.46  TECH PUBLIC TPD2E2U06DCKR-TP
+F301                               C70065 E      1    2    0      20    0.61      20    0.61  TECHFUSE nSMD010
+SW201,SW202                       C318884 B      2    8    0       9    0.18      15    0.31  XKB TS-1187A-B-A-B
+R201..R728 (19)                    C25804 B     19   38    0      48    0.09     105    0.19  UNI-ROYAL 0603WAF1002T5E
+R204..R712 (7)                     C21190 B      7   14    0      24    0.06      45    0.12  UNI-ROYAL 0603WAF1001T5E
+R301,R302                          C23162 B      2    4    0      20    0.06      20    0.06  UNI-ROYAL 0603WAF4701T5E
+R303,R304,R401,R402,R403,R404      C23140 B      6   12    0      22    0.06      40    0.10  UNI-ROYAL 0603WAF330JT5E
+R501,R511,R521                     C22775 B      3    6    0      20    0.06      25    0.08  UNI-ROYAL 0603WAF1000T5E
+R101..R723 (7)                     C25803 B      7   14    0      24    0.07      45    0.14  UNI-ROYAL 0603WAF1003T5E
+R601,R711,R721                     C22859 B      3    6    0      20    0.06      25    0.08  UNI-ROYAL 0603WAF100JT5E
+R703,R906,R908                    C105579 E      3    6    0      20    0.06      25    0.08  Yageo RC0603FR-0747KL
+R717,R727                          C25814 E      2    4    0      20    0.05      20    0.05  UNI-ROYAL 0603WAF3163T5E
+R722                               C13167 B      1    2    0      20    0.06      20    0.06  UNI-ROYAL 0603WAF2701T5E
+Q501,Q511                          C20917 B      2    6    0       8    0.68      14    1.18  AOS AO3400A
+Q521                               C37130 E      1    3    0       6    0.81       9    1.21  AOS AO3422
+F501,F511,F521                      C3099 E      3    6    0       8    2.01      17    4.26  Littelfuse 0451001.MRL
+J302,J521,J601                    C466970 E      3    0    6       6    1.09      15    2.72  DORABO DB125-3.5-2P-GN-S
+J501,J511                        C2757925 E      2    0    8       4    1.60      10    3.99  DORABO DB125-3.5-4P-GN-S
+Q601                              C145537 E      1    5    0       2    1.54       5    3.86  onsemi NTMFS5C628NLT1G
+U601                              C185857 E      1    8    0       2    0.55       5    1.38  TI UCC27524ADR
+D601                             C1973126 E      1    2    0       5    0.86       7    1.20  Vishay SMBJ30A-E3/52
+C602                               C98195 E      1    2    0      20    1.04      20    1.04  Samsung CL21B475KAFNNNE
+U700                                C7666 E      1    5    0       6    0.29       9    0.44  TI SN74LVC1G08DBVR
+U710,U720                        C3192318 E      2   16    0       4    3.72      10    7.26  Diodes AL8853S-13
+Q711                              C114200 E      1   13    0       2    1.95       5    4.88  TI CSD19534Q5A
+Q721                              C478471 E      1   21    0       5    5.32       5    5.32  TI CSD19538Q3A
+D711                               C10648 E      1    7    0       2    1.15       5    2.87  ST STPS5H100B-TR
+D721                             C3757915 E      1    2    0       5    2.36       5    2.36  ST STPS2H100AFY
+L711                             C2041872 E      1    2    0       2    6.04       5   15.09  Bourns SRP1770TA-470M
+L721                              C840530 E      1    2    0       2    2.22       5    5.56  Bourns SRP1265A-470M
+C716..C728 (7)                  C22380050 E      7   14    0      14   10.00      35   22.00  Samsung CL32Y106KCV6PNE
+C711,C721                          C28323 B      2    4    0      20    0.79      20    0.79  Samsung CL21B105KBFNNNE
+C712,C713,C722,C723                C14858 B      4    8    0      20    0.17      30    0.26  Samsung CL10C101JB8NNNC
+C714,C724                          C64705 E      2    4    0      20    0.36      20    0.36  Samsung CL10B224KB8NNNC
+R715                            C19633795 E      1    2    0       5    0.50       7    0.70  UNI-ROYAL LR123WF270MT4E
+R716                            C48533605 E      1    2    0       5    0.36       7    0.50  FOJAN FRM252WFR180TM
+R725                            C52015951 E      1    2    0       5    0.25       7    0.35  RVR HIXD25NR047F
+R726                            C22464907 E      1    2    0       6    0.16       9    0.24  TA-I RLH12FTCR430
+F711                              C178982 E      1    2    0       5    1.22       5    1.22  Littelfuse 045106.3MRL
+F721                               C13982 E      1    2    0       5    1.28       7    1.79  Littelfuse 0451003.MRL
+J711,J721,J731                      C8465 E      3    0    6       6    0.80      15    2.00  KANGNEX WJ500V-5.08-2P
+R102                               C31850 B      1    2    0      20    0.08      20    0.08  UNI-ROYAL 0603WAF2202T5E
+L101                             C2687402 E      1    2    0       2    1.68       5    4.21  Bourns SRP7028A-100M
+
+Bought separately (not assembled by JLCPCB):
+  Littelfuse 0297010.WXNV (F902 insert): LCSC C151094, order 2 boards 5 pcs USD 0.62, 5 boards 5 pcs USD 0.62
+  CR2032 cell (BT301): not priced - no CR2032 cell found at LCSC on the snapshot date; buy locally
+
+JLCPCB availability below the charged quantity (orderable stock at the snapshot date):
+  2 boards: J901 C98732 Amass XT60PW-M: orderable -1553, needs 2
+  5 boards: J901 C98732 Amass XT60PW-M: orderable -1553, needs 5
+
+X-ray assumption: leadless power packages (SO-8FL, two VSONP); ESP32 module bottom pad may add one more per board.
+Extended loading is charged for the 45 machine-placed extended types only; if JLCPCB also charges the 8 through-hole extended types, add USD 24.56 (Economic).

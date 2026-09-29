@@ -1,6 +1,6 @@
 """Estimate a JLCPCB PCB + assembly order for the whole schematic.
 
-  python estimate_jlc_assembly.py netlist.xml PCB_V1/price_snapshot_v16.json PCB_V1/jlc_snapshot_v16.json [--output report.txt]
+  python estimate_jlc_assembly.py netlist.xml PCB_V1/price_snapshot_v18.json PCB_V1/jlc_snapshot_v18.json [--output report.txt]
 
 Parts: every priced schematic line of the LCSC price snapshot, re-priced from the JLCPCB parts
 library record in the JLC snapshot. JLCPCB charges max(BOM x boards + attrition, minimum) pieces at
@@ -47,9 +47,13 @@ def report(netlist, price_snapshot, jlc_snapshot):
     rate = D(prices['eur_usd']['rate'])
     parts, joints = jlc['parts'], jlc['joints']
     lines, extras = [], []
+    purchasing_codes = set()
     for line in prices['lines']:
         if line['kind'] == 'zero':
             continue
+        if line['lcsc']:
+            assert line['lcsc'] not in purchasing_codes, (line['lcsc'], 'merge equal purchasing codes before PCBA attrition/tier pricing')
+            purchasing_codes.add(line['lcsc'])
         if not line['refs']:
             extras.append(line)
             continue

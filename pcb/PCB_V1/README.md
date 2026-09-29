@@ -1,10 +1,10 @@
-# PCB_V1 — контроллер GrowBox, ревизия 0.17
+# PCB_V1 — контроллер GrowBox, ревизия 0.18
 
 Проект KiCad 10: открыть `PCB_V1.kicad_pro`. Если KiCad уже открыт со старой копией, перечитать файлы с диска перед сохранением.
 
 **Состояние:**
 - Схема: ERC 0/0, все скриптовые проверки проходят.
-- Плата: 100×100 мм, 4 слоя; **167 компонентов размещены**, 12 разъёмов и microSD по краям, батарейный держатель снизу. Трассировки нет; DRC 0 нарушений геометрии, 350 несоединённых связей.
+- Плата: 100×100 мм, 4 слоя; **161 компонент размещены**, 12 разъёмов и microSD по краям, батарейный держатель снизу. Трассировка отложена; DRC 0 нарушений геометрии, 336 несоединённых связей.
 - К изготовлению не готова.
 
 ## Коротко о схеме
@@ -23,14 +23,15 @@
 | [DESIGN.md](DESIGN.md) | Текущее описание: архитектура питания, расчёты, предохранители, проверки, открытые вопросы |
 | [PLACEMENT.md](PLACEMENT.md) | Размещение, стек, правила, изображения платы и следующий этап |
 | [LAYOUT_PLAN.md](LAYOUT_PLAN.md) | Ограничения размещения и задачи для параллельной работы перед трассировкой |
-| [CHANGELOG.md](CHANGELOG.md) | Журнал ревизий 0.1–0.17 |
+| [CHANGELOG.md](CHANGELOG.md) | Журнал ревизий 0.1–0.18 |
 | [BOM_schematic.csv](BOM_schematic.csv) | Полный состав схемы, генерируется из netlist |
 | [BOM_v0.1.md](BOM_v0.1.md) / `.csv` | Подобранные детали с MPN и статусом (не заказной BOM) |
-| [COST_REVIEW.md](COST_REVIEW.md) | Стоимость компонентов: итог, склад, кандидаты на удешевление |
+| [SIMPLIFICATION.md](SIMPLIFICATION.md) | Изменения 0.18, расчёты замен и актуальное сравнение стоимости |
+| [COST_REVIEW.md](COST_REVIEW.md) | Исторический обзор 0.16: стоимость, склад, кандидаты |
 | [PRE_LAYOUT_PARTS_REVIEW.md](PRE_LAYOUT_PARTS_REVIEW.md) | Проверка MPN, посадочных мест и габаритов перед размещением; правки схемы по Ref |
 | [RTC_COMPATIBILITY.md](RTC_COMPATIBILITY.md) | Совместимость DS3231MZ с прошивкой |
-| [jlc_snapshot_v16.json](jlc_snapshot_v16.json) | Тарифы и данные деталей JLCPCB для оценки сборки; отчёт — [../review/JLC_assembly_v17.txt](../review/JLC_assembly_v17.txt) |
-| [price_snapshot_v16.json](price_snapshot_v16.json) | Цены LCSC на все позиции схемы (снимок 2026-09-28); отчёт — [../review/BOM_cost_v17.txt](../review/BOM_cost_v17.txt) |
+| [jlc_snapshot_v18.json](jlc_snapshot_v18.json) | Тарифы и данные деталей JLCPCB для оценки сборки; отчёт — [../review/JLC_assembly_v18.txt](../review/JLC_assembly_v18.txt) |
+| [price_snapshot_v18.json](price_snapshot_v18.json) | Цены LCSC на все позиции схемы (база 2026-09-28, новые L101/R102 2026-09-29); отчёт — [../review/BOM_cost_v18.txt](../review/BOM_cost_v18.txt) |
 | `libraries/` | Проектные символы (`GrowBox.kicad_sym`) и посадочные места (`GrowBox.pretty`) |
 | [history/](history) | Документы 12-вольтовой версии (0.1–0.13), не обновляются |
 | [../review/](../review) | Отчёты и изображения листов текущей ревизии |

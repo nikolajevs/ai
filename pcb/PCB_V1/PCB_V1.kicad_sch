@@ -6,10 +6,10 @@
 	(paper "A4")
 	(title_block
 		(title "01 - Logic power / 12 V aux to 3.3 V")
-		(date "2026-09-28")
-		(rev "0.17-DRAFT")
+		(date "2026-09-29")
+		(rev "0.18-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Engineering draft; startup, thermal and fault qualification pending")
+		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
@@ -933,7 +933,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Vout = 0.596 x (1 + 100k/22k) = 3.305 V\n500 kHz; L = 10 uH; ripple ~0.48 A at 12 V (nominal).\n2 A IC rating; target logic budget <= 1 A continuous.\nL101: footprint candidate; exact MPN / DCR / Isat to verify.\nC104/C105: verify effective capacitance under DC bias.\nC106 is NOT fitted until loop/transient verification."
+	(text "Vout = 0.596 x (1 + 100k/22k) = 3.305 V; divider 1%.\nStatic FB + resistor limits: 3.170..3.444 V. Budget <=1 A.\nL101 SRP7028A-100M: 10 uH, Isat 6 A, Irms 3.5 A.\nVerify C104/C105 effective capacitance and load-step response.\nC106 is NOT fitted until loop/transient verification."
 		(exclude_from_sim no)
 		(at 20.32 119.38 0)
 		(effects
@@ -977,7 +977,7 @@
 		)
 		(uuid "a559b4a3-72b9-5b8c-9e44-abdc36e95f10")
 	)
-	(text "Ревизия 0.4: входная защита и LED boost-драйверы добавлены; параметры силовых компонентов требуют верификации."
+	(text "0.18 DRAFT: simplified passives and microSD; routing and prototype validation pending."
 		(exclude_from_sim no)
 		(at 20.32 25.4 0)
 		(effects
@@ -1894,25 +1894,25 @@
 		(dnp no)
 		(uuid "07bb22a2-7f67-53e1-87ae-de09b3c57de5")
 		(property "Reference" "C101"
-			(at 48.72 67.31 0)
+			(at 42.72 67.31 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1 1)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Value" "22u 50V"
-			(at 48.72 69.85 0)
+		(property "Value" "22u 25V X7R"
+			(at 42.72 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1 1)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
@@ -1961,6 +1961,42 @@
 					(reference "C101")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 45.72 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL32B226KAJNNNE"
+			(at 45.72 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C309062"
+			(at 45.72 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2068,7 +2104,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k 0.1%"
+		(property "Value" "100k 1%"
 			(at 206.2 77.47 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2127,6 +2163,42 @@
 				)
 			)
 		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 203.2 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1003T5E"
+			(at 203.2 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C25803"
+			(at 203.2 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -2150,7 +2222,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n / 50V"
+		(property "Value" "100n 50V X7R"
 			(at 63.96 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2207,6 +2279,42 @@
 					(reference "C102")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 60.96 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 60.96 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 60.96 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2311,7 +2419,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n / 16V"
+		(property "Value" "100n 50V X7R"
 			(at 112 45.72 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2368,6 +2476,42 @@
 					(reference "C103")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 116.84 53.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 116.84 53.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 116.84 53.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2717,7 +2861,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22k 0.1%"
+		(property "Value" "22k 1%"
 			(at 206.2 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2774,6 +2918,42 @@
 					(reference "R102")
 					(unit 1)
 				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF2202T5E"
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C31850"
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -2962,25 +3142,23 @@
 		(dnp no)
 		(uuid "eff3f699-5b30-53ba-a2f7-6f37ebd0bb0a")
 		(property "Reference" "L101"
-			(at 130.81 55.88 90)
+			(at 139.7 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1 1)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "10u SRP7050TA-100M"
-			(at 130.81 58.42 90)
+		(property "Value" "10u SRP7028A-100M"
+			(at 139.7 58.42 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1 1)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm"
@@ -2995,7 +3173,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp7050ta.pdf"
+		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp7028a.pdf"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3043,7 +3221,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SRP7050TA-100M"
+		(property "MPN" "SRP7028A-100M"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3055,7 +3233,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C2041441"
+		(property "LCSC" "C2687402"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3069,8 +3247,8 @@
 		)
 	)
 	(sheet
-		(at 200.66 151.13)
-		(size 66.04 7.62)
+		(at 222.25 151.13)
+		(size 58.42 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3085,7 +3263,7 @@
 		)
 		(uuid "094b27f9-0b26-500d-bd76-df142bab7fb7")
 		(property "Sheetname" "Outputs"
-			(at 200.66 150.495 0)
+			(at 222.25 150.495 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3096,7 +3274,7 @@
 			)
 		)
 		(property "Sheetfile" "Outputs.kicad_sch"
-			(at 200.66 159.385 0)
+			(at 222.25 159.385 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3115,8 +3293,8 @@
 		)
 	)
 	(sheet
-		(at 200.66 104.14)
-		(size 66.04 7.62)
+		(at 222.25 104.14)
+		(size 58.42 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3131,7 +3309,7 @@
 		)
 		(uuid "13f6ec92-6d25-5cb3-b953-f0854e3d007b")
 		(property "Sheetname" "InputPower"
-			(at 200.66 103.505 0)
+			(at 222.25 103.505 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3142,7 +3320,7 @@
 			)
 		)
 		(property "Sheetfile" "InputPower.kicad_sch"
-			(at 200.66 112.395 0)
+			(at 222.25 112.395 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3161,8 +3339,8 @@
 		)
 	)
 	(sheet
-		(at 200.66 132.08)
-		(size 66.04 7.62)
+		(at 222.25 132.08)
+		(size 58.42 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3177,7 +3355,7 @@
 		)
 		(uuid "6b08d5d1-f5dd-51d1-a612-b10717fdf3b0")
 		(property "Sheetname" "MCU / ESP32"
-			(at 200.66 131.445 0)
+			(at 222.25 131.445 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3188,7 +3366,7 @@
 			)
 		)
 		(property "Sheetfile" "MCU.kicad_sch"
-			(at 200.66 140.335 0)
+			(at 222.25 140.335 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3207,8 +3385,8 @@
 		)
 	)
 	(sheet
-		(at 200.66 116.84)
-		(size 66.04 7.62)
+		(at 222.25 116.84)
+		(size 58.42 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3223,7 +3401,7 @@
 		)
 		(uuid "c53d98f9-b867-551c-91ac-fda89b3b1f54")
 		(property "Sheetname" "LEDDrivers"
-			(at 200.66 116.205 0)
+			(at 222.25 116.205 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3234,7 +3412,7 @@
 			)
 		)
 		(property "Sheetfile" "LEDDrivers.kicad_sch"
-			(at 200.66 125.095 0)
+			(at 222.25 125.095 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

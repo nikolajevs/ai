@@ -50,6 +50,7 @@ def report(netlist, snapshot):
     data = json.loads(snapshot.read_text(encoding='utf-8'))
     rate = Decimal(str(data['eur_usd']['rate']))
     seen = set()
+    purchasing_codes = set()
     rows, unpriced, short = [], [], []
     totals = {n: {'board': Decimal(0), 'order': Decimal(0)} for n in BUILDS}
     for line in data['lines']:
@@ -63,6 +64,9 @@ def report(netlist, snapshot):
         qty = len(refs) if refs else line['qty']
         if line['kind'] == 'zero':
             continue
+        if line['lcsc']:
+            assert line['lcsc'] not in purchasing_codes, (line['lcsc'], 'merge equal purchasing codes before applying MOQ/tier prices')
+            purchasing_codes.add(line['lcsc'])
         if not line['tiers']:
             unpriced.append(line)
             continue
@@ -84,6 +88,8 @@ def report(netlist, snapshot):
     out = [f'PCB_V1 v{revision} BOM price audit, LCSC snapshot {date}',
            f'{src}. EUR at ECB {data["eur_usd"]["date"]}: 1 EUR = {rate} USD.',
            'Per board = fitted parts x tier price; order = LCSC minimum/multiple applied (leftovers included).',
+           f'Priced on-board purchasing codes: {len({r["line"]["lcsc"] for r in rows if r["line"]["refs"]})}; '
+           f'fitted on-board parts: {sum(r["qty"] for r in rows if r["line"]["refs"])} (DNP and copper test pads excluded).',
            'Not included: shipping, VAT/duty, PCB, assembly, promotional discounts, parts marked unpriced.', '',
            f'{"refs":30} {"qty":>3} {"LCSC":>10} {"kind":8} {"USD@1":>8} {"1 board":>8} {"order 1":>8} '
            f'{"USD@5":>8} {"5: /board":>9} {"order 5":>8}  part']

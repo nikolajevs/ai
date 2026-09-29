@@ -30,9 +30,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-REV = 'v17'
-# The September 28 v16 snapshots already price the reviewed parts selected in v17.
-PRICE_REV = 'v16'
+REV = 'v18'
+# Unchanged parts/fees retain September 28 data; new L101/R102 records are dated September 29.
+PRICE_REV = 'v18'
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE / 'PCB_V1'
 REVIEW = HERE / 'review'
