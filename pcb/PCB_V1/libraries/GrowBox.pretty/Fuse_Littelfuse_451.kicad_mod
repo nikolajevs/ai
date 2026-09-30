@@ -82,4 +82,15 @@
 		(size 1.96 3.15)
 		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

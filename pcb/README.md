@@ -32,6 +32,8 @@ python check_all.py --write   # also refresh review/*_v22, sheet images and PCB_
 | `export_bom.py` | Full schematic BOM to `PCB_V1/BOM_schematic.csv` |
 | `sync_board.py` | Update the unrouted board, retaining component side and orientation from the netlist (refuses routed boards) — KiCad Python |
 | `create_staging_board.py` | Create the initial staging board — KiCad Python |
+| `sync_models.py` | Attach 3D models to the board (project library models, overrides for stock footprints whose KiCad 10 model is missing) and list parts still without a model — KiCad Python |
+| `models3d/power.py` | CadQuery generator of the simplified STEP models for the power SMD parts and the microSD socket (`PCB_V1/libraries/GrowBox.3dshapes/`, sources in `SOURCES_power.md`) |
 | `estimate_jlc_assembly.py` | JLCPCB PCB + Economic/Standard assembly estimate for 2 and 5 boards from `PCB_V1/jlc_snapshot_v22.json` |
 | `analyze_copper.py` | Copper screen before routing: IPC-2221 widths for the confirmed stack, via counts, drops and Kelvin notes (`review/Copper_<REV>.txt`) |
 | `audit_bom_cost.py` | Whole-BOM LCSC price audit from the dated snapshot `PCB_V1/price_snapshot_v22.json` (1 and 5 boards, MOQ, EUR) |
