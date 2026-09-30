@@ -21362,7 +21362,7 @@
 				)
 			)
 		)
-		(property "Value" "BAT54C"
+		(property "Value" "BAV170"
 			(at 0 2.4 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -21374,7 +21374,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/product-detail/C37704.html"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -21408,7 +21408,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "JSCJ"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -21420,7 +21420,7 @@
 				)
 			)
 		)
-		(property "MPN" "BAT54C,215"
+		(property "MPN" "BAV170"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -21432,7 +21432,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C37704"
+		(property "LCSC" "C68970"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -36648,7 +36648,7 @@
 			)
 		)
 	)
-	(gr_text "GROWBOX 24V / 0.20"
+	(gr_text "GROWBOX 24V / 0.21"
 		(at 86 53 0)
 		(layer "F.SilkS")
 		(uuid "8d55abdb-9059-4227-b235-ddf8c3157daf")
@@ -36671,7 +36671,7 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "GROWBOX 0.20 / BOTTOM"
+	(gr_text "GROWBOX 0.21 / BOTTOM"
 		(at 100 140 0)
 		(layer "B.SilkS")
 		(uuid "5e88d479-4ad0-417c-a82a-8236ee491daa")

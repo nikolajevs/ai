@@ -117,7 +117,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.20 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
+    out = ['PCB_V1 v0.21 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',

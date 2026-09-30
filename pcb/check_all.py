@@ -30,9 +30,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-REV = 'v20'
-# Unchanged parts/fees retain September 28 data; v18/v19 substitutions are dated September 29, v20 parts September 30.
-PRICE_REV = 'v20'
+REV = 'v21'
+# Unchanged parts/fees retain September 28 data; v18/v19 substitutions are dated September 29, v20/v21 parts September 30.
+PRICE_REV = 'v21'
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE / 'PCB_V1'
 REVIEW = HERE / 'review'
