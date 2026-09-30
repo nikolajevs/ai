@@ -36,7 +36,7 @@ constexpr uint8_t sensirionCrc8(const uint8_t *data, int len) {
 struct RtcFields { int year, month, day, hour, minute, second; };
 
 // DS3231 register format. Reject OSF, malformed BCD and impossible calendar dates.
-constexpr bool decodeRtc(const uint8_t (&raw)[7], uint8_t status, RtcFields &out) {
+constexpr bool decodeDs3231(const uint8_t (&raw)[7], uint8_t status, RtcFields &out) {
   if (status & 0x80) return false;
   if ((raw[0] & 0x80) || (raw[1] & 0x80) || (raw[2] & 0x80) ||
       (raw[4] & 0xc0) || (raw[5] & 0xe0)) return false;
@@ -53,5 +53,22 @@ constexpr bool decodeRtc(const uint8_t (&raw)[7], uint8_t status, RtcFields &out
   }
   if (!validCalendar(2000 + value[6], value[5], value[4], value[2], value[1], value[0])) return false;
   out = {2000 + value[6], value[5], value[4], value[2], value[1], value[0]};
+  return true;
+}
+
+// PCF8563 registers 02h..08h (board v0.20). VL (bit 7 of 02h) means clock integrity is not
+// guaranteed after a supply loss. Unused bits are undefined and masked; the century bit is
+// ignored because the calendar is limited to 2024..2099 anyway.
+constexpr bool decodePcf8563(const uint8_t (&raw)[7], RtcFields &out) {
+  if (raw[0] & 0x80) return false;
+  const uint8_t mask[7] = {0x7f, 0x7f, 0x3f, 0x3f, 0x07, 0x1f, 0xff};
+  int value[7] = {};
+  for (int i = 0; i < 7; ++i) {
+    const uint8_t bcd = raw[i] & mask[i];
+    if ((bcd & 15) > 9 || (bcd >> 4) > 9) return false;
+    value[i] = (bcd >> 4) * 10 + (bcd & 15);
+  }
+  if (!validCalendar(2000 + value[6], value[5], value[3], value[2], value[1], value[0])) return false;
+  out = {2000 + value[6], value[5], value[3], value[2], value[1], value[0]};
   return true;
 }

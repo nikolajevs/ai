@@ -294,7 +294,7 @@ uint32_t backup_unixtime = 1774838400; // Дефолтный 2026 год, есл
 uint32_t last_rtc_check_ms = 0;
 
 // Время и запросы к RTC трогает только loop(). Веб-обработчики крутятся в задаче
-// AsyncWebServer (другое ядро): раньше они звали getSafeDateTime() и rtc.adjust() напрямую,
+// AsyncWebServer (другое ядро): раньше они звали getSafeDateTime() и rtcAdjust() напрямую,
 // то есть лезли в I2C параллельно с опросом SHT4x и одновременно правили rtc_online/backup_unixtime.
 std::atomic<uint32_t> cached_unixtime{0};  // Снимок времени для веб-обработчиков, обновляет loop()
 std::atomic<uint32_t> pending_time_set{0}; // Запрос "выставить часы" с формы; применяет loop()
@@ -304,7 +304,12 @@ TaskHandle_t UbidotsTaskHandle = NULL;
 
 // --- Инициализация объектов ---
 Adafruit_SHT4x sht40 = Adafruit_SHT4x();
-RTC_DS3231 rtc;
+// Плата v0.20: NXP PCF8563 (0x51). Готовый модуль DS3231 (0x68) на стенде тоже поддерживается:
+// микросхема определяется при каждом rtcBegin(), регистры читаются напрямую (readRTC()).
+enum class RtcChip : uint8_t { None, Pcf8563, Ds3231 };
+RTC_PCF8563 pcf8563;
+RTC_DS3231 ds3231;
+RtcChip rtc_chip = RtcChip::None;
 AsyncWebServer server(80);
 Preferences preferences;
 
@@ -711,7 +716,7 @@ void vUbidotsTask(void *pvParameters) {
     payload += "}";
 
     if (!cfg.ubidots_token[0] || !cfg.device_label[0]) continue;
-    // System UTC for certificate validation; never modifies the local DS3231 schedule.
+    // System UTC for certificate validation; never modifies the local RTC schedule.
     configTime(0, 0, "pool.ntp.org", "time.cloudflare.com");
     for (int i = 0; time(nullptr) < 1704067200 && i < 40; ++i) vTaskDelay(pdMS_TO_TICKS(250));
     if (time(nullptr) < 1704067200) { logPrintln("[TLS] Waiting for UTC time; telemetry skipped."); continue; }
@@ -800,7 +805,7 @@ void logI2CScan() {
   for (uint8_t addr = 0x08; addr < 0x78; addr++) {
     Wire.beginTransmission(addr);
     if (Wire.endTransmission() != 0) continue;
-    const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" :
+    const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" : addr == 0x51 ? " (PCF8563)" :
                        addr == 0x68 ? " (DS3231)" : addr == 0x57 ? " (EEPROM модуля RTC)" : "";
     char item[40];
     snprintf(item, sizeof(item), " 0x%02X%s", addr, name);
@@ -847,18 +852,51 @@ void logSht4xDiagnosis() {
             crcT ? "ok" : "ОШИБКА", crcH ? "ok" : "ОШИБКА", t, h);
 }
 
+const char *rtcName() {
+  return rtc_chip == RtcChip::Pcf8563 ? "PCF8563" : rtc_chip == RtcChip::Ds3231 ? "DS3231" : "RTC";
+}
+
+// Ищет микросхему часов: сначала PCF8563 платы v0.20, затем модуль DS3231.
+// PCF8563 после подачи питания выдаёт 32.768 kHz на CLKOUT; вывод никуда не подключён,
+// поэтому выход выключается — меньше ток от батарейки.
+bool rtcBegin() {
+  if (pcf8563.begin(&Wire)) {
+    rtc_chip = RtcChip::Pcf8563;
+    pcf8563.writeSqwPinMode(PCF8563_SquareWaveOFF);
+    pcf8563.start(); // Снимает STOP, если бит когда-либо был установлен
+    return true;
+  }
+  rtc_chip = ds3231.begin(&Wire) ? RtcChip::Ds3231 : RtcChip::None;
+  return rtc_chip != RtcChip::None;
+}
+
+// Запись времени также сбрасывает флаг потери питания (VL у PCF8563, OSF у DS3231).
+void rtcAdjust(const DateTime &time) {
+  if (rtc_chip == RtcChip::Pcf8563) pcf8563.adjust(time);
+  else if (rtc_chip == RtcChip::Ds3231) ds3231.adjust(time);
+}
+
+bool readRtcRegisters(uint8_t addr, uint8_t reg, uint8_t *out, size_t count) {
+  Wire.beginTransmission(addr);
+  Wire.write(reg);
+  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(addr, count, true) != count) return false;
+  for (size_t i = 0; i < count; ++i) out[i] = Wire.read();
+  return true;
+}
+
 // Do not use rtc.now() for failure detection: its API does not report I2C errors.
 bool readRTC(DateTime &result) {
   uint8_t raw[7];
-  Wire.beginTransmission(0x68);
-  Wire.write(uint8_t(0));
-  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(uint8_t(0x68), size_t(7), true) != 7) return false;
-  for (int i = 0; i < 7; ++i) raw[i] = Wire.read();
-  Wire.beginTransmission(0x68);
-  Wire.write(uint8_t(0x0f));
-  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(uint8_t(0x68), size_t(1), true) != 1) return false;
   RtcFields fields{};
-  if (!decodeRtc(raw, Wire.read(), fields)) return false;
+  if (rtc_chip == RtcChip::Pcf8563) {
+    if (!readRtcRegisters(0x51, 0x02, raw, sizeof(raw)) || !decodePcf8563(raw, fields)) return false;
+  } else if (rtc_chip == RtcChip::Ds3231) {
+    uint8_t status = 0;
+    if (!readRtcRegisters(0x68, 0x00, raw, sizeof(raw)) || !readRtcRegisters(0x68, 0x0f, &status, 1) ||
+        !decodeDs3231(raw, status, fields)) return false;
+  } else {
+    return false;
+  }
   result = DateTime(fields.year, fields.month, fields.day, fields.hour, fields.minute, fields.second);
   return true;
 }
@@ -897,7 +935,7 @@ void tryRecoverRTC(unsigned long currentMillis) {
   recoverI2CBus(); // Освобождаем шину на случай, если она физически "залипла"
 
   bool retry_ok = false;
-  if (rtc.begin()) {
+  if (rtcBegin()) {
     DateTime now;
     // 2024..2099 — грубая защита от "проснувшегося после разряда батарейки" RTC,
     // который обычно сбрасывается на заводскую дату (например, 2000 или 2021 год)
@@ -911,7 +949,7 @@ void tryRecoverRTC(unsigned long currentMillis) {
         backup_unixtime = now.unixtime();
         last_rtc_check_ms = millis();
         rtc_recovery_streak = 0;
-        logPrintln("[RTC] DS3231 восстановлен, выходим из программного таймера.");
+        logPrintf("[RTC] %s восстановлен, выходим из программного таймера.\n", rtcName());
       }
     }
   }
@@ -1063,7 +1101,7 @@ void setup() {
   state.rtc_online = false;
   for (int i = 0; i < 5 && !state.rtc_online; i++) {
     DateTime initialTime;
-    if (rtc.begin() && readRTC(initialTime)) {
+    if (rtcBegin() && readRTC(initialTime)) {
       backup_unixtime = initialTime.unixtime();
       last_rtc_check_ms = millis();
       state.clock_trusted = true;
@@ -1074,7 +1112,11 @@ void setup() {
     }
   }
   if (!state.rtc_online) {
-    logPrintln("ОШИБКА: RTC DS3231 не найден после 5 попыток!");
+    if (rtc_chip != RtcChip::None) {
+      logPrintf("ОШИБКА: %s отвечает, но время недостоверно (потеря питания/батарейки) — выставьте часы.\n", rtcName());
+    } else {
+      logPrintln("ОШИБКА: RTC (PCF8563 0x51 / DS3231 0x68) не найден после 5 попыток!");
+    }
     last_rtc_check_ms = millis();
   }
   logI2CScan(); // Одна строка при каждом старте: кто вообще отвечает на шине
@@ -1207,7 +1249,7 @@ void setup() {
         request->redirect("/settings?error=time");
         return;
       }
-      // Само применение — в loop(): rtc.adjust() из задачи веб-сервера означал бы
+      // Само применение — в loop(): rtcAdjust() из задачи веб-сервера означал бы
       // обращение к I2C с другого ядра, параллельно с опросом SHT4x
       pending_time_set = userTime.unixtime();
     }
@@ -1318,8 +1360,8 @@ void loop() {
   if (requested != 0) {
     DateTime userTime(requested);
     state.rtc_online = false;
-    if (rtc.begin()) {
-      rtc.adjust(userTime);
+    if (rtcBegin()) {
+      rtcAdjust(userTime);
       DateTime checked;
       state.rtc_online = readRTC(checked) && checked.unixtime() >= requested && checked.unixtime() - requested <= 2;
     }
