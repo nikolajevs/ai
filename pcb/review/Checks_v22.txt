@@ -26,6 +26,7 @@
       PASS: 170 components and every pad inside 100 x 100 mm; no mounting footprints
       PASS: all 12 connectors at edges, outward microSD access, bottom battery, four-layer antenna keepout
       PASS: JLC7628 starting stack, nine routing classes and manufacturing constraints present
+      PASS: a 3D model on every placed part; project STEP files present
 [OK] DRC report export
 [OK] DRC
       DRC violations 0; unconnected pads 341 (expected while the board is unrouted)

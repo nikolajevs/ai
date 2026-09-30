@@ -11441,6 +11441,17 @@
 			(uuid "40346ece-8a64-4ff6-9ee8-4519ed2603fc")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_1210_3225Metric"
 		(layer "F.Cu")
@@ -17049,6 +17060,17 @@
 			(uuid "86faff63-c678-4fe0-adbb-46e332210da6")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
@@ -18252,6 +18274,17 @@
 			(uuid "84887b01-504f-4c1a-9c57-7f2ceccd5501")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
 		(layer "F.Cu")
@@ -18755,7 +18788,7 @@
 			(uuid "67ea7476-b9a9-4325-b34b-bb21e415c6f3")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -19309,6 +19342,17 @@
 			(uuid "2a912add-9136-4ccb-a19c-f80551139cd8")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_1210_3225Metric"
 		(layer "F.Cu")
@@ -22397,7 +22441,7 @@
 			(uuid "77256af2-7f19-48c1-b1ab-3bcf6157050b")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT60PW-M_1x02_P7.20mm_Horizontal.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/AMASS_XT60PW-M_1x02_P7.20mm_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -26767,6 +26811,17 @@
 			(uuid "3403df44-9757-4b69-ac41-70687e449387")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "TestPoint:TestPoint_Pad_D2.0mm"
 		(layer "F.Cu")
@@ -27618,6 +27673,17 @@
 			(uuid "5db80811-71f3-4eb9-8c9b-f13b00eb6b0c")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
 		(layer "F.Cu")
@@ -28121,7 +28187,7 @@
 			(uuid "28b5367d-f195-44e3-b687-409d6e8de3dd")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -29462,7 +29528,7 @@
 	(footprint "NetTie:NetTie-2_SMD_Pad0.5mm"
 		(layer "F.Cu")
 		(uuid "d84710c8-e1c5-4bc2-818d-7d14ae08ee2a")
-		(at 64.04 134.125 90)
+		(at 64.04 134.025 90)
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT712"
@@ -33096,6 +33162,17 @@
 			(uuid "e2b89752-14ea-44f8-b067-9ae4393afe05")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
@@ -35920,6 +35997,17 @@
 			(uuid "3aefa878-c79a-48e3-8fb2-e9e84d0246e7")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
@@ -36456,11 +36544,22 @@
 			(uuid "71b03e44-f1c6-4f0a-96c3-2bcb092de60a")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuseholder_Blade_Mini_XFCN_XF-508P.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "NetTie:NetTie-2_SMD_Pad0.5mm"
 		(layer "F.Cu")
 		(uuid "fdfa160b-83fd-4c0d-9556-aa69b8c87a28")
-		(at 98.54 134.925 90)
+		(at 98.54 134.825 90)
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT722"
@@ -36791,7 +36890,7 @@
 			(uuid "f7c8ddd0-9e20-4425-85f9-41d9357bb440")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Battery.3dshapes/BatteryHolder_MYOUNG_BS-07-A1BJ001_CR2032.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/BatteryHolder_MYOUNG_BS-07-A1BJ001_CR2032.step"
 			(offset
 				(xyz 0 0 0)
 			)

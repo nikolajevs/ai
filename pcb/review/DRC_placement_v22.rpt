@@ -1,5 +1,5 @@
 ** Drc report for PCB_V1.kicad_pcb **
-** Created on 2026-09-30T22:32:26 **
+** Created on 2026-09-30T23:50:54 **
 ** Report includes: Errors, Warnings **
 
 ** Found 0 DRC violations **
@@ -799,7 +799,7 @@
     @(87.3000 mm, 124.4375 mm): Pad 1 [/LEDDrivers/LED1_SOURCE] of R715 on F.Cu
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(87.2800 mm, 122.0400 mm): Pad 2 [/LEDDrivers/LED1_SOURCE] of Q711 on F.Cu
+    @(87.2800 mm, 122.0400 mm): Pad 1 [/LEDDrivers/LED1_SOURCE] of Q711 on F.Cu
     @(87.3000 mm, 124.4375 mm): Pad 1 [/LEDDrivers/LED1_SOURCE] of R715 on F.Cu
 [unconnected_items]: Missing connection between items
     Local override; error
@@ -1339,7 +1339,7 @@
     @(98.5375 mm, 136.0000 mm): Pad 1 [/LEDDrivers/LED2_RETURN] of R726 on F.Cu
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(64.0400 mm, 133.6250 mm): Pad 2 [/LEDDrivers/LED1_FB_K] of NT712 on F.Cu
+    @(64.0400 mm, 133.5250 mm): Pad 2 [/LEDDrivers/LED1_FB_K] of NT712 on F.Cu
     @(100.1750 mm, 119.8050 mm): Pad 5 [/LEDDrivers/LED1_FB_K] of U710 on F.Cu
 [unconnected_items]: Missing connection between items
     Local override; error
@@ -1367,7 +1367,7 @@
     @(90.4750 mm, 124.6000 mm): Pad 1 [/LEDDrivers/LED1_CS_K] of R712 on F.Cu
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(98.5400 mm, 134.4250 mm): Pad 2 [/LEDDrivers/LED2_FB_K] of NT722 on F.Cu
+    @(98.5400 mm, 134.3250 mm): Pad 2 [/LEDDrivers/LED2_FB_K] of NT722 on F.Cu
     @(135.4750 mm, 125.9050 mm): Pad 5 [/LEDDrivers/LED2_FB_K] of U720 on F.Cu
 
 ** Found 0 Footprint errors **

@@ -86,3 +86,18 @@ assert '(stackup' in text and '(material "FR4 7628")' in text, 'Documented stack
 print(f'PASS: {len(fps)} components and every pad inside 100 x 100 mm; no mounting footprints')
 print('PASS: all 12 connectors at edges, outward microSD access, bottom battery, four-layer antenna keepout')
 print('PASS: JLC7628 starting stack, nine routing classes and manufacturing constraints present')
+
+# 3D models: every placed part except net ties and bare test pads carries a model;
+# project models (${KIPRJMOD}) must exist. KiCad library models depend on the local install.
+no_model, no_file = [], []
+for ref, fp in sorted(fps.items()):
+    if fp.IsNetTie() or str(fp.GetFPID().GetLibItemName()).startswith('TestPoint_Pad'):
+        continue
+    models = [m for m in fp.Models() if m.m_Show]
+    if not models:
+        no_model.append(ref)
+    no_file += [ref for m in models if m.m_Filename.startswith('${KIPRJMOD}/')
+                and not (path.parent / m.m_Filename[len('${KIPRJMOD}/'):]).exists()]
+assert not no_model, ('parts without a 3D model', no_model)
+assert not no_file, ('project 3D model files missing', no_file)
+print('PASS: a 3D model on every placed part; project STEP files present')
