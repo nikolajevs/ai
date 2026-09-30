@@ -7,7 +7,7 @@
 	(title_block
 		(title "03 - RTC / microSD / external sensors")
 		(date "2026-09-29")
-		(rev "0.18-DRAFT")
+		(rev "0.20-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
@@ -2025,212 +2025,778 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "GrowBox:DS3231MZ"
-			(pin_names
-				(offset 0.508)
-			)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "U"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
+	
+		(symbol "Timer_RTC:PCF8563T"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "U"
+			(at -7.62 8.89 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify left)
 			)
-			(property "Value" "DS3231MZ+TRL"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
+		)
+		(property "Value" "PCF8563T"
+			(at 2.54 8.89 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify left)
 			)
-			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231M.pdf"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "DS3231MZ MEMS RTC, SOIC-8; VCC2 GND5 VBAT6 SDA7 SCL8; no charging"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
-			(symbol "DS3231MZ_0_1"
-				(rectangle
-					(start -10.16 10.16)
-					(end 10.16 -10.16)
-					(stroke
-						(width 0.254)
-						(type default)
+		)
+		(property "Datasheet" "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Realtime Clock/Calendar I2C Interface, SOIC-8"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "I2C RTC Clock Calendar"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "SOIC*3.9x4.9mm*P1.27mm*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "PCF8563T_0_1"
+			(rectangle
+				(start -7.62 7.62)
+				(end 7.62 -7.62)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "PCF8563T_1_1"
+			(pin input line
+				(at -10.16 5.08 0)
+				(length 2.54)
+				(name "OSCI"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
 					)
-					(fill
-						(type background)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
 					)
 				)
 			)
-			(symbol "DS3231MZ_1_1"
-				(pin open_collector line
-					(at 12.7 5.08 180)
-					(length 2.54)
-					(name "32kHz"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1 1)
-							)
+			(pin output line
+				(at -10.16 -5.08 0)
+				(length 2.54)
+				(name "OSCO"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin power_in line
-					(at -2.54 12.7 270)
-					(length 2.54)
-					(name "VCC"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1 1)
-							)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin open_collector line
-					(at 12.7 0 180)
-					(length 2.54)
-					(name "~{INT}/SQW"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1 1)
-							)
+			)
+			(pin output line
+				(at 10.16 -5.08 180)
+				(length 2.54)
+				(name "~{INT}"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin bidirectional line
-					(at -12.7 -5.08 0)
-					(length 2.54)
-					(name "~{RST}"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1 1)
-							)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin power_in line
-					(at 0 -12.7 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1 1)
-							)
+			)
+			(pin power_in line
+				(at 0 -10.16 90)
+				(length 2.54)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin power_in line
-					(at 2.54 12.7 270)
-					(length 2.54)
-					(name "VBAT"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1 1)
-							)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin bidirectional line
-					(at -12.7 2.54 0)
-					(length 2.54)
-					(name "SDA"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1 1)
-							)
+			)
+			(pin bidirectional line
+				(at 10.16 2.54 180)
+				(length 2.54)
+				(name "SDA"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin input line
-					(at -12.7 5.08 0)
-					(length 2.54)
-					(name "SCL"
-						(effects
-							(font
-								(size 1 1)
-							)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
-					(number "8"
-						(effects
-							(font
-								(size 1 1)
-							)
+				)
+			)
+			(pin input line
+				(at 10.16 5.08 180)
+				(length 2.54)
+				(name "SCL"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output clock
+				(at 10.16 -2.54 180)
+				(length 2.54)
+				(name "CLKO"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 0 10.16 270)
+				(length 2.54)
+				(name "VDD"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
 			)
 		)
+		(embedded_fonts no)
+	)
+		(symbol "Device:Crystal"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Y"
+			(at 0 3.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Crystal"
+			(at 0 -3.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Two pin crystal"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "quartz ceramic resonator oscillator"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Crystal*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Crystal_0_1"
+			(polyline
+				(pts
+					(xy -2.54 0) (xy -1.905 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 -1.27) (xy -1.905 1.27)
+				)
+				(stroke
+					(width 0.508)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.143 2.54)
+				(end 1.143 -2.54)
+				(stroke
+					(width 0.3048)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.905 -1.27) (xy 1.905 1.27)
+				)
+				(stroke
+					(width 0.508)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 0) (xy 1.905 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Crystal_1_1"
+			(pin passive line
+				(at -3.81 0 0)
+				(length 1.27)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 3.81 0 180)
+				(length 1.27)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "Diode:BAT54C"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "D"
+			(at 0.635 -3.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BAT54C"
+			(at -6.35 3.175 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 1.905 3.175 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "http://www.diodes.com/_files/datasheets/ds11005.pdf"
+			(at -2.032 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "dual schottky barrier diode, common cathode"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "schottky diode common cathode"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "SOT?23*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "BAT54C_0_1"
+			(polyline
+				(pts
+					(xy -3.175 -1.27) (xy -3.175 1.27) (xy -1.27 0) (xy -3.175 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 1.27) (xy -1.905 1.016)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 0) (xy 1.905 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.27 1.27) (xy -1.905 1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.27 1.27) (xy -1.27 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.27 0) (xy -3.81 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.27 -1.27) (xy -0.635 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -0.635 -1.27) (xy -0.635 -1.016)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 0 0)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.635 -1.27) (xy 0.635 -1.016)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 1.27) (xy 1.27 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 1.27) (xy 1.905 1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 -1.27) (xy 0.635 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.905 1.27) (xy 1.905 1.016)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.175 -1.27) (xy 3.175 1.27) (xy 1.27 0) (xy 3.175 -1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.81 0) (xy 1.27 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "BAT54C_1_1"
+			(pin passive line
+				(at -7.62 0 0)
+				(length 3.81)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 7.62 0 180)
+				(length 3.81)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -5.08 90)
+				(length 5.08)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	)
 	(text "Разомкнутый вход/обрыв кабеля = нет воды.\nLOW ~0.30 V; фильтр + программный debounce 20..50 ms.\nJ302: винтовая клемма 3.5 мм DORABO DB125-3.5-2P-GN-S."
 		(exclude_from_sim no)
@@ -2298,7 +2864,7 @@
 		)
 		(uuid "809a9aa6-afb5-5179-a55b-b7d66baf7eaa")
 	)
-	(text "01  DS3231MZ / I2C 0x68 / CR2032"
+	(text "01  PCF8563T / I2C 0x51 / CR2032"
 		(exclude_from_sim no)
 		(at 20.32 35.56 0)
 		(effects
@@ -2320,7 +2886,7 @@
 		)
 		(uuid "b2e3528c-3713-538e-ba14-13169022eaa7")
 	)
-	(text "SOIC-8: VCC=2, GND=5, VBAT=6, SDA=7, SCL=8.\n32kHz, INT/SQW, RST не используются.\nCR2032 -> VBAT; без зарядки. RTC-код совместим."
+	(text "SOIC-8: OSCI=1, OSCO=2, VSS=4, SDA=5, SCL=6, VDD=8; INT, CLKOUT unused (firmware turns CLKOUT off).\nY301 FC-135 CL 12.5 pF: OSCO has 25 pF inside (15..35), OSCI needs ~25 pF -> C304 18p + pin/stray.\nTrim C304 on the prototype by the 32.768 kHz CLKOUT frequency after power-on (NXP method 1).\nD303: +3V3 or CR2032 via R307 -> RTC_VDD (C301). R307 limits reverse current into the cell."
 		(exclude_from_sim no)
 		(at 20.32 101.6 0)
 		(effects
@@ -2331,7 +2897,7 @@
 		)
 		(uuid "c96eac63-e0b5-5c45-945e-f766feba6652")
 	)
-	(text "0.18 DRAFT — схема для проверки; разводка и испытания ещё не выполнены."
+	(text "0.20 DRAFT — схема для проверки; разводка и испытания ещё не выполнены."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -2358,24 +2924,12 @@
 		(uuid "640b1fec-cb65-53cc-8f9b-fec95b8dd739")
 	)
 	(no_connect
-		(at 91.44 68.58)
-		(uuid "6976e4b0-5094-5617-862d-f76e8953245c")
-	)
-	(no_connect
-		(at 91.44 73.66)
-		(uuid "6b26be21-6fbd-55cd-b0c1-5227a5efcdf9")
-	)
-	(no_connect
 		(at 347.98 86.36)
 		(uuid "80ee54f8-b322-5a89-98df-243155a19b12")
 	)
 	(no_connect
 		(at 347.98 83.82)
 		(uuid "fcacfb62-209a-540d-a8c2-81de88962c9f")
-	)
-	(no_connect
-		(at 66.04 78.74)
-		(uuid "fff15a0e-5b5c-5b37-9255-04950e3b3aac")
 	)
 	(wire
 		(pts
@@ -2456,16 +3010,6 @@
 			(type default)
 		)
 		(uuid "176d331a-f65d-5440-8d46-147905fa7689")
-	)
-	(wire
-		(pts
-			(xy 78.74 86.36) (xy 78.74 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "19c54c83-5c54-5c3d-9605-4732a0bd8aed")
 	)
 	(wire
 		(pts
@@ -2559,16 +3103,6 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 60.96) (xy 81.28 55.88)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2b6fbd45-eb0c-5baa-9a5d-48e91f9bb0a8")
-	)
-	(wire
-		(pts
 			(xy 266.7 144.78) (xy 266.7 149.86)
 		)
 		(stroke
@@ -2659,16 +3193,6 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 71.12) (xy 45.72 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "575bb99f-e5ed-5bc9-b64a-457c17d484f1")
-	)
-	(wire
-		(pts
 			(xy 125.73 243.84) (xy 130.81 243.84)
 		)
 		(stroke
@@ -2696,16 +3220,6 @@
 			(type default)
 		)
 		(uuid "62a14651-84ef-5e01-a6a6-a6b022ebd0f4")
-	)
-	(wire
-		(pts
-			(xy 76.2 60.96) (xy 76.2 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "662e4005-1eb9-598f-a6a8-d986f2face86")
 	)
 	(wire
 		(pts
@@ -2906,16 +3420,6 @@
 			(type default)
 		)
 		(uuid "acf43747-9b7b-58df-84f5-e4bf8e159220")
-	)
-	(wire
-		(pts
-			(xy 66.04 68.58) (xy 45.72 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aee728e4-ba1f-5ece-a988-b78a309f9ee7")
 	)
 	(wire
 		(pts
@@ -3136,16 +3640,6 @@
 			(justify left bottom)
 		)
 		(uuid "1d69a42a-a77f-54f5-8a0f-255a0bb13167")
-	)
-	(label "RTC_VBAT"
-		(at 81.28 55.88 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "224c4740-d804-533b-8bc4-8a37a798d52d")
 	)
 	(label "SD_DAT1"
 		(at 266.7 149.86 0)
@@ -3597,28 +4091,6 @@
 	)
 	(global_label "+3V3"
 		(shape bidirectional)
-		(at 27.94 59.69 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "2873bff5-dbb1-5243-b672-4d4dd249c75d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 27.94 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "+3V3"
-		(shape bidirectional)
 		(at 19.05 179.07 0)
 		(effects
 			(font
@@ -3739,28 +4211,6 @@
 		(uuid "4ac325fe-02cf-559e-9591-b34a50c09292")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 281.94 185.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "I2C_SDA"
-		(shape bidirectional)
-		(at 45.72 71.12 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "4f78ac3d-a8e5-539c-8a21-3558311107ed")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 45.72 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3969,50 +4419,6 @@
 			)
 		)
 	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 78.74 91.44 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "b4272389-c39f-56ef-8b89-6b3de87bae0e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 78.74 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "+3V3"
-		(shape bidirectional)
-		(at 76.2 45.72 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "b5b3f12e-be50-54ee-9ee8-24fe6fcb4ba4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 76.2 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "I2C_SDA"
 		(shape bidirectional)
 		(at 80.01 146.05 0)
@@ -4157,28 +4563,6 @@
 		(uuid "da1b32f6-8640-510f-9720-7c04aab65efb")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 27.94 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "I2C_SCL"
-		(shape bidirectional)
-		(at 45.72 68.58 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "dcdb882a-0772-58d8-b755-b92652d225a3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 45.72 68.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4724,106 +5108,6 @@
 					(unit 1)
 				)
 			)
-		)
-	)
-	(symbol
-		(lib_id "GrowBox:DS3231MZ")
-		(at 78.74 73.66 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "3345e5f1-bfda-5cea-8572-4c10b7f68cb5")
-		(property "Reference" "U301"
-			(at 66.04 52.07 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "DS3231MZ+TRL"
-			(at 66.04 54.61 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 78.74 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231M.pdf"
-			(at 78.74 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 78.74 73.66 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "PCB_V1"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
-					(reference "U301")
-					(unit 1)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a2722eea-755f-570a-a972-c38995b5789d")
-		)
-		(pin "2"
-			(uuid "6c6e7ab7-5cee-5114-bb11-7b5a8bb91e08")
-		)
-		(pin "3"
-			(uuid "7ea18fa4-22b1-520e-87bd-998e018a4634")
-		)
-		(pin "4"
-			(uuid "41dee22b-0288-5cd1-869a-1aa2800234ab")
-		)
-		(pin "5"
-			(uuid "b7e22afa-51a3-4686-95e1-8d5bc4f7326d")
-		)
-		(pin "6"
-			(uuid "af1bfe53-1bfe-4b75-9960-55c228a7c95c")
-		)
-		(pin "7"
-			(uuid "b61e14f0-5472-4356-98c7-3846b23ba216")
-		)
-		(pin "8"
-			(uuid "fbd4b596-d3e2-4044-b3c6-51855fc8595e")
 		)
 	)
 	(symbol
@@ -7064,5 +7348,939 @@
 				(justify left)
 			)
 		)
+	)
+	(label "RTC_VDD"
+		(at 27.94 59.69 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 17db3db1-20f6-4591-b1a8-03a21893e054)
+	)
+	(symbol
+		(lib_id "Timer_RTC:PCF8563T")
+		(at 78.74 73.66 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 1131cf4c-f67d-4d7f-8b2f-e3526a6f1f3d)
+		(property "Reference" "U301"
+			(at 88.9 60.96 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PCF8563T/5"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "RTC, I2C 0x51; VDD from +3V3 or CR2032 via D303"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "NXP"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "PCF8563T/5,518"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C7440"
+			(at 78.74 73.66 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 921ce6f6-1f48-4b73-a1a4-e88c6d6f7f2e)
+		)
+		(pin "2"
+			(uuid ec714310-9e3b-470f-98b5-2513a8076f80)
+		)
+		(pin "3"
+			(uuid a0b75e92-8077-4744-bbff-31ebe69bce34)
+		)
+		(pin "4"
+			(uuid b874704f-5304-4346-9e36-7aec26bdc45e)
+		)
+		(pin "5"
+			(uuid ec5c833b-0ddc-4730-b241-d9560e0c516b)
+		)
+		(pin "6"
+			(uuid 839dfbc1-57e0-4fa6-a139-ebe9ccc591c6)
+		)
+		(pin "7"
+			(uuid 2163bb2c-fd48-43d4-b147-d79c36bda5f6)
+		)
+		(pin "8"
+			(uuid afb0d61b-3b6a-4262-8c07-e962d89f6aa9)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "U301")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 68.58 68.58) (xy 66.04 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 906c467c-b3f6-445a-921e-dfae1fd53c9c)
+	)
+	(label "RTC_OSCI"
+		(at 66.04 68.58 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 59a73019-33a3-48c7-b03d-4ddab595c49f)
+	)
+	(wire
+		(pts
+			(xy 68.58 78.74) (xy 66.04 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d97e5e4b-4434-48d2-a5f4-c7482588bbec)
+	)
+	(label "RTC_OSCO"
+		(at 66.04 78.74 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid bb764b0f-ff3f-4ea7-bd31-84f748381d16)
+	)
+	(no_connect
+		(at 88.9 78.74)
+		(uuid "acaf4cb7-550c-4d81-9d4f-ae7f37cabbcf")
+	)
+	(wire
+		(pts
+			(xy 78.74 83.82) (xy 78.74 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 2d5f5722-f444-4838-afe1-537fc8dfc3cc)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 78.74 86.36 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid daf7fbed-d7d6-41a7-a618-16b4e5538696)
+	)
+	(wire
+		(pts
+			(xy 88.9 71.12) (xy 91.44 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 9da2a10c-c609-40bf-a3bc-04ea35bf7fe4)
+	)
+	(global_label "I2C_SDA"
+		(shape bidirectional)
+		(at 91.44 71.12 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left)
+		)
+		(uuid 0231a3ac-17df-4c8d-96b3-a96553fb399c)
+	)
+	(wire
+		(pts
+			(xy 88.9 68.58) (xy 91.44 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f2f274fa-b133-49b4-b5f2-2d4f36f57b1e)
+	)
+	(global_label "I2C_SCL"
+		(shape bidirectional)
+		(at 91.44 68.58 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left)
+		)
+		(uuid 377bd480-438d-4cf8-b0c6-8b651dbc477d)
+	)
+	(no_connect
+		(at 88.9 76.2)
+		(uuid "1f56a610-5017-48e8-8dcf-ebaa194120e1")
+	)
+	(wire
+		(pts
+			(xy 78.74 63.5) (xy 78.74 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid cc2bb2c3-e61d-459a-b80a-53fb3117f53c)
+	)
+	(label "RTC_VDD"
+		(at 78.74 60.96 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 65ddc5fc-9143-4aba-a0a8-cb3ff2e657dc)
+	)
+	(symbol
+		(lib_id "Device:Crystal")
+		(at 165.1 50.8 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 21293db4-b53c-4266-b1e3-3854dbdc94ac)
+		(property "Reference" "Y301"
+			(at 161.29 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "32.768k 12.5pF"
+			(at 161.29 47.75 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/product-detail/C32346.html"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "FC-135, +/-20 ppm, ESR 70k max"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Epson"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "Q13FC13500004"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C32346"
+			(at 165.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 080a6a42-2094-4d40-99af-53b70dec1aa1)
+		)
+		(pin "2"
+			(uuid 6c9f9d57-da8e-494c-8cad-0f1b94b96a2b)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "Y301")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 161.29 50.8) (xy 158.75 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 98072271-96ad-4a3c-82c9-ac00454b0f70)
+	)
+	(label "RTC_OSCI"
+		(at 158.75 50.8 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid bcf1f783-ea98-45f1-96b8-c259d8a4defd)
+	)
+	(wire
+		(pts
+			(xy 168.91 50.8) (xy 171.45 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid a28b3a07-5c3f-4084-9a6b-b52da92fb31d)
+	)
+	(label "RTC_OSCO"
+		(at 171.45 50.8 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid b2e7deb2-ceb7-4398-94bf-c93988b36731)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 165.1 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid a865cdf6-ca15-4c19-ac22-429de7cb9036)
+		(property "Reference" "C304"
+			(at 168.91 74.93 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "18p 50V C0G"
+			(at 168.91 77.47 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "OSCI load; trim on the prototype (see note)"
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10C180JB8NNNC"
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1647"
+			(at 165.1 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 768076a2-82ec-4744-966a-687939df2f08)
+		)
+		(pin "2"
+			(uuid 861d6ea7-554f-4670-9ed7-d0a1218c8e27)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "C304")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 165.1 72.39) (xy 165.1 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 3b3d10bf-a675-463d-953e-bbdf9c0833a7)
+	)
+	(label "RTC_OSCI"
+		(at 165.1 69.85 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid a86b862d-1a24-40e1-ab03-ece2597987f4)
+	)
+	(wire
+		(pts
+			(xy 165.1 80.01) (xy 165.1 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid aa978a1d-33d6-437d-b5b2-927e6bd005e5)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 165.1 82.55 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid d8b6f3eb-86ad-4da9-af44-66f9c56869de)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 190.5 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid d9c998c6-9cad-4c6c-a483-738f931a1bd8)
+		(property "Reference" "R307"
+			(at 194.31 74.93 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 194.31 77.47 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "Limits reverse current into the lithium cell if D303 fails"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "0603WAF1001T5E"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 44795a1b-e57d-4797-a861-f4bf650d80a0)
+		)
+		(pin "2"
+			(uuid 639d5e74-a584-4221-b4a7-ba69e80f1ed4)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "R307")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 190.5 72.39) (xy 190.5 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 35663498-c3a0-4d9b-a6b8-a44d08601412)
+	)
+	(label "RTC_VBAT"
+		(at 190.5 69.85 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 489e76fd-cf73-4a0c-8e78-5b30241fa67b)
+	)
+	(wire
+		(pts
+			(xy 190.5 80.01) (xy 190.5 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 092391fd-8717-44e0-b7fd-bb0f88bd1c35)
+	)
+	(label "RTC_VBAT_R"
+		(at 190.5 82.55 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 8748922d-d986-4ebf-85c2-2e02be0e0d01)
+	)
+	(symbol
+		(lib_id "Diode:BAT54C")
+		(at 177.8 110.49 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid eb7afad7-6130-408a-9048-ba54ea16cfc4)
+		(property "Reference" "D303"
+			(at 170.18 105.41 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BAT54C"
+			(at 170.18 107.44 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/product-detail/C37704.html"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "RTC supply OR: A1 from +3V3, A2 from CR2032 via R307"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Nexperia"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "BAT54C,215"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C37704"
+			(at 177.8 110.49 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 3ca8a9ae-3813-4dd2-82c6-6c95f5dc74d1)
+		)
+		(pin "2"
+			(uuid d6025556-96d4-4b47-9e1a-41dc6472587e)
+		)
+		(pin "3"
+			(uuid 4cbeba58-e0f2-4164-bccf-8c317f984bd8)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "D303")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 170.18 110.49) (xy 167.64 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 25bd13f6-5abf-4f2e-84bf-754bea4a7bbb)
+	)
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 167.64 110.49 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 31d7a914-efeb-4298-8813-759195cfaac5)
+	)
+	(wire
+		(pts
+			(xy 185.42 110.49) (xy 187.96 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid a724a242-1ad2-44c0-8a34-1a5327b65d4e)
+	)
+	(label "RTC_VBAT_R"
+		(at 187.96 110.49 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 13e56cb2-ee51-4307-a6cc-0a81e83ad7c4)
+	)
+	(wire
+		(pts
+			(xy 177.8 115.57) (xy 177.8 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 6a82599b-408f-4805-952e-73104cfd708c)
+	)
+	(label "RTC_VDD"
+		(at 177.8 118.11 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 359be082-58ec-424a-852e-51db650d23da)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 195.58 116.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid 1aee7b61-59d4-403c-b919-02e04fd7cc88)
+		(property "Reference" "#FLG0303"
+			(at 199.39 115.57 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 199.39 118.11 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 195.58 116.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 195.58 116.84 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid c40bbe8b-e7da-4625-8bec-1104ed94a04b)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/6b08d5d1-f5dd-51d1-a612-b10717fdf3b0/bcf5e9ab-329b-5115-ad03-190ffcafae19"
+					(reference "#FLG0303")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 195.58 116.84) (xy 195.58 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0435b6c7-3b70-4803-bba1-8ff82cfa9b03)
+	)
+	(label "RTC_VDD"
+		(at 195.58 119.38 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 0fe93f1c-ca18-41ed-8da3-2f2ea6c4335a)
 	)
 )

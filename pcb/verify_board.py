@@ -44,44 +44,37 @@ def numbered(ref):
 def size(p):
  s=p.GetSize();return (round(pcbnew.ToMM(s.x),4),round(pcbnew.ToMM(s.y),4))
 
-# TI SLPS583B top view: S1/2/3, G4, D5/6/7/8 plus exposed drain.
-# Project DNH0008A footprint combines all drain copper under number 5.
-pads=numbered('Q721')
-assert str(fps['Q721'].GetFPID().GetLibItemName())=='TI_DNH0008A_CSD19538Q3A'
-assert fps['Q721'].GetValue()=='CSD19538Q3A'
-assert set(pads)=={'1','2','3','4','5'}, ('Q721','NexFET pin count')
-for number in ['1','2','3','4']:
- assert len(pads[number])==1 and size(pads[number][0])==(.7,.4),('Q721',number,'pad geometry')
-assert sorted(size(p) for p in pads['5'])==[(.835,.4)]*4+[(1.875,2.55)],('Q721','drain geometry')
-for ps in pads.values():
- for p in ps:
-  assert abs(pcbnew.ToMM(p.GetLocalSolderMaskMargin())+.05)<.001,('Q721','mask-defined land')
-# TI SLPS483 (CSD19534Q5A, DQJ): project copy of KiCad VSONP-8 5x6 renumbered S1/2/3 G4 D5.
-pads=numbered('Q711')
-assert str(fps['Q711'].GetFPID().GetLibItemName())=='TI_DQJ0008A_CSD19534Q5A'
-assert fps['Q711'].GetValue()=='CSD19534Q5A'
-assert set(pads)=={'1','2','3','4','5'}, ('Q711','NexFET pin count')
-for number in ['1','2','3','4']:
- assert len(pads[number])==1 and size(pads[number][0])==(.7,.7),('Q711',number,'pad geometry')
- assert abs(pcbnew.ToMM(pads[number][0].GetFPRelativePosition().x)+2.8)<.001,('Q711','S/G row')
-assert sorted(size(p) for p in pads['5'])==[(.7,.7)]*4+[(4.35,4.51)],('Q711','drain geometry')
+# v0.20 AOS AOD66923 (TO-252/DPAK) on a project footprint that keeps the NexFET numbering:
+# source lead = pads 1/2/3 stacked (paste on pad 1 only), gate lead 4, drain tab 5.
+for ref in ['Q711','Q721']:
+ pads=numbered(ref)
+ assert str(fps[ref].GetFPID().GetLibItemName())=='TO-252-2_NMOS_S123_G4_D5',(ref,'DPAK footprint')
+ assert fps[ref].GetValue()=='AOD66923'
+ assert set(pads)=={'1','2','3','4','5'} and all(len(v)==1 for v in pads.values()),(ref,'DPAK pad numbers')
+ rel={n:tuple(round(pcbnew.ToMM(v),3) for v in (ps[0].GetFPRelativePosition().x,ps[0].GetFPRelativePosition().y)) for n,ps in pads.items()}
+ assert rel['1']==rel['2']==rel['3']==(-5.04,2.28) and rel['4']==(-5.04,-2.28) and rel['5']==(1.26,0.0),(ref,'DPAK lead positions')
+ assert all(size(pads[n][0])==(2.2,1.2) for n in '1234') and size(pads['5'][0])==(6.4,5.8),(ref,'DPAK lands')
+ assert [n for n in '123' if pads[n][0].IsOnLayer(pcbnew.F_Paste)]==['1'],(ref,'stacked source pads must print paste once')
 assert str(fps['U301'].GetFPID().GetLibItemName())=='SOIC-8_3.9x4.9mm_P1.27mm'
-assert fps['U301'].GetValue()=='DS3231MZ+TRL'
+assert fps['U301'].GetValue()=='PCF8563T/5'
 assert {p.GetNumber() for p in fps['U301'].Pads()}==set('12345678')
-print('PASS: NexFET S1/2/3 G4 D5 (Q711 DQJ, Q721 DNH) and SOIC-8 RTC package/pin mapping')
+assert nodes[('U301','1')]==nodes[('Y301','1')] and nodes[('U301','2')]==nodes[('Y301','2')],'crystal on OSCI/OSCO'
+print('PASS: AOD66923 DPAK S1/2/3 G4 D5 (Q711, Q721) and SOIC-8 PCF8563 package/pin mapping')
 
-# Check selected LED passive packages, including the DPAK's otherwise unused lead.
+# Check selected LED power packages: SS5P10 TO-277A cathode tab 1, two anode leads 2.
 for ref in ['D711','D721','L711','L721']:
  for pad in fps[ref].Pads():
   if pad.GetNumber():
    key=(ref,pad.GetNumber())
    assert key in nodes and pad.GetNetname()==nodes[key],key
-assert nodes[('D711','2')]==nodes[('C716','1')]
-assert nodes[('D711','3')]==nodes[('Q711','5')]
-assert nodes[('D711','1')].startswith('unconnected-')
-assert str(fps['D711'].GetFPID().GetLibItemName())=='TO-252-2'
-assert str(fps['D721'].GetFPID().GetLibItemName())=='D_SOD-128'
-for ref,sz in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
+for n in (1,2):
+ d=f'D7{n}1'
+ assert nodes[(d,'1')]==nodes[(f'C7{n}6','1')] and nodes[(d,'2')]==nodes[(f'Q7{n}1','5')],(d,'diode polarity')
+ assert str(fps[d].GetFPID().GetLibItemName())=='Vishay_TO-277A_D_K1_A2',(d,'TO-277A footprint')
+ pads=numbered(d)
+ assert set(pads)=={'1','2'} and len(pads['1'])==1 and len(pads['2'])==2,(d,'K tab + two A leads')
+ assert size(pads['1'][0])==(4.8,4.72) and all(size(p)==(1.4,1.27) for p in pads['2']),(d,'TO-277A lands')
+for ref,sz in [('L711',(3.15,12.5)),('L721',(3.1,5.0))]:
  pads=[p for p in fps[ref].Pads() if p.GetNumber()]
  assert {p.GetNumber() for p in pads}=={'1','2'}
  for pad in pads:
@@ -89,7 +82,7 @@ for ref,sz in [('L711',(3.15,12.5)),('L721',(3.1,5.0)),('D721',(1.4,2.1))]:
 assert str(fps['L721'].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
 assert str(fps['L711'].GetFPID().GetLibItemName())=='L_Bourns_SRP1770TA_16.9x16.9mm'
 assert nodes[('J721','1')]==nodes[('J731','1')] and nodes[('J721','2')]==nodes[('J731','2')],'CH2 bars not paralleled'
-print('PASS: all values/footprints agree; LED diode polarity/NC, CH2 parallel bars and selected passive lands checked')
+print('PASS: all values/footprints agree; SS5P10 polarity and lands, CH2 parallel bars and selected passive lands checked')
 
 # 24 V input and 12 V aux buck.
 gnd=nodes[('U201','1')]
@@ -117,7 +110,7 @@ assert nodes[('U902','6')].startswith('unconnected-')
 assert nodes[('D902','1')]==nodes[('U902','8')]==nodes[('L902','1')],'catch diode cathode to SW'
 assert nodes[('D902','2')]==gnd
 assert nodes[('L902','2')]==nodes[('U101','3')]==nodes[('U601','6')],'12 V aux feeds 3.3 V buck and gate driver'
-assert str(fps['L902'].GetFPID().GetLibItemName())=='L_Bourns_SRP1265A'
+assert str(fps['L902'].GetFPID().GetLibItemName())=='L_Changjiang_FXL0630'
 assert nodes[('U710','1')]==nodes[('U720','1')]==nodes[('L902','2')],'AL8853 bias must use 12 V'
 assert str(fps['C909'].GetFPID().GetLibItemName())=='CP_Elec_8x6.9'
 assert nodes[('C909','1')]==nodes[('L902','2')] and nodes[('C909','2')]==gnd,'C909 polymer polarity'
@@ -151,7 +144,9 @@ assert len(list(fps['BT301'].Pads()))==2
 assert nodes[('BT301','2')]==gnd and nodes[('BT301','1')]!=gnd,'CR2032 polarity'
 for pad in fps['BT301'].Pads():
  assert pad.GetAttribute()==pcbnew.PAD_ATTRIB_PTH and abs(pcbnew.ToMM(pad.GetDrillSize().x)-1.5)<.001,'Battery holder lead hole'
-assert str(fps['L101'].GetFPID().GetLibItemName())=='L_Bourns_SRP7028A_7.3x6.6mm'
-assert fps['L101'].GetField('MPN').GetText()=='SRP7028A-100M'
-assert all(size(pad)==(2.95,3.5) for pad in fps['L101'].Pads()),'SRP7028A lands'
-print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and SRP7028A lands')
+# L101 cjiang FXL0630-100-M and L902 PROD PSPMAA0604-220M-ANP (land 2.1 x 3.5 at 5.8 mm) share KiCad's FXL0630 lands.
+for ref,mpn in [('L101','FXL0630-100-M'),('L902','PSPMAA0604-220M-ANP')]:
+ assert str(fps[ref].GetFPID().GetLibItemName())=='L_Changjiang_FXL0630'
+ assert fps[ref].GetField('MPN').GetText()==mpn
+ assert all(size(pad)==(2.35,3.5) for pad in fps[ref].Pads()),(ref,'FXL0630 lands')
+print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and FXL0630 inductor lands')

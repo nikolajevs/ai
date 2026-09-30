@@ -12,17 +12,20 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 
+# v0.20: both channels use AOS AOD66923 (DPAK, Qgd 3.5 nC, 11 mOhm max at 10 V) and
+# Vishay SS5P10-M3/86A (TO-277A). SS5P10 25 C typical: 0.708 V at 2.5 A, 0.832 V at 5 A
+# -> 0.584 V + 0.050 ohm, rounded up to a=0.59 V, b=0.05 ohm; 0.88 V max at 5 A for the duty estimate.
+SWITCH = 'AOD66923'
+SS5P10 = dict(diode='SS5P10-M3/86A', diode_vf=.88, diode_a=.59, diode_b=.05)
 CHANNELS = [
     # v0.16: back to the 16.9 mm SRP1770TA-470M; restores OCP headroom and lowers copper loss.
     # v0.17: available low-TCR 0.18 ohm shunt, 1.111 A nominal panel current.
     dict(n=1, led_r=.18, cs_r=.027, slope_r=1000, l_mpn='SRP1770TA-470M',
-         l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4,
-         diode='STPS5H100B-TR', diode_vf=.85, diode_a=.51, diode_b=.02),
+         l_bias=.70, dcr=.055, irms=8.7, isat=16, caps=4, **SS5P10),
     # CH2 has one CURRENT REGULATOR for J721 || J731, no guaranteed sharing.
     # Even if one bar is open, the other stays below 0.5 A at the FB/R corner.
     dict(n=2, led_r=.43, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
-         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=3,
-         diode='STPS2H100AFY', diode_vf=.88, diode_a=.56, diode_b=.045),
+         l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=3, **SS5P10),
 ]
 # POWER-stage input voltage, NOT the AL8853 VIN pins (now 12 V aux bias):
 # 24 V PSU set point, 25 V ceiling,
@@ -48,6 +51,7 @@ def check_schematic(path):
         for ref, value in expected.items():
             assert comps[ref].findtext('value').split()[0] == value, (ref, value)
         assert comps[f'D7{n}1'].findtext('value') == ch['diode']
+        assert comps[f'Q7{n}1'].findtext('value') == SWITCH, (n, 'boost switch')
         fields = {f.get('name'): f.text for f in comps[f'L7{n}1'].findall('fields/field')}
         assert fields.get('MPN') == ch['l_mpn'], (n, 'inductor MPN')
         cap_refs = [f'C7{n}6', f'C7{n}7'] + (['C718', 'C719'] if n == 1 else ['C728'])
@@ -113,7 +117,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.19 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
+    out = ['PCB_V1 v0.20 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',
@@ -130,7 +134,7 @@ def report():
         ratio_txt = f'{max(ratios):.3f} (<1; typical ramp only)' if ratios else 'n/a (all cases DCM)'
         assert lo('headroom') > 0, 'Estimated minimum OCP clips normal peak'
         assert hi('ocp_high') < ch['isat'], 'Estimated operating-duty OCP exceeds Isat'
-        out += [f"CH{ch['n']}: {ch['l_mpn']}; {len(cases)} cases; "
+        out += [f"CH{ch['n']}: {ch['l_mpn']}, {SWITCH}, {ch['diode']}; {len(cases)} cases; "
                 f"modes {','.join(sorted({c['mode'] for c in cases}))}",
                 f"  ILED max {hi('io'):.4f} A; Iin estimate max {hi('average'):.3f} A",
                 f"  L effective allowance {47*.8*ch['l_bias']:.2f} uH; "

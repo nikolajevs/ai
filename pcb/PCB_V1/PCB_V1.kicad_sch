@@ -7,7 +7,7 @@
 	(title_block
 		(title "01 - Logic power / 12 V aux to 3.3 V")
 		(date "2026-09-29")
-		(rev "0.18-DRAFT")
+		(rev "0.20-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
@@ -933,7 +933,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Vout = 0.596 x (1 + 100k/22k) = 3.305 V; divider 1%.\nStatic FB + resistor limits: 3.170..3.444 V. Budget <=1 A.\nL101 SRP7028A-100M: 10 uH, Isat 6 A, Irms 3.5 A.\nVerify C104/C105 effective capacitance and load-step response.\nC106 is NOT fitted until loop/transient verification."
+	(text "Vout = 0.596 x (1 + 100k/22k) = 3.305 V; divider 1%.\nStatic FB + resistor limits: 3.170..3.444 V. Budget <=1 A.\nL101 FXL0630-100-M: 10 uH, Isat 4.9 A, Irms 3.8 A, DCR 68 mOhm max.\nVerify C104/C105 effective capacitance and load-step response.\nC106 is NOT fitted until loop/transient verification."
 		(exclude_from_sim no)
 		(at 20.32 119.38 0)
 		(effects
@@ -977,7 +977,7 @@
 		)
 		(uuid "a559b4a3-72b9-5b8c-9e44-abdc36e95f10")
 	)
-	(text "0.18 DRAFT: simplified passives and microSD; routing and prototype validation pending."
+	(text "0.20 DRAFT: cost-down (PCF8563 RTC, DPAK/TO-277A boost parts, 7 mm inductors); routing and prototype validation pending."
 		(exclude_from_sim no)
 		(at 20.32 25.4 0)
 		(effects
@@ -3205,7 +3205,7 @@
 				)
 			)
 		)
-		(property "Value" "10u SRP7028A-100M"
+		(property "Value" "10u FXL0630-100-M"
 			(at 139.7 58.42 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3215,7 +3215,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm"
+		(property "Footprint" "Inductor_SMD:L_Changjiang_FXL0630"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3227,7 +3227,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.bourns.com/docs/product-datasheets/srp7028a.pdf"
+		(property "Datasheet" "https://www.lcsc.com/product-detail/C167223.html"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3263,7 +3263,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Bourns"
+		(property "Manufacturer" "cjiang"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3275,7 +3275,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SRP7028A-100M"
+		(property "MPN" "FXL0630-100-M"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
@@ -3287,7 +3287,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C2687402"
+		(property "LCSC" "C167223"
 			(at 139.7 63.5 90)
 			(hide yes)
 			(show_name no)
