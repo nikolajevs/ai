@@ -32,11 +32,15 @@ groups = [
     [('U201', 35), ('R205', 1)], [('R205', 2), ('J201', 3)],
     [('U201', 34), ('R206', 2)], [('R206', 1), ('J201', 4)],
     [('R204', 2), ('J201', 2)], [('R204', 1), ('U201', 2)],
-    [('U201', 33), ('U301', 7), ('R301', 2), ('R303', 1)],
-    [('U201', 36), ('U301', 8), ('R302', 2), ('R304', 1)],
-    [('U301', 6), ('BT301', 1)],
-    [('U301', 2), ('C301', 1), ('U201', 2)],
-    [('U301', 5), ('BT301', 2)],
+    # PCF8563T SO-8: OSCI 1, OSCO 2, INT 3, VSS 4, SDA 5, SCL 6, CLKOUT 7, VDD 8.
+    [('U201', 33), ('U301', 5), ('R301', 2), ('R303', 1)],
+    [('U201', 36), ('U301', 6), ('R302', 2), ('R304', 1)],
+    [('BT301', 1), ('R307', 1)], [('R307', 2), ('D303', 2)],
+    [('D303', 1), ('U201', 2)],
+    [('D303', 3), ('U301', 8), ('C301', 1)],
+    [('U301', 4), ('BT301', 2), ('C301', 2), ('C304', 2), ('U201', 1)],
+    [('U301', 1), ('Y301', 1), ('C304', 1)],
+    [('U301', 2), ('Y301', 2)],
     [('J301', 1), ('F301', 2), ('C302', 1)],
     [('J301', 2), ('J302', 2), ('U201', 1)],
     [('J301', 3), ('R303', 2), ('D301', 1)],
@@ -112,10 +116,10 @@ returns = []
 for idx in (1, 2):
     r = lambda kind, n: f'{kind}7{idx}{n}'
     u, q, l, d, j = (r(k, n) for k, n in [('U',0),('Q',1),('L',1),('D',1),('J',1)])
-    # PowerPAK and the NexFET footprints aggregate drain contacts as pad 5.
+    # AOD66923 DPAK footprint keeps the NexFET numbering: source lead = pads 1-3, gate 4, drain tab 5.
     gate, drain, sources = 4, 5, [1, 2, 3]
-    # STPS5H100B DPAK: NC1, cathode/tab2, anode3. SOD128: K1/A2.
-    cathode, anode = (2, 3) if idx == 1 else (1, 2)
+    # SS5P10 TO-277A: cathode tab 1, both anode leads 2.
+    cathode, anode = 1, 2
     bars = [j] + (['J731'] if idx == 2 else [])
     out_caps = [r('C',6), r('C',7)] + (['C718', 'C719'] if idx == 1 else ['C728'])
     groups += [
@@ -139,15 +143,20 @@ for idx in (1, 2):
     returns.append(name)
 assert len(set(returns + [net_of('U201',1)[0]])) == 3, 'LED returns shorted together or to ground'
 groups += [[('U201', 1), ('C710', 2)]]
-assert net_of('D711', 1)[1] == {('D711', '1')}, 'DPAK NC lead connected'
 
 for group in groups:
     name, actual = net_of(*group[0])
     expected = {(ref, str(pin)) for ref, pin in group}
     assert expected <= actual, (name, expected - actual)
 
-# Battery must never share a power net with the 3.3 V rail or peripheral supply.
-assert net_of('BT301', 1)[1] == {('BT301', '1'), ('U301', '6')}
+# Battery must never share a power net with the 3.3 V rail or peripheral supply: CR2032 -> R307 -> D303 only.
+assert net_of('BT301', 1)[1] == {('BT301', '1'), ('R307', '1')}
+assert net_of('R307', 2)[1] == {('R307', '2'), ('D303', '2')}
+assert net_of('U301', 8)[1] == {('U301', '8'), ('D303', '3'), ('C301', '1')}, 'RTC VDD only behind the diode OR'
+# Oscillator nodes carry only the crystal and the OSCI load capacitor; INT/CLKOUT stay open.
+assert net_of('U301', 1)[1] == {('U301', '1'), ('Y301', '1'), ('C304', '1')}
+assert net_of('U301', 2)[1] == {('U301', '2'), ('Y301', '2')}
+assert all(net_of('U301', pin)[1] == {('U301', str(pin))} for pin in (3, 7)), 'INT/CLKOUT must stay unconnected'
 assert net_of('J201', 2)[0] != net_of('U201', 2)[0]
 assert net_of('U101', 2)[0] != net_of('U201', 2)[0]
 
@@ -158,7 +167,7 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 161
+assert len(root.findall('.//components/comp')) == 165
 
 # Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable nets.
 v24, v24_loads, v12, v33, gnd = (net_of('J901', 2)[0], net_of('F902', 2)[0], net_of('L902', 2)[0],
@@ -174,7 +183,8 @@ obsolete = {'U901', 'Q901', 'F901', 'R903', 'C903', 'C904', 'U602', 'C603', 'C60
             'F903', 'TP903', 'D401', 'D402', 'D403', 'R409', 'R701', 'R702'}
 assert not obsolete & set(refs), ('obsolete parts remain', obsolete & set(refs))
 for ref, mpn in [('U902', 'LMR16020PDDAR'), ('D901', 'SMBJ26CA-E3/52'), ('D601', 'SMBJ26CA-E3/52'),
-                 ('Q711', 'CSD19534Q5A'), ('Q721', 'CSD19538Q3A'), ('Q521', 'AO3422'), ('D521', 'SS36-E3/57T')]:
+                 ('Q711', 'AOD66923'), ('Q721', 'AOD66923'), ('D711', 'SS5P10-M3/86A'), ('D721', 'SS5P10-M3/86A'),
+                 ('U301', 'PCF8563T/5'), ('Q521', 'AO3422'), ('D521', 'SS36-E3/57T')]:
     comp = next(c for c in root.findall('.//components/comp') if c.get('ref') == ref)
     assert comp.findtext('value') == mpn, (ref, 'unqualified substitute')
 

@@ -42,19 +42,38 @@ static_assert(backupWrapRegression(), "fallback clock must survive millis wrap")
 constexpr bool rtcRegression() {
   uint8_t raw[7] = {0x59, 0x59, 0x23, 6, 0x26, 0x09, 0x26};
   RtcFields result{};
-  if (!decodeRtc(raw, 0, result) || result.year != 2026 || result.hour != 23 || result.day != 26) return false;
-  if (decodeRtc(raw, 0x80, result)) return false; // Valid date but oscillator stopped.
+  if (!decodeDs3231(raw, 0, result) || result.year != 2026 || result.hour != 23 || result.day != 26) return false;
+  if (decodeDs3231(raw, 0x80, result)) return false; // Valid date but oscillator stopped.
   raw[2] = 0x52; // 12 AM.
-  if (!decodeRtc(raw, 0, result) || result.hour != 0) return false;
+  if (!decodeDs3231(raw, 0, result) || result.hour != 0) return false;
   raw[2] = 0x72; // 12 PM.
-  if (!decodeRtc(raw, 0, result) || result.hour != 12) return false;
+  if (!decodeDs3231(raw, 0, result) || result.hour != 12) return false;
   raw[2] = 0x61; // 1 PM.
-  if (!decodeRtc(raw, 0, result) || result.hour != 13) return false;
+  if (!decodeDs3231(raw, 0, result) || result.hour != 13) return false;
   raw[2] = 0x24;
-  if (decodeRtc(raw, 0, result)) return false;
+  if (decodeDs3231(raw, 0, result)) return false;
   raw[2] = 0x12; raw[0] = 0x2a;
-  if (decodeRtc(raw, 0, result)) return false; // Invalid BCD.
+  if (decodeDs3231(raw, 0, result)) return false; // Invalid BCD.
   raw[0] = 0; raw[4] = 0x30; raw[5] = 0x02;
-  return !decodeRtc(raw, 0, result);
+  return !decodeDs3231(raw, 0, result);
 }
 static_assert(rtcRegression(), "validate DS3231 OSF, BCD, calendar, 12h and 24h registers");
+
+constexpr bool pcf8563Regression() {
+  // VL_seconds, minutes, hours, days, weekdays, century_months, years: 2026-09-26 23:59:59.
+  uint8_t raw[7] = {0x59, 0x59, 0x23, 0x26, 6, 0x89, 0x26};
+  RtcFields result{};
+  if (!decodePcf8563(raw, result) || result.year != 2026 || result.month != 9 || result.day != 26 ||
+      result.hour != 23 || result.minute != 59 || result.second != 59) return false; // Century bit ignored.
+  raw[0] = 0xd9;
+  if (decodePcf8563(raw, result)) return false; // VL: integrity lost after a supply dropout.
+  raw[0] = 0x59; raw[1] = 0xd9; raw[2] = 0xe3; raw[4] = 0xfe;
+  if (!decodePcf8563(raw, result) || result.minute != 59 || result.hour != 23) return false; // Unused bits masked.
+  raw[3] = 0x2a;
+  if (decodePcf8563(raw, result)) return false; // Invalid BCD.
+  raw[3] = 0x31; raw[5] = 0x04;
+  if (decodePcf8563(raw, result)) return false; // 31 April.
+  raw[3] = 0x01; raw[5] = 0x01; raw[6] = 0x00;
+  return !decodePcf8563(raw, result); // Factory date 2000-01-01.
+}
+static_assert(pcf8563Regression(), "validate PCF8563 VL flag, register masks, BCD and calendar");

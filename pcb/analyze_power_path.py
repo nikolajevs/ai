@@ -1,4 +1,4 @@
-"""v0.19 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.20 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
 Sources/assumptions: PCB_V1/DESIGN.md.
 """
@@ -12,12 +12,12 @@ def report(netlist):
     check_schematic(netlist)
     comps = {c.get('ref'):c for c in ET.parse(netlist).findall('.//components/comp')}
     expected = {'U902':'LMR16020PDDAR','R904':'150k 0.1%','R905':'10k 0.1%','R906':'47k 1%',
-                'R907':'560k 1%','R908':'47k 1%','L902':'22u SRP1265A-220M','D902':'SS36-E3/57T',
+                'R907':'560k 1%','R908':'47k 1%','L902':'22u PSPMAA0604-220M','D902':'SS36-E3/57T',
                 'D901':'SMBJ26CA-E3/52','D601':'SMBJ26CA-E3/52','Q601':'NTMFS5C628NLT1G',
                 'U601':'UCC27524ADR','C901':'220u / 50V','F902':'10A mini blade (ATM)',
                 'Q521':'AO3422','D521':'SS36-E3/57T','C602':'10u / 25V X5R',
                 'C909':'100u 25V polymer','C910':'22u 25V X7R','C101':'22u 25V X7R',
-                'R101':'100k 1%','R102':'22k 1%','L101':'10u SRP7028A-100M',
+                'R101':'100k 1%','R102':'22k 1%','L101':'10u FXL0630-100-M',
                 'R205':'1k 1%','R206':'1k 1%'}
     for ref,value in expected.items():
         assert comps[ref].findtext('value') == value,(ref,'sizing does not match schematic')
@@ -35,12 +35,12 @@ def report(netlist):
     logic_lo, logic_hi = .581*(1+100*.99/(22*1.01)), .611*(1+100*1.01/(22*.99))
     assert 3.0 < logic_lo < logic_hi < 3.6, 'ESP32/SD static supply range'
     # Initial load 1 A, L -20% tolerance and an additional -20% bias scenario;
-    # minimum IC frequency 390 kHz. Bourns table at 25 C: Isat 6 A (-20%), Irms 3.5 A.
+    # minimum IC frequency 390 kHz. v0.20 cjiang FXL0630-100-M table at 25 C: Isat 4.9 A, Irms 3.8 A, DCR 68 mOhm max.
     logic_di = max((vi-v)*v/(vi*10e-6*.8*.8*390e3)
                    for vi,v in itertools.product((vlo,vhi),(logic_lo,logic_hi)))
     logic_peak = 1+logic_di/2
     logic_rms = math.sqrt(1+logic_di**2/12)
-    assert logic_peak < 2.5 and logic_rms < 3.5 and 4.3 < 6
+    assert logic_peak < 2.5 and logic_rms < 3.8 and 4.3 < 4.9
     # TI LMR16020 equation 4: RT[kOhm] = 42904 * f[kHz]**-1.088.
     fs_nom = (42904/47)**(1/1.088)*1000
     ptc,pump = 100/24,6/24
@@ -51,6 +51,7 @@ def report(netlist):
     fans,logic,bias = 8/vlo,logic_hi*1.0/.85/vlo,.03
     aux_budget = 1.2
     assert fans+logic+bias < aux_budget
+    # v0.20 L902 PROD PSPMAA0604-220M-ANP: Isat 5 A (L -30%), Irms 3.2 A (dT 40 C), DCR 130 mOhm max.
     # Initial L -20%, extra bias -20%, conservative 450 kHz screen retained.
     # Not a guaranteed frequency tolerance at RT=47k (about 526 kHz nominal).
     lmin,lmax,fsmin = 22e-6*.8*.8,22e-6*1.2,450e3
@@ -63,10 +64,11 @@ def report(netlist):
     peak = max(c['peak'] for c in buck)
     assert peak < 2.5,'aux peak exceeds specified 25 C limit minimum'
     aux_in,aux_rms = vhi*aux_budget/.85/vmin,max(c['irms'] for c in buck)
+    assert aux_rms < 3.2 and 3.8 < 5, 'L902 RMS rating or LMR16020 current limit vs Isat'
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.19 power path (24 V)',
+    out = ['GrowBox v0.20 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
@@ -102,7 +104,9 @@ def report(netlist):
             f'Divider 150k/10k 0.1%: {vo:.3f} V nominal, {vlo:.3f}..{vhi:.3f} V including FB temperature limits.',
             f'RT 47k (shared with R703/R908): {fs_nom/1000:.1f} kHz nominal by TI eq.4; 450 kHz screening floor, not a guaranteed tolerance.',
             f'L22uH/tolerance/bias/frequency scenario: ripple <= {max(c["ripple"] for c in buck):.3f} App; peak {peak:.3f} A.',
-            '2.5 A minimum current limit is specified at 25 C; 3.8 A maximum <9 A stated inductor saturation point.',
+            '2.5 A minimum current limit is specified at 25 C; 3.8 A maximum < 5 A Isat of PSPMAA0604-220M-ANP (L -30%).',
+            f'L902 RMS screen {aux_rms:.3f} A < 3.2 A (dT 40 C); DCR 130mOhm max: <= {aux_rms**2*.13:.3f} W at 25C, '
+            f'hot x1.4 scenario {aux_rms**2*.13*1.4:.3f} W; core loss excluded.',
             f'SS36 average <= {max(c["diode"] for c in buck):.3f} A; conduction screen <= {max(c["diode"] for c in buck)*.75:.3f} W.']
     # TI equations 12/13. Keep static divider tolerance in the fan +/-5% budget.
     delta=.25
@@ -129,8 +133,8 @@ def report(netlist):
             f'Divider 100k/22k 1%: {vlogic:.3f} V nominal; {logic_lo:.3f}..{logic_hi:.3f} V static over FB limits.',
             'The static range excludes resistor temperature drift and load-step/ripple excursions; verify those on the prototype.',
             f'At L_eff 6.4uH / 390kHz: ripple <= {logic_di:.3f} App; peak {logic_peak:.3f} A; RMS {logic_rms:.3f} A.',
-            'L101 SRP7028A-100M: Isat 6A (-20% L) at 25C exceeds TPS54202 HS/LS limits 3.9/4.3A; Irms 3.5A.',
-            f'DCR 85mOhm max at 25C: <= {logic_rms**2*.085:.3f} W winding loss; hot x1.4 scenario {logic_rms**2*.085*1.4:.3f} W; core loss excluded.',
+            'L101 FXL0630-100-M: Isat 4.9A at 25C exceeds TPS54202 HS/LS limits 3.9/4.3A (margin 0.6A); Irms 3.8A.',
+            f'DCR 68mOhm max at 25C: <= {logic_rms**2*.068:.3f} W winding loss; hot x1.4 scenario {logic_rms**2*.068*1.4:.3f} W; core loss excluded.',
             'C101 and C910 share CL32B226KAJNNNE, 22uF/25V X7R 1210 on the regulated 12V rail.',
             'UART R205/R206 1k: RC 10..90% rise 0.220us at an assumed 100pF; 921600-baud bit 1.085us.',
             'Short programming cable only; actual cable capacitance/edges and flashing speed need validation.', '',
@@ -140,6 +144,7 @@ def report(netlist):
             'C602 CL21A106KAYNNNE (shared with C201): 10uF/25V X5R 0805; Samsung curve -81.7 % at 12.26 V = 1.83uF typ.;',
             'with -10 % tolerance and -14.6 % at 85 C ~1.41uF before aging, above the >=1uF target at the UCC27524A.',
             'AL8853 gate drive at 12 V bias: verify VGS/fronts and MOSFET losses hot and at startup.',
+            'Q711/Q721 AOD66923: Qg 25nC typ at 10V, Qgd 3.5nC; gate charge power ~25nC x 12V x 130kHz = 0.039 W per AL8853.',
             'Independent PTC thermal cutoff, fuse clearing, connector/PCB ampacity and hot TVS remain unqualified.']
     return '\n'.join(out)+'\n'
 
