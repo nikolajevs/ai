@@ -1,0 +1,80 @@
+GrowBox v0.22 power path (24 V)
+Conditional datasheet calculations, NOT fault/surge/thermal qualification.
+24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.
+
+PTC 24 V/100 W: 4.167 A nominal; +15% cold at 24 V: 4.792 A.
+Pump confirmed 24 V/6 W: 0.250 A; design allowance 0.500 A (not a measured stall limit).
+Aux budget: fans 0.682 + 3.3V/1A logic input 0.345 + gate/controller bias 0.030 = 1.057 A.
+Aux ceiling 1.2 A; input mean 0.802 A; input RMS screen 1.085 A.
+LED input mean bound 4.384 A; sum of RMS bounds 4.946 A.
+Whole-board mean screen 11.010 A; conservative RMS sum 11.855 A.
+Includes a constant-power PTC lower-voltage scenario, not a predicted PTC temperature/resistance.
+24 V/300 W PSU nominal current is 12.5 A; actual OCP/hiccup behavior unspecified.
+
+Fuse loading: 0.75 continuous x 0.90 engineering hot-board allowance.
+ref     rating_A  load_bound_A  derated_A  spare_A
+F501        1.00         0.341      0.675    0.334
+F511        1.00         0.341      0.675    0.334
+F521        1.00         0.500      0.675    0.175
+F711        6.30         3.318      4.252    0.935
+F721        3.00         1.629      2.025    0.396
+F902       10.00         5.824      6.750    0.926
+F904        3.00         1.085      2.025    0.940
+F902 holder uses separately purchased Littelfuse 0297010.WXNV MINI 10 A / 32 V DC insert (curated BOM).
+SMT fuse ratings here are >=125 V; loading does not prove I2t, interruption or selective clearing.
+v0.16: former F903 (7.5 A, redundant with F711+F721, smallest margin) removed; LED channels are fused individually.
+XT60-to-TVS/bulk segment has no onboard fuse; upstream PSU/cable protection must be qualified.
+
+TVS screen: 25 C, 10/1000 us; no wire overshoot included.
+D901 SMBJ26CA: standoff 26 V >25 V; clamp 42.1 V at 14.3 A.
+Margin to LMR16020 input abs max 65 V: 22.9 V; to 50 V input capacitors: only 7.9 V.
+AL8853 VIN static 11.738..12.263 V, no longer directly exposed to the input TVS clamp.
+D601 SMBJ26CA (shared with D901): standoff 26 V > 25 V drain off-state; clamp 42.1 V vs Q601 60 V.
+Q521 AO3422: 55 V, SS36 cathode after F521.
+Pump VDS screen 42.1+0.75=42.85 V, 12.15 V margin before wiring overshoot.
+No electronic reverse protection; verify the assembled XT60 cable polarity.
+
+LMR16020 12 V auxiliary buck:
+Divider 150k/10k 0.1%: 12.000 V nominal, 11.738..12.263 V including FB temperature limits.
+RT 47k (shared with R703/R908): 526.0 kHz nominal by TI eq.4; 450 kHz screening floor, not a guaranteed tolerance.
+L22uH/tolerance/bias/frequency scenario: ripple <= 0.986 App; peak 1.693 A.
+2.5 A minimum current limit is specified at 25 C; 3.8 A maximum < 5 A Isat of PSPMAA0604-220M-ANP (L -30%).
+L902 winding RMS screen 1.233 A < 3.2 A (dT 40 C); DCR 130mOhm max: <= 0.198 W at 25C, hot x1.4 scenario 0.277 W; core loss excluded.
+CCM winding RMS = sqrt(Iout^2 + ripple^2/12); input RMS is a separate F904 loading screen.
+SS36 average <= 0.637 A; conduction screen <= 0.477 W.
+0.1% divider retained: with 1% resistors the same step/ripple screen would span 11.333..12.680 V, outside the 11.4..12.6 V fan budget.
+Full 0..1.2 A step, dynamic target 0.25 V: Ceff >= 32.0 uF undershoot / 6.4 uF overshoot.
+C909 25SVPF100M: 100uF/25V polymer; screening Ceff 64.0uF, ESR 48mOhm; C910 22u ceramic retained.
+No credit for ceramic capacitance: load-step drop screen 0.183V; ripple bound 0.052Vpp.
+This clears the capacitance sizing screen, not the closed-loop/startup/thermal qualification.
+EN 560k/47k retained: start ~14.9 V; threshold-only envelope ~13.0..17.3 V. Current-source spread unqualified.
+Startup interaction, ESR, loop stability and thermal behavior require measurements.
+
+TPS54202 3.3 V logic buck (1 A budget):
+Divider 100k/22k 1%: 3.305 V nominal; 3.170..3.444 V static over FB limits.
+The static range excludes resistor temperature drift and load-step/ripple excursions; verify those on the prototype.
+At L_eff 6.4uH / 390kHz: ripple <= 0.992 App; peak 1.496 A; RMS 1.040 A.
+L101 FXL0630-100-M: Isat 4.9A at 25C exceeds TPS54202 HS/LS limits 3.9/4.3A (margin 0.6A); Irms 3.8A.
+DCR 68mOhm max at 25C: <= 0.074 W winding loss; hot x1.4 scenario 0.103 W; core loss excluded.
+C101 and C910 share CL32B226KAJNNNE, 22uF/25V X7R 1210 on the regulated 12V rail.
+UART R205/R206 1k: RC 10..90% rise 0.220us at an assumed 100pF; 921600-baud bit 1.085us.
+Short programming cable only; actual cable capacitance/edges and flashing speed need validation.
+
+Switch conduction; hot x1.7 is a scenario, not a guaranteed bound:
+Q601 2.4mOhm at VGS>=10 V: 0.0417 W nominal; 0.0551 W cold; 0.0937 W hot scenario.
+Q521 200mOhm at VGS=2.5 V: 0.0125 W at 0.25 A; 0.0850 W at allowance/hot scenario.
+C602 CL21A106KAYNNNE (shared with C201): 10uF/25V X5R 0805; Samsung curve -81.7 % at 12.26 V = 1.83uF typ.;
+with -10 % tolerance and -14.6 % at 85 C ~1.41uF before aging, above the >=1uF target at the UCC27524A.
+AL8853 gate drive at 12 V bias: verify VGS/fronts and MOSFET losses hot and at startup.
+Q711/Q721 AOD66923: Qg 25nC typ at 10V, Qgd 3.5nC; gate charge power ~25nC x 12V x 130kHz = 0.039 W per AL8853.
+Independent PTC thermal cutoff, fuse clearing, connector/PCB ampacity and hot TVS remain unqualified.
+
+PCF8563 backup supply, v0.21:
+D303 JSCJ BAV170 C68970: silicon common cathode A1/A2/K3, same SOT-23 footprint.
+JSCJ IR <=5nA at 75V/25C; no guaranteed hot leakage bound in the selected datasheet.
+VF 0.9V at 1mA used as a lower-current 25C screening drop; verify cold/hot and startup.
+3.3V lower static corner 3.170V -> RTC_VDD >= 2.270V in the screen; I2C minimum 1.8V.
+Backup screening current 3.005uA (includes default CLKOUT before first boot and both input leakage reserves).
+Assumed CR2032 replacement floor 2.2V, R307 1k+1% -> RTC_VDD >= 1.297V; timekeeping minimum 1.0V at 25C.
+No forced supply priority; fresh battery can contribute while the board is powered.
+Not a cell charging/lifetime qualification: verify both battery current polarities and supply transitions.

@@ -7,7 +7,7 @@
 	(title_block
 		(title "05 - PTC heater switch (24 V)")
 		(date "2026-09-30")
-		(rev "0.21-DRAFT")
+		(rev "0.22-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
@@ -1667,7 +1667,7 @@
 		)
 		(uuid "b265a6f5-dfce-5b57-8983-a5f2e930067d")
 	)
-	(text "0.21 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
+	(text "0.22 DRAFT: 24 V / 100 W PTC; power/thermal limits require prototype validation."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects

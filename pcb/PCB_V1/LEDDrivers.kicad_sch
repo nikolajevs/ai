@@ -7,7 +7,7 @@
 	(title_block
 		(title "07 - AL8853 LED drivers, 24 V input, 2 channels")
 		(date "2026-09-30")
-		(rev "0.21-DRAFT")
+		(rev "0.22-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
@@ -2233,6 +2233,149 @@
 		)
 		(embedded_fonts no)
 	)
+	
+		(symbol "Device:NetTie_2"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "NT"
+			(at 0 1.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 0 -1.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Net tie, 2 pins"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "net tie short"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Net*Tie*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "NetTie_2_0_1"
+			(polyline
+				(pts
+					(xy -1.27 0) (xy 1.27 0)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "NetTie_2_1_1"
+			(pin passive line
+				(at -2.54 0 0)
+				(length 2.54)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 0 180)
+				(length 2.54)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	)
 	(text "PWM 20 kHz initial / analog current dimming. Enable low or reset: DIM low. LED returns MUST remain separate."
 		(exclude_from_sim no)
@@ -2322,7 +2465,7 @@
 		)
 		(uuid "c7950506-397c-5c01-a6da-a6294b68f2fa")
 	)
-	(text "0.21 DRAFT: Q711/Q721 AOD66923 DPAK, D711/D721 SS5P10 TO-277A. Power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.111 A; CH2 0.465 A total. Qualification pending."
+	(text "0.22 DRAFT: Q711/Q721 AOD66923 DPAK, D711/D721 SS5P10 TO-277A. Power input 24 V; AL8853 bias 12 V. CH1 back to SRP1770TA-470M / 0.027 ohm (OCP headroom). CH1 1.111 A; CH2 0.465 A total. Qualification pending."
 		(exclude_from_sim no)
 		(at 20.32 22.86 0)
 		(effects
@@ -3403,7 +3546,7 @@
 		)
 		(uuid "0767d071-452a-54cc-afdc-4f2850f01eb6")
 	)
-	(label "LED2_RETURN"
+	(label "LED2_FB_K"
 		(at 54.61 210.82 180)
 		(effects
 			(font
@@ -3453,7 +3596,7 @@
 		)
 		(uuid "1b646bc5-6b3c-56f8-b314-fca6bcccdf8d")
 	)
-	(label "LED2_SOURCE"
+	(label "LED2_CS_K"
 		(at 119.38 250.19 0)
 		(effects
 			(font
@@ -3583,7 +3726,7 @@
 		)
 		(uuid "49ccb16b-b87e-5cbb-a116-fccd1374eff2")
 	)
-	(label "LED1_SOURCE"
+	(label "LED1_CS_K"
 		(at 119.38 149.86 0)
 		(effects
 			(font
@@ -3913,7 +4056,7 @@
 		)
 		(uuid "c5c15b06-844a-5644-8219-1f39e63395c2")
 	)
-	(label "LED1_RETURN"
+	(label "LED1_FB_K"
 		(at 54.61 110.49 180)
 		(effects
 			(font
@@ -5832,7 +5975,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5855,7 +5998,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5891,7 +6034,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5903,7 +6046,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5915,7 +6058,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6350,7 +6493,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6373,7 +6516,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6409,7 +6552,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6421,7 +6564,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6433,7 +6576,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -7116,7 +7259,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7139,7 +7282,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7175,7 +7318,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7187,7 +7330,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7199,7 +7342,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9125,7 +9268,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9148,7 +9291,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9184,7 +9327,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9196,7 +9339,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9208,7 +9351,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9421,7 +9564,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 403.05 99.06 0)
 			(effects
 				(font
@@ -9440,7 +9583,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9464,7 +9607,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9474,7 +9617,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9484,7 +9627,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9556,7 +9699,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 403.05 124.46 0)
 			(effects
 				(font
@@ -9575,7 +9718,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9599,7 +9742,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9609,7 +9752,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9619,7 +9762,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9825,7 +9968,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 349.25 199.39 0)
 			(effects
 				(font
@@ -9844,7 +9987,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC"
+		(property "Datasheet" "https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -9854,7 +9997,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "TDK"
+		(property "Manufacturer" "Murata"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -9864,7 +10007,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "C3225X7R2A106K250AC"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -9874,7 +10017,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C49296968"
+		(property "LCSC" "C576517"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -10373,5 +10516,453 @@
 			(justify left bottom)
 		)
 		(uuid d230fe57-1351-5e9f-9c10-e962b1736e27)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 265.43 146.05 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid 008725d5-b6e7-472f-ba55-4232d1358fbd)
+		(property "Reference" "NT711"
+			(at 269.24 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Kelvin"
+			(at 269.24 147.32 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 265.43 146.05 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 265.43 146.05 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "Kelvin tap: LED1_CS_K leaves R715 pad 1 on its own trace"
+			(at 265.43 146.05 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid fbe166d3-ff7d-4e89-9019-536ee0611d15)
+		)
+		(pin "2"
+			(uuid 3d5b2226-5eec-4c7f-af95-9afda86b389a)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "NT711")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 262.89 146.05) (xy 260.35 146.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid bfab8fa8-1750-4486-a3c8-b9004359f186)
+	)
+	(label "LED1_SOURCE"
+		(at 260.35 146.05 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid d63b0ea3-5807-48d1-b097-b0e13a63a57a)
+	)
+	(wire
+		(pts
+			(xy 267.97 146.05) (xy 270.51 146.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 2f58f6e4-96fa-47b8-b27f-d01da3779e60)
+	)
+	(label "LED1_CS_K"
+		(at 270.51 146.05 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 1a4b7ee7-34b4-41f5-b054-9ecfd6debafb)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 459.74 113.03 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid 441c633e-025f-49b0-a562-2a94f9293063)
+		(property "Reference" "NT712"
+			(at 463.55 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Kelvin"
+			(at 463.55 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 459.74 113.03 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 459.74 113.03 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "Kelvin tap: LED1_FB_K leaves R716 pad 1 on its own trace"
+			(at 459.74 113.03 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid ed8af02c-edb7-4b4a-8dbb-ba979e662fdc)
+		)
+		(pin "2"
+			(uuid 6cbcfe14-4d5f-478e-9c2f-690cf077c3de)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "NT712")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 457.2 113.03) (xy 454.66 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 22df5704-2a24-422a-a36e-db9553928674)
+	)
+	(label "LED1_RETURN"
+		(at 454.66 113.03 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 13df526e-d280-4d2b-b5e5-1b4c78bb0f39)
+	)
+	(wire
+		(pts
+			(xy 462.28 113.03) (xy 464.82 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 4f3508dc-863d-44a8-b939-4219b1b9b6c8)
+	)
+	(label "LED1_FB_K"
+		(at 464.82 113.03 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 1ea38e5f-0096-43b2-b9b4-0109bd575cf7)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 265.43 246.38 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid 4be3c194-c89c-4114-b1b9-2811508c2a99)
+		(property "Reference" "NT721"
+			(at 269.24 245.11 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Kelvin"
+			(at 269.24 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 265.43 246.38 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 265.43 246.38 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "Kelvin tap: LED2_CS_K leaves R725 pad 1 on its own trace"
+			(at 265.43 246.38 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid c7fcd395-8bcb-46b9-9154-a7b31c49b2a4)
+		)
+		(pin "2"
+			(uuid bf364cc8-73ca-4e08-a671-a1e149d165bc)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "NT721")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 262.89 246.38) (xy 260.35 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 983c0d31-e8c7-4c24-ac8d-c13670d1c97a)
+	)
+	(label "LED2_SOURCE"
+		(at 260.35 246.38 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid d454b301-a98d-4700-a6a0-f24d4edcdeeb)
+	)
+	(wire
+		(pts
+			(xy 267.97 246.38) (xy 270.51 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 82fc7d29-0916-4d35-bfdb-d35cb173dde4)
+	)
+	(label "LED2_CS_K"
+		(at 270.51 246.38 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 7626caf4-0e51-49e7-a65a-ce39ab40e003)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 459.74 213.36 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid 3e3b86fa-9414-4519-91c6-c43d5c0681ed)
+		(property "Reference" "NT722"
+			(at 463.55 212.09 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Kelvin"
+			(at 463.55 214.63 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 459.74 213.36 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 459.74 213.36 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Description" "Kelvin tap: LED2_FB_K leaves R726 pad 1 on its own trace"
+			(at 459.74 213.36 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 3efd5a25-33b0-4e05-92f7-8891aa0b479f)
+		)
+		(pin "2"
+			(uuid ccdfc1a5-deb6-44e6-82d1-c30a5c7ae60e)
+		)
+		(instances
+			(project "PCB_V1"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/c53d98f9-b867-551c-91ac-fda89b3b1f54"
+					(reference "NT722")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 457.2 213.36) (xy 454.66 213.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 5278f864-b9b0-40c5-8f96-eb303ee2e731)
+	)
+	(label "LED2_RETURN"
+		(at 454.66 213.36 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid c0ae7658-d827-45a5-9b28-7fda897c6fed)
+	)
+	(wire
+		(pts
+			(xy 462.28 213.36) (xy 464.82 213.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid e59a16ea-ca54-40c8-b878-db3083417b40)
+	)
+	(label "LED2_FB_K"
+		(at 464.82 213.36 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 399417b3-8b8a-4ef0-b08e-075a605c6b7a)
 	)
 )

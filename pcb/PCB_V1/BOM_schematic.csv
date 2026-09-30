@@ -25,18 +25,18 @@ C712,100p / comp tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERI
 C713,100p / CS tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C714,220n / comp tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C715,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP,/LEDDrivers/,Taiyo Yuden,UMK325AB7106KMHP,C386166,ENGINEERING DRAFT - DO NOT ORDER
-C716,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
-C717,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
-C718,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
-C719,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
+C716,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
+C717,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
+C718,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
+C719,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
 C721,1u 50V X7R,Capacitor_SMD:C_0805_2012Metric,,/LEDDrivers/,Samsung,CL21B105KBFNNNE,C28323,ENGINEERING DRAFT - DO NOT ORDER
 C722,100p / comp tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C723,100p / CS tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C724,220n / comp tune,Capacitor_SMD:C_0603_1608Metric,,/LEDDrivers/,,,,ENGINEERING DRAFT - DO NOT ORDER
 C725,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP,/LEDDrivers/,Taiyo Yuden,UMK325AB7106KMHP,C386166,ENGINEERING DRAFT - DO NOT ORDER
-C726,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
-C727,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
-C728,10u 100V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R2A106K250AC,/LEDDrivers/,TDK,C3225X7R2A106K250AC,C49296968,ENGINEERING DRAFT - DO NOT ORDER
+C726,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
+C727,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
+C728,10u 100V X7S,Capacitor_SMD:C_1210_3225Metric,https://pim.murata.com/en-us/pim/details/?partNum=GRM32EC72A106KE05%23,/LEDDrivers/,Murata,GRM32EC72A106KE05L,C576517,ENGINEERING DRAFT - DO NOT ORDER
 C901,220u / 50V,Capacitor_SMD:CP_Elec_10x10.5,,/InputPower/,Panasonic,EEEFK1H221P,C178549,ENGINEERING DRAFT - DO NOT ORDER
 C902,1u / 50V X7R,Capacitor_SMD:C_1210_3225Metric,https://product.samsungsem.com/mlcc/CL32B105KBHNNN.do,/InputPower/,Samsung Electro-Mechanics,CL32B105KBHNNNE,C40708,ENGINEERING DRAFT - DO NOT ORDER
 C905,10u 50V X7R,Capacitor_SMD:C_1210_3225Metric,https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=UMK325AB7106KMHP,/InputPower/,Taiyo Yuden,UMK325AB7106KMHP,C386166,ENGINEERING DRAFT - DO NOT ORDER
@@ -67,7 +67,7 @@ F904,3A / 0451003.MRL,GrowBox:Fuse_Littelfuse_451,https://www.littelfuse.com/ass
 J201,UART / 3V3 logic,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,/MCU / ESP32/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J301,SHT4x / XH 2.50,Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 J302,FLOAT / 3.5 mm,GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal,,/MCU / ESP32/Peripherals/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
-J401,Molex 104031-0811,Connector_Card:microSD_HC_Molex_104031-0811,https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/104/104031/1040310811_sd.pdf,/MCU / ESP32/Peripherals/,Molex,1040310811,C585350,ENGINEERING DRAFT - DO NOT ORDER
+J401,HRO TF-01A,GrowBox:microSD_HRO_TF-01A,https://www.lcsc.com/product-detail/C91145.html,/MCU / ESP32/Peripherals/,Korean Hroparts Elec,TF-01A,C91145,ENGINEERING DRAFT - DO NOT ORDER
 J501,FAN1 / 3.5 mm,GrowBox:TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal,,/Outputs/,DORABO,DB125-3.5-4P-GN-S,C2757925,ENGINEERING DRAFT - DO NOT ORDER
 J511,FAN2 / 3.5 mm,GrowBox:TerminalBlock_DORABO_DB125-3.5_1x04_P3.50mm_Horizontal,,/Outputs/,DORABO,DB125-3.5-4P-GN-S,C2757925,ENGINEERING DRAFT - DO NOT ORDER
 J521,PUMP 24V / 6W,GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal,,/Outputs/,DORABO,DB125-3.5-2P-GN-S,C466970,ENGINEERING DRAFT - DO NOT ORDER
@@ -153,6 +153,7 @@ SW202,BOOT,Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A,,/MCU / ESP32/,XKB Connec
 TP101,+12V,TestPoint:TestPoint_Pad_D2.0mm,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP102,+3V3,TestPoint:TestPoint_Pad_D2.0mm,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP103,GND,TestPoint:TestPoint_Pad_D2.0mm,,/,,,,ENGINEERING DRAFT - DO NOT ORDER
+TP301,CLKOUT,TestPoint:TestPoint_Pad_D1.0mm,,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP901,+24V,TestPoint:TestPoint_Pad_D2.0mm,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 TP902,+24V_LOADS,TestPoint:TestPoint_Pad_D2.0mm,,/InputPower/,,,,ENGINEERING DRAFT - DO NOT ORDER
 U101,TPS54202DDCR,Package_TO_SOT_SMD:SOT-23-6,http://www.ti.com/lit/ds/symlink/tps54202.pdf,/,,,,ENGINEERING DRAFT - DO NOT ORDER

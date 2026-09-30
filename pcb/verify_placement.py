@@ -38,6 +38,8 @@ for ref, fp in fps.items():
         box = pad.GetBoundingBox()
         assert left <= mm(box.GetLeft()) <= mm(box.GetRight()) <= right, (ref, 'pad beyond X outline')
         assert top <= mm(box.GetTop()) <= mm(box.GetBottom()) <= bottom, (ref, 'pad beyond Y outline')
+    if fp.IsNetTie():
+        continue  # copper-only Kelvin tie sitting on a shunt pad: no body
     body = shape_bounds(fp, p.B_Fab if fp.GetLayer() == p.B_Cu else p.F_Fab)
     assert body[0] >= left-.1 and body[1] >= top-.1 and body[2] <= right+.1 and body[3] <= bottom+.1, (ref, 'body outside board', body)
     if ref.startswith('J'):
@@ -46,11 +48,14 @@ for ref, fp in fps.items():
 
 # The microSD footprint's opening faces local +Y. Check the outward-facing
 # board edge rather than freezing the first placement's absolute coordinates.
+# Distance from the footprint origin to the card mouth along local +Y.
+MOUTH = {'microSD_HC_Molex_104031-0811': 6.275, 'microSD_HRO_TF-01A': 7.25}
 card = fps['J401']
+mouth = MOUTH[str(card.GetFPID().GetLibItemName())]
 angle = math.radians(card.GetOrientationDegrees())
 dx, dy = math.sin(angle), math.cos(angle)
-mouth_x = mm(card.GetPosition().x) + 6.275*dx
-mouth_y = mm(card.GetPosition().y) + 6.275*dy
+mouth_x = mm(card.GetPosition().x) + mouth*dx
+mouth_y = mm(card.GetPosition().y) + mouth*dy
 if dx > .999: gap = right-mouth_x
 elif dx < -.999: gap = mouth_x-left
 elif dy > .999: gap = bottom-mouth_y

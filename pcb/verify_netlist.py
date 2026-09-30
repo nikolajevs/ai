@@ -121,6 +121,8 @@ for idx in (1, 2):
     # SS5P10 TO-277A: cathode tab 1, both anode leads 2.
     cathode, anode = 1, 2
     bars = [j] + (['J731'] if idx == 2 else [])
+    # v0.22 Kelvin net ties: NT7x1 at the switch shunt R7x5 (CS via R7x2), NT7x2 at the LED shunt R7x6 (FB).
+    nt_cs, nt_fb = f'NT7{idx}1', f'NT7{idx}2'
     out_caps = [r('C',6), r('C',7)] + (['C718', 'C719'] if idx == 1 else ['C728'])
     groups += [
         [(u, 1), (r('C',1), 1), ('L902', 2)],
@@ -128,18 +130,22 @@ for idx in (1, 2):
         [(u, 2), (r('R',1), 1)],
         [(r('R',1), 2), (q, gate), (r('R',3), 1)],
         [(q, drain), (l, 2), (d, anode)],
-        [(q, pin) for pin in sources] + [(r('R',5), 1), (r('R',2), 1), (r('R',3), 2)],
+        [(q, pin) for pin in sources] + [(r('R',5), 1), (r('R',3), 2), (nt_cs, 1)],
+        [(nt_cs, 2), (r('R',2), 1)],
         [(u, 4), (r('R',2), 2), (r('C',3), 1)],
         [(d, cathode), (r('R',7), 1)] + [(b, 1) for b in bars] + [(c, 1) for c in out_caps],
         [(u, 7), (r('R',7), 2), (r('R',8), 1)],
-        [(u, 5), (r('R',6), 1)] + [(b, 2) for b in bars],
+        [(r('R',6), 1), (nt_fb, 1)] + [(b, 2) for b in bars],
+        [(nt_fb, 2), (u, 5)],
         [(u, 3), (r('R',5), 2), (r('R',6), 2), (r('R',8), 2), (r('C',1), 2),
          (r('C',2), 2), (r('C',3), 2), (r('C',4), 2), (r('C',5), 2), ('U201', 1)] + [(c, 2) for c in out_caps],
         [(u, 6), (r('R',4), 1), (r('C',2), 1)],
         [(r('R',4), 2), (r('C',4), 1)],
     ]
     name, nodes = net_of(j, 2)
-    assert nodes == {(b, '2') for b in bars} | {(u, '5'), (r('R',6), '1')}, (j, 'LED return bypassed')
+    assert nodes == {(b, '2') for b in bars} | {(r('R',6), '1'), (nt_fb, '1')}, (j, 'LED return bypassed')
+    assert net_of(u, 5)[1] == {(u, '5'), (nt_fb, '2')}, (u, 'FB must be a Kelvin tap at the LED shunt')
+    assert net_of(r('R',2), 1)[1] == {(r('R',2), '1'), (nt_cs, '2')}, (u, 'CS must be a Kelvin tap at the switch shunt')
     returns.append(name)
 assert len(set(returns + [net_of('U201',1)[0]])) == 3, 'LED returns shorted together or to ground'
 groups += [[('U201', 1), ('C710', 2)]]
@@ -153,10 +159,12 @@ for group in groups:
 assert net_of('BT301', 1)[1] == {('BT301', '1'), ('R307', '1')}
 assert net_of('R307', 2)[1] == {('R307', '2'), ('D303', '2')}
 assert net_of('U301', 8)[1] == {('U301', '8'), ('D303', '3'), ('C301', '1')}, 'RTC VDD only behind the diode OR'
-# Oscillator nodes carry only the crystal and the OSCI load capacitor; INT/CLKOUT stay open.
+# Oscillator nodes carry only the crystal and the OSCI load capacitor; INT stays open, CLKOUT only to TP301.
 assert net_of('U301', 1)[1] == {('U301', '1'), ('Y301', '1'), ('C304', '1')}
 assert net_of('U301', 2)[1] == {('U301', '2'), ('Y301', '2')}
-assert all(net_of('U301', pin)[1] == {('U301', str(pin))} for pin in (3, 7)), 'INT/CLKOUT must stay unconnected'
+assert net_of('U301', 3)[1] == {('U301', '3')}, 'INT must stay unconnected'
+assert net_of('U301', 7)[1] == {('U301', '7'), ('TP301', '1')}, 'CLKOUT only to its test pad (no pull-up on the battery rail)'
+assert net_of('J401', 9)[1] == {('J401', '9')}, 'microSD card-detect pin unused'
 assert net_of('J201', 2)[0] != net_of('U201', 2)[0]
 assert net_of('U101', 2)[0] != net_of('U201', 2)[0]
 
@@ -167,7 +175,7 @@ gpio = {'6':'FAN1_TACH', '7':'FAN2_TACH', '8':'LIGHT_PWM', '9':'WATER_LEVEL',
 for pin, name in gpio.items():
     assert net_of('U201', pin)[0].split('/')[-1] == name, (pin, name)
 
-assert len(root.findall('.//components/comp')) == 165
+assert len(root.findall('.//components/comp')) == 170
 
 # Supply-domain mistakes can pass ordinary ERC. Check the non-interchangeable nets.
 v24, v24_loads, v12, v33, gnd = (net_of('J901', 2)[0], net_of('F902', 2)[0], net_of('L902', 2)[0],
