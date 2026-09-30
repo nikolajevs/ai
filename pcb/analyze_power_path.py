@@ -58,13 +58,19 @@ def report(netlist):
     buck = []
     for vi,v in itertools.product(VIN_CASES,(vlo,vo,vhi)):
         di = (vi-v)*v/(vi*lmin*fsmin)
+        # In CCM the winding carries output current throughout the cycle.
+        # The input/switch current carries it only during D=Vout/Vin.
+        # Keep the existing /eta input-screen allowance for F904, not L902.
+        il_rms = math.sqrt(aux_budget**2+di**2/12)
         buck.append(dict(ripple=di,peak=aux_budget+di/2,
-                         irms=math.sqrt(v/vi*(aux_budget**2+di**2/12))/.85,
+                         il_rms=il_rms,input_rms=math.sqrt(v/vi)*il_rms/.85,
                          diode=aux_budget*(1-v/vi)))
     peak = max(c['peak'] for c in buck)
     assert peak < 2.5,'aux peak exceeds specified 25 C limit minimum'
-    aux_in,aux_rms = vhi*aux_budget/.85/vmin,max(c['irms'] for c in buck)
-    assert aux_rms < 3.2 and 3.8 < 5, 'L902 RMS rating or LMR16020 current limit vs Isat'
+    aux_in,aux_rms = vhi*aux_budget/.85/vmin,max(c['input_rms'] for c in buck)
+    inductor_rms = max(c['il_rms'] for c in buck)
+    assert all(aux_budget <= c['il_rms'] <= c['peak'] for c in buck), 'CCM winding RMS must lie between mean and peak'
+    assert inductor_rms < 3.2 and 3.8 < 5, 'L902 RMS rating or LMR16020 current limit vs Isat'
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
@@ -74,7 +80,7 @@ def report(netlist):
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
            f'Pump confirmed 24 V/6 W: {pump:.3f} A; design allowance {pump_budget:.3f} A (not a measured stall limit).',
            f'Aux budget: fans {fans:.3f} + 3.3V/1A logic input {logic:.3f} + gate/controller bias {bias:.3f} = {fans+logic+bias:.3f} A.',
-           f'Aux ceiling {aux_budget:.1f} A; input mean {aux_in:.3f} A; RMS screen {aux_rms:.3f} A.',
+           f'Aux ceiling {aux_budget:.1f} A; input mean {aux_in:.3f} A; input RMS screen {aux_rms:.3f} A.',
            f'LED input mean bound {sum(led_mean):.3f} A; sum of RMS bounds {sum(led_rms):.3f} A.',
            f'Whole-board mean screen {ptc_screen+pump_budget+sum(led_mean)+aux_in:.3f} A; conservative RMS sum {ptc_screen+pump_budget+sum(led_rms)+aux_rms:.3f} A.',
            'Includes a constant-power PTC lower-voltage scenario, not a predicted PTC temperature/resistance.',
@@ -105,8 +111,9 @@ def report(netlist):
             f'RT 47k (shared with R703/R908): {fs_nom/1000:.1f} kHz nominal by TI eq.4; 450 kHz screening floor, not a guaranteed tolerance.',
             f'L22uH/tolerance/bias/frequency scenario: ripple <= {max(c["ripple"] for c in buck):.3f} App; peak {peak:.3f} A.',
             '2.5 A minimum current limit is specified at 25 C; 3.8 A maximum < 5 A Isat of PSPMAA0604-220M-ANP (L -30%).',
-            f'L902 RMS screen {aux_rms:.3f} A < 3.2 A (dT 40 C); DCR 130mOhm max: <= {aux_rms**2*.13:.3f} W at 25C, '
-            f'hot x1.4 scenario {aux_rms**2*.13*1.4:.3f} W; core loss excluded.',
+            f'L902 winding RMS screen {inductor_rms:.3f} A < 3.2 A (dT 40 C); DCR 130mOhm max: <= {inductor_rms**2*.13:.3f} W at 25C, '
+            f'hot x1.4 scenario {inductor_rms**2*.13*1.4:.3f} W; core loss excluded.',
+            'CCM winding RMS = sqrt(Iout^2 + ripple^2/12); input RMS is a separate F904 loading screen.',
             f'SS36 average <= {max(c["diode"] for c in buck):.3f} A; conduction screen <= {max(c["diode"] for c in buck)*.75:.3f} W.']
     # TI equations 12/13. Keep static divider tolerance in the fan +/-5% budget.
     delta=.25
