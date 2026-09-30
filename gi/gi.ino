@@ -856,13 +856,19 @@ const char *rtcName() {
   return rtc_chip == RtcChip::Pcf8563 ? "PCF8563" : rtc_chip == RtcChip::Ds3231 ? "DS3231" : "RTC";
 }
 
+// 1 — оставить 32.768 kHz на CLKOUT (контрольная точка TP301 платы v0.22), чтобы подобрать C304
+// частотомером; на время измерения нужна подтяжка ~10 кОм к +3V3. В обычной прошивке — 0.
+#ifndef RTC_CLKOUT_TRIM
+#define RTC_CLKOUT_TRIM 0
+#endif
+
 // Ищет микросхему часов: сначала PCF8563 платы v0.20, затем модуль DS3231.
-// PCF8563 после подачи питания выдаёт 32.768 kHz на CLKOUT; вывод никуда не подключён,
+// PCF8563 после подачи питания выдаёт 32.768 kHz на CLKOUT (открытый сток, только TP301),
 // поэтому выход выключается — меньше ток от батарейки.
 bool rtcBegin() {
   if (pcf8563.begin(&Wire)) {
     rtc_chip = RtcChip::Pcf8563;
-    pcf8563.writeSqwPinMode(PCF8563_SquareWaveOFF);
+    pcf8563.writeSqwPinMode(RTC_CLKOUT_TRIM ? PCF8563_SquareWave32kHz : PCF8563_SquareWaveOFF);
     pcf8563.start(); // Снимает STOP, если бит когда-либо был установлен
     return true;
   }
