@@ -47,7 +47,7 @@ C909,100u 25V polymer,Capacitor_SMD:CP_Elec_8x6.9,https://industrial.panasonic.c
 C910,22u 25V X7R,Capacitor_SMD:C_1210_3225Metric,,/InputPower/,Samsung,CL32B226KAJNNNE,C309062,ENGINEERING DRAFT - DO NOT ORDER
 D301,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
 D302,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/MCU / ESP32/Peripherals/,,,,ENGINEERING DRAFT - DO NOT ORDER
-D303,BAT54C,Package_TO_SOT_SMD:SOT-23,https://www.lcsc.com/product-detail/C37704.html,/MCU / ESP32/Peripherals/,Nexperia,"BAT54C,215",C37704,ENGINEERING DRAFT - DO NOT ORDER
+D303,BAV170,Package_TO_SOT_SMD:SOT-23,https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970,/MCU / ESP32/Peripherals/,JSCJ,BAV170,C68970,ENGINEERING DRAFT - DO NOT ORDER
 D501,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/Outputs/,,,,ENGINEERING DRAFT - DO NOT ORDER
 D511,TPD2E2U06DCKR,Package_TO_SOT_SMD:SOT-323_SC-70,http://www.ti.com/lit/ds/symlink/tpd2e2u06.pdf,/Outputs/,,,,ENGINEERING DRAFT - DO NOT ORDER
 D521,SS36-E3/57T,Diode_SMD:D_SMC,https://www.vishay.com/docs/88751/ss32.pdf,/Outputs/,Vishay,SS36-E3/57T,C35722,ENGINEERING DRAFT - DO NOT ORDER

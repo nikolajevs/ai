@@ -1,4 +1,4 @@
-"""v0.20 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.21 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
 Sources/assumptions: PCB_V1/DESIGN.md.
 """
@@ -21,6 +21,10 @@ def report(netlist):
                 'R205':'1k 1%','R206':'1k 1%'}
     for ref,value in expected.items():
         assert comps[ref].findtext('value') == value,(ref,'sizing does not match schematic')
+    rtc_fields = {f.get('name'):f.text for f in comps['D303'].findall('fields/field')}
+    assert comps['D303'].findtext('value') == 'BAV170' and rtc_fields.get('MPN') == 'BAV170'
+    assert rtc_fields.get('Manufacturer') == 'JSCJ' and rtc_fields.get('LCSC') == 'C68970', 'RTC diode model is manufacturer-specific'
+    assert comps['R307'].findtext('value').split()[0] == '1k', 'RTC battery series resistor changed'
     fuses = {'F501':(1,'0451001.MRL'),'F511':(1,'0451001.MRL'),'F521':(1,'0451001.MRL'),
              'F711':(6.3,'045106.3MRL'),'F721':(3,'0451003.MRL'),'F904':(3,'0451003.MRL')}
     for ref,(amps,mpn) in fuses.items():
@@ -74,7 +78,7 @@ def report(netlist):
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.20 power path (24 V)',
+    out = ['GrowBox v0.21 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',
@@ -153,6 +157,27 @@ def report(netlist):
             'AL8853 gate drive at 12 V bias: verify VGS/fronts and MOSFET losses hot and at startup.',
             'Q711/Q721 AOD66923: Qg 25nC typ at 10V, Qgd 3.5nC; gate charge power ~25nC x 12V x 130kHz = 0.039 W per AL8853.',
             'Independent PTC thermal cutoff, fuse clearing, connector/PCB ampacity and hot TVS remain unqualified.']
+    # JSCJ/JCET BAV170, B Oct 2014: VF <=0.9 V at 1 mA, IR <=5 nA at 75 V, both at 25 C.
+    # Use that forward drop as a conservative lower-current screen, not a full-temperature bound.
+    # PCF8563: active IDD <=800uA at 400kHz; standby <=500nA at 3V/25C,
+    # or <=1000nA before the first firmware boot disables the default CLKOUT.
+    # Reserve 1uA for each SDA/SCL input, plus 5nA for the disabled supply diode.
+    rtc_active,rtc_standby_reset,rtc_input_leak,diode_reverse = 800e-6,1000e-9,2e-6,5e-9
+    assert rtc_active + rtc_input_leak + diode_reverse < 1e-3
+    rtc_primary_min = logic_lo - .9
+    battery_floor = 2.2  # engineering replacement floor at 25 C, not the CR2032 nominal voltage
+    backup_current = rtc_standby_reset + rtc_input_leak + diode_reverse
+    rtc_backup_min = battery_floor - .9 - backup_current*1000*1.01
+    assert rtc_primary_min > 1.8 and rtc_backup_min > 1.0, 'RTC room-temperature supply screen'
+    out += ['', 'PCF8563 backup supply, v0.21:',
+            'D303 JSCJ BAV170 C68970: silicon common cathode A1/A2/K3, same SOT-23 footprint.',
+            'JSCJ IR <=5nA at 75V/25C; no guaranteed hot leakage bound in the selected datasheet.',
+            'VF 0.9V at 1mA used as a lower-current 25C screening drop; verify cold/hot and startup.',
+            f'3.3V lower static corner {logic_lo:.3f}V -> RTC_VDD >= {rtc_primary_min:.3f}V in the screen; I2C minimum 1.8V.',
+            f'Backup screening current {backup_current*1e6:.3f}uA (includes default CLKOUT before first boot and both input leakage reserves).',
+            f'Assumed CR2032 replacement floor {battery_floor:.1f}V, R307 1k+1% -> RTC_VDD >= {rtc_backup_min:.3f}V; timekeeping minimum 1.0V at 25C.',
+            'No forced supply priority; fresh battery can contribute while the board is powered.',
+            'Not a cell charging/lifetime qualification: verify both battery current polarities and supply transitions.']
     return '\n'.join(out)+'\n'
 
 

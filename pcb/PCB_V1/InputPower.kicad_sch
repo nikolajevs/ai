@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "06 - 24 V input, fuses, 12 V auxiliary buck")
-		(date "2026-09-29")
-		(rev "0.20-DRAFT")
+		(date "2026-09-30")
+		(rev "0.21-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)

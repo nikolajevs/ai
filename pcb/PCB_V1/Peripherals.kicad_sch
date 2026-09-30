@@ -6,8 +6,8 @@
 	(paper "A3")
 	(title_block
 		(title "03 - RTC / microSD / external sensors")
-		(date "2026-09-29")
-		(rev "0.20-DRAFT")
+		(date "2026-09-30")
+		(rev "0.21-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)
@@ -2025,778 +2025,685 @@
 			)
 			(embedded_fonts no)
 		)
-	
 		(symbol "Timer_RTC:PCF8563T"
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(duplicate_pin_numbers_are_jumpers no)
-		(property "Reference" "U"
-			(at -7.62 8.89 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -7.62 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
 				)
-				(justify left)
 			)
+			(property "Value" "PCF8563T"
+				(at 2.54 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Realtime Clock/Calendar I2C Interface, SOIC-8"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "I2C RTC Clock Calendar"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOIC*3.9x4.9mm*P1.27mm*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PCF8563T_0_1"
+				(rectangle
+					(start -7.62 7.62)
+					(end 7.62 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "PCF8563T_1_1"
+				(pin input line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "OSCI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -10.16 -5.08 0)
+					(length 2.54)
+					(name "OSCO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 10.16 -5.08 180)
+					(length 2.54)
+					(name "~{INT}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 2.54 180)
+					(length 2.54)
+					(name "SDA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 10.16 5.08 180)
+					(length 2.54)
+					(name "SCL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output clock
+					(at 10.16 -2.54 180)
+					(length 2.54)
+					(name "CLKO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 10.16 270)
+					(length 2.54)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
 		)
-		(property "Value" "PCF8563T"
-			(at 2.54 8.89 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Realtime Clock/Calendar I2C Interface, SOIC-8"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "I2C RTC Clock Calendar"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "SOIC*3.9x4.9mm*P1.27mm*"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(symbol "PCF8563T_0_1"
-			(rectangle
-				(start -7.62 7.62)
-				(end 7.62 -7.62)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type background)
-				)
-			)
-		)
-		(symbol "PCF8563T_1_1"
-			(pin input line
-				(at -10.16 5.08 0)
-				(length 2.54)
-				(name "OSCI"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -10.16 -5.08 0)
-				(length 2.54)
-				(name "OSCO"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at 10.16 -5.08 180)
-				(length 2.54)
-				(name "~{INT}"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 0 -10.16 90)
-				(length 2.54)
-				(name "VSS"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at 10.16 2.54 180)
-				(length 2.54)
-				(name "SDA"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 10.16 5.08 180)
-				(length 2.54)
-				(name "SCL"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "6"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output clock
-				(at 10.16 -2.54 180)
-				(length 2.54)
-				(name "CLKO"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 0 10.16 270)
-				(length 2.54)
-				(name "VDD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-		)
-		(embedded_fonts no)
-	)
 		(symbol "Device:Crystal"
-		(pin_numbers
-			(hide yes)
-		)
-		(pin_names
-			(offset 1.016)
-			(hide yes)
-		)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(duplicate_pin_numbers_are_jumpers no)
-		(property "Reference" "Y"
-			(at 0 3.81 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+			(pin_numbers
+				(hide yes)
 			)
-		)
-		(property "Value" "Crystal"
-			(at 0 -3.81 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
 			)
-		)
-		(property "Footprint" ""
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Two pin crystal"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "quartz ceramic resonator oscillator"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Crystal*"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(symbol "Crystal_0_1"
-			(polyline
-				(pts
-					(xy -2.54 0) (xy -1.905 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 -1.27) (xy -1.905 1.27)
-				)
-				(stroke
-					(width 0.508)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(rectangle
-				(start -1.143 2.54)
-				(end 1.143 -2.54)
-				(stroke
-					(width 0.3048)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.905 -1.27) (xy 1.905 1.27)
-				)
-				(stroke
-					(width 0.508)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 2.54 0) (xy 1.905 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-		)
-		(symbol "Crystal_1_1"
-			(pin passive line
-				(at -3.81 0 0)
-				(length 1.27)
-				(name "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Y"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
 					)
 				)
 			)
-			(pin passive line
-				(at 3.81 0 180)
-				(length 1.27)
-				(name "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
+			(property "Value" "Crystal"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
 					)
 				)
 			)
-		)
-		(embedded_fonts no)
-	)
-		(symbol "Diode:BAT54C"
-		(pin_names
-			(offset 1.016)
-		)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(duplicate_pin_numbers_are_jumpers no)
-		(property "Reference" "D"
-			(at 0.635 -3.81 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT54C"
-			(at -6.35 3.175 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 1.905 3.175 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "http://www.diodes.com/_files/datasheets/ds11005.pdf"
-			(at -2.032 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 				)
 			)
-		)
-		(property "Description" "dual schottky barrier diode, common cathode"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 				)
 			)
-		)
-		(property "ki_keywords" "schottky diode common cathode"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
+			(property "Description" "Two pin crystal"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 				)
 			)
-		)
-		(property "ki_fp_filters" "SOT?23*"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
+			(property "ki_keywords" "quartz ceramic resonator oscillator"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 				)
 			)
-		)
-		(symbol "BAT54C_0_1"
-			(polyline
-				(pts
-					(xy -3.175 -1.27) (xy -3.175 1.27) (xy -1.27 0) (xy -3.175 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
+			(property "ki_fp_filters" "Crystal*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 				)
 			)
-			(polyline
-				(pts
-					(xy -1.905 1.27) (xy -1.905 1.016)
+			(symbol "Crystal_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0)
+						(xy -1.905 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
 				)
-				(stroke
-					(width 0)
-					(type default)
+				(polyline
+					(pts
+						(xy -1.905 -1.27)
+						(xy -1.905 1.27)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
 				)
-				(fill
-					(type none)
+				(rectangle
+					(start -1.143 2.54)
+					(end 1.143 -2.54)
+					(stroke
+						(width 0.3048)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
 				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 0) (xy 1.905 0)
+				(polyline
+					(pts
+						(xy 1.905 -1.27)
+						(xy 1.905 1.27)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.27 1.27) (xy -1.905 1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.27 1.27) (xy -1.27 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.27 0) (xy -3.81 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.27 -1.27) (xy -0.635 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
+				(polyline
+					(pts
+						(xy 2.54 0)
+						(xy 1.905 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
 				)
 			)
-			(polyline
-				(pts
-					(xy -0.635 -1.27) (xy -0.635 -1.016)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 0 0)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(polyline
-				(pts
-					(xy 0.635 -1.27) (xy 0.635 -1.016)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 1.27) (xy 1.27 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 1.27) (xy 1.905 1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 -1.27) (xy 0.635 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.905 1.27) (xy 1.905 1.016)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 3.175 -1.27) (xy 3.175 1.27) (xy 1.27 0) (xy 3.175 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 3.81 0) (xy 1.27 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-		)
-		(symbol "BAT54C_1_1"
-			(pin passive line
-				(at -7.62 0 0)
-				(length 3.81)
-				(name ""
-					(effects
-						(font
-							(size 1.27 1.27)
+			(symbol "Crystal_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
 						)
 					)
 				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 1.27)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
 						)
 					)
 				)
 			)
-			(pin passive line
-				(at 7.62 0 180)
-				(length 3.81)
-				(name ""
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 0 -5.08 90)
-				(length 5.08)
-				(name ""
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
+			(embedded_fonts no)
 		)
-		(embedded_fonts no)
-	)
+		(symbol "GrowBox:BAV170"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "BAV170"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "JSCJ BAV170 low-leakage silicon dual diode, common cathode; A1 A2 K3; NOT a Schottky diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "BAV170_0_1"
+				(polyline
+					(pts
+						(xy -3.81 1.27)
+						(xy -1.27 0)
+						(xy -3.81 -1.27)
+						(xy -3.81 1.27)
+						(xy -3.81 1.27)
+						(xy -3.81 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -3.81 0)
+						(xy 3.81 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27)
+						(xy -1.27 1.27)
+						(xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0)
+						(xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27)
+						(xy 1.27 1.27)
+						(xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.81 -1.27)
+						(xy 1.27 0)
+						(xy 3.81 1.27)
+						(xy 3.81 -1.27)
+						(xy 3.81 -1.27)
+						(xy 3.81 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -7.62 0 0)
+					(length 3.81)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 3.81)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -5.08 90)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "Разомкнутый вход/обрыв кабеля = нет воды.\nLOW ~0.30 V; фильтр + программный debounce 20..50 ms.\nJ302: винтовая клемма 3.5 мм DORABO DB125-3.5-2P-GN-S."
 		(exclude_from_sim no)
@@ -2886,7 +2793,7 @@
 		)
 		(uuid "b2e3528c-3713-538e-ba14-13169022eaa7")
 	)
-	(text "SOIC-8: OSCI=1, OSCO=2, VSS=4, SDA=5, SCL=6, VDD=8; INT, CLKOUT unused (firmware turns CLKOUT off).\nY301 FC-135 CL 12.5 pF: OSCO has 25 pF inside (15..35), OSCI needs ~25 pF -> C304 18p + pin/stray.\nTrim C304 on the prototype by the 32.768 kHz CLKOUT frequency after power-on (NXP method 1).\nD303: +3V3 or CR2032 via R307 -> RTC_VDD (C301). R307 limits reverse current into the cell."
+	(text "SOIC-8: OSCI=1, OSCO=2, VSS=4, SDA=5, SCL=6, VDD=8; INT, CLKOUT unused (firmware turns CLKOUT off).\nY301 FC-135 CL 12.5 pF: OSCO has 25 pF inside (15..35), OSCI needs ~25 pF -> C304 18p + pin/stray.\nTrim C304 on the prototype by the 32.768 kHz CLKOUT frequency after power-on (NXP method 1).\nD303 BAV170: +3V3 or CR2032 via R307 -> RTC_VDD (C301).\nVerify VF/leakage at temperature. R307 is not qualified fault/charging protection."
 		(exclude_from_sim no)
 		(at 20.32 101.6 0)
 		(effects
@@ -2897,7 +2804,7 @@
 		)
 		(uuid "c96eac63-e0b5-5c45-945e-f766feba6652")
 	)
-	(text "0.20 DRAFT — схема для проверки; разводка и испытания ещё не выполнены."
+	(text "0.21 DRAFT — схема для проверки; разводка и испытания ещё не выполнены."
 		(exclude_from_sim no)
 		(at 20.32 24.13 0)
 		(effects
@@ -8038,7 +7945,7 @@
 		(uuid 8748922d-d986-4ebf-85c2-2e02be0e0d01)
 	)
 	(symbol
-		(lib_id "Diode:BAT54C")
+		(lib_id "GrowBox:BAV170")
 		(at 177.8 110.49 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8055,7 +7962,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "BAT54C"
+		(property "Value" "BAV170"
 			(at 170.18 107.44 0)
 			(effects
 				(font
@@ -8074,7 +7981,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/product-detail/C37704.html"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970"
 			(at 177.8 110.49 0)
 			(effects
 				(font
@@ -8094,7 +8001,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "JSCJ"
 			(at 177.8 110.49 0)
 			(effects
 				(font
@@ -8104,7 +8011,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "BAT54C,215"
+		(property "MPN" "BAV170"
 			(at 177.8 110.49 0)
 			(effects
 				(font
@@ -8114,7 +8021,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C37704"
+		(property "LCSC" "C68970"
 			(at 177.8 110.49 0)
 			(effects
 				(font
