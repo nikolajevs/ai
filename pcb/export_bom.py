@@ -16,10 +16,12 @@ with Path(sys.argv[2]).open('w', encoding='utf-8-sig', newline='') as stream:
     writer.writerow(['Reference', 'Value', 'Footprint', 'Datasheet', 'Sheet',
                      'Manufacturer', 'MPN', 'LCSC', 'Procurement status'])
     for comp in sorted(components, key=lambda c: c.get('ref')):
+        if comp.find("property[@name='exclude_from_bom']") is not None:
+            continue  # net ties: copper only, never purchased
         fields = {f.get('name'): f.text or '' for f in comp.findall('fields/field')}
         writer.writerow([comp.get('ref'), comp.findtext('value', ''),
                          comp.findtext('footprint', ''), comp.findtext('datasheet', ''),
                          comp.find('sheetpath').get('names'),
                          fields.get('Manufacturer', ''), fields.get('MPN', ''), fields.get('LCSC', ''),
                          'ENGINEERING DRAFT - DO NOT ORDER'])
-print(f'Exported {len(components)} schematic components')
+print(f'Exported {sum(c.find("property[@name='exclude_from_bom']") is None for c in components)} schematic components')

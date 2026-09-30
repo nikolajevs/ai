@@ -1,0 +1,54 @@
+GrowBox v0.22 copper screen before routing
+Stack (board file): 1.6062 mm; outer F.Cu/B.Cu 35.0 um (1 oz), inner In1/In2 15.2 um (0.5 oz finished).
+IPC-2221 chart, isolated conductor, still air; k 0.048 outer, 0.024 inner. Screen only, not IPC-2152/thermal simulation.
+
+Minimum width on ONE outer layer, mm (dT above local board temperature):
+path                                           class       I, A   dT10   dT20  class  status
+XT60 +24V to TVS/bulk and fuse inputs          MAIN24    11.855   9.10   5.97   8.00  class width OK only at dT20: widen or pour
+                                               basis: whole-board RMS sum
+GND return XT60 pin 1 to the loads             GND       11.855   9.10   5.97      -  plane/pour only
+                                               basis: same current, planes/pours
+F902 -> +24V_LOADS -> PTC J601 / pump F521     HEATER24   5.824   3.41   2.24   4.00  class width OK at dT10
+                                               basis: F902 load bound
+PTC return J601 -> Q601 drain/source -> GND    HEATER24   5.324   3.02   1.98   4.00  class width OK at dT10
+                                               basis: F902 load minus pump
+F711 -> L711 (CH1 input)                       LED_INPUT  3.318   1.57   1.03   3.00  class width OK at dT10
+                                               basis: F711 load bound = CH1 inductor RMS
+CH1 switch node L711/Q711/D711                 SWITCH     3.318   1.57   1.03   2.00  class width OK at dT10
+                                               basis: CH1 inductor RMS
+CH1 source/shunt Q711 -> R715 -> GND           SWITCH     2.483   1.05   0.69   2.00  class width OK at dT10
+                                               basis: CH1 switch RMS
+CH1 LED output and return (J711, R716)         LED48      1.156   0.37   0.24   1.00  class width OK at dT10
+                                               basis: CH1 LED current, FB/R corner
+F721 -> L721 (CH2 input)                       LED_INPUT  1.629   0.59   0.39   3.00  class width OK at dT10
+                                               basis: F721 load bound = CH2 inductor RMS
+CH2 switch node L721/Q721/D721                 SWITCH     1.629   0.59   0.39   2.00  class width OK at dT10
+                                               basis: CH2 inductor RMS
+CH2 LED output and return (J721/J731, R726)    LED48      0.484   0.11   0.07   1.00  class width OK at dT10
+                                               basis: CH2 LED current
+F904 -> AUX_VIN (LMR16020 input)               AUX24      1.085   0.34   0.22   1.00  class width OK at dT10
+                                               basis: F904 input RMS screen
+Pump F521 -> J521, Q521 drain                  AUX24      0.500   0.12   0.08   1.00  class width OK at dT10
+                                               basis: pump allowance
++12V aux rail                                  PWR12      1.200   0.39   0.25   0.80  class width OK at dT10
+                                               basis: aux ceiling
++12V fan branches F501/F511                    PWR12      0.341   0.07   0.04   0.80  class width OK at dT10
+                                               basis: per fan
++3V3 logic rail                                PWR3V3     1.000   0.30   0.20   0.50  class width OK at dT10
+                                               basis: 3.3 V buck budget
+
+Main 24 V path 11.855 A: 9.1 mm on one outer layer (dT10); 3.5 mm on EACH outer layer when F.Cu and B.Cu pours are stitched in parallel.
+Same current on one 0.5 oz inner layer would need 54 mm: inner layers carry no power path.
+Resistance per 10 mm of 1 oz outer copper at 60 C: 0.25 mm 22.80 mOhm, 1 mm 5.70 mOhm, 3 mm 1.90 mOhm, 8 mm 0.71 mOhm.
+
+Layer-change vias (barrel plating assumed 18 um; IPC-2221 inner k as a conservative barrel screen):
+  drill 0.3 mm: 0.74 A per via at dT10; main path 17 vias, HEATER24 8, CH1 input 5.
+  drill 0.4 mm: 0.90 A per via at dT10; main path 14 vias, HEATER24 7, CH1 input 4.
+
+Kelvin taps (net ties, v0.22): NT711 R715->R712 (LED1_CS_K), NT712 R716->U710 FB (LED1_FB_K),
+NT721 R725->R722 (LED2_CS_K), NT722 R726->U720 FB (LED2_FB_K). Route the *_K nets as thin traces from the
+net-tie pad; never connect them to the source/return pours. Error per 1 mOhm of shared copper:
+  R715 0.027 ohm: 3.7 % of the CS signal; R716 0.18 ohm: 0.56 % of LED current.
+
+Not covered: neighbouring hot parts (inductors, diodes, shunts), enclosure air, via fill, current crowding
+at pads/fuse holders, transient/fault currents (fuse clearing), plating tolerance.

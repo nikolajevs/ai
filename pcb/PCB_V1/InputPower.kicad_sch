@@ -7,7 +7,7 @@
 	(title_block
 		(title "06 - 24 V input, fuses, 12 V auxiliary buck")
 		(date "2026-09-30")
-		(rev "0.21-DRAFT")
+		(rev "0.22-DRAFT")
 		(company "GrowBox controller")
 		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
 	)

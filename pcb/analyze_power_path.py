@@ -1,4 +1,4 @@
-"""v0.21 sizing from the netlist, not fault/surge/thermal qualification.
+"""v0.22 sizing from the netlist, not fault/surge/thermal qualification.
 Usage: python analyze_power_path.py netlist.xml [--output report.txt]
 Sources/assumptions: PCB_V1/DESIGN.md.
 """
@@ -78,7 +78,7 @@ def report(netlist):
     cases = [[estimate(ch,*p) for p in itertools.product(VIN_CASES,(40,44,48),(110e3,130e3),(.85,.90),(False,True))] for ch in CHANNELS]
     led_mean = [max(c['average'] for c in cc) for cc in cases]
     led_rms = [max(c['il_rms'] for c in cc) for cc in cases]
-    out = ['GrowBox v0.21 power path (24 V)',
+    out = ['GrowBox v0.22 power path (24 V)',
            'Conditional datasheet calculations, NOT fault/surge/thermal qualification.',
            '24.0 V set point; power stages 21.6..25 V; AL8853 VIN pins use 12 V aux.', '',
            f'PTC 24 V/100 W: {ptc:.3f} A nominal; +15% cold at 24 V: {cold:.3f} A.',

@@ -31,14 +31,15 @@ CHANNELS = [
 # 24 V PSU set point, 25 V ceiling,
 # -10 % allowance for PSU tolerance, cable, fuse and connector drops.
 VIN_CASES = (21.6, 24.0, 25.0)
-CAP_MPN = 'C3225X7R2A106K250AC'
-# v0.19: TDK X7R instead of Samsung CL32Y106KCV6PNE (X7S, 2.575 uF).
-# TDK Product Center DC-bias curve, 25 C: 2.984 uF at 40 V, 2.292 uF at 50 V;
-# linear 2.361 uF at 49 V, rounded DOWN.
+CAP_MPN = 'GRM32EC72A106KE05L'
+# v0.22: Murata GRM32EC72A106KE05L (X7S, LCSC C576517) instead of TDK C3225X7R2A106K250AC
+# (X7R, 2.35 uF at 49 V). Murata Electrical Characteristics Data (Oct 2026), DC-bias curve
+# digitised from the chart: -67.2 % at 40 V, -74.0 % at 49 V, -74.8 % at 50 V -> 2.60 uF at 49 V,
+# rounded DOWN to 2.55 uF for digitising uncertainty. X7S is +/-22 % over -55..125 C (X7R +/-15 %).
 # 49 V covers 48 V LED + FB voltage. These are design allowances, not
 # guaranteed simultaneous production minima for DC bias/temperature/aging.
-CAP_BIASED_UF = 2.35
-CAP_ALLOWANCE = .90 * .85 * .90  # initial tolerance, X7R +/-15 %, extra aging/model reserve
+CAP_BIASED_UF = 2.55
+CAP_ALLOWANCE = .90 * .78 * .90  # initial tolerance, X7S +/-22 %, extra aging/model reserve
 
 
 def check_schematic(path):
@@ -56,7 +57,7 @@ def check_schematic(path):
         assert fields.get('MPN') == ch['l_mpn'], (n, 'inductor MPN')
         cap_refs = [f'C7{n}6', f'C7{n}7'] + (['C718', 'C719'] if n == 1 else ['C728'])
         for ref in cap_refs:
-            assert comps[ref].findtext('value') == '10u 100V X7R'
+            assert comps[ref].findtext('value') == '10u 100V X7S'
             fields = {f.get('name'): f.text for f in comps[ref].findall('fields/field')}
             assert fields.get('MPN') == CAP_MPN, (ref, 'MLCC MPN')
 
@@ -117,7 +118,7 @@ def estimate(ch, vin, vled, fs, eta, tolerance):
 
 
 def report():
-    out = ['PCB_V1 v0.21 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
+    out = ['PCB_V1 v0.22 LED sizing estimates (24 V power, 12 V IC bias, 2 channels)',
            'Not a manufacturing release or a guaranteed OCP/stability envelope.',
            'VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;',
            'fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;',

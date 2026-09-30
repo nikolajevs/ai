@@ -4,10 +4,10 @@
   python check_all.py --write    # also refresh review/*_<REV> reports, sheet images and BOM_schematic.csv
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
--> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
+-> analyze_copper.py -> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
 Python) -> verify_placement.py -> DRC. The placement check verifies the outline, edge connectors,
 antenna keepout, battery side and initial manufacturing setup.
-Without --write the deterministic reports (LED_power, Power_path, BOM_cost,
+Without --write the deterministic reports (LED_power, Power_path, Copper, BOM_cost,
 JLC_assembly, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
 are not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
 are only counted while the board is unrouted). The price audit uses the committed dated snapshot
@@ -30,9 +30,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-REV = 'v21'
-# Unchanged parts/fees retain September 28 data; v18/v19 substitutions are dated September 29, v20/v21 parts September 30.
-PRICE_REV = 'v21'
+REV = 'v22'
+# Unchanged parts/fees retain September 28 data; v18/v19 substitutions are dated September 29, v20-v22 parts September 30.
+PRICE_REV = 'v22'
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE / 'PCB_V1'
 REVIEW = HERE / 'review'
@@ -127,7 +127,8 @@ def main():
         run('netlist export', [KICAD_CLI, 'sch', 'export', 'netlist', '--format', 'kicadxml', '-o', str(net), str(sch)])
         run('verify_netlist.py', [sys.executable, 'verify_netlist.py', str(net)], capture=False)
         for label, script, name in [('analyze_led_power.py', 'analyze_led_power.py', f'LED_power_{REV}.txt'),
-                                    ('analyze_power_path.py', 'analyze_power_path.py', f'Power_path_{REV}.txt')]:
+                                    ('analyze_power_path.py', 'analyze_power_path.py', f'Power_path_{REV}.txt'),
+                                    ('analyze_copper.py', 'analyze_copper.py', f'Copper_{REV}.txt')]:
             out = tmp / name
             run(label, [sys.executable, script, str(net), '--output', str(out)])
             if out.exists():

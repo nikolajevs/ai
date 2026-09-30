@@ -149,4 +149,16 @@ for ref,mpn in [('L101','FXL0630-100-M'),('L902','PSPMAA0604-220M-ANP')]:
  assert str(fps[ref].GetFPID().GetLibItemName())=='L_Changjiang_FXL0630'
  assert fps[ref].GetField('MPN').GetText()==mpn
  assert all(size(pad)==(2.35,3.5) for pad in fps[ref].Pads()),(ref,'FXL0630 lands')
-print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity and FXL0630 inductor lands')
+# v0.22 HRO TF-01A microSD (drawing rev A): nine 0.70 x 1.30 contacts at 1.10 mm, four shell lands, two NPTH d1.00 at 8.00 mm.
+card=fps['J401']
+assert str(card.GetFPID().GetLibNickname())=='GrowBox' and str(card.GetFPID().GetLibItemName())=='microSD_HRO_TF-01A'
+pads=numbered('J401')
+assert set(pads)==set('123456789')|{'SH'} and len(pads['SH'])==4,('J401','TF-01A pads')
+xs=[round(pcbnew.ToMM(pads[str(n)][0].GetFPRelativePosition().x),3) for n in range(1,10)]
+assert all(abs(a-b-1.1)<.001 for a,b in zip(xs,xs[1:])) and all(size(pads[str(n)][0])==(.7,1.3) for n in range(1,10)),('J401','contact pitch/lands')
+assert sorted(size(p) for p in pads['SH'])==[(1.2,1.4)]*2+[(1.2,2.0)]*2,('J401','shell lands')
+holes=[p for p in card.Pads() if p.GetAttribute()==pcbnew.PAD_ATTRIB_NPTH]
+assert len(holes)==2 and all(abs(pcbnew.ToMM(h.GetDrillSize().x)-1.0)<.001 for h in holes),('J401','locating holes')
+assert abs(pcbnew.ToMM(abs(holes[0].GetFPRelativePosition().x-holes[1].GetFPRelativePosition().x))-8.0)<.001,('J401','hole pitch')
+assert all(nodes[('J401',str(n))]!=gnd for n in (1,2,3,5,7,8)) and nodes[('J401','6')]==gnd and nodes[('J401','SH')]==gnd,('J401','pinout')
+print('PASS: reviewed XT60 slots, DORABO/KANGNEX terminal holes, THT battery polarity, FXL0630 inductor lands and TF-01A microSD')
