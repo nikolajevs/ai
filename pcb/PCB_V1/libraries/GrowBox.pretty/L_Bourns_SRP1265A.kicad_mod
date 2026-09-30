@@ -431,4 +431,15 @@
 		(uuid "f656fcef-b902-4df2-952a-bf560ea141b4")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/L_Bourns_SRP1265A.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

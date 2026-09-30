@@ -295,4 +295,15 @@
 		(uuid "fc79d26b-26fb-48cd-a899-f501dea6e366")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/microSD_HRO_TF-01A.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

@@ -2097,6 +2097,17 @@
 			(uuid "7ad821a6-ed6f-4624-86c2-fb39b03888af")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/L_Bourns_SRP1265A.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
@@ -6177,6 +6188,17 @@
 			(uuid "09b7976e-a3ba-4f7c-831e-390b464da4ec")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm"
 		(layer "F.Cu")
@@ -7008,7 +7030,7 @@
 			(uuid "f03be441-d5fa-4cec-a6ca-95826b3083af")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm.step"
+		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -7166,6 +7188,17 @@
 			(uuid "628ec73b-3d67-4467-9a48-eefdac4cf7e3")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "GrowBox:TO-252-2_NMOS_S123_G4_D5"
 		(layer "F.Cu")
@@ -24979,6 +25012,17 @@
 			(uuid "84360a3e-1f92-4bcf-8e91-1ba8e856e228")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Package_TO_SOT_SMD:SOT-323_SC-70"
 		(layer "F.Cu")
@@ -26323,6 +26367,17 @@
 			(uuid "189cb5a7-ca15-4bae-bde3-977469fffdd2")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
@@ -28224,6 +28279,17 @@
 			(uuid "fc08dca9-012f-4c06-adcc-2f01acc1fb9b")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Inductor_SMD:L_Changjiang_FXL0630"
 		(layer "F.Cu")
@@ -30652,6 +30718,17 @@
 			(uuid "2c5dec90-04df-4680-a201-f9e31734f91a")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuse_Littelfuse_451.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_1210_3225Metric"
 		(layer "F.Cu")
@@ -31794,7 +31871,7 @@
 			(uuid "15ab1f23-abcd-416a-8bb0-08df4dabf353")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Inductor_SMD.3dshapes/L_Bourns_SRP1770TA_16.9x16.9mm.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/L_Bourns_SRP1770TA_16.9x16.9mm.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -32154,6 +32231,17 @@
 			(uuid "9e3083e5-bbf6-4ffd-be92-5b7aa9bb6739")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/microSD_HRO_TF-01A.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
 		(layer "F.Cu")
@@ -35093,7 +35181,7 @@
 			(uuid "60391977-4cab-4ea3-96e4-5976770ec916")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/ONSemi_SO-8FL_488AA.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/ONSemi_SO-8FL_488AA.step"
 			(offset
 				(xyz 0 0 0)
 			)
