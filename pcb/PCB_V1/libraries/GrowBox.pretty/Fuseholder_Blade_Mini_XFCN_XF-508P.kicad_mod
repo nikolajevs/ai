@@ -92,4 +92,9 @@
 		(uuid "0ee43eee-cd16-423e-9768-2f2ee7ea4278")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/Fuseholder_Blade_Mini_XFCN_XF-508P.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )
