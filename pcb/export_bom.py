@@ -24,4 +24,5 @@ with Path(sys.argv[2]).open('w', encoding='utf-8-sig', newline='') as stream:
                          comp.find('sheetpath').get('names'),
                          fields.get('Manufacturer', ''), fields.get('MPN', ''), fields.get('LCSC', ''),
                          'ENGINEERING DRAFT - DO NOT ORDER'])
-print(f'Exported {sum(c.find("property[@name='exclude_from_bom']") is None for c in components)} schematic components')
+exported_count = sum(c.find("property[@name='exclude_from_bom']") is None for c in components)
+print(f'Exported {exported_count} schematic components')
