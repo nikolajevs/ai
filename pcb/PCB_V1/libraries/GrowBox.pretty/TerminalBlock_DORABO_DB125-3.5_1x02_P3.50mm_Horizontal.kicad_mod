@@ -148,4 +148,9 @@
 		(uuid "6bb52913-c622-46bc-a855-6a3727e052c2")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )

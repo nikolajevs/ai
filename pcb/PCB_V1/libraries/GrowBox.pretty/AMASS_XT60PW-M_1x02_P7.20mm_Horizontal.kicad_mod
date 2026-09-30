@@ -265,15 +265,9 @@
 		(uuid "a3d6e25c-867b-4bfc-9223-8693f225c0df")
 	)
 	(embedded_fonts no)
-	(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT60PW-M_1x02_P7.20mm_Horizontal.step"
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/AMASS_XT60PW-M_1x02_P7.20mm_Horizontal.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
 	)
 )

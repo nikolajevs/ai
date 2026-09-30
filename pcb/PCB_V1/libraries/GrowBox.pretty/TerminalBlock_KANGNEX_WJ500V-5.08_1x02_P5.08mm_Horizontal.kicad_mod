@@ -159,4 +159,9 @@
 		(uuid "e7c4244d-f2fd-4142-9251-3f794c71f9d1")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/TerminalBlock_KANGNEX_WJ500V-5.08_1x02_P5.08mm_Horizontal.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )
