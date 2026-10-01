@@ -4,13 +4,13 @@
   python check_all.py --write    # also refresh review/*_<REV> reports, sheet images and BOM_schematic.csv
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
--> analyze_copper.py -> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
+-> analyze_copper.py -> BOM export comparison -> export_lcsc_bom.py (LCSC order BOM) -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
 Python) -> verify_placement.py -> verify_routing.py -> check_fab.py -> DRC. The placement check verifies the outline, edge connectors,
 antenna keepout, battery side and initial manufacturing setup; the routing check the layer strategy (solid GND on In1,
 no vias on switching nodes) and the copper of the main power paths; the fabrication check compares the
 board with the published JLCPCB limits (review/DFM_JLCPCB_<REV>.txt).
 Without --write the deterministic reports (LED_power, Power_path, Copper, BOM_cost,
-JLC_assembly, DFM_JLCPCB, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
+JLC_assembly, DFM_JLCPCB, BOM_schematic.csv, BOM_LCSC_<REV>.csv/.xlsx, BOM_PCB_V1_<REV>.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
 are not compared with review/: ERC must report no violations and DRC no violations and no unconnected pads
 (the board is routed). The price audit uses the committed dated snapshot
 PCB_V1/price_snapshot_<PRICE_REV>.json; it fails when a schematic reference has no price line or
@@ -30,6 +30,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 REV = 'v22'
@@ -62,6 +63,9 @@ def run(label, cmd, capture=True):
 
 
 def same_text(a, b):
+    if Path(a).suffix == '.xlsx':       # compare the unzipped parts: compressed bytes may differ between zlib builds
+        with zipfile.ZipFile(a) as za, zipfile.ZipFile(b) as zb:
+            return za.namelist() == zb.namelist() and all(za.read(n) == zb.read(n) for n in za.namelist())
     return Path(a).read_text(encoding='utf-8-sig').replace('\r\n', '\n') == \
         Path(b).read_text(encoding='utf-8-sig').replace('\r\n', '\n')
 
@@ -139,6 +143,12 @@ def main():
         run('export_bom.py', [sys.executable, 'export_bom.py', str(net), str(bom)])
         if bom.exists():
             compare_or_write('BOM_schematic.csv', bom, PROJECT / 'BOM_schematic.csv', args.write)
+        lcsc = tmp / 'lcsc'
+        run('export_lcsc_bom.py', [sys.executable, 'export_lcsc_bom.py', str(net), str(PROJECT / f'price_snapshot_{PRICE_REV}.json'),
+                                   str(PROJECT / f'jlc_snapshot_{PRICE_REV}.json'), str(lcsc), '--rev', REV])
+        for name in (f'BOM_LCSC_{REV}.csv', f'BOM_LCSC_{REV}.xlsx', f'BOM_PCB_V1_{REV}.csv'):
+            if (lcsc / name).exists():
+                compare_or_write(f'export_lcsc_bom.py {name}', lcsc / name, PROJECT / name, args.write)
         cost = tmp / f'BOM_cost_{REV}.txt'
         run('audit_bom_cost.py', [sys.executable, 'audit_bom_cost.py', str(net),
                                   str(PROJECT / f'price_snapshot_{PRICE_REV}.json'), '--output', str(cost)])
