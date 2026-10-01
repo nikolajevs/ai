@@ -40,8 +40,8 @@ FILES = {
     'PCB_V1-B_Cu.gbl': ('Copper,L4,Bot', 0.09),
     'PCB_V1-F_Mask.gts': ('Soldermask,Top', None),
     'PCB_V1-B_Mask.gbs': ('Soldermask,Bot', None),
-    'PCB_V1-F_Silkscreen.gto': ('Legend,Top', 0.15),
-    'PCB_V1-B_Silkscreen.gbo': ('Legend,Bot', 0.15),
+    'PCB_V1-F_Silkscreen.gto': ('Legend,Top', 0.2),
+    'PCB_V1-B_Silkscreen.gbo': ('Legend,Bot', 0.2),
     'PCB_V1-F_Paste.gtp': ('Paste,Top', None),
     'PCB_V1-Edge_Cuts.gm1': ('Profile,NP', None),
 }
