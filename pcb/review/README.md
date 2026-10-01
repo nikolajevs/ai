@@ -15,6 +15,7 @@ Current revision **v22** (PCB_V1 0.22). Electrical, cost and assembly reports ar
 | `Checks_v22.txt` | Full `check_all.py` log for 0.22 |
 | `Placement_v22_top.png` / `.svg`, `Placement_v22_bottom.png` / `.svg` | Placement exported from KiCad (top: F.Cu, F.Fab, F.Silkscreen, outline; bottom mirrored) |
 | `Root_v22.png` … `LEDDrivers_v22.png` | Schematic sheets rendered from KiCad SVG export |
+| `DFM_JLCPCB_v22.txt` | `check_fab.py` — the board against the published JLCPCB limits (0 FAIL, 2 WARN) |
 | `Routed_v22_top.png`, `Routed_v22_bottom.png` | 3D renders (`kicad-cli pcb render`) of the routed board, top and bottom |
 | `Routed_v22_F.png`, `Routed_v22_In1.png`, `Routed_v22_In2.png`, `Routed_v22_B.png` | Copper layers of the routed board (`kicad-cli pcb export svg`; B.Cu mirrored): GND pours red, white = clearance |
 
