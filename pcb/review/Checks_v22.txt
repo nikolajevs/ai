@@ -12,6 +12,10 @@
 [OK] analyze_copper.py reproduces review\Copper_v22.txt
 [OK] export_bom.py
 [OK] BOM_schematic.csv reproduces PCB_V1\BOM_schematic.csv
+[OK] export_lcsc_bom.py
+[OK] export_lcsc_bom.py BOM_LCSC_v22.csv reproduces PCB_V1\BOM_LCSC_v22.csv
+[OK] export_lcsc_bom.py BOM_LCSC_v22.xlsx reproduces PCB_V1\BOM_LCSC_v22.xlsx
+[OK] export_lcsc_bom.py BOM_PCB_V1_v22.csv reproduces PCB_V1\BOM_PCB_V1_v22.csv
 [OK] audit_bom_cost.py
 [OK] audit_bom_cost.py reproduces review\BOM_cost_v22.txt
 [OK] estimate_jlc_assembly.py

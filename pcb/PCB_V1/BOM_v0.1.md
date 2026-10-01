@@ -1,6 +1,6 @@
 # PCB_V1 — подобранные компоненты, ревизия 0.22
 
-Список выбранных деталей с MPN и статусом. Полный состав схемы — [BOM_schematic.csv](BOM_schematic.csv), генерируется из netlist.
+Список выбранных деталей с MPN и статусом. **Для заказа на LCSC используйте [BOM.md](BOM.md)** (сгруппированный BOM с кодами LCSC, количествами и ценами). Полный состав схемы — [BOM_schematic.csv](BOM_schematic.csv), генерируется из netlist.
 
 Актуальная оценка — **$30,04/плату** ($28,42 при пяти платах), [BOM_cost_v22.txt](../review/BOM_cost_v22.txt); подготовка к трассировке 0.22 — [ROUTING_PREP.md](ROUTING_PREP.md), удешевление 0.20 — [COST_DOWN_020.md](https://github.com/nikolajevs/ai/blob/1887d866ac820a41e9d1717056d188d7af6e6b51/pcb/PCB_V1/COST_DOWN_020.md), 0.19 — [COST_DOWN.md](https://github.com/nikolajevs/ai/blob/1887d866ac820a41e9d1717056d188d7af6e6b51/pcb/PCB_V1/COST_DOWN.md). Новые позиции 0.20–0.22 запрошены 30.09, остальные — по снимкам от 28–29.09. Первые платы собираются вручную. Изменения 0.18, унификация и экономия — [SIMPLIFICATION.md](https://github.com/nikolajevs/ai/blob/1887d866ac820a41e9d1717056d188d7af6e6b51/pcb/PCB_V1/SIMPLIFICATION.md); механический обзор предыдущей ревизии — [PRE_LAYOUT_PARTS_REVIEW.md](https://github.com/nikolajevs/ai/blob/1887d866ac820a41e9d1717056d188d7af6e6b51/pcb/PCB_V1/PRE_LAYOUT_PARTS_REVIEW.md).
 
