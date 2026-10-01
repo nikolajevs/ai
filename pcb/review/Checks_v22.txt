@@ -32,6 +32,9 @@
       PASS: no vias on BUCK12_SW, BUCK_SW, LED1_SW, LED2_SW; Kelvin sense lines thin with at most two vias each; RTC crystal nets short on F.Cu without vias
       PASS: +24V has 29 vias of at least 0.4 mm (limit 14), +24V_LOADS 11 (limit 8)
       PASS: copper areas +24V 1005 mm2, +24V_LOADS 389 mm2, HEATER_DRAIN 73 mm2, LED1_OUT 365 mm2, LED2_OUT 188 mm2
+[OK] check_fab.py (KiCad Python)
+      0 FAIL, 2 WARN (JLCPCB limits; details in review/DFM_JLCPCB_v22.txt)
+[OK] check_fab.py reproduces review\DFM_JLCPCB_v22.txt
 [OK] DRC report export
 [OK] DRC
       DRC violations 0; unconnected pads 0
