@@ -15,10 +15,4 @@ Current revision **v22** (PCB_V1 0.22). Electrical, cost and assembly reports ar
 | `Placement_v22_top.png` / `.svg`, `Placement_v22_bottom.png` / `.svg` | Placement exported from KiCad (top: F.Cu, F.Fab, F.Silkscreen, outline; bottom mirrored) |
 | `Root_v22.png` … `LEDDrivers_v22.png` | Schematic sheets rendered from KiCad SVG export |
 
-`history/` keeps the reports, images and partial cost audit of revisions 0.1–0.15 unchanged; historical documents in `../PCB_V1/history` link to them.
-
-Revision 0.20 changed footprints (Q711/Q721 DPAK, D711/D721 TO-277A, L101/L902 FXL0630 land) and added the RTC crystal parts; the LED switch areas were re-placed, see `../PCB_V1/COST_DOWN_020.md` and `Placement_v22_top.png`. Reports with suffixes v16–v20 are kept for comparison.
-
-Revision 0.21 changes only D303 to JSCJ BAV170 on the same SOT-23 land. Connectivity and placement are preserved. RTC voltage screening and limitations: `../PCB_V1/RTC_BACKUP_021.md`.
-
-Revision 0.22 prepares routing: Murata LED output MLCCs (same land), HRO TF-01A microSD on a project footprint, TP301 on the RTC CLKOUT and four Kelvin net ties at the LED-driver shunts; see `../PCB_V1/ROUTING_PREP.md`. Reports with suffixes v16–v21 are kept for comparison.
+Only the current revision is kept here. When `REV` in `check_all.py` changes, delete the previous revision's files in the same commit. Reports of earlier revisions (v16–v21, and 0.1–0.15 under `history/`) are in git history; links are in the archive section of `../PCB_V1/CHANGELOG.md`.

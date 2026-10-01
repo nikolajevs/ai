@@ -1,6 +1,6 @@
 """Price the whole schematic from a committed LCSC price snapshot.
 
-  python audit_bom_cost.py netlist.xml PCB_V1/price_snapshot_v16.json [--output report.txt]
+  python audit_bom_cost.py netlist.xml PCB_V1/price_snapshot_v22.json [--output report.txt]
 
 Every schematic reference must appear in exactly one snapshot line (parts that are not bought,
 such as DNP positions and bare test pads, are listed with kind "zero"). Lines with no references
