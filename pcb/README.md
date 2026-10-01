@@ -26,7 +26,8 @@ python check_all.py --write   # also refresh review/*_v22 (incl. DRC_routed_v22.
 | `verify_netlist.py` | Critical connectivity, supply domains, fuse branches, LED return isolation, GPIO map |
 | `verify_board.py` | Board vs schematic (every pin), power-footprint pad geometry — KiCad Python |
 | `verify_placement.py` | Board boundary, edge access, battery side, antenna keepout and manufacturing setup |
-| `check_fab.py` | DFM check of the board against the published JLCPCB limits (4 layers, 1 oz outer); `--fix-silk` widens thin silkscreen lines (`review/DFM_JLCPCB_<REV>.txt`) — KiCad Python |
+| `check_fab.py` | DFM check of the board against the published JLCPCB limits (4 layers, 1 oz outer) and the JLCDFM categories (silkscreen to pad/hole, via to pad, track to pad, THT to SMD); `--fix-silk` sets silkscreen strokes to 0.2 mm, cuts them away from pads and holes and nudges texts (`review/DFM_JLCPCB_<REV>.txt`) — KiCad Python |
+| `fab_touchups.py` | One-off board edits after the JLCDFM report of 2026-10-01 (a via, three ground ties, four track corners, one footprint); a record, tied to the coordinates of the committed routing — KiCad Python |
 | `export_fab.py` | Gerber + Excellon export for JLCPCB, read-back verification and `fab/PCB_V1_<REV>_jlcpcb.zip` (reproducible; `--check` compares with the committed archive) — KiCad Python |
 | `verify_routing.py` | Routing rules DRC cannot see: no tracks on the In1 GND plane, no power loops on In2, no vias on switching nodes, thin Kelvin lines, short RTC crystal nets, via counts and copper areas of the power nets — KiCad Python |
 | `route_power.py` | Power stage of the routing (planes, pours, power tracks and vias, ground ties) and its finish stage (GND/+3V3 fills): geometry tables in the script — KiCad Python |
