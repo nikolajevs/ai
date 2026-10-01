@@ -5,7 +5,8 @@ Current revision **v22** (PCB_V1 0.22). Electrical, cost and assembly reports ar
 | File | Content |
 |---|---|
 | `ERC_v22.rpt` | KiCad ERC report (0 errors / 0 warnings) |
-| `DRC_placement_v22.rpt` | KiCad DRC of the placed, unrouted board (0 violations; unconnected pads expected) |
+| `DRC_placement_v22.rpt` | KiCad DRC of the placed, unrouted board before routing (0 violations; 341 unconnected links) |
+| `DRC_routed_v22.rpt` | KiCad DRC of the routed board (0 violations, 0 unconnected pads); written by `check_all.py --write` |
 | `LED_power_v22.txt` | `analyze_led_power.py` — LED boost sizing, 72 cases per channel |
 | `Power_path_v22.txt` | `analyze_power_path.py` — input, fuses, TVS margins, 12 V buck, switches |
 | `Copper_v22.txt` | `analyze_copper.py` — conductor widths, via counts and drops for the confirmed stack (1.6 mm, 1 oz outer, 0.5 oz inner) |
@@ -14,6 +15,8 @@ Current revision **v22** (PCB_V1 0.22). Electrical, cost and assembly reports ar
 | `Checks_v22.txt` | Full `check_all.py` log for 0.22 |
 | `Placement_v22_top.png` / `.svg`, `Placement_v22_bottom.png` / `.svg` | Placement exported from KiCad (top: F.Cu, F.Fab, F.Silkscreen, outline; bottom mirrored) |
 | `Root_v22.png` … `LEDDrivers_v22.png` | Schematic sheets rendered from KiCad SVG export |
+| `Routed_v22_top.png`, `Routed_v22_bottom.png` | 3D renders (`kicad-cli pcb render`) of the routed board, top and bottom |
+| `Routed_v22_F.png`, `Routed_v22_In1.png`, `Routed_v22_In2.png`, `Routed_v22_B.png` | Copper layers of the routed board (`kicad-cli pcb export svg`; B.Cu mirrored): GND pours red, white = clearance |
 
 `history/` keeps the reports, images and partial cost audit of revisions 0.1–0.15 unchanged; historical documents in `../PCB_V1/history` link to them.
 
@@ -21,4 +24,4 @@ Revision 0.20 changed footprints (Q711/Q721 DPAK, D711/D721 TO-277A, L101/L902 F
 
 Revision 0.21 changes only D303 to JSCJ BAV170 on the same SOT-23 land. Connectivity and placement are preserved. RTC voltage screening and limitations: `../PCB_V1/RTC_BACKUP_021.md`.
 
-Revision 0.22 prepares routing: Murata LED output MLCCs (same land), HRO TF-01A microSD on a project footprint, TP301 on the RTC CLKOUT and four Kelvin net ties at the LED-driver shunts; see `../PCB_V1/ROUTING_PREP.md`. Reports with suffixes v16–v21 are kept for comparison.
+Revision 0.22 prepares routing: Murata LED output MLCCs (same land), HRO TF-01A microSD on a project footprint, TP301 on the RTC CLKOUT and four Kelvin net ties at the LED-driver shunts; see `../PCB_V1/ROUTING_PREP.md`. Reports with suffixes v16–v21 are kept for comparison. The first routed layout of 0.22 (2026-10-01, `../PCB_V1/ROUTING.md`) adds `DRC_routed_v22.rpt`, the `Routed_v22_*` images and a new `Checks_v22.txt` that includes `verify_routing.py`.
