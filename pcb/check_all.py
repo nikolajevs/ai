@@ -5,11 +5,12 @@
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
 -> analyze_copper.py -> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
-Python) -> verify_placement.py -> verify_routing.py -> DRC. The placement check verifies the outline, edge connectors,
+Python) -> verify_placement.py -> verify_routing.py -> check_fab.py -> DRC. The placement check verifies the outline, edge connectors,
 antenna keepout, battery side and initial manufacturing setup; the routing check the layer strategy (solid GND on In1,
-no vias on switching nodes) and the copper of the main power paths.
+no vias on switching nodes) and the copper of the main power paths; the fabrication check compares the
+board with the published JLCPCB limits (review/DFM_JLCPCB_<REV>.txt).
 Without --write the deterministic reports (LED_power, Power_path, Copper, BOM_cost,
-JLC_assembly, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
+JLC_assembly, DFM_JLCPCB, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
 are not compared with review/: ERC must report no violations and DRC no violations and no unconnected pads
 (the board is routed). The price audit uses the committed dated snapshot
 PCB_V1/price_snapshot_<PRICE_REV>.json; it fails when a schematic reference has no price line or
@@ -152,6 +153,12 @@ def main():
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
         run('verify_placement.py (KiCad Python)', [KICAD_PYTHON, 'verify_placement.py', str(pcb)], capture=False)
         run('verify_routing.py (KiCad Python)', [KICAD_PYTHON, 'verify_routing.py', str(pcb)], capture=False)
+        dfm = tmp / f'DFM_JLCPCB_{REV}.txt'
+        out = run('check_fab.py (KiCad Python)', [KICAD_PYTHON, 'check_fab.py', str(pcb)])
+        dfm.write_text(out.replace('\r\n', '\n'), encoding='utf-8', newline='\n')
+        print('      ' + (out.strip().splitlines() or ['no output'])[-1] + f' (JLCPCB limits; details in review/{dfm.name})')
+        if out.strip():
+            compare_or_write('check_fab.py', dfm, REVIEW / dfm.name, args.write)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
         unconnected = counters(drc, r'Found (\d+) unconnected pads')
