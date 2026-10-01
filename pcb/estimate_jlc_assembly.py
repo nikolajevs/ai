@@ -1,6 +1,6 @@
 """Estimate a JLCPCB PCB + assembly order for the whole schematic.
 
-  python estimate_jlc_assembly.py netlist.xml PCB_V1/price_snapshot_v19.json PCB_V1/jlc_snapshot_v19.json [--output report.txt]
+  python estimate_jlc_assembly.py netlist.xml PCB_V1/price_snapshot_v22.json PCB_V1/jlc_snapshot_v22.json [--output report.txt]
 
 Parts: every priced schematic line of the LCSC price snapshot, re-priced from the JLCPCB parts
 library record in the JLC snapshot. JLCPCB charges max(BOM x boards + attrition, minimum) pieces at
