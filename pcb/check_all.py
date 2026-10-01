@@ -5,12 +5,13 @@
 
 Steps: ERC -> netlist export -> verify_netlist.py -> analyze_led_power.py -> analyze_power_path.py
 -> analyze_copper.py -> BOM export comparison -> audit_bom_cost.py -> estimate_jlc_assembly.py -> verify_board.py (KiCad
-Python) -> verify_placement.py -> DRC. The placement check verifies the outline, edge connectors,
-antenna keepout, battery side and initial manufacturing setup.
+Python) -> verify_placement.py -> verify_routing.py -> DRC. The placement check verifies the outline, edge connectors,
+antenna keepout, battery side and initial manufacturing setup; the routing check the layer strategy (solid GND on In1,
+no vias on switching nodes) and the copper of the main power paths.
 Without --write the deterministic reports (LED_power, Power_path, Copper, BOM_cost,
 JLC_assembly, BOM_schematic.csv) must match the committed files byte for byte (line endings ignored). ERC/DRC reports carry timestamps and
-are not compared with review/: ERC must report no violations and DRC no violations (unconnected pads
-are only counted while the board is unrouted). The price audit uses the committed dated snapshot
+are not compared with review/: ERC must report no violations and DRC no violations and no unconnected pads
+(the board is routed). The price audit uses the committed dated snapshot
 PCB_V1/price_snapshot_<PRICE_REV>.json; it fails when a schematic reference has no price line or
 a selected MPN differs. The JLCPCB assembly estimate uses jlc_snapshot_<PRICE_REV>.json.
 Price snapshot dates are independent of the hardware/report revision; existing data are reused,
@@ -150,20 +151,21 @@ def main():
             compare_or_write('estimate_jlc_assembly.py', jlc, REVIEW / jlc.name, args.write)
         run('verify_board.py (KiCad Python)', [KICAD_PYTHON, 'verify_board.py', str(net), str(pcb)], capture=False)
         run('verify_placement.py (KiCad Python)', [KICAD_PYTHON, 'verify_placement.py', str(pcb)], capture=False)
+        run('verify_routing.py (KiCad Python)', [KICAD_PYTHON, 'verify_routing.py', str(pcb)], capture=False)
         run('DRC report export', [KICAD_CLI, 'pcb', 'drc', '-o', str(drc), str(pcb)])
         violations = counters(drc, r'Found (\d+) DRC violations')
         unconnected = counters(drc, r'Found (\d+) unconnected pads')
-        drc_ok = bool(violations) and violations[0] == 0
+        drc_ok = bool(violations) and violations[0] == 0 and bool(unconnected) and unconnected[0] == 0
         print(f"[{'OK' if drc_ok else 'FAIL'}] DRC")
         print(f'      DRC violations {violations[0] if violations else "?"}; unconnected pads '
-              f'{unconnected[0] if unconnected else "?"} (expected while the board is unrouted)')
+              f'{unconnected[0] if unconnected else "?"}')
         check_libraries('DRC', drc)
         if not drc_ok:
-            failures.append('DRC violations')
+            failures.append('DRC violations or unconnected pads')
         if args.write:
             shutil.copyfile(erc, REVIEW / f'ERC_{REV}.rpt')
-            shutil.copyfile(drc, REVIEW / f'DRC_placement_{REV}.rpt')
-            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_placement_{REV}.rpt')
+            shutil.copyfile(drc, REVIEW / f'DRC_routed_{REV}.rpt')
+            print(f'[WRITE] review/ERC_{REV}.rpt, review/DRC_routed_{REV}.rpt')
             svg_dir = tmp / 'svg'
             run('schematic SVG export', [KICAD_CLI, 'sch', 'export', 'svg', '-o', str(svg_dir), str(sch)])
             render_images(svg_dir)
