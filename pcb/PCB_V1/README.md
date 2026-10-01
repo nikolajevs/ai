@@ -26,6 +26,7 @@
 | [CHANGELOG.md](CHANGELOG.md) | Журнал ревизий 0.1–0.22 |
 | [BOM_schematic.csv](BOM_schematic.csv) | Полный состав схемы, генерируется из netlist |
 | [BOM_v0.1.md](BOM_v0.1.md) / `.csv` | Подобранные детали с MPN и статусом (не заказной BOM) |
+| [FAB.md](FAB.md) | Файлы для JLCPCB (Gerber, сверловка), параметры заказа, проверка платы по нормам JLCPCB, что осталось |
 | [ROUTING.md](ROUTING.md) | Трассировка 0.22: способ (скрипты + Freerouting + доводка), силовые пути, результат, что осталось |
 | [ROUTING_PREP.md](ROUTING_PREP.md) | Ревизия 0.22: подготовка к трассировке — замены, net-tie, медь при подтверждённом стеке, правила и порядок разводки |
 | [RTC_COMPATIBILITY.md](RTC_COMPATIBILITY.md) | RTC PCF8563: схема, генератор и точность, батарейка, прошивка |
