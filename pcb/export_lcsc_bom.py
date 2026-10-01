@@ -1,19 +1,20 @@
 """Export the order BOM for LCSC from the schematic and the dated price snapshots.
 
-  python export_lcsc_bom.py netlist.xml PCB_V1/price_snapshot_v22.json PCB_V1/jlc_snapshot_v22.json OUTDIR [--rev v22] [--boards 5]
+  python export_lcsc_bom.py netlist.xml PCB_V1/price_snapshot_v22.json PCB_V1/jlc_snapshot_v22.json OUTDIR [--rev v22] [--boards 1] [--spare-rate 0]
 
 Writes into OUTDIR (all deterministic: same inputs give the same bytes):
   BOM_LCSC_<rev>.csv / .xlsx   upload file for https://www.lcsc.com/bom (.csv/.xlsx, up to 800 lines): Quantity,
                                LCSC Part Number, Manufacturer Part Number, Manufacturer, Description, Customer Part Number
-                               (the designators). Only parts LCSC can supply at the snapshot date, quantities for
-                               --boards boards including spares and LCSC minimum/multiple. The workbook also has the
-                               full BOM, the parts to buy elsewhere and the totals.
+                               (the designators). Only parts LCSC can supply at the snapshot date. Quantity is the
+                               number of parts for --boards boards (default one): the BOM quantity, not rounded to
+                               the LCSC minimum order. The workbook also has the full BOM, the parts to buy elsewhere
+                               and the totals.
   BOM_PCB_V1_<rev>.csv         full grouped BOM: one line per purchasing code, with package, mounting, price tiers
                                applied, stock, JLCPCB library class, notes; not fitted lines and extras included.
 
-Quantities: parts per board x boards, plus spares (10 %, at least one piece; the LCSC minimum/multiple may already
-cover it), then rounded up to the LCSC minimum and multiple. The unit price is the list price tier at the order
-quantity. Prices, stock and minimums are the snapshot of the dates in the snapshot file, not a live quote: the LCSC
+Quantities: parts per board x boards (plus --spare-rate of that, at least one piece, when given). The full BOM also
+shows the LCSC minimum and multiple and the order for 1 and for 5 boards rounded up to them, with the list price tier
+at that order quantity (the cost columns and totals use these rounded orders). Prices, stock and minimums are the snapshot of the dates in the snapshot file, not a live quote: the LCSC
 BOM tool shows the live values after upload and the quantities can be edited there.
 """
 import argparse
@@ -31,7 +32,6 @@ from xml.sax.saxutils import escape
 
 import audit_bom_cost as audit
 
-SPARE_RATE = Decimal('0.1')
 CATEGORY = {'U': 'IC / module', 'Q': 'Transistor / MOSFET', 'D': 'Diode / TVS / ESD', 'L': 'Inductor', 'C': 'Capacitor',
             'R': 'Resistor', 'F': 'Fuse / holder', 'J': 'Connector', 'SW': 'Switch', 'BT': 'Battery holder', 'Y': 'Crystal',
             'NT': 'Net tie (copper only)', 'TP': 'Test pad (copper only)'}
@@ -72,7 +72,7 @@ def split_part(part):
     return manufacturer, mpn
 
 
-def build(netlist, snapshot, jlc_snapshot, boards):
+def build(netlist, snapshot, jlc_snapshot, boards, spare_rate):
     root = ET.parse(netlist).getroot()
     comps = {c.get('ref'): c for c in root.findall('.//components/comp')}
     data = json.loads(snapshot.read_text(encoding='utf-8'))
@@ -126,14 +126,12 @@ def build(netlist, snapshot, jlc_snapshot, boards):
             rows.append(row)
             continue
         row['orderable'] = line['stock'] > 0
-        for n, spares in ((1, False), (boards, True)):
+        for key, n, rate in (('b1', 1, 0), ('b5', 5, 0), ('up', boards, spare_rate)):
             need = qty * n
-            spare = max(1, math.ceil(Decimal(need) * SPARE_RATE)) if spares else 0
+            spare = max(1, math.ceil(Decimal(need) * Decimal(str(rate)))) if rate else 0
             order = audit.order_quantity(line, need + spare)
             price = audit.tier_price(line['tiers'], order)
-            row[f'build{n}'] = dict(need=need, order=order, spare=order - need, price=price, cost=price * order)
-        base = audit.order_quantity(line, qty * boards)
-        row['nospare'] = dict(order=base, cost=audit.tier_price(line['tiers'], base) * base)
+            row[key] = dict(need=need, order=order, price=price, cost=price * order, qty=need + spare)
         rows.append(row)
     order_key = {name: i for i, name in enumerate(CATEGORY.values())}
     rows.sort(key=lambda r: (r['kind'] == 'zero', r['category'] == 'Extra', order_key.get(r['category'], 99),
@@ -147,7 +145,7 @@ def money(x):
 
 def description(r):
     """Passives: value and size. Everything else: manufacturer and part number."""
-    if r['category'] in ('Capacitor', 'Resistor', 'Inductor'):
+    if r['category'] in ('Capacitor', 'Resistor'):
         return f'{r["value"]} {short_package(r["package"])}'
     if r['refs']:
         return f'{r["manufacturer"]} {r["mpn"]}'.strip()
@@ -161,24 +159,24 @@ def customer_part(r):
     return m.group(1) if m else r['line']['part']
 
 
-def upload_rows(rows, boards):
+def upload_rows(rows):
     out = []
     for r in rows:
         if r['kind'] == 'zero' or not r['orderable']:
             continue
-        b = r[f'build{boards}']
-        out.append([b['order'], r['lcsc'], r['mpn'], r['manufacturer'], description(r), customer_part(r)])
+        b = r['up']
+        out.append([b['qty'], r['lcsc'], r['mpn'], r['manufacturer'], description(r), customer_part(r)])
     return out
 
 
 UPLOAD_HEADER = ['Quantity', 'LCSC Part Number', 'Manufacturer Part Number', 'Manufacturer', 'Description', 'Customer Part Number']
 
 
-def full_rows(rows, boards):
+def full_rows(rows):
     header = ['Line', 'Category', 'Designators', 'Qty per board', 'Value / function', 'Package', 'Mount', 'Manufacturer', 'MPN', 'LCSC Part Number',
               'Part type', 'JLCPCB class', 'LCSC stock (snapshot)', 'LCSC minimum', 'LCSC multiple',
               'Order qty 1 board', 'Unit USD 1 board', 'Order USD 1 board',
-              f'Needed {boards} boards', 'Spares and MOQ surplus', f'Order qty {boards} boards', f'Unit USD {boards} boards', f'Order USD {boards} boards',
+              'Order qty 5 boards', 'Unit USD 5 boards', 'Order USD 5 boards', 'Qty in BOM_LCSC file',
               'LCSC page', 'Notes']
     out = []
     for i, r in enumerate(rows, 1):
@@ -186,24 +184,24 @@ def full_rows(rows, boards):
         base = [i, r['category'], customer_part(r), r['qty'], r['value'] if r['refs'] and r['kind'] != 'zero' else (r['line']['part'] if r['kind'] == 'zero' else description(r)), r['package'], r['mount'],
                 r['manufacturer'], r['mpn'], r['lcsc'], PART_TYPE[r['kind']], jlc, r['stock'] if r['lcsc'] else '',
                 r['moq'] or '', r['mult'] or '']
-        if 'build1' in r:
-            one, many = r['build1'], r[f'build{boards}']
-            base += [one['order'], money(one['price']), money(one['cost']), many['need'], many['spare'], many['order'],
-                     money(many['price']), money(many['cost'])]
+        if 'b1' in r:
+            one, five = r['b1'], r['b5']
+            base += [one['order'], money(one['price']), money(one['cost']), five['order'], money(five['price']), money(five['cost']),
+                     r['up']['qty'] if r['orderable'] else '']
         else:
-            base += ['', '', '', '', '', '', '', '']
+            base += ['', '', '', '', '', '', '']
         out.append(base + [r['source'], r['notes']])
     return header, out
 
 
-def totals(rows, boards):
+def totals(rows):
     t = {'parts': sum(r['qty'] for r in rows if r['kind'] != 'zero' and r['refs']),
          'codes': len({r['lcsc'] for r in rows if r['kind'] != 'zero' and r['lcsc'] and r['refs']}),
          'lines': sum(1 for r in rows if r['orderable'] and r['kind'] != 'zero')}
-    ok = [r for r in rows if r.get('orderable') and 'build1' in r]
-    t['order1'] = sum(r['build1']['cost'] for r in ok)
-    t['orderN'] = sum(r[f'build{boards}']['cost'] for r in ok)
-    t['orderN_nospare'] = sum(r['nospare']['cost'] for r in ok)
+    ok = [r for r in rows if r.get('orderable') and 'b1' in r]
+    t['order1'] = sum(r['b1']['cost'] for r in ok)
+    t['order5'] = sum(r['b5']['cost'] for r in ok)
+    t['upload'] = sum(r['up']['cost'] for r in ok)
     t['elsewhere'] = [r for r in rows if r['kind'] != 'zero' and not r['orderable']]
     return t
 
@@ -308,15 +306,15 @@ def write_xlsx(path, sheets):
             z.writestr(info, text.encode('utf-8'))
 
 
-def workbook(rows, data, boards, rev):
-    t = totals(rows, boards)
-    up_header, up_body = UPLOAD_HEADER, upload_rows(rows, boards)
+def workbook(rows, data, boards, spare_rate, rev):
+    t = totals(rows)
+    up_header, up_body = UPLOAD_HEADER, upload_rows(rows)
     sheet1 = [[(h, 1) for h in up_header]]
     for body in up_body:
         sheet1.append([(body[0], 4), (body[1], 2), (body[2], 2), (body[3], 2), (body[4], 2), (body[5], 2)])
-    full_header, full_body = full_rows(rows, boards)
-    numeric = {0, 3, 12, 13, 14, 15, 17, 18, 19, 20, 22}
-    price = {16, 21}
+    full_header, full_body = full_rows(rows)
+    numeric = {0, 3, 12, 13, 14, 15, 18, 21}
+    price = {16, 17, 19, 20}
     sheet2 = [[(h, 1) for h in full_header]]
     for body in full_body:
         cells = []
@@ -331,12 +329,12 @@ def workbook(rows, data, boards, rev):
     summary = [[(f'PCB_V1 {rev} - order BOM for LCSC', 5)], [],
                ['Price snapshot', data['captured']], ['Source', data['source']],
                ['EUR rate', f'1 EUR = {data["eur_usd"]["rate"]} USD ({data["eur_usd"]["date"]})'],
-               ['Build', f'{boards} boards; quantities include spares (10 %, at least one piece) and the LCSC minimum/multiple'], [],
+               ['Upload file', f'quantities for {boards} board(s), spares {int(spare_rate * 100)} %, not rounded to the LCSC minimum order'], [],
                [('Totals (list prices, USD, no shipping, VAT or discounts)', 5)],
                ['Parts on one board', t['parts']], ['Distinct LCSC codes on the board', t['codes']], ['Lines in the upload file', t['lines']],
-               ['Order for 1 board, no spares', money(t['order1'])],
-               [f'Order for {boards} boards, no spares', money(t['orderN_nospare'])],
-               [f'Order for {boards} boards, with spares (upload file)', money(t['orderN'])], [],
+               ['Order for 1 board', money(t['order1'])],
+               ['Order for 5 boards', money(t['order5'])],
+               ['Upload file after LCSC minimum orders', money(t['upload'])], [],
                [('Not in the upload file: buy elsewhere', 5)]]
     for r in t['elsewhere']:
         summary.append([(', '.join(r['refs']) or r['line']['part'], 6), (f'{r["qty"]} per board: {r["manufacturer"]} {r["mpn"]}'.strip(), 6), (r['notes'], 6)])
@@ -348,20 +346,20 @@ def workbook(rows, data, boards, rev):
                 ['Stock and prices are the snapshot above; the LCSC BOM tool shows the live values after upload and the quantities can be edited there.'],
                 ['Generic lines are representative parts: an equivalent with the same value, package and rating is fine.']]
     return [('LCSC upload', sheet_xml(sheet1, [10, 18, 28, 22, 40, 60], 1, f'A1:F{len(sheet1)}')),
-            ('Full BOM', sheet_xml(sheet2, [6, 18, 36, 8, 22, 28, 9, 20, 28, 14, 16, 12, 10, 9, 9, 10, 10, 10, 10, 8, 10, 10, 10, 34, 60], 1, f'A1:{col_name(len(full_header) - 1)}{len(sheet2)}')),
+            ('Full BOM', sheet_xml(sheet2, [6, 18, 36, 8, 22, 28, 9, 20, 28, 14, 16, 12, 10, 9, 9, 10, 10, 10, 10, 10, 10, 10, 34, 60], 1, f'A1:{col_name(len(full_header) - 1)}{len(sheet2)}')),
             ('Summary', sheet_xml(summary, [48, 48, 70]))]
 
 
-def export(netlist, snapshot, jlc_snapshot, outdir, boards, rev):
-    rows, data = build(netlist, snapshot, jlc_snapshot, boards)
+def export(netlist, snapshot, jlc_snapshot, outdir, boards, spare_rate, rev):
+    rows, data = build(netlist, snapshot, jlc_snapshot, boards, spare_rate)
     outdir.mkdir(parents=True, exist_ok=True)
-    write_csv(outdir / f'BOM_LCSC_{rev}.csv', UPLOAD_HEADER, upload_rows(rows, boards))
-    header, body = full_rows(rows, boards)
+    write_csv(outdir / f'BOM_LCSC_{rev}.csv', UPLOAD_HEADER, upload_rows(rows))
+    header, body = full_rows(rows)
     write_csv(outdir / f'BOM_PCB_V1_{rev}.csv', header, body)
-    write_xlsx(outdir / f'BOM_LCSC_{rev}.xlsx', workbook(rows, data, boards, rev))
-    t = totals(rows, boards)
-    print(f'{t["lines"]} lines for LCSC ({t["parts"]} parts on the board, {t["codes"]} codes); order for {boards} boards with spares USD {money(t["orderN"])} '
-          f'(without spares {money(t["orderN_nospare"])}), 1 board USD {money(t["order1"])}')
+    write_xlsx(outdir / f'BOM_LCSC_{rev}.xlsx', workbook(rows, data, boards, spare_rate, rev))
+    t = totals(rows)
+    print(f'{t["lines"]} lines for LCSC ({t["parts"]} parts on the board, {t["codes"]} codes); 1 board USD {money(t["order1"])}, '
+          f'5 boards USD {money(t["order5"])}; upload file ({boards} board(s), spares {spare_rate}) costs USD {money(t["upload"])} after LCSC minimum orders')
     print('buy elsewhere: ' + '; '.join(f'{", ".join(r["refs"]) or r["line"]["part"]} {r["mpn"]}' for r in t['elsewhere']))
     return t
 
@@ -373,6 +371,7 @@ if __name__ == '__main__':
     parser.add_argument('jlc_snapshot', type=Path)
     parser.add_argument('outdir', type=Path)
     parser.add_argument('--rev', default='v22')
-    parser.add_argument('--boards', type=int, default=5)
+    parser.add_argument('--boards', type=int, default=1)
+    parser.add_argument('--spare-rate', type=float, default=0.0, help='spares as a fraction of the need, e.g. 0.1; at least one piece')
     args = parser.parse_args()
-    export(args.netlist, args.snapshot, args.jlc_snapshot, args.outdir, args.boards, args.rev)
+    export(args.netlist, args.snapshot, args.jlc_snapshot, args.outdir, args.boards, args.spare_rate, args.rev)

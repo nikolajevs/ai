@@ -37,7 +37,7 @@ python check_all.py --write   # also refresh review/*_v22 (incl. DRC_routed_v22.
 | `analyze_led_power.py` | LED boost sizing over 72 cases per channel |
 | `analyze_power_path.py` | Input, fuse loading, TVS margins, 12 V / 3.3 V bucks, switch conduction |
 | `export_bom.py` | Full schematic BOM to `PCB_V1/BOM_schematic.csv` |
-| `export_lcsc_bom.py` | Order BOM for LCSC from the schematic and the dated price snapshot: `PCB_V1/BOM_LCSC_<REV>.csv` / `.xlsx` (upload file for lcsc.com/bom, quantities for 5 boards with spares and LCSC minimums) and the full grouped `PCB_V1/BOM_PCB_V1_<REV>.csv` |
+| `export_lcsc_bom.py` | Order BOM for LCSC from the schematic and the dated price snapshot: `PCB_V1/BOM_LCSC_<REV>.csv` / `.xlsx` (upload file for lcsc.com/bom, quantities per board) and the full grouped `PCB_V1/BOM_PCB_V1_<REV>.csv` |
 | `sync_board.py` | Update an unrouted board from the netlist, retaining component side and orientation (refuses routed boards: after routing use KiCad's Update PCB) — KiCad Python |
 | `create_staging_board.py` | Create the initial staging board — KiCad Python |
 | `sync_models.py` | Attach 3D models to the board (project library models, overrides for stock footprints whose KiCad 10 model is missing) and list parts still without a model — KiCad Python |
