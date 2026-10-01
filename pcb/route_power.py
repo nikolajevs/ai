@@ -210,8 +210,8 @@ VIAS = [
     ('GND', 'M', [(99.3, 99.5), (99.3, 101.3)]),                                                # C104, C105
     ('GND', 'M', [(60.1, 101.0)]),                                                              # C710
     ('GND', 'M', [(66.9, 129.3), (66.9, 130.7)]),                                               # C715
-    ('GND', 'S', [(92.475, 107.95)]),                                                           # C716, C717
-    ('GND', 'M', [(92.475, 111.75), (92.475, 112.95)]),
+    # (no via between C716.2 and C717.2: it would sit 0.075 mm from both pads)
+    ('GND', 'M', [(92.475, 111.75), (92.475, 112.95)]),                                         # C716, C717
     ('GND', 'M', [(98.8, 105.5), (98.8, 107.95), (98.8, 110.4)]),                               # C718, C719
     ('GND', 'M', [(86.2, 131.9), (87.3, 131.9), (88.4, 131.9)]),                                # R715
     ('GND', 'M', [(71.5, 135.2), (71.5, 136.8)]),                                               # R716
@@ -334,28 +334,32 @@ TIE_WIDTH = 0.3
 
 
 def obstacles(board):
-    """Copper of every net: [net, (x0, y0, x1, y1) in mm, {layer: shape}, clearance mm]."""
+    """Copper of every net: [net, (x0, y0, x1, y1) in mm, {layer: shape}, clearance mm, uuid, kind]."""
     out = []
 
-    def add(item, layers):
+    def add(item, layers, kind):
         bb = item.GetBoundingBox()
         box = (p.ToMM(bb.GetLeft()), p.ToMM(bb.GetTop()), p.ToMM(bb.GetRight()), p.ToMM(bb.GetBottom()))
         try:
             clr = p.ToMM(item.GetEffectiveNetClass().GetClearance())
         except Exception:
             clr = 0.5
-        out.append([item.GetNetname(), box, {layer: item.GetEffectiveShape(layer) for layer in layers}, max(clr, 0.2)])
+        out.append([item.GetNetname(), box, {layer: item.GetEffectiveShape(layer) for layer in layers}, max(clr, 0.2),
+                    item.m_Uuid.AsString(), kind])
 
     for fp in board.GetFootprints():
         for pad in fp.Pads():
-            add(pad, [layer for layer in COPPER if pad.IsOnLayer(layer)])
+            add(pad, [layer for layer in COPPER if pad.IsOnLayer(layer)], 'pad')
     for t in board.GetTracks():
-        add(t, COPPER if isinstance(t, p.PCB_VIA) else [t.GetLayer()])
+        add(t, COPPER if isinstance(t, p.PCB_VIA) else [t.GetLayer()], 'via' if isinstance(t, p.PCB_VIA) else 'track')
     return out
 
 
-def tie_ground(board):
-    """A via and a short stub for every GND pad outside the copper islands: SMD pads reach In1 locally."""
+def tie_ground(board, only=None):
+    """A via and a short stub for every GND pad outside the copper islands: SMD pads reach In1 locally.
+
+    A tie via keeps clear of every other pad and via, also of its own net (no via touching a neighbouring pad);
+    `only` limits the work to a set of (reference, pad number), used when a tie is redone on a finished board."""
     pours = [outline for name, netname, layer, outline in POURS if netname != 'GND']
     keepouts = []
     for fp in board.GetFootprints():
@@ -370,12 +374,17 @@ def tie_ground(board):
     dia, drill = VIA['S']
     placed, failed = 0, []
 
-    def clear_of(shape, layer, box):
+    def clear_of(shape, layer, box, via, own):
         x0, y0, x1, y1 = box
-        for netname, (a, b, c, d), shapes, clr in obst:
-            if netname == 'GND' or layer not in shapes:
+        for netname, (a, b, c, d), shapes, clr, uid, kind in obst:
+            if uid == own or layer not in shapes:
                 continue
-            m = max(clr, TIE_MARGIN)
+            if netname == 'GND':
+                if kind == 'track' or (kind == 'via' and not via):
+                    continue
+                m = 0.35 if kind == 'via' else 0.15        # same net: hole spacing / no sliver against a neighbouring pad
+            else:
+                m = max(clr, TIE_MARGIN)
             if c < x0 - m or a > x1 + m or d < y0 - m or b > y1 + m:
                 continue
             if shape.Collide(shapes[layer], MM(m)):
@@ -387,6 +396,8 @@ def tie_ground(board):
             continue
         for pad in fp.Pads():
             if pad.GetNetname() != 'GND' or pad.GetAttribute() == p.PAD_ATTRIB_PTH or (fp.GetReference(), pad.GetNumber()) in TIED_BY_TRACK:
+                continue
+            if only is not None and (fp.GetReference(), pad.GetNumber()) not in only:
                 continue
             cx, cy = p.ToMM(pad.GetPosition().x), p.ToMM(pad.GetPosition().y)
             if any(inside((cx, cy), outline) for _, layer, outline in islands() if layer == 'F.Cu'):
@@ -413,7 +424,8 @@ def tie_ground(board):
                     box = (vx - dia / 2, vy - dia / 2, vx + dia / 2, vy + dia / 2)
                     if v.GetEffectiveShape(pad_layer).Collide(pad.GetEffectiveShape(pad_layer), MM(0.15)):
                         continue            # never a via in or against the pad being tied (hand soldering)
-                    if not all(clear_of(v.GetEffectiveShape(layer), layer, box) for layer in (p.F_Cu, p.In2_Cu, p.B_Cu)):
+                    own = pad.m_Uuid.AsString()
+                    if not all(clear_of(v.GetEffectiveShape(layer), layer, box, True, own) for layer in (p.F_Cu, p.In2_Cu, p.B_Cu)):
                         continue
                     stub = p.PCB_TRACK(board)
                     stub.SetStart(pad.GetPosition())
@@ -421,7 +433,7 @@ def tie_ground(board):
                     stub.SetWidth(MM(TIE_WIDTH))
                     stub.SetLayer(pad_layer)
                     sbox = (min(cx, vx) - TIE_WIDTH, min(cy, vy) - TIE_WIDTH, max(cx, vx) + TIE_WIDTH, max(cy, vy) + TIE_WIDTH)
-                    if not clear_of(stub.GetEffectiveShape(), pad_layer, sbox):
+                    if not clear_of(stub.GetEffectiveShape(), pad_layer, sbox, False, own):
                         continue
                     found = (v, stub)
                     break
@@ -436,7 +448,8 @@ def tie_ground(board):
                 board.Add(item)
                 bb = item.GetBoundingBox()
                 obst.append(['GND', (p.ToMM(bb.GetLeft()), p.ToMM(bb.GetTop()), p.ToMM(bb.GetRight()), p.ToMM(bb.GetBottom())),
-                             {layer: item.GetEffectiveShape(layer) for layer in layers}, 0.2])
+                             {layer: item.GetEffectiveShape(layer) for layer in layers}, 0.2, item.m_Uuid.AsString(),
+                             'via' if isinstance(item, p.PCB_VIA) else 'track'])
             placed += 1
     print(f'GND ties: {placed} vias with stubs; no room for {failed if failed else "none"}')
     return failed

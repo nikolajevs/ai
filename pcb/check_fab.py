@@ -1,14 +1,16 @@
 """DFM check of PCB_V1 against the JLCPCB capabilities for a 4-layer 1.6 mm board (KiCad Python).
 
   python check_fab.py PCB_V1/PCB_V1.kicad_pcb              # report; exit 1 on any FAIL
-  python check_fab.py PCB_V1/PCB_V1.kicad_pcb --fix-silk   # widen silkscreen lines to the JLCPCB minimum, then save
+  python check_fab.py PCB_V1/PCB_V1.kicad_pcb --fix-silk   # silkscreen: strokes to 0.2 mm, cut away from pads and holes, then save
 
 Limits are the JLCPCB figures for multilayer boards with 1 oz outer copper, read on 2026-10-01 from
 https://jlcpcb.com/capabilities/pcb-capabilities (FAIL = below the absolute minimum, WARN = below the
 recommended value). This is our own check against the published numbers; JLCPCB's automatic review on
-upload is the final word. It does not replace DRC, which stays responsible for clearances in the design.
+upload is the final word (JLCDFM, https://dfm.jlcdfm.com, found the silkscreen, via-to-pad and mask-to-trace cases that
+the published limits do not spell out; they are checked here as well). It does not replace DRC.
 """
 import json
+import math
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -73,34 +75,235 @@ def check(ok, fail_text, pass_text, level='FAIL'):
 
 # --- silkscreen --------------------------------------------------------------------------------
 SILK = (p.F_SilkS, p.B_SilkS)
-thin, texts = 0, []
-items = list(board.GetDrawings()) + [g for fp in board.GetFootprints() for g in fp.GraphicalItems()]
-for g in items:
-    if g.GetLayer() not in SILK:
-        continue
-    if isinstance(g, p.PCB_SHAPE):
-        if mm(g.GetWidth()) < SILK_LINE_MIN - 1e-6:
-            thin += 1
-            if fix_silk:
-                g.SetWidth(p.FromMM(SILK_LINE_MIN))
-    elif isinstance(g, p.PCB_TEXT) and g.IsVisible():
-        texts.append(g)
-for fp in board.GetFootprints():
-    for f in (fp.Reference(), fp.Value()):
-        if f.IsVisible() and f.GetLayer() in SILK:
-            texts.append(f)
-if fix_silk:
+SILK_LINE_REC = 0.2             # JLCDFM warns at 0.15 mm
+SILK_GAP = 0.15                 # silkscreen to pad and to hole
+SILK_PIECE_MIN = 0.3            # trimmed pieces shorter than this are dropped
+SAMPLE = 0.02                   # sampling step along a silkscreen stroke, mm
+graveyard = []                  # removed items stay referenced (see route_power.GRAVEYARD)
+FMM = p.FromMM
+
+
+def silk_graphics():
+    out = [(g, board) for g in board.GetDrawings() if g.GetLayer() in SILK]
+    for fp in board.GetFootprints():
+        out += [(g, fp) for g in fp.GraphicalItems() if g.GetLayer() in SILK]
+    return out
+
+
+def silk_blockers():
+    """Per silkscreen layer: pad copper and holes (drills, vias) that silkscreen must keep SILK_GAP away from."""
+    out = {p.F_SilkS: [], p.B_SilkS: []}
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            for silk, cu in ((p.F_SilkS, p.F_Cu), (p.B_SilkS, p.B_Cu)):
+                if pad.IsOnLayer(cu):
+                    out[silk].append((pad.GetEffectiveShape(cu), pad.GetBoundingBox()))
+            if pad.GetDrillSizeX() > 0:
+                for silk in out:
+                    out[silk].append((pad.GetEffectiveHoleShape(), pad.GetBoundingBox()))
+    for t in board.GetTracks():
+        if isinstance(t, p.PCB_VIA):
+            for silk in out:
+                out[silk].append((p.SHAPE_CIRCLE(t.GetPosition(), t.GetDrill() // 2), t.GetBoundingBox()))
+    return out
+
+
+def blocked_at(blockers, x, y, half_width):
+    reach = FMM(SILK_GAP + half_width + 0.02)
+    probe = p.SHAPE_CIRCLE(p.VECTOR2I(int(x), int(y)), FMM(half_width))
+    for shape, bb in blockers:
+        if x < bb.GetLeft() - reach or x > bb.GetRight() + reach or y < bb.GetTop() - reach or y > bb.GetBottom() + reach:
+            continue
+        if p.SHAPE.Collide(shape, probe, FMM(SILK_GAP)):
+            return True
+    return False
+
+
+def stroke_points(g):
+    """Centre line of a silkscreen shape as [(x, y, is_vertex)] in nm, closed shapes with the first point repeated; None otherwise."""
+    kind = g.GetShape()
+    s, e = g.GetStart(), g.GetEnd()
+    if kind == p.SHAPE_T_SEGMENT:
+        return [(s.x, s.y, True), (e.x, e.y, True)]
+    if kind == p.SHAPE_T_RECT:
+        corners = [(s.x, s.y), (e.x, s.y), (e.x, e.y), (s.x, e.y), (s.x, s.y)]
+        return [(x, y, True) for x, y in corners]
+    if kind == p.SHAPE_T_CIRCLE:
+        r = math.hypot(e.x - s.x, e.y - s.y)
+        return [(s.x + r * math.cos(2 * math.pi * k / 72), s.y + r * math.sin(2 * math.pi * k / 72), False) for k in range(73)]
+    if kind == p.SHAPE_T_ARC:
+        c, m = g.GetCenter(), g.GetArcMid()
+        r = math.hypot(s.x - c.x, s.y - c.y)
+        a0 = math.atan2(s.y - c.y, s.x - c.x)
+        am = math.atan2(m.y - c.y, m.x - c.x)
+        a1 = math.atan2(e.y - c.y, e.x - c.x)
+        sweep = (a1 - a0) % (2 * math.pi)
+        if ((am - a0) % (2 * math.pi)) > sweep:
+            sweep -= 2 * math.pi
+        n = max(2, int(abs(sweep) * r / FMM(0.1)))
+        return [(c.x + r * math.cos(a0 + sweep * k / n), c.y + r * math.sin(a0 + sweep * k / n), False) for k in range(n + 1)]
+    return None
+
+
+def densify(points):
+    out = []
+    for (x0, y0, v0), (x1, y1, v1) in zip(points, points[1:]):
+        n = max(1, int(math.hypot(x1 - x0, y1 - y0) / FMM(SAMPLE)))
+        for k in range(n):
+            out.append((x0 + (x1 - x0) * k / n, y0 + (y1 - y0) * k / n, v0 if k == 0 else False))
+    out.append(points[-1])
+    return out
+
+
+def new_line(owner, layer, width, a, b):
+    s = p.PCB_SHAPE(owner)
+    s.SetShape(p.SHAPE_T_SEGMENT)
+    s.SetStart(p.VECTOR2I(int(a[0]), int(a[1])))
+    s.SetEnd(p.VECTOR2I(int(b[0]), int(b[1])))
+    s.SetWidth(width)
+    s.SetLayer(layer)
+    owner.Add(s)
+
+
+def text_conflict(g, blockers, others=()):
+    """A text touches a pad or hole closer than SILK_GAP, or overlaps another silkscreen stroke (DRC silk_overlap)."""
+    strokes_ = g.GetEffectiveTextShape()
+    if any(p.SHAPE.Collide(shape, strokes_, FMM(SILK_GAP)) for shape, _ in blockers):
+        return True
+    bb = g.GetBoundingBox()                     # DRC tests the text box against other silkscreen
+    box = p.SHAPE_RECT(bb.GetLeft(), bb.GetTop(), bb.GetWidth(), bb.GetHeight())
+    return any(layer == g.GetLayer() and p.SHAPE.Collide(shape, box, 0) for shape, layer in others)
+
+
+def silk_strokes():
+    return [(g.GetEffectiveShape(), g.GetLayer()) for g, _ in silk_graphics() if isinstance(g, p.PCB_SHAPE)]
+
+
+def trim_silk(blockers):
+    """Cut silkscreen away where it comes closer than SILK_GAP to a pad or a hole, nudge texts that touch one."""
+    trimmed = deleted = 0
+    texts_bad, texts_moved, text_items = [], [], []
+    for g, owner in silk_graphics():
+        side, half = g.GetLayer(), mm(g.GetWidth()) / 2 if isinstance(g, p.PCB_SHAPE) else 0
+        if isinstance(g, p.PCB_TEXT):
+            if g.IsVisible():
+                text_items.append(g)            # after the strokes are final
+            continue
+        if not isinstance(g, p.PCB_SHAPE):
+            continue
+        pts = stroke_points(g)
+        if pts is None:                                 # filled polygons: whole or nothing
+            if any(p.SHAPE.Collide(shape, g.GetEffectiveShape(), FMM(SILK_GAP)) for shape, _ in blockers[side]):
+                owner.Remove(g)
+                graveyard.append(g)
+                deleted += 1
+            continue
+        dense = densify(pts)
+        flags = [blocked_at(blockers[side], x, y, half) for x, y, _ in dense]
+        if not any(flags):
+            continue
+        width, keep_all = g.GetWidth(), g.GetShape() in (p.SHAPE_T_ARC, p.SHAPE_T_CIRCLE)
+        owner.Remove(g)
+        graveyard.append(g)
+        trimmed += 1
+        run = []
+        for q, bad in list(zip(dense, flags)) + [(None, True)]:
+            if not bad:
+                run.append(q)
+                continue
+            if len(run) > 1:
+                length = sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(run, run[1:]))
+                if length >= FMM(SILK_PIECE_MIN):
+                    pick = [run[0]]
+                    for q2 in run[1:-1]:
+                        if (keep_all and math.hypot(q2[0] - pick[-1][0], q2[1] - pick[-1][1]) >= FMM(0.1)) or (not keep_all and q2[2]):
+                            pick.append(q2)
+                    pick.append(run[-1])
+                    for a, b in zip(pick, pick[1:]):
+                        new_line(owner, side, width, a, b)
+            run = []
+    for fp in board.GetFootprints():            # reference and value fields shown on the silkscreen
+        text_items += [f for f in (fp.Reference(), fp.Value()) if f.IsVisible() and f.GetLayer() in SILK]
+    others = silk_strokes()
+    for g in text_items:
+        side = g.GetLayer()
+        if not text_conflict(g, blockers[side], others):
+            continue
+        home = g.GetPosition()
+        for r in (0.2, 0.4, 0.6, 0.8, 1.0, 1.4, 2.0, 3.0):
+            for ang in range(0, 360, 45):
+                g.SetPosition(p.VECTOR2I(int(home.x + FMM(r) * math.cos(math.radians(ang))), int(home.y + FMM(r) * math.sin(math.radians(ang)))))
+                if not text_conflict(g, blockers[side], others):
+                    break
+            else:
+                continue
+            texts_moved.append(f'{g.GetText()} by {r} mm')
+            break
+        else:
+            g.SetPosition(home)
+            texts_bad.append(g.GetText())
+    return trimmed, deleted, texts_bad, texts_moved
+
+
+def fix_silkscreen():
+    widened = 0
+    for g, _ in silk_graphics():
+        if isinstance(g, p.PCB_SHAPE) and 0 < mm(g.GetWidth()) < SILK_LINE_REC - 1e-6:        # filled marks have an outline stroke too
+            g.SetWidth(FMM(SILK_LINE_REC))
+            widened += 1
+        elif isinstance(g, p.PCB_TEXT) and g.IsVisible() and mm(g.GetTextThickness()) < SILK_LINE_REC - 1e-6:
+            g.SetTextThickness(FMM(SILK_LINE_REC))
+            widened += 1
+    for fp in board.GetFootprints():
+        for f in (fp.Reference(), fp.Value()):
+            if f.IsVisible() and f.GetLayer() in SILK and mm(f.GetTextThickness()) < SILK_LINE_REC - 1e-6:
+                f.SetTextThickness(FMM(SILK_LINE_REC))
+                widened += 1
+    trimmed, deleted, texts_bad, texts_moved = trim_silk(silk_blockers())
     p.SaveBoard(str(path), board)
     text = path.read_text(encoding='utf-8').replace('\r\n', '\n')
     path.write_text(text, encoding='utf-8', newline='\n')
-    print(f'silkscreen: {thin} lines widened to {SILK_LINE_MIN} mm, board saved')
-    thin = 0
-check(thin == 0, f'{thin} silkscreen lines thinner than {SILK_LINE_MIN} mm (run --fix-silk)',
-      f'silkscreen lines all at least {SILK_LINE_MIN} mm')
-small = [(t.GetText(), round(mm(t.GetTextHeight()), 2), round(mm(t.GetTextThickness()), 3)) for t in texts
-         if mm(t.GetTextHeight()) < SILK_TEXT_H_MIN - 1e-6 or mm(t.GetTextThickness()) < SILK_LINE_MIN - 1e-6]
-check(not small, f'silkscreen text below {SILK_TEXT_H_MIN} mm high or {SILK_LINE_MIN} mm stroke: {small}',
-      f'{len(texts)} visible silkscreen texts: height at least {SILK_TEXT_H_MIN} mm and stroke at least {SILK_LINE_MIN} mm')
+    print(f'silkscreen: {widened} strokes widened to {SILK_LINE_REC} mm, {trimmed} shapes trimmed away from pads and holes '
+          f'({SILK_GAP} mm), {deleted} filled marks removed, board saved')
+    if texts_moved:
+        print(f'  texts nudged away from pads and holes: {texts_moved}')
+    if texts_bad:
+        print(f'  texts closer than {SILK_GAP} mm to a pad or hole, move them by hand: {texts_bad}')
+
+
+if fix_silk:
+    fix_silkscreen()
+texts = [g for g, _ in silk_graphics() if isinstance(g, p.PCB_TEXT) and g.IsVisible()]
+for fp in board.GetFootprints():
+    texts += [f for f in (fp.Reference(), fp.Value()) if f.IsVisible() and f.GetLayer() in SILK]
+strokes = [g for g, _ in silk_graphics() if isinstance(g, p.PCB_SHAPE) and g.GetWidth() > 0]
+thinnest = min([mm(g.GetWidth()) for g in strokes] + [mm(t.GetTextThickness()) for t in texts])
+check(thinnest >= SILK_LINE_MIN - 1e-6, f'silkscreen stroke {thinnest:.3f} mm is below {SILK_LINE_MIN} mm (run --fix-silk)',
+      f'silkscreen strokes (lines and text) at least {SILK_LINE_MIN} mm')
+check(thinnest >= SILK_LINE_REC - 1e-6, f'silkscreen stroke {thinnest:.3f} mm below {SILK_LINE_REC} mm (JLCDFM warns at 0.15 mm; run --fix-silk)',
+      f'silkscreen strokes at least {SILK_LINE_REC} mm', level='WARN')
+small = [(t.GetText(), round(mm(t.GetTextHeight()), 2)) for t in texts if mm(t.GetTextHeight()) < SILK_TEXT_H_MIN - 1e-6]
+check(not small, f'silkscreen text below {SILK_TEXT_H_MIN} mm high: {small}',
+      f'{len(texts)} visible silkscreen texts at least {SILK_TEXT_H_MIN} mm high')
+_blockers = silk_blockers()
+_strokes = silk_strokes()
+conflicts = []
+for fp in board.GetFootprints():
+    conflicts += [f.GetText() for f in (fp.Reference(), fp.Value()) if f.IsVisible() and f.GetLayer() in SILK
+                  and text_conflict(f, _blockers[f.GetLayer()], _strokes)]
+for g, _owner in silk_graphics():
+    side = g.GetLayer()
+    if isinstance(g, p.PCB_TEXT):
+        if g.IsVisible():
+            if text_conflict(g, _blockers[side], _strokes):
+                conflicts.append(g.GetText())
+    elif isinstance(g, p.PCB_SHAPE):
+        if any(p.SHAPE.Collide(shape, g.GetEffectiveShape(), FMM(SILK_GAP)) for shape, bb in _blockers[side]
+               if not (g.GetBoundingBox().GetRight() + FMM(0.4) < bb.GetLeft() or bb.GetRight() + FMM(0.4) < g.GetBoundingBox().GetLeft()
+                       or g.GetBoundingBox().GetBottom() + FMM(0.4) < bb.GetTop() or bb.GetBottom() + FMM(0.4) < g.GetBoundingBox().GetTop())):
+            conflicts.append(g.GetShapeStr())
+check(not conflicts, f'{len(conflicts)} silkscreen items closer than {SILK_GAP} mm to a pad or a hole (JLCDFM: silkscreen to pad / to hole; run --fix-silk): {conflicts[:8]}',
+      f'silkscreen keeps {SILK_GAP} mm away from every pad and hole')
 
 # --- outline and project rules ------------------------------------------------------------------
 edge = [g for g in board.GetDrawings() if g.GetLayer() == p.Edge_Cuts]
@@ -270,6 +473,59 @@ tiny = sum(1 for g_, _, _ in close if g_ < SPACE_MIN)
 check(not close, f'{len(close)} same-net track pairs closer than {SAME_NET_SPACE_REC} mm without touching ({tiny} under {SPACE_MIN} mm '
       f'etch as one piece, {len(close) - tiny} are narrow slits between parts of one net, no short: electrically harmless)',
       f'no same-net tracks closer than {SAME_NET_SPACE_REC} mm without touching', level='WARN')
+
+# --- vias against pads, tracks that skim a pad, through-hole pads next to SMD pads (JLCDFM categories) ---------
+EP_PADS = {'U902': None, 'U201': {'39'}}        # thermal pads that carry vias on purpose (None = every pad of the part)
+VIA_PAD_MIN, TRACK_PAD_MIN, THT_SMD_REC = 0.10, 0.09, 0.5
+touching = []
+for v in vias:
+    sv = v.GetEffectiveShape(p.F_Cu)
+    vb = v.GetBoundingBox()
+    for fp, pad in pads:
+        eps = EP_PADS.get(fp.GetReference(), False)
+        if eps is None or (eps and pad.GetNumber() in eps):
+            continue
+        for layer in (p.F_Cu, p.B_Cu):
+            pb = pad.GetBoundingBox()
+            if not pad.IsOnLayer(layer) or vb.GetRight() + reach < pb.GetLeft() or pb.GetRight() + reach < vb.GetLeft() or \
+               vb.GetBottom() + reach < pb.GetTop() or pb.GetBottom() + reach < vb.GetTop():
+                continue
+            if collides(sv, pad.GetEffectiveShape(layer), VIA_PAD_MIN):
+                touching.append(f'via@{mm(v.GetPosition().x):.2f},{mm(v.GetPosition().y):.2f} / {fp.GetReference()}.{pad.GetNumber()}')
+                break
+check(not touching, f'{len(touching)} vias touch or come within {VIA_PAD_MIN} mm of a pad: {touching[:6]}',
+      f'no via touches a pad or comes within {VIA_PAD_MIN} mm of one (thermal pads of U902 and U201 excepted)')
+skim = []
+for t in tracks:
+    st = t.GetEffectiveShape()
+    tb = t.GetBoundingBox()
+    for fp, pad in pads:
+        pb = pad.GetBoundingBox()
+        if not pad.IsOnLayer(t.GetLayer()) or tb.GetRight() + reach < pb.GetLeft() or pb.GetRight() + reach < tb.GetLeft() or \
+           tb.GetBottom() + reach < pb.GetTop() or pb.GetBottom() + reach < tb.GetTop():
+            continue
+        sp = pad.GetEffectiveShape(t.GetLayer())
+        if not collides(st, sp, 0.002) and collides(st, sp, TRACK_PAD_MIN):
+            skim.append(f'{fp.GetReference()}.{pad.GetNumber()} at {mm(t.GetStart().x):.1f},{mm(t.GetStart().y):.1f}')
+check(not skim, f'{len(skim)} tracks pass a pad within {TRACK_PAD_MIN} mm without touching it (the mask opening exposes them): {skim[:6]}',
+      f'no track passes a pad closer than {TRACK_PAD_MIN} mm without touching it')
+near = []
+for fp, pad in pads:
+    if pad.GetAttribute() != p.PAD_ATTRIB_PTH:
+        continue
+    for fp2, pad2 in pads:
+        if pad2.GetAttribute() == p.PAD_ATTRIB_PTH or pad2.GetDrillSizeX() > 0 or fp2 is fp:
+            continue
+        for layer in (p.F_Cu, p.B_Cu):
+            pb, qb = pad.GetBoundingBox(), pad2.GetBoundingBox()
+            if not (pad.IsOnLayer(layer) and pad2.IsOnLayer(layer)) or pb.GetRight() + reach < qb.GetLeft() or qb.GetRight() + reach < pb.GetLeft() or \
+               pb.GetBottom() + reach < qb.GetTop() or qb.GetBottom() + reach < pb.GetTop():
+                continue
+            d = gap(pad.GetEffectiveShape(layer), pad2.GetEffectiveShape(layer), THT_SMD_REC)
+            if d < THT_SMD_REC - 1e-6:
+                near.append((round(d, 2), f'{fp.GetReference()}.{pad.GetNumber()} / {fp2.GetReference()}.{pad2.GetNumber()}'))
+check(not near, f'{len(near)} through-hole pad / SMD pad pairs closer than {THT_SMD_REC} mm (JLCDFM "THT to SMD"): {sorted(near)[:4]}',
+      f'through-hole pads keep {THT_SMD_REC} mm from SMD pads', level='WARN')
 
 fails = sum(1 for lv, _ in results if lv == 'FAIL')
 warns = sum(1 for lv, _ in results if lv == 'WARN')
