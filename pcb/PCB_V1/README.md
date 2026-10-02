@@ -20,6 +20,7 @@
 | Заказать детали | [BOM.md](BOM.md), [CSV для LCSC](BOM_LCSC_v22.csv), [XLSX](BOM_LCSC_v22.xlsx) |
 | Заказать PCB | [FAB.md](FAB.md), [архив Gerber и сверловки](../fab/PCB_V1_v22_jlcpcb.zip) |
 | Проверить механику, стек и 3D-модели | [PLACEMENT.md](PLACEMENT.md) |
+| Напечатать корпус | [../enclosure/README.md](../enclosure/README.md) |
 | Проверить трассировку | [ROUTING.md](ROUTING.md); расчётные ограничения — [ROUTING_PREP.md](ROUTING_PREP.md) |
 | Проверить RTC и совместимость прошивки | [RTC_COMPATIBILITY.md](RTC_COMPATIBILITY.md) |
 | Найти историю изменений | [CHANGELOG.md](CHANGELOG.md) |
