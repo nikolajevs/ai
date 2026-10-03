@@ -5381,7 +5381,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:L_Feryster_DTMSS-27_THT"
+		(property "Footprint" "GrowBox:L_Feryster_DTMSS-27_V"
 			(at 165.1 97.79 90)
 			(hide yes)
 			(show_name no)
@@ -5738,7 +5738,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5797,7 +5797,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5809,7 +5809,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5821,7 +5821,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C576517"
 			(at 320.04 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5830,16 +5830,6 @@
 				(font
 					(size 1 1)
 				)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
-			(at 320.04 198.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
 				(justify left)
 			)
 		)
@@ -6326,7 +6316,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6385,7 +6375,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6397,7 +6387,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6409,7 +6399,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C576517"
 			(at 364.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -6418,16 +6408,6 @@
 				(font
 					(size 1 1)
 				)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
-			(at 364.49 198.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
 				(justify left)
 			)
 		)
@@ -7142,7 +7122,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 368.3 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7201,7 +7181,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7213,7 +7193,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7225,7 +7205,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C576517"
 			(at 364.49 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7234,16 +7214,6 @@
 				(font
 					(size 1 1)
 				)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
-			(at 364.49 97.79 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
 				(justify left)
 			)
 		)
@@ -9351,7 +9321,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 322.58 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9410,7 +9380,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9422,7 +9392,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9434,7 +9404,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C576517"
 			(at 320.04 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -9443,16 +9413,6 @@
 				(font
 					(size 1 1)
 				)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
-			(at 320.04 97.79 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
 				(justify left)
 			)
 		)
@@ -9657,7 +9617,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 403.05 99.06 0)
 			(effects
 				(font
@@ -9700,7 +9660,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9710,7 +9670,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9720,17 +9680,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
-			(at 400.05 97.79 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
+		(property "LCSC" "C576517"
 			(at 400.05 97.79 0)
 			(effects
 				(font
@@ -9802,7 +9752,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 403.05 124.46 0)
 			(effects
 				(font
@@ -9845,7 +9795,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9855,7 +9805,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -9865,17 +9815,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
-			(at 400.05 123.19 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
+		(property "LCSC" "C576517"
 			(at 400.05 123.19 0)
 			(effects
 				(font
@@ -10091,7 +10031,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7u 100V X7R"
+		(property "Value" "10u 100V X7S"
 			(at 349.25 199.39 0)
 			(effects
 				(font
@@ -10120,7 +10060,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "Murata"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -10130,7 +10070,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B475KCI6PJE"
+		(property "MPN" "GRM32EC72A106KE05L"
 			(at 345.44 198.12 0)
 			(effects
 				(font
@@ -10140,17 +10080,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
-			(at 345.44 198.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Source" "stock:2"
+		(property "LCSC" "C576517"
 			(at 345.44 198.12 0)
 			(effects
 				(font

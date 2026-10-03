@@ -35,7 +35,6 @@ R1206_47K = dict(value="47k 1%", footprint="Resistor_SMD:R_1206_3216Metric", mpn
 C1210_10U35 = dict(value="10u 35V X5R", footprint="Capacitor_SMD:C_1210_3225Metric", mpn="CL32A106KLULNNE",
                    mfr="Samsung Electro-Mechanics", lcsc="C2980162", source="stock:6")
 C1210_10U50 = dict(mpn="CL32B106KBJNNNE", mfr="Samsung Electro-Mechanics", lcsc="C92388", source="stock:47")
-C1210_4U7_100 = dict(value="4.7u 100V X7R", mpn="CL32B475KCI6PJE", mfr="Samsung Electro-Mechanics", lcsc="", source="stock:2")
 C1206_2U2_50 = dict(value="2.2u 50V X7R", footprint="Capacitor_SMD:C_1206_3216Metric", mpn="12065C225KATM-HW", mfr="KYOCERA AVX",
                     lcsc="", source="stock:3")
 C0805_2U2_16 = dict(value="2.2u 16V X5R", footprint="Capacitor_SMD:C_0805_2012Metric", mpn="CL21A225KOFNNNE",
@@ -168,13 +167,12 @@ def led_drivers(extra_lib: dict):
         sh.set_lib_id(ref, new)
         part(sh, ref, value="BSC146N10LS5", footprint="Package_TO_SOT_SMD:TDSON-8-1", mpn="BSC146N10LS5",
              mfr="Infineon Technologies", lcsc="", source="stock:112")
-    part(sh, "L711", value="47u DTMSS-27/0.047/15-V", footprint="GrowBox:L_Feryster_DTMSS-27_THT", mpn="DTMSS-27/0.047/15-V",
+    part(sh, "L711", value="47u DTMSS-27/0.047/15-V", footprint="GrowBox:L_Feryster_DTMSS-27_V", mpn="DTMSS-27/0.047/15-V",
          mfr="Feryster", lcsc="", source="stock:12")
     part(sh, ["D711", "D721"], value="SBRT15U100SP5", footprint="GrowBox:Diodes_PowerDI5", mpn="SBRT15U100SP5-13",
          mfr="Diodes Incorporated", lcsc="C2934601", source="stock:8",
          datasheet="https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf")
     use(sh, ["C710", "C715", "C725"], C1210_10U50)
-    use(sh, ["C716", "C717", "C718", "C719", "C726", "C727", "C728"], C1210_4U7_100)
     use(sh, ["C711", "C721"], C1206_2U2_50)
     use(sh, ["R711", "R721"], R1206_10R)
     use(sh, "R703", R1206_47K)
