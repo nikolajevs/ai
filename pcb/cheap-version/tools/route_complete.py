@@ -2,12 +2,14 @@
 
   python route_complete.py cheap-version.kicad_pcb [--write]
 
-Run after route_signals.py and before `route_power.py --finish`. Every net whose pads form more than
-one connected group is joined by a grid router (0.1 mm, 45-degree moves, layers F.Cu / In2.Cu / B.Cu,
-through vias), searched in a window around the two closest pads. Clearances are the net-class values
-(never below 0.2 mm) and are tested with the KiCad collision shapes, so the result is checked against
-the same geometry as DRC. Copper of other nets, script zones of other nets, the board edge and the
-antenna keepout are obstacles; the GND pours of the finish stage are not (they refill around tracks).
+Run after route_signals.py; finish fills may be applied first to connect plane-fed pads.
+A grid router (0.1 mm, 45-degree moves) joins signal and low-current nets; main power paths and
+switching loops are deferred for manual routing. Explicit single-pad branch exceptions are below.
+Supply completion uses only outer layers; other signals may use F.Cu / In2.Cu / B.Cu. Clearances
+come from the matching project, with a margin for grid rounding. KiCad collision shapes screen
+candidates; CLI DRC is mandatory afterwards, including custom rules and refilled zones. Copper of
+other nets, script power zones, edges and the antenna keepout are obstacles. Finish fills refill
+around new tracks. --write saves partial progress too; a nonzero exit means connections remain.
 """
 import heapq
 import math
@@ -21,17 +23,19 @@ MM = p.FromMM
 GRID = 0.1
 WINDOW = 14.0               # mm around the two pads
 LAYERS = [p.F_Cu, p.In2_Cu, p.B_Cu]
-WIDTH = {'+12V': 0.5, '+3V3': 0.4}
-DEFAULT_WIDTH = 0.25
+# High-current paths and switching loops require reviewed copper geometry, not a
+# 0.25 mm fallback. Low-current supply completion stays on the 1 oz outer layers.
+MANUAL_CLASSES = {'MAIN24', 'HEATER24', 'LED_INPUT', 'SWITCH'}
+# Only isolated single-pad branches qualify. Never use these widths for the
+# main path on the same net: F521 feeds the <=0.5 A pump allowance; R727 is OVP sensing.
+BRANCHES = {'+24V_LOADS': (('F521', '1'), 1.0),
+            '/LEDDrivers/LED2_OUT': (('R727', '1'), 0.25)}
 VIA_COST, TURN_COST = 12.0, 0.4
 DIRS = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (-1, 1), (-1, -1), (1, -1)]
 
 
 def clearance_of(item):
-    try:
-        return max(p.ToMM(item.GetEffectiveNetClass().GetClearance()), 0.2)
-    except Exception:
-        return 0.5
+    return route_power.clearance(item.GetNetname())
 
 
 def components(board, netcode):
@@ -65,6 +69,7 @@ class Grid:
         self.track = {layer: bytearray(self.nx * self.ny) for layer in LAYERS}
         self.via = bytearray(self.nx * self.ny)
         self.width = width
+        self.clearance = route_power.clearance(netname)
         edge = board.GetBoardEdgesBoundingBox()
         self.bounds = tuple(p.ToMM(v) for v in (edge.GetLeft(), edge.GetTop(), edge.GetRight(), edge.GetBottom()))
         self.paint(board, netcode, netname)
@@ -77,6 +82,7 @@ class Grid:
 
     def mark(self, layer, shape, clr, box):
         """Block the cells whose track (and via) probe collides with the shape."""
+        clr = max(clr, self.clearance) + 0.08   # grid/end-point rounding margin
         for kind, radius in (('track', self.width / 2), ('via', route_power.VIA['S'][0] / 2)):
             reach = radius + clr
             i0, j0 = self.cell(box[0] - reach, box[1] - reach)
@@ -176,14 +182,13 @@ class Grid:
                     self.via[i * self.ny + j] = 1
 
     def free_pad(self, pad, layer):
-        """Cells inside the pad being connected carry its own copper: usable by the track, never by a via."""
+        """Forbid vias in the endpoint pad without erasing foreign-copper obstacles."""
         bb = pad.GetBoundingBox()
         a, b, c, d = (p.ToMM(v) for v in (bb.GetLeft(), bb.GetTop(), bb.GetRight(), bb.GetBottom()))
         i0, j0 = self.cell(a, b)
         i1, j1 = self.cell(c, d)
         for i in range(max(i0, 0), min(i1, self.nx - 1) + 1):
             for j in range(max(j0, 0), min(j1, self.ny - 1) + 1):
-                self.track[layer][i * self.ny + j] = 0
                 self.via[i * self.ny + j] = 1
 
     def free(self, layer, i, j):
@@ -269,6 +274,12 @@ def complete(board):
         netcode = info.GetNetCode()
         if netcode == 0 or netname == 'GND':
             continue
+        classes = route_power.net_classes(netname)
+        if any(c['name'] in MANUAL_CLASSES for c in classes) and netname not in BRANCHES:
+            if len(components(board, netcode)) > 1:
+                failed.append(netname + ' (manual power routing required)')
+                print('MANUAL', netname)
+            continue
         guard = 0
         while guard < 12:
             guard += 1
@@ -277,18 +288,33 @@ def complete(board):
                 break
             groups.sort(key=len, reverse=True)
             main = groups[0]
+            branch = BRANCHES.get(netname)
+            if branch:
+                target, branch_width = branch
+                branch_groups = [g for g in groups[1:] if len(g) == 1 and
+                                 (g[0].GetParentFootprint().GetReference(), g[0].GetNumber()) == target]
+                if len(groups) != 2 or len(branch_groups) != 1:
+                    failed.append(netname + ' (not the reviewed single-pad branch)')
+                    break
             best = None
             for other in groups[1:]:
                 for a in other:
                     for b in main:
+                        if any(c['name'] == 'LED48' for c in classes) and (
+                                a.GetParentFootprint().IsNetTie() or b.GetParentFootprint().IsNetTie()):
+                            continue  # deliver load current to the shunt, not its Kelvin net-tie
                         d = math.dist((p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)),
                                       (p.ToMM(b.GetPosition().x), p.ToMM(b.GetPosition().y)))
                         if best is None or d < best[0]:
                             best = (d, a, b)
+            if best is None:
+                failed.append(netname + ' (no suitable pad pair)')
+                break
             dist, a, b = best
             todo += 1
-            short = netname.split('/')[-1]
-            width = WIDTH.get(short, DEFAULT_WIDTH)
+            width = max(c['track_width'] for c in classes)
+            if branch:
+                width = branch_width
             ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)
             bx, by = p.ToMM(b.GetPosition().x), p.ToMM(b.GetPosition().y)
             grid = Grid(board, netcode, netname, min(ax, bx) - WINDOW / 2, min(ay, by) - WINDOW / 2,
@@ -299,7 +325,8 @@ def complete(board):
             grid.free_pad(b, gl)
             si, sj = grid.cell(ax, ay)
             gi, gj = grid.cell(bx, by)
-            path = search(grid, (sl, si, sj), (gl, gi, gj), LAYERS)
+            layers = [p.F_Cu, p.B_Cu] if branch or any(c['name'] in {'AUX24', 'LED48', 'PWR12'} for c in classes) else LAYERS
+            path = search(grid, (sl, si, sj), (gl, gi, gj), layers)
             label = f'{netname} {a.GetParentFootprint().GetReference()}.{a.GetNumber()} -> {b.GetParentFootprint().GetReference()}.{b.GetNumber()} ({dist:.1f} mm)'
             if not path:
                 failed.append(label)
@@ -309,13 +336,15 @@ def complete(board):
             board.BuildConnectivity()
             print('routed', label, f'{len(path)} cells, {vias} vias')
             done += 1
+        if guard == 12 and len(components(board, netcode)) > 1:
+            failed.append(netname + ' (completion limit reached)')
     print(f'completion: {done} connections routed, {len(failed)} failed')
     return failed
 
 
 def main():
     path = sys.argv[1]
-    board = p.LoadBoard(path)
+    board = route_power.load_board(path)
     failed = complete(board)
     route_power.p.ZONE_FILLER(board).Fill(board.Zones())
     board.BuildConnectivity()

@@ -29,8 +29,9 @@ import route_power
 
 NO_ROUTE_LAYERS = ['In1.Cu']    # the GND plane (route_power.PLANES): no autorouted copper
 # Class widths used by the router only (mm). The project classes stay at 0.8 / 0.5 / 1.0 mm for hand work and the
-# power pours; wide tracks cannot reach fine-pitch pins, and the router cannot neck down on its own. 0.5 mm carries
-# 1.5 A at 10 C rise on 1 oz copper (IPC-2221), more than any branch of these nets draws outside the pours.
+# power pours; wide tracks cannot reach fine-pitch pins, and the router cannot neck down on its own.
+# These are routing hints, NOT a current-capacity approval (especially on 0.5 oz inner copper).
+# Main power paths must be reinforced and layer-change vias reviewed before production.
 ROUTER_WIDTHS = {'MAIN24': 2.0, 'HEATER24': 3.0, 'LED_INPUT': 2.0, 'SWITCH': 1.5, 'LED48': 0.8, 'AUX24': 0.6, 'PWR12': 0.5, 'PWR3V3': 0.4}
 
 
@@ -45,7 +46,7 @@ def main():
     ap.add_argument('--write', action='store_true')
     args = ap.parse_args()
 
-    board = p.LoadBoard(args.board)
+    board = route_power.load_board(args.board)
     names = {z.GetZoneName() for z in board.Zones()}
     assert route_power.TAG + 'GND plane' in names, 'run the power stage of route_power.py first'
     route_power.remove_zones(board, {name for name, *_ in route_power.FINISH})
