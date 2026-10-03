@@ -116,7 +116,7 @@ def input_power():
     use(sh, ["C905", "C906"], C1210_10U50)
     use(sh, "C902", C1206_2U2_50)
     use(sh, ["C907", "C908"], C0603_100N)
-    use(sh, "J901", KF301, value="24V IN (KF301-5.0-2P)")
+    use(sh, "J901", {**KF301, "footprint": "GrowBox:TerminalBlock_KF301_1x02_P5.00mm_Horizontal_Input"}, value="24V IN (KF301-5.0-2P)")
     sh.prune_lib_symbols()
     return sh
 

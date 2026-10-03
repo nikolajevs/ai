@@ -25,7 +25,7 @@ EDGE = 50.35             # courtyards of ordinary parts stay inside [EDGE, 150 -
 # (x, y, rotation) - decided by hand, then pinned
 FIXED_AT = {
     "L711": (70.9, 120.0, 0),          # DTMSS-27 standing, pads 62.15 / 79.65
-    "J901": (56.3, 62.0, 90),          # KF301 flush with the left edge
+    "J901": (56.3, 57.0, -90),          # KF301 flush with the left edge
     "R716": (71.0, 143.8, 90),         # LED1 return shunt between the terminals J711 and J721 (Kelvin tie follows)
 }
 NET_TIES = {"NT711": "R715", "NT712": "R716", "NT721": "R725", "NT722": "R726"}   # copper-only Kelvin ties follow their shunt

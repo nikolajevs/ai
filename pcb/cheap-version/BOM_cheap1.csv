@@ -35,7 +35,7 @@
 34,J521,1,PUMP 24V / 6W,"TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,FS1.5-02-350-2601R,,stock:86,1,0,"id 86: 7 in stock, 3 used"
 35,J601,1,PTC + / switched - (3.5 mm),"TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,FS1.5-02-350-2601R,,stock:86,1,0,"id 86: 7 in stock, 3 used"
 36,J711 J721 J731,3,LED +/- (return isolated),"TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",,KF301-5.0-2P,,stock:93,3,0,"id 93: 31 in stock, 4 used"
-37,J901,1,24V IN (KF301-5.0-2P),"TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",,KF301-5.0-2P,,stock:93,1,0,"id 93: 31 in stock, 4 used"
+37,J901,1,24V IN (KF301-5.0-2P),"TerminalBlock_KF301_1x02_P5.00mm_Horizontal_Input",,KF301-5.0-2P,,stock:93,1,0,"id 93: 31 in stock, 4 used"
 38,L101,1,4.7u FXL0630-4R7-M,L_Changjiang_FXL0630,cjiang,FXL0630-4R7-M,C167220,buy,0,1,
 39,L711,1,47u DTMSS-27/0.047/15-V,L_Feryster_DTMSS-27_V,Feryster,DTMSS-27/0.047/15-V,,stock:12,1,0,"id 12: 1 in stock, 1 used (no spare)"
 40,L721,1,47u SRP1265A-470M,L_Bourns_SRP1265A,Bourns,SRP1265A-470M,C840530,buy,0,1,
