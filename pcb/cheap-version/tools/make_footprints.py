@@ -69,13 +69,52 @@ def powerdi5():
     fp.Reference().SetLayer(p.F_SilkS)
     fp.Value().SetPosition(v(0, 4.8))
     fp.Value().SetLayer(p.F_Fab)
+    add_model(fp, "Diodes_PowerDI5")
+    return fp
+
+
+def add_model(fp, name):
+    m = p.FP_3DMODEL()
+    m.m_Filename = "${KIPRJMOD}/libraries/GrowBox.3dshapes/" + name + ".step"
+    fp.Add3DModel(m)
+
+
+def tht_pad(fp, number, x, y, size, drill):
+    pd = p.PAD(fp)
+    pd.SetNumber(number)
+    pd.SetAttribute(p.PAD_ATTRIB_PTH)
+    pd.SetShape(p.PAD_SHAPE_CIRCLE)
+    pd.SetSize(v(size, size))
+    pd.SetDrillSize(v(drill, drill))
+    pd.SetPosition(v(x, y))
+    pd.SetLayerSet(p.PAD.PTHMask())
+    fp.Add(pd)
+
+
+def dtmss27():
+    """Feryster DTMSS-27/0.047/15-V (mounting V): leads D = 1.9 mm, E = 17.5 mm apart, ring on edge A x C = 32.5 x 16."""
+    fp = p.FOOTPRINT(p.BOARD())
+    fp.SetFPID(p.LIB_ID("GrowBox", "L_Feryster_DTMSS-27_V"))
+    fp.SetAttributes(p.FP_THROUGH_HOLE)
+    fp.SetReference("REF**")
+    fp.SetValue("L_Feryster_DTMSS-27_V")
+    tht_pad(fp, "1", -8.75, 0, 4.2, 2.4)
+    tht_pad(fp, "2", 8.75, 0, 4.2, 2.4)
+    rect(fp, p.F_Fab, -8.0, -16.25, 8.0, 16.25, 0.1)          # body A x C, nominal
+    rect(fp, p.F_SilkS, -9.0, -17.25, 9.0, 17.25, 0.12)       # +10 % tolerance, clear of the pads' annular rings
+    rect(fp, p.F_CrtYd, -11.1, -18.1, 11.1, 18.1, 0.05)
+    fp.Reference().SetPosition(v(0, -19.5))
+    fp.Reference().SetLayer(p.F_SilkS)
+    fp.Value().SetPosition(v(0, 19.5))
+    fp.Value().SetLayer(p.F_Fab)
+    add_model(fp, "L_Feryster_DTMSS-27_V")
     return fp
 
 
 def main():
-    fp = powerdi5()
-    p.FootprintSave(str(LIB), fp)
-    print("saved", LIB / "Diodes_PowerDI5.kicad_mod")
+    for fp in (powerdi5(), dtmss27()):
+        p.FootprintSave(str(LIB), fp)
+        print("saved", LIB / (str(fp.GetFPID().GetLibItemName()) + ".kicad_mod"))
 
 
 if __name__ == "__main__":
