@@ -25694,7 +25694,7 @@
 			(uuid "061d7c22-4306-4334-ae2f-e04542e3eafd")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/libraries/GrowBox.3dshapes/JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step"
 			(offset
 				(xyz 0 0 0)
 			)
