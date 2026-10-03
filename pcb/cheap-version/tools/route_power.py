@@ -9,6 +9,9 @@ them from the tables, so geometry is edited here and not by hand.
 """
 import math
 import sys
+import json
+from fnmatch import fnmatchcase
+from pathlib import Path
 
 import pcbnew as p
 
@@ -42,10 +45,44 @@ VIAS = [
 ]
 TIED_BY_TRACK = set()       # ground pads connected by a hand-placed track in TRACKS
 # pads joined solidly to every zone they touch
-SOLID_PADS = [('J901', '1'), ('J901', '2'), ('Q601', '2'), ('J301', '2'), ('J401', 'SH')]
+SOLID_PADS = [('J901', '1'), ('J901', '2'), ('Q601', '2'), ('Q601', '3'),
+              ('C901', '2'), ('R715', '2'), ('R725', '2'),
+              ('U902', '3'), ('U902', '6'), ('U902', '9'),
+              ('J301', '2'), ('J401', 'SH')]
 
 
 NETS = {}
+NET_SETTINGS = None
+
+
+def load_board(path):
+    """Load the matching project too: LoadBoard alone loses net-class rules during filling."""
+    global NET_SETTINGS
+    path = Path(path).resolve()
+    project = path.with_suffix('.kicad_pro')
+    NET_SETTINGS = json.loads(project.read_text(encoding='utf-8'))['net_settings']
+    manager = p.GetSettingsManager()
+    if not manager.LoadProject(str(project)):
+        raise RuntimeError(f'Cannot load project rules: {project}')
+    board = p.LoadBoard(str(path))
+    board.SetProject(manager.GetProject(str(project)))
+    NETS.clear()
+    return board
+
+
+def net_classes(name):
+    if NET_SETTINGS is None:
+        raise RuntimeError('Use load_board() before routing')
+    names = {row['netclass'] for row in NET_SETTINGS['netclass_patterns']
+             if fnmatchcase(str(name), row['pattern'])}
+    names.update((NET_SETTINGS.get('netclass_assignments') or {}).get(str(name), []))
+    return [c for c in NET_SETTINGS['classes'] if c['name'] in (names or {'Default'})]
+
+
+def clearance(name):
+    # The SWIG GetEffectiveNetClass return type is opaque in KiCad 10.0.5.
+    # Resolve this project's wildcard assignments explicitly; CLI DRC is still mandatory.
+    return max(0.2, *(c['clearance'] for c in net_classes(name)))
 
 
 def net(board, name):
@@ -156,10 +193,7 @@ def obstacles(board):
     def add(item, layers, kind):
         bb = item.GetBoundingBox()
         box = (p.ToMM(bb.GetLeft()), p.ToMM(bb.GetTop()), p.ToMM(bb.GetRight()), p.ToMM(bb.GetBottom()))
-        try:
-            clr = p.ToMM(item.GetEffectiveNetClass().GetClearance())
-        except Exception:
-            clr = 0.5
+        clr = clearance(item.GetNetname())
         out.append([item.GetNetname(), box, {layer: item.GetEffectiveShape(layer) for layer in layers}, max(clr, 0.2),
                     item.m_Uuid.AsString(), kind])
 
@@ -312,7 +346,7 @@ def finish_stage(board):
 
 def main():
     path = sys.argv[1]
-    board = p.LoadBoard(path)
+    board = load_board(path)
     net(board, 'GND')
     if '--finish' in sys.argv:
         finish_stage(board)
