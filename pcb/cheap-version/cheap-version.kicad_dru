@@ -1,0 +1,21 @@
+(version 1)
+
+# Project margins above the manufacturer's absolute minima. No microvias or
+# blind/buried vias are part of this four-layer, mechanically drilled design.
+(rule "Through via minimum drill"
+  (condition "A.Type == 'Via'")
+  (constraint hole_size (min 0.3mm)))
+
+(rule "Through via minimum diameter"
+  (condition "A.Type == 'Via'")
+  (constraint via_diameter (min 0.65mm)))
+
+(rule "PTH pad hole spacing"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad'")
+  (constraint hole_to_hole (min 0.45mm)))
+
+# The stock TI DDA land pattern has 0.20 mm between VIN and the ground EP.
+# This exception applies only between pads of U902, never to surrounding copper.
+(rule "LMR16020 DDA internal pad clearance"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad' && A.memberOfFootprint('U902') && B.memberOfFootprint('U902')")
+  (constraint clearance (min 0.2mm)))

@@ -1,0 +1,1 @@
+(sym_lib_table (version 7) (lib (name "GrowBox")(type "KiCad")(uri "${KIPRJMOD}/libraries/GrowBox.kicad_sym")(options "")(descr "Project RTC symbol, DS3231SN datasheet pinout")))
