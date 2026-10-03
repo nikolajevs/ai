@@ -233,3 +233,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## J301: XH без боковых подпорок (03.10.2026)
+
+Файл: `JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step`. Производная от модели
+KiCad `Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step`,
+Copyright (C) 2019 Rene Poeschl. Лицензия: [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+с исключением KiCad для электронных проектов; исходное уведомление сохранено внутри STEP.
+Производная геометрия распространяется на тех же условиях. Это исключение из описанного
+выше происхождения семи самостоятельно построенных механических моделей.
+
+Источник: установленная библиотека KiCad 10; [upstream](https://gitlab.com/kicad/libraries/kicad-packages3D/-/tree/master/Connector_JST.3dshapes).
+SHA-256 исходного STEP: `5a64a9bcf2a4e71d73522b5213a8af062113d5a0e626da3360749df87814ca36`.
+Скрипт: `pcb/cheap-version/tools/make_xh_no_supports.py <исходный STEP>` (CadQuery).
+Удалены только две задние боковые опоры. Шаг 2,50 мм, позиции четырёх выводов,
+основной корпус 12,4×7,0 мм и высота над платой 6,1 мм сохранены из исходной модели.
+Смещение и поворот модели на плате — нулевые, масштаб 1.
+
+Внешний вид выбран по фотографии пользователя; точная модель складского разъёма
+и ревизия его чертежа не установлены. Это визуальная адаптация, не размерная
+квалификация реального компонента. Цвет условный. Проверены валидность STEP,
+неизменность геометрии выводов и отдельный трёхмерный вид. Посадочное место,
+шелкография, courtyard и разводка оставлены прежними.
