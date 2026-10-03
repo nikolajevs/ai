@@ -32,6 +32,7 @@ python check_all.py
 | Заказ деталей и оценка цены | [BOM.md](PCB_V1/BOM.md), `export_lcsc_bom.py`, `audit_bom_cost.py`, `estimate_jlc_assembly.py` |
 | Gerber и сверловка | [FAB.md](PCB_V1/FAB.md), `export_fab.py` |
 | 3D-модели | `models3d/mechanical.py`, `models3d/power.py`, `sync_models.py`; [источники](PCB_V1/PLACEMENT.md) |
+| Одноразовая плата из склада | [cheap-version/README.md](cheap-version/README.md) — отдельный проект cheap-1 (копия схемы PCB_V1 с заменами деталей) |
 | Корпус (3D-печать) | [enclosure/README.md](enclosure/README.md), `enclosure/enclosure.py`, `enclosure/check_enclosure.py` |
 
 Правила веток и проверки — [AGENTS.md](../AGENTS.md). Работа с удалённой KiCad-станцией — [vps-docs/README.md](../vps-docs/README.md).
