@@ -170,6 +170,9 @@ def led_drivers(extra_lib: dict):
              mfr="Infineon Technologies", lcsc="", source="stock:112")
     part(sh, "L711", value="47u DTMSS-27/0.047/15-V", footprint="GrowBox:L_Feryster_DTMSS-27_THT", mpn="DTMSS-27/0.047/15-V",
          mfr="Feryster", lcsc="", source="stock:12")
+    part(sh, ["D711", "D721"], value="SBRT15U100SP5", footprint="GrowBox:Diodes_PowerDI5", mpn="SBRT15U100SP5-13",
+         mfr="Diodes Incorporated", lcsc="C2934601", source="stock:8",
+         datasheet="https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf")
     use(sh, ["C710", "C715", "C725"], C1210_10U50)
     use(sh, ["C716", "C717", "C718", "C719", "C726", "C727", "C728"], C1210_4U7_100)
     use(sh, ["C711", "C721"], C1206_2U2_50)
@@ -215,12 +218,49 @@ def mcu():
     return sh
 
 
+ROOT_NETS = {   # the 3.3 V sheet: pin number -> net (labels without a leading slash are global)
+    "C101": {"1": "+12V", "2": "GND"}, "C102": {"1": "+12V", "2": "GND"}, "C103": {"1": "+12V", "2": "GND"},
+    "C104": {"1": "+3V3", "2": "GND"}, "C105": {"1": "+3V3", "2": "GND"}, "C106": {"1": "+3V3", "2": "BUCK_FB"},
+    "L101": {"1": "BUCK_SW", "2": "+3V3"}, "R101": {"1": "+3V3", "2": "BUCK_FB"}, "R102": {"1": "BUCK_FB", "2": "GND"},
+    "TP101": {"1": "+12V"}, "TP102": {"1": "+3V3"}, "TP103": {"1": "GND"},
+    "#FLG0101": {"1": "+12V"}, "#FLG0102": {"1": "GND"}, "#FLG0103": {"1": "+3V3"},
+}
+
+
 def root():
+    """U101: ST1S10PHR (INH to VIN = on, SYNC to GND = 900 kHz, no bootstrap) instead of TPS54202."""
     sh = load("cheap-version")
-    use(sh, "C101", C1210_10U35)
+    st1s10 = load_stock_symbol(SYM_DIR / "Regulator_Switching.kicad_sym", "ST1S10PHR", "Regulator_Switching")
+    X, Y, rot = sh.instance_transform(sh.text[slice(*sh.symbol("U101"))])[1:4]
+    pos_ref, pos_value = sh.prop_pos("U101", "Reference"), sh.prop_pos("U101", "Value")
+    # this sheet was drawn with plain wires: redraw it in the stub-and-label style of the other sheets
+    sh.delete_blocks({"wire", "junction", "label", "global_label", "no_connect"})
+    sh.remove_symbol("U101")
+    sh.ensure_lib_symbol("Regulator_Switching:ST1S10PHR", st1s10)
+    globals_ = {"+12V", "+3V3", "GND"}
+    sh.add_symbol(
+        "Regulator_Switching:ST1S10PHR", "U101", (X, Y), rot,
+        dict(Value="ST1S10PHR", Footprint="Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm",
+             Datasheet="https://www.st.com/resource/en/datasheet/st1s10.pdf", Manufacturer="STMicroelectronics",
+             MPN="ST1S10PHR", LCSC="C11175", Source="stock:27"),
+        {"1": "+12V", "2": "+12V", "3": "BUCK_FB", "4": "GND", "5": "GND", "6": "+12V", "7": "BUCK_SW", "8": "GND", "9": "GND"},
+        pos_ref=pos_ref, pos_value=pos_value, global_nets=globals_)
+    for ref, nets in ROOT_NETS.items():
+        sh.attach_stubs(ref, nets, globals_)
+    use(sh, "C101", C1210_10U35)                      # VIN_SW: 10 uF or more with 47..100 uF on the output
+    use(sh, "C102", C0603_100N)
+    use(sh, "C103", C0805_2U2_16)                     # was the BOOT capacitor; now the VIN_A bypass (1 uF or more)
     use(sh, ["C104", "C105"], C0805_22U10)
-    use(sh, ["C102", "C103"], C0603_100N)
     use(sh, "R101", R0603_100K)
+    part(sh, "R102", value="31.6k 1%", mpn="0603WAF3162T5E", lcsc="", source="buy: verify MPN on LCSC")   # 3.33 V at VFB 0.8 V
+    part(sh, "L101", value="4.7u FXL0630-4R7-M", mpn="FXL0630-4R7-M", lcsc="C167220")  # same 7x6.6 mm package as the 10 uH part
+    sh.replace_text("Vout = 0.596", "Vout = 0.8 V x (1 + 100k/31.6k) = 3.33 V (ST1S10 VFB 0.784..0.816 V); dividers 1%.\\n"
+                    "ST1S10: 2.5..18 V in, 3 A, synchronous, 900 kHz (SYNC to GND), INH tied to VIN (on), no BOOT.\\n"
+                    "L101 FXL0630-4R7-M: 4.7 uH, Isat 9 A, DCR 33 mOhm; C103 is the VIN_A bypass.\\n"
+                    "Cout 3 x 22u/10V X5R (C104, C105, C401); verify load-step response. C106 is NOT fitted.")
+    sh.replace_text("EN ", "INH (EN) соединён с +12V: регулятор включён всегда.\\nSYNC на GND: 900 кГц без внешней синхронизации.")
+    sh.replace_text("0.22 DRAFT", "cheap-1 DRAFT: schematic derived from PCB_V1 0.22 with stock-part substitutions; unrouted.")
+    sh.prune_lib_symbols()
     return sh
 
 

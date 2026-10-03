@@ -1,0 +1,33 @@
+cheap-1 (PCB_V1 0.22 schematic with stock parts) LED sizing estimates (24 V power, 12 V IC bias, 2 channels)
+Not a manufacturing release or a guaranteed OCP/stability envelope.
+VIN 21.6/24/25 V at the LED rail; LED Vf 40/44/48 V;
+fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;
+L -20% initial plus bias allowance; winding resistance at 100 C.
+
+CH1: DTMSS-27/0.047/15-V, BSC146N10LS5, SBRT15U100SP5; 72 cases; modes CCM
+  ILED max 1.1560 A; Iin estimate max 3.073 A
+  L effective allowance 33.09 uH; Ipeak max 4.727 A; ILrms max 3.218 A
+  IQrms max 2.403 A; IDrms max 2.141 A
+  CCM subharmonic ratio max 0.175 (<1; typical ramp only)
+  OCP estimate 8.319..14.108 A; minimum paired peak headroom 3.592 A
+  Winding copper loss at 100 C max 0.147 W (core loss NOT included)
+  CS shunt loss max 0.157 W; diode conduction estimate max 0.591 W (reverse/dynamic loss NOT included)
+  Output bank 4 x 4.7u/100V X7R; C effective allowance 7.160 uF; whole-cycle discharge bound 1.468 Vpp
+  Output-cap RMS screening max 1.653 A total
+
+CH2: SRP1265A-470M, BSC146N10LS5, SBRT15U100SP5; 72 cases; modes DCM
+  ILED max 0.4839 A; Iin estimate max 1.286 A
+  L effective allowance 30.08 uH; Ipeak max 3.060 A; ILrms max 1.620 A
+  IQrms max 1.209 A; IDrms max 1.078 A
+  CCM subharmonic ratio max n/a (all cases DCM)
+  OCP estimate 3.908..7.872 A; minimum paired peak headroom 0.966 A
+  Winding copper loss at 100 C max 0.306 W (core loss NOT included)
+  CS shunt loss max 0.069 W; diode conduction estimate max 0.228 W (reverse/dynamic loss NOT included)
+  Output bank 3 x 4.7u/100V X7R; C effective allowance 5.370 uF; whole-cycle discharge bound 0.819 Vpp
+  Output-cap RMS screening max 0.915 A total
+
+Combined LED power at 48 V: nominal 75.66 W; FB/R corner 78.72 W.
+CH2 sharing is NOT guaranteed. One remaining bar: <= 0.4839 A steady-state.
+Uncovered: faults/startup/OVP, gate delays, ramp tolerances, compensation loop,
+hot saturation and core loss, MLCC bias/temperature/aging interaction, layout.
+Input branch fuses are fitted; clearing time/I2t with the actual PSU is NOT qualified.

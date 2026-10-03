@@ -55,6 +55,15 @@ def _head(block: str) -> str:
     return re.match(r"\(([^\s()]+)", block).group(1)
 
 
+def _eat_indent(text: str, s: int) -> int:
+    """start index that also swallows the tabs and the newline in front of a block"""
+    while s > 0 and text[s - 1] == "\t":
+        s -= 1
+    if s > 0 and text[s - 1] == "\n":
+        s -= 1
+    return s
+
+
 class Sheet:
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -190,13 +199,13 @@ class Sheet:
                         spans.extend(self._marks_at(far))
             spans.extend(self._marks_at(p["point"]))
         for s, e in sorted(set(spans), reverse=True):
-            # swallow the preceding newline + tab so the file stays tidy
-            ss = s - 1 if self.text[s - 2:s] == "\n\t" or self.text[s - 1] == "\t" else s
-            while ss > 0 and self.text[ss - 1] in "\t":
-                ss -= 1
-            if ss > 0 and self.text[ss - 1] == "\n":
-                ss -= 1
-            self.text = self.text[:ss] + self.text[e:]
+            self.text = self.text[:_eat_indent(self.text, s)] + self.text[e:]
+
+    def delete_blocks(self, heads):
+        """delete every top-level block whose head is in heads (e.g. wire, junction, label)"""
+        for s, e, h in sorted(self.blocks(), reverse=True):
+            if h in heads:
+                self.text = self.text[:_eat_indent(self.text, s)] + self.text[e:]
 
     def set_prop(self, ref: str, name: str, value: str):
         s, e = self.symbol(ref)
@@ -217,10 +226,24 @@ class Sheet:
         s, e = self.symbol(ref)
         return dict(re.findall(r'\(property "([^"]+)" "([^"]*)"', self.text[s:e]))
 
+    def prop_pos(self, ref: str, name: str):
+        s, e = self.symbol(ref)
+        m = re.search(r'\(property "' + re.escape(name) + r'" "[^"]*"\s*\(at ([-\d.]+) ([-\d.]+)', self.text[s:e])
+        return float(m.group(1)), float(m.group(2))
+
     def set_lib_id(self, ref: str, lib_id: str):
         s, e = self.symbol(ref)
         blk = re.sub(r'\(lib_id "[^"]+"\)', f'(lib_id "{lib_id}")', self.text[s:e], count=1)
         self.text = self.text[:s] + blk + self.text[e:]
+
+    def replace_text(self, startswith: str, new: str):
+        """replace the string of a free text note that starts with `startswith`"""
+        for s, e, h in self.blocks():
+            if h == "text" and self.text[s:e].startswith(f'(text "{startswith}'):
+                blk = re.sub(r'^\(text "(?:[^"\\]|\\.)*"', lambda m: '(text "' + new.replace('"', "'") + '"', self.text[s:e])
+                self.text = self.text[:s] + blk + self.text[e:]
+                return
+        raise KeyError(startswith)
 
     def ensure_lib_symbol(self, lib_id: str, text: str):
         """text: full '(symbol "Lib:Name" ...)' block indented for the lib_symbols container (2 tabs)."""
@@ -233,11 +256,61 @@ class Sheet:
             j -= 1
         self.text = self.text[:j] + text.rstrip("\n") + "\n" + self.text[j:]
 
+    def prune_lib_symbols(self):
+        """drop embedded library symbols that no instance uses any more"""
+        used = set(re.findall(r'\(lib_id "([^"]+)"\)', self.text))
+        s, e = self.lib_symbols_span()
+        for cs, ce in sorted(_children(self.text, s), reverse=True):
+            name = re.match(r'\(symbol "([^"]+)"', self.text[cs:ce]).group(1)
+            if name not in used:
+                self.text = self.text[:_eat_indent(self.text, cs)] + self.text[ce:]
+
     def instance_path(self):
         return re.search(r'\(path "([^"]+)"', self.text).group(1)
 
     def project_name(self):
         return re.search(r'\(project "([^"]+)"', self.text).group(1)
+
+    # ------------------------------------------------------------------ new items
+    def _append(self, texts):
+        end = self.text.rstrip().rindex(")")
+        j = end
+        while self.text[j - 1] in "\t":
+            j -= 1
+        self.text = self.text[:j] + "\n".join(texts) + "\n" + self.text[j:]
+
+    def _stub_text(self, ref, pins, X, Y, rot, mirror, nets, global_nets):
+        extra = []
+        for p in pins:
+            net = nets.get(p["number"], "__missing__")
+            if net == "__missing__":
+                raise KeyError(f"{ref} pin {p['number']} ({p['name']}) has no net assignment")
+            px, py = self.pin_point(p["x"], p["y"], X, Y, rot, mirror)
+            if net is None:
+                extra.append(f"\t(no_connect\n\t\t(at {fmt(px)} {fmt(py)})\n\t\t(uuid {uid(ref, 'nc', p['number'], self.path.name)})\n\t)")
+                continue
+            # the stub leaves the pin away from the body
+            direction = {0: (-1, 0), 180: (1, 0), 90: (0, 1), 270: (0, -1)}[(p["angle"] + rot) % 360]
+            qx, qy = round(px + direction[0] * STUB, 2), round(py + direction[1] * STUB, 2)
+            extra.append(f"\t(wire\n\t\t(pts\n\t\t\t(xy {fmt(px)} {fmt(py)}) (xy {fmt(qx)} {fmt(qy)})\n\t\t)\n\t\t(stroke\n\t\t\t(width 0)\n"
+                         f"\t\t\t(type default)\n\t\t)\n\t\t(uuid {uid(ref, 'wire', p['number'], self.path.name)})\n\t)")
+            angle, just = {(-1, 0): (180, "right bottom"), (1, 0): (0, "left bottom"), (0, 1): (270, "right"), (0, -1): (90, "left")}[direction]
+            if net in global_nets:
+                extra.append(f'\t(global_label "{net}"\n\t\t(shape bidirectional)\n\t\t(at {fmt(qx)} {fmt(qy)} {angle})\n\t\t(effects\n'
+                             f'\t\t\t(font\n\t\t\t\t(size 1.0 1.0)\n\t\t\t)\n\t\t\t(justify {just.split()[0]})\n\t\t)\n'
+                             f"\t\t(uuid {uid(ref, 'label', p['number'], self.path.name)})\n\t)")
+            else:
+                extra.append(f'\t(label "{net}"\n\t\t(at {fmt(qx)} {fmt(qy)} {angle})\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.0 1.0)\n'
+                             f"\t\t\t)\n\t\t\t(justify {just})\n\t\t)\n\t\t(uuid {uid(ref, 'label', p['number'], self.path.name)})\n\t)")
+        return extra
+
+    def attach_stubs(self, ref: str, nets: dict, global_nets=()):
+        """wire stubs and labels for every pin of an existing instance"""
+        s, e = self.symbol(ref)
+        lib_id, X, Y, rot, mirror = self.instance_transform(self.text[s:e])
+        ls = self.lib_symbol_span(lib_id)
+        pins = self.parse_pins(self.text[ls[0]:ls[1]])
+        self._append(self._stub_text(ref, pins, X, Y, rot, mirror, nets, global_nets))
 
     def add_symbol(self, lib_id: str, ref: str, at, rot, props: dict, nets: dict, pos_ref=None, pos_value=None,
                    mirror=None, global_nets=()):
@@ -266,34 +339,8 @@ class Sheet:
         out.append(f'\t\t(instances\n\t\t\t(project "{self.project_name()}"\n\t\t\t\t(path "{self.instance_path()}"\n'
                    f'\t\t\t\t\t(reference "{ref}")\n\t\t\t\t\t(unit 1)\n\t\t\t\t)\n\t\t\t)\n\t\t)')
         out.append("\t)")
-        extra = []
-        for p in pins:
-            net = nets.get(p["number"], "__missing__")
-            if net == "__missing__":
-                raise KeyError(f"{ref} pin {p['number']} ({p['name']}) has no net assignment")
-            px, py = self.pin_point(p["x"], p["y"], X, Y, rot, mirror)
-            if net is None:
-                extra.append(f"\t(no_connect\n\t\t(at {fmt(px)} {fmt(py)})\n\t\t(uuid {uid(ref, 'nc', p['number'], self.path.name)})\n\t)")
-                continue
-            # the stub leaves the pin away from the body
-            direction = {0: (-1, 0), 180: (1, 0), 90: (0, 1), 270: (0, -1)}[(p["angle"] + rot) % 360]
-            qx, qy = round(px + direction[0] * STUB, 2), round(py + direction[1] * STUB, 2)
-            extra.append(f"\t(wire\n\t\t(pts\n\t\t\t(xy {fmt(px)} {fmt(py)}) (xy {fmt(qx)} {fmt(qy)})\n\t\t)\n\t\t(stroke\n\t\t\t(width 0)\n"
-                         f"\t\t\t(type default)\n\t\t)\n\t\t(uuid {uid(ref, 'wire', p['number'], self.path.name)})\n\t)")
-            angle, just = {(-1, 0): (180, "right bottom"), (1, 0): (0, "left bottom"), (0, 1): (270, "right"), (0, -1): (90, "left")}[direction]
-            if net in global_nets:
-                extra.append(f'\t(global_label "{net}"\n\t\t(shape bidirectional)\n\t\t(at {fmt(qx)} {fmt(qy)} {angle})\n\t\t(effects\n'
-                             f'\t\t\t(font\n\t\t\t\t(size 1.0 1.0)\n\t\t\t)\n\t\t\t(justify {just.split()[0]})\n\t\t)\n'
-                             f"\t\t(uuid {uid(ref, 'label', p['number'], self.path.name)})\n\t)")
-            else:
-                extra.append(f'\t(label "{net}"\n\t\t(at {fmt(qx)} {fmt(qy)} {angle})\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.0 1.0)\n'
-                             f"\t\t\t)\n\t\t\t(justify {just})\n\t\t)\n\t\t(uuid {uid(ref, 'label', p['number'], self.path.name)})\n\t)")
-        # insert before the final closing paren of the sheet (after the last top-level block)
-        end = self.text.rstrip().rindex(")")
-        j = end
-        while self.text[j - 1] in "\t":
-            j -= 1
-        self.text = self.text[:j] + "\n".join(out + extra) + "\n" + self.text[j:]
+        extra = self._stub_text(ref, pins, X, Y, rot, mirror, nets, global_nets)
+        self._append(out + extra)
 
     def global_net_names(self):
         return set(re.findall(r'\(global_label "([^"]*)"', self.text))
@@ -339,29 +386,3 @@ def load_stock_symbol(lib_file: Path, name: str, lib_nick: str) -> str:
         j += 1
     blk = t[i:j + 1].replace(f'(symbol "{name}"', f'(symbol "{lib_nick}:{name}"', 1)
     return "\n".join(("\t" + ln if ln.strip() else ln) for ln in ("\t" + blk).split("\n"))
-
-
-def _prop_pos(self: "Sheet", ref: str, name: str):
-    s, e = self.symbol(ref)
-    m = re.search(r'\(property "' + re.escape(name) + r'" "[^"]*"\s*\(at ([-\d.]+) ([-\d.]+)', self.text[s:e])
-    return float(m.group(1)), float(m.group(2))
-
-
-def _prune_lib_symbols(self: "Sheet"):
-    """drop embedded library symbols that no instance uses any more"""
-    used = set(re.findall(r'\(lib_id "([^"]+)"\)', self.text))
-    s, e = self.lib_symbols_span()
-    for cs, ce in sorted(_children(self.text, s), reverse=True):
-        name = re.match(r'\(symbol "([^"]+)"', self.text[cs:ce]).group(1)
-        if name not in used:
-            ss = cs
-            while ss > 0 and self.text[ss - 1] == "\t":
-                ss -= 1
-            if ss > 0 and self.text[ss - 1] == "\n":
-                ss -= 1
-            self.text = self.text[:ss] + self.text[ce:]
-            s, e = self.lib_symbols_span()
-
-
-Sheet.prop_pos = _prop_pos
-Sheet.prune_lib_symbols = _prune_lib_symbols

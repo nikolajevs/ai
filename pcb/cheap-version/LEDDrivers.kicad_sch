@@ -4637,7 +4637,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SS5P10-M3/86A"
+		(property "Value" "SBRT15U100SP5"
 			(at 276.86 187.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4648,7 +4648,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:Vishay_TO-277A_D_K1_A2"
+		(property "Footprint" "GrowBox:Diodes_PowerDI5"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -4660,7 +4660,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/88984/ss5p10.pdf"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -4696,7 +4696,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Vishay"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -4708,7 +4708,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SS5P10-M3/86A"
+		(property "MPN" "SBRT15U100SP5-13"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -4720,7 +4720,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C46986"
+		(property "LCSC" "C2934601"
 			(at 289.56 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -4729,6 +4729,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:8"
+			(at 289.56 198.12 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -7001,7 +7011,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SS5P10-M3/86A"
+		(property "Value" "SBRT15U100SP5"
 			(at 276.86 87.63 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7012,7 +7022,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:Vishay_TO-277A_D_K1_A2"
+		(property "Footprint" "GrowBox:Diodes_PowerDI5"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7024,7 +7034,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/88984/ss5p10.pdf"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7060,7 +7070,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Vishay"
+		(property "Manufacturer" "Diodes Incorporated"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7072,7 +7082,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SS5P10-M3/86A"
+		(property "MPN" "SBRT15U100SP5-13"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7084,7 +7094,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C46986"
+		(property "LCSC" "C2934601"
 			(at 289.56 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -7093,6 +7103,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:8"
+			(at 289.56 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
