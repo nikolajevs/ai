@@ -6,10 +6,10 @@
 	(paper "A3")
 	(title_block
 		(title "03 - RTC / microSD / external sensors")
-		(date "2026-09-30")
-		(rev "0.22-DRAFT")
+		(date "2026-10-03")
+		(rev "cheap-1-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
+		(comment 1 "cheap-1: one-off board from stock parts, schematic derived from PCB_V1 0.22; unrouted")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -4773,6 +4773,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 320.04 176.53 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -4878,7 +4888,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 305.26 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4889,7 +4899,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 302.26 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4921,6 +4931,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 302.26 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 302.26 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 302.26 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 302.26 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -4960,7 +5010,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7k"
+		(property "Value" "4.7k 5%"
 			(at 63.96 146.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4971,7 +5021,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 60.96 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -5003,6 +5053,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 60.96 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 60.96 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 60.96 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:72"
+			(at 60.96 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -5304,6 +5394,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 68.58 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -5581,7 +5681,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29277"
+		(property "LCSC" "C318688"
 			(at 281.94 176.53 0)
 			(effects
 				(font
@@ -5590,7 +5690,17 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL21A226MPQNNNE"
+		(property "Source" "stock:7"
+			(at 281.94 176.53 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL21A226KPCLRNC"
 			(at 281.94 176.53 0)
 			(effects
 				(font
@@ -5647,7 +5757,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
 			(at 193.04 247.65 0)
 			(hide yes)
 			(show_name no)
@@ -5695,7 +5805,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C466970"
+		(property "LCSC" ""
 			(at 193.04 247.65 0)
 			(effects
 				(font
@@ -5705,7 +5815,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "DB125-3.5-2P-GN-S"
+		(property "Source" "stock:86"
 			(at 193.04 247.65 0)
 			(effects
 				(font
@@ -5715,7 +5825,17 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "DORABO"
+		(property "MPN" "FS1.5-02-350-2601R"
+			(at 193.04 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
 			(at 193.04 247.65 0)
 			(effects
 				(font
@@ -5748,7 +5868,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 234.14 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5759,7 +5879,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 231.14 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -5791,6 +5911,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 231.14 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 231.14 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 231.14 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 231.14 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -5830,7 +5990,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 376.38 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5841,7 +6001,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 373.38 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -5873,6 +6033,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 373.38 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 373.38 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 373.38 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 373.38 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -5994,7 +6194,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u / 16V"
+		(property "Value" "2.2u 16V X5R"
 			(at 69.04 186.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6005,7 +6205,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 66.04 185.42 0)
 			(hide yes)
 			(show_name no)
@@ -6037,6 +6237,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" "CL21A225KOFNNNE"
+			(at 66.04 185.42 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 66.04 185.42 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 66.04 185.42 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:57"
+			(at 66.04 185.42 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -6076,7 +6316,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 33.48 248.92 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6087,7 +6327,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 30.48 247.65 0)
 			(hide yes)
 			(show_name no)
@@ -6119,6 +6359,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 30.48 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 30.48 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 30.48 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 30.48 247.65 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -6250,7 +6530,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal"
 			(at 190.5 147.32 0)
 			(hide yes)
 			(show_name no)
@@ -6282,6 +6562,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" "XH2.54-4P-90"
+			(at 190.5 147.32 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 190.5 147.32 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 190.5 147.32 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:90"
+			(at 190.5 147.32 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -6586,6 +6906,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 27.94 68.58 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -6609,7 +6939,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 269.7 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6620,7 +6950,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 266.7 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -6652,6 +6982,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 266.7 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 266.7 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 266.7 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 266.7 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -6691,7 +7061,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7k"
+		(property "Value" "4.7k 5%"
 			(at 30.94 146.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6702,7 +7072,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 27.94 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -6734,6 +7104,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:72"
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -6773,7 +7183,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k 5%"
 			(at 340.82 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6784,7 +7194,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 337.82 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -6816,6 +7226,46 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MPN" ""
+			(at 337.82 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 337.82 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 337.82 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:70"
+			(at 337.82 140.97 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
 			)
 		)
 		(pin "1"
@@ -7307,7 +7757,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL"
+		(property "Manufacturer" "Yageo"
 			(at 121.92 243.84 90)
 			(hide yes)
 			(show_name no)
@@ -7319,7 +7769,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF1001T5E"
+		(property "MPN" "RC0603FR-071KL"
 			(at 121.92 243.84 90)
 			(hide yes)
 			(show_name no)
@@ -7340,6 +7790,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:62"
+			(at 121.92 243.84 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -7943,7 +8403,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL"
+		(property "Manufacturer" "Yageo"
 			(at 190.5 76.2 0)
 			(effects
 				(font
@@ -7953,7 +8413,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF1001T5E"
+		(property "MPN" "RC0603FR-071KL"
 			(at 190.5 76.2 0)
 			(effects
 				(font
@@ -7964,6 +8424,16 @@
 			)
 		)
 		(property "LCSC" "C21190"
+			(at 190.5 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:62"
 			(at 190.5 76.2 0)
 			(effects
 				(font

@@ -6,10 +6,10 @@
 	(paper "A4")
 	(title_block
 		(title "01 - Logic power / 12 V aux to 3.3 V")
-		(date "2026-09-30")
-		(rev "0.22-DRAFT")
+		(date "2026-10-03")
+		(rev "cheap-1-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
+		(comment 1 "cheap-1: one-off board from stock parts, schematic derived from PCB_V1 0.22; unrouted")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
@@ -1904,7 +1904,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "22u 25V X7R"
+		(property "Value" "10u 35V X5R"
 			(at 42.72 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1963,7 +1963,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 45.72 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -1975,7 +1975,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B226KAJNNNE"
+		(property "MPN" "CL32A106KLULNNE"
 			(at 45.72 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -1987,7 +1987,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C309062"
+		(property "LCSC" "C2980162"
 			(at 45.72 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -1996,6 +1996,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:6"
+			(at 45.72 68.58 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -2076,7 +2086,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29277"
+		(property "LCSC" "C318688"
 			(at 185.42 80.01 0)
 			(effects
 				(font
@@ -2085,7 +2095,17 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL21A226MPQNNNE"
+		(property "Source" "stock:7"
+			(at 185.42 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL21A226KPCLRNC"
 			(at 185.42 80.01 0)
 			(effects
 				(font
@@ -2190,7 +2210,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL"
+		(property "Manufacturer" "Yageo"
 			(at 203.2 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -2202,7 +2222,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 203.2 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -2214,7 +2234,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C14675"
 			(at 203.2 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -2223,6 +2243,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:55"
+			(at 203.2 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -2341,6 +2371,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:54"
+			(at 60.96 68.58 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -2541,6 +2581,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 116.84 53.34 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -2618,7 +2668,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29277"
+		(property "LCSC" "C318688"
 			(at 165.1 80.01 0)
 			(effects
 				(font
@@ -2627,7 +2677,17 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL21A226MPQNNNE"
+		(property "Source" "stock:7"
+			(at 165.1 80.01 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL21A226KPCLRNC"
 			(at 165.1 80.01 0)
 			(effects
 				(font

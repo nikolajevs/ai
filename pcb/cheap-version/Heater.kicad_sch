@@ -6,10 +6,10 @@
 	(paper "A3")
 	(title_block
 		(title "05 - PTC heater switch (24 V)")
-		(date "2026-09-30")
-		(rev "0.22-DRAFT")
+		(date "2026-10-03")
+		(rev "cheap-1-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
+		(comment 1 "cheap-1: one-off board from stock parts, schematic derived from PCB_V1 0.22; unrouted")
 	)
 	(lib_symbols
 		(symbol "Device:D_TVS"
@@ -501,178 +501,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D_Zener"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "D"
-				(at 0 2.54 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "D_Zener"
-				(at 0 -2.54 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Zener diode"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "diode"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "D_Zener_0_1"
-				(polyline
-					(pts
-						(xy -1.27 -1.27)
-						(xy -1.27 1.27)
-						(xy -0.762 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0)
-						(xy -1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -1.27)
-						(xy 1.27 1.27)
-						(xy -1.27 0)
-						(xy 1.27 -1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "D_Zener_1_1"
-				(pin passive line
-					(at -3.81 0 0)
-					(length 2.54)
-					(name "K"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 3.81 0 180)
-					(length 2.54)
-					(name "A"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:R"
 			(pin_numbers
 				(hide yes)
@@ -813,7 +641,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Driver_FET:UCC27524D"
+		(symbol "Driver_FET:TC4427xOA"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -830,7 +658,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "UCC27524D"
+			(property "Value" "TC4427xOA"
 				(at 1.27 8.89 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -842,7 +670,7 @@
 				)
 			)
 			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-				(at 0 -8.89 0)
+				(at 0.508 -15.24 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -852,8 +680,8 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524.pdf"
-				(at 0 -2.54 0)
+			(property "Datasheet" "https://ww1.microchip.com/downloads/en/DeviceDoc/20001422G.pdf"
+				(at 0.508 -13.208 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -863,7 +691,18 @@
 					)
 				)
 			)
-			(property "Description" "Dual 5A MOSFET driver, 4.5V..18V supply, non-inverting, SOIC-8"
+			(property "Description" "1.5A Dual High-Speed Power MOSFET Drivers, 4.5..18V supply, TTL/CMOS compatible inputs, non-inverting drivers, SOIC-8"
+				(at 0 -11.176 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "TelCom-Semiconductor Microchip ESD push-pull TC427 TC4427EOA TC4427COA TC4427VOA"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -874,7 +713,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "high-speed low-side negative-input-voltage-capability"
+			(property "ki_fp_filters" "*SO*3.9*4.*P1.27mm*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -885,21 +724,10 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "*SOIC*3.9x4.9mm*P1.27mm*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "UCC27524D_0_1"
+			(symbol "TC4427xOA_0_1"
 				(rectangle
-					(start -7.62 7.62)
-					(end 7.62 -7.62)
+					(start -7.62 -7.62)
+					(end 7.62 7.62)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -909,11 +737,12 @@
 					)
 				)
 			)
-			(symbol "UCC27524D_1_1"
-				(pin input line
-					(at -10.16 5.08 0)
+			(symbol "TC4427xOA_1_1"
+				(pin no_connect line
+					(at -7.62 0 0)
 					(length 2.54)
-					(name "ENA"
+					(hide yes)
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -931,7 +760,7 @@
 				(pin input line
 					(at -10.16 2.54 0)
 					(length 2.54)
-					(name "INA"
+					(name "IN_A"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -967,7 +796,7 @@
 				(pin input line
 					(at -10.16 -2.54 0)
 					(length 2.54)
-					(name "INB"
+					(name "IN_B"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -985,7 +814,7 @@
 				(pin output line
 					(at 10.16 -2.54 180)
 					(length 2.54)
-					(name "OUTB"
+					(name "OUT_B"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1021,7 +850,7 @@
 				(pin output line
 					(at 10.16 2.54 180)
 					(length 2.54)
-					(name "OUTA"
+					(name "OUT_A"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1036,10 +865,11 @@
 						)
 					)
 				)
-				(pin input line
-					(at -10.16 -5.08 0)
+				(pin no_connect line
+					(at 7.62 0 180)
 					(length 2.54)
-					(name "ENB"
+					(hide yes)
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1057,7 +887,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "GrowBox:NTMFS5C628NL"
+		(symbol "Transistor_FET:Q_NMOS_GDS"
 			(pin_names
 				(offset 0)
 				(hide yes)
@@ -1078,7 +908,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "NTMFS5C628NL"
+			(property "Value" "Q_NMOS_GDS"
 				(at 5.08 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1089,21 +919,8 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_SO:ONSemi_SO-8FL_488AA"
-				(at 5.08 -1.905 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(justify left)
-				)
-			)
-			(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/ntmfs5c628nl-d.pdf"
-				(at 5.08 -3.81 0)
+			(property "Footprint" ""
+				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1111,10 +928,9 @@
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
-			(property "Description" "N-channel MOSFET 60V, SO-8FL; S=1,2,3 G=4 D=5"
+			(property "Datasheet" ""
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1125,7 +941,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "N-Channel MOSFET"
+			(property "Description" "N-MOSFET transistor, gate/drain/source"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1136,7 +952,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "ONSemi*SO*8FL*"
+			(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1147,11 +963,10 @@
 					)
 				)
 			)
-			(symbol "NTMFS5C628NL_0_1"
+			(symbol "Q_NMOS_GDS_0_1"
 				(polyline
 					(pts
-						(xy 0.254 1.905)
-						(xy 0.254 -1.905)
+						(xy 0.254 1.905) (xy 0.254 -1.905)
 					)
 					(stroke
 						(width 0.254)
@@ -1163,8 +978,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.254 0)
-						(xy -2.54 0)
+						(xy 0.254 0) (xy -2.54 0)
 					)
 					(stroke
 						(width 0)
@@ -1176,8 +990,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 2.286)
-						(xy 0.762 1.27)
+						(xy 0.762 2.286) (xy 0.762 1.27)
 					)
 					(stroke
 						(width 0.254)
@@ -1189,8 +1002,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 0.508)
-						(xy 0.762 -0.508)
+						(xy 0.762 0.508) (xy 0.762 -0.508)
 					)
 					(stroke
 						(width 0.254)
@@ -1202,8 +1014,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.27)
-						(xy 0.762 -2.286)
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
 					)
 					(stroke
 						(width 0.254)
@@ -1215,10 +1026,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.762 -1.778)
-						(xy 3.302 -1.778)
-						(xy 3.302 1.778)
-						(xy 0.762 1.778)
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1230,10 +1038,7 @@
 				)
 				(polyline
 					(pts
-						(xy 1.016 0)
-						(xy 2.032 0.381)
-						(xy 2.032 -0.381)
-						(xy 1.016 0)
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
 					)
 					(stroke
 						(width 0)
@@ -1256,8 +1061,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 2.54)
-						(xy 2.54 1.778)
+						(xy 2.54 2.54) (xy 2.54 1.778)
 					)
 					(stroke
 						(width 0)
@@ -1291,9 +1095,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 -2.54)
-						(xy 2.54 0)
-						(xy 0.762 0)
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
 					)
 					(stroke
 						(width 0)
@@ -1305,8 +1107,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.921 0.381)
-						(xy 3.683 0.381)
+						(xy 2.921 0.381) (xy 3.683 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1318,10 +1119,7 @@
 				)
 				(polyline
 					(pts
-						(xy 3.302 0.381)
-						(xy 2.921 -0.254)
-						(xy 3.683 -0.254)
-						(xy 3.302 0.381)
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1332,63 +1130,7 @@
 					)
 				)
 			)
-			(symbol "NTMFS5C628NL_1_1"
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(hide yes)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(hide yes)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+			(symbol "Q_NMOS_GDS_1_1"
 				(pin input line
 					(at -5.08 0 0)
 					(length 2.54)
@@ -1399,7 +1141,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1417,68 +1159,6 @@
 							)
 						)
 					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "GrowBox:TPS70950"
-			(pin_names
-				(offset 0.254)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(symbol "TPS70950_0_1"
-				(rectangle
-					(start -5.08 4.445)
-					(end 5.08 -5.08)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-			)
-			(symbol "TPS70950_1_1"
-				(pin power_in line
-					(at -7.62 2.54 0)
-					(length 2.54)
-					(name "VIN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 0 -7.62 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
 					(number "2"
 						(effects
 							(font
@@ -1487,10 +1167,10 @@
 						)
 					)
 				)
-				(pin input line
-					(at -7.62 0 0)
+				(pin passive line
+					(at 2.54 -5.08 90)
 					(length 2.54)
-					(name "EN"
+					(name "S"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1505,122 +1185,8 @@
 						)
 					)
 				)
-				(pin no_connect line
-					(at 5.08 0 180)
-					(length 2.54)
-					(hide yes)
-					(name "NC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_out line
-					(at 7.62 2.54 180)
-					(length 2.54)
-					(name "VOUT"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 			)
 			(embedded_fonts no)
-			(property "Reference" "U"
-				(at -5.08 5.715 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "TPS70950DBVR"
-				(at 0 5.715 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-				(at 0 8.255 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps709.pdf"
-				(at 0 2.54 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "TI TPS70950 DBV, 5V LDO with reverse current protection; IN1 GND2 EN3 NC4 OUT5; not TPS709A/B"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "linear regulator ldo fixed positive"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "SOT?23?5*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
 		)
 	)
 	(text "U601: ENA=3.3 V, INA=HEATER_EN. Channel B disabled. VDD = +12V from the aux buck (sheet 06).\nC601/C602 close to VDD/GND. Short OUTA-G-S-GND loop.\nMCU R210=10k pull-down; R602 discharges the gate."
@@ -1678,20 +1244,6 @@
 		)
 		(uuid "c2aa5ada-8f3c-5716-9467-86d1bb049840")
 	)
-	(no_connect
-		(at 99.06 66.04)
-		(uuid "1274060d-6548-5b1c-928a-b893592671ce")
-	)
-	(wire
-		(pts
-			(xy 78.74 60.96) (xy 58.42 60.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03b7d359-b54c-523b-b1ce-cb68e0de1f3d")
-	)
 	(wire
 		(pts
 			(xy 153.67 60.96) (xy 158.75 60.96)
@@ -1701,16 +1253,6 @@
 			(type default)
 		)
 		(uuid "327053f7-9a6b-5a22-ac0d-f4c2d4b98835")
-	)
-	(wire
-		(pts
-			(xy 88.9 73.66) (xy 88.9 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "34576a65-f7f7-5095-9218-aa877cbb5def")
 	)
 	(wire
 		(pts
@@ -1724,26 +1266,6 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 53.34) (xy 88.9 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "44e2c564-05b6-5406-821d-e2fe24c8cdba")
-	)
-	(wire
-		(pts
-			(xy 210.82 88.9) (xy 210.82 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "546beb69-08b4-5393-83ff-c59d34f6fd91")
-	)
-	(wire
-		(pts
 			(xy 30.48 97.79) (xy 30.48 92.71)
 		)
 		(stroke
@@ -1751,16 +1273,6 @@
 			(type default)
 		)
 		(uuid "582f8390-61f1-5b09-b439-d809a8c63a98")
-	)
-	(wire
-		(pts
-			(xy 78.74 66.04) (xy 58.42 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "68a54925-07d8-51f9-952c-df77678e8a1c")
 	)
 	(wire
 		(pts
@@ -1824,36 +1336,6 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 60.96) (xy 104.14 60.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8e88afaa-6ab8-5284-980f-f47f4326c412")
-	)
-	(wire
-		(pts
-			(xy 210.82 78.74) (xy 210.82 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "98d580ba-fb99-53b3-ab29-771fdfe9507e")
-	)
-	(wire
-		(pts
-			(xy 203.2 83.82) (xy 198.12 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c8491c79-9d93-5f52-8773-dd7060770041")
-	)
-	(wire
-		(pts
 			(xy 248.92 50.8) (xy 243.84 50.8)
 		)
 		(stroke
@@ -1874,16 +1356,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 68.58) (xy 58.42 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0a5261e-bf3a-5be1-ae4d-13a5fbd34b7e")
-	)
-	(wire
-		(pts
 			(xy 149.86 93.98) (xy 149.86 88.9)
 		)
 		(stroke
@@ -1891,26 +1363,6 @@
 			(type default)
 		)
 		(uuid "f41290bc-b696-5a97-8bf3-336a88ecbdef")
-	)
-	(wire
-		(pts
-			(xy 78.74 58.42) (xy 58.42 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fed4a0e0-859e-5844-91b7-5e37aa5d22a4")
-	)
-	(label "HEATER_DRIVE"
-		(at 104.14 60.96 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "2c49d32a-25fd-52ff-baa1-8850a3ddcd67")
 	)
 	(label "HEATER_DRAIN"
 		(at 259.08 113.03 0)
@@ -1933,16 +1385,6 @@
 		(uuid "3e668bef-8439-5cc9-9652-da445ad55431")
 	)
 	(label "HEATER_GATE"
-		(at 198.12 83.82 180)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify right bottom)
-		)
-		(uuid "548f3d3f-f43f-5897-ab56-55b07c08ee33")
-	)
-	(label "HEATER_GATE"
 		(at 158.75 60.96 0)
 		(effects
 			(font
@@ -1961,16 +1403,6 @@
 			(justify right bottom)
 		)
 		(uuid "77ecd90e-6b02-5218-b267-25daaf04a610")
-	)
-	(label "HEATER_DRAIN"
-		(at 210.82 73.66 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "7cf7597d-5515-5ab4-bca4-675dd3d520ef")
 	)
 	(label "HEATER_DRIVE"
 		(at 140.97 60.96 180)
@@ -2048,50 +1480,6 @@
 			)
 		)
 	)
-	(global_label "+12V"
-		(shape bidirectional)
-		(at 88.9 48.26 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "4d439e0b-fc11-5a28-bcc3-8f57a9493253")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 88.9 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "+3V3"
-		(shape bidirectional)
-		(at 58.42 58.42 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "4d8389f2-95f0-5653-bf41-28c2dba221be")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.42 58.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "GND"
 		(shape bidirectional)
 		(at 149.86 106.68 0)
@@ -2104,72 +1492,6 @@
 		(uuid "5cd93f05-b5c9-5c9b-8985-d5d854355731")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 149.86 106.68 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 58.42 66.04 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "629ba9a4-761f-584e-9407-b8645e2e445c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.42 66.04 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 88.9 78.74 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "6588617f-3ad9-5944-8de3-673c69bd968c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 88.9 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "HEATER_EN"
-		(shape bidirectional)
-		(at 58.42 60.96 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "75504c96-e490-5bd4-b246-e6e8167605bb")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.42 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2214,50 +1536,6 @@
 		(uuid "ad163bf2-21f5-5eea-9e32-3e65ebfc7339")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 228.6 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 58.42 68.58 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "b210532d-4c01-5659-8ae7-332939a93a1a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.42 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 210.82 93.98 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "c91b8df7-e1d0-5f15-85ea-ee6fdf209631")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 210.82 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2371,7 +1649,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "UNI-ROYAL"
+		(property "Manufacturer" "Yageo"
 			(at 149.86 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -2383,7 +1661,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF1003T5E"
+		(property "MPN" "RC0603FR-07100KL"
 			(at 149.86 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -2395,7 +1673,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C14675"
 			(at 149.86 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -2407,104 +1685,14 @@
 				(justify left)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Driver_FET:UCC27524D")
-		(at 88.9 63.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "19f341cd-3bd4-5d97-9669-2a8e50f70b9e")
-		(property "Reference" "U601"
-			(at 76.2 40.64 0)
-			(show_name no)
-			(do_not_autoplace no)
+		(property "Source" "stock:55"
+			(at 149.86 97.79 0)
 			(effects
 				(font
 					(size 1 1)
 				)
+				(hide yes)
 				(justify left)
-			)
-		)
-		(property "Value" "UCC27524ADR"
-			(at 76.2 43.18 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 88.9 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524a.pdf"
-			(at 88.9 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 88.9 63.5 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "d5f1250c-4da0-5d0a-96fc-81f772fd927f")
-		)
-		(pin "2"
-			(uuid "86b12abf-369c-5af1-92ce-4f6fbceb05f2")
-		)
-		(pin "3"
-			(uuid "a9ff5a50-0a7d-55c9-8f4b-427e9ccdbb24")
-		)
-		(pin "4"
-			(uuid "f08ef673-a318-5eeb-a477-e4deadbfd219")
-		)
-		(pin "5"
-			(uuid "9d9455f3-a632-5eb0-9e4a-aa7dea3e225f")
-		)
-		(pin "6"
-			(uuid "ce09ab0b-f980-5826-b86a-c79f042f729d")
-		)
-		(pin "7"
-			(uuid "bd32c01f-7ee8-5130-b539-babe815b9479")
-		)
-		(pin "8"
-			(uuid "bb19f760-ff49-5ff3-95f1-0af8b27d0164")
-		)
-		(instances
-			(project "cheap-version"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
-					(reference "U601")
-					(unit 1)
-				)
 			)
 		)
 	)
@@ -2530,7 +1718,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "10R 5%"
 			(at 149.86 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2541,7 +1729,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 149.86 60.96 90)
 			(hide yes)
 			(show_name no)
@@ -2575,6 +1763,46 @@
 				)
 			)
 		)
+		(property "MPN" ""
+			(at 149.86 60.96 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 149.86 60.96 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 149.86 60.96 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:41"
+			(at 149.86 60.96 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 		(pin "1"
 			(uuid "40c10929-7c3c-5346-bb9f-c86f2e3a295e")
 		)
@@ -2587,133 +1815,6 @@
 					(reference "R601")
 					(unit 1)
 				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "GrowBox:NTMFS5C628NL")
-		(at 208.28 83.82 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "5f367e47-3a20-5bd1-af20-25fcd89f0025")
-		(property "Reference" "Q601"
-			(at 215.9 76.2 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "NTMFS5C628NLT1G"
-			(at 215.9 78.74 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:ONSemi_SO-8FL_488AA"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/ntmfs5c628nl-d.pdf"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" ""
-			(at 208.28 83.82 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "4"
-			(uuid "60392cd7-1fe0-5e81-a5f8-ce59a05cb715")
-		)
-		(pin "1"
-			(uuid "9aeae353-49eb-54aa-a3d2-6d067d871c4e")
-		)
-		(pin "5"
-			(uuid "36440ad4-ac47-53a1-8b48-e8e31d7a227e")
-		)
-		(pin "2"
-			(uuid "22c9afe7-5c28-5796-a4aa-07c013b483cc")
-		)
-		(pin "3"
-			(uuid "caefb5c9-4315-5772-b0b7-b933b17b9c4a")
-		)
-		(instances
-			(project "cheap-version"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
-					(reference "Q601")
-					(unit 1)
-				)
-			)
-		)
-		(property "Manufacturer" "onsemi"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "MPN" "NTMFS5C628NLT1G"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" "C145537"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
 			)
 		)
 	)
@@ -2739,7 +1840,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u / 25V X5R"
+		(property "Value" "10u 35V X5R"
 			(at 33.48 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2750,7 +1851,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
 			(at 30.48 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -2810,7 +1911,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL21A106KAYNNNE"
+		(property "MPN" "CL32A106KLULNNE"
 			(at 30.48 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -2822,7 +1923,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C15850"
+		(property "LCSC" "C2980162"
 			(at 30.48 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -2831,6 +1932,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:6"
+			(at 30.48 101.6 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)
@@ -2952,6 +2063,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 30.48 66.04 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -2986,7 +2107,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:TerminalBlock_DORABO_DB125-3.5_1x02_P3.50mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal"
 			(at 254 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -3034,7 +2155,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C466970"
+		(property "LCSC" ""
 			(at 254 48.26 0)
 			(effects
 				(font
@@ -3044,7 +2165,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "DB125-3.5-2P-GN-S"
+		(property "Source" "stock:86"
 			(at 254 48.26 0)
 			(effects
 				(font
@@ -3054,7 +2175,17 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "DORABO"
+		(property "MPN" "FS1.5-02-350-2601R"
+			(at 254 48.26 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
 			(at 254 48.26 0)
 			(effects
 				(font
@@ -3199,5 +2330,407 @@
 			(justify left top)
 		)
 		(uuid b60d9e27-3211-5b7c-88ee-a247243e1089)
+	)
+	(symbol
+		(lib_id "Driver_FET:TC4427xOA")
+		(at 88.9 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid d1bb88db-a97e-5aef-83c9-077df222bbf6)
+		(property "Reference" "U601"
+			(at 76.2 40.64 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IRS4427S"
+			(at 76.2 43.18 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Infineon"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "IRS4427STRPBF"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:11"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 463d7950-48c1-5806-992d-290b5c8db2f3)
+		)
+		(pin "2"
+			(uuid 1f1e6e5a-8f2d-5bcb-ae0e-f75cff1aabb8)
+		)
+		(pin "3"
+			(uuid 38a5a6fa-38c2-5d2e-81d4-5b7469a8e1da)
+		)
+		(pin "4"
+			(uuid 30110279-a642-5b24-b10b-41bf05d053ae)
+		)
+		(pin "5"
+			(uuid 12208b80-16d1-5c84-814d-8b5f2fe3cb1f)
+		)
+		(pin "6"
+			(uuid fc3efb32-4b25-5236-b8cf-8d85250fb0f3)
+		)
+		(pin "7"
+			(uuid 4a4fe6a0-4e71-58ba-bfee-a642ebec4fab)
+		)
+		(pin "8"
+			(uuid adb0f7b5-40c1-5112-943b-cffcbe78d643)
+		)
+		(instances
+			(project "cheap-version"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
+					(reference "U601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(no_connect
+		(at 81.28 63.5)
+		(uuid fb191a92-ca1f-5c23-b55b-5e50d1c54b50)
+	)
+	(wire
+		(pts
+			(xy 78.74 60.96) (xy 76.2 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d318259f-8acc-5792-92a8-f7d0896bc1e5)
+	)
+	(global_label "HEATER_EN"
+		(shape bidirectional)
+		(at 76.2 60.96 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 412e5d0b-7412-5961-afe1-bb1c230ca21f)
+	)
+	(wire
+		(pts
+			(xy 88.9 73.66) (xy 88.9 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 965f1795-70af-58a4-b218-ad532d610e7a)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 88.9 76.2 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 29dbc847-f2f5-50dc-b554-16d6fd4cdc39)
+	)
+	(wire
+		(pts
+			(xy 78.74 66.04) (xy 76.2 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 3930b476-7388-5c61-abd4-d4ccc4cbb958)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 76.2 66.04 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid cf1bd2e7-e0db-5438-9f71-bb940d4c006b)
+	)
+	(no_connect
+		(at 99.06 66.04)
+		(uuid 808fad9a-6d67-5e5b-be2d-92448f9beead)
+	)
+	(wire
+		(pts
+			(xy 88.9 53.34) (xy 88.9 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 8f8c79cd-87ad-5f0f-a5a2-8ac8090d91c4)
+	)
+	(global_label "+12V"
+		(shape bidirectional)
+		(at 88.9 50.8 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left)
+		)
+		(uuid fd94f207-1435-5ad1-98e7-0d49c84c5138)
+	)
+	(wire
+		(pts
+			(xy 99.06 60.96) (xy 101.6 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 68ba6c11-9388-5846-8428-535d49896131)
+	)
+	(label "HEATER_DRIVE"
+		(at 101.6 60.96 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid c7f96078-6778-5de3-9bdf-e6ff4aa0c110)
+	)
+	(no_connect
+		(at 96.52 63.5)
+		(uuid 7ba0d856-f29e-5921-a624-628905eb2706)
+	)
+	(symbol
+		(lib_id "Transistor_FET:Q_NMOS_GDS")
+		(at 208.28 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 2dceecb2-d288-5bc6-a547-6da7f59e3a7e)
+		(property "Reference" "Q601"
+			(at 215.9 76.2 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IRL2505"
+			(at 215.9 78.74 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "IRL2505"
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:78"
+			(at 208.28 83.82 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid ab633e84-592b-565a-9ea6-3f65be6ae805)
+		)
+		(pin "2"
+			(uuid d874e746-4be0-5b8a-bead-6395a8e999a9)
+		)
+		(pin "3"
+			(uuid 85883144-2349-59b7-b714-cc6640a0782f)
+		)
+		(instances
+			(project "cheap-version"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/094b27f9-0b26-500d-bd76-df142bab7fb7/2fc560f7-b519-5c8c-b492-72c94880fc7b"
+					(reference "Q601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 83.82) (xy 200.66 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 8d760339-4a86-5bf2-a341-3144f37435af)
+	)
+	(label "HEATER_GATE"
+		(at 200.66 83.82 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 70bbee7e-8659-5538-a6cf-e7b01941d325)
+	)
+	(wire
+		(pts
+			(xy 210.82 78.74) (xy 210.82 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 91aa93ae-2f18-554a-a61b-b486da1ffa1d)
+	)
+	(label "HEATER_DRAIN"
+		(at 210.82 76.2 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left)
+		)
+		(uuid a793e506-0178-5937-9d0f-f9db981fec10)
+	)
+	(wire
+		(pts
+			(xy 210.82 88.9) (xy 210.82 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid cb98ba6a-7157-59fe-a951-6b6fb1966051)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 210.82 91.44 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 45de2895-18ec-5dd6-a1b7-d0b264c80e0f)
 	)
 )

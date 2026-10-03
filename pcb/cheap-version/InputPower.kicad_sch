@@ -6,10 +6,10 @@
 	(paper "A3")
 	(title_block
 		(title "06 - 24 V input, fuses, 12 V auxiliary buck")
-		(date "2026-09-30")
-		(rev "0.22-DRAFT")
+		(date "2026-10-03")
+		(rev "cheap-1-DRAFT")
 		(company "GrowBox controller")
-		(comment 1 "Simplified prototype; unrouted; hardware qualification pending")
+		(comment 1 "cheap-1: one-off board from stock parts, schematic derived from PCB_V1 0.22; unrouted")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
@@ -1217,271 +1217,6 @@
 			(embedded_fonts no)
 		)
 
-		(symbol "GrowBox:LMR16020"
-		(pin_names
-			(offset 0.254)
-		)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(duplicate_pin_numbers_are_jumpers no)
-		(symbol "LMR16020_0_1"
-			(rectangle
-				(start -10.16 7.62)
-				(end 10.16 -7.62)
-				(stroke
-					(width 0.254)
-					(type default)
-				)
-				(fill
-					(type background)
-				)
-			)
-		)
-		(symbol "LMR16020_1_1"
-			(pin power_in line
-				(at -12.7 5.08 0)
-				(length 2.54)
-				(name "VIN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -12.7 0 0)
-				(length 2.54)
-				(name "EN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at -12.7 -5.08 0)
-				(length 2.54)
-				(name "RT/SYNC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 12.7 5.08 180)
-				(length 2.54)
-				(name "BOOT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 12.7 2.54 180)
-				(length 2.54)
-				(name "SW"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 12.7 -2.54 180)
-				(length 2.54)
-				(name "FB"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin open_collector line
-				(at 12.7 -5.08 180)
-				(length 2.54)
-				(name "PGOOD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "6"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 0 -10.16 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 2.54 -10.16 90)
-				(length 2.54)
-				(name "EP"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "9"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-		)
-		(embedded_fonts no)
-		(property "Reference" "U"
-			(at -10.16 8.89 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "LMR16020PDDAR"
-			(at 0 8.89 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm"
-			(at 0 11.43 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmr16020.pdf"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "TI LMR16020 60 V 2 A non-synchronous buck, SO PowerPAD DDA0008B; BOOT1 VIN2 EN3 RT/SYNC4 FB5 PGOOD6 GND7 SW8 EP9=GND"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "buck step-down switching regulator 60V"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "SOIC*1EP*3.9x4.9mm*P1.27mm*"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 		(symbol "Device:D_Schottky"
 			(pin_numbers
 				(hide yes)
@@ -1835,6 +1570,270 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Regulator_Switching:ST1S14PHR"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -8.255 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "ST1S14PHR"
+				(at 0 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:TI_SO-PowerPAD-8"
+				(at 3.175 -8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(justify left)
+				)
+			)
+			(property "Datasheet" "http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00285678.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "3A step-down switching regulator, Adjustable Output Voltage, 5.5-48V Input Voltage, 850kHz, PowerSO-8"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "DC/DC Buck Conwerter 3A"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TI*SO*PowerPAD*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "ST1S14PHR_0_1"
+				(rectangle
+					(start 7.62 7.62)
+					(end -7.62 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "ST1S14PHR_1_1"
+				(pin input line
+					(at 10.16 5.08 180)
+					(length 2.54)
+					(name "BOOT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -10.16 -5.08 0)
+					(length 2.54)
+					(name "PG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 0 0)
+					(length 2.54)
+					(name "~{EN1}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 10.16 -5.08 180)
+					(length 2.54)
+					(name "FB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 -2.54 0)
+					(length 2.54)
+					(name "EN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 -10.16 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "VIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "SW"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 2.54)
+					(name "PADGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -1854,7 +1853,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XT60PW-M 24V IN"
+		(property "Value" "24V IN (KF301-5.0-2P)"
 			(at 41.91 52.07 0)
 			(effects
 				(font
@@ -1863,7 +1862,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "GrowBox:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal"
 			(at 38.1 50.8 0)
 			(effects
 				(font
@@ -1883,7 +1882,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Changzhou Amass"
+		(property "Manufacturer" ""
 			(at 38.1 50.8 0)
 			(effects
 				(font
@@ -1893,7 +1892,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "XT60PW-M"
+		(property "MPN" "KF301-5.0-2P"
 			(at 38.1 50.8 0)
 			(effects
 				(font
@@ -1903,7 +1902,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C98732"
+		(property "LCSC" ""
+			(at 38.1 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:93"
 			(at 38.1 50.8 0)
 			(effects
 				(font
@@ -2122,7 +2131,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "220u / 50V"
+		(property "Value" "470u / 63V"
 			(at 87.63 52.07 0)
 			(effects
 				(font
@@ -2131,7 +2140,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:CP_Elec_10x10.5"
+		(property "Footprint" "Capacitor_SMD:CP_Elec_16x17.5"
 			(at 83.82 50.8 0)
 			(effects
 				(font
@@ -2161,7 +2170,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "EEEFK1H221P"
+		(property "MPN" "EEVFK1J471M"
 			(at 83.82 50.8 0)
 			(effects
 				(font
@@ -2171,7 +2180,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C178549"
+		(property "LCSC" "C178728"
+			(at 83.82 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:13"
 			(at 83.82 50.8 0)
 			(effects
 				(font
@@ -2256,7 +2275,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u / 50V X7R"
+		(property "Value" "2.2u 50V X7R"
 			(at 105.41 52.07 0)
 			(effects
 				(font
@@ -2265,7 +2284,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 101.6 50.8 0)
 			(effects
 				(font
@@ -2299,7 +2318,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "KYOCERA AVX"
 			(at 101.6 50.8 0)
 			(effects
 				(font
@@ -2309,7 +2328,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B105KBHNNNE"
+		(property "MPN" "12065C225KATM-HW"
 			(at 101.6 50.8 0)
 			(effects
 				(font
@@ -2319,7 +2338,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C40708"
+		(property "LCSC" ""
+			(at 101.6 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:3"
 			(at 101.6 50.8 0)
 			(effects
 				(font
@@ -2875,7 +2904,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Taiyo Yuden"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2885,7 +2914,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UMK325AB7106KMHP"
+		(property "MPN" "CL32B106KBJNNNE"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -2895,7 +2924,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C386166"
+		(property "LCSC" "C92388"
+			(at 33.02 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:47"
 			(at 33.02 124.46 0)
 			(effects
 				(font
@@ -3008,7 +3047,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Taiyo Yuden"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3018,7 +3057,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "UMK325AB7106KMHP"
+		(property "MPN" "CL32B106KBJNNNE"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3028,7 +3067,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C386166"
+		(property "LCSC" "C92388"
+			(at 50.8 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:47"
 			(at 50.8 124.46 0)
 			(effects
 				(font
@@ -3171,6 +3220,16 @@
 				(justify left)
 			)
 		)
+		(property "Source" "stock:54"
+			(at 68.58 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
 		(pin "1"
 			(uuid 663adaeb-c03b-4054-a8b7-15ce26bef34d)
 		)
@@ -3245,7 +3304,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560k 1%"
+		(property "Value" "470k 1%"
 			(at 95.25 113.03 0)
 			(effects
 				(font
@@ -3298,7 +3357,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "0603WAF5603T5E"
+		(property "MPN" "0603WAF4703T5E"
 			(at 91.44 111.76 0)
 			(effects
 				(font
@@ -3308,7 +3367,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C23203"
+		(property "LCSC" ""
 			(at 91.44 111.76 0)
 			(effects
 				(font
@@ -3386,7 +3445,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 91.44 149.86 0)
 			(effects
 				(font
@@ -3420,7 +3479,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" ""
 			(at 91.44 149.86 0)
 			(effects
 				(font
@@ -3430,7 +3489,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "RC0603FR-0747KL"
+		(property "MPN" ""
 			(at 91.44 149.86 0)
 			(effects
 				(font
@@ -3440,7 +3499,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C105579"
+		(property "LCSC" ""
+			(at 91.44 149.86 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:61"
 			(at 91.44 149.86 0)
 			(effects
 				(font
@@ -3491,418 +3560,6 @@
 			(justify right)
 		)
 		(uuid 5ddd38f4-0ca9-41bc-85a5-e2e05b2ccf63)
-	)
-	(symbol
-		(lib_id "GrowBox:LMR16020")
-		(at 132.08 124.46 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid 0114cb97-5452-4d78-a4c0-626f171d70cc)
-		(property "Reference" "U902"
-			(at 121.92 111.76 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "LMR16020PDDAR"
-			(at 121.92 114.3 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm"
-			(at 132.08 124.46 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmr16020.pdf"
-			(at 132.08 124.46 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Manufacturer" "Texas Instruments"
-			(at 132.08 124.46 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "MPN" "LMR16020PDDAR"
-			(at 132.08 124.46 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "LCSC" "C190006"
-			(at 132.08 124.46 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid 122082af-e28d-4ce9-9fe7-a7ba72764335)
-		)
-		(pin "2"
-			(uuid 9e436aa5-dedd-4408-8642-1dd82d8c9df6)
-		)
-		(pin "3"
-			(uuid c76a9c03-1b65-4bd6-9715-2c16443e40b8)
-		)
-		(pin "4"
-			(uuid 59bbedef-adc2-444c-be88-0dfb88043663)
-		)
-		(pin "5"
-			(uuid 2f9fb9cc-b04f-4aea-8799-13f94cbb4401)
-		)
-		(pin "6"
-			(uuid 3cee03d3-ed5e-4628-9bb6-fc5b949cbcaa)
-		)
-		(pin "7"
-			(uuid 70cf9c2c-149f-446d-8f54-2eb8db03e0b9)
-		)
-		(pin "8"
-			(uuid 149a62bb-bfff-4870-95b8-99305f43e615)
-		)
-		(pin "9"
-			(uuid f112f0f6-516b-4629-ae54-325613b9de94)
-		)
-		(instances
-			(project "cheap-version"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "U902")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 119.38 119.38) (xy 116.84 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid dd38dc1f-f4e8-41ae-a41c-ab6817c71af6)
-	)
-	(label "AUX_VIN"
-		(at 116.84 119.38 180)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right)
-		)
-		(uuid c0fc8585-3101-4696-8ba2-d59a235f1486)
-	)
-	(wire
-		(pts
-			(xy 119.38 124.46) (xy 116.84 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid ad62b578-2b28-4f30-926f-689067d15f31)
-	)
-	(label "BUCK12_EN"
-		(at 116.84 124.46 180)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right bottom)
-		)
-		(uuid b0ca9b48-8ff1-4703-9293-b763943d242c)
-	)
-	(wire
-		(pts
-			(xy 119.38 129.54) (xy 116.84 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 36a36dc8-2e98-4b7c-a5f3-5dc06fcf3cab)
-	)
-	(label "BUCK12_RT"
-		(at 116.84 129.54 180)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right bottom)
-		)
-		(uuid d006e782-92c6-4c36-bdbb-9fa6eb491452)
-	)
-	(wire
-		(pts
-			(xy 144.78 119.38) (xy 147.32 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 1ccf66ca-75d2-4ece-881a-13206a640493)
-	)
-	(label "BUCK12_BOOT"
-		(at 147.32 119.38 0)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify left bottom)
-		)
-		(uuid 3b80d950-d711-45d5-84fd-e7494293eb3f)
-	)
-	(wire
-		(pts
-			(xy 144.78 121.92) (xy 147.32 121.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 3b143d2d-809e-4f9c-ab4c-e7f0b188dbb4)
-	)
-	(label "BUCK12_SW"
-		(at 147.32 121.92 0)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify left bottom)
-		)
-		(uuid 416060a7-5bf3-4496-abb8-7bfeb8115bc1)
-	)
-	(wire
-		(pts
-			(xy 144.78 127) (xy 147.32 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 9198da3e-6db8-425f-b276-fbd3f8802c98)
-	)
-	(label "BUCK12_FB"
-		(at 147.32 127 0)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify left bottom)
-		)
-		(uuid b5951542-3811-4d37-bec1-1ef52dc9fef8)
-	)
-	(no_connect
-		(at 144.78 129.54)
-		(uuid "503efe1d-bc23-45ed-b315-628e6bc9c358")
-	)
-	(wire
-		(pts
-			(xy 132.08 134.62) (xy 132.08 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid f6c9852a-63aa-465b-9eb2-23f6e39b8d24)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 132.08 137.16 270)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right)
-		)
-		(uuid 41178347-1048-4b70-a176-83bb641875d6)
-	)
-	(wire
-		(pts
-			(xy 134.62 134.62) (xy 134.62 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 487002ee-2399-46c6-9a4f-6b4e770895a4)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 134.62 137.16 270)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right)
-		)
-		(uuid c18fd05a-ebe5-4f55-ac6f-fdd2a39958f1)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 109.22 152.4 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid 6f29c72a-9371-4392-bff1-e6853fdadd81)
-		(property "Reference" "R906"
-			(at 113.03 151.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "47k 1%"
-			(at 113.03 153.67 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 109.22 152.4 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 109.22 152.4 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid ab6caf74-49fd-47a5-aed0-9afef8674681)
-		)
-		(pin "2"
-			(uuid 13d4da3a-5e9e-4024-8e67-78c32044d11d)
-		)
-		(instances
-			(project "cheap-version"
-				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
-					(reference "R906")
-					(unit 1)
-				)
-			)
-		)
-		(property "Manufacturer" "Yageo"
-			(at 109.22 152.4 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "MPN" "RC0603FR-0747KL"
-			(at 109.22 152.4 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-		(property "LCSC" "C105579"
-			(at 109.22 152.4 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-				(justify left)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 109.22 148.59) (xy 109.22 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid d11112bb-9ff1-4ebe-9014-bc5a75aa6ee1)
-	)
-	(label "BUCK12_RT"
-		(at 109.22 146.05 90)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify left bottom)
-		)
-		(uuid d59977aa-59bd-4d39-b01d-e7e552766962)
-	)
-	(wire
-		(pts
-			(xy 109.22 156.21) (xy 109.22 158.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid 6789d292-f9c9-4bc7-83d9-0b90a6e0c50f)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 109.22 158.75 270)
-		(effects
-			(font
-				(size 1.0 1.0)
-			)
-			(justify right)
-		)
-		(uuid 446d02e2-9303-4cd3-bc7a-30dba1ce492a)
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -3972,6 +3629,16 @@
 			)
 		)
 		(property "LCSC" "C1591"
+			(at 170.18 109.22 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:54"
 			(at 170.18 109.22 0)
 			(effects
 				(font
@@ -4054,7 +3721,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SS36-E3/57T"
+		(property "Value" "SS56"
 			(at 179.07 143.51 90)
 			(effects
 				(font
@@ -4083,7 +3750,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Vishay"
+		(property "Manufacturer" ""
 			(at 175.26 142.24 90)
 			(effects
 				(font
@@ -4093,7 +3760,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "SS36-E3/57T"
+		(property "MPN" "SS56"
 			(at 175.26 142.24 90)
 			(effects
 				(font
@@ -4103,8 +3770,18 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C35722"
+		(property "LCSC" ""
 			(at 175.26 142.24 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:20"
+			(at 175.26 142.24 270)
 			(effects
 				(font
 					(size 1 1)
@@ -4320,7 +3997,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "150k 0.1%"
+		(property "Value" "88.7k 0.1%"
 			(at 224.79 115.57 0)
 			(effects
 				(font
@@ -4373,7 +4050,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "RT0603BRD07150KL"
+		(property "MPN" "RT0603BRD0788K7L"
 			(at 220.98 114.3 0)
 			(effects
 				(font
@@ -4383,7 +4060,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C326734"
+		(property "LCSC" ""
+			(at 220.98 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "buy: verify MPN on LCSC"
 			(at 220.98 114.3 0)
 			(effects
 				(font
@@ -4586,7 +4273,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100u 25V polymer"
+		(property "Value" "820u 25V"
 			(at 247.65 125.73 0)
 			(effects
 				(font
@@ -4595,7 +4282,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:CP_Elec_8x6.9"
+		(property "Footprint" "Capacitor_SMD:CP_Elec_10x10.5"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4625,7 +4312,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "25SVPF100M"
+		(property "MPN" "EEEFT1E821AP"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4635,7 +4322,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C136279"
+		(property "LCSC" "C178593"
+			(at 243.84 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:14"
 			(at 243.84 124.46 0)
 			(effects
 				(font
@@ -4720,7 +4417,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22u 25V X7R"
+		(property "Value" "10u 35V X5R"
 			(at 285.75 125.73 0)
 			(effects
 				(font
@@ -4749,7 +4446,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Samsung"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 281.94 124.46 0)
 			(effects
 				(font
@@ -4759,7 +4456,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "CL32B226KAJNNNE"
+		(property "MPN" "CL32A106KLULNNE"
 			(at 281.94 124.46 0)
 			(effects
 				(font
@@ -4769,7 +4466,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C309062"
+		(property "LCSC" "C2980162"
+			(at 281.94 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:6"
 			(at 281.94 124.46 0)
 			(effects
 				(font
@@ -5098,5 +4805,295 @@
 			(justify left bottom)
 		)
 		(uuid 858c913e-1a7c-52bc-8880-95bf82127fa3)
+	)
+	(symbol
+		(lib_id "Regulator_Switching:ST1S14PHR")
+		(at 132.08 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid c0edf9cc-f056-5147-a5c0-663f2b536f42)
+		(property "Reference" "U902"
+			(at 121.92 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ST1S14PHR"
+			(at 121.92 114.3 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/st1s14.pdf"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "STMicroelectronics"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "ST1S14PHR"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C84130"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:26"
+			(at 132.08 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 1652d973-dd8e-5102-869e-12bac92f8ad3)
+		)
+		(pin "2"
+			(uuid 3482f3b1-ccb5-5d7f-bd25-5084fd4d4492)
+		)
+		(pin "3"
+			(uuid 042eb49c-f24e-5fa1-965e-c11e1cb8f8d7)
+		)
+		(pin "4"
+			(uuid c66af687-d168-51ec-a88a-cd0b35740db9)
+		)
+		(pin "5"
+			(uuid 01f32d4b-1b9f-531d-9aaf-8fa378bc26e9)
+		)
+		(pin "6"
+			(uuid 22120a4c-fbc3-5179-abe0-24d12fec6051)
+		)
+		(pin "7"
+			(uuid 9b848864-bf95-5499-878d-b48b32303baf)
+		)
+		(pin "8"
+			(uuid d9094ed5-0ec4-5b3b-b3e1-7eeaf5323cfa)
+		)
+		(pin "9"
+			(uuid a394ffe0-fa9e-5ee3-a8d3-db37ea730d61)
+		)
+		(instances
+			(project "cheap-version"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "U902")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 142.24 119.38) (xy 144.78 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d9f6030a-95d1-5dad-b4af-362bce8592be)
+	)
+	(label "BUCK12_BOOT"
+		(at 144.78 119.38 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 35911c76-5201-53c3-a36f-91fec01667dd)
+	)
+	(no_connect
+		(at 121.92 129.54)
+		(uuid 364f37a5-321e-58ad-aae7-cb4d86052c60)
+	)
+	(wire
+		(pts
+			(xy 121.92 124.46) (xy 119.38 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f6ac6474-fc8c-545b-9de7-13ee679e4e7a)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 119.38 124.46 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 0409ea08-5d5a-5ea3-99b6-7d42374601c0)
+	)
+	(wire
+		(pts
+			(xy 142.24 129.54) (xy 144.78 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 66603c6a-5cb0-5ff6-abe1-0a61664da381)
+	)
+	(label "BUCK12_FB"
+		(at 144.78 129.54 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid 28b59356-d749-5589-9cbd-022c74104d18)
+	)
+	(wire
+		(pts
+			(xy 121.92 127) (xy 119.38 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 14ece618-56a6-5317-8600-2ef0bc69bbe5)
+	)
+	(label "BUCK12_EN"
+		(at 119.38 127 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 380e5fe9-2786-5aef-b7f9-00c969e9aaaa)
+	)
+	(wire
+		(pts
+			(xy 134.62 134.62) (xy 134.62 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 815c3824-dd7b-5bd2-abeb-a82a357e51b1)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 134.62 137.16 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 86734d05-f485-5c8c-9681-aeaa0c7b72e6)
+	)
+	(wire
+		(pts
+			(xy 121.92 119.38) (xy 119.38 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 9fef6e3c-f53c-57bf-b32e-2715d20baa17)
+	)
+	(label "AUX_VIN"
+		(at 119.38 119.38 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right bottom)
+		)
+		(uuid 72fdd670-1dc3-57b0-810e-e9e11aa4b214)
+	)
+	(wire
+		(pts
+			(xy 142.24 124.46) (xy 144.78 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d4a284ad-a0e9-5a58-8a2d-f0108f977bdb)
+	)
+	(label "BUCK12_SW"
+		(at 144.78 124.46 0)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left bottom)
+		)
+		(uuid c38490ae-62e7-5761-8319-9d1f5aaadfac)
+	)
+	(wire
+		(pts
+			(xy 132.08 134.62) (xy 132.08 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 9922aab0-fef4-58b6-872c-4228f9ee6223)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 132.08 137.16 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid ba581606-0519-5e70-a259-9f5969ff5ae7)
 	)
 )
