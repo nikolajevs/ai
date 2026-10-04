@@ -237,14 +237,14 @@ kicad-cli version
 Основной проект:
 
 ```text
-~/kicad/main/pcb/PCB_V1/PCB_V1.kicad_pro
+~/kicad/main/hardware/PCB_V1/PCB_V1.kicad_pro
 ```
 
 Запуск KiCad из SSH в существующей VNC-сессии (только когда графика включена):
 
 ```bash
 DISPLAY=:1 kicad \
-  ~/kicad/main/pcb/PCB_V1/PCB_V1.kicad_pro \
+  ~/kicad/main/hardware/PCB_V1/PCB_V1.kicad_pro \
   >/tmp/kicad.log 2>&1 &
 ```
 
@@ -289,13 +289,13 @@ ls -l ~/.config/kicad/10.0/*lib-table
 Основной скрипт:
 
 ```text
-pcb/check_all.py
+hardware/check_all.py
 ```
 
 Запуск:
 
 ```bash
-cd ~/kicad/main/pcb
+cd ~/kicad/main/hardware
 
 KICAD_CLI=/usr/bin/kicad-cli \
 KICAD_PYTHON=/usr/bin/python3 \
@@ -514,7 +514,7 @@ git -C ~/kicad/main worktree list
 Пример:
 
 ```bash
-cd ~/kicad/worktrees/ai__layout-led/pcb
+cd ~/kicad/worktrees/ai__layout-led/hardware
 
 KICAD_CLI=/usr/bin/kicad-cli \
 KICAD_PYTHON=/usr/bin/python3 \
@@ -527,7 +527,7 @@ python3 check_all.py
 
 ```bash
 DISPLAY=:1 kicad \
-  ~/kicad/worktrees/ai__layout-led/pcb/PCB_V1/PCB_V1.kicad_pro \
+  ~/kicad/worktrees/ai__layout-led/hardware/PCB_V1/PCB_V1.kicad_pro \
   >/tmp/kicad-ai-layout-led.log 2>&1 &
 ```
 
@@ -956,14 +956,14 @@ kicad-cli version
 
 ```bash
 DISPLAY=:1 kicad \
-  ~/kicad/main/pcb/PCB_V1/PCB_V1.kicad_pro \
+  ~/kicad/main/hardware/PCB_V1/PCB_V1.kicad_pro \
   >/tmp/kicad.log 2>&1 &
 ```
 
 Проверить проект:
 
 ```bash
-cd ~/kicad/main/pcb
+cd ~/kicad/main/hardware
 KICAD_CLI=/usr/bin/kicad-cli KICAD_PYTHON=/usr/bin/python3 python3 check_all.py
 ```
 
@@ -1003,7 +1003,7 @@ Codex и Claude могут работать параллельно только 
 Проверка KiCad из worktree:
 
 ```bash
-cd pcb
+cd hardware
 KICAD_CLI=/usr/bin/kicad-cli \
 KICAD_PYTHON=/usr/bin/python3 \
 python3 check_all.py
