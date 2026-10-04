@@ -16,7 +16,7 @@ This repository uses a shared KiCad VPS workstation for hardware development.
 
 Primary KiCad project:
 
-`pcb/PCB_V1/PCB_V1.kicad_pro`
+`hardware/PCB_V1/PCB_V1.kicad_pro`
 
 VPS KiCad version:
 
@@ -49,7 +49,7 @@ ChatGPT and Claude may work in parallel, but they should use different branches/
 
 ## Validation
 
-For PCB-related changes, run from the repository's `pcb` directory:
+For PCB-related changes, run from the repository's `hardware` directory:
 
 ```bash
 KICAD_CLI=/usr/bin/kicad-cli \
@@ -65,9 +65,9 @@ Do not use `check_all.py --write` unless the task intentionally requires updatin
 
 Keep only current information in the working tree; git history keeps the rest.
 
-- Living documents in `pcb/PCB_V1/`: `DESIGN.md` (current design, calculations, open items), `CHANGELOG.md` (one row per revision and the archive of removed files), `PLACEMENT.md`, `ROUTING_PREP.md`, `RTC_COMPATIBILITY.md`, `BOM_v0.1.*` and the README files. Update them instead of adding new documents.
+- Living documents in `hardware/PCB_V1/`: `DESIGN.md` (current design, calculations, open items), `CHANGELOG.md` (one row per revision and the archive of removed files), `PLACEMENT.md`, `ROUTING_PREP.md`, `RTC_COMPATIBILITY.md`, `BOM_v0.1.*` and the README files. Update them instead of adding new documents.
 - Write a task report in the PR description, not as a new file. Move durable results into `DESIGN.md` (decisions, calculations, open items) and add a `CHANGELOG.md` row.
-- `pcb/review/` and `pcb/PCB_V1/*_snapshot_*.json` hold only the revision selected by `REV` / `PRICE_REV` in `check_all.py`. When either changes, delete the previous files in the same commit. Link old files by GitHub permalink, as in the `CHANGELOG.md` archive.
+- `hardware/review/` and `hardware/PCB_V1/*_snapshot_*.json` hold only the revision selected by `REV` / `PRICE_REV` in `check_all.py`. When either changes, delete the previous files in the same commit. Link old files by GitHub permalink, as in the `CHANGELOG.md` archive.
 - Do not read large generated reports such as DRC `.rpt` in full; search them for the lines you need.
 
 ## KiCad merge safety
