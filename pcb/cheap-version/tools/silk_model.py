@@ -10,6 +10,7 @@ SILK = p.F_SilkS
 EDGE_MARGIN = 0.45          # mm from the outline for text (DRC wants 0.15 mm)
 SILK_CLEAR = 0.22           # mm between silk items (DRC 0.15 mm)
 PAD_CLEAR = 0.12            # mm between silk and a pad (mask opening)
+HOLE_CLEAR = 0.2            # mm between silk and a drilled hole or via (JLCDFM 0.15 mm)
 GRAVEYARD = []              # removed items stay referenced: destroying their Python proxies breaks later pcbnew calls
 
 
@@ -45,11 +46,15 @@ def silk_graphics(fp):
 
 
 def pad_items(board):
+    """pads (mask openings) and every drilled hole including vias: JLCDFM wants silk 0.15 mm off holes too"""
     items = []
     for fp in board.GetFootprints():
         for pad in fp.Pads():
             if pad.IsOnLayer(p.F_Cu) or pad.GetDrillSizeX() > 0:
                 items.append(Item(pad.GetEffectiveShape(p.F_Cu), PAD_CLEAR, fp.GetReference(), 'pad'))
+    for t in board.GetTracks():
+        if isinstance(t, p.PCB_VIA):
+            items.append(Item(p.SHAPE_CIRCLE(t.GetPosition(), t.GetDrillValue() // 2), HOLE_CLEAR, '', 'via'))
     return items
 
 

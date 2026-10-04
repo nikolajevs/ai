@@ -4,8 +4,7 @@
    L711 axis lines through its pads) are removed on this board, and where outlines of two footprints touch the shorter
    line goes;
 2. every visible reference designator and board label that touches a pad, a silk line, another text or the board edge is
-   moved to the nearest free place (both orientations), shrunk from 1.0 to 0.8 mm text height if nothing is free, and
-   hidden only as a last resort (listed in the output).
+   moved to the nearest free place (both orientations), hidden only as a last resort (listed in the output); text height stays 1.0 mm (JLCPCB minimum), stroke 0.2 mm.
 
 Texts without a conflict are not touched, so the script is repeatable. The clearances are in silk_model.py (a little
 above the project's DRC values); CLI DRC remains the judge.
@@ -18,10 +17,10 @@ import pcbnew as p
 import silk_model as m
 
 MM = p.FromMM
-MAX_GAP = 6.0           # mm between the footprint pads and the moved text
+MAX_GAP = 10.0          # mm between the footprint pads and the moved text
 STEP_GAP = 0.2
 STEP_SLIDE = 0.4
-SIZES = (1.0, 0.8)
+SIZES = (1.0,)          # JLCPCB: silk text at least 1.0 mm high, so there is no smaller fallback
 
 
 def anchor_box(owner):
@@ -36,7 +35,7 @@ def anchor_box(owner):
 
 def set_text(text, size, angle):
     text.SetTextSize(p.VECTOR2I(MM(size), MM(size)))
-    text.SetTextThickness(MM(0.15 if size >= 1.0 else 0.12))
+    text.SetTextThickness(MM(0.2))     # JLCDFM warns below 0.2 mm strokes
     text.SetTextAngleDegrees(angle)
     text.SetHorizJustify(p.GR_TEXT_H_ALIGN_CENTER)
     text.SetVertJustify(p.GR_TEXT_V_ALIGN_CENTER)
@@ -59,7 +58,7 @@ def run(board, verbose=True):
     for fp in board.GetFootprints():
         for g in m.silk_graphics(fp):
             it = m.Item(g.GetEffectiveShape(), 0.0, fp.GetReference(), 'line')
-            if m.outside_edge(it.box, margin=0.15) or any(m.collides(it, o) for o in pads):
+            if m.outside_edge(it.box, margin=0.15) or any(m.collides(it, o) for o in pads if o.kind == 'pad'):
                 removed.append((fp.GetReference(), g.GetShapeStr()))
                 fp.Remove(g)
                 m.GRAVEYARD.append(g)
