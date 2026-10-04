@@ -163,7 +163,6 @@
 		(property "Reference" "C715"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "d513b0e7-9671-4633-a909-f84b038432cc")
 			(effects
 				(font
@@ -351,7 +350,6 @@
 		(property "Reference" "C725"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "4240197c-12ea-47bf-9965-d7e337b35539")
 			(effects
 				(font
@@ -539,7 +537,6 @@
 		(property "Reference" "R501"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "94346016-50fb-4196-a034-17b4fea18bc3")
 			(effects
 				(font
@@ -1020,7 +1017,6 @@
 		(property "Reference" "L721"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "3c3b144b-13f0-4935-8422-15480cbcd3bb")
 			(effects
 				(font
@@ -1524,7 +1520,6 @@
 		(property "Reference" "R905"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "f56c304e-4736-4c16-9c67-58af48c9c0ae")
 			(effects
 				(font
@@ -1709,7 +1704,6 @@
 		(property "Reference" "U601"
 			(at 0 0 270)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1d4513f7-d481-4109-8ae8-baa1567af677")
 			(effects
 				(font
@@ -2257,7 +2251,6 @@
 		(property "Reference" "C402"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a44c0306-52e0-432a-83c3-ae2dae43e175")
 			(effects
 				(font
@@ -2444,7 +2437,6 @@
 		(property "Reference" "C910"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "b4dc185c-04bf-435f-a48f-f02f43c8ba15")
 			(effects
 				(font
@@ -3094,7 +3086,6 @@
 		(property "Reference" "R715"
 			(at 0 0 90)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "87311c1f-f311-45e3-8c81-8615e301ebf9")
 			(effects
 				(font
@@ -3282,7 +3273,6 @@
 		(property "Reference" "C106"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "9cd3eb36-197d-4da1-94c2-b24e3c72fb17")
 			(effects
 				(font
@@ -3433,7 +3423,6 @@
 		(property "Reference" "R503"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "64f2c571-223b-4c72-b9c6-26077a95d94c")
 			(effects
 				(font
@@ -4637,7 +4626,6 @@
 		(property "Reference" "R512"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "209dd698-f155-4c69-8419-a0ccd1b5ca0f")
 			(effects
 				(font
@@ -4824,7 +4812,6 @@
 		(property "Reference" "C714"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a1997c3e-860d-49a3-ac18-719a4e0f46fb")
 			(effects
 				(font
@@ -4975,7 +4962,6 @@
 		(property "Reference" "TP901"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "80912b79-020f-4451-8024-539c8d8654f8")
 			(effects
 				(font
@@ -5067,7 +5053,6 @@
 		(property "Reference" "R511"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "fdb6025e-f82e-437f-bafc-e12272addc06")
 			(effects
 				(font
@@ -5218,7 +5203,6 @@
 		(property "Reference" "R521"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "29cf385d-675a-4803-a096-dc64e620584a")
 			(effects
 				(font
@@ -5663,7 +5647,6 @@
 		(property "Reference" "C907"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1f85b532-79cc-4603-a6c4-0eb3d6055e74")
 			(effects
 				(font
@@ -6019,7 +6002,6 @@
 		(property "Reference" "D902"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "40a7e112-b627-493b-b6c0-b2ae89c5bcd2")
 			(effects
 				(font
@@ -6325,7 +6307,6 @@
 		(property "Reference" "R717"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c251b058-c019-4410-81da-d4d61403c0b1")
 			(effects
 				(font
@@ -7131,14 +7112,13 @@
 		(descr "SMD Crystal FC-135 https://support.epson.biz/td/api/doc_check.php?dl=brief_FC-135R_en.pdf")
 		(tags "SMD SMT Crystal")
 		(property "Reference" "Y301"
-			(at -3.4 -0.1 0)
+			(at 2.506 4.777143 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "f15115f6-e02c-499c-ba7c-fc726833e389")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -8124,7 +8104,6 @@
 		(property "Reference" "C712"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5ec4571e-7eba-4731-885e-7e7813ab97f6")
 			(effects
 				(font
@@ -8275,7 +8254,6 @@
 		(property "Reference" "TP102"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "34afa4a1-314f-46c5-a85e-a78b2c10ff52")
 			(effects
 				(font
@@ -8367,7 +8345,6 @@
 		(property "Reference" "C201"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "f8231bf7-2ba1-47d4-b1a3-42bb113ca2d9")
 			(effects
 				(font
@@ -8554,7 +8531,6 @@
 		(property "Reference" "R404"
 			(at 0 0 90)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "e9b34f6c-58b8-4562-baf4-1741d46adbd7")
 			(effects
 				(font
@@ -8695,7 +8671,6 @@
 		(property "Reference" "C906"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1d3789ea-02a3-4ecf-9841-a5dd250c9001")
 			(effects
 				(font
@@ -8890,7 +8865,6 @@
 		(property "Reference" "Q511"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "218d953f-de4f-45fe-a2dd-083630fbd493")
 			(effects
 				(font
@@ -9402,7 +9376,6 @@
 		(property "Reference" "F301"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5609f186-2473-46ad-a9d1-fe1f7f6d09f6")
 			(effects
 				(font
@@ -9553,7 +9526,6 @@
 		(property "Reference" "R401"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "216f3af3-9d6b-49ba-bb6b-ea82396348fb")
 			(effects
 				(font
@@ -9851,7 +9823,6 @@
 		(property "Reference" "R304"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "fa007968-bfcf-4ba8-b2ab-9b4ee1fbb89e")
 			(effects
 				(font
@@ -10002,7 +9973,6 @@
 		(property "Reference" "R205"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a4572819-205e-41c2-a647-9ce221ea244e")
 			(effects
 				(font
@@ -10179,7 +10149,6 @@
 		(property "Reference" "Q501"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a9ee5295-2745-475f-a9d6-b05043896c8b")
 			(effects
 				(font
@@ -10691,7 +10660,6 @@
 		(property "Reference" "C105"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "0ac2f80c-a703-4a31-89ed-1e3eafbdbc99")
 			(effects
 				(font
@@ -11026,7 +10994,6 @@
 		(property "Reference" "C723"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "6f51bd8e-1750-4af3-8d82-f17f1ea3d69b")
 			(effects
 				(font
@@ -11460,7 +11427,6 @@
 		(property "Reference" "TP101"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "9cfe4aee-81d4-4fb7-92eb-a5bde73c7046")
 			(effects
 				(font
@@ -11552,7 +11518,6 @@
 		(property "Reference" "C101"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5a7a2a4b-2d7e-4986-9a8a-5691724f52c4")
 			(effects
 				(font
@@ -11740,7 +11705,6 @@
 		(property "Reference" "C716"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "6f3d996b-52bb-4684-b71b-dca22f84a134")
 			(effects
 				(font
@@ -12296,7 +12260,6 @@
 		(property "Reference" "R904"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "36136543-2e87-447e-967a-8f28223431bd")
 			(effects
 				(font
@@ -12471,7 +12434,6 @@
 		(property "Reference" "C722"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "087dcf24-a24d-4fca-9f95-e888fc0e366b")
 			(effects
 				(font
@@ -12622,7 +12584,6 @@
 		(property "Reference" "D901"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a9f06f7a-3223-4dcf-b9f5-3c8daa52070c")
 			(effects
 				(font
@@ -12933,14 +12894,13 @@
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP301"
-			(at 0 -1.448 0)
+			(at 12.829524 -1.656 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "c543643b-2d8d-4963-a6b9-650b8f733d9f")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -13025,7 +12985,6 @@
 		(property "Reference" "U201"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "174df387-3bd7-456e-b89f-9c0cc73fb0b6")
 			(effects
 				(font
@@ -13644,7 +13603,6 @@
 		(property "Reference" "R723"
 			(at 0 0 90)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a8252875-176c-452c-9ab7-ebcf45ca0aab")
 			(effects
 				(font
@@ -14196,7 +14154,6 @@
 		(property "Reference" "C726"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "cd42118d-bec8-46a6-8236-59b09071d8e7")
 			(effects
 				(font
@@ -14384,7 +14341,6 @@
 		(property "Reference" "Q521"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c8d9bd7d-0ef4-4ff2-a5ca-8ce47e01205e")
 			(effects
 				(font
@@ -14932,7 +14888,6 @@
 		(property "Reference" "R402"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "ae8a2b99-3454-43fe-82f0-e8604071e971")
 			(effects
 				(font
@@ -15083,7 +15038,6 @@
 		(property "Reference" "R727"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "bae4da2b-90b9-47e8-8ac3-0d9fbae048be")
 			(effects
 				(font
@@ -15381,7 +15335,6 @@
 		(property "Reference" "C717"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c97252c6-8bfd-4aef-987f-3c7fa2ede68b")
 			(effects
 				(font
@@ -15716,7 +15669,6 @@
 		(property "Reference" "C724"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "57e7affc-bb31-4448-90e4-3189f320fbba")
 			(effects
 				(font
@@ -15867,7 +15819,6 @@
 		(property "Reference" "C713"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "acd601e2-1c4c-4716-a93d-94e352088f7d")
 			(effects
 				(font
@@ -16018,7 +15969,6 @@
 		(property "Reference" "C202"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "83048423-ff06-4685-877b-062523389a28")
 			(effects
 				(font
@@ -16205,7 +16155,6 @@
 		(property "Reference" "R502"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "679f5761-277c-4947-aec4-3024e3f388d7")
 			(effects
 				(font
@@ -16551,14 +16500,13 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R307"
-			(at 0 1.6 0)
+			(at 0.026428 8.031 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "2b8ed110-c134-4075-9462-9bc7532d308f")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -16738,7 +16686,6 @@
 		(property "Reference" "R206"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "3bfd7605-9835-4faf-bd11-681c4e3311b6")
 			(effects
 				(font
@@ -16925,7 +16872,6 @@
 		(property "Reference" "C728"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "e177f043-d825-4ed3-b27c-15ba9ae93a1c")
 			(effects
 				(font
@@ -17111,7 +17057,6 @@
 		(property "Reference" "R713"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a966ad00-aa6b-45cb-aad9-75981f8efed7")
 			(effects
 				(font
@@ -17727,14 +17672,13 @@
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C304"
-			(at 3.2 0.3 0)
+			(at 2.826428 -8.631 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "046dfe68-35b6-46a6-ae4a-07a462917e34")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -18150,7 +18094,6 @@
 		(property "Reference" "R305"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "ed194b1e-9bc6-4419-993b-eee7555ae5d6")
 			(effects
 				(font
@@ -19392,7 +19335,6 @@
 		(property "Reference" "R204"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "96a9fa1e-ff70-4b09-8848-bf7f5d22f096")
 			(effects
 				(font
@@ -19929,7 +19871,6 @@
 		(property "Reference" "D501"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "071a8962-7c93-4eb6-9fe4-4476eb984921")
 			(effects
 				(font
@@ -20271,7 +20212,6 @@
 		(property "Reference" "C718"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "66f82c85-b14f-45cd-befc-7158bba0b12b")
 			(effects
 				(font
@@ -20459,7 +20399,6 @@
 		(property "Reference" "C908"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "b176d63f-1cb1-4513-8135-206eebb3e487")
 			(effects
 				(font
@@ -20642,14 +20581,13 @@
 		(descr "Inductor, Changjiang, FXL0630, 6.45x6.6x2.8mm, (https://www.lcsc.com/datasheet/lcsc_datasheet_2404260921_cjiang--Changjiang-Microelectronics-Tech-FXL0420-2R2-M_C167206.pdf)")
 		(tags "power shielded cjiang fxl")
 		(property "Reference" "L101"
-			(at 0 -4.25 0)
+			(at -6.453334 1.094 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "cf0fa173-fb35-4c2d-a0cc-ed8131c032fe")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -20998,7 +20936,6 @@
 		(property "Reference" "U301"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1e449b3b-cb1d-4fef-ad55-a4ad7668df0b")
 			(effects
 				(font
@@ -21407,14 +21344,13 @@
 		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "D303"
-			(at 0 -2.7 90)
+			(at -9.031 -2.798572 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "96e127dc-5f5e-479f-8e9a-9710078072c6")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -21814,7 +21750,6 @@
 		(property "Reference" "R602"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "4af2b3a2-9c55-4524-9ccd-4e47bb89fe30")
 			(effects
 				(font
@@ -22001,7 +21936,6 @@
 		(property "Reference" "R522"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "de594636-7b73-4df7-afc4-62de36042d46")
 			(effects
 				(font
@@ -22188,7 +22122,6 @@
 		(property "Reference" "C601"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "f45fd9f0-8856-4e42-a0ba-a0c2ba2449fe")
 			(effects
 				(font
@@ -22611,7 +22544,6 @@
 		(property "Reference" "R101"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c78df720-62ab-4203-aae6-3f7866f61182")
 			(effects
 				(font
@@ -23167,7 +23099,6 @@
 		(property "Reference" "R722"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "0ee45b02-8154-4a22-96b6-92a6a5cf0903")
 			(effects
 				(font
@@ -23465,7 +23396,6 @@
 		(property "Reference" "TP103"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "49512b20-6224-4adc-9a8d-efdf946913e1")
 			(effects
 				(font
@@ -23995,14 +23925,13 @@
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT721"
-			(at 0 -1.2 0)
+			(at -1.503334 11.206 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "238b2603-ddb2-46db-a48d-49f8af919ec7")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -24232,7 +24161,6 @@
 		(property "Reference" "R725"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "17fb7f46-94e6-4a50-99af-acd5006891f8")
 			(effects
 				(font
@@ -24440,7 +24368,6 @@
 		(property "Reference" "R726"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "74a8a0f3-e0b4-4e3d-9ad7-be38e97cf86d")
 			(effects
 				(font
@@ -24628,7 +24555,6 @@
 		(property "Reference" "C104"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a35daabf-a51e-47d5-86b7-b1f1c02f8985")
 			(effects
 				(font
@@ -24816,7 +24742,6 @@
 		(property "Reference" "U710"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "9d55b07a-80ed-4884-9d19-615b110818a9")
 			(effects
 				(font
@@ -25722,7 +25647,6 @@
 		(property "Reference" "D511"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "cc0b2d09-648b-4ed1-9bc9-585ad3256926")
 			(effects
 				(font
@@ -26064,7 +25988,6 @@
 		(property "Reference" "C521"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "7c33be0b-c227-41c4-bcb4-33324470519e")
 			(effects
 				(font
@@ -26419,7 +26342,6 @@
 		(property "Reference" "D301"
 			(at 0 0 270)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "43f42fe3-d882-488f-be22-d0c27b0aab3a")
 			(effects
 				(font
@@ -26751,7 +26673,6 @@
 		(property "Reference" "U700"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "aecedde1-1afb-4382-9259-e89114ee96e4")
 			(effects
 				(font
@@ -27301,7 +27222,6 @@
 		(property "Reference" "R102"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "edb98989-da0f-45ea-9c32-d75d6d4dd007")
 			(effects
 				(font
@@ -27853,7 +27773,6 @@
 		(property "Reference" "TP902"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "e7799909-14d2-4d11-99c7-de1867e748b1")
 			(effects
 				(font
@@ -27945,7 +27864,6 @@
 		(property "Reference" "C401"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a8fe250d-3971-4796-b7f3-dbde7ca85e8f")
 			(effects
 				(font
@@ -28122,7 +28040,6 @@
 		(property "Reference" "C710"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "fc385ce7-0de5-454a-864e-51e70bf6e56f")
 			(effects
 				(font
@@ -29348,14 +29265,13 @@
 		(descr "Inductor, Changjiang, FXL0630, 6.45x6.6x2.8mm, (https://www.lcsc.com/datasheet/lcsc_datasheet_2404260921_cjiang--Changjiang-Microelectronics-Tech-FXL0420-2R2-M_C167206.pdf)")
 		(tags "power shielded cjiang fxl")
 		(property "Reference" "L902"
-			(at 0 -4.25 0)
+			(at -0.053334 4.706 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "572aa3d4-8ba3-478a-8fe0-1026aef6563b")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -29684,7 +29600,6 @@
 		(property "Reference" "R716"
 			(at 0 0 90)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "2e3de816-352b-4df4-90e4-3e70fbf0d9e0")
 			(effects
 				(font
@@ -29872,7 +29787,6 @@
 		(property "Reference" "D521"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5b5cd416-3f9b-422b-9021-67d517458934")
 			(effects
 				(font
@@ -30191,7 +30105,6 @@
 		(property "Reference" "C700"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a4be55b4-7d77-4989-a07f-31b7e89ad4da")
 			(effects
 				(font
@@ -30523,14 +30436,13 @@
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT712"
-			(at 0 -1.2 180)
+			(at -1.696666 7.806 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "ab95388c-2478-42cf-8bed-8500ae970b77")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -30611,9 +30523,8 @@
 		(descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C721"
-			(at 0.076428 -2.16825 0)
+			(at 4.001428 -4.456 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "5fe2f394-8ccf-4eb0-9efb-2c965530d2c9")
 			(effects
 				(font
@@ -31186,7 +31097,6 @@
 		(property "Reference" "C905"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c653f299-9604-4bc0-b702-6377e7933379")
 			(effects
 				(font
@@ -31518,7 +31428,6 @@
 		(property "Reference" "D302"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "b34aa93d-e254-4620-9bd5-7bc9c354cddf")
 			(effects
 				(font
@@ -32383,7 +32292,6 @@
 		(property "Reference" "C719"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5651298b-005f-4e99-86cf-c2c6eb359e9d")
 			(effects
 				(font
@@ -32571,7 +32479,6 @@
 		(property "Reference" "C727"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "bddc6ccc-69fe-4b8a-bd5d-b3461a017efa")
 			(effects
 				(font
@@ -32757,13 +32664,13 @@
 		(descr "HRO TF-01A microSD (TF) push-push socket, 1.10 mm pitch, 1.85 mm high, card detect pin 9, LCSC C91145 (https://www.lcsc.com/product-detail/C91145.html). Card mouth faces +Y.")
 		(tags "microSD TF card socket push-push HRO TF-01A")
 		(property "Reference" "J401"
-			(at 0 -9.5 90)
+			(at 5.116 -10.480524 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "cff33dc3-9aa8-4a83-b294-eedd82e36c40")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -33143,7 +33050,6 @@
 		(property "Reference" "J201"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a5685c04-8fc2-4f6f-a4fc-90c18b9b4fc5")
 			(effects
 				(font
@@ -33431,7 +33337,6 @@
 		(property "Reference" "C301"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "38966c4f-772f-422f-af8a-7be1444a6cbe")
 			(effects
 				(font
@@ -33765,7 +33670,6 @@
 		(property "Reference" "R513"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c3124a89-1385-4a9c-b946-6569cc5a16b1")
 			(effects
 				(font
@@ -33952,7 +33856,6 @@
 		(property "Reference" "C303"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "86f02a45-5987-4fe5-a296-edd5bc84e947")
 			(effects
 				(font
@@ -34139,7 +34042,6 @@
 		(property "Reference" "R907"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "36a6d886-370d-4b94-a520-48207aa5bbc0")
 			(effects
 				(font
@@ -34471,7 +34373,6 @@
 		(property "Reference" "D601"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5368f8dc-7e64-48ca-a620-24fa3c856bc4")
 			(effects
 				(font
@@ -34779,14 +34680,13 @@
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT711"
-			(at 0 -1.2 0)
+			(at 2.896666 2.406 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "7a5699a0-2be7-44db-b90d-4a81c8c6c8f6")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -34869,7 +34769,6 @@
 		(property "Reference" "R303"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "4ff41c56-5490-4160-8e9c-7195179b4d54")
 			(effects
 				(font
@@ -35157,7 +35056,6 @@
 		(property "Reference" "U720"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "37c0271a-110a-43c0-a911-913da5346560")
 			(effects
 				(font
@@ -35532,7 +35430,6 @@
 		(property "Reference" "R403"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "0c9e9945-a967-470c-97a7-ab625ce339a7")
 			(effects
 				(font
@@ -35683,7 +35580,6 @@
 		(property "Reference" "R712"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "3a42a02c-5fd6-4096-ba4e-0ffb9456130e")
 			(effects
 				(font
@@ -35870,7 +35766,6 @@
 		(property "Reference" "C102"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "40af880c-2075-43e5-adfc-c8f829529473")
 			(effects
 				(font
@@ -36272,14 +36167,13 @@
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT722"
-			(at 0 -1.2 90)
+			(at 1.906 0.196666 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "d2a6a69d-17f8-45b5-be86-3ab85663e292")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -36509,7 +36403,6 @@
 		(property "Reference" "C911"
 			(at 0 0 90)
 			(layer "B.Fab")
-			(hide yes)
 			(uuid "5da7a6e3-bea9-4f85-b6ba-409ce7768b7d")
 			(effects
 				(font
@@ -36704,7 +36597,6 @@
 			(at 12.4 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
-			(hide yes)
 			(uuid "494e134d-50e7-4e38-a110-18428f8d18c7")
 			(effects
 				(font
