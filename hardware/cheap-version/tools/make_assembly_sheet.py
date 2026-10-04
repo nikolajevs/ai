@@ -1,10 +1,9 @@
 """Short assembly sheets of cheap-1 for the operator (A4 portrait, Russian PDF):
 
-  python tools/make_assembly_sheet.py assembly.json assembly/Assembly_cheap1_sheets.pdf [--png out_dir]
+  python tools/make_assembly_sheet.py assembly.json assembly/Assembly_cheap1_A4.pdf [--png out_dir]
 
 assembly.json comes from tools/export_assembly.py (KiCad Python). Pages:
-  1  SMD parts: one A3 page (the only one; the rest is A4) with the top side, every reference, its value and the polarity marks
-     (green = no polarity, orange = polar), inset of the bottom side
+  1  SMD parts: one A4 picture of the top side with every reference and the polarity marks (+ inset of the bottom side)
   2  SMD parts: one table, reference designators next to the MPN (one line per part type)
   3  through-hole parts: the same picture (+ inset of the bottom side with BT301)
   4  through-hole parts: the table
@@ -25,7 +24,6 @@ import asm_text as at
 import make_assembly_doc as mad
 
 A4 = (595, 842)
-A3 = (842, 1191)
 M = 18
 REG = (46.0, 46.0, 154.0, 154.0)         # the board plus a 4 mm margin for the zone letters
 BOARD = (49.975, 49.975, 150.025, 150.025)
@@ -54,18 +52,12 @@ td { border: 0.5pt solid #888; padding: 0.7pt 2pt; font-size: 7pt; vertical-alig
 """
 
 
-def scaled_css(k):
-    """the same style with every size multiplied by k (legends of the A3 page)"""
-    return re.sub(r'(\d+(?:\.\d+)?)pt', lambda m: f'{float(m.group(1)) * k:.2f}pt', CSS)
-
-
 # ------------------------------------------------------------------------------------------------- picture
 def render_sheet(data, mirror, active, width_pt, scale, values=False, badge_mm=0.85, label_pt=LABEL_PT, value_pt=VALUE_PT,
-                 dnp_labels=True, color_of=None, value_gaps=6):
+                 dnp_labels=True, color_of=None):
     """Board (parts only) as an image: parts selected by active() in colour with reference labels and polarity badges,
     the others faint. width_pt is the width the image will have on the page, to size text in points.
-    values: False = reference only, True = reference and value, 'fit' = the value only where it fits within value_gaps
-    distance steps of the part (6 = next to it, 10 = up to about 6 mm away, with a leader line).
+    values: False = reference only, True = reference and value, 'fit' = the value only where it fits next to the part.
     color_of(fp) = colour of a part (default: the colour of its assembly step)."""
     color_of = color_of or (lambda fp: dr.STEP_COLORS[fp['step']])
     view = dr.View(REG, scale, mirror)
@@ -129,19 +121,18 @@ def render_sheet(data, mirror, active, width_pt, scale, values=False, badge_mm=0
         lab.boxes.append((u - r, v - r, u + r, v + r))
     f1, f2 = dr.font(label_pt * ppt, True), dr.font(value_pt * ppt)
     order = sorted(act, key=lambda f: -((dr.pads_bbox(f)[2] - dr.pads_bbox(f)[0]) * (dr.pads_bbox(f)[3] - dr.pads_bbox(f)[1])))
-    n_values, without = 0, []
+    n_values = 0
     for fp in order:
         bb, col = dr.pads_bbox(fp), color_of(fp)
         if values is True:
             lab.place(d, bb, [fp['ref'], pic_value(fp)], col, [f1, f2])
             n_values += 1
-        elif values == 'fit' and lab.place(d, bb, [fp['ref'], pic_value(fp)], col, [f1, f2], max_cost=0, ngaps=value_gaps) is not None:
+        elif values == 'fit' and lab.place(d, bb, [fp['ref'], pic_value(fp)], col, [f1, f2], max_cost=0, ngaps=6) is not None:
             n_values += 1
         else:
             lab.place(d, bb, [fp['ref']], col, [f1])
-            without.append(fp['ref'])
     if values:
-        print(f'  labels with a value: {n_values} of {len(order)}' + (f', without: {" ".join(without)}' if without else ''))
+        print(f'  labels with a value: {n_values} of {len(order)}')
     if dnp_labels:
         for fp in items:
             if fp['kind'] == 'SMD' and fp['side'] == side and fp['step'] is None and not active(fp):
@@ -316,23 +307,21 @@ def marks_legend(rows_html):
             '<p class="small">Серые детали — не из этой схемы (контекст). Сетка A–D, 1–4 — зоны 25 × 25 мм, как в столбце «Зоны» таблицы.</p>')
 
 
-def picture_page(doc, fonts, title, subtitle, image, inset, inset_title, legend_marks, legend_steps, page=A4, k=1.0):
-    """a page of the given size (A4 or A3, k = text scale): title, the board picture across the page, below it the inset
-    of the bottom side and two legends"""
-    css = CSS if k == 1.0 else scaled_css(k)
-    pg = doc.new_page(width=page[0], height=page[1])
-    pg.insert_htmlbox(pymupdf.Rect(M, 10, page[0] - M, 48 * k), f'<h1>{title}</h1><p class="small">{subtitle}</p>', css=css, archive=fonts)
-    w = page[0] - 2 * M
-    top = 50 * k
+def picture_page(doc, fonts, title, subtitle, image, inset, inset_title, legend_marks, legend_steps):
+    pg = doc.new_page(width=A4[0], height=A4[1])
+    pg.insert_htmlbox(pymupdf.Rect(M, 10, A4[0] - M, 48), f'<h1>{title}</h1><p class="small">{subtitle}</p>', css=CSS, archive=fonts)
+    w = A4[0] - 2 * M
+    top = 50
     pg.insert_image(pymupdf.Rect(M, top, M + w, top + w * image.size[1] / image.size[0]), stream=mad.jpeg_bytes(image, 90))
     y = top + w * image.size[1] / image.size[0] + 4
-    inset_w = min(page[1] - 12 - y - 12 * k, 190 * k)
-    pg.insert_htmlbox(pymupdf.Rect(M, y, M + inset_w, y + 12 * k), f'<p class="small"><b>{inset_title}</b></p>', css=css, archive=fonts)
-    pg.insert_image(pymupdf.Rect(M, y + 12 * k, M + inset_w, y + 12 * k + inset_w * inset.size[1] / inset.size[0]), stream=mad.jpeg_bytes(inset, 88))
+    inset_w = A4[1] - 12 - y - 12
+    inset_w = min(inset_w, 190)
+    pg.insert_htmlbox(pymupdf.Rect(M, y, M + inset_w, y + 12), f'<p class="small"><b>{inset_title}</b></p>', css=CSS, archive=fonts)
+    pg.insert_image(pymupdf.Rect(M, y + 12, M + inset_w, y + 12 + inset_w * inset.size[1] / inset.size[0]), stream=mad.jpeg_bytes(inset, 88))
     x1 = M + inset_w + 8
-    mid = x1 + (page[0] - M - x1) * 0.52
-    pg.insert_htmlbox(pymupdf.Rect(x1, y, mid - 4, page[1] - 12), legend_marks, css=css, archive=fonts)
-    pg.insert_htmlbox(pymupdf.Rect(mid, y, page[0] - M, page[1] - 12), legend_steps, css=css, archive=fonts)
+    mid = x1 + (A4[0] - M - x1) * 0.52
+    pg.insert_htmlbox(pymupdf.Rect(x1, y, mid - 4, A4[1] - 12), legend_marks, css=CSS, archive=fonts)
+    pg.insert_htmlbox(pymupdf.Rect(mid, y, A4[0] - M, A4[1] - 12), legend_steps, css=CSS, archive=fonts)
     return pg
 
 
@@ -349,20 +338,17 @@ def build(data, out_path, png_dir=None):
     n_smd = sum(1 for fp in data['fps'] if fp['step'] and fp['kind'] == 'SMD')
     n_tht = sum(1 for fp in data['fps'] if fp['step'] and fp['kind'] == 'THT')
     # ------------------------------------------------------------------ SMD picture
-    # the SMD picture is the only A3 page: the same board, 1.41 times larger, so the values fit next to the references
-    k3 = A3[0] / A4[0]
-    main = render_sheet(data, False, smd_top, A3[0] - 2 * M, 40, values='fit', color_of=polar_color, label_pt=7.5, value_pt=6.2,
-                        value_gaps=10)
-    inset = render_sheet(data, True, smd_bot, 190 * k3, 20, values=True, badge_mm=0.8, color_of=polar_color, label_pt=7.5, value_pt=6.2)
+    main = render_sheet(data, False, smd_top, W, 36, values='fit', color_of=polar_color)
+    inset = render_sheet(data, True, smd_bot, 190, 14, values=True, badge_mm=0.8, color_of=polar_color)
     previews['1_smd'] = main
     marks = ('<tr><td class="k">K</td><td>катод диода — полоса на корпусе</td></tr><tr><td class="k">+ / −</td><td>плюс / минус</td></tr>'
              '<tr><td class="k">1</td><td>вывод 1: точка, скос или метка на корпусе микросхемы</td></tr>'
              '<tr><td class="k">G S D</td><td>затвор, исток, сток</td></tr>')
-    picture_page(doc, fonts, 'GrowBox cheap-1 — схема установки SMD-деталей (вид сверху, лист A3)',
-                 f'{n_smd} SMD-деталей, из них {n_smd - 1} сверху и C911 снизу. Позиции — по таблице на следующей странице (A4). '
+    picture_page(doc, fonts, 'GrowBox cheap-1 — схема установки SMD-деталей (вид сверху)',
+                 f'{n_smd} SMD-деталей, из них {n_smd - 1} сверху и C911 снизу. Позиции — по таблице на следующей странице. '
                  'Зелёные детали — без полярности, оранжевые — с полярностью; красный кружок — вывод, к которому должна встать метка на детали. '
-                 'Номинал стоит рядом с позицией; если для него не нашлось места, он есть в таблице.',
-                 main, inset, 'Нижняя сторона (плата перевёрнута, зеркально): C911', marks_legend(marks), polar_legend(), page=A3, k=k3)
+                 'Номинал рядом с позицией — там, где хватило места, полный список — в таблице.',
+                 main, inset, 'Нижняя сторона (плата перевёрнута, зеркально): C911', marks_legend(marks), polar_legend())
     # ------------------------------------------------------------------ SMD table
     smd_rows = rows_for(data, [fp for fp in data['fps'] if fp['step'] and fp['kind'] == 'SMD'])
     extra = ('<tr><td colspan="8" class="small"><b>Не ставить:</b> C106 (DNP); TP101–TP103, TP301, TP901, TP902, NT711, NT712, NT721, NT722 — '
