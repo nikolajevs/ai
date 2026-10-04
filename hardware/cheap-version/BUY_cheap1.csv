@@ -13,28 +13,27 @@
 24,F711,6.3A / 045106.3MRL,045106.3MRL,Littelfuse,C178982,1,5,0.2477,1.2385,V1 price snapshot 2026-09-28..30; stock not refreshed
 25,F721 F904,3A / 0451003.MRL,0451003.MRL,Littelfuse,C13982,2,5,0.2556,1.278,V1 price snapshot 2026-09-28..30; stock not refreshed
 26,F902,10A mini blade (ATM),XF-508P-B-B,XFCN,C19727305,1,5,0.2775,1.3875,V1 price snapshot 2026-09-28..30; stock not refreshed
-27,F902 insert,"Littelfuse 0297010.WXNV, 10 A mini blade fuse",0297010.WXNV,Littelfuse,C151094,1,5,0.1236,0.618,LCSC checked 2026-10-04; stock 10305; https://www.lcsc.com/product-detail/C151094.html
-28,J201,UART / 3V3 logic,2.54-1x6P,BOOMELE,C37208,1,10,0.0419,0.419,V1 price snapshot 2026-09-28..30; stock not refreshed
-31,J401,HRO TF-01A,TF-01A,Korean Hroparts Elec,C91145,1,5,0.1937,0.9685,V1 price snapshot 2026-09-28..30; stock not refreshed
-38,L101,4.7u FXL0630-4R7-M,FXL0630-4R7-M,cjiang,C167220,1,5,0.1695,0.8475,LCSC checked 2026-10-04; stock 72865; https://www.lcsc.com/product-detail/C167220.html
-40,L721,47u SRP1265A-470M,SRP1265A-470M,Bourns,C840530,1,1,1.1226,1.1226,V1 price snapshot 2026-09-28..30; stock not refreshed
-41,L902,22u PSPMAA0604-220M,PSPMAA0604-220M-ANP,PROD Tech,C53190553,1,5,0.1242,0.621,V1 price snapshot 2026-09-28..30; stock not refreshed
-42,Q501 Q511,AO3400A,AO3400A,AOS,C20917,2,5,0.0853,0.4265,V1 price snapshot 2026-09-28..30; stock not refreshed
-43,Q521,AO3422,AO3422,AOS,C37130,1,5,0.1356,0.678,V1 price snapshot 2026-09-28..30; stock not refreshed
-47,R102,31.6k 1%,0603WAF3162T5E,UNI-ROYAL,C25967,1,100,0.0022,0.22,LCSC checked 2026-10-04; stock 77300; https://www.lcsc.com/product-detail/C25967.html
-51,R303 R304 R401 R402 R403 R404 R501 R511 R521,33,0603WAF330JT5E,UNI-ROYAL,C23140,9,100,0.0025,0.25,V1 price snapshot 2026-09-28..30; stock not refreshed
-54,R715,0.027 1% >=1W,LR123WF270MT4E,UNI-ROYAL,C19633795,1,1,0.1011,0.1011,V1 price snapshot 2026-09-28..30; stock not refreshed
-55,R716,0.12 1% 3W 50ppm,JER2512F3R120,JIERR,C49164917,1,5,0.0771,0.3855,LCSC checked 2026-10-04; stock 56525; https://www.lcsc.com/product-detail/C49164917.html
-56,R717 R727,316k 1%,0603WAF3163T5E,UNI-ROYAL,C25814,2,100,0.0025,0.25,V1 price snapshot 2026-09-28..30; stock not refreshed
-58,R722,2.7k 1%,0603WAF2701T5E,UNI-ROYAL,C13167,1,100,0.0033,0.33,V1 price snapshot 2026-09-28..30; stock not refreshed
-59,R725,0.047 1% >=1W,HIXD25NR047F,RVR,C52015951,1,10,0.0495,0.495,V1 price snapshot 2026-09-28..30; stock not refreshed
-60,R726,0.43 1% >=0.25W,RLH12FTCR430,TA-I,C22464907,1,20,0.027,0.54,V1 price snapshot 2026-09-28..30; stock not refreshed
-61,R904,88.7k 0.1%,RT0603BRD0788K7L,Yageo,C728599,1,20,0.038,0.76,LCSC checked 2026-10-04; stock 7680; https://www.lcsc.com/product-detail/C728599.html
-62,R905,10k 0.1%,RT0603BRD0710KL,Yageo,C95204,1,20,0.033,0.66,V1 price snapshot 2026-09-28..30; stock not refreshed
-63,R907,470k 1%,0603WAF4703T5E,UNI-ROYAL,C23178,1,100,0.003,0.3,LCSC checked 2026-10-04; stock 1017700; https://www.lcsc.com/product-detail/C23178.html
-67,U201,ESP32-WROOM-32E-N4,ESP32-WROOM-32E-N4,Espressif,C701341,1,1,3.7644,3.7644,V1 price snapshot 2026-09-28..30; stock not refreshed
-68,U301,PCF8563T/5,"PCF8563T/5,518",NXP,C7440,1,1,0.6138,0.6138,V1 price snapshot 2026-09-28..30; stock not refreshed
-69,U601,UCC27524ADR,UCC27524ADR,TI,C185857,1,5,0.2783,1.3915,V1 price snapshot 2026-09-28..30; stock not refreshed
-70,U700,SN74LVC1G08DBVR,SN74LVC1G08DBVR,TI,C7666,1,10,0.0496,0.496,V1 price snapshot 2026-09-28..30; stock not refreshed
-71,U710 U720,AL8853S-13,AL8853S-13,Diodes,C3192318,2,2,0.9392,1.8784,V1 price snapshot 2026-09-28..30; stock not refreshed
-73,Y301,32.768k 12.5pF,Q13FC13500004,Epson,C32346,1,5,0.1733,0.8665,V1 price snapshot 2026-09-28..30; stock not refreshed
+27,J201,UART / 3V3 logic,2.54-1x6P,BOOMELE,C37208,1,10,0.0419,0.419,V1 price snapshot 2026-09-28..30; stock not refreshed
+30,J401,HRO TF-01A,TF-01A,Korean Hroparts Elec,C91145,1,5,0.1937,0.9685,V1 price snapshot 2026-09-28..30; stock not refreshed
+37,L101,4.7u FXL0630-4R7-M,FXL0630-4R7-M,cjiang,C167220,1,5,0.1695,0.8475,LCSC checked 2026-10-04; stock 72865; https://www.lcsc.com/product-detail/C167220.html
+39,L721,47u SRP1265A-470M,SRP1265A-470M,Bourns,C840530,1,1,1.1226,1.1226,V1 price snapshot 2026-09-28..30; stock not refreshed
+40,L902,22u PSPMAA0604-220M,PSPMAA0604-220M-ANP,PROD Tech,C53190553,1,5,0.1242,0.621,V1 price snapshot 2026-09-28..30; stock not refreshed
+41,Q501 Q511,AO3400A,AO3400A,AOS,C20917,2,5,0.0853,0.4265,V1 price snapshot 2026-09-28..30; stock not refreshed
+42,Q521,AO3422,AO3422,AOS,C37130,1,5,0.1356,0.678,V1 price snapshot 2026-09-28..30; stock not refreshed
+46,R102,31.6k 1%,0603WAF3162T5E,UNI-ROYAL,C25967,1,100,0.0022,0.22,LCSC checked 2026-10-04; stock 77300; https://www.lcsc.com/product-detail/C25967.html
+50,R303 R304 R401 R402 R403 R404 R501 R511 R521,33,0603WAF330JT5E,UNI-ROYAL,C23140,9,100,0.0025,0.25,V1 price snapshot 2026-09-28..30; stock not refreshed
+53,R715,0.027 1% >=1W,LR123WF270MT4E,UNI-ROYAL,C19633795,1,1,0.1011,0.1011,V1 price snapshot 2026-09-28..30; stock not refreshed
+54,R716,0.12 1% 3W 50ppm,JER2512F3R120,JIERR,C49164917,1,5,0.0771,0.3855,LCSC checked 2026-10-04; stock 56525; https://www.lcsc.com/product-detail/C49164917.html
+55,R717 R727,316k 1%,0603WAF3163T5E,UNI-ROYAL,C25814,2,100,0.0025,0.25,V1 price snapshot 2026-09-28..30; stock not refreshed
+57,R722,2.7k 1%,0603WAF2701T5E,UNI-ROYAL,C13167,1,100,0.0033,0.33,V1 price snapshot 2026-09-28..30; stock not refreshed
+58,R725,0.047 1% >=1W,HIXD25NR047F,RVR,C52015951,1,10,0.0495,0.495,V1 price snapshot 2026-09-28..30; stock not refreshed
+59,R726,0.43 1% >=0.25W,RLH12FTCR430,TA-I,C22464907,1,20,0.027,0.54,V1 price snapshot 2026-09-28..30; stock not refreshed
+60,R904,88.7k 0.1%,RT0603BRD0788K7L,Yageo,C728599,1,20,0.038,0.76,LCSC checked 2026-10-04; stock 7680; https://www.lcsc.com/product-detail/C728599.html
+61,R905,10k 0.1%,RT0603BRD0710KL,Yageo,C95204,1,20,0.033,0.66,V1 price snapshot 2026-09-28..30; stock not refreshed
+62,R907,470k 1%,0603WAF4703T5E,UNI-ROYAL,C23178,1,100,0.003,0.3,LCSC checked 2026-10-04; stock 1017700; https://www.lcsc.com/product-detail/C23178.html
+66,U201,ESP32-WROOM-32E-N4,ESP32-WROOM-32E-N4,Espressif,C701341,1,1,3.7644,3.7644,V1 price snapshot 2026-09-28..30; stock not refreshed
+67,U301,PCF8563T/5,"PCF8563T/5,518",NXP,C7440,1,1,0.6138,0.6138,V1 price snapshot 2026-09-28..30; stock not refreshed
+68,U601,UCC27524ADR,UCC27524ADR,TI,C185857,1,5,0.2783,1.3915,V1 price snapshot 2026-09-28..30; stock not refreshed
+69,U700,SN74LVC1G08DBVR,SN74LVC1G08DBVR,TI,C7666,1,10,0.0496,0.496,V1 price snapshot 2026-09-28..30; stock not refreshed
+70,U710 U720,AL8853S-13,AL8853S-13,Diodes,C3192318,2,2,0.9392,1.8784,V1 price snapshot 2026-09-28..30; stock not refreshed
+72,Y301,32.768k 12.5pF,Q13FC13500004,Epson,C32346,1,5,0.1733,0.8665,V1 price snapshot 2026-09-28..30; stock not refreshed
