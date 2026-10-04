@@ -32,7 +32,7 @@ function page() {
         watering_days: 0, start_time: 0})};
     }
   });
-  vm.runInContext(fs.readFileSync(path.join(__dirname, '../gi/data/settings.js'), 'utf8'), context);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '../software/data/settings.js'), 'utf8'), context);
   return {context, fields, forms, calls, alerts};
 }
 
