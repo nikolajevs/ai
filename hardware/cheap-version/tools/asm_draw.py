@@ -103,6 +103,7 @@ class Labeler:
         self.view = view
         self.boxes = []                      # pixel boxes of placed labels
         self.obstacles = obstacles           # pixel boxes of pads of every part in view
+        self.gaps = (4, 10, 18, 28, 40, 56, 76, 100)
 
     def place(self, d, bbox_mm, lines, color, fonts, anchor_pad_boxes=()):
         v = self.view
@@ -114,7 +115,7 @@ class Labeler:
         w = max(s[2] - s[0] for s in sizes) + 6
         h = sum(s[3] - s[1] + 4 for s in sizes) + 2
         cands = [(cx, cy)]
-        for gap in (4, 10, 18, 28, 40, 56, 76, 100):
+        for gap in self.gaps:
             cands += [(cx, uy0 - gap - h / 2), (cx, uy1 + gap + h / 2), (ux0 - gap - w / 2, cy), (ux1 + gap + w / 2, cy),
                       (ux0 - gap - w / 2, uy0 - gap - h / 2), (ux1 + gap + w / 2, uy0 - gap - h / 2),
                       (ux0 - gap - w / 2, uy1 + gap + h / 2), (ux1 + gap + w / 2, uy1 + gap + h / 2)]
