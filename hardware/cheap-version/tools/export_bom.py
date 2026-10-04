@@ -8,6 +8,8 @@ Writes hardware/cheap-version/BOM_cheap1.csv (every fitted line, with the stock 
 bought, LCSC order quantities rounded to the minimum and multiple of the PCB_V1 price list). Prices are the 28-30.09.2026
 LCSC snapshot behind ../PCB_V1/BOM_PCB_V1_v22.csv, with exact-part overrides dated 2026-10-04 below, matched by LCSC number or MPN: lines without a match have no price.
 The "Source" field of a schematic part is "stock:<id>" for parts taken from stock/components-*.csv.
+Also writes BOM_LCSC_cheap1.csv for LCSC import: purchased parts only, grouped by LCSC code,
+with quantities rounded once per code to the snapshot minimum/multiple. Parts without a code are reported separately.
 """
 from __future__ import annotations
 
@@ -112,6 +114,42 @@ def groups(netlist):
     return lines
 
 
+def write_lcsc_import(rows):
+    parts = {}
+    excluded = []
+    for row in rows:
+        if not row["lcsc"]:
+            excluded.append(row)
+            continue
+        code = row["lcsc"]
+        if not re.fullmatch(r"C[0-9]+", code):
+            raise ValueError(f"Invalid LCSC code for {row['refs']}: {code}")
+        if not row["price"]:
+            raise ValueError(f"No minimum/multiple for {row['refs']} ({code})")
+        part = parts.setdefault(code, dict(mpn=row["mpn"], mfr=row["mfr"], refs=[], values=[], need=0,
+                                          minimum=row["price"]["min"], multiple=row["price"]["mult"]))
+        if (part["mpn"], part["minimum"], part["multiple"]) != (
+                row["mpn"], row["price"]["min"], row["price"]["mult"]):
+            raise ValueError(f"Conflicting MPN or order limits for {code}")
+        part["need"] += row["to_buy"]
+        part["refs"].append(row["refs"])
+        if row["value"] not in part["values"]:
+            part["values"].append(row["value"])
+    output = HERE / "BOM_LCSC_cheap1.csv"
+    total = 0
+    with output.open("w", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["Quantity", "LCSC Part Number", "Manufacturer Part Number", "Manufacturer", "Description",
+                         "Customer Part Number"])
+        for code, part in parts.items():
+            quantity = max(part["minimum"], math.ceil(part["need"] / part["multiple"]) * part["multiple"])
+            writer.writerow([quantity, code, part["mpn"], part["mfr"], "; ".join(part["values"]), " ".join(part["refs"])])
+            total += quantity
+    print(f"LCSC import: {len(parts)} codes, {total} ordered pieces -> {output.name}")
+    for row in excluded:
+        print(f"  excluded from LCSC import (no code): {row['refs']} {row['value']}")
+
+
 def main():
     stock = load_stock()
     by_lcsc, by_mpn, by_ref = load_prices()
@@ -191,6 +229,9 @@ def main():
     print(f"order estimate (LCSC minimums, dated snapshot prices, {priced} of {len(buy)} lines): USD {total:.2f}")
     for line in problems:
         print("PROBLEM:", line)
+    if problems:
+        return 1
+    write_lcsc_import(buy)
     for r in buy:
         if not r["price"]:
             print(f"  no price: line {r['line']} {r['refs']} {r['value']} {r['mpn']}")
