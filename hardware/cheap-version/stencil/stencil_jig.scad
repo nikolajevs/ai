@@ -74,7 +74,6 @@ module rounded_prism(w, d, h, r) {
             }
     }
 }
-
 module ring(outer_w, outer_h, inner_w, inner_h, z, h, r) {
     translate([0, 0, z])
         difference() {
