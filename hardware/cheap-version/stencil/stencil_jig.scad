@@ -37,6 +37,13 @@ hinge_hole_d = 3.5;
 hinge_od = 7.0;
 hinge_y = (pcb_h + 2 * (stencil_margin_y + base_border)) / 2 + 1.5;
 hinge_z = base_t + 1.6;
+hinge_span = 110.0;
+hinge_axial_gap = 1.0;
+hinge_knuckle_len = (hinge_span - 2 * hinge_axial_gap) / 3;
+hinge_base_x_left = -hinge_span / 2;
+hinge_frame_x = -hinge_knuckle_len / 2;
+hinge_base_x_right = hinge_frame_x + hinge_knuckle_len + hinge_axial_gap;
+// Along the pin: base 36 mm, 1 mm gap, frame 36 mm, 1 mm gap, base 36 mm.
 
 latch_hole_d = 3.5;
 latch_nut_af = 6.4;          // M3 hex nut pocket, measured across corners here
@@ -138,9 +145,9 @@ module base() {
     }
 
     // Two base knuckles with one central frame knuckle between them.
-    for (x0 = [-55, 25]) {
-        base_hinge_arm(x0, 30);
-        hinge_knuckle(x0, 30);
+    for (x0 = [hinge_base_x_left, hinge_base_x_right]) {
+        base_hinge_arm(x0, hinge_knuckle_len);
+        hinge_knuckle(x0, hinge_knuckle_len);
     }
 }
 
@@ -156,7 +163,7 @@ module frame() {
                 translate([x, latch_y, frame_z])
                     rounded_prism(10, 10, frame_t, 1.2);
 
-            frame_hinge_arm(-15, 30);
+            frame_hinge_arm(hinge_frame_x, hinge_knuckle_len);
         }
 
         for (x = [-52, 52])
@@ -164,7 +171,7 @@ module frame() {
     }
 
     // One frame knuckle, interleaved between the two base knuckles.
-    hinge_knuckle(-15, 30);
+    hinge_knuckle(hinge_frame_x, hinge_knuckle_len);
 }
 
 if (part == "base") {
