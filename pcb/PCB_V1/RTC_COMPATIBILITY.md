@@ -4,7 +4,7 @@
 
 С 0.21 D303 — JSCJ BAV170 вместо BAT54C. Распиновка и плата сохранены; проверка падения напряжения и цены — [RTC_BACKUP_021.md](https://github.com/nikolajevs/ai/blob/1887d866ac820a41e9d1717056d188d7af6e6b51/pcb/PCB_V1/RTC_BACKUP_021.md).
 
-Сверено по [PCF8563, Rev. 11.1 от 19.01.2026](https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf), [Epson FC-135](https://www.lcsc.com/product-detail/C32346.html), [JSCJ BAV170](https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970), а также по [gi.ino](../../gi/gi.ino), [Safety.h](../../gi/Safety.h) и [SafetyTests.h](../../gi/SafetyTests.h).
+Сверено по [PCF8563, Rev. 11.1 от 19.01.2026](https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf), [Epson FC-135](https://www.lcsc.com/product-detail/C32346.html), [JSCJ BAV170](https://datasheet.lcsc.com/datasheet/pdf/6ef1dc0b67324e17a45dc6699f4d3860.pdf?productCode=C68970), а также по [software.ino](../../software/software.ino), [Safety.h](../../software/Safety.h) и [SafetyTests.h](../../software/SafetyTests.h).
 
 ## Схема
 
