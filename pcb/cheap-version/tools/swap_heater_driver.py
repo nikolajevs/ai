@@ -13,7 +13,7 @@ import route_power as rp
 p = rp.p
 U601_FIELDS = dict(Value='UCC27524ADR', Manufacturer='TI', MPN='UCC27524ADR', LCSC='C185857', Source='buy',
                    Datasheet='https://www.ti.com/lit/ds/symlink/ucc27524a.pdf')
-R716_FIELDS = dict(Value='0.12 1% 2W 50ppm', MPN='FRM252WFR120TM', LCSC='')
+R716_FIELDS = dict(Value='0.12 1% 3W 50ppm', MPN='JER2512F3R120', Manufacturer='JIERR', LCSC='C49164917', Datasheet='https://datasheet.lcsc.com/datasheet/pdf/02ae4b20613551dea68a63964573e262.pdf')
 PAD1 = (83.41, 89.78)
 STUB = [(83.5, 90.3), (84.3, 90.79)]     # inside pad 1 -> onto the +12V track (82.84,92.25)-(85.38,89.71)
 

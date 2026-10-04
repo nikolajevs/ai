@@ -6,7 +6,7 @@ Usage:  python pcb/cheap-version/tools/export_bom.py [netlist.xml]
 
 Writes pcb/cheap-version/BOM_cheap1.csv (every fitted line, with the stock check) and BUY_cheap1.csv (what has to be
 bought, LCSC order quantities rounded to the minimum and multiple of the PCB_V1 price list). Prices are the 28-30.09.2026
-LCSC snapshot behind ../PCB_V1/BOM_PCB_V1_v22.csv, matched by LCSC number or MPN: lines without a match have no price.
+LCSC snapshot behind ../PCB_V1/BOM_PCB_V1_v22.csv, with exact-part overrides dated 2026-10-04 below, matched by LCSC number or MPN: lines without a match have no price.
 The "Source" field of a schematic part is "stock:<id>" for parts taken from stock/components-*.csv.
 """
 from __future__ import annotations
@@ -30,7 +30,7 @@ SKIP_PREFIX = ("#", "NT", "TP")
 EXTRAS = [
     dict(refs="BT301", value="CR2032 cell", footprint="", mpn="CR2032", mfr="", lcsc="", source="buy"),
     dict(refs="F902 insert", value="Littelfuse 0297010.WXNV, 10 A mini blade fuse", footprint="", mpn="0297010.WXNV",
-         mfr="Littelfuse", lcsc="", source="buy"),
+         mfr="Littelfuse", lcsc="C151094", source="buy"),
 ]
 
 
@@ -56,9 +56,16 @@ def load_stock():
     return stock
 
 
-# new parts without a snapshot price: a sibling of the same series and size (price indicative)
-PRICE_LIKE = {"0603WAF3162T5E": "0603WAF3163T5E", "0603WAF4703T5E": "0603WAF3163T5E", "RT0603BRD0788K7L": "RT0603BRD0710KL",
-              "FXL0630-4R7-M": "FXL0630-100-M", "FRM252WFR120TM": "FRM252WFR180TM"}
+# Exact-part LCSC snapshot checked 2026-10-04; normal price, no temporary discount.
+# mpn: (LCSC, minimum/multiple, USD each, stock at observation)
+VERIFIED = {
+    "0603WAF3162T5E": ("C25967", 100, 0.0022, 77300),
+    "0603WAF4703T5E": ("C23178", 100, 0.0030, 1017700),
+    "RT0603BRD0788K7L": ("C728599", 20, 0.0380, 7680),
+    "FXL0630-4R7-M": ("C167220", 5, 0.1695, 72865),
+    "JER2512F3R120": ("C49164917", 5, 0.0771, 56525),
+    "0297010.WXNV": ("C151094", 5, 0.1236, 10305),
+}
 
 
 def load_prices():
@@ -80,6 +87,11 @@ def load_prices():
                     by_mpn[row["MPN"].casefold()] = info
                 for ref in row["Designators"].split():
                     by_ref[ref] = info
+    for mpn, (code, minimum, unit, available) in VERIFIED.items():
+        info = dict(min=minimum, mult=minimum, unit=unit, lcsc=code, mpn=mpn,
+                    page=f"https://www.lcsc.com/product-detail/{code}.html",
+                    checked="2026-10-04", available=available)
+        by_lcsc[code] = by_mpn[mpn.casefold()] = info
     return by_lcsc, by_mpn, by_ref
 
 
@@ -143,9 +155,6 @@ def main():
             if v1:
                 r["price"] = v1
                 r["mpn"], r["mfr"], r["lcsc"] = v1["mpn"], v1["mfr"], v1["lcsc"]
-        if not r["price"] and r["mpn"] in PRICE_LIKE:
-            r["price"] = by_mpn.get(PRICE_LIKE[r["mpn"]].casefold())
-            r["like"] = PRICE_LIKE[r["mpn"]]
         if r["to_buy"]:
             if r["price"]:
                 p = r["price"]
@@ -169,9 +178,9 @@ def main():
                     "Unit USD", "Order USD", "Note"])
         for r in buy:
             p = r["price"]
-            note = "" if p else "no price in the V1 snapshot: check on LCSC"
-            if r.get("like"):
-                note = f"price borrowed from {r['like']} (same series)"
+            note = "no price: buy locally / check supplier" if not p else "V1 price snapshot 2026-09-28..30; stock not refreshed"
+            if p and p.get("checked"):
+                note = f"LCSC checked {p['checked']}; stock {p['available']}; {p['page']}"
             if r["source"].startswith("buy:"):
                 note = (note + "; " if note else "") + r["source"][4:].strip()
             w.writerow([r["line"], r["refs"], r["value"], r["mpn"], r["mfr"], r["lcsc"], r["to_buy"],
@@ -179,7 +188,7 @@ def main():
     priced = sum(1 for r in buy if r["price"])
     print(f"{len(rows)} BOM lines, {sum(r['qty'] for r in rows)} parts; from stock {sum(r['from_stock'] for r in rows)}; "
           f"to buy {sum(r['to_buy'] for r in buy)} parts in {len(buy)} lines ({priced} priced)")
-    print(f"order estimate (LCSC minimums, V1 snapshot prices, {priced} of {len(buy)} lines): USD {total:.2f}")
+    print(f"order estimate (LCSC minimums, dated snapshot prices, {priced} of {len(buy)} lines): USD {total:.2f}")
     for line in problems:
         print("PROBLEM:", line)
     for r in buy:
