@@ -12,8 +12,8 @@ Examples (from hardware/cheap-version)::
     python tools/make_stencil.py --test-scad stencil/cheap_test.scad
 
 The script does not change the board or the fabrication archive.  The supplied
-STL is an experiment for a 0.4 mm nozzle and PLA; inspect the sliced preview
-before printing.
+STLs are experiments for 0.4 mm and 0.2 mm nozzles with PLA; inspect the sliced
+preview before printing.
 """
 
 from __future__ import annotations

@@ -116,7 +116,9 @@ kicad-cli sch export netlist --format kicadxml -o netlist.xml cheap-version.kica
 
 Для пробной ручной пайки сделаны [полный STL 100×100 мм](stencil/cheap_full.stl), [полный 3MF](stencil/cheap_full_geometry.3mf) и [тестовый купон 40×40 мм](stencil/cheap_test.stl) под Bambu Lab A1 mini с соплом 0,4 мм и PLA. Купон охватывает плотную область платы около U601 и мелких пассивных компонентов; его лучше напечатать первым. Для прямого открытия в Bambu Studio есть также [3MF купона](stencil/cheap_test_geometry.3mf). Превью: [cheap_test_preview.png](stencil/cheap_test_preview.png).
 
-Это однослойный трафарет толщиной 0,20 мм. Отверстия взяты из `F.Paste`, для FDM они расширены на 0,08 мм и упрощены до прямоугольных контуров. Поэтому это проверка идеи, а не замена лазерному трафарету: сначала нужно проверить купон и количество нанесённой пасты. При печати задать слой 0,20 мм, первый слой 0,20 мм, без поддержек, с плоской ориентацией и бримом; перед печатью проверить слайс в Bambu Studio. Малые перемычки между соседними площадками могут исчезнуть из-за ширины линии 0,4 мм.
+Для сопла **0,2 мм** добавлен предпочтительный вариант: [тестовый 3MF](stencil/cheap_test_02_geometry.3mf), [полный 3MF](stencil/cheap_full_02_geometry.3mf), а также соответствующие [STL купона](stencil/cheap_test_02.stl) и [полной платы](stencil/cheap_full_02.stl). В нём отверстия расширены только на 0,03 мм; толщина остаётся 0,20 мм (два слоя по 0,10 мм). Файлы без суффикса `_02` оставлены как более грубый запасной вариант для сопла 0,4 мм.
+
+Это однослойный трафарет толщиной 0,20 мм. Отверстия взяты из `F.Paste`, для FDM они расширены на 0,08 мм (вариант 0,4 мм) или на 0,03 мм (вариант 0,2 мм) и упрощены до прямоугольных контуров. Поэтому это проверка идеи, а не замена лазерному трафарету: сначала нужно проверить купон и количество нанесённой пасты. Для `_02` задать сопло 0,2 мм, слой 0,10 мм, первый слой 0,10 мм, ширину линии около 0,22–0,24 мм, без поддержек и разглаживания, с плоской ориентацией и бримом; перед печатью проверить слайс в Bambu Studio. Для старого варианта 0,4 мм оставить слой и первый слой 0,20 мм. Малые перемычки между соседними площадками всё равно нужно проверить на превью.
 
 SCAD и генератор лежат в [stencil/](stencil/) и [tools/make_stencil.py](tools/make_stencil.py). Повторная генерация:
 
@@ -124,6 +126,14 @@ SCAD и генератор лежат в [stencil/](stencil/) и [tools/make_ste
 python tools/make_stencil.py --scad stencil/cheap_full.scad --test-scad stencil/cheap_test.scad --expand 0.08 --thickness 0.20
 openscad -o stencil/cheap_full.stl --export-format binstl stencil/cheap_full.scad
 openscad -o stencil/cheap_test.stl --export-format binstl stencil/cheap_test.scad
+```
+
+Для варианта с соплом 0,2 мм:
+
+```text
+python tools/make_stencil.py --scad stencil/cheap_full_02.scad --test-scad stencil/cheap_test_02.scad --expand 0.03 --thickness 0.20
+openscad -o stencil/cheap_full_02.stl --export-format binstl stencil/cheap_full_02.scad
+openscad -o stencil/cheap_test_02.stl --export-format binstl stencil/cheap_test_02.scad
 ```
 
 | Ref | Артикул | LCSC | Проверенная позиция |
