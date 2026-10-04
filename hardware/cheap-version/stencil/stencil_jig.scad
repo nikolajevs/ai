@@ -36,10 +36,15 @@ hinge_pin_d = 3.0;           // use a smooth M3 screw or 3 mm rod as the pin
 hinge_hole_d = 3.5;
 hinge_od = 7.0;
 hinge_y = (pcb_h + 2 * (stencil_margin_y + base_border)) / 2 + 1.5;
-hinge_z = base_t + 1.6;
+// The pin axis is one tube radius above the bottom plane of the frame, so the frame prints flat on its bottom face with
+// the knuckle tube resting on the same plane: no support, nothing hangs in the air.
+hinge_z = (base_t - stencil_recess) + stencil_t - frame_gap + hinge_od / 2;
 hinge_span = 110.0;
 hinge_axial_gap = 1.0;
-hinge_clearance = 0.5;       // radial clearance between the frame knuckle and the base plate
+// The frame ear ends this far behind the axis.  Its lower corner must stay inside the circle that the base plate edge
+// leaves free (the edge is 3.77 mm from the axis): sqrt(3.5^2 + 0.8^2) = 3.59 mm, so the frame opens past 170 degrees
+// without touching the base.
+hinge_frame_reach = 0.8;
 hinge_knuckle_len = (hinge_span - 2 * hinge_axial_gap) / 3;
 hinge_base_x_left = -hinge_span / 2;
 hinge_frame_x = -hinge_knuckle_len / 2;
@@ -91,9 +96,11 @@ module ring(outer_w, outer_h, inner_w, inner_h, z, h, r) {
         }
 }
 
-// A hinge ear is a web from the plate edge to the knuckle tube.  x0 is where the knuckle starts along the pin; the
-// web has exactly the same x range, so it sits centred under its knuckle.  The pin bore is cut from the joined solid
-// (see base() and frame()), so it stays empty along the whole knuckle and the web cannot fill it.
+// A hinge ear is a block from the plate edge to the knuckle tube, exactly as wide as the knuckle (x0 is where the knuckle
+// starts along the pin).  The base ear rises to the axis and reaches the far side of the tube; the frame ear is as thick
+// as the frame and ends hinge_frame_reach behind the axis.  Both parts print flat without support: the lower half of every
+// tube sits on its ear.  The pin bore is cut from the joined solid (see base() and frame()), so the ear cannot fill it,
+// and it is a teardrop with the point up, so the top of the horizontal hole is not a bridge.
 module hinge_tube(x0, len) {
     translate([x0, hinge_y, hinge_z])
         rotate([0, 90, 0])
@@ -101,19 +108,26 @@ module hinge_tube(x0, len) {
 }
 
 module hinge_bore(x0, len) {
+    // teardrop: the point of the bore faces up (local -x becomes global +z after the rotation)
     translate([x0 - 0.1, hinge_y, hinge_z])
         rotate([0, 90, 0])
-            cylinder(h = len + 0.2, d = hinge_hole_d);
+            linear_extrude(height = len + 0.2)
+                hull() {
+                    circle(d = hinge_hole_d);
+                    translate([-hinge_hole_d / 2 * sqrt(2), 0]) square(0.01, center = true);
+                }
 }
 
 module base_hinge_arm(x0, len) {
-    translate([x0 + len / 2, (base_h / 2 + hinge_y) / 2, base_t / 2])
-        cube([len, hinge_y - base_h / 2 + 1.0, base_t], center = true);
+    y0 = base_h / 2 - 0.5;
+    translate([x0, y0, 0])
+        cube([len, hinge_y + hinge_od / 2 - y0, hinge_z]);
 }
 
 module frame_hinge_arm(x0, len) {
-    translate([x0 + len / 2, (frame_outer_h / 2 + hinge_y) / 2, frame_z + frame_t / 2])
-        cube([len, hinge_y - frame_outer_h / 2 + 1.0, frame_t], center = true);
+    y0 = frame_outer_h / 2 - 0.5;
+    translate([x0, y0, frame_z])
+        cube([len, hinge_y + hinge_frame_reach - y0, frame_t]);
 }
 
 module latch_hole(x, z0, h) {
@@ -150,13 +164,6 @@ module base() {
                     translate([x, latch_y, -0.1])
                         cylinder(h = 2.6, r = latch_nut_af / 2, $fn = 6);
                 }
-
-                // Scoop in the back edge for the central frame knuckle: its axis is
-                // only 1.5 mm behind the plate, so the tube would sit inside the plate.
-                translate([hinge_frame_x - hinge_axial_gap, hinge_y, hinge_z])
-                    rotate([0, 90, 0])
-                        cylinder(h = hinge_knuckle_len + 2 * hinge_axial_gap,
-                                 d = hinge_od + 2 * hinge_clearance);
             }
 
             // Two base ears with their knuckles; the frame knuckle goes between them.
@@ -196,10 +203,50 @@ module frame() {
     }
 }
 
+// Short hinge sample for a quick test print: the same ears, tubes, bores and gaps as the jig, three 12 mm knuckles and
+// small plate stubs at the same heights.  Print "hinge_test_base" and "hinge_test_frame" flat, without support, push a
+// 3 mm pin through and check the fit and the swing before printing the whole jig.
+test_len = 12.0;
+test_stub_w = 3 * test_len + 2 * hinge_axial_gap;
+test_x_base_left = -test_stub_w / 2;
+test_x_frame = -test_len / 2;
+test_x_base_right = test_x_frame + test_len + hinge_axial_gap;
+
+module hinge_test_base() {
+    difference() {
+        union() {
+            translate([test_x_base_left, base_h / 2 - 10, 0])
+                cube([test_stub_w, 10, base_t]);
+            for (x0 = [test_x_base_left, test_x_base_right]) {
+                base_hinge_arm(x0, test_len);
+                hinge_tube(x0, test_len);
+            }
+        }
+        for (x0 = [test_x_base_left, test_x_base_right])
+            hinge_bore(x0, test_len);
+    }
+}
+
+module hinge_test_frame() {
+    difference() {
+        union() {
+            translate([test_x_base_left, frame_outer_h / 2 - 10, frame_z])
+                cube([test_stub_w, 10, frame_t]);
+            frame_hinge_arm(test_x_frame, test_len);
+            hinge_tube(test_x_frame, test_len);
+        }
+        hinge_bore(test_x_frame, test_len);
+    }
+}
+
 if (part == "base") {
     base();
 } else if (part == "frame") {
     frame();
+} else if (part == "hinge_test_base") {
+    hinge_test_base();
+} else if (part == "hinge_test_frame") {
+    hinge_test_frame();
 } else {
     // Closed assembly preview.  The two parts are intentionally coplanar;
     // export the separate parts for printing.
