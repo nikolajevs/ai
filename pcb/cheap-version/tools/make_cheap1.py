@@ -123,12 +123,14 @@ def input_power():
 
 def heater():
     sh = load("Heater")
-    tc4427 = load_stock_symbol(SYM_DIR / "Driver_FET.kicad_sym", "TC4427xOA", "Driver_FET")
+    # 04.10.2026: back to the PCB_V1 driver UCC27524ADR (the IRS4427S input threshold left 0.14 V of margin);
+    # pin 1 (ENA) goes to +12V instead of +3V3, pin 8 (ENB) to GND, OUTB unused
     replace_symbol(
-        sh, "U601", "Driver_FET:TC4427xOA", tc4427,
-        lambda o: {"1": None, "2": o["2"], "3": "GND", "4": "GND", "5": None, "6": o["6"], "7": o["7"], "8": None},
-        dict(Value="IRS4427S", Footprint="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", Datasheet="",
-             Manufacturer="Infineon", MPN="IRS4427STRPBF", LCSC="", Source="stock:11"))
+        sh, "U601", "Driver_FET:UCC27524D", None,
+        lambda o: {**o, "1": "+12V", "5": None},
+        dict(Value="UCC27524ADR", Footprint="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+             Datasheet="https://www.ti.com/lit/ds/symlink/ucc27524a.pdf", Manufacturer="TI",
+             MPN="UCC27524ADR", LCSC="C185857", Source="buy"))
     nmos = load_stock_symbol(SYM_DIR / "Transistor_FET.kicad_sym", "Q_NMOS_GDS", "Transistor_FET")
     replace_symbol(
         sh, "Q601", "Transistor_FET:Q_NMOS_GDS", nmos,
@@ -172,6 +174,8 @@ def led_drivers(extra_lib: dict):
     part(sh, ["D711", "D721"], value="SBRT15U100SP5", footprint="GrowBox:Diodes_PowerDI5", mpn="SBRT15U100SP5-13",
          mfr="Diodes Incorporated", lcsc="C2934601", source="stock:8",
          datasheet="https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf")
+    part(sh, "R716", value="0.12 1% 2W 50ppm", mpn="FRM252WFR120TM", lcsc="")   # CH1 80 W (04.10.2026; 0.18 ohm = 53 W)
+    sh.replace_text("CH1: 1.111 A", "CH1: 1.667 A nominal = 80 W at 48 V (panel rated up to 120 W)")
     use(sh, ["C710", "C715", "C725"], C1210_10U50)
     use(sh, ["C711", "C721"], C1206_2U2_50)
     use(sh, ["R711", "R721"], R1206_10R)

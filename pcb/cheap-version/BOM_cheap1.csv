@@ -35,7 +35,7 @@
 34,J521,1,PUMP 24V / 6W,"TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,FS1.5-02-350-2601R,,stock:86,1,0,"id 86: 7 in stock, 3 used"
 35,J601,1,PTC + / switched - (3.5 mm),"TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal",,FS1.5-02-350-2601R,,stock:86,1,0,"id 86: 7 in stock, 3 used"
 36,J711 J721 J731,3,LED +/- (return isolated),"TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",,KF301-5.0-2P,,stock:93,3,0,"id 93: 31 in stock, 4 used"
-37,J901,1,24V IN (KF301-5.0-2P),"TerminalBlock_KF301_1x02_P5.00mm_Horizontal_Input",,KF301-5.0-2P,,stock:93,1,0,"id 93: 31 in stock, 4 used"
+37,J901,1,24V IN (KF301-5.0-2P),TerminalBlock_KF301_1x02_P5.00mm_Horizontal_Input,,KF301-5.0-2P,,stock:93,1,0,"id 93: 31 in stock, 4 used"
 38,L101,1,4.7u FXL0630-4R7-M,L_Changjiang_FXL0630,cjiang,FXL0630-4R7-M,C167220,buy,0,1,
 39,L711,1,47u DTMSS-27/0.047/15-V,L_Feryster_DTMSS-27_V,Feryster,DTMSS-27/0.047/15-V,,stock:12,1,0,"id 12: 1 in stock, 1 used (no spare)"
 40,L721,1,47u SRP1265A-470M,L_Bourns_SRP1265A,Bourns,SRP1265A-470M,C840530,buy,0,1,
@@ -53,7 +53,7 @@
 52,R601 R711 R721,3,10R 5%,R_1206_3216Metric,UNI-ROYAL,0603WAF100JT5E,C22859,stock:41,3,0,"id 41: 5 in stock, 3 used"
 53,R703 R908,2,47k 1%,R_1206_3216Metric,Yageo,RC0603FR-0747KL,C105579,stock:61,2,0,"id 61: 6 in stock, 2 used"
 54,R715,1,0.027 1% >=1W,R_2512_6332Metric,UNI-ROYAL,LR123WF270MT4E,C19633795,buy,0,1,
-55,R716,1,0.18 1% 2W 50ppm,R_2512_6332Metric,FOJAN,FRM252WFR180TM,C48533605,buy,0,1,
+55,R716,1,0.12 1% 2W 50ppm,R_2512_6332Metric,FOJAN,FRM252WFR120TM,,buy,0,1,
 56,R717 R727,2,316k 1%,R_0603_1608Metric,UNI-ROYAL,0603WAF3163T5E,C25814,buy,0,2,
 57,R718 R728,2,10k 1%,R_0805_2012Metric,UNI-ROYAL,0603WAF1002T5E,C25804,stock:59,2,0,"id 59: 19 in stock, 2 used"
 58,R722,1,2.7k 1%,R_0603_1608Metric,UNI-ROYAL,0603WAF2701T5E,C13167,buy,0,1,
@@ -67,7 +67,7 @@
 66,U101,1,ST1S10PHR,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm,STMicroelectronics,ST1S10PHR,C11175,stock:27,1,0,"id 27: 4 in stock, 1 used"
 67,U201,1,ESP32-WROOM-32E-N4,ESP32-WROOM-32E_NoVias,Espressif,ESP32-WROOM-32E-N4,C701341,buy,0,1,
 68,U301,1,PCF8563T/5,SOIC-8_3.9x4.9mm_P1.27mm,NXP,"PCF8563T/5,518",C7440,buy,0,1,
-69,U601,1,IRS4427S,SOIC-8_3.9x4.9mm_P1.27mm,Infineon,IRS4427STRPBF,,stock:11,1,0,"id 11: 10 in stock, 1 used"
+69,U601,1,UCC27524ADR,SOIC-8_3.9x4.9mm_P1.27mm,TI,UCC27524ADR,C185857,buy,0,1,
 70,U700,1,SN74LVC1G08DBVR,SOT-23-5,TI,SN74LVC1G08DBVR,C7666,buy,0,1,
 71,U710 U720,2,AL8853S-13,SOIC-8_3.9x4.9mm_P1.27mm,Diodes,AL8853S-13,C3192318,buy,0,2,
 72,U902,1,ST1S14PHR,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm,STMicroelectronics,ST1S14PHR,C84130,stock:26,1,0,"id 26: 3 in stock, 1 used"
