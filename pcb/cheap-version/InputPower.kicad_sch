@@ -5096,4 +5096,147 @@
 		)
 		(uuid ba581606-0519-5e70-a259-9f5969ff5ae7)
 	)
+	(symbol
+		(lib_id "Device:C")
+		(at 86.36 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid 92c68b9f-8e43-5601-8f10-f12681edca1a)
+		(property "Reference" "C911"
+			(at 90.17 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n 50V X7R"
+			(at 90.17 125.73 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Datasheet" ""
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "MPN" "CL10B104KB8NNNC"
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "LCSC" "C1591"
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "stock:54"
+			(at 86.36 124.46 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid 5e9126a4-d0d4-508a-9476-ab7dd8e5f7fe)
+		)
+		(pin "2"
+			(uuid 87233847-11d2-5941-b04f-c91d4fd4b23f)
+		)
+		(instances
+			(project "cheap-version"
+				(path "/7c30e6d8-4e60-4647-b4d3-d05e639d6467/13f6ec92-6d25-5cb3-b953-f0854e3d007b"
+					(reference "C911")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 86.36 120.65) (xy 86.36 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid cd296ca6-d001-5fc1-bd1c-277281dbc30a)
+	)
+	(label "AUX_VIN"
+		(at 86.36 118.11 90)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify left)
+		)
+		(uuid 1b6f2630-f028-52aa-8ae4-f6056961d81f)
+	)
+	(wire
+		(pts
+			(xy 86.36 128.27) (xy 86.36 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid b900d365-7b42-56e9-b6e7-8d54065d2e4c)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 86.36 130.81 270)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 28c871d4-519d-50a6-9929-ed70c55ae649)
+	)
 )

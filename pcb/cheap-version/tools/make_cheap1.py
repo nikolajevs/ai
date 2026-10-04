@@ -116,6 +116,11 @@ def input_power():
     use(sh, ["C905", "C906"], C1210_10U50)
     use(sh, "C902", C1206_2U2_50)
     use(sh, ["C907", "C908"], C0603_100N)
+    # 04.10.2026: local HF bypass at the ST1S14 VIN pin. The route from the input capacitors to pin 7 is about 15 mm with
+    # two vias (B.Cu in between); the cap sits on the bottom side right under the pin, GND via beside it (add_c911.py)
+    c907 = {k: v for k, v in sh.props("C907").items() if k != "Reference"}
+    sh.add_symbol("Device:C", "C911", (86.36, 124.46), 0, c907, {"1": "AUX_VIN", "2": "GND"},
+                  pos_ref=(90.17, 123.19), pos_value=(90.17, 125.73), global_nets=sh.global_net_names())
     use(sh, "J901", {**KF301, "footprint": "GrowBox:TerminalBlock_KF301_1x02_P5.00mm_Horizontal_Input"}, value="24V IN (KF301-5.0-2P)")
     sh.prune_lib_symbols()
     return sh
