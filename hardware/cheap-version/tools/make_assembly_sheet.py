@@ -28,6 +28,12 @@ M = 18
 REG = (46.0, 46.0, 154.0, 154.0)         # the board plus a 4 mm margin for the zone letters
 BOARD = (49.975, 49.975, 150.025, 150.025)
 LABEL_PT, VALUE_PT = 6.8, 5.6
+GREEN, ORANGE = dr.STEP_COLORS[5], dr.STEP_COLORS[3]      # SMD picture: no polarity / has a polarity or a pin 1
+
+
+def polar_color(fp):
+    """orange = a part that goes in one way only (it has a red mark on the picture), green = no polarity"""
+    return ORANGE if fp['ref'] in ad.POLARITY else GREEN
 
 CSS = """
 @font-face { font-family: 'AR'; src: url(arial.ttf); }
@@ -48,9 +54,12 @@ td { border: 0.5pt solid #888; padding: 0.7pt 2pt; font-size: 7pt; vertical-alig
 
 # ------------------------------------------------------------------------------------------------- picture
 def render_sheet(data, mirror, active, width_pt, scale, values=False, badge_mm=0.85, label_pt=LABEL_PT, value_pt=VALUE_PT,
-                 dnp_labels=True):
+                 dnp_labels=True, color_of=None):
     """Board (parts only) as an image: parts selected by active() in colour with reference labels and polarity badges,
-    the others faint. width_pt is the width the image will have on the page, to size text in points."""
+    the others faint. width_pt is the width the image will have on the page, to size text in points.
+    values: False = reference only, True = reference and value, 'fit' = the value only where it fits next to the part.
+    color_of(fp) = colour of a part (default: the colour of its assembly step)."""
+    color_of = color_of or (lambda fp: dr.STEP_COLORS[fp['step']])
     view = dr.View(REG, scale, mirror)
     ppt = view.w / width_pt
     img = Image.new('RGB', (view.w, view.h), (255, 255, 255))
@@ -92,7 +101,7 @@ def render_sheet(data, mirror, active, width_pt, scale, values=False, badge_mm=0
     obstacles = []
     for fp in items:
         if active(fp):
-            dr.draw_fp(d, view, fp, step_color=dr.STEP_COLORS[fp['step']])
+            dr.draw_fp(d, view, fp, step_color=color_of(fp))
         for pad in fp['pads']:
             b = dr.poly_bbox(pad['poly'])
             if b:
@@ -112,9 +121,18 @@ def render_sheet(data, mirror, active, width_pt, scale, values=False, badge_mm=0
         lab.boxes.append((u - r, v - r, u + r, v + r))
     f1, f2 = dr.font(label_pt * ppt, True), dr.font(value_pt * ppt)
     order = sorted(act, key=lambda f: -((dr.pads_bbox(f)[2] - dr.pads_bbox(f)[0]) * (dr.pads_bbox(f)[3] - dr.pads_bbox(f)[1])))
+    n_values = 0
     for fp in order:
-        lines = [fp['ref']] + ([ad.short_value(fp['bom_value'])] if values else [])
-        lab.place(d, dr.pads_bbox(fp), lines, dr.STEP_COLORS[fp['step']], [f1, f2][:len(lines)])
+        bb, col = dr.pads_bbox(fp), color_of(fp)
+        if values is True:
+            lab.place(d, bb, [fp['ref'], pic_value(fp)], col, [f1, f2])
+            n_values += 1
+        elif values == 'fit' and lab.place(d, bb, [fp['ref'], pic_value(fp)], col, [f1, f2], max_cost=0, ngaps=6) is not None:
+            n_values += 1
+        else:
+            lab.place(d, bb, [fp['ref']], col, [f1])
+    if values:
+        print(f'  labels with a value: {n_values} of {len(order)}')
     if dnp_labels:
         for fp in items:
             if fp['kind'] == 'SMD' and fp['side'] == side and fp['step'] is None and not active(fp):
@@ -199,6 +217,14 @@ def short_val(value):
     return re.sub(r'^(\S+) [A-Z]{2,}[A-Z0-9]*[-/][\w.\-/]+$', lambda m: m.group(1), v)
 
 
+def pic_value(fp):
+    """value for a label on the picture: the MPN column already has the part number, the tolerance stays"""
+    v = short_val(ad.short_value(fp['bom_value']))
+    for tail in (' / >=16V', ' >=0.25W', ' >=1W', ' 50ppm'):
+        v = v.replace(tail, '')
+    return v
+
+
 def rows_for(data, fps):
     groups = defaultdict(list)
     for fp in fps:
@@ -265,6 +291,17 @@ def step_legend(steps):
     return f'<h2>Порядок установки (цвет = шаг)</h2><table>{rows}</table>'
 
 
+def polar_legend():
+    return ('<h2>Цвет детали</h2><table>'
+            f'<tr><td class="sw" style="background:rgb{at.ad_color(5)}; width:9%">&nbsp;</td><td><b>без полярности</b>: резисторы, керамика, индуктивности, '
+            'предохранители, кварц, SMBJ (D601, D901), microSD</td></tr>'
+            f'<tr><td class="sw" style="background:rgb{at.ad_color(3)}">&nbsp;</td><td><b>с полярностью или выводом 1</b>: диоды, электролиты, '
+            'транзисторы, микросхемы, ESP32 — по красной метке</td></tr></table>'
+            '<h2>Порядок пайки (колонка «Шаг»)</h2>'
+            '<p class="small">1 — C911 снизу; 2 — микросхемы; 3 — транзисторы и диоды; 4 — 0603; 5 — 0805; 6 — 1206, 1210, 2512, F301; '
+            '7 — индуктивности, предохранители Littelfuse, кварц, C901 и C909; 8 — ESP32 и microSD.</p>')
+
+
 def marks_legend(rows_html):
     return ('<h2>Метки полярности на схеме</h2><table>' + rows_html + '</table>'
             '<p class="small">Серые детали — не из этой схемы (контекст). Сетка A–D, 1–4 — зоны 25 × 25 мм, как в столбце «Зоны» таблицы.</p>')
@@ -301,20 +338,21 @@ def build(data, out_path, png_dir=None):
     n_smd = sum(1 for fp in data['fps'] if fp['step'] and fp['kind'] == 'SMD')
     n_tht = sum(1 for fp in data['fps'] if fp['step'] and fp['kind'] == 'THT')
     # ------------------------------------------------------------------ SMD picture
-    main = render_sheet(data, False, smd_top, W, 36)
-    inset = render_sheet(data, True, smd_bot, 190, 14, values=True, badge_mm=0.8)
+    main = render_sheet(data, False, smd_top, W, 36, values='fit', color_of=polar_color)
+    inset = render_sheet(data, True, smd_bot, 190, 14, values=True, badge_mm=0.8, color_of=polar_color)
     previews['1_smd'] = main
     marks = ('<tr><td class="k">K</td><td>катод диода — полоса на корпусе</td></tr><tr><td class="k">+ / −</td><td>плюс / минус</td></tr>'
              '<tr><td class="k">1</td><td>вывод 1: точка, скос или метка на корпусе микросхемы</td></tr>'
              '<tr><td class="k">G S D</td><td>затвор, исток, сток</td></tr>')
     picture_page(doc, fonts, 'GrowBox cheap-1 — схема установки SMD-деталей (вид сверху)',
                  f'{n_smd} SMD-деталей, из них {n_smd - 1} сверху и C911 снизу. Позиции — по таблице на следующей странице. '
-                 'Красный кружок — вывод, к которому должна встать метка на детали. Резисторы, керамика, индуктивности и предохранители — без полярности.',
-                 main, inset, 'Нижняя сторона (плата перевёрнута, зеркально): C911', marks_legend(marks), step_legend([1, 2, 3, 4, 5, 6, 7, 8]))
+                 'Зелёные детали — без полярности, оранжевые — с полярностью; красный кружок — вывод, к которому должна встать метка на детали. '
+                 'Номинал рядом с позицией — там, где хватило места, полный список — в таблице.',
+                 main, inset, 'Нижняя сторона (плата перевёрнута, зеркально): C911', marks_legend(marks), polar_legend())
     # ------------------------------------------------------------------ SMD table
     smd_rows = rows_for(data, [fp for fp in data['fps'] if fp['step'] and fp['kind'] == 'SMD'])
     extra = ('<tr><td colspan="8" class="small"><b>Не ставить:</b> C106 (DNP); TP101–TP103, TP301, TP901, TP902, NT711, NT712, NT721, NT722 — '
-             'только медные площадки. «Шаг» — порядок пайки (цвета на схеме), «Зоны» — сетка A–D, 1–4 на схеме.</td></tr>')
+             'только медные площадки. «Шаг» — порядок пайки (расшифровка на схеме), «Зоны» — сетка A–D, 1–4 на схеме.</td></tr>')
     rect1 = (M, 30, A4[0] - M, A4[1] - 8)
     for i, (rect, html) in enumerate(paginate(fonts, data, smd_rows, rect1, (M, 10, A4[0] - M, A4[1] - 8),
                                               f'<h1>SMD-детали — позиции и MPN ({n_smd} шт., {len(smd_rows)} строк)</h1>',

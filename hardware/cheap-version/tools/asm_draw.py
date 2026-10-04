@@ -105,7 +105,9 @@ class Labeler:
         self.obstacles = obstacles           # pixel boxes of pads of every part in view
         self.gaps = (4, 10, 18, 28, 40, 56, 76, 100)
 
-    def place(self, d, bbox_mm, lines, color, fonts, anchor_pad_boxes=()):
+    def place(self, d, bbox_mm, lines, color, fonts, anchor_pad_boxes=(), max_cost=None, ngaps=None):
+        """draw the label next to the part; with max_cost the label is placed only if some spot within the first ngaps
+        distances costs no more than that (no overlap), otherwise nothing is drawn and None is returned"""
         v = self.view
         (ux0, uy0), (ux1, uy1) = v.px(bbox_mm[0], bbox_mm[1]), v.px(bbox_mm[2], bbox_mm[3])
         ux0, ux1 = sorted((ux0, ux1))
@@ -115,7 +117,7 @@ class Labeler:
         w = max(s[2] - s[0] for s in sizes) + 6
         h = sum(s[3] - s[1] + 4 for s in sizes) + 2
         cands = [(cx, cy)]
-        for gap in self.gaps:
+        for gap in (self.gaps[:ngaps] if ngaps else self.gaps):
             cands += [(cx, uy0 - gap - h / 2), (cx, uy1 + gap + h / 2), (ux0 - gap - w / 2, cy), (ux1 + gap + w / 2, cy),
                       (ux0 - gap - w / 2, uy0 - gap - h / 2), (ux1 + gap + w / 2, uy0 - gap - h / 2),
                       (ux0 - gap - w / 2, uy1 + gap + h / 2), (ux1 + gap + w / 2, uy1 + gap + h / 2)]
@@ -129,6 +131,8 @@ class Labeler:
                 best, best_cost = (x, y, box), cost
             if cost == 0:
                 break
+        if max_cost is not None and (best is None or best_cost > max_cost):
+            return None
         if best is None:
             best = (cx, cy, (cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2))
         x, y, box = best[:3]
