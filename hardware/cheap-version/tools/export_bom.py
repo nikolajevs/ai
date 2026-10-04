@@ -28,11 +28,10 @@ HERE = Path(__file__).resolve().parents[1]
 V1_BOM = HERE.parent / "PCB_V1" / "BOM_PCB_V1_v22.csv"
 STOCK = sorted((HERE / "stock").glob("components-*.csv"))[-1]
 SKIP_PREFIX = ("#", "NT", "TP")
-# parts that are not on the schematic but are bought for the board (as in PCB_V1)
+# parts that are not on the schematic but are bought for the board (as in PCB_V1); the 10 A blade fuse for F902 is not
+# bought (the user has fuses), only the holder
 EXTRAS = [
     dict(refs="BT301", value="CR2032 cell", footprint="", mpn="CR2032", mfr="", lcsc="", source="buy"),
-    dict(refs="F902 insert", value="Littelfuse 0297010.WXNV, 10 A mini blade fuse", footprint="", mpn="0297010.WXNV",
-         mfr="Littelfuse", lcsc="C151094", source="buy"),
 ]
 
 
@@ -66,7 +65,6 @@ VERIFIED = {
     "RT0603BRD0788K7L": ("C728599", 20, 0.0380, 7680),
     "FXL0630-4R7-M": ("C167220", 5, 0.1695, 72865),
     "JER2512F3R120": ("C49164917", 5, 0.0771, 56525),
-    "0297010.WXNV": ("C151094", 5, 0.1236, 10305),
 }
 
 
