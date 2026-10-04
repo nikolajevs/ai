@@ -39,6 +39,7 @@ hinge_y = (pcb_h + 2 * (stencil_margin_y + base_border)) / 2 + 1.5;
 hinge_z = base_t + 1.6;
 hinge_span = 110.0;
 hinge_axial_gap = 1.0;
+hinge_clearance = 0.5;       // radial clearance between the frame knuckle and the base plate
 hinge_knuckle_len = (hinge_span - 2 * hinge_axial_gap) / 3;
 hinge_base_x_left = -hinge_span / 2;
 hinge_frame_x = -hinge_knuckle_len / 2;
@@ -90,23 +91,28 @@ module ring(outer_w, outer_h, inner_w, inner_h, z, h, r) {
         }
 }
 
-module hinge_knuckle(x0, len) {
+// A hinge ear is a web from the plate edge to the knuckle tube.  x0 is where the knuckle starts along the pin; the
+// web has exactly the same x range, so it sits centred under its knuckle.  The pin bore is cut from the joined solid
+// (see base() and frame()), so it stays empty along the whole knuckle and the web cannot fill it.
+module hinge_tube(x0, len) {
     translate([x0, hinge_y, hinge_z])
         rotate([0, 90, 0])
-            difference() {
-                cylinder(h = len, d = hinge_od);
-                translate([0, 0, -0.1])
-                    cylinder(h = len + 0.2, d = hinge_hole_d);
-            }
+            cylinder(h = len, d = hinge_od);
+}
+
+module hinge_bore(x0, len) {
+    translate([x0 - 0.1, hinge_y, hinge_z])
+        rotate([0, 90, 0])
+            cylinder(h = len + 0.2, d = hinge_hole_d);
 }
 
 module base_hinge_arm(x0, len) {
-    translate([x0, (base_h / 2 + hinge_y) / 2, base_t / 2])
+    translate([x0 + len / 2, (base_h / 2 + hinge_y) / 2, base_t / 2])
         cube([len, hinge_y - base_h / 2 + 1.0, base_t], center = true);
 }
 
 module frame_hinge_arm(x0, len) {
-    translate([x0, (frame_outer_h / 2 + hinge_y) / 2, frame_z + frame_t / 2])
+    translate([x0 + len / 2, (frame_outer_h / 2 + hinge_y) / 2, frame_z + frame_t / 2])
         cube([len, hinge_y - frame_outer_h / 2 + 1.0, frame_t], center = true);
 }
 
@@ -117,37 +123,51 @@ module latch_hole(x, z0, h) {
 
 module base() {
     difference() {
-        rounded_prism(base_w, base_h, base_t, base_corner_r);
+        union() {
+            difference() {
+                rounded_prism(base_w, base_h, base_t, base_corner_r);
 
-        // The stencil pocket registers its outside edge.  Its floor and the
-        // PCB pocket are coplanar, so the stencil sits directly on the PCB.
-        translate([0, 0, stencil_shelf_z])
-            rounded_prism(stencil_w + 2 * stencil_clearance,
-                          stencil_h + 2 * stencil_clearance,
-                          base_t - stencil_shelf_z + 0.2, 2.0);
-        translate([0, 0, pcb_floor_z])
-            rounded_prism(pcb_w + 2 * pcb_clearance,
-                          pcb_h + 2 * pcb_clearance,
-                          stencil_shelf_z - pcb_floor_z + 0.2, 0.8);
+                // The stencil pocket registers its outside edge.  Its floor and the
+                // PCB pocket are coplanar, so the stencil sits directly on the PCB.
+                translate([0, 0, stencil_shelf_z])
+                    rounded_prism(stencil_w + 2 * stencil_clearance,
+                                  stencil_h + 2 * stencil_clearance,
+                                  base_t - stencil_shelf_z + 0.2, 2.0);
+                translate([0, 0, pcb_floor_z])
+                    rounded_prism(pcb_w + 2 * pcb_clearance,
+                                  pcb_h + 2 * pcb_clearance,
+                                  stencil_shelf_z - pcb_floor_z + 0.2, 0.8);
 
-        // Relief for the bottom CR2032 holder.  The rest of the PCB is
-        // supported by the pocket floor; no mounting holes are required.
-        translate([battery_relief_x, battery_relief_y, -0.1])
-            rounded_prism(battery_relief_w, battery_relief_h,
-                          pcb_floor_z + 0.3, 2.0);
+                // Relief for the bottom CR2032 holder.  The rest of the PCB is
+                // supported by the pocket floor; no mounting holes are required.
+                translate([battery_relief_x, battery_relief_y, -0.1])
+                    rounded_prism(battery_relief_w, battery_relief_h,
+                                  pcb_floor_z + 0.3, 2.0);
 
-        // Captive M3 nut pockets under the two front latch screws.
-        for (x = [-52, 52]) {
-            latch_hole(x, -0.1, base_t + 0.2);
-            translate([x, latch_y, -0.1])
-                cylinder(h = 2.6, r = latch_nut_af / 2, $fn = 6);
+                // Captive M3 nut pockets under the two front latch screws.
+                for (x = [-52, 52]) {
+                    latch_hole(x, -0.1, base_t + 0.2);
+                    translate([x, latch_y, -0.1])
+                        cylinder(h = 2.6, r = latch_nut_af / 2, $fn = 6);
+                }
+
+                // Scoop in the back edge for the central frame knuckle: its axis is
+                // only 1.5 mm behind the plate, so the tube would sit inside the plate.
+                translate([hinge_frame_x - hinge_axial_gap, hinge_y, hinge_z])
+                    rotate([0, 90, 0])
+                        cylinder(h = hinge_knuckle_len + 2 * hinge_axial_gap,
+                                 d = hinge_od + 2 * hinge_clearance);
+            }
+
+            // Two base ears with their knuckles; the frame knuckle goes between them.
+            for (x0 = [hinge_base_x_left, hinge_base_x_right]) {
+                base_hinge_arm(x0, hinge_knuckle_len);
+                hinge_tube(x0, hinge_knuckle_len);
+            }
         }
-    }
 
-    // Two base knuckles with one central frame knuckle between them.
-    for (x0 = [hinge_base_x_left, hinge_base_x_right]) {
-        base_hinge_arm(x0, hinge_knuckle_len);
-        hinge_knuckle(x0, hinge_knuckle_len);
+        for (x0 = [hinge_base_x_left, hinge_base_x_right])
+            hinge_bore(x0, hinge_knuckle_len);
     }
 }
 
@@ -163,15 +183,17 @@ module frame() {
                 translate([x, latch_y, frame_z])
                     rounded_prism(10, 10, frame_t, 1.2);
 
+            // One ear in the middle of the back edge, with the frame knuckle
+            // interleaved between the two base knuckles.
             frame_hinge_arm(hinge_frame_x, hinge_knuckle_len);
+            hinge_tube(hinge_frame_x, hinge_knuckle_len);
         }
 
         for (x = [-52, 52])
             latch_hole(x, frame_z - 0.1, frame_t + 0.2);
-    }
 
-    // One frame knuckle, interleaved between the two base knuckles.
-    hinge_knuckle(hinge_frame_x, hinge_knuckle_len);
+        hinge_bore(hinge_frame_x, hinge_knuckle_len);
+    }
 }
 
 if (part == "base") {
