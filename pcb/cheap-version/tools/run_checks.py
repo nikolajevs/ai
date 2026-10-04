@@ -5,7 +5,7 @@ Steps (each prints its own summary; the exit code is 1 when any step fails):
   verify_input_copper.py, verify_led_copper.py, check_return_paths.py, analyze_dcdc_loops.py, export_fab_cheap.py --check.
 KICAD_BIN (default C:\\Program Files\\KiCad\\10.0\\bin) gives kicad-cli and the KiCad Python; CHEAP_PY is a Python with
 numpy, scipy and Pillow for the copper checks (for example a venv: pip install numpy scipy pillow); without it those
-two steps are skipped with a note.
+two steps fail with an actionable note; an incomplete run is not a release pass.
 """
 import json
 import os
@@ -57,7 +57,7 @@ def main():
     step('JLCPCB capabilities (check_fab.py)', r.returncode == 0, last[-1] if last else r.stderr[-200:])
 
     r = run([KPY, str(TOOLS / 'verify_input_copper.py'), BOARD], cwd=str(TOOLS))
-    step('input / PTC copper', 'PASS' in r.stdout, [ln for ln in r.stdout.splitlines() if 'PASS' in ln or 'Error' in ln][-1:][0] if r.stdout.strip() else r.stderr[-200:])
+    step('input / PTC copper', r.returncode == 0 and 'PASS' in r.stdout, [ln for ln in r.stdout.splitlines() if 'PASS' in ln or 'Error' in ln][-1:][0] if r.stdout.strip() else r.stderr[-200:])
 
     export = tmp / 'board.json'
     run([KPY, str(TOOLS / 'export_view.py'), str(export), BOARD])
@@ -66,7 +66,7 @@ def main():
             r = run([NUMPY_PY, str(TOOLS / script), str(export)] + args, cwd=str(TOOLS))
             step(name, r.returncode == 0, r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-200:])
         else:
-            print(f'SKIP  {name}: set CHEAP_PY to a Python with numpy, scipy and Pillow')
+            step(name, False, 'set CHEAP_PY to a Python with numpy, scipy and Pillow')
     r = run([sys.executable, str(TOOLS / 'analyze_dcdc_loops.py'), str(export)], cwd=str(TOOLS))
     step('DC/DC loop estimate', r.returncode == 0, r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-200:])
 

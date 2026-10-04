@@ -104,8 +104,8 @@ def input_power():
              Datasheet="https://www.st.com/resource/en/datasheet/st1s14.pdf", Manufacturer="STMicroelectronics",
              MPN="ST1S14PHR", LCSC="C84130", Source="stock:26"))
     sh.remove_symbol("R906")                                  # no RT pin on the ST1S14
-    part(sh, "R907", value="470k 1%", mpn="0603WAF4703T5E", lcsc="")          # EN2 threshold 1.5 V: on from about 16.5 V
-    part(sh, "R904", value="88.7k 0.1%", mpn="RT0603BRD0788K7L", lcsc="", source="buy: verify MPN on LCSC")  # 12.06 V at VFB 1.222 V
+    part(sh, "R907", value="470k 1%", mpn="0603WAF4703T5E", lcsc="C23178")          # EN2 threshold 1.5 V: on from about 16.5 V
+    part(sh, "R904", value="88.7k 0.1%", mpn="RT0603BRD0788K7L", lcsc="C728599", source="buy")  # 12.06 V at VFB 1.222 V
     use(sh, "R908", R1206_47K)
     use(sh, "C909", dict(value="820u 25V", footprint="Capacitor_SMD:CP_Elec_10x10.5", mpn="EEEFT1E821AP", mfr="Panasonic",
                          lcsc="C178593", source="stock:14"))
@@ -179,7 +179,7 @@ def led_drivers(extra_lib: dict):
     part(sh, ["D711", "D721"], value="SBRT15U100SP5", footprint="GrowBox:Diodes_PowerDI5", mpn="SBRT15U100SP5-13",
          mfr="Diodes Incorporated", lcsc="C2934601", source="stock:8",
          datasheet="https://www.diodes.com/assets/Datasheets/SBRT15U100SP5.pdf")
-    part(sh, "R716", value="0.12 1% 2W 50ppm", mpn="FRM252WFR120TM", lcsc="")   # CH1 80 W (04.10.2026; 0.18 ohm = 53 W)
+    part(sh, "R716", value="0.12 1% 3W 50ppm", mpn="JER2512F3R120", mfr="JIERR", lcsc="C49164917", datasheet="https://datasheet.lcsc.com/datasheet/pdf/02ae4b20613551dea68a63964573e262.pdf")   # CH1 80 W (04.10.2026; 0.18 ohm = 53 W)
     sh.replace_text("CH1: 1.111 A", "CH1: 1.667 A nominal = 80 W at 48 V (panel rated up to 120 W)")
     use(sh, ["C710", "C715", "C725"], C1210_10U50)
     use(sh, ["C711", "C721"], C1206_2U2_50)
@@ -259,7 +259,7 @@ def root():
     use(sh, "C103", C0805_2U2_16)                     # was the BOOT capacitor; now the VIN_A bypass (1 uF or more)
     use(sh, ["C104", "C105"], C0805_22U10)
     use(sh, "R101", R0603_100K)
-    part(sh, "R102", value="31.6k 1%", mpn="0603WAF3162T5E", lcsc="", source="buy: verify MPN on LCSC")   # 3.33 V at VFB 0.8 V
+    part(sh, "R102", value="31.6k 1%", mpn="0603WAF3162T5E", lcsc="C25967", source="buy")   # 3.33 V at VFB 0.8 V
     part(sh, "L101", value="4.7u FXL0630-4R7-M", mpn="FXL0630-4R7-M", lcsc="C167220")  # same 7x6.6 mm package as the 10 uH part
     sh.replace_text("Vout = 0.596", "Vout = 0.8 V x (1 + 100k/31.6k) = 3.33 V (ST1S10 VFB 0.784..0.816 V); dividers 1%.\\n"
                     "ST1S10: 2.5..18 V in, 3 A, synchronous, 900 kHz (SYNC to GND), INH tied to VIN (on), no BOOT.\\n"

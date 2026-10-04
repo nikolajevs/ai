@@ -2381,7 +2381,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C25967"
 			(at 203.2 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -2393,7 +2393,7 @@
 				(justify left)
 			)
 		)
-		(property "Source" "buy: verify MPN on LCSC"
+		(property "Source" "buy"
 			(at 203.2 101.6 0)
 			(effects
 				(font

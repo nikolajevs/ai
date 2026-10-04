@@ -12375,7 +12375,7 @@
 				)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C728599"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -27380,7 +27380,7 @@
 				)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C25967"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -29693,7 +29693,7 @@
 				)
 			)
 		)
-		(property "Value" "0.12 1% 2W 50ppm"
+		(property "Value" "0.12 1% 3W 50ppm"
 			(at 0 2.63 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -29705,7 +29705,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/b47da348e6587de9f1f028172ba2b8ea.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/02ae4b20613551dea68a63964573e262.pdf"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -29739,7 +29739,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "FOJAN"
+		(property "Manufacturer" "JIERR"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -29751,7 +29751,7 @@
 				)
 			)
 		)
-		(property "MPN" "FRM252WFR120TM"
+		(property "MPN" "JER2512F3R120"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -29763,7 +29763,7 @@
 				)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C49164917"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -34218,7 +34218,7 @@
 				)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C23178"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)

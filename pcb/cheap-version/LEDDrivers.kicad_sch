@@ -7240,7 +7240,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.12 1% 2W 50ppm"
+		(property "Value" "0.12 1% 3W 50ppm"
 			(at 448.31 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7263,7 +7263,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/b47da348e6587de9f1f028172ba2b8ea.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/02ae4b20613551dea68a63964573e262.pdf"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7299,7 +7299,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "FOJAN"
+		(property "Manufacturer" "JIERR"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7311,7 +7311,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "FRM252WFR120TM"
+		(property "MPN" "JER2512F3R120"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7323,7 +7323,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C49164917"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7332,6 +7332,16 @@
 				(font
 					(size 1 1)
 				)
+				(justify left)
+			)
+		)
+		(property "Source" "buy"
+			(at 444.5 123.19 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
 				(justify left)
 			)
 		)

@@ -3367,7 +3367,17 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C23178"
+			(at 91.44 111.76 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+				(justify left)
+			)
+		)
+		(property "Source" "buy"
 			(at 91.44 111.76 0)
 			(effects
 				(font
@@ -4060,7 +4070,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C728599"
 			(at 220.98 114.3 0)
 			(effects
 				(font
@@ -4070,7 +4080,7 @@
 				(justify left)
 			)
 		)
-		(property "Source" "buy: verify MPN on LCSC"
+		(property "Source" "buy"
 			(at 220.98 114.3 0)
 			(effects
 				(font
