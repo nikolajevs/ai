@@ -170,9 +170,9 @@ def text_conflict(g, blockers, others=()):
     strokes_ = g.GetEffectiveTextShape()
     if any(p.SHAPE.Collide(shape, strokes_, FMM(SILK_GAP)) for shape, _ in blockers):
         return True
-    bb = g.GetBoundingBox()                     # DRC tests the text box against other silkscreen
-    box = p.SHAPE_RECT(bb.GetLeft(), bb.GetTop(), bb.GetWidth(), bb.GetHeight())
-    return any(layer == g.GetLayer() and p.SHAPE.Collide(shape, box, 0) for shape, layer in others)
+    # DRC compares silkscreen stroke against stroke (a text is not judged by its bounding box: texts 0.3 mm apart pass
+    # although their boxes overlap), with the board's 0.15 mm silk clearance
+    return any(layer == g.GetLayer() and p.SHAPE.Collide(shape, strokes_, FMM(SILK_GAP)) for shape, layer in others)
 
 
 def silk_strokes():
