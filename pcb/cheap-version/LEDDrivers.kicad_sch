@@ -2086,7 +2086,7 @@
 		)
 		(uuid "5b22d8ef-1745-59fd-a5a1-c27e4ab2ce10")
 	)
-	(text "CH1: 1.111 A nominal / panel"
+	(text "CH1: 1.667 A nominal = 80 W at 48 V (panel rated up to 120 W)"
 		(exclude_from_sim no)
 		(at 20.32 80.01 0)
 		(effects
@@ -7240,7 +7240,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.18 1% 2W 50ppm"
+		(property "Value" "0.12 1% 2W 50ppm"
 			(at 448.31 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7311,7 +7311,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "FRM252WFR180TM"
+		(property "MPN" "FRM252WFR120TM"
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -7323,7 +7323,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C48533605"
+		(property "LCSC" ""
 			(at 444.5 123.19 0)
 			(hide yes)
 			(show_name no)

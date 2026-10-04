@@ -10,7 +10,8 @@ Imports pcb/analyze_led_power.py (the PCB_V1 model, unchanged) and overrides the
                 rounded up to 0.35 V + 0.025 ohm, 0.60 V assumed for the output-voltage estimate.
   output MLCCs  unchanged: Murata GRM32EC72A106KE05L (10 uF/100 V X7S, bought as in PCB_V1).
   switches      Infineon BSC146N10LS5 (RDS(on) 14.6 mOhm max at 10 V; only the name is used by the model).
-CH2 keeps the PCB_V1 inductor (SRP1265A-470M).
+CH1 shunt R716 0.12 ohm (04.10.2026, was 0.18): 1.667 A = 80 W at 48 V; CS shunt R715 stays 0.027 ohm (OCP window 8.3..14.1 A
+below the 15 A inductor point). CH2 keeps the PCB_V1 inductor (SRP1265A-470M).
 """
 import argparse
 import sys
@@ -22,7 +23,7 @@ import analyze_led_power as m  # noqa: E402
 SBRT = dict(diode='SBRT15U100SP5', diode_vf=.60, diode_a=.35, diode_b=.025)
 m.SWITCH = 'BSC146N10LS5'
 m.CHANNELS = [
-    dict(n=1, led_r=.18, cs_r=.027, slope_r=1000, l_mpn='DTMSS-27/0.047/15-V',
+    dict(n=1, led_r=.12, cs_r=.027, slope_r=1000, l_mpn='DTMSS-27/0.047/15-V',
          l_bias=.88, dcr=.011, irms=15, isat=15, caps=4, **SBRT),
     dict(n=2, led_r=.43, cs_r=.047, slope_r=2700, l_mpn='SRP1265A-470M',
          l_bias=.80, dcr=.090, irms=6.5, isat=9.5, caps=3, **SBRT),

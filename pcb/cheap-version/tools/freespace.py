@@ -28,6 +28,7 @@ ap.add_argument("--region", default="50,50,150,150")
 ap.add_argument("--res", type=float, default=0.1)
 ap.add_argument("--png")
 ap.add_argument("--width", type=float)
+ap.add_argument("--ignore-zones", action="store_true", help="treat every zone fill as removable (floods such as +3V3 on In2 give way to new copper)")
 args = ap.parse_args()
 
 X0, Y0, X1, Y1 = map(float, args.region.split(","))
@@ -73,7 +74,7 @@ for v in data["vias"]:
     r = v["d"] / 2 / RES
     d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=255)
 for z in data["zones"]:
-    if z["layer"] != layer or z["net"] in (net, "GND"):
+    if args.ignore_zones or z["layer"] != layer or z["net"] in (net, "GND"):
         continue
     for poly in z["polys"]:
         d.polygon([to_px(q) for q in poly["o"]], fill=255)

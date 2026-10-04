@@ -641,7 +641,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Driver_FET:TC4427xOA"
+		(symbol "Driver_FET:UCC27524D"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -658,7 +658,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "TC4427xOA"
+			(property "Value" "UCC27524D"
 				(at 1.27 8.89 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -670,7 +670,7 @@
 				)
 			)
 			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-				(at 0.508 -15.24 0)
+				(at 0 -8.89 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -680,8 +680,8 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://ww1.microchip.com/downloads/en/DeviceDoc/20001422G.pdf"
-				(at 0.508 -13.208 0)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524.pdf"
+				(at 0 -2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -691,18 +691,7 @@
 					)
 				)
 			)
-			(property "Description" "1.5A Dual High-Speed Power MOSFET Drivers, 4.5..18V supply, TTL/CMOS compatible inputs, non-inverting drivers, SOIC-8"
-				(at 0 -11.176 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "TelCom-Semiconductor Microchip ESD push-pull TC427 TC4427EOA TC4427COA TC4427VOA"
+			(property "Description" "Dual 5A MOSFET driver, 4.5V..18V supply, non-inverting, SOIC-8"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -713,7 +702,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "*SO*3.9*4.*P1.27mm*"
+			(property "ki_keywords" "high-speed low-side negative-input-voltage-capability"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -724,10 +713,21 @@
 					)
 				)
 			)
-			(symbol "TC4427xOA_0_1"
+			(property "ki_fp_filters" "*SOIC*3.9x4.9mm*P1.27mm*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "UCC27524D_0_1"
 				(rectangle
-					(start -7.62 -7.62)
-					(end 7.62 7.62)
+					(start -7.62 7.62)
+					(end 7.62 -7.62)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -737,12 +737,11 @@
 					)
 				)
 			)
-			(symbol "TC4427xOA_1_1"
-				(pin no_connect line
-					(at -7.62 0 0)
+			(symbol "UCC27524D_1_1"
+				(pin input line
+					(at -10.16 5.08 0)
 					(length 2.54)
-					(hide yes)
-					(name "NC"
+					(name "ENA"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -760,7 +759,7 @@
 				(pin input line
 					(at -10.16 2.54 0)
 					(length 2.54)
-					(name "IN_A"
+					(name "INA"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -796,7 +795,7 @@
 				(pin input line
 					(at -10.16 -2.54 0)
 					(length 2.54)
-					(name "IN_B"
+					(name "INB"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -814,7 +813,7 @@
 				(pin output line
 					(at 10.16 -2.54 180)
 					(length 2.54)
-					(name "OUT_B"
+					(name "OUTB"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -850,7 +849,7 @@
 				(pin output line
 					(at 10.16 2.54 180)
 					(length 2.54)
-					(name "OUT_A"
+					(name "OUTA"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -865,11 +864,10 @@
 						)
 					)
 				)
-				(pin no_connect line
-					(at 7.62 0 180)
+				(pin input line
+					(at -10.16 -5.08 0)
 					(length 2.54)
-					(hide yes)
-					(name "NC"
+					(name "ENB"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2332,7 +2330,7 @@
 		(uuid b60d9e27-3211-5b7c-88ee-a247243e1089)
 	)
 	(symbol
-		(lib_id "Driver_FET:TC4427xOA")
+		(lib_id "Driver_FET:UCC27524D")
 		(at 88.9 63.5 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2349,7 +2347,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "IRS4427S"
+		(property "Value" "UCC27524ADR"
 			(at 76.2 43.18 0)
 			(effects
 				(font
@@ -2368,7 +2366,7 @@
 				(justify left)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/ucc27524a.pdf"
 			(at 88.9 63.5 0)
 			(effects
 				(font
@@ -2378,7 +2376,7 @@
 				(justify left)
 			)
 		)
-		(property "Manufacturer" "Infineon"
+		(property "Manufacturer" "TI"
 			(at 88.9 63.5 0)
 			(effects
 				(font
@@ -2388,7 +2386,7 @@
 				(justify left)
 			)
 		)
-		(property "MPN" "IRS4427STRPBF"
+		(property "MPN" "UCC27524ADR"
 			(at 88.9 63.5 0)
 			(effects
 				(font
@@ -2398,7 +2396,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C185857"
 			(at 88.9 63.5 0)
 			(effects
 				(font
@@ -2408,7 +2406,7 @@
 				(justify left)
 			)
 		)
-		(property "Source" "stock:11"
+		(property "Source" "buy"
 			(at 88.9 63.5 0)
 			(effects
 				(font
@@ -2451,9 +2449,26 @@
 			)
 		)
 	)
-	(no_connect
-		(at 81.28 63.5)
-		(uuid fb191a92-ca1f-5c23-b55b-5e50d1c54b50)
+	(wire
+		(pts
+			(xy 78.74 58.42) (xy 76.2 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid ca0f09ac-420a-5ac7-9432-df11dd592f17)
+	)
+	(global_label "+12V"
+		(shape bidirectional)
+		(at 76.2 58.42 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 2ff33cdd-0488-518a-befb-a4cbfe68ad3d)
 	)
 	(wire
 		(pts
@@ -2563,9 +2578,26 @@
 		)
 		(uuid c7f96078-6778-5de3-9bdf-e6ff4aa0c110)
 	)
-	(no_connect
-		(at 96.52 63.5)
-		(uuid 7ba0d856-f29e-5921-a624-628905eb2706)
+	(wire
+		(pts
+			(xy 78.74 68.58) (xy 76.2 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0efe366c-fedd-55af-960f-ec65c609dcc4)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 76.2 68.58 180)
+		(effects
+			(font
+				(size 1.0 1.0)
+			)
+			(justify right)
+		)
+		(uuid 220d6695-c239-5682-afed-ad5c852d8042)
 	)
 	(symbol
 		(lib_id "Transistor_FET:Q_NMOS_GDS")

@@ -58,7 +58,7 @@ def load_stock():
 
 # new parts without a snapshot price: a sibling of the same series and size (price indicative)
 PRICE_LIKE = {"0603WAF3162T5E": "0603WAF3163T5E", "0603WAF4703T5E": "0603WAF3163T5E", "RT0603BRD0788K7L": "RT0603BRD0710KL",
-              "FXL0630-4R7-M": "FXL0630-100-M"}
+              "FXL0630-4R7-M": "FXL0630-100-M", "FRM252WFR120TM": "FRM252WFR180TM"}
 
 
 def load_prices():

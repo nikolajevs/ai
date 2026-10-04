@@ -41,8 +41,9 @@ POURS = [
 ]
 # (net, size, [(x, y), ...])
 VIAS = [
-    ('+24V', 'M', [(80, 78.4), (81, 77.4), (82, 76.4), (83, 75.4), (84, 74.4),                # beside the band edge
-                   (81, 78.5), (82, 77.5), (83, 76.5), (84, 75.5), (85, 74.5)]),
+    # beside the band edge, kept 0.2 mm off the C901 pad (JLCDFM: via to pad) and off the pads at y >= 79.5
+    ('+24V', 'M', [(80.0, 78.4), (80.9, 77.5), (81.7, 76.7), (82.5, 76.0), (83.6, 76.0), (84.4, 75.3),
+                   (81.3, 78.5), (82.1, 77.7), (82.9, 77.0), (84.0, 77.0), (84.8, 76.3), (83.1, 78.1)]),
     ('+24V', 'M', [(x, y) for y in (106.4, 108.0) for x in (72.0, 73.3, 74.6, 75.9, 77.2, 78.5)]),  # CH1 feed
     ('+24V', 'M', [(100.0, 104.8), (100.0, 106.0), (100.0, 107.2), (104.6, 104.8), (104.6, 107.6)]),  # CH2 feed
 ]
@@ -91,6 +92,8 @@ def reinforce(board):
             rp.discard(board, t)        # the 2 mm band is now the 'ch1 feed' pour
         elif is_via and net == '+24V' and same(pos_mm(t)[0], 87.3):
             rp.discard(board, t)
+        elif is_via and net == '+24V' and 79.4 <= pos_mm(t)[0] <= 86.6 and 72.8 <= pos_mm(t)[1] <= 79.4:
+            rp.discard(board, t)        # the crossing array (earlier runs used other positions)
         elif is_via and net in ('+24V', 'LED2_OUT'):
             # drop vias of this stage that earlier runs created at the same places
             if any(same(pos_mm(t)[0], x) and same(pos_mm(t)[1], y)

@@ -5,15 +5,15 @@ fs 110/130 kHz; assumed efficiency 85/90%; FB/shunt tolerances;
 L -20% initial plus bias allowance; winding resistance at 100 C.
 
 CH1: DTMSS-27/0.047/15-V, BSC146N10LS5, SBRT15U100SP5; 72 cases; modes CCM
-  ILED max 1.1560 A; Iin estimate max 3.073 A
-  L effective allowance 33.09 uH; Ipeak max 4.727 A; ILrms max 3.218 A
-  IQrms max 2.403 A; IDrms max 2.141 A
+  ILED max 1.7340 A; Iin estimate max 4.609 A
+  L effective allowance 33.09 uH; Ipeak max 6.264 A; ILrms max 4.707 A
+  IQrms max 3.515 A; IDrms max 3.132 A
   CCM subharmonic ratio max 0.175 (<1; typical ramp only)
-  OCP estimate 8.319..14.108 A; minimum paired peak headroom 3.592 A
-  Winding copper loss at 100 C max 0.147 W (core loss NOT included)
-  CS shunt loss max 0.157 W; diode conduction estimate max 0.591 W (reverse/dynamic loss NOT included)
-  Output bank 4 x 10u/100V; C effective allowance 6.444 uF; whole-cycle discharge bound 1.631 Vpp
-  Output-cap RMS screening max 1.653 A total
+  OCP estimate 8.319..14.108 A; minimum paired peak headroom 2.055 A
+  Winding copper loss at 100 C max 0.316 W (core loss NOT included)
+  CS shunt loss max 0.337 W; diode conduction estimate max 0.959 W (reverse/dynamic loss NOT included)
+  Output bank 4 x 10u/100V; C effective allowance 6.444 uF; whole-cycle discharge bound 2.446 Vpp
+  Output-cap RMS screening max 2.376 A total
 
 CH2: SRP1265A-470M, BSC146N10LS5, SBRT15U100SP5; 72 cases; modes DCM
   ILED max 0.4839 A; Iin estimate max 1.286 A
@@ -26,7 +26,7 @@ CH2: SRP1265A-470M, BSC146N10LS5, SBRT15U100SP5; 72 cases; modes DCM
   Output bank 3 x 10u/100V; C effective allowance 4.833 uF; whole-cycle discharge bound 0.910 Vpp
   Output-cap RMS screening max 0.915 A total
 
-Combined LED power at 48 V: nominal 75.66 W; FB/R corner 78.72 W.
+Combined LED power at 48 V: nominal 102.33 W; FB/R corner 106.46 W.
 CH2 sharing is NOT guaranteed. One remaining bar: <= 0.4839 A steady-state.
 Uncovered: faults/startup/OVP, gate delays, ramp tolerances, compensation loop,
 hot saturation and core loss, MLCC bias/temperature/aging interaction, layout.
