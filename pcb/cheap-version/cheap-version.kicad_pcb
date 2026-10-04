@@ -1020,7 +1020,6 @@
 		(property "Reference" "L721"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "3c3b144b-13f0-4935-8422-15480cbcd3bb")
 			(effects
 				(font
@@ -1709,7 +1708,6 @@
 		(property "Reference" "U601"
 			(at 0 0 270)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1d4513f7-d481-4109-8ae8-baa1567af677")
 			(effects
 				(font
@@ -6019,7 +6017,6 @@
 		(property "Reference" "D902"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "40a7e112-b627-493b-b6c0-b2ae89c5bcd2")
 			(effects
 				(font
@@ -7131,14 +7128,13 @@
 		(descr "SMD Crystal FC-135 https://support.epson.biz/td/api/doc_check.php?dl=brief_FC-135R_en.pdf")
 		(tags "SMD SMT Crystal")
 		(property "Reference" "Y301"
-			(at -3.4 -0.1 0)
+			(at 2.506 4.777143 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "f15115f6-e02c-499c-ba7c-fc726833e389")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -8890,7 +8886,6 @@
 		(property "Reference" "Q511"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "218d953f-de4f-45fe-a2dd-083630fbd493")
 			(effects
 				(font
@@ -9402,7 +9397,6 @@
 		(property "Reference" "F301"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5609f186-2473-46ad-a9d1-fe1f7f6d09f6")
 			(effects
 				(font
@@ -10179,7 +10173,6 @@
 		(property "Reference" "Q501"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a9ee5295-2745-475f-a9d6-b05043896c8b")
 			(effects
 				(font
@@ -12622,7 +12615,6 @@
 		(property "Reference" "D901"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a9f06f7a-3223-4dcf-b9f5-3c8daa52070c")
 			(effects
 				(font
@@ -13025,7 +13017,6 @@
 		(property "Reference" "U201"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "174df387-3bd7-456e-b89f-9c0cc73fb0b6")
 			(effects
 				(font
@@ -14384,7 +14375,6 @@
 		(property "Reference" "Q521"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "c8d9bd7d-0ef4-4ff2-a5ca-8ce47e01205e")
 			(effects
 				(font
@@ -19929,7 +19919,6 @@
 		(property "Reference" "D501"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "071a8962-7c93-4eb6-9fe4-4476eb984921")
 			(effects
 				(font
@@ -20642,14 +20631,13 @@
 		(descr "Inductor, Changjiang, FXL0630, 6.45x6.6x2.8mm, (https://www.lcsc.com/datasheet/lcsc_datasheet_2404260921_cjiang--Changjiang-Microelectronics-Tech-FXL0420-2R2-M_C167206.pdf)")
 		(tags "power shielded cjiang fxl")
 		(property "Reference" "L101"
-			(at 0 -4.25 0)
+			(at -6.453334 1.094 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "cf0fa173-fb35-4c2d-a0cc-ed8131c032fe")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -20998,7 +20986,6 @@
 		(property "Reference" "U301"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "1e449b3b-cb1d-4fef-ad55-a4ad7668df0b")
 			(effects
 				(font
@@ -21407,14 +21394,13 @@
 		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "D303"
-			(at 0 -2.7 90)
+			(at -9.031 -2.798572 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "96e127dc-5f5e-479f-8e9a-9710078072c6")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -24816,7 +24802,6 @@
 		(property "Reference" "U710"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "9d55b07a-80ed-4884-9d19-615b110818a9")
 			(effects
 				(font
@@ -25722,7 +25707,6 @@
 		(property "Reference" "D511"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "cc0b2d09-648b-4ed1-9bc9-585ad3256926")
 			(effects
 				(font
@@ -26419,7 +26403,6 @@
 		(property "Reference" "D301"
 			(at 0 0 270)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "43f42fe3-d882-488f-be22-d0c27b0aab3a")
 			(effects
 				(font
@@ -26751,7 +26734,6 @@
 		(property "Reference" "U700"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "aecedde1-1afb-4382-9259-e89114ee96e4")
 			(effects
 				(font
@@ -29348,14 +29330,13 @@
 		(descr "Inductor, Changjiang, FXL0630, 6.45x6.6x2.8mm, (https://www.lcsc.com/datasheet/lcsc_datasheet_2404260921_cjiang--Changjiang-Microelectronics-Tech-FXL0420-2R2-M_C167206.pdf)")
 		(tags "power shielded cjiang fxl")
 		(property "Reference" "L902"
-			(at 0 -4.25 0)
+			(at -0.053334 4.706 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "572aa3d4-8ba3-478a-8fe0-1026aef6563b")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -29872,7 +29853,6 @@
 		(property "Reference" "D521"
 			(at 0 0 180)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5b5cd416-3f9b-422b-9021-67d517458934")
 			(effects
 				(font
@@ -31518,7 +31498,6 @@
 		(property "Reference" "D302"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "b34aa93d-e254-4620-9bd5-7bc9c354cddf")
 			(effects
 				(font
@@ -32757,13 +32736,13 @@
 		(descr "HRO TF-01A microSD (TF) push-push socket, 1.10 mm pitch, 1.85 mm high, card detect pin 9, LCSC C91145 (https://www.lcsc.com/product-detail/C91145.html). Card mouth faces +Y.")
 		(tags "microSD TF card socket push-push HRO TF-01A")
 		(property "Reference" "J401"
-			(at 0 -9.5 90)
+			(at 5.116 -10.480524 0)
 			(layer "F.SilkS")
-			(hide yes)
 			(uuid "cff33dc3-9aa8-4a83-b294-eedd82e36c40")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
+					(thickness 0.2)
 				)
 			)
 		)
@@ -33143,7 +33122,6 @@
 		(property "Reference" "J201"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "a5685c04-8fc2-4f6f-a4fc-90c18b9b4fc5")
 			(effects
 				(font
@@ -34471,7 +34449,6 @@
 		(property "Reference" "D601"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "5368f8dc-7e64-48ca-a620-24fa3c856bc4")
 			(effects
 				(font
@@ -35157,7 +35134,6 @@
 		(property "Reference" "U720"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(hide yes)
 			(uuid "37c0271a-110a-43c0-a911-913da5346560")
 			(effects
 				(font
@@ -36704,7 +36680,6 @@
 			(at 12.4 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
-			(hide yes)
 			(uuid "494e134d-50e7-4e38-a110-18428f8d18c7")
 			(effects
 				(font
