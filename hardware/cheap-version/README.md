@@ -136,6 +136,29 @@ openscad -o stencil/cheap_full_02.stl --export-format binstl stencil/cheap_full_
 openscad -o stencil/cheap_test_02.stl --export-format binstl stencil/cheap_test_02.scad
 ```
 
+Для стенда добавлен трафарет с полем **15 мм по всем четырём сторонам**: [3MF 130,05×130,05 мм](stencil/cheap_full_02_margin15_geometry.3mf), [STL](stencil/cheap_full_02_margin15.stl) и [SCAD](stencil/cheap_full_02_margin15.scad). Поля оставлены пустыми для прижима рамкой; рабочее окно остаётся 100,05×100,05 мм. Генерация:
+
+```text
+python tools/make_stencil.py --scad stencil/cheap_full_02_margin15.scad --expand 0.03 --thickness 0.20 --margin 15
+openscad -o stencil/cheap_full_02_margin15.stl --export-format binstl stencil/cheap_full_02_margin15.scad
+openscad -o stencil/cheap_full_02_margin15_geometry.3mf --export-format 3mf stencil/cheap_full_02_margin15.scad
+```
+
+Если понадобятся поля только слева и справа, генератор поддерживает раздельные размеры: используйте `--margin-x 15 --margin-y 0`.
+
+### Стенд для нанесения пасты
+
+Сделан параметрический двухдетальный стенд: нижняя ванночка и шарнирная прижимная рамка. Нижняя деталь имеет наружный размер около 146×151 мм с учётом шарнира, карман под плату 100,65×100,65 мм и рельеф под нижний держатель CR2032 BT301. Рамка имеет окно 101×101 мм, два отверстия под передние винты M3 и шарнир под штифт Ø3 мм. В первой версии поля трафарета сделаны по 15 мм со всех сторон, чтобы ракель начинал и заканчивал ход за пределами платы.
+
+Файлы для печати: [нижняя часть 3MF](stencil/stencil_jig_base_geometry.3mf), [рамка 3MF](stencil/stencil_jig_frame_geometry.3mf), [нижняя часть STL](stencil/stencil_jig_base.stl), [рамка STL](stencil/stencil_jig_frame.stl) и [параметрический SCAD](stencil/stencil_jig.scad). Превью сборки: [stencil_jig_preview.png](stencil/stencil_jig_preview.png). Экспорт отдельных деталей из OpenSCAD:
+
+```text
+openscad -o stencil/stencil_jig_base.stl --export-format binstl stencil/stencil_jig_base.scad
+openscad -o stencil/stencil_jig_frame.stl --export-format binstl stencil/stencil_jig_frame.scad
+```
+
+Для первой печати стенда достаточно PLA, слоя 0,20 мм, 4 стенок, 25–35% заполнения, без поддержек и с бримом вокруг шарнирных ушек. В рамку можно наклеить тонкую полоску TPU, силикона или каптона: она компенсирует неровность PLA и не даёт пережать трафарет. В нижние карманы устанавливаются два M3-гайки; шарнир лучше собрать на гладком винте или прутке Ø3 мм. Перед серийной печатью нужно проверить посадку реальной платы: зазоры и положение рельефа BT301 вынесены параметрами в начало `stencil_jig.scad`.
+
 | Ref | Артикул | LCSC | Проверенная позиция |
 | --- | --- | --- | --- |
 | R102 | 0603WAF3162T5E | [C25967](https://www.lcsc.com/product-detail/C25967.html) | 31,6 кОм, 1%, 0603 |
