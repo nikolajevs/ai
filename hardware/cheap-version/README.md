@@ -112,6 +112,20 @@ kicad-cli sch export netlist --format kicadxml -o netlist.xml cheap-version.kica
 
 `tools/export_bom.py` по схеме и складу пишет [BOM_cheap1.csv](BOM_cheap1.csv) (72 строки, 160 деталей; без net-tie, контрольных точек и C106 DNP; плюс CR2032; сам предохранитель 10 А для F902 не закупается, у пользователя есть, закупается только держатель) и [BUY_cheap1.csv](BUY_cheap1.csv) (что докупить). Со склада идут 94 детали, докупается 66 деталей в 38 строках. Оценка заказа LCSC с минимальными партиями: **$33,86**, без CR2032, доставки и налогов. Для пяти позиций цены и наличие сверены 04.10.2026; остальные цены — снимок PCB_V1 от 28–30.09.2026, их наличие повторно не проверялось. Дата и ссылка указаны в колонке Note. Цены соседних номиналов больше не используются.
 
+## Экспериментальный FDM-трафарет
+
+Для пробной ручной пайки сделаны [полный STL 100×100 мм](stencil/cheap_full.stl), [полный 3MF](stencil/cheap_full_geometry.3mf) и [тестовый купон 40×40 мм](stencil/cheap_test.stl) под Bambu Lab A1 mini с соплом 0,4 мм и PLA. Купон охватывает плотную область платы около U601 и мелких пассивных компонентов; его лучше напечатать первым. Для прямого открытия в Bambu Studio есть также [3MF купона](stencil/cheap_test_geometry.3mf). Превью: [cheap_test_preview.png](stencil/cheap_test_preview.png).
+
+Это однослойный трафарет толщиной 0,20 мм. Отверстия взяты из `F.Paste`, для FDM они расширены на 0,08 мм и упрощены до прямоугольных контуров. Поэтому это проверка идеи, а не замена лазерному трафарету: сначала нужно проверить купон и количество нанесённой пасты. При печати задать слой 0,20 мм, первый слой 0,20 мм, без поддержек, с плоской ориентацией и бримом; перед печатью проверить слайс в Bambu Studio. Малые перемычки между соседними площадками могут исчезнуть из-за ширины линии 0,4 мм.
+
+SCAD и генератор лежат в [stencil/](stencil/) и [tools/make_stencil.py](tools/make_stencil.py). Повторная генерация:
+
+```text
+python tools/make_stencil.py --scad stencil/cheap_full.scad --test-scad stencil/cheap_test.scad --expand 0.08 --thickness 0.20
+openscad -o stencil/cheap_full.stl --export-format binstl stencil/cheap_full.scad
+openscad -o stencil/cheap_test.stl --export-format binstl stencil/cheap_test.scad
+```
+
 | Ref | Артикул | LCSC | Проверенная позиция |
 | --- | --- | --- | --- |
 | R102 | 0603WAF3162T5E | [C25967](https://www.lcsc.com/product-detail/C25967.html) | 31,6 кОм, 1%, 0603 |
