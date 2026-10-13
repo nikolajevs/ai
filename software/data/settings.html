@@ -15,6 +15,8 @@
             <a href="/" class="btn-nav">← К мониторингу</a>
         </header>
 
+        <div id="save-banner" class="form-ok" role="status" hidden>Настройки сохранены.</div>
+
         <form action="/save-settings" method="POST" id="operation-mode-form" class="mode-selection">
             <label for="operation_mode">Режим</label>
             <select id="operation_mode" name="operation_mode" required>
@@ -28,7 +30,7 @@
             <button type="button" class="tab-btn" data-tab="tab-light" data-modes="growing">Освещение</button>
             <button type="button" class="tab-btn" data-tab="tab-fans" data-modes="growing,drying">Вентиляция</button>
             <button type="button" class="tab-btn" data-tab="tab-watering" data-modes="growing">Полив</button>
-            <button type="button" class="tab-btn" data-tab="tab-heater" data-modes="growing">Обогрев</button>
+            <button type="button" class="tab-btn" data-tab="tab-heater" data-modes="growing,drying">Обогрев</button>
             <button type="button" class="tab-btn" data-tab="tab-network" data-modes="growing,drying">WiFi / Ubidots</button>
             <button type="button" class="tab-btn active" data-tab="tab-general" data-modes="growing,drying">Общее</button>
             <button type="button" class="tab-btn" data-tab="tab-console" data-modes="growing,drying">Консоль</button>
@@ -44,24 +46,31 @@
                 <div id="time-error-banner" class="form-error" style="display: none;">
                     Плата отклонила дату: ожидается формат ГГГГ-ММ-ДДTЧЧ:ММ. Время не изменено.
                 </div>
-                <form action="/set-time" method="POST">
+                <form action="/set-time" method="POST" id="time-form">
+                    <!-- Синхронизация берёт время телефона в момент нажатия, с секундами. Раньше в плату
+                         уходило значение поля, заполненное при открытии страницы, и без секунд. -->
+                    <button type="button" class="btn-action btn-sync" onclick="syncTimeFromBrowser()">Синхронизировать с этим устройством</button>
+                    <div class="form-hint" style="margin: 16px 0 8px;">Или задать вручную:</div>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <input type="datetime-local" id="datetime" name="datetime" required>
-                        <button type="submit" class="btn-action btn-sync">Обновить время RTC</button>
-                        <button type="button" class="btn-action" onclick="setCurrentTime()">Заполнить текущим</button>
+                        <input type="datetime-local" id="datetime" name="datetime" step="1" required style="flex: 1; min-width: 200px;">
+                        <button type="submit" class="btn-action">Установить это время</button>
                     </div>
                 </form>
             </div>
 
             <div class="form-section" data-mode-only="growing">
                 <h3>Гровинг</h3>
+                <div id="date-error-banner" class="form-error" style="display: none;">
+                    Плата отклонила дату начала: ожидается формат ГГГГ-ММ-ДД, год от 2024. Дата не изменена.
+                </div>
                 <form action="/save-settings" method="POST">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Дата начала гровинга</label>
+                            <label for="start_date">Дата начала гровинга</label>
                             <input type="date" id="start_date" name="start_date">
                         </div>
                     </div>
+                    <div class="form-hint" style="margin-bottom: 15px;">Пустая дата — цикл не начат.</div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
             </div>
@@ -106,7 +115,7 @@
                         </div>
                     </div>
                     <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
-                        В Growing вентиляторы управляются температурой круглосуточно: днём используется дневная цель, ночью — ночная. Гистерезис общий. Расписание обогревателя — на вкладке «Обогрев».
+                        В Growing вентиляторы управляются температурой круглосуточно: днём используется дневная цель, ночью — ночная. Гистерезис общий. Пока обогреватель включён, вентиляторы держатся на минимуме, чтобы не выдувать тепло. Расписание обогревателя — на вкладке «Обогрев».
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
@@ -134,7 +143,7 @@
                             <input type="number" step="0.1" min="0.1" max="25" id="drying_hum_band" name="drying_hum_band" required>
                         </div>
                     </div>
-                    <div class="mode-note">Нагреватель поддерживает заданную температуру по термостату. Вентиляторы плавно разгоняются выше целевой влажности и достигают максимума у верхней границы диапазона. При превышении температуры на величину гистерезиса вентиляторы также переходят на максимум. Свет и автополив в режиме Drying выключены.</div>
+                    <div class="mode-note">Нагреватель поддерживает заданную температуру по термостату: включается на гистерезис ниже цели и выключается на гистерезис выше. Если на вкладке «Обогрев» выбрано «Никогда», в сушке он тоже не включается. Вентиляторы плавно разгоняются выше целевой влажности и достигают максимума у верхней границы диапазона. Если температура превысит цель на два гистерезиса, вентиляторы также переходят на максимум. Свет и автополив в режиме Drying выключены.</div>
                     <button type="submit" class="btn-action btn-sync">Сохранить климат сушки</button>
                 </form>
             </div>
@@ -210,13 +219,13 @@
                 <h3>Автополив</h3>
                 <form action="/save-settings" method="POST" id="watering-form">
                     <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 15px;">
-                        <label><input type="checkbox" id="wd_mon"> Пн</label>
-                        <label><input type="checkbox" id="wd_tue"> Вт</label>
-                        <label><input type="checkbox" id="wd_wed"> Ср</label>
-                        <label><input type="checkbox" id="wd_thu"> Чт</label>
-                        <label><input type="checkbox" id="wd_fri"> Пт</label>
-                        <label><input type="checkbox" id="wd_sat"> Сб</label>
-                        <label><input type="checkbox" id="wd_sun"> Вс</label>
+                        <label class="check-label"><input type="checkbox" id="wd_mon"> Пн</label>
+                        <label class="check-label"><input type="checkbox" id="wd_tue"> Вт</label>
+                        <label class="check-label"><input type="checkbox" id="wd_wed"> Ср</label>
+                        <label class="check-label"><input type="checkbox" id="wd_thu"> Чт</label>
+                        <label class="check-label"><input type="checkbox" id="wd_fri"> Пт</label>
+                        <label class="check-label"><input type="checkbox" id="wd_sat"> Сб</label>
+                        <label class="check-label"><input type="checkbox" id="wd_sun"> Вс</label>
                     </div>
                     <input type="hidden" id="watering_days" name="watering_days">
                     <div class="form-grid">
@@ -233,23 +242,26 @@
                             <input type="number" min="1" max="3600" id="watering_duration" name="watering_duration" required>
                         </div>
                     </div>
-                    <label style="display: flex; align-items: center; gap: 8px; margin-top: 15px; cursor: pointer;">
+                    <label class="check-label" style="margin-top: 15px;">
                         <input type="checkbox" id="water_sensor_checkbox">
                         Учитывать датчик уровня воды (не поливать/прервать полив, если воды в баке нет)
                     </label>
                     <input type="hidden" id="water_sensor_enabled" name="water_sensor_enabled" value="0">
+                    <div class="form-hint" style="margin-top: 12px;">
+                        Если плата в назначенное время была без питания или перезагружалась, полив начнётся с опозданием — в пределах 4 часов. Позже пропущенный полив уже не догоняется.
+                    </div>
                     <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить настройки полива</button>
                 </form>
             </div>
         </div>
 
         <!-- ОБОГРЕВ -->
-        <div class="tab-panel" id="tab-heater" data-modes="growing">
+        <div class="tab-panel" id="tab-heater" data-modes="growing,drying">
             <div class="form-section">
                 <h3>Обогрев</h3>
                 <form action="/save-settings" method="POST">
                     <div class="form-group">
-                        <label>Режим работы обогревателя</label>
+                        <label for="heater_mode">Режим работы обогревателя</label>
                         <select id="heater_mode" name="heater_mode" required>
                             <option value="0">Только днём</option>
                             <option value="1">Только ночью</option>
@@ -259,6 +271,9 @@
                     </div>
                     <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
                         Целевая температура (днём и ночью) и гистерезис — на вкладке «Климат».
+                    </div>
+                    <div class="mode-note" data-mode-only="drying">
+                        В режиме Drying нет дня и ночи, поэтому расписание не действует: нагреватель работает по термостату сушки при любом выборе, кроме «Никогда».
                     </div>
                     <button type="submit" class="btn-action btn-sync" style="margin-top: 15px;">Сохранить режим обогрева</button>
                 </form>
@@ -311,7 +326,7 @@
                                 <input type="password" id="wifi_pass" name="wifi_pass" autocomplete="off" minlength="8" maxlength="63" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('wifi_pass')">👁</button>
                             </div>
-                            <label style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--text-muted);">
+                            <label class="check-label muted" style="margin-top: 8px;">
                                 <input type="checkbox" id="wifi_pass_clear" name="wifi_pass_clear" value="1"> Сеть без пароля
                             </label>
                         </div>
@@ -337,7 +352,9 @@
                                 <input type="password" id="ubidots_token" name="ubidots_token" autocomplete="off" maxlength="128" style="flex: 1;">
                                 <button type="button" class="btn-action" onclick="togglePasswordField('ubidots_token')">👁</button>
                             </div>
-                            <label><input type="checkbox" id="ubidots_token_clear" name="ubidots_token_clear" value="1"> Отключить облако: удалить токен</label>
+                            <label class="check-label muted" style="margin-top: 8px;">
+                                <input type="checkbox" id="ubidots_token_clear" name="ubidots_token_clear" value="1"> Отключить облако: удалить токен
+                            </label>
                         </div>
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить Ubidots</button>
@@ -349,7 +366,7 @@
             <div class="analytics-section">
                 <div class="chart-header-row">
                     <div class="chart-title">Serial-консоль платы</div>
-                    <label style="font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                    <label class="check-label muted">
                         <input type="checkbox" id="console-autoscroll" checked> автопрокрутка
                     </label>
                 </div>

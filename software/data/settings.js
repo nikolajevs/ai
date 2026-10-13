@@ -1,6 +1,21 @@
 let csrfToken = "";
-let lastConsoleLength = -1;
+let lastConsoleText = null;
 let consoleInFlight = false;
+let currentMode = '0';        // Режим, сохранённый на плате: к нему возвращаем список при отмене
+let activeTabRestored = false;
+const TAB_STORAGE_KEY = 'gi-settings-tab';
+
+// sessionStorage может быть недоступен (приватный режим, старый браузер) — тогда просто
+// не запоминаем вкладку, а страница работает как раньше
+function readStoredTab() {
+    try { return typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(TAB_STORAGE_KEY) : null; }
+    catch (e) { return null; }
+}
+
+function storeTab(tabId) {
+    try { if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(TAB_STORAGE_KEY, tabId); }
+    catch (e) { /* не критично */ }
+}
 const wateringDayIds = ["wd_mon", "wd_tue", "wd_wed", "wd_thu", "wd_fri", "wd_sat", "wd_sun"];
 
 async function updateConsole() {
@@ -11,8 +26,10 @@ async function updateConsole() {
         const res = await fetch('/api/console');
         if (!res.ok) return;
         const text = await res.text();
-        if (text.length === lastConsoleLength) return;
-        lastConsoleLength = text.length;
+        // Сравниваем сам текст: у заполненного кольцевого буфера длина почти не меняется,
+        // и сравнение по длине пропускало обновления
+        if (text === lastConsoleText) return;
+        lastConsoleText = text;
 
         const el = document.getElementById('serial-console');
         const wasAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
@@ -105,9 +122,21 @@ function showServerErrors() {
     }
     if (errors.includes('time')) {
         document.getElementById('time-error-banner').style.display = 'block';
+        document.querySelector('[data-tab="tab-general"]').click();
     }
-    if (errors.length) {
-        // Убираем ?error=... из адресной строки, чтобы баннер не всплывал повторно при обновлении страницы
+    if (errors.includes('date')) {
+        document.getElementById('date-error-banner').style.display = 'block';
+        document.querySelector('[data-tab="tab-general"]').click();
+    }
+    // ?saved=1 — плата приняла настройки. Раньше после сохранения не было никакого подтверждения.
+    const saved = params.get('saved');
+    if (saved) {
+        const banner = document.getElementById('save-banner');
+        banner.hidden = false;
+        setTimeout(() => { banner.hidden = true; }, 4000);
+    }
+    if (errors.length || saved) {
+        // Убираем параметры из адресной строки, чтобы баннер не всплывал повторно при обновлении страницы
         window.history.replaceState({}, '', window.location.pathname);
     }
 }
@@ -159,11 +188,22 @@ function attachWifiValidation() {
     });
 }
 
-function setCurrentTime() {
+// Местное время этого устройства в формате поля datetime-local: 16 знаков — до минут, 19 — с секундами
+function localIsoTime(length) {
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
-    const localISOTime = (new Date(now - offset)).toISOString().slice(0, 16);
-    document.getElementById('datetime').value = localISOTime;
+    return (new Date(now - offset)).toISOString().slice(0, length);
+}
+
+function setCurrentTime() {
+    document.getElementById('datetime').value = localIsoTime(16);
+}
+
+// Берёт время в момент нажатия и сразу отправляет. Раньше в плату уходило значение поля,
+// заполненное при открытии страницы: провисела страница 5 минут — часы на 5 минут назад.
+function syncTimeFromBrowser() {
+    document.getElementById('datetime').value = localIsoTime(19);
+    document.getElementById('time-form').requestSubmit();
 }
 
 async function loadCurrentSettings() {
@@ -208,6 +248,12 @@ async function loadCurrentSettings() {
         document.getElementById('drying_hum_target').value = data.drying_hum_target;
         document.getElementById('drying_hum_band').value = data.drying_hum_band;
         applySettingsMode(data.operation_mode);
+        if (!activeTabRestored) {
+            // Возвращаемся на вкладку, с которой сохраняли: раньше после любого сохранения
+            // страница открывалась на «Общее»
+            activeTabRestored = true;
+            restoreActiveTab();
+        }
 
         document.getElementById('wifi_ssid').value = data.wifi_ssid;
         document.getElementById('device_label').value = data.device_label;
@@ -216,12 +262,16 @@ async function loadCurrentSettings() {
         setSecretPlaceholder('ubidots_token', data.ubidots_token_set);
         setSecretPlaceholder('ap_pass', data.ap_pass_set);
         
+        // Плата хранит полночь выбранной даты без часового пояса, поэтому и разбираем её как UTC.
+        // С местными getDate()/getMonth() в поясах западнее UTC дата съезжала на день назад.
         if (data.start_time > 0) {
             const d = new Date(data.start_time * 1000);
-            const yyyy = d.getFullYear();
-            const mm = String(d.getMonth() + 1).padStart(2, '0');
-            const dd = String(d.getDate()).padStart(2, '0');
+            const yyyy = d.getUTCFullYear();
+            const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+            const dd = String(d.getUTCDate()).padStart(2, '0');
             document.getElementById('start_date').value = `${yyyy}-${mm}-${dd}`;
+        } else {
+            document.getElementById('start_date').value = '';
         }
         const today = new Date();
         document.getElementById('start_date').max =
@@ -242,8 +292,9 @@ async function loadCurrentSettings() {
 function applySettingsMode(mode) {
     const drying = Number(mode) === 1;
     const modeName = drying ? 'drying' : 'growing';
+    currentMode = drying ? '1' : '0';
     const modeSelect = document.getElementById('operation_mode');
-    if (modeSelect) modeSelect.value = drying ? '1' : '0';
+    if (modeSelect) modeSelect.value = currentMode;
 
     document.querySelectorAll('[data-modes]').forEach(element => {
         if (!element.dataset || !element.dataset.modes) return;
@@ -255,11 +306,31 @@ function applySettingsMode(mode) {
     });
 }
 
+// Смена режима применяется на плате сразу и меняет поведение всего бокса, поэтому
+// спрашиваем подтверждение: список легко переключить случайно колесом мыши или свайпом.
 function initOperationModeSelector() {
     const modeSelect = document.getElementById('operation_mode');
     const modeForm = document.getElementById('operation-mode-form');
     if (!modeSelect || !modeForm) return;
-    modeSelect.addEventListener('change', () => modeForm.requestSubmit());
+    modeSelect.addEventListener('change', () => {
+        const question = modeSelect.value === '1'
+            ? 'Переключить в режим сушки? Свет и автополив выключатся сразу.'
+            : 'Переключить в режим выращивания? Свет и автополив снова пойдут по расписанию.';
+        if (!confirm(question)) {
+            modeSelect.value = currentMode;
+            return;
+        }
+        modeForm.requestSubmit();
+    });
+}
+
+// Открывает вкладку, запомненную до перезагрузки страницы. Если её нет в текущем режиме
+// (например, «Полив» в сушке), остаётся вкладка по умолчанию.
+function restoreActiveTab() {
+    const tabId = readStoredTab();
+    if (!tabId || typeof document.querySelector !== 'function') return;
+    const button = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+    if (button && !button.hidden) button.click();
 }
 
 // ---------- Обслуживание SD-карты ----------
@@ -321,6 +392,7 @@ function initTabs() {
 
             btn.classList.add('active');
             document.getElementById(btn.dataset.tab).classList.add('active');
+            storeTab(btn.dataset.tab);
             if (btn.dataset.tab === 'tab-console') updateConsole();
         });
     });
