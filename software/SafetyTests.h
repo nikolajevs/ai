@@ -21,6 +21,39 @@ static_assert(elapsedMs(29999, 0) < 30000, "pump must run for requested duration
 static_assert(elapsedMs(30000, 0) >= 30000, "pump must stop at deadline");
 static_assert(elapsedMs(0x20, 0xfffffff0) == 48, "millis wrap must be safe");
 
+static_assert(reconcileWateringMark(true, 20000, 20365) == 20000, "a mark from a future clock is pulled back to today");
+static_assert(!wateringDayAllowed(true, 20000, reconcileWateringMark(true, 20000, 20365)), "no repeat on the day of the correction");
+static_assert(wateringDayAllowed(true, 20001, reconcileWateringMark(true, 20000, 20365)), "watering resumes the next day");
+static_assert(reconcileWateringMark(true, 20000, 19999) == 19999, "a normal mark is left alone");
+static_assert(reconcileWateringMark(false, 20000, 20365) == 20365, "an untrusted clock must not rewrite the mark");
+
+// Schedule 08:00 = second 28800 of the day, catch-up window 4 h.
+static_assert(wateringDue(28800, 28800, 0, 14400), "starts at the scheduled second");
+static_assert(wateringDue(28859, 28800, 0, 14400), "still starts at the end of the scheduled minute");
+static_assert(!wateringDue(28799, 28800, 0, 14400), "never starts early");
+static_assert(wateringDue(36000, 28800, 0, 14400), "catches up after a two-hour outage");
+static_assert(!wateringDue(43201, 28800, 0, 14400), "gives up once the window has passed");
+static_assert(!wateringDue(36000, 28800, 36000, 14400), "saving settings two hours later must not start the pump");
+static_assert(wateringDue(28800, 28800, 28700, 14400), "a schedule saved shortly before its time still runs");
+
+constexpr bool debounceRegression() {
+  Debounce level{true, true, 0};
+  debounceUpdate(level, false, 100, 2000);          // The float dips for the first time.
+  if (!level.stable) return false;
+  debounceUpdate(level, false, 1500, 2000);
+  if (!level.stable) return false;                  // Not long enough yet.
+  debounceUpdate(level, true, 1600, 2000);          // It bobs back: a slosh, not an empty tank.
+  debounceUpdate(level, false, 1700, 2000);
+  debounceUpdate(level, false, 3600, 2000);
+  if (!level.stable) return false;                  // The hold restarted at 1700.
+  debounceUpdate(level, false, 3700, 2000);
+  if (level.stable) return false;                   // Held low for 2 s: the tank is empty.
+  debounceUpdate(level, true, 0xfffffff0, 2000);    // Refilled just before millis() wraps.
+  debounceUpdate(level, true, 2000, 2000);
+  return level.stable;
+}
+static_assert(debounceRegression(), "float switch debounce must ignore sloshing and survive millis wrap");
+
 constexpr uint8_t kSensirionCrcExample[2] = {0xBE, 0xEF};
 static_assert(sensirionCrc8(kSensirionCrcExample, 2) == 0x92, "SHT4x CRC must match the datasheet example");
 

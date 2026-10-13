@@ -8,21 +8,22 @@
 </head>
 <body>
     <div class="dashboard">
+        <!-- Три элемента шапки: на телефоне время и кнопка остаются в первой строке,
+             а значки состояния переносятся под них и не выталкивают кнопку за край экрана -->
         <header>
-            <div>
-                <span class="status-badge time-badge" id="box-time">Загрузка</span>
-            </div>
+            <span class="status-badge time-badge" id="box-time">Загрузка</span>
             <div class="header-status">
                 <span id="cycle-str" class="status-badge cycle-badge day-badge" aria-live="polite">
                     <span id="cycle-phase">Загрузка</span>
-                    <span class="cycle-divider" aria-hidden="true">·</span>
+                    <span id="cycle-divider" class="cycle-divider" aria-hidden="true">·</span>
                     <span id="cycle-day">Загрузка</span>
                 </span>
-                <a href="/settings" class="btn-nav">Настройки</a>
+                <a id="clock-warning" href="/settings" class="status-badge offline-badge" hidden></a>
             </div>
+            <a href="/settings" class="btn-nav">Настройки</a>
         </header>
-        
-        <div class="grid">
+
+        <div class="grid" id="live-grid">
             <div class="card">
                 <h3>Датчик КЛИМАТА</h3>
                 <div class="metrics-row">

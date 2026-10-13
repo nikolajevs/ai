@@ -102,11 +102,53 @@ test('Drying settings show the drying profile and hide Growing-only controls', (
   assert.equal(p.modeElements[3].hidden, false);
 });
 
-test('changing operation mode submits immediately without a confirmation step', () => {
+test('changing operation mode asks for confirmation and then submits', () => {
   const p = page();
-  vm.runInContext('initOperationModeSelector()', p.context);
+  const questions = [];
+  p.context.confirm = text => { questions.push(text); return true; };
+  vm.runInContext('applySettingsMode(0); initOperationModeSelector()', p.context);
+  p.fields.get('operation_mode').value = '1';
   p.changeOperationMode();
   assert.equal(p.modeFormSubmits, 1);
+  assert.equal(questions.length, 1);
+  assert.match(questions[0], /сушк/);
+});
+
+test('cancelling the mode change restores the saved mode and does not submit', () => {
+  const p = page();
+  p.context.confirm = () => false;
+  vm.runInContext('applySettingsMode(0); initOperationModeSelector()', p.context);
+  p.fields.get('operation_mode').value = '1';
+  p.changeOperationMode();
+  assert.equal(p.modeFormSubmits, 0);
+  assert.equal(p.fields.get('operation_mode').value, '0');
+});
+
+test('console refreshes when the text changes even if its length stays the same', async () => {
+  const p = page();
+  let body = 'aaaa';
+  p.fields.set('tab-console', {classList: {contains: () => true}});
+  p.fields.set('serial-console', {scrollHeight: 100, scrollTop: 100, clientHeight: 100});
+  p.fields.set('console-autoscroll', {checked: true});
+  p.context.fetch = async () => ({ok: true, text: async () => body});
+
+  await vm.runInContext('updateConsole()', p.context);
+  body = 'bbbb';
+  await vm.runInContext('updateConsole()', p.context);
+  assert.equal(p.fields.get('serial-console').textContent, 'bbbb');
+});
+
+test('start date is shown as stored on the board, independent of the browser time zone', async () => {
+  const p = page();
+  const original = p.context.fetch;
+  p.context.fetch = async (url, options) => {
+    const res = await original(url, options);
+    const data = await res.json();
+    // 2026-10-01 00:00:00 — полночь даты, как её хранит плата
+    return {ok: true, json: async () => ({...data, start_time: 1790812800})};
+  };
+  await vm.runInContext('loadCurrentSettings()', p.context);
+  assert.equal(p.fields.get('start_date').value, '2026-10-01');
 });
 
 test('serial console polls only while its settings tab is active', async () => {

@@ -162,7 +162,6 @@ static State stateShared = {};
 static portMUX_TYPE stateMux = portMUX_INITIALIZER_UNLOCKED;
 static Settings settingsShared = {};
 static portMUX_TYPE settingsMux = portMUX_INITIALIZER_UNLOCKED;
-static std::atomic<bool> dryingModeActive{false};
 
 // --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/console) ---
 #define LOG_BUFFER_SIZE 4096
@@ -289,6 +288,20 @@ uint32_t pump_start_ms = 0;   // Отсчёт длительности поли�
 uint32_t pump_duration_ms = 0;
 uint32_t last_watering_day = 0;    // Защита от повторного срабатывания в тот же день (хранится в NVS)
 
+// Полив, пропущенный из-за отключения питания или перезагрузки, догоняется в течение этого
+// окна. Позже — уже нет: полив среди ночи вместо утреннего хуже, чем пропуск одного дня.
+const uint32_t WATERING_CATCHUP_SEC = 4UL * 3600;
+// Момент (unixtime), с которого действует расписание полива: когда пользователь последний раз
+// менял расписание, режим или часы. Поливы, запланированные раньше, не догоняются — иначе
+// сохранение настроек днём сразу запускало бы насос за утреннее время. После перезагрузки
+// равен 0: тогда пропуск вызван простоем платы, и его как раз нужно догнать.
+uint32_t watering_armed_from = 0;
+
+// Датчик уровня воды с антидребезгом: "воды нет" только после WATER_DEBOUNCE_MS непрерывно.
+// Раньше хватало одного чтения, и колыхание воды при работающем насосе обрывало полив.
+const uint32_t WATER_DEBOUNCE_MS = 2000;
+Debounce water_level = {true, true, 0};
+
 unsigned long last_sht_retry = 0;                  // Когда последний раз пытались восстановить датчик
 const unsigned long SHT_RETRY_INTERVAL_MS = 30000; // Пауза между попытками восстановления, мс
 int sht_recovery_streak = 0;                       // Счётчик подряд успешных попыток восстановления
@@ -351,19 +364,23 @@ bool parseDate(const String &str, int &y, int &m, int &d) {
   return validCalendar(y, m, d, 0, 0, 0);
 }
 
-// "YYYY-MM-DDTHH:MM" — формат, который отдаёт <input type="datetime-local">
+// "YYYY-MM-DDTHH:MM" или "YYYY-MM-DDTHH:MM:SS" — оба варианта отдаёт <input type="datetime-local">.
+// Секунды нужны кнопке синхронизации: без них часы платы отставали до минуты.
 bool parseDateTimeLocal(const String &str, DateTime &out) {
   int y, m, d;
   if (!parseDate(str, y, m, d)) return false;
-  if (str.length() != 16 || str[10] != 'T' || str[13] != ':') return false;
-  for (int i = 11; i < 16; i++) {
-    if (i == 13) continue;
+  const bool withSeconds = str.length() == 19;
+  if ((str.length() != 16 && !withSeconds) || str[10] != 'T' || str[13] != ':') return false;
+  if (withSeconds && str[16] != ':') return false;
+  for (int i = 11; i < (int)str.length(); i++) {
+    if (i == 13 || i == 16) continue;
     if (str[i] < '0' || str[i] > '9') return false;
   }
   int hh = str.substring(11, 13).toInt();
   int mm = str.substring(14, 16).toInt();
-  if (hh > 23 || mm > 59) return false;
-  out = DateTime(y, m, d, hh, mm, 0);
+  int ss = withSeconds ? str.substring(17, 19).toInt() : 0;
+  if (hh > 23 || mm > 59 || ss > 59) return false;
+  out = DateTime(y, m, d, hh, mm, ss);
   return true;
 }
 
@@ -412,7 +429,6 @@ void publishSettings(const Settings &s) {
   portENTER_CRITICAL(&settingsMux);
   memcpy(&settingsShared, &s, sizeof(Settings));
   portEXIT_CRITICAL(&settingsMux);
-  dryingModeActive.store(s.operation_mode == OP_MODE_DRYING, std::memory_order_release);
 }
 
 // =====================================================================================
@@ -707,6 +723,9 @@ void vUbidotsTask(void *pvParameters) {
     }
 
     if (WiFi.status() != WL_CONNECTED) {
+      // Останавливаем поиск сети до следующей попытки. Пока STA сканирует эфир, радио уходит
+      // с канала точки доступа, и веб-интерфейс у подключённого телефона работает с обрывами.
+      WiFi.disconnect();
       logPrintln("[Core 0] Нет связи с роутером — телеметрия пропущена.");
       continue;
     }
@@ -724,8 +743,12 @@ void vUbidotsTask(void *pvParameters) {
 
     if (!cfg.ubidots_token[0] || !cfg.device_label[0]) continue;
     // System UTC for certificate validation; never modifies the local RTC schedule.
-    configTime(0, 0, "pool.ntp.org", "time.cloudflare.com");
-    for (int i = 0; time(nullptr) < 1704067200 && i < 40; ++i) vTaskDelay(pdMS_TO_TICKS(250));
+    // SNTP is (re)started only while the clock is still unset: calling configTime() on every
+    // cycle restarted it each two minutes even after a successful sync.
+    if (time(nullptr) < 1704067200) {
+      configTime(0, 0, "pool.ntp.org", "time.cloudflare.com");
+      for (int i = 0; time(nullptr) < 1704067200 && i < 40; ++i) vTaskDelay(pdMS_TO_TICKS(250));
+    }
     if (time(nullptr) < 1704067200) { logPrintln("[TLS] Waiting for UTC time; telemetry skipped."); continue; }
     WiFiClientSecure client;
     client.setCACert(UBIDOTS_ROOT_CA);
@@ -1023,6 +1046,13 @@ void setup() {
   digitalWrite(PUMP_PIN, LOW);
   pinMode(HEATER_PIN, OUTPUT);
   digitalWrite(HEATER_PIN, LOW);
+  // Лампа и вентиляторы тоже гасятся сразу: ШИМ подключается только в конце setup(), и до
+  // тех пор эти выходы несколько секунд оставались ненастроенными (висели в воздухе).
+  const int pwmPins[] = {LED_PWM_PIN, FAN1_PWM_PIN, FAN2_PWM_PIN};
+  for (int pin : pwmPins) {
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW);
+  }
   Serial.begin(115200);
   // Внутри setup() после инициализации Serial
   #ifdef ESP_IDF_VERSION_VAL
@@ -1146,9 +1176,15 @@ void setup() {
   // Датчик уровня воды: подтяжка к VCC, замыкание на GND = "вода есть".
   // Если у твоего датчика логика обратная (замыкание = "воды нет") — поменяй LOW на HIGH в isWaterAvailable().
   pinMode(WATER_LEVEL_PIN, INPUT_PULLUP);
+  delay(10); // Даём входу установиться: с фильтрующим конденсатором первое чтение иначе ложный LOW
+  const bool waterNow = isWaterAvailable();
+  water_level = {waterNow, waterNow, (uint32_t)millis()};
 
   // AP+STA сразу и навсегда: точка доступа больше не передёргивается задачей телеметрии
   WiFi.mode(WIFI_AP_STA);
+  // К роутеру подключается только задача телеметрии, раз в две минуты. Фоновое
+  // автоподключение при недоступном роутере сканировало эфир непрерывно и мешало точке доступа.
+  WiFi.setAutoReconnect(false);
   WiFi.softAP(cfg.ap_ssid, cfg.ap_pass[0] ? cfg.ap_pass : NULL);
 
   cached_unixtime = getSafeDateTime().unixtime(); // Веб-обработчики читают только этот снимок
@@ -1172,11 +1208,13 @@ void setup() {
 
   server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest *request){
     State st = stateSnapshot();
-    uint32_t start_ts = settingsSnapshot().start_timestamp;
+    Settings cfg = settingsSnapshot();
+    uint32_t start_ts = cfg.start_timestamp;
     DateTime now = getWebDateTime();
     int grow_day = (start_ts > 0 && now.unixtime() >= start_ts) ? ((now.unixtime() - start_ts) / 86400) + 1 : 0;
 
     String json = "{";
+    json += "\"operation_mode\":" + String(cfg.operation_mode) + ","; // Главная показывает режим в шапке
     json += "\"temp\":" + String(st.temp, 2) + ",";
     json += "\"hum\":" + String(st.hum, 2) + ",";
     json += "\"led\":" + String(st.led_pwm) + ",";
@@ -1231,14 +1269,18 @@ void setup() {
     Settings next = prev;
     String rejected = applyFormToSettings(request, next);
 
-    // Дата начала цикла приходит строкой YYYY-MM-DD — в таблицу не укладывается
+    // Дата начала цикла приходит строкой YYYY-MM-DD — в таблицу не укладывается.
+    // Пустое поле сбрасывает цикл в "не начат" (раньше оно вело на голую страницу с ошибкой 400).
     if (request->hasParam("start_date", true)) {
+      String startDate = request->getParam("start_date", true)->value();
+      startDate.trim();
       int y, m, d;
-      if (isValidLogDate(request->getParam("start_date", true)->value()) &&
-          parseDate(request->getParam("start_date", true)->value(), y, m, d)) {
+      if (startDate.length() == 0) {
+        next.start_timestamp = 0;
+      } else if (startDate.length() == 10 && parseDate(startDate, y, m, d)) {
         next.start_timestamp = DateTime(y, m, d, 0, 0, 0).unixtime();
       } else {
-        request->send(400, "text/plain", "Invalid start date"); return;
+        addErrorGroup(rejected, "date");
       }
     }
 
@@ -1251,8 +1293,9 @@ void setup() {
       WiFi.softAP(next.ap_ssid, next.ap_pass[0] ? next.ap_pass : NULL);
     }
 
+    // saved=1 — страница показывает "Настройки сохранены" и остаётся на той же вкладке
     if (rejected.length()) request->redirect("/settings?error=" + rejected);
-    else request->redirect("/settings");
+    else request->redirect("/settings?saved=1");
   });
 
   server.on("/set-time", HTTP_POST, [](AsyncWebServerRequest *request){
@@ -1266,7 +1309,7 @@ void setup() {
       // обращение к I2C с другого ядра, параллельно с опросом SHT4x
       pending_time_set = userTime.unixtime();
     }
-    request->redirect("/settings");
+    request->redirect("/settings?saved=1");
   });
 
   server.on("/api/log", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -1339,9 +1382,10 @@ void setup() {
 
   server.begin();
 
-  ledcAttach(LED_PWM_PIN, PWM_FREQ, PWM_RES);
-  ledcAttach(FAN1_PWM_PIN, PWM_FREQ, PWM_RES);
-  ledcAttach(FAN2_PWM_PIN, PWM_FREQ, PWM_RES);
+  for (int pin : pwmPins) {
+    ledcAttach(pin, PWM_FREQ, PWM_RES);
+    ledcWrite(pin, 0); // Явный ноль до первого расчёта климата
+  }
 }
 
 void loop() {
@@ -1353,6 +1397,7 @@ void loop() {
     logPrintln("[Watering] Pump stopped at deadline.");
   }
   tryRecoverRTC(currentMillis); // Не блокирует: сам ограничивает частоту попыток внутри
+  debounceUpdate(water_level, isWaterAvailable(), currentMillis, WATER_DEBOUNCE_MS);
 
   // Время читаем раз в секунду, а не на каждой итерации loop(): rtc.now() — полноценная
   // транзакция по I2C, и раньше она крутилась тысячи раз в секунду на той же шине,
@@ -1360,13 +1405,24 @@ void loop() {
   // веба вступают в силу не позже чем через секунду, а весь цикл видит одну цельную версию.
   static DateTime now((uint32_t)0);
   static Settings cfg;
+  static bool cfgLoaded = false;
   static unsigned long lastTimeRead = 0;
   if (lastTimeRead == 0 || currentMillis - lastTimeRead >= 1000) {
     lastTimeRead = currentMillis;
     now = getSafeDateTime();
     cached_unixtime = now.unixtime(); // Снимок, который отдают веб-обработчики
-    cfg = settingsSnapshot();
-    if (dryingModeActive.load(std::memory_order_acquire)) {
+
+    Settings fresh = settingsSnapshot();
+    // Пользователь поменял расписание полива или режим: с этого момента расписание действует
+    // заново, а время, прошедшее сегодня раньше, не догоняется (см. watering_armed_from).
+    if (cfgLoaded && (fresh.operation_mode != cfg.operation_mode || fresh.watering_days != cfg.watering_days ||
+                      fresh.watering_hour != cfg.watering_hour || fresh.watering_minute != cfg.watering_minute)) {
+      watering_armed_from = now.unixtime();
+    }
+    cfg = fresh;
+    cfgLoaded = true;
+
+    if (cfg.operation_mode == OP_MODE_DRYING) {
       // Drying всегда выключает полив и свет, даже если они были активны при переключении.
       if (state.pump_active) {
         state.pump_active = false;
@@ -1379,6 +1435,9 @@ void loop() {
       }
     }
   }
+  // Режим берётся только из cfg — той же копии настроек, по которой считается весь цикл.
+  // Раньше рядом жил отдельный атомарный флаг, и до секунды после переключения они расходились.
+  const bool drying_mode = cfg.operation_mode == OP_MODE_DRYING;
 
   // Часы, выставленные из веб-формы, применяем здесь: в I2C ходит только loop()
   uint32_t requested = pending_time_set.exchange(0);
@@ -1396,6 +1455,7 @@ void loop() {
     last_rtc_check_ms = millis();
     now = userTime;
     cached_unixtime = requested;
+    watering_armed_from = requested; // Полив, "пропущенный" по новым часам, не догоняем
     logPrintln("[RTC] Часы выставлены вручную через веб-интерфейс");
   }
 
@@ -1500,7 +1560,6 @@ void loop() {
       float current_min = cfg.temp_target - safe_delta;
       float current_max = cfg.temp_target + safe_delta;
 
-      bool drying_mode = cfg.operation_mode == OP_MODE_DRYING;
       float heater_delta = drying_mode ? max(cfg.drying_temp_delta, 0.1f) : safe_delta;
       // В режиме Growing сохраняется прежний дневной/ночной термостат. В Drying
       // нагреватель независимо от расписания поддерживает отдельную температурную цель.
@@ -1508,8 +1567,12 @@ void loop() {
       float heater_min = heater_target - heater_delta;
       float heater_off_threshold = drying_mode ? heater_target + heater_delta : heater_target;
 
-      bool heater_schedule_ok = drying_mode || cfg.heater_mode == 2 ||
-                                (cfg.heater_mode == 0 && is_day) || (cfg.heater_mode == 1 && !is_day);
+      // "Никогда" (3) запрещает обогрев в любом режиме: раньше Drying этот выбор игнорировал,
+      // и отключить нагреватель на время сушки было нечем. Расписание день/ночь в Drying
+      // не действует — там нет смены дня и ночи.
+      bool heater_schedule_ok = drying_mode ? cfg.heater_mode != 3
+                                            : (cfg.heater_mode == 2 || (cfg.heater_mode == 0 && is_day) ||
+                                               (cfg.heater_mode == 1 && !is_day));
       if (!heater_schedule_ok) {
         state.heater_active = false;
       } else if (!state.heater_active && read_temp <= heater_min) {
@@ -1525,7 +1588,11 @@ void loop() {
         target_led = 0;
         float humidity_min = cfg.drying_hum_target;
         float humidity_max = min(100.0f, humidity_min + max(cfg.drying_hum_band, 0.1f));
-        if (read_temp >= cfg.drying_temp_target + heater_delta ||
+        // Сброс тепла вентиляторами — на два гистерезиса выше цели. Раньше порог совпадал с
+        // порогом выключения нагревателя (цель + гистерезис), и каждый цикл нагрева кончался
+        // тем, что вентиляторы тут же выдували только что набранное тепло.
+        float vent_threshold = cfg.drying_temp_target + 2.0f * heater_delta;
+        if (read_temp >= vent_threshold ||
             (humidity_max > humidity_min && read_hum >= humidity_max)) {
           target_fan1 = pwm_fan1_max;
           target_fan2 = pwm_fan2_max;
@@ -1563,11 +1630,19 @@ void loop() {
           target_fan1 = map(read_temp * 100, fan_min_temp * 100, fan_max_temp * 100, pwm_fan1_min, pwm_fan1_max);
           target_fan2 = map(read_temp * 100, fan_min_temp * 100, fan_max_temp * 100, pwm_fan2_min, pwm_fan2_max);
         }
+
+        // Пока обогреватель греет, вентиляторы держим на минимуме. Иначе на отрезке
+        // "цель − дельта … цель" они разгонялись до половины диапазона и выдували тепло,
+        // которое обогреватель производит: слабый обогреватель мог не выключиться никогда.
+        if (state.heater_active) {
+          target_fan1 = pwm_fan1_min;
+          target_fan2 = pwm_fan2_min;
+        }
       }
     }
 
+    if (drying_mode) target_led = 0; // В сушке свет не включаем и при отказе датчика
     // Страхуемся от выхода за пределы 8-битного ШИМ (map() с кривыми границами это умеет)
-    if (dryingModeActive.load(std::memory_order_acquire)) target_led = 0; // Также не включаем свет при отказе датчика.
     target_led  = clampInt(target_led, 0, 255);
     target_fan1 = clampInt(target_fan1, 0, 255);
     target_fan2 = clampInt(target_fan2, 0, 255);
@@ -1620,10 +1695,20 @@ void loop() {
     int iso_dow = (rtc_dow == 0) ? 6 : rtc_dow - 1;
     uint32_t today_code = now.unixtime() / 86400;
 
-    // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
-    bool water_ok = !cfg.water_sensor_enabled || isWaterAvailable();
+    // Отметка "последний полив" из будущего (часы когда-то стояли неверно, а потом их поправили)
+    // раньше блокировала полив до той самой даты — хоть на год. Сдвигаем её на сегодня:
+    // сегодня повтора не будет, с завтрашнего дня полив идёт как обычно.
+    uint32_t reconciled = reconcileWateringMark(state.clock_trusted, today_code, last_watering_day);
+    if (reconciled != last_watering_day) {
+      last_watering_day = reconciled;
+      preferences.putUInt("last_water", reconciled);
+      logPrintln("[ПОЛИВ] Отметка последнего полива была из будущего — сдвинута на сегодня.");
+    }
 
-    if (dryingModeActive.load(std::memory_order_acquire)) {
+    // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
+    bool water_ok = !cfg.water_sensor_enabled || water_level.stable;
+
+    if (drying_mode) {
       if (state.pump_active) {
         state.pump_active = false;
         digitalWrite(PUMP_PIN, LOW);
@@ -1632,7 +1717,12 @@ void loop() {
       digitalWrite(PUMP_PIN, LOW);
     } else if (!state.pump_active) {
       bool day_enabled = (cfg.watering_days >> iso_dow) & 0x01;
-      if (day_enabled && now.hour() == cfg.watering_hour && now.minute() == cfg.watering_minute && wateringDayAllowed(state.clock_trusted, today_code, last_watering_day)) {
+      // Раньше полив стартовал, только если текущие час и минута равны заданным: стоило плате
+      // в эту минуту быть без питания или перезагружаться — и день оставался без полива.
+      uint32_t scheduled = today_code * 86400UL + (uint32_t)cfg.watering_hour * 3600UL + (uint32_t)cfg.watering_minute * 60UL;
+      if (day_enabled && wateringDue(now.unixtime(), scheduled, watering_armed_from, WATERING_CATCHUP_SEC) &&
+          wateringDayAllowed(state.clock_trusted, today_code, last_watering_day)) {
+        uint32_t late_min = (now.unixtime() - scheduled) / 60;
         // Persist before energizing the pump; reboot during this minute must not repeat it.
         last_watering_day = today_code;
         if (preferences.putUInt("last_water", today_code) != sizeof(uint32_t)) {
@@ -1642,9 +1732,9 @@ void loop() {
           pump_start_ms = millis();
           pump_duration_ms = uint32_t(cfg.watering_duration_sec) * 1000U;
           digitalWrite(PUMP_PIN, HIGH);
-          logPrintln("[ПОЛИВ] Старт автополива");
+          if (late_min > 0) logPrintf("[ПОЛИВ] Старт автополива с опозданием на %u мин (плата была недоступна)\n", (unsigned)late_min);
+          else logPrintln("[ПОЛИВ] Старт автополива");
         } else {
-          last_watering_day = today_code; // Не пробуем каждую секунду до конца минуты — ждём до завтра
           logPrintln("[ПОЛИВ] Пропущен: датчик не видит воду в баке");
         }
       }

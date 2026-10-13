@@ -1,79 +1,122 @@
 let currentSelectedDate = "";
+let deviceDate = "";         // Сегодняшняя дата по часам платы (из /api/status)
+let userPickedDate = false;  // Пользователь сам выбрал в календаре другой день
 let chartPoints = [];
 let chartViewBox = { width: 1000, height: 400 };
 
 let statusInFlight = false;
+let lastStatusOkMs = 0;
+const STATUS_TIMEOUT_MS = 5000;  // Зависший запрос иначе навсегда блокировал следующие опросы
+const STALE_AFTER_MS = 10000;    // Столько без ответа платы — и показания считаются устаревшими
+
+// Без этого панель при потере связи продолжала показывать последние значения как живые
+function setLinkLost(lost) {
+    const grid = document.getElementById('live-grid');
+    if (grid) grid.classList.toggle('stale', lost);
+    const timeEl = document.getElementById('box-time');
+    if (lost) {
+        timeEl.innerText = 'Нет связи';
+        timeEl.className = "status-badge offline-badge";
+    } else {
+        timeEl.className = "status-badge time-badge";
+    }
+}
 
 async function updateStatus() {
     if (statusInFlight || document.hidden) return;
     statusInFlight = true;
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), STATUS_TIMEOUT_MS);
     try {
-        const res = await fetch('/api/status');
-        // 503 — плата не успела отдать когерентный снимок состояния; просто пропускаем тик
-        if (!res.ok) return;
+        const res = await fetch('/api/status', { signal: abort.signal });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        if (data.sht_online) {
-            document.getElementById('t-val').innerHTML = data.temp.toFixed(1) + '<span class="unit">°C</span>';
-            document.getElementById('h-val').innerHTML = data.hum.toFixed(1) + '<span class="unit">%</span>';
-            document.getElementById('sensor-status-badge').style.display = 'none';
-        } else {
-            document.getElementById('t-val').innerHTML = '--:--';
-            document.getElementById('h-val').innerHTML = '--:--';
-            document.getElementById('sensor-status-badge').style.display = 'inline-block';
-        }
-        document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
-        document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
-        document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
-
-        const timeEl = document.getElementById('box-time');
-        timeEl.innerText = data.time;
-        if (!timeEl.classList.contains('status-badge')) {
-            timeEl.className = "status-badge time-badge";
-        }
-
-        const pumpEl = document.getElementById('pump-val');
-        if (data.pump_active) {
-            pumpEl.innerText = 'ВКЛЮЧЕН 💦';
-            pumpEl.style.color = 'var(--warning)';
-        } else {
-            pumpEl.innerText = 'Выключен';
-            pumpEl.style.color = 'var(--text-muted)';
-        }
-
-        const heaterEl = document.getElementById('heater-val');
-        if (data.heater_active) {
-            heaterEl.innerText = 'ВКЛЮЧЕН 🌞';
-            heaterEl.style.color = 'var(--warning)';
-        } else {
-            heaterEl.innerText = 'Выключен';
-            heaterEl.style.color = 'var(--text-muted)';
-        }
-        
-        // Первоначальное выставление даты в календаре, если пользователь её ещё не менял
-        if (!currentSelectedDate) {
-            currentSelectedDate = data.date;
-            const dateInput = document.getElementById('chart-date-selector');
-            if (dateInput) {
-                dateInput.value = data.date;
-                drawSvgChart(); // Запуск отрисовки текущего дня
-            }
-        }
-
-        const cycleEl = document.getElementById('cycle-str');
-        const phaseEl = document.getElementById('cycle-phase');
-        const cycleDayEl = document.getElementById('cycle-day');
-        if (data.is_day) {
-            phaseEl.textContent = '☀️ День';
-            cycleEl.className = "status-badge cycle-badge day-badge";
-        } else {
-            phaseEl.textContent = '🌙 Ночь';
-            cycleEl.className = "status-badge cycle-badge night-badge";
-        }
-        cycleDayEl.textContent = data.grow_day > 0 ? `День цикла: ${data.grow_day}` : 'Цикл не начат';
+        lastStatusOkMs = Date.now();
+        setLinkLost(false);
+        renderStatus(data);
     } catch (e) {
         console.error("Ошибка API:", e);
+        if (Date.now() - lastStatusOkMs > STALE_AFTER_MS) setLinkLost(true);
     } finally {
+        clearTimeout(timer);
         statusInFlight = false;
+    }
+}
+
+function renderStatus(data) {
+    if (data.sht_online) {
+        document.getElementById('t-val').innerHTML = data.temp.toFixed(1) + '<span class="unit">°C</span>';
+        document.getElementById('h-val').innerHTML = data.hum.toFixed(1) + '<span class="unit">%</span>';
+        document.getElementById('sensor-status-badge').style.display = 'none';
+    } else {
+        document.getElementById('t-val').innerHTML = '--:--';
+        document.getElementById('h-val').innerHTML = '--:--';
+        document.getElementById('sensor-status-badge').style.display = 'inline-block';
+    }
+    document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
+    document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
+    document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
+
+    document.getElementById('box-time').innerText = data.time;
+
+    const pumpEl = document.getElementById('pump-val');
+    if (data.pump_active) {
+        pumpEl.innerText = 'ВКЛЮЧЕН 💦';
+        pumpEl.style.color = 'var(--warning)';
+    } else {
+        pumpEl.innerText = 'Выключен';
+        pumpEl.style.color = 'var(--text-muted)';
+    }
+
+    const heaterEl = document.getElementById('heater-val');
+    if (data.heater_active) {
+        heaterEl.innerText = 'ВКЛЮЧЕН 🌞';
+        heaterEl.style.color = 'var(--warning)';
+    } else {
+        heaterEl.innerText = 'Выключен';
+        heaterEl.style.color = 'var(--text-muted)';
+    }
+    
+    // График следует за сегодняшним днём платы, пока пользователь сам не выбрал другой:
+    // и при первой загрузке, и когда на плате наступила полночь
+    deviceDate = data.date;
+    if (!userPickedDate && currentSelectedDate !== data.date) {
+        currentSelectedDate = data.date;
+        const dateInput = document.getElementById('chart-date-selector');
+        if (dateInput) dateInput.value = data.date;
+        drawSvgChart();
+    }
+
+    // В сушке нет ни дня с ночью, ни цикла выращивания — раньше шапка всё равно
+    // показывала "День · День цикла: N", и понять по главной, что идёт сушка, было нельзя
+    const drying = data.operation_mode === 1;
+    const cycleEl = document.getElementById('cycle-str');
+    const phaseEl = document.getElementById('cycle-phase');
+    const cycleDayEl = document.getElementById('cycle-day');
+    if (drying) {
+        phaseEl.textContent = '🍂 Сушка';
+        cycleEl.className = "status-badge cycle-badge drying-badge";
+    } else if (data.is_day) {
+        phaseEl.textContent = '☀️ День';
+        cycleEl.className = "status-badge cycle-badge day-badge";
+    } else {
+        phaseEl.textContent = '🌙 Ночь';
+        cycleEl.className = "status-badge cycle-badge night-badge";
+    }
+    document.getElementById('cycle-divider').hidden = drying;
+    cycleDayEl.hidden = drying;
+    cycleDayEl.textContent = data.grow_day > 0 ? `День цикла: ${data.grow_day}` : 'Цикл не начат';
+
+    // Без доверенных часов прошивка не поливает — и раньше нигде об этом не сообщала
+    const warnEl = document.getElementById('clock-warning');
+    if (!data.clock_trusted) {
+        warnEl.textContent = drying ? 'Часы не выставлены' : 'Часы не выставлены — полив выключен';
+        warnEl.hidden = false;
+    } else if (!data.rtc_online) {
+        warnEl.textContent = 'RTC не отвечает — время по таймеру';
+        warnEl.hidden = false;
+    } else {
+        warnEl.hidden = true;
     }
 }
 
@@ -100,14 +143,22 @@ async function drawSvgChart() {
 
         for (let i = 0; i < dataLines.length; i += step) {
             const cols = dataLines[i].split(';');
-            if (cols.length >= 3) {
-                // Извлекаем "HH:MM" из полной метки времени YYYY-MM-DDTHH:MM:SS
-                const timePart = cols[0].split('T')[1]?.substring(0, 5) || "--:--";
-                data.push({ time: timePart, temp: parseFloat(cols[1]), hum: parseFloat(cols[2]) });
-            }
+            if (cols.length < 3) continue;
+            // Строки, записанные при отказавшем датчике (sht_ok = 0), хранят последнее старое
+            // значение — на графике оно выглядело бы как настоящее измерение
+            if (cols.length >= 7 && cols[6].trim() === '0') continue;
+            const temp = parseFloat(cols[1]), hum = parseFloat(cols[2]);
+            if (!Number.isFinite(temp) || !Number.isFinite(hum)) continue;
+            // Извлекаем "HH:MM" из полной метки времени YYYY-MM-DDTHH:MM:SS
+            const timePart = cols[0].split('T')[1]?.substring(0, 5) || "--:--";
+            data.push({ time: timePart, temp, hum });
         }
-        
-        if (data.length === 0) return;
+
+        if (data.length === 0) {
+            document.getElementById('svgChart').innerHTML = `<text x="500" y="200" fill="var(--text-muted)" text-anchor="middle" font-size="16">Нет записей лога за выбранный день</text>`;
+            chartPoints = [];
+            return;
+        }
 
         const width = 1000, height = 400, padding = { top: 40, right: 60, bottom: 40, left: 60 };
         const chartWidth = width - padding.left - padding.right, chartHeight = height - padding.top - padding.bottom;
@@ -116,7 +167,11 @@ async function drawSvgChart() {
         const minTemp = Math.floor(Math.min(...temps) - 1), maxTemp = Math.ceil(Math.max(...temps) + 1);
         const minHum = Math.floor(Math.min(...hums) - 5), maxHum = Math.ceil(Math.max(...hums) + 5);
         
-        const getX = (index) => padding.left + (index / (data.length - 1)) * chartWidth;
+        // Единственная точка (первая запись за день) ставится по центру: деление на
+        // (длина − 1) давало NaN, и график не рисовался до появления второй записи
+        const getX = (index) => data.length > 1
+            ? padding.left + (index / (data.length - 1)) * chartWidth
+            : padding.left + chartWidth / 2;
         const getYTemp = (val) => padding.top + chartHeight - ((val - minTemp) / (maxTemp - minTemp)) * chartHeight;
         const fillYHum = (val) => padding.top + chartHeight - ((val - minHum) / (maxHum - minHum)) * chartHeight;
         
@@ -144,6 +199,11 @@ async function drawSvgChart() {
         }
         
         svgContent += `<path class="line-temp" d="${tempPath}" /><path class="line-hum" d="${humPath}" />`;
+        if (data.length === 1) {
+            // Линия из одной точки не видна — рисуем сами точки
+            svgContent += `<circle cx="${getX(0)}" cy="${getYTemp(data[0].temp)}" r="5" fill="var(--danger)" />`;
+            svgContent += `<circle cx="${getX(0)}" cy="${fillYHum(data[0].hum)}" r="5" fill="var(--primary)" />`;
+        }
 
         // Элементы наведения (изначально скрыты через opacity в CSS)
         svgContent += `<line id="hoverLine" class="hover-line" x1="0" y1="${padding.top}" x2="0" y2="${height - padding.bottom}" />`;
@@ -169,7 +229,9 @@ function handleChartHover(e) {
     const rect = svg.getBoundingClientRect();
     const scaleX = chartViewBox.width / rect.width;
 
-    const mouseXsvg = (e.clientX - rect.left) * scaleX;
+    // На телефоне координата приходит в touches, а не в самом событии
+    const clientX = e.touches && e.touches.length ? e.touches[0].clientX : e.clientX;
+    const mouseXsvg = (clientX - rect.left) * scaleX;
 
     // Ищем ближайшую по X точку данных
     let nearest = chartPoints[0], minDist = Infinity;
@@ -209,20 +271,24 @@ function handleChartLeave() {
 
 document.getElementById('svgChart').addEventListener('mousemove', handleChartHover);
 document.getElementById('svgChart').addEventListener('mouseleave', handleChartLeave);
+// Палец: подсказка по точке появляется при касании и ведётся при движении по графику
+document.getElementById('svgChart').addEventListener('touchstart', handleChartHover, { passive: true });
+document.getElementById('svgChart').addEventListener('touchmove', handleChartHover, { passive: true });
 
 // Слушатель ручного выбора даты в календаре
 document.getElementById('chart-date-selector').addEventListener('change', (e) => {
     currentSelectedDate = e.target.value;
+    userPickedDate = currentSelectedDate !== deviceDate; // Выбрали сегодня — снова следуем за платой
     drawSvgChart();
 });
 
 setInterval(updateStatus, 3000);
-updateStatus(); 
+updateStatus();
 
-// Автоматически раз в 5 минут обновляем текущий график, если смотрим сегодняшний день
+// Раз в 5 минут обновляем график, если смотрим сегодняшний день. "Сегодня" — по часам платы:
+// сравнение с UTC-датой браузера не срабатывало первые часы суток (в UTC ещё "вчера").
 setInterval(() => {
-    const todayStr = new Date().toISOString().split('T')[0];
-    if (currentSelectedDate === todayStr) {
+    if (currentSelectedDate && currentSelectedDate === deviceDate) {
         drawSvgChart();
     }
 }, 300000);
