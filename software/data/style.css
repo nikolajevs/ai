@@ -207,6 +207,14 @@ select { appearance: none; cursor: pointer; }
 .tab-panel.active { display: block; }
 [hidden] { display: none !important; }
 
-.mode-selection { margin-bottom: 20px; }
-.mode-submit { align-self: end; }
-.mode-note { color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-top: 10px; }
+.mode-selection {
+    display: flex; align-items: center; gap: 12px;
+    width: min(100%, 360px); margin: 0 0 18px auto;
+}
+.mode-selection label { white-space: nowrap; }
+.mode-selection select { width: auto; min-width: 0; flex: 1; padding: 9px 12px; }
+
+@media (max-width: 600px) {
+    .mode-selection { width: 100%; margin-bottom: 14px; }
+    .mode-selection select { font-size: 16px; }
+}

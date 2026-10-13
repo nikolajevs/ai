@@ -253,13 +253,13 @@ function applySettingsMode(mode) {
         if (!element.dataset || !element.dataset.modeOnly) return;
         element.hidden = element.dataset.modeOnly !== modeName;
     });
+}
 
-    const note = document.getElementById('operation-mode-note');
-    if (note) {
-        note.textContent = drying
-            ? 'Drying: климатические настройки сушки. Свет и полив принудительно выключены.'
-            : 'Growing: профиль выращивания с расписанием света и автополивом.';
-    }
+function initOperationModeSelector() {
+    const modeSelect = document.getElementById('operation_mode');
+    const modeForm = document.getElementById('operation-mode-form');
+    if (!modeSelect || !modeForm) return;
+    modeSelect.addEventListener('change', () => modeForm.requestSubmit());
 }
 
 // ---------- Обслуживание SD-карты ----------
@@ -336,6 +336,7 @@ window.onload = () => {
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
     document.getElementById('watering-form').addEventListener('submit', packWaterSensor);
     document.getElementById('light-form').addEventListener('submit', packLedTimes);
+    initOperationModeSelector();
     initTabs();
     setInterval(updateConsole, 3000);
     showServerErrors();
