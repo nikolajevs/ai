@@ -10,6 +10,12 @@ function page() {
     inputs: [], querySelector() { return this.inputs[0]; },
     appendChild(input) { this.inputs.push(input); }
   }));
+  const modeElements = [
+    {dataset: {modes: 'growing,drying'}, hidden: false},
+    {dataset: {modes: 'growing'}, hidden: false},
+    {dataset: {modeOnly: 'growing'}, hidden: false},
+    {dataset: {modeOnly: 'drying'}, hidden: false}
+  ];
   const calls = [], alerts = [];
   const context = vm.createContext({
     console, URLSearchParams, Date,
@@ -19,7 +25,11 @@ function page() {
         if (!fields.has(id)) fields.set(id, {value: 'previous', style: {}});
         return fields.get(id);
       },
-      querySelectorAll() { return forms; },
+      querySelectorAll(selector) {
+        if (selector === '[data-modes]') return modeElements.slice(0, 2);
+        if (selector === '[data-mode-only]') return modeElements.slice(2);
+        return forms;
+      },
       createElement() { return {}; }
     },
     confirm: () => true,
@@ -27,19 +37,24 @@ function page() {
     fetch: async (url, options) => {
       calls.push({url, options});
       return {ok: true, json: async () => ({csrf_token: 'random-per-boot-token',
+        operation_mode: 0, drying_temp_target: 18, drying_temp_delta: 0.5,
+        drying_hum_target: 55, drying_hum_band: 5,
         wifi_ssid: 'Box"\\Lab', ap_ssid: 'Private AP', device_label: 'box',
         led_on_hour: 6, led_on_minute: 0, led_off_hour: 18, led_off_minute: 0,
         watering_days: 0, start_time: 0})};
     }
   });
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../software/data/settings.js'), 'utf8'), context);
-  return {context, fields, forms, calls, alerts};
+  return {context, fields, forms, modeElements, calls, alerts};
 }
 
 test('settings keep secrets empty, preserve special characters and attach CSRF to every form', async () => {
   const p = page();
   await vm.runInContext('loadCurrentSettings()', p.context);
   assert.equal(p.fields.get('wifi_ssid').value, 'Box"\\Lab');
+  assert.equal(p.fields.get('operation_mode').value, '0');
+  assert.equal(p.fields.get('drying_temp_target').value, 18);
+  assert.equal(p.fields.get('drying_hum_target').value, 55);
   for (const name of ['wifi_pass', 'ap_pass', 'ubidots_token']) assert.equal(p.fields.get(name).value, '');
   for (const form of p.forms) {
     assert.equal(form.inputs[0].name, 'csrf_token');
@@ -64,4 +79,36 @@ test('clear logs uses authenticated same-origin POST with CSRF', async () => {
   const request = p.calls.find(c => c.url === '/api/clearlogs');
   assert.equal(request.options.method, 'POST');
   assert.equal(request.options.headers['X-CSRF-Token'], 'random-per-boot-token');
+});
+
+test('Drying settings show the drying profile and hide Growing-only controls', () => {
+  const p = page();
+  vm.runInContext('applySettingsMode(1)', p.context);
+  assert.equal(p.fields.get('operation_mode').value, '1');
+  assert.equal(p.modeElements[0].hidden, false);
+  assert.equal(p.modeElements[1].hidden, true);
+  assert.equal(p.modeElements[2].hidden, true);
+  assert.equal(p.modeElements[3].hidden, false);
+  assert.match(p.fields.get('operation-mode-note').textContent, /свет и полив принудительно выключены/i);
+});
+
+test('serial console polls only while its settings tab is active', async () => {
+  const p = page();
+  let active = false;
+  let requests = 0;
+  p.fields.set('tab-console', {classList: {contains: () => active}});
+  p.fields.set('serial-console', {scrollHeight: 100, scrollTop: 100, clientHeight: 100});
+  p.fields.set('console-autoscroll', {checked: true});
+  p.context.fetch = async () => {
+    requests++;
+    return {ok: true, text: async () => 'board log'};
+  };
+
+  await vm.runInContext('updateConsole()', p.context);
+  assert.equal(requests, 0);
+
+  active = true;
+  await vm.runInContext('updateConsole()', p.context);
+  assert.equal(requests, 1);
+  assert.equal(p.fields.get('serial-console').textContent, 'board log');
 });

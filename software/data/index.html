@@ -13,7 +13,11 @@
                 <span class="status-badge time-badge" id="box-time">Загрузка</span>
             </div>
             <div class="header-status">
-                <span id="cycle-str" class="status-badge day-badge">Загрузка</span>
+                <span id="cycle-str" class="status-badge cycle-badge day-badge" aria-live="polite">
+                    <span id="cycle-phase">Загрузка</span>
+                    <span class="cycle-divider" aria-hidden="true">·</span>
+                    <span id="cycle-day">Загрузка</span>
+                </span>
                 <a href="/settings" class="btn-nav">Настройки</a>
             </div>
         </header>
@@ -81,15 +85,6 @@
             </div>
         </div>
 
-        <div class="analytics-section">
-            <div class="chart-header-row">
-                <div class="chart-title">Консоль (Serial.print с платы)</div>
-                <label style="font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                    <input type="checkbox" id="console-autoscroll" checked> автопрокрутка
-                </label>
-            </div>
-            <pre id="serial-console" class="serial-console">Загрузка лога...</pre>
-        </div>
     </div>
     <script src="/script.js"></script>
 </body>

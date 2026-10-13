@@ -2,39 +2,7 @@ let currentSelectedDate = "";
 let chartPoints = [];
 let chartViewBox = { width: 1000, height: 400 };
 
-let lastConsoleLength = -1;
-
-// Флаги "запрос в полёте": на медленной точке доступа опрос раз в 3 секунды успевал
-// накопить очередь из десятков незавершённых запросов к плате
-let consoleInFlight = false;
 let statusInFlight = false;
-
-async function updateConsole() {
-    if (consoleInFlight || document.hidden) return;
-    consoleInFlight = true;
-    try {
-        const res = await fetch('/api/console');
-        if (!res.ok) return;
-        const text = await res.text();
-        if (text.length === lastConsoleLength) return; // Ничего нового — не дёргаем DOM зря
-        lastConsoleLength = text.length;
-
-        const el = document.getElementById('serial-console');
-        const autoscroll = document.getElementById('console-autoscroll').checked;
-        // Автопрокрутка срабатывает, только если пользователь и так был внизу (не мешаем читать историю)
-        const wasAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
-
-        el.textContent = text.length ? text : "(лог пуст)";
-
-        if (autoscroll && wasAtBottom) {
-            el.scrollTop = el.scrollHeight;
-        }
-    } catch (e) {
-        // Тихо игнорируем — не хотим спамить ошибками поверх самой консоли логов
-    } finally {
-        consoleInFlight = false;
-    }
-}
 
 async function updateStatus() {
     if (statusInFlight || document.hidden) return;
@@ -92,18 +60,16 @@ async function updateStatus() {
         }
 
         const cycleEl = document.getElementById('cycle-str');
-        
-        if (data.grow_day > 0) {
-            cycleEl.innerText = `ДЕНЬ: ${data.grow_day}`;
+        const phaseEl = document.getElementById('cycle-phase');
+        const cycleDayEl = document.getElementById('cycle-day');
+        if (data.is_day) {
+            phaseEl.textContent = '☀️ День';
+            cycleEl.className = "status-badge cycle-badge day-badge";
         } else {
-            cycleEl.innerText = `ЦИКЛ НЕ НАЧАТ`;
+            phaseEl.textContent = '🌙 Ночь';
+            cycleEl.className = "status-badge cycle-badge night-badge";
         }
-        
-        if(data.is_day) {
-            cycleEl.className = "status-badge day-badge";
-        } else {
-            cycleEl.className = "status-badge night-badge";
-        }
+        cycleDayEl.textContent = data.grow_day > 0 ? `День цикла: ${data.grow_day}` : 'Цикл не начат';
     } catch (e) {
         console.error("Ошибка API:", e);
     } finally {
@@ -252,9 +218,6 @@ document.getElementById('chart-date-selector').addEventListener('change', (e) =>
 
 setInterval(updateStatus, 3000);
 updateStatus(); 
-
-setInterval(updateConsole, 3000);
-updateConsole();
 
 // Автоматически раз в 5 минут обновляем текущий график, если смотрим сегодняшний день
 setInterval(() => {

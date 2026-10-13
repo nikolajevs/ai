@@ -1,5 +1,32 @@
 let csrfToken = "";
+let lastConsoleLength = -1;
+let consoleInFlight = false;
 const wateringDayIds = ["wd_mon", "wd_tue", "wd_wed", "wd_thu", "wd_fri", "wd_sat", "wd_sun"];
+
+async function updateConsole() {
+    const panel = document.getElementById('tab-console');
+    if (consoleInFlight || document.hidden || !panel.classList.contains('active')) return;
+    consoleInFlight = true;
+    try {
+        const res = await fetch('/api/console');
+        if (!res.ok) return;
+        const text = await res.text();
+        if (text.length === lastConsoleLength) return;
+        lastConsoleLength = text.length;
+
+        const el = document.getElementById('serial-console');
+        const wasAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
+        el.textContent = text.length ? text : '(лог пуст)';
+
+        if (document.getElementById('console-autoscroll').checked && wasAtBottom) {
+            el.scrollTop = el.scrollHeight;
+        }
+    } catch (e) {
+        // Тихо игнорируем временные ошибки связи с платой.
+    } finally {
+        consoleInFlight = false;
+    }
+}
 
 function packWateringDays() {
     let mask = 0;
@@ -159,7 +186,6 @@ async function loadCurrentSettings() {
 
         document.getElementById('temp_target').value = data.temp_target;
         document.getElementById('temp_delta').value = data.temp_delta;
-        document.getElementById('max_hum_night').value = data.max_hum_night;
         document.getElementById('led_on_time').value = formatTime(data.led_on_hour, data.led_on_minute);
         document.getElementById('led_off_time').value = formatTime(data.led_off_hour, data.led_off_minute);
         document.getElementById('fan1_min_limit').value = data.fan1_min_limit;
@@ -168,9 +194,6 @@ async function loadCurrentSettings() {
         document.getElementById('fan2_max_limit').value = data.fan2_max_limit;
         document.getElementById('led_min_limit').value = data.led_min_limit; 
         document.getElementById('led_max_limit').value = data.led_max_limit;
-        document.getElementById('min_hum_night').value = data.min_hum_night;
-        document.getElementById('fan_night_min_limit').value = data.fan_night_min_limit;
-        document.getElementById('fan_night_max_limit').value = data.fan_night_max_limit;
         document.getElementById('rtc-time-label').innerText = data.rtc_time;
 
         document.getElementById('watering_hour').value = data.watering_hour;
@@ -180,6 +203,11 @@ async function loadCurrentSettings() {
         document.getElementById('water_sensor_checkbox').checked = !!data.water_sensor_enabled;
         document.getElementById('heater_mode').value = data.heater_mode;
         document.getElementById('temp_target_night').value = data.temp_target_night;
+        document.getElementById('drying_temp_target').value = data.drying_temp_target;
+        document.getElementById('drying_temp_delta').value = data.drying_temp_delta;
+        document.getElementById('drying_hum_target').value = data.drying_hum_target;
+        document.getElementById('drying_hum_band').value = data.drying_hum_band;
+        applySettingsMode(data.operation_mode);
 
         document.getElementById('wifi_ssid').value = data.wifi_ssid;
         document.getElementById('device_label').value = data.device_label;
@@ -208,6 +236,29 @@ async function loadCurrentSettings() {
     } catch (e) {
         console.error("Ошибка загрузки настроек:", e);
         document.getElementById('rtc-time-label').innerText = "Ошибка связи";
+    }
+}
+
+function applySettingsMode(mode) {
+    const drying = Number(mode) === 1;
+    const modeName = drying ? 'drying' : 'growing';
+    const modeSelect = document.getElementById('operation_mode');
+    if (modeSelect) modeSelect.value = drying ? '1' : '0';
+
+    document.querySelectorAll('[data-modes]').forEach(element => {
+        if (!element.dataset || !element.dataset.modes) return;
+        element.hidden = !element.dataset.modes.split(',').includes(modeName);
+    });
+    document.querySelectorAll('[data-mode-only]').forEach(element => {
+        if (!element.dataset || !element.dataset.modeOnly) return;
+        element.hidden = element.dataset.modeOnly !== modeName;
+    });
+
+    const note = document.getElementById('operation-mode-note');
+    if (note) {
+        note.textContent = drying
+            ? 'Drying: климатические настройки сушки. Свет и полив принудительно выключены.'
+            : 'Growing: профиль выращивания с расписанием света и автополивом.';
     }
 }
 
@@ -270,6 +321,7 @@ function initTabs() {
 
             btn.classList.add('active');
             document.getElementById(btn.dataset.tab).classList.add('active');
+            if (btn.dataset.tab === 'tab-console') updateConsole();
         });
     });
 }
@@ -285,11 +337,10 @@ window.onload = () => {
     document.getElementById('watering-form').addEventListener('submit', packWaterSensor);
     document.getElementById('light-form').addEventListener('submit', packLedTimes);
     initTabs();
+    setInterval(updateConsole, 3000);
     showServerErrors();
 
-    attachMinMaxValidation('climate-form', 'min_hum_night', 'max_hum_night', 'climate-error-banner', 'Ночная влажность (нижний/верхний предел)');
     attachMinMaxValidation('light-form', 'led_min_limit', 'led_max_limit', 'light-error-banner', 'Мощность лампы (мин/макс)');
-    attachMinMaxValidation('fans-night-form', 'fan_night_min_limit', 'fan_night_max_limit', 'fans-night-error-banner', 'Ночная вентиляция (мин/макс)');
     attachWifiValidation();
     attachClearPassToggles();
 
