@@ -72,12 +72,19 @@ String csrf_token;
 // автоматические прототипы функций именно туда, и типы из их сигнатур должны быть известны.
 
 struct Settings {
+  // Профиль управления: 0 = выращивание, 1 = сушка
+  int operation_mode;
+
   // Климат
-  float temp_target;        // Целевая температура дня, °C (от неё считаются лампа и вентиляторы)
-  float temp_delta;         // Полуширина рабочего диапазона и гистерезис обогрева, °C
-  float temp_target_night;  // Цель обогревателя ночью, °C (гистерезис temp_delta общий)
-  float min_hum_night;      // Ночью ниже этой влажности вентиляторы держат минимум, %
-  float max_hum_night;      // ...а выше этой — максимум, %
+  float temp_target;        // Дневная цель: лампа и вентиляторы по температуре
+  float temp_delta;         // Ширина температурного диапазона и порог включения обогрева в Growing, °C
+  float temp_target_night;  // Ночная цель для обогрева и вентиляторов, °C
+
+  // Отдельный климатический профиль сушки
+  float drying_temp_target;
+  float drying_temp_delta;
+  float drying_hum_target;
+  float drying_hum_band;
 
   // Свет
   int led_on_hour, led_on_minute;
@@ -85,9 +92,8 @@ struct Settings {
   int led_min_limit, led_max_limit;              // Мощность лампы днём, %
 
   // Вентиляция
-  int fan1_min_limit, fan1_max_limit;            // Днём, по температуре, %
+  int fan1_min_limit, fan1_max_limit;            // Скорость по температуре, %
   int fan2_min_limit, fan2_max_limit;
-  int fan_night_min_limit, fan_night_max_limit;  // Ночью, обоими вентиляторами по влажности, %
 
   // Обогрев: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
   int heater_mode;
@@ -123,6 +129,9 @@ struct State {
   bool heater_active;
 };
 
+static const int OP_MODE_GROWING = 0;
+static const int OP_MODE_DRYING = 1;
+
 // Описание одной настройки для таблицы SETTING_DEFS (см. ниже)
 enum SettingType : uint8_t { ST_FLOAT, ST_INT, ST_U8, ST_BOOL, ST_U32, ST_STRING };
 
@@ -153,6 +162,7 @@ static State stateShared = {};
 static portMUX_TYPE stateMux = portMUX_INITIALIZER_UNLOCKED;
 static Settings settingsShared = {};
 static portMUX_TYPE settingsMux = portMUX_INITIALIZER_UNLOCKED;
+static std::atomic<bool> dryingModeActive{false};
 
 // --- Кольцевой буфер для показа Serial.print()-сообщений на веб-странице (/api/console) ---
 #define LOG_BUFFER_SIZE 4096
@@ -402,6 +412,7 @@ void publishSettings(const Settings &s) {
   portENTER_CRITICAL(&settingsMux);
   memcpy(&settingsShared, &s, sizeof(Settings));
   portEXIT_CRITICAL(&settingsMux);
+  dryingModeActive.store(s.operation_mode == OP_MODE_DRYING, std::memory_order_release);
 }
 
 // =====================================================================================
@@ -448,12 +459,16 @@ char requireChars(char *);
 
 static const SettingDef SETTING_DEFS[] = {
   //        param (форма/JSON)     ключ NVS           поле                   мин   макс   по умолч.
+  // --- Профиль управления ---
+  SET_INT  ("operation_mode",      "op_mode",         operation_mode,        OP_MODE_GROWING, OP_MODE_DRYING, OP_MODE_GROWING),
   // --- Климат ---
   SET_FLOAT("temp_target",         "temp_target",     temp_target,           0,    50,    25),
   SET_FLOAT("temp_delta",          "temp_delta",      temp_delta,            0.1,  20,    2),
   SET_FLOAT("temp_target_night",   "temp_night",      temp_target_night,     0,    50,    20),
-  SET_FLOAT("min_hum_night",       "min_hum_night",   min_hum_night,         0,    100,   40),
-  SET_FLOAT("max_hum_night",       "max_hum_night",   max_hum_night,         0,    100,   60),
+  SET_FLOAT("drying_temp_target",  "dry_temp",        drying_temp_target,    0,    50,    18),
+  SET_FLOAT("drying_temp_delta",   "dry_t_delta",     drying_temp_delta,     0.1,  20,    0.5),
+  SET_FLOAT("drying_hum_target",   "dry_hum",         drying_hum_target,     0,    100,   55),
+  SET_FLOAT("drying_hum_band",     "dry_h_band",      drying_hum_band,       0.1,  25,    5),
   // --- Свет ---
   SET_INT  ("led_on_hour",         "led_on_hour",     led_on_hour,           0,    23,    6),
   SET_INT  ("led_on_minute",       "led_on_minute",   led_on_minute,         0,    59,    0),
@@ -466,8 +481,6 @@ static const SettingDef SETTING_DEFS[] = {
   SET_INT  ("fan1_max_limit",      "fan1_max_limit",  fan1_max_limit,        0,    100,   100),
   SET_INT  ("fan2_min_limit",      "fan2_min_limit",  fan2_min_limit,        0,    100,   20),
   SET_INT  ("fan2_max_limit",      "fan2_max_limit",  fan2_max_limit,        0,    100,   100),
-  SET_INT  ("fan_night_min_limit", "fan_night_min",   fan_night_min_limit,   0,    100,   30),
-  SET_INT  ("fan_night_max_limit", "fan_night_max",   fan_night_max_limit,   0,    100,   100),
   // --- Обогрев ---
   SET_INT  ("heater_mode",         "heater_mode",     heater_mode,           0,    3,     3),
   // --- Автополив ---
@@ -509,18 +522,12 @@ void orderRange(int &lo, int &hi) {
   if (lo > hi) { int t = lo; lo = hi; hi = t; }
 }
 
-void orderRange(float &lo, float &hi) {
-  if (lo > hi) { float t = lo; lo = hi; hi = t; }
-}
-
 // Подстраховка от "перевёрнутых" границ (min > max): меняем местами, чтобы устройство
 // не осталось с невозможным диапазоном. Срабатывает и на форму, и на испорченный NVS.
 void normalizeRanges(Settings &s) {
   orderRange(s.led_min_limit, s.led_max_limit);
   orderRange(s.fan1_min_limit, s.fan1_max_limit);
   orderRange(s.fan2_min_limit, s.fan2_max_limit);
-  orderRange(s.fan_night_min_limit, s.fan_night_max_limit);
-  orderRange(s.min_hum_night, s.max_hum_night);
 }
 
 // Загрузка всех настроек из NVS. Числа клэмпятся и здесь — на случай испорченных
@@ -1359,6 +1366,18 @@ void loop() {
     now = getSafeDateTime();
     cached_unixtime = now.unixtime(); // Снимок, который отдают веб-обработчики
     cfg = settingsSnapshot();
+    if (dryingModeActive.load(std::memory_order_acquire)) {
+      // Drying всегда выключает полив и свет, даже если они были активны при переключении.
+      if (state.pump_active) {
+        state.pump_active = false;
+        digitalWrite(PUMP_PIN, LOW);
+        logPrintln("[Drying] Полив остановлен при выборе режима сушки.");
+      }
+      if (state.led_pwm != 0) {
+        state.led_pwm = 0;
+        ledcWrite(LED_PWM_PIN, 0);
+      }
+    }
   }
 
   // Часы, выставленные из веб-формы, применяем здесь: в I2C ходит только loop()
@@ -1399,9 +1418,6 @@ void loop() {
     int pwm_fan2_max = map(cfg.fan2_max_limit, 0, 100, 0, 255);
     int pwm_led_min = map(cfg.led_min_limit, 0, 100, 0, 255);
     int pwm_led_max = map(cfg.led_max_limit, 0, 100, 0, 255);
-    int pwm_fan_night_min = map(cfg.fan_night_min_limit, 0, 100, 0, 255);
-    int pwm_fan_night_max = map(cfg.fan_night_max_limit, 0, 100, 0, 255);
-
     int target_led, target_fan1, target_fan2;
     float read_temp = state.temp; // По умолчанию — последнее известное валидное значение, а не 0.0
     float read_hum = state.hum;
@@ -1460,14 +1476,9 @@ void loop() {
     // ЛОГИКА АВАРИЙНОГО РЕЖИМА ИЛИ НОРМАЛЬНОЙ РАБОТЫ
     if (!state.sht_online) {
       // --- АВАРИЯ: Датчик сломан. Включаем безопасный пресет ---
-      // Вентиляторы на 50% выбранного диапазона (день — температурный диапазон, ночь — ночной диапазон)
-      if (is_day) {
-        target_fan1 = map(50, 0, 100, pwm_fan1_min, pwm_fan1_max);
-        target_fan2 = map(50, 0, 100, pwm_fan2_min, pwm_fan2_max);
-      } else {
-        target_fan1 = map(50, 0, 100, pwm_fan_night_min, pwm_fan_night_max);
-        target_fan2 = target_fan1;
-      }
+      // При отказе датчика держим вентиляторы на середине их настроенного диапазона.
+      target_fan1 = map(50, 0, 100, pwm_fan1_min, pwm_fan1_max);
+      target_fan2 = map(50, 0, 100, pwm_fan2_min, pwm_fan2_max);
       // Светильник на минимальный уровень дня, чтобы не сжечь растения светом/жаром
       target_led = is_day ? pwm_led_min : 0;
 
@@ -1489,62 +1500,74 @@ void loop() {
       float current_min = cfg.temp_target - safe_delta;
       float current_max = cfg.temp_target + safe_delta;
 
-      // Обогрев: своя цель ночью (temp_target_night), днём — общая temp_target.
-      // На вентиляторы/лампу (current_min/current_max выше) это не влияет — они всегда считаются от дневной temp_target.
-      float heater_target = is_day ? cfg.temp_target : cfg.temp_target_night;
-      float heater_min = heater_target - safe_delta;
+      bool drying_mode = cfg.operation_mode == OP_MODE_DRYING;
+      float heater_delta = drying_mode ? max(cfg.drying_temp_delta, 0.1f) : safe_delta;
+      // В режиме Growing сохраняется прежний дневной/ночной термостат. В Drying
+      // нагреватель независимо от расписания поддерживает отдельную температурную цель.
+      float heater_target = drying_mode ? cfg.drying_temp_target : (is_day ? cfg.temp_target : cfg.temp_target_night);
+      float heater_min = heater_target - heater_delta;
+      float heater_off_threshold = drying_mode ? heater_target + heater_delta : heater_target;
 
-      bool heater_schedule_ok = (cfg.heater_mode == 2) || (cfg.heater_mode == 0 && is_day) || (cfg.heater_mode == 1 && !is_day);
+      bool heater_schedule_ok = drying_mode || cfg.heater_mode == 2 ||
+                                (cfg.heater_mode == 0 && is_day) || (cfg.heater_mode == 1 && !is_day);
       if (!heater_schedule_ok) {
         state.heater_active = false;
       } else if (!state.heater_active && read_temp <= heater_min) {
         state.heater_active = true;
-      } else if (state.heater_active && read_temp >= heater_target) {
+      } else if (state.heater_active && read_temp >= heater_off_threshold) {
         state.heater_active = false;
       }
       digitalWrite(HEATER_PIN, state.heater_active ? HIGH : LOW);
 
-      if (read_temp <= current_min) {
-        target_led = is_day ? pwm_led_max : 0;
-        target_fan1 = pwm_fan1_min;
-        target_fan2 = pwm_fan2_min;
-      }
-      else if (read_temp >= current_max) {
-        target_led = is_day ? pwm_led_min : 0;
-        target_fan1 = pwm_fan1_max;
-        target_fan2 = pwm_fan2_max;
-      }
-      else {
-        target_led = is_day ? map(read_temp * 100, current_min * 100, current_max * 100, pwm_led_max, pwm_led_min) : 0;
-        target_fan1 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan1_min, pwm_fan1_max);
-        target_fan2 = map(read_temp * 100, current_min * 100, current_max * 100, pwm_fan2_min, pwm_fan2_max);
-      }
-
-      if (!is_day) {
-        // НОЧЬ: оба вентилятора управляются влажностью с плавным (пропорциональным) регулированием скорости,
-        // независимо от дневной температурной логики выше. Диапазон скорости задаётся отдельно (fan_night_min/max_limit).
-        // min_hum_night — нижняя граница (мин. скорость), max_hum_night — верхняя граница (макс. скорость).
-        float night_hum_lo = cfg.min_hum_night;
-        float night_hum_hi = cfg.max_hum_night;
-        int night_fan_pwm;
-
-        if (night_hum_hi <= night_hum_lo) {
-          // Некорректная настройка (границы совпадают/перепутаны) — работаем по порогу без плавности
-          night_fan_pwm = (read_hum >= night_hum_hi) ? pwm_fan_night_max : pwm_fan_night_min;
-        } else if (read_hum <= night_hum_lo) {
-          night_fan_pwm = pwm_fan_night_min;
-        } else if (read_hum >= night_hum_hi) {
-          night_fan_pwm = pwm_fan_night_max;
+      if (drying_mode) {
+        // При сушке свет не используется. По влажности выше заданной плавно
+        // увеличиваем скорость вентиляторов: от цели RH до цели + диапазон.
+        target_led = 0;
+        float humidity_min = cfg.drying_hum_target;
+        float humidity_max = min(100.0f, humidity_min + max(cfg.drying_hum_band, 0.1f));
+        if (read_temp >= cfg.drying_temp_target + heater_delta ||
+            (humidity_max > humidity_min && read_hum >= humidity_max)) {
+          target_fan1 = pwm_fan1_max;
+          target_fan2 = pwm_fan2_max;
+        } else if (humidity_max <= humidity_min || read_hum <= humidity_min) {
+          target_fan1 = pwm_fan1_min;
+          target_fan2 = pwm_fan2_min;
         } else {
-          night_fan_pwm = map(read_hum * 100, night_hum_lo * 100, night_hum_hi * 100, pwm_fan_night_min, pwm_fan_night_max);
+          target_fan1 = map(read_hum * 100, humidity_min * 100, humidity_max * 100, pwm_fan1_min, pwm_fan1_max);
+          target_fan2 = map(read_hum * 100, humidity_min * 100, humidity_max * 100, pwm_fan2_min, pwm_fan2_max);
+        }
+      } else {
+        // В Growing вентиляторы используют ту же температурную цель, что и обогрев:
+        // дневную при включённом свете и ночную при выключённом.
+        float fan_target = is_day ? cfg.temp_target : cfg.temp_target_night;
+        float fan_min_temp = fan_target - safe_delta;
+        float fan_max_temp = fan_target + safe_delta;
+
+        if (read_temp <= current_min) {
+          target_led = is_day ? pwm_led_max : 0;
+        }
+        else if (read_temp >= current_max) {
+          target_led = is_day ? pwm_led_min : 0;
+        }
+        else {
+          target_led = is_day ? map(read_temp * 100, current_min * 100, current_max * 100, pwm_led_max, pwm_led_min) : 0;
         }
 
-        target_fan1 = night_fan_pwm;
-        target_fan2 = night_fan_pwm;
+        if (read_temp <= fan_min_temp) {
+          target_fan1 = pwm_fan1_min;
+          target_fan2 = pwm_fan2_min;
+        } else if (read_temp >= fan_max_temp) {
+          target_fan1 = pwm_fan1_max;
+          target_fan2 = pwm_fan2_max;
+        } else {
+          target_fan1 = map(read_temp * 100, fan_min_temp * 100, fan_max_temp * 100, pwm_fan1_min, pwm_fan1_max);
+          target_fan2 = map(read_temp * 100, fan_min_temp * 100, fan_max_temp * 100, pwm_fan2_min, pwm_fan2_max);
+        }
       }
     }
 
     // Страхуемся от выхода за пределы 8-битного ШИМ (map() с кривыми границами это умеет)
+    if (dryingModeActive.load(std::memory_order_acquire)) target_led = 0; // Также не включаем свет при отказе датчика.
     target_led  = clampInt(target_led, 0, 255);
     target_fan1 = clampInt(target_fan1, 0, 255);
     target_fan2 = clampInt(target_fan2, 0, 255);
@@ -1600,7 +1623,14 @@ void loop() {
     // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
     bool water_ok = !cfg.water_sensor_enabled || isWaterAvailable();
 
-    if (!state.pump_active) {
+    if (dryingModeActive.load(std::memory_order_acquire)) {
+      if (state.pump_active) {
+        state.pump_active = false;
+        digitalWrite(PUMP_PIN, LOW);
+        logPrintln("[Drying] Полив остановлен при выборе режима сушки.");
+      }
+      digitalWrite(PUMP_PIN, LOW);
+    } else if (!state.pump_active) {
       bool day_enabled = (cfg.watering_days >> iso_dow) & 0x01;
       if (day_enabled && now.hour() == cfg.watering_hour && now.minute() == cfg.watering_minute && wateringDayAllowed(state.clock_trusted, today_code, last_watering_day)) {
         // Persist before energizing the pump; reboot during this minute must not repeat it.

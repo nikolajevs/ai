@@ -15,14 +15,34 @@
             <a href="/" class="btn-nav">← К мониторингу</a>
         </header>
 
+        <div class="form-section mode-selection">
+            <h3>Режим работы</h3>
+            <form action="/save-settings" method="POST" id="operation-mode-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="operation_mode">Выбери профиль, для которого открыть настройки</label>
+                        <select id="operation_mode" name="operation_mode" required>
+                            <option value="0">Growing — выращивание</option>
+                            <option value="1">Drying — сушка</option>
+                        </select>
+                    </div>
+                    <div class="form-group mode-submit">
+                        <button type="submit" class="btn-action btn-sync">Применить режим</button>
+                    </div>
+                </div>
+                <div id="operation-mode-note" class="mode-note">Выбери Growing или Drying, чтобы загрузить соответствующие настройки.</div>
+            </form>
+        </div>
+
         <div class="tabs" id="settings-tabs">
-            <button type="button" class="tab-btn active" data-tab="tab-general">Общее</button>
-            <button type="button" class="tab-btn" data-tab="tab-climate">Климат</button>
-            <button type="button" class="tab-btn" data-tab="tab-light">Освещение</button>
-            <button type="button" class="tab-btn" data-tab="tab-fans">Вентиляция</button>
-            <button type="button" class="tab-btn" data-tab="tab-watering">Полив</button>
-            <button type="button" class="tab-btn" data-tab="tab-heater">Обогрев</button>
-            <button type="button" class="tab-btn" data-tab="tab-network">WiFi / Ubidots</button>
+            <button type="button" class="tab-btn active" data-tab="tab-general" data-modes="growing,drying">Общее</button>
+            <button type="button" class="tab-btn" data-tab="tab-climate" data-modes="growing,drying">Климат</button>
+            <button type="button" class="tab-btn" data-tab="tab-light" data-modes="growing">Освещение</button>
+            <button type="button" class="tab-btn" data-tab="tab-fans" data-modes="growing,drying">Вентиляция</button>
+            <button type="button" class="tab-btn" data-tab="tab-watering" data-modes="growing">Полив</button>
+            <button type="button" class="tab-btn" data-tab="tab-heater" data-modes="growing">Обогрев</button>
+            <button type="button" class="tab-btn" data-tab="tab-network" data-modes="growing,drying">WiFi / Ubidots</button>
+            <button type="button" class="tab-btn" data-tab="tab-console" data-modes="growing,drying">Консоль</button>
         </div>
 
         <!-- ОБЩЕЕ -->
@@ -44,7 +64,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-mode-only="growing">
                 <h3>Гровинг</h3>
                 <form action="/save-settings" method="POST">
                     <div class="form-grid">
@@ -77,43 +97,63 @@
 
         <!-- КЛИМАТ -->
         <div class="tab-panel" id="tab-climate">
+            <div data-mode-only="growing">
             <div class="form-section">
                 <h3>Температура и влажность</h3>
                 <form action="/save-settings" method="POST" id="climate-form">
                     <div id="climate-error-banner" class="form-error" style="display: none;"></div>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Целевая температура, °C</label>
+                            <label>Дневная целевая температура, °C</label>
                             <input type="number" step="0.1" min="0" max="50" id="temp_target" name="temp_target" required>
                         </div>
                         <div class="form-group">
-                            <label>Целевая температура ночью, °C</label>
+                            <label>Ночная целевая температура, °C</label>
                             <input type="number" step="0.1" min="0" max="50" id="temp_target_night" name="temp_target_night" required>
                         </div>
                         <div class="form-group">
                             <label>Гистерезис (Дельта ±), °C</label>
                             <input type="number" step="0.1" min="0.1" max="20" id="temp_delta" name="temp_delta" required>
                         </div>
-                        <div class="form-group">
-                            <label>Верхний ночной предел влажности, %</label>
-                            <input type="number" step="1" min="0" max="100" id="max_hum_night" name="max_hum_night" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Нижний ночной предел влажности, %</label>
-                            <input type="number" step="1" min="0" max="100" id="min_hum_night" name="min_hum_night" required>
-                        </div>
                     </div>
                     <div style="font-size: 13px; margin-top: 10px; color: var(--text-muted)">
-                        Гистерезис (Дельта) общий для дня и ночи. Режим работы обогревателя — на вкладке «Обогрев».
+                        В Growing вентиляторы управляются температурой круглосуточно: днём используется дневная цель, ночью — ночная. Гистерезис общий. Расписание обогревателя — на вкладке «Обогрев».
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
+            </div>
+
+            <div class="form-section" data-mode-only="drying">
+                <h3>Климат сушки</h3>
+                <form action="/save-settings" method="POST" id="drying-climate-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Целевая температура, °C</label>
+                            <input type="number" step="0.1" min="0" max="50" id="drying_temp_target" name="drying_temp_target" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Гистерезис нагрева, ± °C</label>
+                            <input type="number" step="0.1" min="0.1" max="20" id="drying_temp_delta" name="drying_temp_delta" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Целевая влажность, % RH</label>
+                            <input type="number" step="1" min="0" max="100" id="drying_hum_target" name="drying_hum_target" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Диапазон разгона вентиляторов, % RH</label>
+                            <input type="number" step="0.1" min="0.1" max="25" id="drying_hum_band" name="drying_hum_band" required>
+                        </div>
+                    </div>
+                    <div class="mode-note">Нагреватель поддерживает заданную температуру по термостату. Вентиляторы плавно разгоняются выше целевой влажности и достигают максимума у верхней границы диапазона. При превышении температуры на величину гистерезиса вентиляторы также переходят на максимум. Свет и автополив в режиме Drying выключены.</div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить климат сушки</button>
                 </form>
             </div>
 
         </div>
 
         <!-- ОСВЕЩЕНИЕ -->
-        <div class="tab-panel" id="tab-light">
+        <div class="tab-panel" id="tab-light" data-modes="growing">
             <div class="form-section">
                 <h3>Освещение</h3>
                 <form action="/save-settings" method="POST" id="light-form">
@@ -173,27 +213,10 @@
                 </form>
             </div>
 
-            <div class="form-section">
-                <h3>Ночная вентиляция (по влажности)</h3>
-                <form action="/save-settings" method="POST" id="fans-night-form">
-                    <div id="fans-night-error-banner" class="form-error" style="display: none;"></div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Ночью мин., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan_night_min_limit" name="fan_night_min_limit" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Ночью макс., % (0-100)</label>
-                            <input type="number" min="0" max="100" id="fan_night_max_limit" name="fan_night_max_limit" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
-                </form>
-            </div>
         </div>
 
         <!-- ПОЛИВ -->
-        <div class="tab-panel" id="tab-watering">
+        <div class="tab-panel" id="tab-watering" data-modes="growing">
             <div class="form-section">
                 <h3>Автополив</h3>
                 <form action="/save-settings" method="POST" id="watering-form">
@@ -232,7 +255,7 @@
         </div>
 
         <!-- ОБОГРЕВ -->
-        <div class="tab-panel" id="tab-heater">
+        <div class="tab-panel" id="tab-heater" data-modes="growing">
             <div class="form-section">
                 <h3>Обогрев</h3>
                 <form action="/save-settings" method="POST">
@@ -330,6 +353,18 @@
                     </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить Ubidots</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="tab-console">
+            <div class="analytics-section">
+                <div class="chart-header-row">
+                    <div class="chart-title">Serial-консоль платы</div>
+                    <label style="font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="checkbox" id="console-autoscroll" checked> автопрокрутка
+                    </label>
+                </div>
+                <pre id="serial-console" class="serial-console">Загрузка лога...</pre>
             </div>
         </div>
     </div>
