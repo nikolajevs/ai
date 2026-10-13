@@ -5,6 +5,17 @@ let currentMode = '0';        // Режим, сохранённый на пла�
 let activeTabRestored = false;
 const TAB_STORAGE_KEY = 'gi-settings-tab';
 
+// Страница открылась после сохранения (плата вернула ?saved=1 или ?error=…)? Только тогда
+// возвращаемся на прежнюю вкладку. При обычном открытии настроек показываем «Климат».
+const returnedFromSave = (() => {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        return params.has('saved') || params.has('error');
+    } catch (e) {
+        return false;
+    }
+})();
+
 // sessionStorage может быть недоступен (приватный режим, старый браузер) — тогда просто
 // не запоминаем вкладку, а страница работает как раньше
 function readStoredTab() {
@@ -78,6 +89,13 @@ function packLedTimes() {
     document.getElementById('led_on_minute').value = onMinute;
     document.getElementById('led_off_hour').value = offHour;
     document.getElementById('led_off_minute').value = offMinute;
+}
+
+// То же для времени полива: одно поле выбора времени вместо двух числовых (час и минута)
+function packWateringTime() {
+    const [hour, minute] = document.getElementById('watering_time').value.split(':');
+    document.getElementById('watering_hour').value = hour;
+    document.getElementById('watering_minute').value = minute;
 }
 
 // Плата больше не отдаёт пароли и токен наружу — в поле показываем только факт,
@@ -236,8 +254,7 @@ async function loadCurrentSettings() {
         document.getElementById('led_max_limit').value = data.led_max_limit;
         document.getElementById('rtc-time-label').innerText = data.rtc_time;
 
-        document.getElementById('watering_hour').value = data.watering_hour;
-        document.getElementById('watering_minute').value = data.watering_minute;
+        document.getElementById('watering_time').value = formatTime(data.watering_hour, data.watering_minute);
         document.getElementById('watering_duration').value = data.watering_duration;
         unpackWateringDays(data.watering_days);
         document.getElementById('water_sensor_checkbox').checked = !!data.water_sensor_enabled;
@@ -249,8 +266,7 @@ async function loadCurrentSettings() {
         document.getElementById('drying_hum_band').value = data.drying_hum_band;
         applySettingsMode(data.operation_mode);
         if (!activeTabRestored) {
-            // Возвращаемся на вкладку, с которой сохраняли: раньше после любого сохранения
-            // страница открывалась на «Общее»
+            // После сохранения возвращаемся на вкладку, с которой сохраняли
             activeTabRestored = true;
             restoreActiveTab();
         }
@@ -324,9 +340,10 @@ function initOperationModeSelector() {
     });
 }
 
-// Открывает вкладку, запомненную до перезагрузки страницы. Если её нет в текущем режиме
-// (например, «Полив» в сушке), остаётся вкладка по умолчанию.
+// После сохранения открывает вкладку, с которой отправили форму. Если её нет в текущем
+// режиме (например, «Полив» в сушке), остаётся вкладка по умолчанию — «Климат».
 function restoreActiveTab() {
+    if (!returnedFromSave) return;
     const tabId = readStoredTab();
     if (!tabId || typeof document.querySelector !== 'function') return;
     const button = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
@@ -407,6 +424,7 @@ window.onload = () => {
     loadSdFiles();
     document.getElementById('watering-form').addEventListener('submit', packWateringDays);
     document.getElementById('watering-form').addEventListener('submit', packWaterSensor);
+    document.getElementById('watering-form').addEventListener('submit', packWateringTime);
     document.getElementById('light-form').addEventListener('submit', packLedTimes);
     initOperationModeSelector();
     initTabs();

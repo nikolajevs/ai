@@ -151,6 +151,22 @@ test('start date is shown as stored on the board, independent of the browser tim
   assert.equal(p.fields.get('start_date').value, '2026-10-01');
 });
 
+test('watering time is one time field that still submits hour and minute', async () => {
+  const p = page();
+  const original = p.context.fetch;
+  p.context.fetch = async (url, options) => {
+    const data = await (await original(url, options)).json();
+    return {ok: true, json: async () => ({...data, watering_hour: 7, watering_minute: 5})};
+  };
+  await vm.runInContext('loadCurrentSettings()', p.context);
+  assert.equal(p.fields.get('watering_time').value, '07:05');
+
+  p.fields.get('watering_time').value = '21:30';
+  vm.runInContext('packWateringTime()', p.context);
+  assert.equal(p.fields.get('watering_hour').value, '21');
+  assert.equal(p.fields.get('watering_minute').value, '30');
+});
+
 test('serial console polls only while its settings tab is active', async () => {
   const p = page();
   let active = false;

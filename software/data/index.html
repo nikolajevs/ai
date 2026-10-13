@@ -42,13 +42,14 @@
             </div>
 
             <div class="card">
-                <h3>Освещение и Силовые цепи</h3>
+                <h3 id="power-title">Освещение и Силовые цепи</h3>
                 <div class="metrics-row">
-                    <div class="metric-box">
+                    <!-- В режиме сушки свет и полив выключены всегда — эти два блока скрываются -->
+                    <div class="metric-box" data-growing-only>
                         <span class="label">Мощность LED</span>
                         <div class="value" id="led-val" style="color: var(--warning)">--<span class="unit">%</span></div>
                     </div>
-                    <div class="metric-box">
+                    <div class="metric-box" data-growing-only>
                         <span class="label">Статус насоса</span>
                         <div class="value" id="pump-val" style="color: var(--text-muted)">--</div>
                     </div>
