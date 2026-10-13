@@ -107,6 +107,10 @@ function renderStatus(data) {
     cycleDayEl.hidden = drying;
     cycleDayEl.textContent = data.grow_day > 0 ? `День цикла: ${data.grow_day}` : 'Цикл не начат';
 
+    // В сушке свет и полив выключены всегда, поэтому лампу и насос с главной убираем
+    document.querySelectorAll('[data-growing-only]').forEach(el => { el.hidden = drying; });
+    document.getElementById('power-title').textContent = drying ? 'Силовые цепи' : 'Освещение и Силовые цепи';
+
     // Без доверенных часов прошивка не поливает — и раньше нигде об этом не сообщала
     const warnEl = document.getElementById('clock-warning');
     if (!data.clock_trusted) {

@@ -26,18 +26,18 @@
         </form>
 
         <div class="tabs" id="settings-tabs">
-            <button type="button" class="tab-btn" data-tab="tab-climate" data-modes="growing,drying">Климат</button>
+            <button type="button" class="tab-btn active" data-tab="tab-climate" data-modes="growing,drying">Климат</button>
             <button type="button" class="tab-btn" data-tab="tab-light" data-modes="growing">Освещение</button>
             <button type="button" class="tab-btn" data-tab="tab-fans" data-modes="growing,drying">Вентиляция</button>
             <button type="button" class="tab-btn" data-tab="tab-watering" data-modes="growing">Полив</button>
             <button type="button" class="tab-btn" data-tab="tab-heater" data-modes="growing,drying">Обогрев</button>
             <button type="button" class="tab-btn" data-tab="tab-network" data-modes="growing,drying">WiFi / Ubidots</button>
-            <button type="button" class="tab-btn active" data-tab="tab-general" data-modes="growing,drying">Общее</button>
+            <button type="button" class="tab-btn" data-tab="tab-general" data-modes="growing,drying">Общее</button>
             <button type="button" class="tab-btn" data-tab="tab-console" data-modes="growing,drying">Консоль</button>
         </div>
 
         <!-- ОБЩЕЕ -->
-        <div class="tab-panel active" id="tab-general">
+        <div class="tab-panel" id="tab-general">
             <div class="form-section">
                 <h3>Синхронизация RTC модуля</h3>
                 <div style="font-size: 14px; margin-bottom: 15px; color: var(--text-muted)">
@@ -94,7 +94,7 @@
         </div>
 
         <!-- КЛИМАТ -->
-        <div class="tab-panel" id="tab-climate">
+        <div class="tab-panel active" id="tab-climate">
             <div data-mode-only="growing">
             <div class="form-section">
                 <h3>Температура и влажность</h3>
@@ -230,15 +230,14 @@
                     <input type="hidden" id="watering_days" name="watering_days">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Час полива</label>
-                            <input type="number" min="0" max="23" id="watering_hour" name="watering_hour" required>
+                            <!-- Выбор времени, как у света; в плату по-прежнему уходят час и минута -->
+                            <label for="watering_time">Время полива</label>
+                            <input type="time" id="watering_time" required>
+                            <input type="hidden" id="watering_hour" name="watering_hour">
+                            <input type="hidden" id="watering_minute" name="watering_minute">
                         </div>
                         <div class="form-group">
-                            <label>Минута полива</label>
-                            <input type="number" min="0" max="59" id="watering_minute" name="watering_minute" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Длительность полива, сек</label>
+                            <label for="watering_duration">Длительность полива, сек</label>
                             <input type="number" min="1" max="3600" id="watering_duration" name="watering_duration" required>
                         </div>
                     </div>
