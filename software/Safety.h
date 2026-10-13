@@ -23,6 +23,33 @@ constexpr bool wateringDayAllowed(bool clockTrusted, uint32_t today, uint32_t la
   return clockTrusted && today > lastDay;
 }
 
+// A mark written by a wrong (future) clock must not block watering for months once the clock
+// is corrected: pull it back to today. Today stays blocked, tomorrow waters as usual.
+constexpr uint32_t reconcileWateringMark(bool clockTrusted, uint32_t today, uint32_t lastDay) {
+  return clockTrusted && lastDay > today ? today : lastDay;
+}
+
+// A scheduled watering may start late (the board was off or rebooting during that minute),
+// but only within windowSec and never for an occurrence older than armedFrom — the moment
+// the user last changed the schedule, the mode or the clock. Otherwise saving settings in
+// the afternoon would start the pump at once for a time that passed in the morning.
+constexpr bool wateringDue(uint32_t now, uint32_t scheduled, uint32_t armedFrom, uint32_t windowSec) {
+  return now >= scheduled && now - scheduled <= windowSec && scheduled >= armedFrom;
+}
+
+// Float switch debounce: the stable level follows the raw input only after it has held the
+// new level for holdMs. Water sloshing while the pump runs must not look like an empty tank.
+struct Debounce { bool stable; bool candidate; uint32_t sinceMs; };
+
+constexpr void debounceUpdate(Debounce &d, bool raw, uint32_t nowMs, uint32_t holdMs) {
+  if (raw != d.candidate) {
+    d.candidate = raw;
+    d.sinceMs = nowMs;
+  } else if (d.stable != d.candidate && elapsedMs(nowMs, d.sinceMs) >= holdMs) {
+    d.stable = d.candidate;
+  }
+}
+
 // Sensirion CRC-8 (SHT4x datasheet: polynomial 0x31, init 0xFF).
 constexpr uint8_t sensirionCrc8(const uint8_t *data, int len) {
   uint8_t crc = 0xFF;
