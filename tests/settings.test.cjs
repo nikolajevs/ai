@@ -6,6 +6,14 @@ const path = require('node:path');
 
 function page() {
   const fields = new Map();
+  let modeChangeHandler;
+  let modeFormSubmits = 0;
+  const modeSelect = {
+    value: '',
+    addEventListener(type, handler) { if (type === 'change') modeChangeHandler = handler; }
+  };
+  const modeForm = {requestSubmit() { modeFormSubmits++; }};
+  fields.set('operation_mode', modeSelect);
   const forms = Array.from({length: 8}, () => ({
     inputs: [], querySelector() { return this.inputs[0]; },
     appendChild(input) { this.inputs.push(input); }
@@ -22,6 +30,7 @@ function page() {
     window: {},
     document: {
       getElementById(id) {
+        if (id === 'operation-mode-form') return modeForm;
         if (!fields.has(id)) fields.set(id, {value: 'previous', style: {}});
         return fields.get(id);
       },
@@ -45,7 +54,9 @@ function page() {
     }
   });
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../software/data/settings.js'), 'utf8'), context);
-  return {context, fields, forms, modeElements, calls, alerts};
+  return {context, fields, forms, modeElements, calls, alerts,
+    changeOperationMode() { modeChangeHandler(); },
+    get modeFormSubmits() { return modeFormSubmits; }};
 }
 
 test('settings keep secrets empty, preserve special characters and attach CSRF to every form', async () => {
@@ -89,7 +100,13 @@ test('Drying settings show the drying profile and hide Growing-only controls', (
   assert.equal(p.modeElements[1].hidden, true);
   assert.equal(p.modeElements[2].hidden, true);
   assert.equal(p.modeElements[3].hidden, false);
-  assert.match(p.fields.get('operation-mode-note').textContent, /свет и полив принудительно выключены/i);
+});
+
+test('changing operation mode submits immediately without a confirmation step', () => {
+  const p = page();
+  vm.runInContext('initOperationModeSelector()', p.context);
+  p.changeOperationMode();
+  assert.equal(p.modeFormSubmits, 1);
 });
 
 test('serial console polls only while its settings tab is active', async () => {

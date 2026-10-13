@@ -15,33 +15,22 @@
             <a href="/" class="btn-nav">← К мониторингу</a>
         </header>
 
-        <div class="form-section mode-selection">
-            <h3>Режим работы</h3>
-            <form action="/save-settings" method="POST" id="operation-mode-form">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="operation_mode">Выбери профиль, для которого открыть настройки</label>
-                        <select id="operation_mode" name="operation_mode" required>
-                            <option value="0">Growing — выращивание</option>
-                            <option value="1">Drying — сушка</option>
-                        </select>
-                    </div>
-                    <div class="form-group mode-submit">
-                        <button type="submit" class="btn-action btn-sync">Применить режим</button>
-                    </div>
-                </div>
-                <div id="operation-mode-note" class="mode-note">Выбери Growing или Drying, чтобы загрузить соответствующие настройки.</div>
-            </form>
-        </div>
+        <form action="/save-settings" method="POST" id="operation-mode-form" class="mode-selection">
+            <label for="operation_mode">Режим</label>
+            <select id="operation_mode" name="operation_mode" required>
+                <option value="0">Growing — выращивание</option>
+                <option value="1">Drying — сушка</option>
+            </select>
+        </form>
 
         <div class="tabs" id="settings-tabs">
-            <button type="button" class="tab-btn active" data-tab="tab-general" data-modes="growing,drying">Общее</button>
             <button type="button" class="tab-btn" data-tab="tab-climate" data-modes="growing,drying">Климат</button>
             <button type="button" class="tab-btn" data-tab="tab-light" data-modes="growing">Освещение</button>
             <button type="button" class="tab-btn" data-tab="tab-fans" data-modes="growing,drying">Вентиляция</button>
             <button type="button" class="tab-btn" data-tab="tab-watering" data-modes="growing">Полив</button>
             <button type="button" class="tab-btn" data-tab="tab-heater" data-modes="growing">Обогрев</button>
             <button type="button" class="tab-btn" data-tab="tab-network" data-modes="growing,drying">WiFi / Ubidots</button>
+            <button type="button" class="tab-btn active" data-tab="tab-general" data-modes="growing,drying">Общее</button>
             <button type="button" class="tab-btn" data-tab="tab-console" data-modes="growing,drying">Консоль</button>
         </div>
 
