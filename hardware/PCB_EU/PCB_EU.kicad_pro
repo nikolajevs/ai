@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "filename": "PCB_EU.kicad_pro",
+    "version": 3
+  },
+  "erc": {
+    "erc_exclusions": [],
+    "meta": {
+      "version": 0
+    }
+  },
+  "schematic": {
+    "meta": {
+      "version": 1
+    }
+  },
+  "text_variables": {
+    "DESIGN_STAGE": "SCHEMATIC_DRAFT"
+  }
+}

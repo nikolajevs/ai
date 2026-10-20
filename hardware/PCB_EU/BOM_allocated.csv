@@ -1,0 +1,77 @@
+﻿Shop,MPN_or_shop_SKU,Fitted_or_accessory,Buy_pieces,Sale_unit,Price_per_sale_unit_EUR_VAT,Line_EUR_VAT,References,Accessory_count,URL,Price_date
+Electrobase,ESP32-WROOM-32E-N4,1,1,шт.,7.48,7.48,U202,0,https://electrobase.lv/katalogs/moduli-iot-wifi-bluetooth-lora/module-iot-bluetooth-low-energywifi-smd-0,2026-10-20
+Electrobase,LM3429MH/NOPB,2,2,шт.,4.86,9.72,U501 U601,0,https://electrobase.lv/katalogs/led-draiveri/ic-driver-boostbuck-boost-led-driver-htssop14-5a-372v-ch-1,2026-10-20
+Salvats,IRF540ZPBF,2,2,шт.,1.7,3.40,Q501 Q601,0,https://www.salvats.lv/lv/100v-n-fet-tht/irf540z-tranzistors-n-fet-100v-36a-20v-92w-0r0265-to-220,2026-10-20
+Electrobase,JNRH1207-100N-A,2,2,шт.,0.54,1.08,L501 L502,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-10uh-ioper-66a-r-355mo-30-isat-8a,2026-10-20
+Electrobase,SS5P10-M3/86A,2,2,шт.,1.09,2.18,D501 D601,0,https://electrobase.lv/katalogs/diodes-schottky-smd/diode-schottky-rectifying-smpcto277a-smd-100v-5a,2026-10-20
+Salvats,CS2512-0R15-1%-HP,1,1,шт.,0.32,0.32,R502,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r15-2512635x32mm-2w-1-smd-55125c-rezistors-thick-film-2512,2026-10-20
+Salvats,CS2512-0R47-1%-HP,1,1,шт.,0.52,0.52,R602,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r47-2512635x32mm-2w-1-smd-55125c-rezistors-thick-film-2512,2026-10-20
+Salvats,LRP2512-R040-1%,1,1,шт.,0.38,0.38,R501,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r04-2512635x32mm-3w-1-smd-55170c-rezistors-thick-film-2512,2026-10-20
+Salvats,EEUFR1J101LB,5,5,шт.,0.6,3.00,C508 C509 C510 C608 C609,0,https://www.salvats.lv/lv/kondensatori-elektrolitiskie-zemas-induktivitates-low-esr/10063v-105c-o8x16mm-20-kondensatori-zemas-induktivitates-8000h-panasonic-ar-lokaniem-izvadiem,2026-10-20
+Salvats,CL31B335KOHNNNE,2,2,шт.,0.08,0.16,C504 C604,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/33mkf-1206-x7r-16v-z-smd-kondensators-1206,2026-10-20
+Salvats,C1206C102JCGACTU,2,2,шт.,0.25,0.50,C506 C606,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/1nf-1206-c0g-500v-5-smd-kondensators-1206,2026-10-20
+Salvats,CL31C101JBCNNNC,2,2,шт.,0.07,0.14,C507 C607,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/100pf-1206-npo-50j-smd-kondensators-1206,2026-10-20
+Salvats,EEUFR1E102,1,1,шт.,0.84,0.84,C112,0,https://www.salvats.lv/lv/kondensatori-elektrolitiskie-zemas-induktivitates-low-esr/100025v-105c-o10x20mm-20-kondensatori-zemas-induktivitates-10000h-panasonic-ar-lokaniem-izvadiem,2026-10-20
+Salvats,SMD1206-0R1,1,1,шт.,0.07,0.07,R101,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/0r1-1206-5-smd-rezistors-1206,2026-10-20
+Salvats,UPW1H221MPD,6,6,шт.,0.63,3.78,C101 C102 C501 C502 C601 C602,0,https://www.salvats.lv/lv/kondensatori-elektrolitiskie-zemas-induktivitates-low-esr/22050v-105c-o10x16mm-20-kondensatori-zemas-induktivitates-011r-5000h-nichicon-ar-lokaniem-izvadiem,2026-10-20
+Electrobase,AP63203WU-7,1,1,шт.,1.24,1.24,U201,0,https://electrobase.lv/katalogs/sprieguma-reguletaji-dcdc-shemas/pmic-dcdc-converter-uin-3832vdc-uout-33vdc-2a-tsot26-smd,2026-10-20
+Electrobase,SRN6045-6R8Y,1,1,шт.,0.28,0.28,L201,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-68uh-ioper-28a-r-473mo-30-6x6x45mm,2026-10-20
+Salvats,CL31A106KAHNNNE,3,3,шт.,0.22,0.66,C201 C202 C801,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/10mkf-1206-x5r-25v-k-10-smd-kondensators-1206,2026-10-20
+Salvats,CL31A226KQHNNNE,6,6,шт.,0.18,1.08,C204 C205 C206 C304 C505 C605,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/22mkf-1206-x5r-63v-k-smd-kondensators-1206,2026-10-20
+Salvats,CL21B104KBCNNNC,14,20,уп. 10 шт.,0.51,1.02,C107 C108 C203 C207 C208 C303 C305 C401 C402 C403 C503 C603 C802 C803,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805,2026-10-20
+Salvats,IRF1010ESPBF,1,1,шт.,1.21,1.21,Q703,0,https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/irf1010es-smd-tranzistors-n-fet-60v-20v-59a-200w-0r012-to-263,2026-10-20
+Salvats,BC847B-DIO,1,1,шт.,0.06,0.06,Q701,0,https://www.salvats.lv/lv/npn-tranzistori-smd/bc847b1f-smd-tranzistors-npn-50v-01a-300mhz-sot23,2026-10-20
+Salvats,BC857B,1,1,шт.,0.08,0.08,Q702,0,https://www.salvats.lv/lv/pnp-tranzistori-smd/bc857b3f-smd-tranzistors-pnp-50v-01a-hfe220475-035w-200mhz-sot23,2026-10-20
+Electrobase,AO3422,3,5,шт.,0.26,1.30,Q411 Q421 Q704,0,https://electrobase.lv/katalogs/tranzistori-ar-n-veida-kanalu-smd/transistor-n-mosfet-unipolar-55v-17a-800mw-sot23,2026-10-20
+Electrobase,MCP7940N-I/SN,1,1,шт.,1.5,1.50,U301,0,https://electrobase.lv/katalogs/rtc-shemas/ic-rtc-circuit-i2c-sram-64bsram-1855vdc-so8-4085degc-tube-0,2026-10-20
+Electrobase,ABS07-32.768KHZ-7-T,1,1,шт.,0.79,0.79,Y301,0,https://electrobase.lv/katalogs/kvarca-generatori-tht/resonator-ceramic-32768khz-20ppm-7pf-smd-32x15x09mm,2026-10-20
+Salvats,C1206C100J5GAC,2,2,шт.,0.1,0.20,C301 C302,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/10pf-1206-y5v-50-z-smd-kondensators-1206,2026-10-20
+Salvats,BC-2001,1,1,шт.,0.33,0.33,BT301,0,https://www.salvats.lv/lv/baterijas-turetaji-1/bateriju-turetajs-metaliska-cemme-cr2032-1-baterija,2026-10-20
+Salvats,BAT-CR2032/P,1,1,шт.,0.75,0.75,,1,https://www.salvats.lv/lv/litija-baterijas/cr2032-litija-baterija-30v-o20x32mm-panasonic-442g,2026-10-20
+Electrobase,MEM2061-01-188-00-A,1,1,шт.,1.74,1.74,J301,0,https://electrobase.lv/katalogs/savienojumi-kartem/connector-cards-microsd-push-push-smt-gold-flash-pin-8-0,2026-10-20
+Electrobase,SMBJ26A-E3/52,1,1,шт.,0.5,0.50,D101,0,https://electrobase.lv/katalogs/diodes-transil-smd-vienvirziena/diode-tvs-600w-289319v-143a-unidirectional-5-smbj,2026-10-20
+Salvats,3413.0330.11,1,1,шт.,0.75,0.75,F101,0,https://www.salvats.lv/lv/drosinataji-smd-1206-32x16x06mm/drosinatajs-smd-1206-15a-63v-fast,2026-10-20
+Salvats,3413.0327.11,1,1,шт.,0.8,0.80,F102,0,https://www.salvats.lv/lv/drosinataji-smd-1206-32x16x06mm/drosinatajs-smd-1206-8a-63v-fast,2026-10-20
+Salvats,3413.0224.11,1,1,шт.,0.86,0.86,F103,0,https://www.salvats.lv/lv/drosinataji-smd-1206-32x16x06mm/drosinatajs-smd-1206-63a-63v-fast,2026-10-20
+Salvats,3403.0169.11,3,3,шт.,0.78,2.34,F104 F105 F401,0,https://www.salvats.lv/lv/drosinataji-smd-10x3x3mm-umt-leni/2a-umt-drosinataji-leni-250vac125vdc-101x3x3mm-smd,2026-10-20
+Salvats,3403.0166.11,1,1,шт.,0.75,0.75,F106,0,https://www.salvats.lv/lv/drosinataji-smd-10x3x3mm-umt-leni/1a-umt-drosinataji-leni-250vac125vdc-101x3x3mm-smd,2026-10-20
+Salvats,USBLC6-2SC6,2,2,шт.,0.67,1.34,U401 U402,0,https://www.salvats.lv/lv/u/usblc6-2sc6-smd-mikroshema-esd-protection-sot23-6,2026-10-20
+Salvats,ESDA6V1L,2,2,шт.,0.26,0.52,D411 D421,0,https://www.salvats.lv/lv/supresori-smd-p6/esda6v1lel61-smd-diode-transil-61v-300w-double-common-anode-sot23,2026-10-20
+Salvats,DG301R-5.0-2P12,2,2,шт.,0.35,0.70,J101 J701,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-25mm2-300v16a-10x76x10mm-taisns,2026-10-20
+Salvats,DG306-5.0-2P12,11,11,шт.,0.32,3.52,J401 J402 J403 J411 J412 J421 J422 J501 J601 J602 J702,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-15mm2-250v15a-10x8x10mm,2026-10-20
+Salvats,TACTB-64K-F,2,2,шт.,0.35,0.70,SW201 SW202,0,https://www.salvats.lv/lv/taktumembranas-sledzi/mikrosledzejs-horizontals-spst-no-off-on-005a12vdc-smd-5x5x2mm-25n-l05mm,2026-10-20
+Salvats,LM2903D-ST,1,1,шт.,0.37,0.37,U802,0,https://www.salvats.lv/lv/l/lm2903d-smd-mikroshema-comparator-low-power-comp-2-500ns-236v-so8,2026-10-20
+Salvats,BAT54-DIO,1,1,шт.,0.06,0.06,D801,0,https://www.salvats.lv/lv/diodes-sotki-smd-1/bat54l4-smd-diode-schottky-30v-02a-5ns-sot23,2026-10-20
+Salvats,ZL2019-20,1,1,шт.,0.63,0.63,J201,0,https://www.salvats.lv/lv/listes-un-nuju-ligzdas/254mm-20pin-stekersstekers-starpplates-savienotajs-104mm-1,2026-10-20
+Salvats,SMD1206-1K-1%,7,7,шт.,0.03,0.21,R104 R503 R504 R511 R603 R604 R611,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/1k-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-10K-1%,5,5,шт.,0.03,0.15,R102 R510 R610 R813 R814,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/10k-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-220R-1%,3,3,шт.,0.03,0.09,R301 R302 R705,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/220r-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206 4K7 1%,2,2,шт.,0.04,0.08,R308 R309,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/4k7-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-100R-1%,2,2,шт.,0.03,0.06,R401 R402,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/100r-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-2K2-1%,2,2,шт.,0.03,0.06,R703 R706,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/2k2-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-6K2-1%,3,3,шт.,0.03,0.09,R505 R508 R608,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/6k2-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,CRCW12061K20FKTABC,1,1,шт.,0.03,0.03,R506,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/1k2-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206 5K6 1%,4,4,шт.,0.03,0.12,R605 R810 R811 R816,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/5k6-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-82R,1,1,шт.,0.03,0.03,R606,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/82r-1206-5-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206 56K 1%,3,3,шт.,0.03,0.09,R507 R607 R809,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/56k-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-1M-1%,1,1,шт.,0.03,0.03,R812,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/1m-1206-1-smd-rezistors-1206,2026-10-20
+Electrobase,L7987,1,1,шт.,4.09,4.09,U101,0,https://electrobase.lv/katalogs/sprieguma-reguletaji-dcdc-shemas/driver-dcdc-converter-uin-4561vdc-uout-0861vdc-3a-smd,2026-10-20
+Electrobase,JNRH1207-330M-A,1,1,шт.,0.54,0.54,L101,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-33uh-ioper-52a-r-645mo-20-isat-45a,2026-10-20
+Salvats,SS510-YAN,2,2,шт.,0.35,0.70,D102 D701,0,https://www.salvats.lv/lv/diodes-sotki-smd-1/ss510-smd-diode-schottky-100v-5a-686x584x213mm-smc,2026-10-20
+Salvats,TC4427AEPA,1,1,шт.,2.53,2.53,U801,0,https://www.salvats.lv/lv/t/tc4427aepa-mikroshema-mosfet-driver-15a-18v-470mw-dip8,2026-10-20
+Salvats,SMD2512-4R7,2,2,шт.,0.11,0.22,R803 R807,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/4r7-2512635x32mm-1w-5-smd-55125c-rezistors-thick-film-2512,2026-10-20
+Salvats,CS2512-0R068-1%-HP,1,1,шт.,0.5,0.50,R601,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r068-2512635x32mm-2w-1-smd-55170c-rezistors-thick-film-2512,2026-10-20
+Salvats,CL21B105KBFNNNG,8,10,уп. 10 шт.,0.54,0.54,C103 C104 C105 C106 C109 C110 C111 C113,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/1mkf-50v-0805-10gab-mlcc-x7r-10-smd-kondensators-0805,2026-10-20
+Salvats,CC1206JRNPO9331,1,1,шт.,0.08,0.08,C114,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/330pf-1206-npo-50-j-smd-kondensators-1206,2026-10-20
+Salvats,SMD1206-3K9-1%,2,2,шт.,0.03,0.06,R103 R105,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/3k9-1206-1-smd-rezistors-1206-1,2026-10-20
+Salvats,SMD1206-33K-1%,2,2,шт.,0.03,0.06,R509 R609,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/33k-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-27K-1%,1,1,шт.,0.03,0.03,R106,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/27k-1206-1-smd-rezistors-1206,2026-10-20
+Salvats,SMD1206-68K,1,1,шт.,0.03,0.03,R107,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/68k-1206-5-smd-rezistors-1206,2026-10-20
+Electrobase,JNRH1207-220M-A,1,1,шт.,0.54,0.54,L601,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-22uh-ioper-54a-r-525o-30-isat-56a,2026-10-20
+Electrobase,C0805C104K1RACTU,2,2,шт.,0.16,0.32,C511 C611,0,https://electrobase.lv/katalogs/kondensatori-mlcc-smd-0201/capacitor-ceramic-mlcc-100nf-100v-x7r-10-smd-0805-0,2026-10-20
+Salvats,SMD0603-1K,8,10,уп. 10 шт.,0.11,0.11,R403 R411 R413 R421 R423 R707 R801 R805,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
+Salvats,SMD0603-10K,14,20,уп. 10 шт.,0.11,0.22,R201 R202 R303 R304 R305 R306 R307 R404 R414 R424 R701 R704 R815 R817,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/10k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
+Salvats,SMD0603-100K,8,10,уп. 10 шт.,0.11,0.11,R412 R422 R702 R708 R802 R804 R806 R808,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/100k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603,2026-10-20
+Salvats,RAD-DY-GF/3,2,2,шт.,0.77,1.54,,2,https://www.salvats.lv/lv/radiatori/radiators-30x30x15mm-88kw-to220-to247-aluminijs-melna-krasa,2026-10-20
+Salvats,TO220-SET,2,2,шт.,0.43,0.86,,2,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-mica-to220-kit-mitrikis-izolejosas-tapas-kontaktu-ziedlapina-montazu-skruve-pakrute-vizla,2026-10-20
+Salvats,SMICA-TO220-2,2,2,шт.,0.18,0.36,,2,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-smica-to-220-15x20x03mm-gumija-ar-izulatoru,2026-10-20

@@ -1,0 +1,18 @@
+{
+  "electrical_components": 188,
+  "testpads": 8,
+  "accessories": {
+    "BAT-CR2032/P": 1,
+    "RAD-DY-GF/3": 2,
+    "TO220-SET": 2,
+    "SMICA-TO220-2": 2
+  },
+  "rows": 76,
+  "shop_totals": {
+    "Electrobase": "33.30",
+    "Salvats": "40.83"
+  },
+  "shipping_EUR": "5.87",
+  "total_EUR": "80.00",
+  "price_basis": "Dated sourcing snapshot 2026-10-20; quantities now allocated to actual schematic. No reservation or order."
+}
