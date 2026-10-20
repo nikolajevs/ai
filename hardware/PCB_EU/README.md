@@ -14,9 +14,13 @@
 | [BOM_allocated.csv](BOM_allocated.csv) | Закупка с MPN/артикулами, количеством, реальными Ref и ссылками |
 | [BOM_allocated.json](BOM_allocated.json) | Тот же состав для автоматической проверки |
 | [design.json](design.json) | Полная спецификация выводов, цепей и компонентов |
+| [footprint_assignments.json](footprint_assignments.json) | Точные механические назначения для 17 MPN, источники и SHA-256 чертежей |
 | [procurement_2026-10-20.json](procurement_2026-10-20.json) | Датированный снимок цен/MOQ; не текущая оферта |
 | [review/validation.json](review/validation.json) | Версия KiCad, результат проверок, контрольные суммы исходников |
 | [review/connectivity.txt](review/connectivity.txt) | 49 проверок соединений и количества покупок |
+| [review/footprints.json](review/footprints.json) | Проверки 196 назначений, нумерации площадок, геометрии и загрузки KiCad |
+| [review/footprint_drc.json](review/footprint_drc.json) | DRC изолированных библиотечных образцов; не DRC изделия |
+| [Посадки 1](review/Footprints_mechanical_1.png) / [Посадки 2](review/Footprints_mechanical_2.png) | Отрисовка 12 механических посадок в KiCad, увеличенных отдельно |
 | [review/erc.json](review/erc.json) | ERC KiCad; стандартные отключённые категории перечислены в файле |
 | [review/netlist.xml](review/netlist.xml) | Netlist, экспортированный самим KiCad |
 | [libraries/SOURCES.md](libraries/SOURCES.md) | Источники графики символов и выбранных посадочных мест |
@@ -57,8 +61,12 @@ python3 hardware/PCB_EU/tools/run_checks.py --kicad-cli /path/to/kicad-cli --all
 python3 hardware/PCB_EU/tools/generate.py
 ```
 
+Специальные посадки воспроизводятся командой `python3 hardware/PCB_EU/tools/generate_footprints.py`. Дополнительный DRC библиотечных образцов: `python3 hardware/PCB_EU/tools/check_footprint_drc.py --kicad-cli /path/to/kicad-cli`; нужен `pcbnew` той же версии в выбранном Python. Этот DRC не проверяет PCB изделия.
+
 Генератор перезаписывает схемы: после ручного редактирования в KiCad сначала перенести изменения в генератор. ERC и проверка связности не подтверждают устойчивость преобразователей, температуру, посадочные места, габарит 100×100 или поведение реального прототипа.
 
-## Подготовка посадочных мест
+## Посадочные места
 
-В `libraries/EU_Mechanical.pretty/` подготовлены два кандидата для F104/F105/F106/F401 и U101. Проверены численные размеры и номера площадок; привязка к генератору и схеме ожидает загрузки и визуального контроля KiCad 10.0.6. Источники и полный статус — в [DESIGN.md](DESIGN.md) и [libraries/SOURCES.md](libraries/SOURCES.md). Новая проверка KiCad и размещение в этот сеанс не выполнялись из-за недоступного локального исполнения; параметры закупки и электрические соединения текущей схемы сохранены.
+Все 33 ранее пустых назначения заполнены; всего назначены 196 позиций и 32 уникальные посадки. Для 33 Ref выполнена сверка с чертежами, для остальных 163 пока сохранён пакетный статус. Все 32 файла загружены и отрисованы KiCad 10.0.7; схема повторно прошла ERC 0/0 и 49 проверок соединений. DRC изолированных библиотечных образцов: 0 геометрических нарушений и 13 неразведённых соединений одноимённых площадок. Физическая сборка и проверка KiCad 10.0.6 не выполнены.
+
+Источники, геометрия и ограничения — в [DESIGN.md](DESIGN.md) и [libraries/SOURCES.md](libraries/SOURCES.md). Контур платы, размещение в 100×100 мм, радиаторы и трассировка ещё не подготовлены. Оценка закупки осталась 80,00 €.
