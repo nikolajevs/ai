@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-20T19:23:18",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479",
+            "violations": []
+        },
+        {
+            "path": "/01 | 24 V input and 12 V auxiliary supply/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/60d5a692-5df6-5cd2-92c0-981fb564fa6c",
+            "violations": []
+        },
+        {
+            "path": "/02 | 3.3 V supply and ESP32/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/1ea8898b-cf8f-5207-a9ab-c1c85abd966d",
+            "violations": []
+        },
+        {
+            "path": "/03 | RTC, battery and microSD/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/f564091f-8583-5205-9c3f-0ba07a6cc17e",
+            "violations": []
+        },
+        {
+            "path": "/04 | SHT4x, float and two 4-wire fans/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/d9558033-80ea-5cd5-96a2-1734f0d121e1",
+            "violations": []
+        },
+        {
+            "path": "/05 | LED boost channel 1/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/b5335c48-cc56-5a1c-ac80-c828837ea929",
+            "violations": []
+        },
+        {
+            "path": "/06 | LED boost channel 2/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/d782ed65-5def-5dc4-af52-9f293d0c580a",
+            "violations": []
+        },
+        {
+            "path": "/07 | PTC heater and 24 V pump/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/4bb43062-ac97-5d39-802c-bf888ef151ca",
+            "violations": []
+        },
+        {
+            "path": "/08 | LED gate drive and hardware inhibit/",
+            "uuid_path": "/06532805-118c-508c-83b1-07900809d479/5908ee75-8829-5c5d-81e3-944d448b3593",
+            "violations": []
+        }
+    ],
+    "source": "PCB_EU.kicad_sch"
+}

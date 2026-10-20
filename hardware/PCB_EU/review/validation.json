@@ -1,0 +1,36 @@
+{
+  "stage": "schematic draft only",
+  "date": "2026-10-20",
+  "kicad_version": "10.0.7",
+  "repository_target_version": "10.0.6",
+  "target_version_verified": false,
+  "erc_errors": 0,
+  "erc_warnings": 0,
+  "default_ignored_erc_checks": [
+    "footprint_filter",
+    "four_way_junction",
+    "simulation_model_issue",
+    "single_global_label"
+  ],
+  "project_erc_exclusions": [],
+  "connectivity_checks": 49,
+  "connected_pins": 488,
+  "purchased_electrical_components": 188,
+  "pcb_drc": "not applicable: no PCB exists yet",
+  "firmware_build": "not performed: old firmware is incompatible",
+  "source_sha256": {
+    "BOM_allocated.json": "5c1bfee07a7bcb324256032249e7d249b2fdb35a0e413d13b96a3d45481ce2d3",
+    "Control.kicad_sch": "a5ca1451ebaf3cd63ecc5cf672d1b18317f08cd4d1c9f56aa1ae8c93c7900706",
+    "InputPower.kicad_sch": "6b80fda5b119f2380f25d9217918778079f270881e69d13ef05d5ca3ede385a7",
+    "Interfaces.kicad_sch": "5a08d479607f8561e3a916ee1da94209edacea9b30981b651954c72e98a0ff8a",
+    "LED1.kicad_sch": "4d5ad94d309b26300c41fed4d509b9fd8febece2bae035b1dc57f7c7ec51240c",
+    "LED2.kicad_sch": "6c71921185426f3d16b7e578bc9de8a76528fa3fbe2fce606feb5f8f57eab3f9",
+    "Loads.kicad_sch": "48bb7fb8b21e0d2e6668dd00cbce118682d278f06994bc16a4f2a82e616fc55a",
+    "MCU.kicad_sch": "f3e31f218946bb8cfa020887a765d5408f04716da8731fc046629ac8d8807dac",
+    "PCB_EU.kicad_pro": "a622bed6dae3f692a1927b99be3889cbfaae3ecd28b560bc063932f5e2c4451a",
+    "PCB_EU.kicad_sch": "da14269c1ed8ecd02c6233b40fabe9995250a5df78452f25d6f1cf1dba298ad8",
+    "Peripherals.kicad_sch": "ce403db4048b40eca8dad947352d210126248b19debd4d7d44db8c6cc41272c5",
+    "design.json": "3f8e3902105a55d58d1a18e934822f43e531a5070c6b8ccfe3714c3fa1663439",
+    "libraries/EU.kicad_sym": "27ad4c27dbdb93e5fcb46bba6f88098c63aa69e63078d1794b1d9a1fe03f2e1d"
+  }
+}
