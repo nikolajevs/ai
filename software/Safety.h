@@ -62,40 +62,43 @@ constexpr uint8_t sensirionCrc8(const uint8_t *data, int len) {
 
 struct RtcFields { int year, month, day, hour, minute, second; };
 
-// DS3231 register format. Reject OSF, malformed BCD and impossible calendar dates.
-constexpr bool decodeDs3231(const uint8_t (&raw)[7], uint8_t status, RtcFields &out) {
-  if (status & 0x80) return false;
-  if ((raw[0] & 0x80) || (raw[1] & 0x80) || (raw[2] & 0x80) ||
-      (raw[4] & 0xc0) || (raw[5] & 0xe0)) return false;
-  const bool twelveHour = raw[2] & 0x40;
-  int value[7] = {};
-  for (int i = 0; i < 7; ++i) {
-    uint8_t bcd = i == 2 ? raw[i] & (twelveHour ? 0x1f : 0x3f) : raw[i];
-    if ((bcd & 15) > 9 || (bcd >> 4) > 9) return false;
-    value[i] = (bcd >> 4) * 10 + (bcd & 15);
-  }
-  if (twelveHour) {
-    if (value[2] < 1 || value[2] > 12) return false;
-    value[2] = value[2] % 12 + ((raw[2] & 0x20) ? 12 : 0);
-  }
-  if (!validCalendar(2000 + value[6], value[5], value[4], value[2], value[1], value[0])) return false;
-  out = {2000 + value[6], value[5], value[4], value[2], value[1], value[0]};
-  return true;
-}
+constexpr uint8_t MCP7940N_ADDR = 0x6f;
+constexpr uint8_t MCP7940N_ST = 0x80;
+constexpr uint8_t MCP7940N_OSCRUN = 0x20;
+constexpr uint8_t MCP7940N_VBATEN = 0x08;
 
-// PCF8563 registers 02h..08h (board v0.20). VL (bit 7 of 02h) means clock integrity is not
-// guaranteed after a supply loss. Unused bits are undefined and masked; the century bit is
-// ignored because the calendar is limited to 2024..2099 anyway.
-constexpr bool decodePcf8563(const uint8_t (&raw)[7], RtcFields &out) {
-  if (raw[0] & 0x80) return false;
-  const uint8_t mask[7] = {0x7f, 0x7f, 0x3f, 0x3f, 0x07, 0x1f, 0xff};
+// MCP7940N 00h..06h: seconds/ST, minutes, hours, weekday/status, date, month/LPYR, year.
+// PWRFAIL is normal after running on a good battery; it is not an oscillator-stop flag.
+// Accept only the board's 24-hour format and an enabled, running, battery-backed clock.
+constexpr bool decodeMcp7940n(const uint8_t (&raw)[7], RtcFields &out) {
+  if (!(raw[0] & MCP7940N_ST) || !(raw[3] & MCP7940N_OSCRUN) || !(raw[3] & MCP7940N_VBATEN)) return false;
+  if ((raw[1] & 0x80) || (raw[2] & 0xc0) || (raw[3] & 0xc0) ||
+      (raw[4] & 0xc0) || (raw[5] & 0xc0)) return false;
+  const uint8_t mask[7] = {0x7f, 0x7f, 0x3f, 0x07, 0x3f, 0x1f, 0xff};
   int value[7] = {};
   for (int i = 0; i < 7; ++i) {
     const uint8_t bcd = raw[i] & mask[i];
     if ((bcd & 15) > 9 || (bcd >> 4) > 9) return false;
     value[i] = (bcd >> 4) * 10 + (bcd & 15);
   }
-  if (!validCalendar(2000 + value[6], value[5], value[3], value[2], value[1], value[0])) return false;
-  out = {2000 + value[6], value[5], value[3], value[2], value[1], value[0]};
+  if (value[3] < 1 || value[3] > 7 ||
+      !validCalendar(2000 + value[6], value[5], value[4], value[2], value[1], value[0])) return false;
+  out = {2000 + value[6], value[5], value[4], value[2], value[1], value[0]};
+  return true;
+}
+
+constexpr uint8_t rtcBcd(int value) { return uint8_t((value / 10) * 16 + value % 10); }
+
+// Final register image. The writer clears ST while loading the calendar, then sets it last.
+constexpr bool encodeMcp7940n(const RtcFields &time, uint8_t weekday, uint8_t (&raw)[7]) {
+  if (!validCalendar(time.year, time.month, time.day, time.hour, time.minute, time.second) ||
+      weekday < 1 || weekday > 7) return false;
+  raw[0] = rtcBcd(time.second) | MCP7940N_ST;
+  raw[1] = rtcBcd(time.minute);
+  raw[2] = rtcBcd(time.hour); // Bit 6 = 0: 24-hour mode.
+  raw[3] = weekday | MCP7940N_VBATEN;
+  raw[4] = rtcBcd(time.day);
+  raw[5] = rtcBcd(time.month);
+  raw[6] = rtcBcd(time.year - 2000);
   return true;
 }

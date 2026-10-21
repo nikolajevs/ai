@@ -1,4 +1,5 @@
 #include <esp_task_wdt.h>
+#include <driver/gpio.h>
 #include <Arduino.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -6,7 +7,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <SPIFFS.h>
-#include <RTClib.h>
+#include <RTClib.h> // DateTime/calendar only; MCP7940N registers are handled below.
 #include <Adafruit_SHT4x.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
@@ -17,6 +18,7 @@
 #include <atomic>
 #include <esp_random.h>
 #include <time.h>
+#include "Board.h"
 #include "Safety.h"
 #include "SafetyTests.h"
 #include "UbidotsCA.h"
@@ -34,19 +36,10 @@
 String admin_password; // Immutable after setup, never returned through HTTP.
 String csrf_token;
 
-// --- Распиновка периферии ---
-#define SD_CS_PIN     5
-#define LED_PWM_PIN   4
-#define FAN1_PWM_PIN  13
-#define FAN2_PWM_PIN  33
-#define PUMP_PIN      25 // реле/мосфет насоса полива — при необходимости смени на свободный GPIO
-#define HEATER_PIN    27 // реле обогревателя — при необходимости смени на свободный GPIO
-#define I2C_SDA_PIN   21 // Стандартные пины I2C для ESP32 (то, что использует Wire.begin() без аргументов)
-#define I2C_SCL_PIN   22
-#define WATER_LEVEL_PIN 32 // Датчик уровня воды в баке (свободный GPIO, не занят другой периферией)
-
-#define PWM_FREQ      5000
-#define PWM_RES       8
+// PCB_EU is the only supported board. GPIOs and PWM timing are defined in Board.h.
+#if !defined(CONFIG_IDF_TARGET_ESP32)
+#error "PCB_EU requires ESP32-WROOM-32E-N4 (classic ESP32, 4 MB flash)"
+#endif
 
 // --- Ограничения длины строковых настроек ---
 #define WIFI_SSID_MAX 32   // стандарт 802.11
@@ -121,6 +114,8 @@ struct State {
   int led_pwm;          // Текущий ШИМ, 0-255
   int fan1_pwm;
   int fan2_pwm;
+  uint32_t fan1_rpm;     // Diagnostic only, assuming two tach pulses per revolution.
+  uint32_t fan2_rpm;
   bool is_day;
   bool sht_online;
   bool rtc_online;
@@ -327,14 +322,49 @@ TaskHandle_t UbidotsTaskHandle = NULL;
 
 // --- Инициализация объектов ---
 Adafruit_SHT4x sht40 = Adafruit_SHT4x();
-// Плата v0.20: NXP PCF8563 (0x51). Готовый модуль DS3231 (0x68) на стенде тоже поддерживается:
-// микросхема определяется при каждом rtcBegin(), регистры читаются напрямую (readRTC()).
-enum class RtcChip : uint8_t { None, Pcf8563, Ds3231 };
-RTC_PCF8563 pcf8563;
-RTC_DS3231 ds3231;
-RtcChip rtc_chip = RtcChip::None;
+bool rtc_present = false; // MCP7940N at 0x6f; presence alone never makes time trusted.
 AsyncWebServer server(80);
 Preferences preferences;
+
+// Tach readings are diagnostics only. No climate/watering/safety decision uses RPM.
+static volatile uint32_t fan1_tach_pulses = 0, fan2_tach_pulses = 0;
+static portMUX_TYPE tachMux = portMUX_INITIALIZER_UNLOCKED;
+static uint32_t last_tach_ms = 0;
+
+void ARDUINO_ISR_ATTR fan1TachISR() {
+  portENTER_CRITICAL_ISR(&tachMux);
+  fan1_tach_pulses = fan1_tach_pulses + 1;
+  portEXIT_CRITICAL_ISR(&tachMux);
+}
+
+void ARDUINO_ISR_ATTR fan2TachISR() {
+  portENTER_CRITICAL_ISR(&tachMux);
+  fan2_tach_pulses = fan2_tach_pulses + 1;
+  portEXIT_CRITICAL_ISR(&tachMux);
+}
+
+void updateFanRpm(uint32_t nowMs) {
+  const uint32_t elapsed = elapsedMs(nowMs, last_tach_ms);
+  if (elapsed < 1000) return;
+  uint32_t pulses1, pulses2;
+  portENTER_CRITICAL(&tachMux);
+  pulses1 = fan1_tach_pulses;
+  pulses2 = fan2_tach_pulses;
+  fan1_tach_pulses = 0;
+  fan2_tach_pulses = 0;
+  portEXIT_CRITICAL(&tachMux);
+  last_tach_ms = nowMs;
+  state.fan1_rpm = uint64_t(pulses1) * 60000 / (uint64_t(elapsed) * FAN_TACH_PULSES_PER_REV);
+  state.fan2_rpm = uint64_t(pulses2) * 60000 / (uint64_t(elapsed) * FAN_TACH_PULSES_PER_REV);
+}
+
+void stopPumpAtDeadline() {
+  if (state.pump_active && elapsedMs(millis(), pump_start_ms) >= pump_duration_ms) {
+    state.pump_active = false;
+    digitalWrite(PUMP_PIN, LOW);
+    logPrintln("[Watering] Pump stopped at deadline.");
+  }
+}
 
 // --- Хелперы валидации входных данных (защита от некорректных значений из веб-формы) ---
 int clampInt(int v, int lo, int hi) {
@@ -818,7 +848,7 @@ void recoverI2CBus() {
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
 }
 
-// Читает датчик уровня воды. Предполагаемая схема: пин подтянут к VCC (INPUT_PULLUP),
+// Читает датчик уровня воды. PCB_EU: внешняя подтяжка 10k к 3,3 В, GPIO14 = INPUT;
 // датчик замыкает его на GND, когда вода есть — LOW = "вода в норме", HIGH = "воды нет".
 // Если у конкретного датчика логика обратная — поменяй местами LOW/HIGH здесь, в одном месте.
 bool isWaterAvailable() {
@@ -835,8 +865,8 @@ void logI2CScan() {
   for (uint8_t addr = 0x08; addr < 0x78; addr++) {
     Wire.beginTransmission(addr);
     if (Wire.endTransmission() != 0) continue;
-    const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" : addr == 0x51 ? " (PCF8563)" :
-                       addr == 0x68 ? " (DS3231)" : addr == 0x57 ? " (EEPROM модуля RTC)" : "";
+    const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" :
+                       addr == MCP7940N_ADDR ? " (MCP7940N)" : "";
     char item[40];
     snprintf(item, sizeof(item), " 0x%02X%s", addr, name);
     found += item;
@@ -883,56 +913,72 @@ void logSht4xDiagnosis() {
 }
 
 const char *rtcName() {
-  return rtc_chip == RtcChip::Pcf8563 ? "PCF8563" : rtc_chip == RtcChip::Ds3231 ? "DS3231" : "RTC";
+  return "MCP7940N";
 }
 
-// 1 — оставить 32.768 kHz на CLKOUT (контрольная точка TP301 платы v0.22), чтобы подобрать C304
-// частотомером; на время измерения нужна подтяжка ~10 кОм к +3V3. В обычной прошивке — 0.
-#ifndef RTC_CLKOUT_TRIM
-#define RTC_CLKOUT_TRIM 0
-#endif
-
-// Ищет микросхему часов: сначала PCF8563 платы v0.20, затем модуль DS3231.
-// PCF8563 после подачи питания выдаёт 32.768 kHz на CLKOUT (открытый сток, только TP301),
-// поэтому выход выключается — меньше ток от батарейки.
-bool rtcBegin() {
-  if (pcf8563.begin(&Wire)) {
-    rtc_chip = RtcChip::Pcf8563;
-    pcf8563.writeSqwPinMode(RTC_CLKOUT_TRIM ? PCF8563_SquareWave32kHz : PCF8563_SquareWaveOFF);
-    pcf8563.start(); // Снимает STOP, если бит когда-либо был установлен
-    return true;
-  }
-  rtc_chip = ds3231.begin(&Wire) ? RtcChip::Ds3231 : RtcChip::None;
-  return rtc_chip != RtcChip::None;
-}
-
-// Запись времени также сбрасывает флаг потери питания (VL у PCF8563, OSF у DS3231).
-void rtcAdjust(const DateTime &time) {
-  if (rtc_chip == RtcChip::Pcf8563) pcf8563.adjust(time);
-  else if (rtc_chip == RtcChip::Ds3231) ds3231.adjust(time);
-}
-
-bool readRtcRegisters(uint8_t addr, uint8_t reg, uint8_t *out, size_t count) {
-  Wire.beginTransmission(addr);
+bool readRtcRegisters(uint8_t reg, uint8_t *out, size_t count) {
+  Wire.beginTransmission(MCP7940N_ADDR);
   Wire.write(reg);
-  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(addr, count, true) != count) return false;
+  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(MCP7940N_ADDR, count, true) != count) return false;
   for (size_t i = 0; i < count; ++i) out[i] = Wire.read();
   return true;
 }
 
-// Do not use rtc.now() for failure detection: its API does not report I2C errors.
+bool writeRtcRegisters(uint8_t reg, const uint8_t *data, size_t count) {
+  Wire.beginTransmission(MCP7940N_ADDR);
+  Wire.write(reg);
+  const bool complete = Wire.write(data, count) == count;
+  return Wire.endTransmission() == 0 && complete;
+}
+
+bool rtcBegin() {
+  uint8_t raw[7];
+  rtc_present = readRtcRegisters(0x00, raw, sizeof(raw));
+  if (!rtc_present) return false;
+  if (!(raw[3] & MCP7940N_VBATEN)) {
+    const uint8_t weekday = (raw[3] & 0x07) | MCP7940N_VBATEN;
+    if (!writeRtcRegisters(0x03, &weekday, 1)) return false;
+    // Writing RTCWKDAY also clears PWRFAIL (DS20005010J); it is not a validity flag.
+  }
+  // Never start a stopped, possibly stale calendar here. ST is set only after the
+  // user supplies a complete valid date/time; readRTC() requires ST and OSCRUN.
+  return true;
+}
+
+bool waitRtcOscillator(bool running) {
+  const uint32_t started = millis();
+  do {
+    stopPumpAtDeadline(); // Setting the clock must not extend an active watering.
+    uint8_t weekday;
+    if (!readRtcRegisters(0x03, &weekday, 1)) return false;
+    if (bool(weekday & MCP7940N_OSCRUN) == running) return true;
+    delay(5);
+  } while (elapsedMs(millis(), started) < 1000);
+  return false; // A missing/stuck crystal must never make a write look successful.
+}
+
+// Microchip DS20005010J section 5.3: stop, wait for OSCRUN=0, load the calendar,
+// then start. ST is written last so a failed/partial calendar write stays untrusted.
+bool rtcAdjust(const DateTime &time) {
+  uint8_t raw[7];
+  const RtcFields fields{time.year(), time.month(), time.day(), time.hour(), time.minute(), time.second()};
+  if (!encodeMcp7940n(fields, time.dayOfTheWeek() + 1, raw)) return false;
+  const uint8_t control = 0; // Crystal oscillator; unused MFP square wave/alarms off.
+  const uint8_t stopped = 0;
+  if (!writeRtcRegisters(0x07, &control, 1) || !writeRtcRegisters(0x00, &stopped, 1) ||
+      !waitRtcOscillator(false)) return false;
+  const uint8_t secondsWithStart = raw[0];
+  raw[0] &= ~MCP7940N_ST;
+  if (!writeRtcRegisters(0x00, raw, sizeof(raw)) ||
+      !writeRtcRegisters(0x00, &secondsWithStart, 1)) return false;
+  return waitRtcOscillator(true);
+}
+
 bool readRTC(DateTime &result) {
+  // One sequential read uses the MCP7940N's rollover-safe snapshot buffers (section 5.3).
   uint8_t raw[7];
   RtcFields fields{};
-  if (rtc_chip == RtcChip::Pcf8563) {
-    if (!readRtcRegisters(0x51, 0x02, raw, sizeof(raw)) || !decodePcf8563(raw, fields)) return false;
-  } else if (rtc_chip == RtcChip::Ds3231) {
-    uint8_t status = 0;
-    if (!readRtcRegisters(0x68, 0x00, raw, sizeof(raw)) || !readRtcRegisters(0x68, 0x0f, &status, 1) ||
-        !decodeDs3231(raw, status, fields)) return false;
-  } else {
-    return false;
-  }
+  if (!readRtcRegisters(0x00, raw, sizeof(raw)) || !decodeMcp7940n(raw, fields)) return false;
   result = DateTime(fields.year, fields.month, fields.day, fields.hour, fields.minute, fields.second);
   return true;
 }
@@ -951,7 +997,8 @@ DateTime getSafeDateTime() {
     state.rtc_online = false;
   }
 
-  // Если RTC сломан, рассчитываем время программно на основе millis()
+  // Backup time keeps the UI/climate/CSV running, but cannot authorize watering.
+  state.clock_trusted = false;
   advanceBackupClock(millis(), last_rtc_check_ms, backup_unixtime);
   return DateTime(backup_unixtime);
 }
@@ -1042,14 +1089,21 @@ bool authorize(AsyncWebServerRequest *request) {
 }
 
 void setup() {
-  pinMode(PUMP_PIN, OUTPUT);
-  digitalWrite(PUMP_PIN, LOW);
+  // FIRST: PCB_EU power outputs off, before Serial, buses, NVS, WiFi or PWM.
+  // Preload LOW before enabling outputs, even if a software reset left a HIGH latch.
+  // Arduino-ESP32 3.x digitalWrite() cannot preload a pin before pinMode().
+  gpio_set_level(gpio_num_t(LED_PWM_PIN), LOW);
+  gpio_set_level(gpio_num_t(HEATER_PIN), LOW);
+  gpio_set_level(gpio_num_t(PUMP_PIN), LOW);
+  pinMode(LED_PWM_PIN, OUTPUT);
+  digitalWrite(LED_PWM_PIN, LOW);
   pinMode(HEATER_PIN, OUTPUT);
   digitalWrite(HEATER_PIN, LOW);
-  // Лампа и вентиляторы тоже гасятся сразу: ШИМ подключается только в конце setup(), и до
-  // тех пор эти выходы несколько секунд оставались ненастроенными (висели в воздухе).
-  const int pwmPins[] = {LED_PWM_PIN, FAN1_PWM_PIN, FAN2_PWM_PIN};
-  for (int pin : pwmPins) {
+  pinMode(PUMP_PIN, OUTPUT);
+  digitalWrite(PUMP_PIN, LOW);
+  // LOW opens each fan's external PWM wire: full airflow throughout setup/reset.
+  for (int pin : {FAN1_PWM_PIN, FAN2_PWM_PIN}) {
+    gpio_set_level(gpio_num_t(pin), LOW);
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
   }
@@ -1069,7 +1123,23 @@ void setup() {
     esp_task_wdt_init(4, true);
     esp_task_wdt_add(NULL);
   #endif
-  Wire.begin();
+  // Explicit channels keep LED timer 0 separate from the 25 kHz fan timer 1.
+  if (!ledcAttachChannel(LED_PWM_PIN, LED_PWM_FREQ, PWM_RES, LED_PWM_CHANNEL) ||
+      !ledcAttachChannel(FAN1_PWM_PIN, FAN_PWM_FREQ, PWM_RES, FAN1_PWM_CHANNEL) ||
+      !ledcAttachChannel(FAN2_PWM_PIN, FAN_PWM_FREQ, PWM_RES, FAN2_PWM_CHANNEL)) {
+    for (int pin : {LED_PWM_PIN, FAN1_PWM_PIN, FAN2_PWM_PIN}) {
+      ledcDetach(pin);
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, LOW);
+    }
+    Serial.println("PWM initialization failed: LED/PTC/pump off, fans at full speed.");
+    while (true) { esp_task_wdt_reset(); delay(1000); }
+  }
+  ledcWrite(LED_PWM_PIN, 0);
+  ledcWrite(FAN1_PWM_PIN, fanGpioDuty(PWM_MAX));
+  ledcWrite(FAN2_PWM_PIN, fanGpioDuty(PWM_MAX));
+
+  Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
   delay(300); // Даём I2C-шине и датчикам (SHT4x/RTC) стабилизироваться после подачи питания —
               // без этой паузы begin() может провалиться из-за гонки при старте платы
   recoverI2CBus(); // На случай, если шина осталась "залипшей" ещё с прошлого включения
@@ -1123,6 +1193,7 @@ void setup() {
   last_watering_day = preferences.getUInt("last_water", 0);
 
   state.is_day = true;
+  state.fan1_pwm = state.fan2_pwm = PWM_MAX; // Logical airflow; boot GPIO duty is zero.
 
   // Безопасная инициализация датчиков с проверкой работоспособности.
   // Пробуем несколько раз с паузой — при старте платы I2C-шина/датчик могут быть
@@ -1155,30 +1226,31 @@ void setup() {
     }
   }
   if (!state.rtc_online) {
-    if (rtc_chip != RtcChip::None) {
+    if (rtc_present) {
       logPrintf("ОШИБКА: %s отвечает, но время недостоверно (потеря питания/батарейки) — выставьте часы.\n", rtcName());
     } else {
-      logPrintln("ОШИБКА: RTC (PCF8563 0x51 / DS3231 0x68) не найден после 5 попыток!");
+      logPrintln("ОШИБКА: MCP7940N (0x6F) не найден после 5 попыток!");
     }
     last_rtc_check_ms = millis();
   }
   logI2CScan(); // Одна строка при каждом старте: кто вообще отвечает на шине
 
-  if (!SD.begin(SD_CS_PIN)) logPrintln("SD-карта не обнаружена.");
+  SPI.begin(SD_SCK_PIN, SD_MISO_PIN, SD_MOSI_PIN, SD_CS_PIN);
+  if (!SD.begin(SD_CS_PIN, SPI)) logPrintln("SD-карта не обнаружена.");
   if (!SPIFFS.begin(true)) logPrintln("Ошибка SPIFFS!");
 
-  pinMode(PUMP_PIN, OUTPUT);
-  digitalWrite(PUMP_PIN, LOW); // насос выключен при старте
-
-  pinMode(HEATER_PIN, OUTPUT);
-  digitalWrite(HEATER_PIN, LOW); // обогреватель выключен при старте
-
-  // Датчик уровня воды: подтяжка к VCC, замыкание на GND = "вода есть".
+  // Датчик уровня воды: внешняя подтяжка 10k; GPIO32 — только выход нагревателя.
   // Если у твоего датчика логика обратная (замыкание = "воды нет") — поменяй LOW на HIGH в isWaterAvailable().
-  pinMode(WATER_LEVEL_PIN, INPUT_PULLUP);
+  pinMode(WATER_LEVEL_PIN, INPUT);
   delay(10); // Даём входу установиться: с фильтрующим конденсатором первое чтение иначе ложный LOW
   const bool waterNow = isWaterAvailable();
   water_level = {waterNow, waterNow, (uint32_t)millis()};
+
+  pinMode(FAN1_TACH_PIN, INPUT);
+  pinMode(FAN2_TACH_PIN, INPUT);
+  last_tach_ms = millis();
+  attachInterrupt(digitalPinToInterrupt(FAN1_TACH_PIN), fan1TachISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(FAN2_TACH_PIN), fan2TachISR, FALLING);
 
   // AP+STA сразу и навсегда: точка доступа больше не передёргивается задачей телеметрии
   WiFi.mode(WIFI_AP_STA);
@@ -1220,6 +1292,8 @@ void setup() {
     json += "\"led\":" + String(st.led_pwm) + ",";
     json += "\"fan1\":" + String(st.fan1_pwm) + ",";
     json += "\"fan2\":" + String(st.fan2_pwm) + ",";
+    json += "\"fan1_rpm\":" + String(st.fan1_rpm) + ",";
+    json += "\"fan2_rpm\":" + String(st.fan2_rpm) + ",";
     json += "\"time\":\"" + now.timestamp(DateTime::TIMESTAMP_TIME) + "\",";
     json += "\"date\":\"" + now.timestamp(DateTime::TIMESTAMP_DATE) + "\",";
     json += "\"is_day\":" + String(st.is_day ? "true" : "false") + ",";
@@ -1381,21 +1455,13 @@ void setup() {
   server.onNotFound([](AsyncWebServerRequest *request){ request->send(404, "text/plain", "Not found"); });
 
   server.begin();
-
-  for (int pin : pwmPins) {
-    ledcAttach(pin, PWM_FREQ, PWM_RES);
-    ledcWrite(pin, 0); // Явный ноль до первого расчёта климата
-  }
 }
 
 void loop() {
   static unsigned long lastClimateTime = 0;
   unsigned long currentMillis = millis();
-  if (state.pump_active && elapsedMs(currentMillis, pump_start_ms) >= pump_duration_ms) {
-    state.pump_active = false;
-    digitalWrite(PUMP_PIN, LOW);
-    logPrintln("[Watering] Pump stopped at deadline.");
-  }
+  stopPumpAtDeadline();
+  updateFanRpm(currentMillis);
   tryRecoverRTC(currentMillis); // Не блокирует: сам ограничивает частоту попыток внутри
   debounceUpdate(water_level, isWaterAvailable(), currentMillis, WATER_DEBOUNCE_MS);
 
@@ -1444,19 +1510,25 @@ void loop() {
   if (requested != 0) {
     DateTime userTime(requested);
     state.rtc_online = false;
-    if (rtcBegin()) {
-      rtcAdjust(userTime);
+    if (rtcBegin() && rtcAdjust(userTime)) {
       DateTime checked;
       state.rtc_online = readRTC(checked) && checked.unixtime() >= requested && checked.unixtime() - requested <= 2;
     }
-    state.clock_trusted = true;
+    state.clock_trusted = state.rtc_online;
     rtc_recovery_streak = 0;
     backup_unixtime = requested;
     last_rtc_check_ms = millis();
     now = userTime;
     cached_unixtime = requested;
     watering_armed_from = requested; // Полив, "пропущенный" по новым часам, не догоняем
-    logPrintln("[RTC] Часы выставлены вручную через веб-интерфейс");
+    logPrintln(state.rtc_online ? "[RTC] MCP7940N: время записано и проверено."
+                               : "[RTC] Запись/проверка не удалась; полив заблокирован, время в интерфейсе резервное.");
+  }
+
+  if (!state.clock_trusted && state.pump_active) {
+    state.pump_active = false;
+    digitalWrite(PUMP_PIN, LOW);
+    logPrintln("[Watering] RTC time untrusted; pump stopped.");
   }
 
   if (currentMillis - lastClimateTime >= 10000) {
@@ -1643,7 +1715,7 @@ void loop() {
 
     if (drying_mode) target_led = 0; // В сушке свет не включаем и при отказе датчика
     // Страхуемся от выхода за пределы 8-битного ШИМ (map() с кривыми границами это умеет)
-    target_led  = clampInt(target_led, 0, 255);
+    target_led  = ledDutyForRequest(target_led);
     target_fan1 = clampInt(target_fan1, 0, 255);
     target_fan2 = clampInt(target_fan2, 0, 255);
 
@@ -1658,8 +1730,8 @@ void loop() {
     state.fan2_pwm = target_fan2;
 
     ledcWrite(LED_PWM_PIN, target_led);
-    ledcWrite(FAN1_PWM_PIN, target_fan1);
-    ledcWrite(FAN2_PWM_PIN, target_fan2);
+    ledcWrite(FAN1_PWM_PIN, fanGpioDuty(target_fan1));
+    ledcWrite(FAN2_PWM_PIN, fanGpioDuty(target_fan2));
   }
 
   // Запись лога на SD-карту с флагами состояния
