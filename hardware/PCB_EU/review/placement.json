@@ -125,8 +125,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "90ca634415047dc10792a52473db7572d859e3d22112e3cc6514688f4771338d",
+    "PCB_EU.kicad_pcb": "e68295eb89d385aa3e824e16c79cdef7b36f57f08111ceff0648badfa6cf5f33",
     "placement.json": "029b6f73354419899290bb19bab74a1559f0a3a15212b1ba49fabf5018c66481",
-    "netlist.xml": "ef365177dec1c38dc4b33c05a0a2886f77d2974052614fdc8897b81ff2c244cb"
+    "netlist.xml": "f3376f0249a4dd3b113b4012ee868a08ae4f87881e73559c3dc24a9a1be0ad66"
   }
 }

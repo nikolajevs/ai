@@ -95,11 +95,19 @@ def main():
     check('L7987: counterclockwise 16 lead map, 0.65 pitch and 3x3 EP17',
           all(geom(name,i,[-2.875,-2.275+(i-1)*.65],[1.55,.4]) for i in range(1,9)) and
           all(geom(name,i,[2.875,2.275-(i-9)*.65],[1.55,.4]) for i in range(9,17)) and geom(name,17,[0,0],[3,3]))
-    # Verify the imported geometry still matches the attributed upstream blobs.
+    # Only the 3D filename differs from the attributed upstream blobs.
+    # Reverse that exact token substitution, then hash ALL original bytes;
+    # any geometry, numbering, attribute or other change still fails.
+    from models3d import PREFIX, config as models_config
+    models = models_config()['footprints']
     for name,sha in [('Fuse_Schurter_UMT250','cbb208235980bc128463c367f6f680e68beb9030'),
                      ('HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm','3e3c314a9d47be6f4bea83ce8ed1b0ffd3de7064')]:
         raw=footprint(name)['path'].read_bytes()
-        check(name+': unchanged upstream Git blob',hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==sha)
+        old_path='${KISYS3DMOD}/'+('Fuse' if name.startswith('Fuse_') else 'Package_SO')+'.3dshapes/'+name+'.wrl'
+        new_path=PREFIX+models['EU_Mechanical:'+name]
+        check(name+': expected local model token present once',raw.count(new_path.encode())==1)
+        raw=raw.replace(new_path.encode(),old_path.encode(),1)
+        check(name+': upstream Git blob unchanged except 3D filename',hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==sha)
     name='TI_PWP0014A_LM3429'
     check('LM3429: TI 14-lead map, 0.65 pitch, 5.8 opposing-row pitch and 3.4x5 copper EP15',
           all(geom(name,i+1,[-2.9,-1.95+i*.65],[1.5,.45]) and geom(name,14-i,[2.9,-1.95+i*.65],[1.5,.45]) for i in range(7)) and geom(name,15,[0,0],[3.4,5]))

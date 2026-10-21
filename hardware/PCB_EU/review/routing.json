@@ -110,7 +110,7 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "90ca634415047dc10792a52473db7572d859e3d22112e3cc6514688f4771338d",
+    "PCB_EU.kicad_pcb": "e68295eb89d385aa3e824e16c79cdef7b36f57f08111ceff0648badfa6cf5f33",
     "routing.json": "9c1d7247dad21291f8546418d8a9c3a7a04c5b3d4063a7bcda65eada0d52b277"
   }
 }

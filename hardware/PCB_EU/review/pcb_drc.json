@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-21T08:58:52",
+    "date": "2026-10-21T12:51:52",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -3348,12 +3348,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [+24V_LED1] on B.Cu, length 1.2000 mm",
+                    "description": "Track [+24V_LED1] on F.Cu, length 1.2000 mm",
                     "pos": {
                         "x": 61.0,
-                        "y": 19.2
+                        "y": 18.0
                     },
-                    "uuid": "59447ea0-f0a2-5eea-b812-a5259125c62b"
+                    "uuid": "934777c8-020d-5a5c-9e81-e4b05726a512"
                 },
                 {
                     "description": "Pad 1 [+24V_LED1] of U501 on B.Cu",
@@ -3448,12 +3448,12 @@
                     "uuid": "b38d2e9a-b238-5100-bda6-9f9f0ebaca2e"
                 },
                 {
-                    "description": "Track [LED1_OUT] on B.Cu, length 4.6760 mm",
+                    "description": "Track [LED1_OUT] on F.Cu, length 2.0004 mm",
                     "pos": {
-                        "x": 76.0,
-                        "y": 51.0
+                        "x": 75.96,
+                        "y": 49.0
                     },
-                    "uuid": "e861c176-b5fe-5323-942c-041c4d5d8fe0"
+                    "uuid": "746e930c-c39e-5aa2-9070-a01522cf511e"
                 }
             ],
             "severity": "error",
@@ -3471,12 +3471,12 @@
                     "uuid": "f3135aad-3825-576c-9433-cfc95fb896ff"
                 },
                 {
-                    "description": "Track [LED1_OUT] on B.Cu, length 4.6760 mm",
+                    "description": "Track [LED1_OUT] on F.Cu, length 2.0004 mm",
                     "pos": {
-                        "x": 76.0,
-                        "y": 51.0
+                        "x": 75.96,
+                        "y": 49.0
                     },
-                    "uuid": "e861c176-b5fe-5323-942c-041c4d5d8fe0"
+                    "uuid": "746e930c-c39e-5aa2-9070-a01522cf511e"
                 }
             ],
             "severity": "error",
@@ -6660,12 +6660,12 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Via [LED1_SW] on F.Cu - B.Cu",
+                    "description": "Track [LED1_SW] on B.Cu, length 1.0000 mm",
                     "pos": {
-                        "x": 79.5,
+                        "x": 80.5,
                         "y": 44.8
                     },
-                    "uuid": "097f331e-c77f-5f6d-a389-9f9a2878350c"
+                    "uuid": "3bb3bef0-02f3-5575-afe0-4fa387c5943e"
                 },
                 {
                     "description": "Pad 1 [LED1_SW] of R507 on B.Cu",

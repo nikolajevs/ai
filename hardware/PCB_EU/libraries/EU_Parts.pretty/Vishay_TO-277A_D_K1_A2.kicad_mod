@@ -282,7 +282,7 @@
 		(uuid "12e88eba-8057-4881-a286-2f103616a48e")
 	)
 	(embedded_fonts no)
-	(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/TO-277A.step"
+	(model "${KIPRJMOD}/libraries/EU.3dshapes/TO-277A.step"
 		(offset
 			(xyz 0 0 0)
 		)
