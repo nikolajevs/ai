@@ -272,8 +272,7 @@ def models():
             tactile(),terminal('DG301R'),terminal('DG306'),battery(),microsd(),
             radial('Nichicon_UPW1H221MPD_D10_L16_P5',10,16,5,.6,'Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'),
             radial('Panasonic_EEUFR1E102_D10_L20_P5',10,20,5,.6,'Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'),
-            radial('Panasonic_EEUFR1J101LB_D8_L15_P5',8,15,5,.6,'Capacitor_THT:CP_Radial_D8.0mm_P3.50mm',
-                   'EEUFR1J101LB taped B leads are 5 mm; PCB holes are 3.5 mm. Physical fit is NOT verified.'),
+            radial('Panasonic_EEUFR1J101LB_D8_L15_P5',8,15,5,.6,'Capacitor_THT:CP_Radial_D8.0mm_P5.00mm'),
             heatsink_envelope()]
 
 

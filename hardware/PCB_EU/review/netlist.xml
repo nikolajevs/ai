@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/claude/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-21T16:55:02</date>
+    <date>2026-10-21T17:56:26</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
     <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -3294,12 +3294,12 @@
     </comp>
     <comp ref="C508">
       <value>100u 63V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</footprint>
       <fields>
         <field name="MPN">EEUFR1J101LB</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -3322,12 +3322,12 @@
     </comp>
     <comp ref="C509">
       <value>100u 63V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</footprint>
       <fields>
         <field name="MPN">EEUFR1J101LB</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -3350,12 +3350,12 @@
     </comp>
     <comp ref="C510">
       <value>100u 63V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</footprint>
       <fields>
         <field name="MPN">EEUFR1J101LB</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -3517,18 +3517,19 @@
       </units>
     </comp>
     <comp ref="Q501">
-      <value>IRF540ZPBF</value>
+      <value>TK22E10N1</value>
       <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
+      <datasheet>https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</datasheet>
       <fields>
-        <field name="MPN">IRF540ZPBF</field>
+        <field name="MPN">TK22E10N1</field>
         <field name="Design_note">Drain tab live. Separate insulated heatsink; exact assembly placement pending</field>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
-        <field name="Datasheet"/>
+        <field name="Datasheet">https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="NMOS" description=""/>
-      <property name="MPN" value="IRF540ZPBF"/>
+      <property name="MPN" value="TK22E10N1"/>
       <property name="Design_note" value="Drain tab live. Separate insulated heatsink; exact assembly placement pending"/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
@@ -4121,12 +4122,12 @@
     </comp>
     <comp ref="C608">
       <value>100u 63V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</footprint>
       <fields>
         <field name="MPN">EEUFR1J101LB</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -4149,12 +4150,12 @@
     </comp>
     <comp ref="C609">
       <value>100u 63V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</footprint>
       <fields>
         <field name="MPN">EEUFR1J101LB</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P5.00mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -4316,18 +4317,19 @@
       </units>
     </comp>
     <comp ref="Q601">
-      <value>IRF540ZPBF</value>
+      <value>TK22E10N1</value>
       <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
+      <datasheet>https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</datasheet>
       <fields>
-        <field name="MPN">IRF540ZPBF</field>
+        <field name="MPN">TK22E10N1</field>
         <field name="Design_note">Drain tab live. Separate insulated heatsink; exact assembly placement pending</field>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
-        <field name="Datasheet"/>
+        <field name="Datasheet">https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="NMOS" description=""/>
-      <property name="MPN" value="IRF540ZPBF"/>
+      <property name="MPN" value="TK22E10N1"/>
       <property name="Design_note" value="Drain tab live. Separate insulated heatsink; exact assembly placement pending"/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>

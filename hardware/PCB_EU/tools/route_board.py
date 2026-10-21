@@ -191,6 +191,9 @@ def import_session(board, ses, work):
             board.Delete(item)
 
 
+HOLE_TO_HOLE = 0.25  # board setup minimum hole-to-hole spacing, mm
+
+
 def drop_conflicts(board, fixed):
     """Delete imported router copper that breaks clearance to copper fixed before the router ran.
 
@@ -212,10 +215,21 @@ def drop_conflicts(board, fixed):
     others = [(t, box(t), item_layers(t)) for t in board.GetTracks() if t.m_Uuid.AsString() in fixed]
     others += [(pad, box(pad), item_layers(pad)) for fp in board.GetFootprints() for pad in fp.Pads()
                if pad.GetAttribute() != p.PAD_ATTRIB_NPTH]
+    holes = [(t.GetPosition(), t.GetDrillValue() // 2) for t in board.GetTracks()
+             if t.m_Uuid.AsString() in fixed and isinstance(t, p.PCB_VIA)]
+    holes += [(pad.GetPosition(), max(pad.GetDrillSize().x, pad.GetDrillSize().y) // 2)
+              for fp in board.GetFootprints() for pad in fp.Pads() if pad.HasHole()]
     dropped = []
     for item in list(board.GetTracks()):
         if item.m_Uuid.AsString() in fixed:
             continue
+        if isinstance(item, p.PCB_VIA):
+            # Hole spacing applies to every net, including the via's own.
+            pos, r = item.GetPosition(), item.GetDrillValue() // 2
+            if any((pos - at).EuclideanNorm() - r - hr < MM(HOLE_TO_HOLE) for at, hr in holes):
+                dropped.append(item.GetNetname())
+                board.Delete(item)
+                continue
         b, own = box(item), item_layers(item)
         for other, ob, olayers in others:
             if other.GetNetCode() == item.GetNetCode() or not near(b, ob):
@@ -224,6 +238,20 @@ def drop_conflicts(board, fixed):
                 dropped.append(item.GetNetname())
                 board.Delete(item)
                 break
+    return dropped
+
+
+def replace_session_nets(board, fixed, plan):
+    """Delete imported router copper on nets that routing.json now plans by hand.
+
+    Sessions made before such a plan still carry the old autorouted copper of these nets;
+    the plan and the grid completion connect them instead."""
+    nets = set(plan.get('replace_session_nets', []))
+    dropped = []
+    for item in list(board.GetTracks()):
+        if item.m_Uuid.AsString() not in fixed and item.GetNetname() in nets:
+            dropped.append(item.GetNetname())
+            board.Delete(item)
     return dropped
 
 
@@ -567,7 +595,7 @@ def main():
     fixed_ids = {item.m_Uuid.AsString() for item in board.GetTracks()}
     for ses in sessions:
         import_session(board, ses, args.work)
-    dropped = drop_conflicts(board, fixed_ids)
+    dropped = replace_session_nets(board, fixed_ids, plan) + drop_conflicts(board, fixed_ids)
     for item in board.GetTracks():
         item.SetLocked(False)
     keep = {i.m_Uuid.AsString() for i in plan_items(board, plan)}
@@ -581,7 +609,8 @@ def main():
         seen.add(name)
         identity(item, name)
     routed, failed = complete(board)
-    pruned = prune_dangling(board, set(dropped))
+    # GND is left out: its session vias are stitching vias that only connect once the pours exist.
+    pruned = prune_dangling(board, set(dropped) - {'GND'})
     for layer, name in (('F.Cu', 'gnd-top'), ('B.Cu', 'gnd-bottom')):
         board.Add(rect_zone(board, 'route_board/' + name, 'GND', [layer], [0.3, 0.3, 99.7, 99.7]))
     stitched, unstitched = stitch_islands(board)

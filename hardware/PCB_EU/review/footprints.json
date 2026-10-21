@@ -72,7 +72,7 @@
     "libraries/EU_Parts.pretty/Vishay_TO-277A_D_K1_A2.kicad_mod": "14a2446f329e31e8d6af928395be372d7a3dbe7844588f6e1be2763d992b9768",
     "libraries/Package_TO_SOT_THT.pretty/TO-220-3_Vertical.kicad_mod": "9dc6991bc272c02cc79cd22c365e99d6044d904a8f288de92bda9b6f55b043af",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "288a53fad2a613aeaf4ef9577ad7bfb63a8bcbecd8a2dc108d85499baf619be2",
-    "libraries/Capacitor_THT.pretty/CP_Radial_D8.0mm_P3.50mm.kicad_mod": "15d0ad3f076537e92904e3ef769fd1aecf23e6c0e7aa04b053e11092b7baa8f4",
+    "libraries/Capacitor_THT.pretty/CP_Radial_D8.0mm_P5.00mm.kicad_mod": "4fa16ff8846adcb0403fd4bd94142e4694c7881e9de99d730c28b9839efa9d2f",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "94cfe0c5bc119601c27b70b1027adfd7a136336b6af513b1c35fbe9cd859ab86"
   }
 }

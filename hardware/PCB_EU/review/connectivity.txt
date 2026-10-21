@@ -3,7 +3,7 @@ Input: netlist.xml
 PASS: 51 checks
 Exported electrical components: 185
 Specified connected pins checked: 479
-Procurement snapshot incl. VAT and delivery: 78.59 EUR
+Procurement snapshot incl. VAT and delivery: 77.95 EUR
 
 PASS 01 | Every specified connected component pin matches the KiCad-exported net
 PASS 02 | All intended NC pins remain unconnected
@@ -33,7 +33,7 @@ PASS 25 | LED2: every 63 V bulk capacitor is before the LED current shunt
 PASS 26 | LED1 has two series 10u coils; LED2 one 22u coil
 PASS 27 | Shared nDIM has one 10k pull-down, a 5k6 GPIO series resistor and correct BAT54 polarity
 PASS 28 | No capacitor is attached to PWM nDIM
-PASS 29 | Each LM3429 GATE drives only its own IRF540Z through 4R7; no external driver
+PASS 29 | Each LM3429 GATE drives only its own TK22E10N1 through 4R7; no external driver
 PASS 30 | UVLO positive feedback, valid unused comparator inputs, output tied to PGOOD
 PASS 31 | Both LED MOSFET gate pull-downs are 100k
 PASS 32 | PTC driver defaults off, with separate NPN and PNP stages
