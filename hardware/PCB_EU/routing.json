@@ -1,7 +1,7 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
   "date": "2026-10-21",
-  "scope": "LED1 local boost power loop, series inductors, input capacitor bank, output terminal and gate resistor; In1 ground reference. Controller, upstream power and rest of board remain incomplete.",
+  "scope": "LED1 local boost power loop, series inductors, input capacitor bank, output terminal and gate resistor; In1 ground reference. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py; the LED2 power loop has no reviewed plan yet.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -36,16 +36,6 @@
       ],
       "diameter": 1.0,
       "drill": 0.5
-    },
-    {
-      "id": "out-return",
-      "net": "GND",
-      "at": [
-        81.35,
-        51.35
-      ],
-      "diameter": 0.7,
-      "drill": 0.3
     },
     {
       "id": "led-pos-a",
@@ -86,6 +76,126 @@
       ],
       "diameter": 1.0,
       "drill": 0.5
+    },
+    {
+      "id": "led2-rct-land",
+      "net": "LED2_RCT",
+      "at": [
+        88.0,
+        84.5
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-csh-land",
+      "net": "LED2_CSH",
+      "at": [
+        93.2,
+        84.45
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-ovp-land",
+      "net": "LED2_OVP",
+      "at": [
+        95.8,
+        84.45
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-ovp-pin",
+      "net": "LED2_OVP",
+      "at": [
+        87.1,
+        86.2
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-rct-pin",
+      "net": "LED2_RCT",
+      "at": [
+        87.1,
+        87.5
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-csh-pin",
+      "net": "LED2_CSH",
+      "at": [
+        86.2,
+        88.15
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-comp-pin",
+      "net": "LED2_COMP",
+      "at": [
+        87.5,
+        88.85
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-comp-cap",
+      "net": "LED2_COMP",
+      "at": [
+        88.5,
+        90.6
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led1-is",
+      "net": "LED1_IS",
+      "at": [
+        83.8,
+        48.3
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "led2-is",
+      "net": "LED2_IS",
+      "at": [
+        96.1,
+        88.15
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "block-oc",
+      "net": "BLOCK_OC",
+      "at": [
+        28.25,
+        67.3
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "ptc-gnd",
+      "net": "GND",
+      "at": [
+        35.0,
+        84.6
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
     }
   ],
   "routes": [
@@ -278,20 +388,6 @@
       ]
     },
     {
-      "id": "bypass-return",
-      "net": "GND",
-      "layer": "B.Cu",
-      "width": 0.6,
-      "points": [
-        {
-          "pad": "C511.2"
-        },
-        {
-          "via": "out-return"
-        }
-      ]
-    },
-    {
       "id": "output-current-shunt",
       "net": "LED1_OUT",
       "layer": "F.Cu",
@@ -480,6 +576,496 @@
           80.46,
           40.5975
         ]
+      ]
+    },
+    {
+      "id": "led2-rct-caps",
+      "net": "LED2_RCT",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R608.2"
+        },
+        {
+          "pad": "C606.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-rct-land",
+      "net": "LED2_RCT",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R608.2"
+        },
+        {
+          "via": "led2-rct-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-rt-mid",
+      "net": "LED2_RT_MID",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R608.1"
+        },
+        {
+          "pad": "R607.2"
+        }
+      ]
+    },
+    {
+      "id": "led2-rt-sw",
+      "net": "LED2_SW",
+      "layer": "B.Cu",
+      "width": 0.5,
+      "points": [
+        {
+          "pad": "R607.1"
+        },
+        [
+          85.5,
+          75.1375
+        ]
+      ]
+    },
+    {
+      "id": "led2-csh-land",
+      "net": "LED2_CSH",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R605.1"
+        },
+        {
+          "via": "led2-csh-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-csh-mid",
+      "net": "LED2_CSH_MID",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R605.2"
+        },
+        [
+          92.2,
+          79.1
+        ],
+        {
+          "pad": "R606.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-ovp-land",
+      "net": "LED2_OVP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R610.2"
+        },
+        {
+          "via": "led2-ovp-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-ovp-cap",
+      "net": "LED2_OVP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R610.2"
+        },
+        {
+          "pad": "C607.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-ovp-r611",
+      "net": "LED2_OVP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R610.2"
+        },
+        [
+          94.5,
+          82.2
+        ],
+        [
+          94.5,
+          79.0
+        ],
+        {
+          "pad": "R611.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-ovp-mid",
+      "net": "LED2_OVP_MID",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R610.1"
+        },
+        {
+          "pad": "R609.2"
+        }
+      ]
+    },
+    {
+      "id": "led2-agnd-ep",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.5"
+        },
+        [
+          90.2,
+          86.85
+        ]
+      ]
+    },
+    {
+      "id": "led2-ovp-pin",
+      "net": "LED2_OVP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.6"
+        },
+        {
+          "via": "led2-ovp-pin"
+        }
+      ]
+    },
+    {
+      "id": "led2-rct-pin",
+      "net": "LED2_RCT",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.4"
+        },
+        {
+          "via": "led2-rct-pin"
+        }
+      ]
+    },
+    {
+      "id": "led2-csh-pin",
+      "net": "LED2_CSH",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.3"
+        },
+        {
+          "via": "led2-csh-pin"
+        }
+      ]
+    },
+    {
+      "id": "led2-ovp-in2",
+      "net": "LED2_OVP",
+      "layer": "In2.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "led2-ovp-pin"
+        },
+        [
+          87.1,
+          83.6
+        ],
+        [
+          95.0,
+          83.6
+        ],
+        {
+          "via": "led2-ovp-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-csh-in2",
+      "net": "LED2_CSH",
+      "layer": "In2.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "led2-csh-pin"
+        },
+        [
+          88.2,
+          88.15
+        ],
+        [
+          89.5,
+          86.85
+        ],
+        [
+          91.5,
+          86.85
+        ],
+        [
+          92.2,
+          85.14
+        ],
+        {
+          "via": "led2-csh-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-rct-f",
+      "net": "LED2_RCT",
+      "layer": "F.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "led2-rct-pin"
+        },
+        [
+          87.9,
+          87.0
+        ],
+        [
+          87.9,
+          85.0
+        ],
+        {
+          "via": "led2-rct-land"
+        }
+      ]
+    },
+    {
+      "id": "led2-comp-pin",
+      "net": "LED2_COMP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.2"
+        },
+        {
+          "via": "led2-comp-pin"
+        }
+      ]
+    },
+    {
+      "id": "led2-comp-in2",
+      "net": "LED2_COMP",
+      "layer": "In2.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "led2-comp-pin"
+        },
+        {
+          "via": "led2-comp-cap"
+        }
+      ]
+    },
+    {
+      "id": "led2-comp-cap",
+      "net": "LED2_COMP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "led2-comp-cap"
+        },
+        {
+          "pad": "C605.1"
+        }
+      ]
+    },
+    {
+      "id": "led1-hsp-res-out",
+      "net": "LED1_OUT",
+      "layer": "B.Cu",
+      "width": 0.5,
+      "points": [
+        {
+          "pad": "R503.1"
+        },
+        [
+          81.88,
+          50.95
+        ]
+      ]
+    },
+    {
+      "id": "led1-is-shunt",
+      "net": "LED1_IS",
+      "layer": "F.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "via": "led1-is"
+        },
+        {
+          "pad": "R501.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-is-pin",
+      "net": "LED2_IS",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U601.12"
+        },
+        {
+          "via": "led2-is"
+        }
+      ]
+    },
+    {
+      "id": "led2-is-shunt",
+      "net": "LED2_IS",
+      "layer": "F.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "via": "led2-is"
+        },
+        [
+          91.5375,
+          88.15
+        ]
+      ]
+    },
+    {
+      "id": "led2-is-tp",
+      "net": "LED2_IS",
+      "layer": "F.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "TP08.1"
+        },
+        [
+          90.4,
+          90.3
+        ],
+        [
+          91.5375,
+          89.2
+        ]
+      ]
+    },
+    {
+      "id": "led1-is-pin",
+      "net": "LED1_IS",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U501.12"
+        },
+        [
+          78.45,
+          47.15
+        ],
+        [
+          78.45,
+          48.07
+        ],
+        [
+          83.6,
+          48.07
+        ],
+        {
+          "via": "led1-is"
+        }
+      ]
+    },
+    {
+      "id": "led1-hsp",
+      "net": "LED1_HSP",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U501.13"
+        },
+        [
+          77.99,
+          47.8
+        ],
+        [
+          77.99,
+          48.3
+        ],
+        [
+          78.6,
+          48.9
+        ],
+        {
+          "pad": "R503.2"
+        }
+      ]
+    },
+    {
+      "id": "block-oc-pin",
+      "net": "BLOCK_OC",
+      "layer": "F.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U101.12"
+        },
+        [
+          27.9,
+          67.625
+        ],
+        {
+          "via": "block-oc"
+        }
+      ]
+    },
+    {
+      "id": "ptc-gnd",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.3,
+      "points": [
+        {
+          "pad": "R706.2"
+        },
+        {
+          "pad": "Q701.2"
+        },
+        {
+          "via": "ptc-gnd"
+        }
       ]
     }
   ],

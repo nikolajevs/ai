@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/workspace/scratch/304de5ccb690/eu-models/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-21T12:51:46</date>
+    <source>/home/claude/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
+    <date>2026-10-21T16:55:02</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
     <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -6179,7 +6179,7 @@
     </library>
   </libraries>
   <nets>
-    <net code="1" name="+3V3" class="Default">
+    <net code="1" name="+3V3" class="PWR">
       <node ref="C204" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C205" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C206" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6214,7 +6214,7 @@
       <node ref="U401" pin="5" pinfunction="VREF_5" pintype="power_in"/>
       <node ref="U402" pin="5" pinfunction="VREF_5" pintype="power_in"/>
     </net>
-    <net code="2" name="+12V" class="Default">
+    <net code="2" name="+12V" class="LOAD">
       <node ref="C109" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C110" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C112" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6232,12 +6232,12 @@
       <node ref="U201" pin="3" pinfunction="VIN_3" pintype="power_in"/>
       <node ref="U802" pin="8" pinfunction="VCC_8" pintype="power_in"/>
     </net>
-    <net code="3" name="+12V_FANS" class="Default">
+    <net code="3" name="+12V_FANS" class="LOAD">
       <node ref="F401" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="J411" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="J421" pin="2" pinfunction="2_2" pintype="passive"/>
     </net>
-    <net code="4" name="+24V_AUX" class="Default">
+    <net code="4" name="+24V_AUX" class="LOAD">
       <node ref="C102" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C103" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C104" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6250,7 +6250,7 @@
       <node ref="U101" pin="4" pinfunction="VCC_4" pintype="power_in"/>
       <node ref="U101" pin="5" pinfunction="EN_5" pintype="input"/>
     </net>
-    <net code="5" name="+24V_FUSED" class="Default">
+    <net code="5" name="+24V_FUSED" class="HEAVY24">
       <node ref="C101" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="D101" pin="1" pinfunction="K_1" pintype="passive"/>
       <node ref="F101" pin="2" pinfunction="~_2" pintype="passive"/>
@@ -6262,7 +6262,7 @@
       <node ref="R108" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R809" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="6" name="+24V_LED1" class="Default">
+    <net code="6" name="+24V_LED1" class="LOAD">
       <node ref="C501" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C502" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C503" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6270,7 +6270,7 @@
       <node ref="L501" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U501" pin="1" pinfunction="VIN_1" pintype="power_in"/>
     </net>
-    <net code="7" name="+24V_LED2" class="Default">
+    <net code="7" name="+24V_LED2" class="LOAD">
       <node ref="C601" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C602" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C603" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6278,16 +6278,16 @@
       <node ref="L601" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="1" pinfunction="VIN_1" pintype="power_in"/>
     </net>
-    <net code="8" name="+24V_PTC" class="Default">
+    <net code="8" name="+24V_PTC" class="HEAVY24">
       <node ref="F102" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="J701" pin="1" pinfunction="1_1" pintype="passive"/>
     </net>
-    <net code="9" name="+24V_PUMP" class="Default">
+    <net code="9" name="+24V_PUMP" class="LOAD">
       <node ref="D701" pin="1" pinfunction="K_1" pintype="passive"/>
       <node ref="F106" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="J702" pin="1" pinfunction="1_1" pintype="passive"/>
     </net>
-    <net code="10" name="+24V_RAW" class="Default">
+    <net code="10" name="+24V_RAW" class="HEAVY24">
       <node ref="F101" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="J101" pin="1" pinfunction="1_1" pintype="passive"/>
     </net>
@@ -6331,7 +6331,7 @@
       <node ref="C111" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U101" pin="6" pinfunction="SS_6" pintype="passive"/>
     </net>
-    <net code="20" name="AUX_SW" class="Default">
+    <net code="20" name="AUX_SW" class="LOAD">
       <node ref="C108" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="D102" pin="1" pinfunction="K_1" pintype="passive"/>
       <node ref="L101" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6571,22 +6571,22 @@
       <node ref="R503" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U501" pin="13" pinfunction="HSP_13" pintype="input"/>
     </net>
-    <net code="46" name="LED1_IS" class="Default">
+    <net code="46" name="LED1_IS" class="LOAD">
       <node ref="Q501" pin="3" pinfunction="S_3" pintype="passive"/>
       <node ref="R501" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="TP07" pin="1" pinfunction="PAD_1" pintype="passive"/>
       <node ref="U501" pin="12" pinfunction="IS_12" pintype="input"/>
     </net>
-    <net code="47" name="LED1_LED_POS" class="Default">
+    <net code="47" name="LED1_LED_POS" class="LOAD">
       <node ref="J501" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="R502" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R504" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="48" name="LED1_L_MID" class="Default">
+    <net code="48" name="LED1_L_MID" class="LOAD">
       <node ref="L501" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="L502" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="49" name="LED1_OUT" class="Default">
+    <net code="49" name="LED1_OUT" class="LOAD">
       <node ref="C508" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C509" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C510" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6615,7 +6615,7 @@
       <node ref="R507" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R508" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="54" name="LED1_SW" class="Default">
+    <net code="54" name="LED1_SW" class="LOAD">
       <node ref="D501" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="L502" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="Q501" pin="2" pinfunction="D_2" pintype="passive"/>
@@ -6654,19 +6654,19 @@
       <node ref="R603" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U601" pin="13" pinfunction="HSP_13" pintype="input"/>
     </net>
-    <net code="63" name="LED2_IS" class="Default">
+    <net code="63" name="LED2_IS" class="LOAD">
       <node ref="Q601" pin="3" pinfunction="S_3" pintype="passive"/>
       <node ref="R601" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="TP08" pin="1" pinfunction="PAD_1" pintype="passive"/>
       <node ref="U601" pin="12" pinfunction="IS_12" pintype="input"/>
     </net>
-    <net code="64" name="LED2_LED_POS" class="Default">
+    <net code="64" name="LED2_LED_POS" class="LOAD">
       <node ref="J601" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="J602" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="R602" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R604" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="65" name="LED2_OUT" class="Default">
+    <net code="65" name="LED2_OUT" class="LOAD">
       <node ref="C608" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C609" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C611" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6694,7 +6694,7 @@
       <node ref="R607" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R608" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="70" name="LED2_SW" class="Default">
+    <net code="70" name="LED2_SW" class="LOAD">
       <node ref="D601" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="L601" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="Q601" pin="2" pinfunction="D_2" pintype="passive"/>
@@ -6720,16 +6720,16 @@
       <node ref="C203" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U201" pin="6" pinfunction="BST_6" pintype="passive"/>
     </net>
-    <net code="75" name="LOGIC_SW" class="Default">
+    <net code="75" name="LOGIC_SW" class="PWR">
       <node ref="C203" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="L201" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U201" pin="5" pinfunction="SW_5" pintype="output"/>
     </net>
-    <net code="76" name="PSU_RTN" class="Default">
+    <net code="76" name="PSU_RTN" class="HEAVY24">
       <node ref="J101" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="Q102" pin="2" pinfunction="D_2" pintype="passive"/>
     </net>
-    <net code="77" name="PTC_DRAIN" class="Default">
+    <net code="77" name="PTC_DRAIN" class="HEAVY24">
       <node ref="J701" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="Q703" pin="2" pinfunction="D_2" pintype="passive"/>
     </net>
@@ -6760,7 +6760,7 @@
       <node ref="R703" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R704" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="84" name="PUMP_DRAIN" class="Default">
+    <net code="84" name="PUMP_DRAIN" class="LOAD">
       <node ref="D701" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="J702" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="Q704" pin="3" pinfunction="D_3" pintype="passive"/>
@@ -6866,7 +6866,7 @@
       <node ref="R809" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R810" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="106" name="VBAT" class="Default">
+    <net code="106" name="VBAT" class="PWR">
       <node ref="BT301" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U301" pin="3" pinfunction="VBAT_3" pintype="power_in"/>
     </net>

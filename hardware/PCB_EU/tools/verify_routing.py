@@ -54,21 +54,28 @@ def check(board_path, output=None):
     for zone in zones:
         if not zone.IsFilled() or not zone.HasFilledPolysForLayer(zone.GetLayer()) or zone.GetFilledArea() <= 0:
             raise RuntimeError('Copper zone has no saved fill; refill and rerun DRC')
+    board.BuildConnectivity()
+    unrouted = board.GetConnectivity().GetUnconnectedCount(False)
+    sessions = sorted((HERE / 'routing').glob('*.ses'))
     tracks = [t for t in board.GetTracks() if not isinstance(t, p.PCB_VIA)]
     vias = [t for t in board.GetTracks() if isinstance(t, p.PCB_VIA)]
     # Each entry is a physical routed segment, not a completed schematic net.
-    result = dict(stage=plan['stage'], date=plan['date'], pcbnew_build=p.GetBuildVersion(),
+    result = dict(stage='autorouted board with open connections' if unrouted else 'fully routed board', date=plan['date'], pcbnew_build=p.GetBuildVersion(),
                   planned_copper_objects_checked=len(expected), tracks=len(tracks), vias=len(vias),
                   tracks_by_layer=dict(Counter(board.GetLayerName(t.GetLayer()) for t in tracks)),
                   copper_zones=[dict(net=z.GetNetname(), layer=board.GetLayerName(z.GetLayer()),
                                      filled_area_mm2=round(z.GetFilledArea()/1e12, 2)) for z in zones],
                   actual_copper_connected_groups=groups, scope=plan['scope'], limits=plan['limits'],
-                  complete_board_routing=False, ampacity_verified=False, thermal_verified=False,
+                  unrouted_connections=unrouted, complete_board_routing=unrouted == 0,
+                  router='LED1 plan (routing.json) + tools/route_board.py: Freerouting 2.4.1 sessions in routing/, grid completion, GND ties and pours',
+                  min_track_width_mm={cls: round(min((p.ToMM(t.GetWidth()) for t in tracks if t.GetNetClassName() == cls), default=0), 3)
+                                      for cls in ('HEAVY24', 'LOAD', 'PWR', 'Default')},
+                  ampacity_verified=False, thermal_verified=False,
                   source_sha256={str(f.relative_to(HERE)) if f.is_relative_to(HERE) else f.name: hashlib.sha256(f.read_bytes()).hexdigest()
-                                 for f in [board_path, HERE/'routing.json']})
+                                 for f in [board_path, HERE/'routing.json', *sessions]})
     if output:
         output.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n')
-    print(f'PASS | partial routing | {len(expected)} planned objects; {len(groups)} physically connected groups; {len(tracks)} tracks / {len(vias)} vias')
+    print(f'PASS | {result["stage"]} | {unrouted} unrouted | {len(expected)} planned objects; {len(groups)} physically connected groups; {len(tracks)} tracks / {len(vias)} vias')
     return result
 
 

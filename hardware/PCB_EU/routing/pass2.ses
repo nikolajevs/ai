@@ -1,0 +1,374 @@
+(session pass2
+  (base_design pass2)
+  (placement
+    (resolution um 10)
+    (component "Resistor_SMD:R_0603_1608Metric"
+      (place R422 195000 -350000 front 0)
+      (place R423 230000 -350000 front 0)
+      (place R303 50000 -805000 front 0)
+      (place R202 370000 -290000 front 0)
+      (place R413 120000 -200000 front 0)
+      (place R421 215000 -510000 front 0)
+      (place R201 140000 -95000 front 0)
+      (place R414 160000 -345000 front 0)
+      (place R304 25000 -895000 front 0)
+      (place R307 120000 -900000 front 0)
+      (place R403 265000 -870000 front 90)
+      (place R411 130000 -225000 front 90)
+      (place R305 235000 -600000 front 90)
+      (place R404 265000 -835000 front 90)
+      (place R424 255000 -345000 front 90)
+      (place R808 895000 -860000 front 90)
+      (place R412 110000 -225000 front 90)
+      (place R306 235000 -565000 front 90)
+      (place R704 350000 -785000 back 180)
+      (place R815 435000 -575000 back 180)
+      (place R701 380000 -805000 back 180)
+      (place R708 530000 -930000 back 180)
+      (place R817 490000 -665000 back 270)
+      (place R804 812000 -383000 back 270)
+      (place R707 560000 -900000 back 270)
+    )
+    (component "EU_Mechanical:L_Bourns_SRN6045"
+      (place L201 370000 -440000 front 0)
+    )
+    (component "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow"
+      (place F103 510000 -200000 front 90)
+      (place F102 480000 -875000 front 90)
+      (place F101 95000 -615000 front 90)
+    )
+    (component "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm"
+      (place C510 542512 -565000 front 0)
+      (place C509 542512 -455000 front 0)
+      (place C608 667500 -895488 back 270)
+      (place C609 814512 -950000 back 180)
+      (place C508 854512 -500000 back 180)
+    )
+    (component "Resistor_SMD:R_2512_6332Metric"
+      (place R807 842000 -911000 front 180)
+      (place R501 855000 -462000 front 0)
+      (place R502 735000 -430000 front 0)
+      (place R601 945000 -875000 front 0)
+      (place R602 903000 -953000 front 90)
+      (place R803 757000 -388000 back 180)
+    )
+    (component "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02"
+      (place J501 955000 -482000 front 90)
+      (place J602 720000 -960000 front 0)
+      (place J401 70000 -960000 front 0)
+      (place J403 330000 -960000 front 0)
+      (place J601 580000 -960000 front 0)
+      (place J702 460000 -960000 front 0)
+      (place J402 200000 -960000 front 0)
+      (place J412 50000 -250000 front 270)
+      (place J421 50000 -380000 front 270)
+      (place J422 50000 -510000 front 270)
+      (place J411 50000 -120000 front 270)
+    )
+    (component "Capacitor_SMD:C_0805_2012Metric"
+      (place C207 160000 -140000 front 0)
+      (place C203 380000 -345000 front 0)
+      (place C104 245000 -630000 front 0)
+      (place C401 435000 -735000 front 0)
+      (place C305 55000 -605000 front 0)
+      (place C108 265000 -605000 front 0)
+      (place C208 140000 -115000 front 0)
+      (place C303 300000 -400000 front 0)
+      (place C402 60000 -895000 front 0)
+      (place C403 455000 -885000 front 90)
+      (place C103 185000 -665000 front 90)
+      (place C503 675000 -495000 back 270)
+      (place C110 180000 -650000 back 270)
+      (place C113 275000 -695000 back 270)
+      (place C109 240000 -650000 back 270)
+      (place C803 515000 -575000 back 270)
+      (place C107 195000 -690000 back 180)
+      (place C105 210000 -665000 back 180)
+      (place C111 195000 -715000 back 180)
+      (place C603 855000 -895000 back 180)
+      (place C106 210000 -640000 back 180)
+      (place C611 830000 -840000 back 180)
+      (place C511 800000 -524000 back 90)
+    )
+    (component 
+      (place H4 965000 -965000 front 0)
+      (place H2 965000 -35000 front 0)
+      (place H1 610000 -35000 front 0)
+      (place H3 35000 -850000 front 0)
+    )
+    (component "Capacitor_SMD:C_1206_3216Metric"
+      (place C206 170000 -105000 front 90)
+      (place C201 355000 -380000 front 90)
+      (place C202 415000 -360000 front 90)
+      (place C204 370000 -500000 front 90)
+      (place C205 330000 -380000 front 90)
+      (place C302 170000 -375000 front 0)
+      (place C301 170000 -400000 front 0)
+      (place C304 55000 -630000 front 0)
+      (place C507 675000 -440000 back 0)
+      (place C506 665000 -465000 back 0)
+      (place C605 900000 -920000 back 180)
+      (place C504 808500 -468000 back 180)
+      (place C505 725000 -510000 back 180)
+      (place C114 240000 -695000 back 180)
+      (place C606 906000 -816000 back 270)
+      (place C607 984000 -816000 back 270)
+      (place C604 975000 -875000 back 90)
+    )
+    (component "Resistor_SMD:R_1206_3216Metric"
+      (place R101 530000 -745000 front 0)
+      (place R402 420000 -875000 front 0)
+      (place R401 90000 -870000 front 90)
+      (place R309 370000 -550000 front 90)
+      (place R302 80000 -820000 front 90)
+      (place R308 305000 -365000 front 90)
+      (place R301 15000 -620000 front 90)
+      (place R509 740000 -560000 back 180)
+      (place R505 710000 -535000 back 180)
+      (place R106 310000 -690000 back 180)
+      (place R604 905000 -945000 back 180)
+      (place R102 210000 -615000 back 180)
+      (place R813 530000 -605000 back 180)
+      (place R706 340000 -805000 back 180)
+      (place R507 740000 -420000 back 180)
+      (place R506 760000 -535000 back 180)
+      (place R104 279000 -665000 back 180)
+      (place R603 950000 -920000 back 180)
+      (place R511 660000 -390000 back 180)
+      (place R812 425000 -640000 back 180)
+      (place R508 660000 -415000 back 180)
+      (place R504 760000 -585000 back 180)
+      (place R109 123500 -806500 back 180)
+      (place R510 640000 -490000 back 180)
+      (place R809 480000 -585000 back 180)
+      (place R110 128500 -781500 back 180)
+      (place R107 275000 -640000 back 180)
+      (place R108 123500 -831500 back 180)
+      (place R705 340000 -875000 back 180)
+      (place R811 410000 -665000 back 180)
+      (place R103 270000 -725000 back 180)
+      (place R608 880000 -816000 back 90)
+      (place R607 880000 -766000 back 90)
+      (place R610 958000 -816000 back 90)
+      (place R609 958000 -766000 back 90)
+      (place R814 465000 -625000 back 270)
+      (place R606 906000 -766000 back 270)
+      (place R816 490000 -625000 back 270)
+      (place R105 225000 -735000 back 270)
+      (place R702 347000 -913500 back 270)
+      (place R605 932000 -816000 back 270)
+      (place R611 932000 -766000 back 270)
+      (place R703 380000 -840000 back 270)
+      (place R810 405000 -600000 back 270)
+      (place R503 804200 -493100 back 0)
+    )
+    (component "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+      (place C112 424988 -800000 front 0)
+      (place C502 414988 -260000 front 0)
+      (place C501 414988 -135000 front 0)
+      (place C101 274988 -540000 front 0)
+      (place C102 414988 -540000 front 0)
+      (place C602 532488 -855000 front 0)
+      (place C601 524988 -776000 back 180)
+    )
+    (component "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+      (place U802 460000 -625000 front 0)
+      (place U301 280000 -440000 front 0)
+    )
+    (component "Diode_SMD:D_SMB"
+      (place D101 552500 -240000 front 90)
+    )
+    (component "TestPoint:TestPoint_Pad_D1.0mm"
+      (place TP04 500013 -720000 front 0)
+      (place TP01 280013 -350000 front 0)
+      (place TP07 480013 -345000 front 0)
+      (place TP05 525013 -720000 front 0)
+      (place TP03 475013 -715000 front 0)
+      (place TP02 185013 -695000 front 0)
+      (place TP08 893013 -898000 front 0)
+      (place TP06 390013 -635000 back 180)
+    )
+    (component "Package_TO_SOT_SMD:TSOT-23-6"
+      (place U201 385000 -380000 front 90)
+      (place U402 120000 -825000 front 90)
+      (place U401 120000 -870000 front 90)
+    )
+    (component "EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A"
+      (place J301 168000 -650000 front 270)
+    )
+    (component "EU_Mechanical:L_Jantek_JNRH1207"
+      (place L101 350000 -672000 front 0)
+      (place L502 800000 -300000 back 180)
+      (place L601 800000 -760000 back 180)
+      (place L501 800000 -165000 back 180)
+    )
+    (component "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02"
+      (place J101 140000 -560000 front 0)
+      (place J701 170000 -830000 front 0)
+    )
+    (component "Package_TO_SOT_THT:TO-220-3_Vertical"
+      (place Q601 804600 -865000 front 0)
+      (place Q501 804600 -425000 front 0)
+    )
+    (component "EU_Mechanical:Crystal_Abracon_ABS07"
+      (place Y301 220000 -440000 front 0)
+    )
+    (component "Package_TO_SOT_SMD:TO-263-2"
+      (place Q703 335000 -824000 front 90)
+      (place Q102 108000 -670000 back 270)
+    )
+    (component "EU_Mechanical:Fuse_Schurter_UMT250"
+      (place F401 160000 -215000 front 90)
+      (place F105 175000 -470000 front 90)
+      (place F104 475000 -680000 front 0)
+      (place F106 460000 -710000 back 270)
+    )
+    (component "EU_Mechanical:SW_Ninigi_TACTB-64K-F"
+      (place SW202 310000 -307000 front 0)
+      (place SW201 200000 -307000 front 0)
+    )
+    (component "Package_TO_SOT_SMD:SOT-23"
+      (place D421 135000 -505000 front 0)
+      (place Q411 135000 -300000 front 0)
+      (place D411 120000 -260000 front 0)
+      (place Q421 215000 -480000 front 0)
+      (place Q701 350000 -840000 back 180)
+      (place Q704 530000 -900000 back 180)
+      (place Q702 310000 -840000 back 180)
+      (place D801 435000 -605000 back 180)
+    )
+    (component "Diode_SMD:D_SMC"
+      (place D102 224500 -749000 front 180)
+      (place D701 445000 -895000 back 180)
+    )
+    (component "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
+      (place J201 120000 -340000 front 0)
+    )
+    (component "EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm"
+      (place U101 240000 -673000 front 0)
+    )
+    (component "EU_Parts:Vishay_TO-277A_D_K1_A2"
+      (place D601 733000 -881000 front 90)
+      (place D501 770000 -490000 front 270)
+    )
+    (component "EU_Parts:ESP32-WROOM-32E_NoVias"
+      (place U202 285000 -140000 front 0)
+    )
+    (component "EU_Mechanical:TI_PWP0014A_LM3429"
+      (place U501 740000 -465000 back 180)
+      (place U601 915000 -875000 back 180)
+    )
+    (component "EU_Mechanical:Battery_COMF_BC-2001"
+      (place BT301 285000 -360000 back 270)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution um 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version "10.0.7-10.0.7~ubuntu24.04.1")
+    )
+    (library_out 
+      (padstack "Via[0-3]_600:300_um"
+        (shape
+          (circle F.Cu 6000 0 0)
+        )
+        (shape
+          (circle In1.Cu 6000 0 0)
+        )
+        (shape
+          (circle In2.Cu 6000 0 0)
+        )
+        (shape
+          (circle B.Cu 6000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-3]_1000:500_um"
+        (shape
+          (circle F.Cu 10000 0 0)
+        )
+        (shape
+          (circle In1.Cu 10000 0 0)
+        )
+        (shape
+          (circle In2.Cu 10000 0 0)
+        )
+        (shape
+          (circle B.Cu 10000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-3]_800:400_um"
+        (shape
+          (circle F.Cu 8000 0 0)
+        )
+        (shape
+          (circle In1.Cu 8000 0 0)
+        )
+        (shape
+          (circle In2.Cu 8000 0 0)
+        )
+        (shape
+          (circle B.Cu 8000 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net +3V3
+        (wire
+          (path F.Cu 3000
+            41750 -805000
+            12649 -834101
+            12649 -890899
+            16750 -895000
+          )
+        )
+      )
+      (net "LED1_OUT"
+        (wire
+          (path F.Cu 4000
+            542512 -455000
+            554529 -455000
+          )
+        )
+        (wire
+          (path F.Cu 4000
+            554529 -455000
+            566546 -467017
+            642198 -467017
+            660352 -485171
+            700546 -485171
+            705375 -490000
+          )
+        )
+      )
+      (net VBAT
+        (wire
+          (path F.Cu 3000
+            255250 -446350
+            250296 -446350
+            241499 -455147
+            241499 -466743
+            244808 -470052
+            244808 -475631
+          )
+        )
+      )
+      (net "+24V_LED2"
+        (wire
+          (path B.Cu 4000
+            886000 -894500
+            862584 -917916
+            836628 -917916
+            830037 -911325
+            830037 -908620
+          )
+        )
+      )
+    )
+  )
+)
