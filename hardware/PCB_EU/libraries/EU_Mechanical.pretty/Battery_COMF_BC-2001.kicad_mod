@@ -18,4 +18,9 @@
 (zone (layers "F.Cu") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy -10 -10) (xy 10 -10) (xy 10 -2.2) (xy -10 -2.2))))
 (zone (layers "F.Cu") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy -10 2.2) (xy 10 2.2) (xy 10 10) (xy -10 10))))
 (zone (layers "F.Cu") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy -10 -2.2) (xy -2.2 -2.2) (xy -2.2 2.2) (xy -10 2.2))))
-(zone (layers "F.Cu") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy 2.2 -2.2) (xy 10 -2.2) (xy 10 2.2) (xy 2.2 2.2)))))
+(zone (layers "F.Cu") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy 2.2 -2.2) (xy 10 -2.2) (xy 10 2.2) (xy 2.2 2.2))))	(model "${KIPRJMOD}/libraries/EU.3dshapes/Battery_COMF_BC-2001_with_CR2032.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
+)

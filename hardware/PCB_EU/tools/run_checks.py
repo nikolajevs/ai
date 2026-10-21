@@ -34,6 +34,8 @@ def main():
     subprocess.run([sys.executable,str(HERE/'tools/verify.py'),str(net)],check=True)
     subprocess.run([sys.executable,str(HERE/'tools/verify_footprints.py'),'--kicad-cli',cli,'--netlist',str(net)],check=True)
     footprint_review=json.loads((out/'footprints.json').read_text())
+    subprocess.run([sys.executable,str(HERE/'tools/models3d.py'),'--output',str(out/'models3d.json')],check=True)
+    models_review=json.loads((out/'models3d.json').read_text())
     import re
     text=(out/'connectivity.txt').read_text()
     connectivity=dict(checks=int(re.search(r'PASS: (\d+) checks',text).group(1)),pins=int(re.search(r'connected pins checked: (\d+)',text).group(1)),components=int(re.search(r'electrical components: (\d+)',text).group(1)))
@@ -69,7 +71,9 @@ def main():
     source = [*HERE.glob('*.kicad_sch'),HERE/'PCB_EU.kicad_pro',HERE/'libraries/EU.kicad_sym',HERE/'design.json',HERE/'BOM_allocated.json',HERE/'footprint_assignments.json',HERE/'fp-lib-table',HERE/'sym-lib-table',*HERE.glob('tools/*.py'),*HERE.glob('libraries/*/*.kicad_mod')]
     if board.exists():source.extend([board,HERE/'placement.json'])
     if routing_result:source.extend([HERE/'routing.json',HERE/'PCB_EU.kicad_dru',*sorted((HERE/'routing').glob('*.ses'))])
+    source.extend([HERE/'models3d.json',*HERE.glob('libraries/EU.3dshapes/*')])
     result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-21',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
+    result['models3d']=models_review
     (out/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(f'PASS | {result["stage"]} | KiCad {version}; repository 10.0.6 target verified: {result["target_version_verified"]}')
 

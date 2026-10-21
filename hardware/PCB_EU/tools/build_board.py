@@ -15,6 +15,7 @@ import uuid
 import xml.etree.ElementTree as ET
 
 import pcbnew as p
+from models3d import set_native
 
 HERE = Path(__file__).resolve().parents[1]
 BOARD = HERE / 'PCB_EU.kicad_pcb'
@@ -160,6 +161,7 @@ def main():
         raise RuntimeError('placement.json reference set differs from exported netlist')
     for ref, spec in layout['placements'].items():
         fp = fps[ref]
+        set_native(fp, ref)
         if spec['side'] == 'B':
             fp.Flip(point(0, 0), False)
         elif spec['side'] != 'F':
