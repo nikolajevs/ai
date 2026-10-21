@@ -26,7 +26,7 @@ def main():
     counts = Counter(v['side'] for v in layout['placements'].values())
     drc = json.loads((HERE / 'review/pcb_drc.json').read_text())
     status = json.loads((HERE / 'review/placement.json').read_text())
-    stage = 'PARTIAL LED1 ROUTING' if status['routed_tracks'] else 'UNROUTED PLACEMENT'
+    stage = ('ROUTED, NOT RELEASED' if not drc.get('unconnected_items') else 'PARTIAL ROUTING') if status['routed_tracks'] else 'UNROUTED PLACEMENT'
     try:
         title = ImageFont.truetype('DejaVuSans.ttf', 20)
         small = ImageFont.truetype('DejaVuSans.ttf', 15)

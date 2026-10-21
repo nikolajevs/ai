@@ -22,6 +22,7 @@ LAYERS = [p.F_Cu, p.In2_Cu, p.B_Cu]
 VIA = (0.6, 0.3)
 WIDTH = {'HEAVY24': 0.8, 'LOAD': 0.4, 'PWR': 0.4}
 DEFAULT_WIDTH = 0.25
+ESCAPE = 0.8                # mm kept free in front of fine-pitch IC pins of other nets
 VIA_COST, TURN_COST = 12.0, 0.4
 DIRS = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (-1, 1), (-1, -1), (1, -1)]
 
@@ -101,6 +102,28 @@ class Grid:
                     else:
                         self.via[i * self.ny + j] = 1
 
+    def reserve_escape(self, fp, pad, box):
+        """Keep a short outward corridor in front of each fine-pitch IC pin of another net, so a
+        route cannot wrap around the pin row and shut in pins that are not routed yet."""
+        if not fp.GetReference().startswith('U') or pad.GetAttribute() != p.PAD_ATTRIB_SMD:
+            return
+        if pad.GetNetname() in ('', 'GND') or pad.GetNetname().startswith('unconnected'):
+            return
+        w, h = box[2] - box[0], box[3] - box[1]
+        if min(w, h) > 0.6 or max(w, h) > 2.2:
+            return                      # not a fine-pitch lead
+        c, o = pad.GetPosition(), fp.GetPosition()
+        dx, dy = p.ToMM(c.x - o.x), p.ToMM(c.y - o.y)
+        if abs(dx) >= abs(dy):
+            esc = (box[2], box[1], box[2] + ESCAPE, box[3]) if dx > 0 else (box[0] - ESCAPE, box[1], box[0], box[3])
+        else:
+            esc = (box[0], box[3], box[2], box[3] + ESCAPE) if dy > 0 else (box[0], box[1] - ESCAPE, box[2], box[1])
+        layer = p.B_Cu if fp.IsFlipped() else p.F_Cu
+        for i, j in self.cells(esc, 0):
+            x, y = self.xy(i, j)
+            if esc[0] < x < esc[2] and esc[1] < y < esc[3]:
+                self.track[layer][i * self.ny + j] = 1
+
     def block_disc(self, cx, cy, radius, layers, via=True):
         for i, j in self.cells((cx, cy, cx, cy), radius):
             x, y = self.xy(i, j)
@@ -125,6 +148,7 @@ class Grid:
                     for layer in LAYERS:
                         if pad.IsOnLayer(layer):
                             self.mark(layer, pad.GetEffectiveShape(layer), clearance_of(pad), box)
+                    self.reserve_escape(fp, pad, box)
                     if pad.HasHole():
                         c = pad.GetPosition()
                         hole = p.ToMM(max(pad.GetDrillSize().x, pad.GetDrillSize().y)) / 2
@@ -279,7 +303,18 @@ def emit(board, net, grid, path, a, b, width, tag):
 def complete_once(board, only, skip, first):
     nets = board.GetNetInfo().NetsByNetcode()
     routed, failed, added = [], [], []
-    order = sorted(nets.keys(), key=lambda c: (nets[c].GetNetname() not in first, first.index(nets[c].GetNetname()) if nets[c].GetNetname() in first else 0, c))
+    span = {}
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            q = pad.GetPosition()
+            box = span.setdefault(pad.GetNetCode(), [q.x, q.y, q.x, q.y])
+            box[:] = [min(box[0], q.x), min(box[1], q.y), max(box[2], q.x), max(box[3], q.y)]
+    size = {c: (b[2] - b[0]) + (b[3] - b[1]) for c, b in span.items()}
+    # Failed nets of the previous attempt first, then the shortest nets: a long route laid
+    # first tends to cut short local connections off.
+    order = sorted(nets.keys(), key=lambda c: (nets[c].GetNetname() not in first,
+                                               first.index(nets[c].GetNetname()) if nets[c].GetNetname() in first else 0,
+                                               size.get(c, 0), c))
     for code in order:
         net = nets[code]
         name = net.GetNetname()

@@ -12,7 +12,7 @@
   "limits": [
     "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserves only; rear components may require movement after pin drawing review.",
     "Back-side battery and C508/C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
-    "Autorouted except 13 connections near U501/U601, D101 and U101; LED2 power loop needs a reviewed plan. Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
+    "All connections routed (hand-planned LM3429 pin escapes in routing.json, rest autorouted); LED2 power loop needs a reviewed plan. Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
   "heatsink_reserves": [
     {
@@ -274,27 +274,27 @@
       "side": "B"
     },
     "C504": {
-      "x": 80.4,
+      "x": 80.85,
       "y": 46.8,
       "rotation": 0,
       "side": "B"
     },
     "C505": {
-      "x": 71.0,
+      "x": 72.5,
       "y": 51.0,
       "rotation": 0,
       "side": "B"
     },
     "C506": {
-      "x": 67.5,
-      "y": 44.0,
-      "rotation": 0,
+      "x": 66.5,
+      "y": 46.5,
+      "rotation": 180,
       "side": "B"
     },
     "C507": {
       "x": 67.5,
-      "y": 46.5,
-      "rotation": 0,
+      "y": 44.0,
+      "rotation": 180,
       "side": "B"
     },
     "C508": {
@@ -316,8 +316,8 @@
       "side": "F"
     },
     "C511": {
-      "x": 80.25,
-      "y": 50.0,
+      "x": 80.0,
+      "y": 52.4,
       "rotation": 270,
       "side": "B"
     },
@@ -340,9 +340,9 @@
       "side": "B"
     },
     "C604": {
-      "x": 97.0,
+      "x": 97.5,
       "y": 87.5,
-      "rotation": 90,
+      "rotation": 270,
       "side": "B"
     },
     "C605": {
@@ -352,15 +352,15 @@
       "side": "B"
     },
     "C606": {
-      "x": 89.0,
-      "y": 83.0,
-      "rotation": 0,
+      "x": 90.6,
+      "y": 81.6,
+      "rotation": 90,
       "side": "B"
     },
     "C607": {
-      "x": 89.0,
-      "y": 80.5,
-      "rotation": 0,
+      "x": 98.4,
+      "y": 81.6,
+      "rotation": 90,
       "side": "B"
     },
     "C608": {
@@ -376,7 +376,7 @@
       "side": "B"
     },
     "C611": {
-      "x": 84.5,
+      "x": 83.0,
       "y": 84.0,
       "rotation": 0,
       "side": "B"
@@ -388,9 +388,9 @@
       "side": "B"
     },
     "D101": {
-      "x": 24.0,
-      "y": 38.5,
-      "rotation": 0,
+      "x": 55.25,
+      "y": 24.0,
+      "rotation": 90,
       "side": "F"
     },
     "D102": {
@@ -670,7 +670,7 @@
       "side": "B"
     },
     "R104": {
-      "x": 27.5,
+      "x": 27.9,
       "y": 66.5,
       "rotation": 0,
       "side": "B"
@@ -862,9 +862,9 @@
       "side": "F"
     },
     "R503": {
-      "x": 80.0,
-      "y": 55.0,
-      "rotation": 90,
+      "x": 80.42,
+      "y": 49.31,
+      "rotation": 180,
       "side": "B"
     },
     "R504": {
@@ -940,45 +940,45 @@
       "side": "B"
     },
     "R605": {
-      "x": 94.0,
-      "y": 83.0,
-      "rotation": 0,
-      "side": "B"
-    },
-    "R606": {
-      "x": 94.0,
-      "y": 80.5,
-      "rotation": 0,
-      "side": "B"
-    },
-    "R607": {
-      "x": 98.0,
-      "y": 82.5,
+      "x": 93.2,
+      "y": 81.6,
       "rotation": 90,
       "side": "B"
     },
+    "R606": {
+      "x": 90.6,
+      "y": 76.6,
+      "rotation": 90,
+      "side": "B"
+    },
+    "R607": {
+      "x": 88.0,
+      "y": 76.6,
+      "rotation": 270,
+      "side": "B"
+    },
     "R608": {
-      "x": 89.0,
-      "y": 78.0,
-      "rotation": 0,
+      "x": 88.0,
+      "y": 81.6,
+      "rotation": 270,
       "side": "B"
     },
     "R609": {
-      "x": 90.5,
-      "y": 97.0,
-      "rotation": 0,
+      "x": 95.8,
+      "y": 76.6,
+      "rotation": 270,
       "side": "B"
     },
     "R610": {
-      "x": 94.0,
-      "y": 78.0,
-      "rotation": 0,
+      "x": 95.8,
+      "y": 81.6,
+      "rotation": 270,
       "side": "B"
     },
     "R611": {
-      "x": 89.0,
-      "y": 75.5,
-      "rotation": 0,
+      "x": 93.2,
+      "y": 76.6,
+      "rotation": 90,
       "side": "B"
     },
     "R701": {
@@ -1043,7 +1043,7 @@
     },
     "R807": {
       "x": 84.2,
-      "y": 90.1,
+      "y": 91.1,
       "rotation": 180,
       "side": "F"
     },

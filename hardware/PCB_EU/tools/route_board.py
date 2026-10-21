@@ -191,6 +191,72 @@ def import_session(board, ses, work):
             board.Delete(item)
 
 
+def drop_conflicts(board, fixed):
+    """Delete imported router copper that breaks clearance to copper fixed before the router ran.
+
+    A session made before a change in routing.json may cross new planned copper; the grid
+    completion then reroutes the connections that lose a track."""
+    gap = MM(POUR_CLEARANCE) - 1000
+    layers = (p.F_Cu, p.In2_Cu, p.B_Cu)
+
+    def box(item):
+        b = item.GetBoundingBox()
+        return b.GetLeft() - gap, b.GetTop() - gap, b.GetRight() + gap, b.GetBottom() + gap
+
+    def near(a, b):
+        return a[0] <= b[2] and b[0] <= a[2] and a[1] <= b[3] and b[1] <= a[3]
+
+    def item_layers(item):
+        return [l for l in layers if item.IsOnLayer(l)]
+
+    others = [(t, box(t), item_layers(t)) for t in board.GetTracks() if t.m_Uuid.AsString() in fixed]
+    others += [(pad, box(pad), item_layers(pad)) for fp in board.GetFootprints() for pad in fp.Pads()
+               if pad.GetAttribute() != p.PAD_ATTRIB_NPTH]
+    dropped = []
+    for item in list(board.GetTracks()):
+        if item.m_Uuid.AsString() in fixed:
+            continue
+        b, own = box(item), item_layers(item)
+        for other, ob, olayers in others:
+            if other.GetNetCode() == item.GetNetCode() or not near(b, ob):
+                continue
+            if any(other.GetEffectiveShape(l).Collide(item.GetEffectiveShape(l), gap) for l in own if l in olayers):
+                dropped.append(item.GetNetname())
+                board.Delete(item)
+                break
+    return dropped
+
+
+def prune_dangling(board, nets):
+    """Remove dead-end tracks and vias of the given nets, left over from dropped session copper."""
+    removed = 0
+    while True:
+        board.BuildConnectivity()
+        conn = board.GetConnectivity()
+        items = [i for i in board.GetTracks() if i.GetNetname() in nets]
+        dead = []
+        for item in items:
+            if isinstance(item, p.PCB_VIA):
+                pos, r = item.GetPosition(), item.GetWidth(p.F_Cu) // 2
+                layers = set()
+                for other in items:
+                    if not isinstance(other, p.PCB_VIA) and any((e - pos).EuclideanNorm() <= r for e in (other.GetStart(), other.GetEnd())):
+                        layers.add(other.GetLayer())
+                for fp in board.GetFootprints():
+                    for pad in fp.Pads():
+                        if pad.GetNetCode() == item.GetNetCode():
+                            layers |= {l for l in (p.F_Cu, p.In2_Cu, p.B_Cu) if pad.IsOnLayer(l) and pad.HitTest(pos)}
+                if len(layers) < 2:
+                    dead.append(item)
+            elif conn.TestTrackEndpointDangling(item, False):
+                dead.append(item)
+        if not dead:
+            return removed
+        for item in dead:
+            board.Delete(item)
+            removed += 1
+
+
 def blocked(board, pos, radius, net):
     """True if a via of this radius at pos would come within POUR_CLEARANCE of foreign copper."""
     circle = p.SHAPE_CIRCLE(pos, radius)
@@ -204,6 +270,10 @@ def blocked(board, pos, radius, net):
             for layer in (p.F_Cu, p.B_Cu, p.In2_Cu):
                 if pad.IsOnLayer(layer) and pad.GetEffectiveShape(layer).Collide(circle, gap):
                     return True
+            # keep the escape area of fine-pitch IC pins free for their own routes
+            if fp.GetReference().startswith('U') and pad.GetAttribute() == p.PAD_ATTRIB_SMD and \
+                    min(pad.GetSize().x, pad.GetSize().y) <= MM(.6) and pad.GetEffectiveShape(p.B_Cu if fp.IsFlipped() else p.F_Cu).Collide(circle, MM(1.3)):
+                return True
             if pad.HasHole() and pad.GetEffectiveHoleShape().Collide(circle, MM(.3)):
                 return True
     for item in board.GetTracks():
@@ -494,8 +564,10 @@ def main():
             item.SetLocked(True)
         shutil.copyfile(run_router(board, args, SECOND_PASS_WIDTHS, 'pass2'), sessions[1])
         board, removed, ties, ep, tied, untied = prepare()
+    fixed_ids = {item.m_Uuid.AsString() for item in board.GetTracks()}
     for ses in sessions:
         import_session(board, ses, args.work)
+    dropped = drop_conflicts(board, fixed_ids)
     for item in board.GetTracks():
         item.SetLocked(False)
     keep = {i.m_Uuid.AsString() for i in plan_items(board, plan)}
@@ -509,6 +581,7 @@ def main():
         seen.add(name)
         identity(item, name)
     routed, failed = complete(board)
+    pruned = prune_dangling(board, set(dropped))
     for layer, name in (('F.Cu', 'gnd-top'), ('B.Cu', 'gnd-bottom')):
         board.Add(rect_zone(board, 'route_board/' + name, 'GND', [layer], [0.3, 0.3, 99.7, 99.7]))
     stitched, unstitched = stitch_islands(board)
@@ -525,7 +598,7 @@ def main():
     p.SaveBoard(str(args.board), board)
     unrouted = board.GetConnectivity().GetUnconnectedCount(False)
     print(json.dumps(dict(removed_previous=removed, fixed_before_router=fixed, tracks_and_vias=len(board.GetTracks()),
-                          ground_tie_vias=ties, exposed_pad_vias=ep, pad_ties=len(tied), untied_ground_pads=untied, island_vias=stitched, unjoined_islands=unstitched, completed=len(routed), completion_failed=failed, unrouted=unrouted)))
+                          ground_tie_vias=ties, exposed_pad_vias=ep, pad_ties=len(tied), untied_ground_pads=untied, dropped_session_copper=sorted(set(dropped)), pruned_dead_ends=pruned, island_vias=stitched, unjoined_islands=unstitched, completed=len(routed), completion_failed=failed, unrouted=unrouted)))
 
 
 if __name__ == '__main__':
