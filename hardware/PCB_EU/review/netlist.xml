@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/workspace/scratch/304de5ccb690/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-20T19:23:18</date>
+    <source>/workspace/scratch/304de5ccb690/eu-footprints/hardware/PCB_EU/PCB_EU.kicad_sch</source>
+    <date>2026-10-21T10:42:04</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
-    <textvar name="DESIGN_STAGE">SCHEMATIC_DRAFT</textvar>
+    <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>GrowBox | EU redesign | schematic review</title>
@@ -12,7 +12,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>PCB_EU.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -30,7 +30,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>InputPower.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -48,7 +48,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>MCU.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -66,7 +66,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Peripherals.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -84,7 +84,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Interfaces.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -102,7 +102,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>LED1.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -120,7 +120,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>LED2.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -138,7 +138,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Loads.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -156,7 +156,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Control.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | no PCB / manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -619,18 +619,19 @@
     </comp>
     <comp ref="F101">
       <value>15 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</footprint>
       <fields>
         <field name="MPN">3413.0330.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3413.0330.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -646,18 +647,19 @@
     </comp>
     <comp ref="F102">
       <value>8 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</footprint>
       <fields>
         <field name="MPN">3413.0327.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3413.0327.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -673,18 +675,19 @@
     </comp>
     <comp ref="F103">
       <value>6.3 A fast</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</footprint>
       <fields>
         <field name="MPN">3413.0224.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3413.0224.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -700,18 +703,19 @@
     </comp>
     <comp ref="F104">
       <value>2 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UMT250</footprint>
       <fields>
         <field name="MPN">3403.0169.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UMT250</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3403.0169.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -727,18 +731,19 @@
     </comp>
     <comp ref="F105">
       <value>2 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UMT250</footprint>
       <fields>
         <field name="MPN">3403.0169.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UMT250</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3403.0169.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -754,18 +759,19 @@
     </comp>
     <comp ref="F106">
       <value>1 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UMT250</footprint>
       <fields>
         <field name="MPN">3403.0166.11</field>
-        <field name="Design_note">DC fuse package / clearing I2t to be checked before layout</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UMT250</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3403.0166.11"/>
-      <property name="Design_note" value="DC fuse package / clearing I2t to be checked before layout"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -781,18 +787,19 @@
     </comp>
     <comp ref="J101">
       <value>24 V IN</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG301R-5.0-2P12</field>
-        <field name="Design_note">16 A terminal; exact footprint pending drawing</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG301R-5.0-2P12"/>
-      <property name="Design_note" value="16 A terminal; exact footprint pending drawing"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -808,18 +815,19 @@
     </comp>
     <comp ref="L101">
       <value>33u</value>
+      <footprint>EU_Mechanical:L_Jantek_JNRH1207</footprint>
       <fields>
         <field name="MPN">JNRH1207-330M-A</field>
-        <field name="Design_note">Jantek drawing and hot Isat remain layout/prototype checks</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:L_Jantek_JNRH1207</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L" description=""/>
       <property name="MPN" value="JNRH1207-330M-A"/>
-      <property name="Design_note" value="Jantek drawing and hot Isat remain layout/prototype checks"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -1059,19 +1067,20 @@
     </comp>
     <comp ref="U101">
       <value>L7987 3A</value>
+      <footprint>EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm</footprint>
       <datasheet>https://www.st.com/resource/en/datasheet/l7987.pdf</datasheet>
       <fields>
         <field name="MPN">L7987</field>
-        <field name="Design_note">HTSSOP16 EP; exact exposed pad footprint still pending</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">ST HTSSOP16 EP17=GND; 3x3 EP and 0.65 pitch; assembly and thermal vias pending</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm</field>
         <field name="Datasheet">https://www.st.com/resource/en/datasheet/l7987.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L7987" description=""/>
       <property name="MPN" value="L7987"/>
-      <property name="Design_note" value="HTSSOP16 EP; exact exposed pad footprint still pending"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="ST HTSSOP16 EP17=GND; 3x3 EP and 0.65 pitch; assembly and thermal vias pending"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
@@ -1358,18 +1367,19 @@
     </comp>
     <comp ref="L201">
       <value>6u8</value>
+      <footprint>EU_Mechanical:L_Bourns_SRN6045</footprint>
       <fields>
         <field name="MPN">SRN6045-6R8Y</field>
-        <field name="Design_note">Bourns SRN6045, exact footprint dimensions to verify</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">Bourns SRN6045 lands checked; not the TA variant; stability remains prototype check</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:L_Bourns_SRN6045</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L" description=""/>
       <property name="MPN" value="SRN6045-6R8Y"/>
-      <property name="Design_note" value="Bourns SRN6045, exact footprint dimensions to verify"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="Bourns SRN6045 lands checked; not the TA variant; stability remains prototype check"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="02 | 3.3 V supply and ESP32"/>
       <property name="Sheetfile" value="MCU.kicad_sch"/>
       <sheetpath names="/02 | 3.3 V supply and ESP32/" tstamps="/1ea8898b-cf8f-5207-a9ab-c1c85abd966d/"/>
@@ -1441,18 +1451,19 @@
     </comp>
     <comp ref="SW201">
       <value>RESET</value>
+      <footprint>EU_Mechanical:SW_Ninigi_TACTB-64K-F</footprint>
       <fields>
         <field name="MPN">TACTB-64K-F</field>
         <field name="Design_note">4 physical button leads form two internally common pairs</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:SW_Ninigi_TACTB-64K-F</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="SW" description=""/>
       <property name="MPN" value="TACTB-64K-F"/>
       <property name="Design_note" value="4 physical button leads form two internally common pairs"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="02 | 3.3 V supply and ESP32"/>
       <property name="Sheetfile" value="MCU.kicad_sch"/>
       <sheetpath names="/02 | 3.3 V supply and ESP32/" tstamps="/1ea8898b-cf8f-5207-a9ab-c1c85abd966d/"/>
@@ -1468,18 +1479,19 @@
     </comp>
     <comp ref="SW202">
       <value>BOOT</value>
+      <footprint>EU_Mechanical:SW_Ninigi_TACTB-64K-F</footprint>
       <fields>
         <field name="MPN">TACTB-64K-F</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:SW_Ninigi_TACTB-64K-F</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="SW" description=""/>
       <property name="MPN" value="TACTB-64K-F"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="02 | 3.3 V supply and ESP32"/>
       <property name="Sheetfile" value="MCU.kicad_sch"/>
       <sheetpath names="/02 | 3.3 V supply and ESP32/" tstamps="/1ea8898b-cf8f-5207-a9ab-c1c85abd966d/"/>
@@ -1622,18 +1634,19 @@
     </comp>
     <comp ref="BT301">
       <value>CR2032 + BC-2001</value>
+      <footprint>EU_Mechanical:Battery_COMF_BC-2001</footprint>
       <fields>
         <field name="MPN">BC-2001</field>
-        <field name="Design_note">BC-2001 clip footprint / negative PCB contact still pending drawing</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">COMF BC-2001: side pads 1 positive; centre pad 2 negative, no paste; durable plated finish and physical fit required</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Battery_COMF_BC-2001</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="BAT" description=""/>
       <property name="MPN" value="BC-2001"/>
-      <property name="Design_note" value="BC-2001 clip footprint / negative PCB contact still pending drawing"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="COMF BC-2001: side pads 1 positive; centre pad 2 negative, no paste; durable plated finish and physical fit required"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="03 | RTC, battery and microSD"/>
       <property name="Sheetfile" value="Peripherals.kicad_sch"/>
       <sheetpath names="/03 | RTC, battery and microSD/" tstamps="/f564091f-8583-5205-9c3f-0ba07a6cc17e/"/>
@@ -1789,19 +1802,20 @@
     </comp>
     <comp ref="J301">
       <value>MEM2061 SPI</value>
+      <footprint>EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A</footprint>
       <datasheet>https://gct.co/Files/Drawings/MEM2061.pdf</datasheet>
       <fields>
         <field name="MPN">MEM2061-01-188-00-A</field>
-        <field name="Design_note">GCT MEM2061 drawing A1, no locating pegs, normally closed CD</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">GCT MEM2061 A1: without pegs; separate CD1/CD2 pads unused; both SH tabs GND; preserve contact keepout and card access</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A</field>
         <field name="Datasheet">https://gct.co/Files/Drawings/MEM2061.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="SD" description=""/>
       <property name="MPN" value="MEM2061-01-188-00-A"/>
-      <property name="Design_note" value="GCT MEM2061 drawing A1, no locating pegs, normally closed CD"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="GCT MEM2061 A1: without pegs; separate CD1/CD2 pads unused; both SH tabs GND; preserve contact keepout and card access"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="03 | RTC, battery and microSD"/>
       <property name="Sheetfile" value="Peripherals.kicad_sch"/>
       <sheetpath names="/03 | RTC, battery and microSD/" tstamps="/f564091f-8583-5205-9c3f-0ba07a6cc17e/"/>
@@ -1818,7 +1832,8 @@
             <pin num="7"/>
             <pin num="6"/>
             <pin num="SH"/>
-            <pin num="CD"/>
+            <pin num="CD1"/>
+            <pin num="CD2"/>
           </pins>
         </unit>
       </units>
@@ -2112,18 +2127,19 @@
     </comp>
     <comp ref="Y301">
       <value>32.768k CL7p</value>
+      <footprint>EU_Mechanical:Crystal_Abracon_ABS07</footprint>
       <fields>
         <field name="MPN">ABS07-32.768KHZ-7-T</field>
         <field name="Design_note">Crystal ESR/load/drive to verify on prototype</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Crystal_Abracon_ABS07</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="Y" description=""/>
       <property name="MPN" value="ABS07-32.768KHZ-7-T"/>
       <property name="Design_note" value="Crystal ESR/load/drive to verify on prototype"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="03 | RTC, battery and microSD"/>
       <property name="Sheetfile" value="Peripherals.kicad_sch"/>
       <sheetpath names="/03 | RTC, battery and microSD/" tstamps="/f564091f-8583-5205-9c3f-0ba07a6cc17e/"/>
@@ -2283,18 +2299,19 @@
     </comp>
     <comp ref="F401">
       <value>2 A slow</value>
+      <footprint>EU_Mechanical:Fuse_Schurter_UMT250</footprint>
       <fields>
         <field name="MPN">3403.0169.11</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:Fuse_Schurter_UMT250</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="F" description=""/>
       <property name="MPN" value="3403.0169.11"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2310,18 +2327,19 @@
     </comp>
     <comp ref="J401">
       <value>SHT 3V3 / GND</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2337,18 +2355,19 @@
     </comp>
     <comp ref="J402">
       <value>SHT SDA / SCL</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2364,18 +2383,19 @@
     </comp>
     <comp ref="J403">
       <value>FLOAT / GND</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2391,18 +2411,19 @@
     </comp>
     <comp ref="J411">
       <value>FAN1: GND / +12</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2418,18 +2439,19 @@
     </comp>
     <comp ref="J412">
       <value>FAN1: TACH / PWM</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2445,18 +2467,19 @@
     </comp>
     <comp ref="J421">
       <value>FAN2: GND / +12</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -2472,18 +2495,19 @@
     </comp>
     <comp ref="J422">
       <value>FAN2: TACH / PWM</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="04 | SHT4x, float and two 4-wire fans"/>
       <property name="Sheetfile" value="Interfaces.kicad_sch"/>
       <sheetpath names="/04 | SHT4x, float and two 4-wire fans/" tstamps="/d9558033-80ea-5cd5-96a2-1734f0d121e1/"/>
@@ -3297,18 +3321,19 @@
     </comp>
     <comp ref="J501">
       <value>LED1 + / GND</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
       <property name="Sheetfile" value="LED1.kicad_sch"/>
       <sheetpath names="/05 | LED boost channel 1/" tstamps="/b5335c48-cc56-5a1c-ac80-c828837ea929/"/>
@@ -3324,18 +3349,19 @@
     </comp>
     <comp ref="L501">
       <value>10u</value>
+      <footprint>EU_Mechanical:L_Jantek_JNRH1207</footprint>
       <fields>
         <field name="MPN">JNRH1207-100N-A</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:L_Jantek_JNRH1207</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L" description=""/>
       <property name="MPN" value="JNRH1207-100N-A"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
       <property name="Sheetfile" value="LED1.kicad_sch"/>
       <sheetpath names="/05 | LED boost channel 1/" tstamps="/b5335c48-cc56-5a1c-ac80-c828837ea929/"/>
@@ -3351,18 +3377,19 @@
     </comp>
     <comp ref="L502">
       <value>10u</value>
+      <footprint>EU_Mechanical:L_Jantek_JNRH1207</footprint>
       <fields>
         <field name="MPN">JNRH1207-100N-A</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:L_Jantek_JNRH1207</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L" description=""/>
       <property name="MPN" value="JNRH1207-100N-A"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
       <property name="Sheetfile" value="LED1.kicad_sch"/>
       <sheetpath names="/05 | LED boost channel 1/" tstamps="/b5335c48-cc56-5a1c-ac80-c828837ea929/"/>
@@ -3743,19 +3770,20 @@
     </comp>
     <comp ref="U501">
       <value>LM3429MH/NOPB</value>
+      <footprint>EU_Mechanical:TI_PWP0014A_LM3429</footprint>
       <datasheet>https://www.ti.com/lit/ds/symlink/lm3429.pdf</datasheet>
       <fields>
         <field name="MPN">LM3429MH/NOPB</field>
-        <field name="Design_note">HTSSOP14 EP footprint dimensions must be validated</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TI_PWP0014A_LM3429</field>
         <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm3429.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="LM3429" description=""/>
       <property name="MPN" value="LM3429MH/NOPB"/>
-      <property name="Design_note" value="HTSSOP14 EP footprint dimensions must be validated"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
       <property name="Sheetfile" value="LED1.kicad_sch"/>
       <sheetpath names="/05 | LED boost channel 1/" tstamps="/b5335c48-cc56-5a1c-ac80-c828837ea929/"/>
@@ -4092,18 +4120,19 @@
     </comp>
     <comp ref="J601">
       <value>LED2 + / GND</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>
       <property name="Sheetfile" value="LED2.kicad_sch"/>
       <sheetpath names="/06 | LED boost channel 2/" tstamps="/d782ed65-5def-5dc4-af52-9f293d0c580a/"/>
@@ -4119,18 +4148,19 @@
     </comp>
     <comp ref="J602">
       <value>BAR2 + / GND</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>
       <property name="Sheetfile" value="LED2.kicad_sch"/>
       <sheetpath names="/06 | LED boost channel 2/" tstamps="/d782ed65-5def-5dc4-af52-9f293d0c580a/"/>
@@ -4146,18 +4176,19 @@
     </comp>
     <comp ref="L601">
       <value>22u</value>
+      <footprint>EU_Mechanical:L_Jantek_JNRH1207</footprint>
       <fields>
         <field name="MPN">JNRH1207-220M-A</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:L_Jantek_JNRH1207</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="L" description=""/>
       <property name="MPN" value="JNRH1207-220M-A"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>
       <property name="Sheetfile" value="LED2.kicad_sch"/>
       <sheetpath names="/06 | LED boost channel 2/" tstamps="/d782ed65-5def-5dc4-af52-9f293d0c580a/"/>
@@ -4538,19 +4569,20 @@
     </comp>
     <comp ref="U601">
       <value>LM3429MH/NOPB</value>
+      <footprint>EU_Mechanical:TI_PWP0014A_LM3429</footprint>
       <datasheet>https://www.ti.com/lit/ds/symlink/lm3429.pdf</datasheet>
       <fields>
         <field name="MPN">LM3429MH/NOPB</field>
-        <field name="Design_note">HTSSOP14 EP footprint dimensions must be validated</field>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="Design_note">TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending</field>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TI_PWP0014A_LM3429</field>
         <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm3429.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="LM3429" description=""/>
       <property name="MPN" value="LM3429MH/NOPB"/>
-      <property name="Design_note" value="HTSSOP14 EP footprint dimensions must be validated"/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="Design_note" value="TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>
       <property name="Sheetfile" value="LED2.kicad_sch"/>
       <sheetpath names="/06 | LED boost channel 2/" tstamps="/d782ed65-5def-5dc4-af52-9f293d0c580a/"/>
@@ -4607,18 +4639,19 @@
     </comp>
     <comp ref="J701">
       <value>PTC + / RETURN</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG301R-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG301R-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="07 | PTC heater and 24 V pump"/>
       <property name="Sheetfile" value="Loads.kicad_sch"/>
       <sheetpath names="/07 | PTC heater and 24 V pump/" tstamps="/4bb43062-ac97-5d39-802c-bf888ef151ca/"/>
@@ -4634,18 +4667,19 @@
     </comp>
     <comp ref="J702">
       <value>PUMP + / RETURN</value>
+      <footprint>EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</footprint>
       <fields>
         <field name="MPN">DG306-5.0-2P12</field>
         <field name="Design_note"/>
-        <field name="FootprintStatus">PENDING - no approved footprint</field>
-        <field name="Footprint"/>
+        <field name="FootprintStatus">DRAWING CHECKED - physical fit and PCB validation pending</field>
+        <field name="Footprint">EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J2" description=""/>
       <property name="MPN" value="DG306-5.0-2P12"/>
       <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PENDING - no approved footprint"/>
+      <property name="FootprintStatus" value="DRAWING CHECKED - physical fit and PCB validation pending"/>
       <property name="Sheetname" value="07 | PTC heater and 24 V pump"/>
       <property name="Sheetfile" value="Loads.kicad_sch"/>
       <sheetpath names="/07 | PTC heater and 24 V pump/" tstamps="/4bb43062-ac97-5d39-802c-bf888ef151ca/"/>
@@ -6155,7 +6189,8 @@
         <pin num="6" name="VSS" type="power_in"/>
         <pin num="7" name="DAT0_MISO" type="tri_state"/>
         <pin num="8" name="DAT1" type="passive"/>
-        <pin num="CD" name="CARD_DETECT" type="passive"/>
+        <pin num="CD1" name="CARD_DETECT_1" type="passive"/>
+        <pin num="CD2" name="CARD_DETECT_2" type="passive"/>
         <pin num="SH" name="SHELL" type="passive"/>
       </pins>
     </libpart>
@@ -6958,82 +6993,85 @@
     <net code="108" name="unconnected-(D801-NC-Pad2)" class="Default">
       <node ref="D801" pin="2" pinfunction="NC_2" pintype="no_connect"/>
     </net>
-    <net code="109" name="unconnected-(J301-CARD_DETECT-PadCD)" class="Default">
-      <node ref="J301" pin="CD" pinfunction="CARD_DETECT_CD" pintype="passive+no_connect"/>
+    <net code="109" name="unconnected-(J301-CARD_DETECT_1-PadCD1)" class="Default">
+      <node ref="J301" pin="CD1" pinfunction="CARD_DETECT_1_CD1" pintype="passive+no_connect"/>
     </net>
-    <net code="110" name="unconnected-(U101-SYNCH-Pad7)" class="Default">
+    <net code="110" name="unconnected-(J301-CARD_DETECT_2-PadCD2)" class="Default">
+      <node ref="J301" pin="CD2" pinfunction="CARD_DETECT_2_CD2" pintype="passive+no_connect"/>
+    </net>
+    <net code="111" name="unconnected-(U101-SYNCH-Pad7)" class="Default">
       <node ref="U101" pin="7" pinfunction="SYNCH_7" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="111" name="unconnected-(U202-GPIO2-Pad24)" class="Default">
+    <net code="112" name="unconnected-(U202-GPIO2-Pad24)" class="Default">
       <node ref="U202" pin="24" pinfunction="GPIO2_24" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="112" name="unconnected-(U202-GPIO4-Pad26)" class="Default">
+    <net code="113" name="unconnected-(U202-GPIO4-Pad26)" class="Default">
       <node ref="U202" pin="26" pinfunction="GPIO4_26" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="113" name="unconnected-(U202-GPIO5-Pad29)" class="Default">
+    <net code="114" name="unconnected-(U202-GPIO5-Pad29)" class="Default">
       <node ref="U202" pin="29" pinfunction="GPIO5_29" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="114" name="unconnected-(U202-GPIO12-Pad14)" class="Default">
+    <net code="115" name="unconnected-(U202-GPIO12-Pad14)" class="Default">
       <node ref="U202" pin="14" pinfunction="GPIO12_14" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="115" name="unconnected-(U202-GPIO15-Pad23)" class="Default">
+    <net code="116" name="unconnected-(U202-GPIO15-Pad23)" class="Default">
       <node ref="U202" pin="23" pinfunction="GPIO15_23" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="116" name="unconnected-(U202-GPIO16-Pad27)" class="Default">
+    <net code="117" name="unconnected-(U202-GPIO16-Pad27)" class="Default">
       <node ref="U202" pin="27" pinfunction="GPIO16_27" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="117" name="unconnected-(U202-GPIO17-Pad28)" class="Default">
+    <net code="118" name="unconnected-(U202-GPIO17-Pad28)" class="Default">
       <node ref="U202" pin="28" pinfunction="GPIO17_28" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="118" name="unconnected-(U202-GPIO36-Pad4)" class="Default">
+    <net code="119" name="unconnected-(U202-GPIO36-Pad4)" class="Default">
       <node ref="U202" pin="4" pinfunction="GPIO36_4" pintype="input+no_connect"/>
     </net>
-    <net code="119" name="unconnected-(U202-GPIO39-Pad5)" class="Default">
+    <net code="120" name="unconnected-(U202-GPIO39-Pad5)" class="Default">
       <node ref="U202" pin="5" pinfunction="GPIO39_5" pintype="input+no_connect"/>
     </net>
-    <net code="120" name="unconnected-(U202-NC-Pad17)" class="Default">
+    <net code="121" name="unconnected-(U202-NC-Pad17)" class="Default">
       <node ref="U202" pin="17" pinfunction="NC_17" pintype="no_connect"/>
     </net>
-    <net code="121" name="unconnected-(U202-NC-Pad18)" class="Default">
+    <net code="122" name="unconnected-(U202-NC-Pad18)" class="Default">
       <node ref="U202" pin="18" pinfunction="NC_18" pintype="no_connect"/>
     </net>
-    <net code="122" name="unconnected-(U202-NC-Pad19)" class="Default">
+    <net code="123" name="unconnected-(U202-NC-Pad19)" class="Default">
       <node ref="U202" pin="19" pinfunction="NC_19" pintype="no_connect"/>
     </net>
-    <net code="123" name="unconnected-(U202-NC-Pad20)" class="Default">
+    <net code="124" name="unconnected-(U202-NC-Pad20)" class="Default">
       <node ref="U202" pin="20" pinfunction="NC_20" pintype="no_connect"/>
     </net>
-    <net code="124" name="unconnected-(U202-NC-Pad21)" class="Default">
+    <net code="125" name="unconnected-(U202-NC-Pad21)" class="Default">
       <node ref="U202" pin="21" pinfunction="NC_21" pintype="no_connect"/>
     </net>
-    <net code="125" name="unconnected-(U202-NC-Pad22)" class="Default">
+    <net code="126" name="unconnected-(U202-NC-Pad22)" class="Default">
       <node ref="U202" pin="22" pinfunction="NC_22" pintype="no_connect"/>
     </net>
-    <net code="126" name="unconnected-(U202-NC-Pad32)" class="Default">
+    <net code="127" name="unconnected-(U202-NC-Pad32)" class="Default">
       <node ref="U202" pin="32" pinfunction="NC_32" pintype="no_connect"/>
     </net>
-    <net code="127" name="unconnected-(U301-MFP-Pad7)" class="Default">
+    <net code="128" name="unconnected-(U301-MFP-Pad7)" class="Default">
       <node ref="U301" pin="7" pinfunction="MFP_7" pintype="open_collector+no_connect"/>
     </net>
-    <net code="128" name="unconnected-(U402-IO2-Pad3)" class="Default">
+    <net code="129" name="unconnected-(U402-IO2-Pad3)" class="Default">
       <node ref="U402" pin="3" pinfunction="IO2_3" pintype="passive+no_connect"/>
     </net>
-    <net code="129" name="unconnected-(U402-IO2-Pad4)" class="Default">
+    <net code="130" name="unconnected-(U402-IO2-Pad4)" class="Default">
       <node ref="U402" pin="4" pinfunction="IO2_4" pintype="passive+no_connect"/>
     </net>
-    <net code="130" name="unconnected-(U501-NC-Pad8)" class="Default">
+    <net code="131" name="unconnected-(U501-NC-Pad8)" class="Default">
       <node ref="U501" pin="8" pinfunction="NC_8" pintype="no_connect"/>
     </net>
-    <net code="131" name="unconnected-(U601-NC-Pad8)" class="Default">
+    <net code="132" name="unconnected-(U601-NC-Pad8)" class="Default">
       <node ref="U601" pin="8" pinfunction="NC_8" pintype="no_connect"/>
     </net>
-    <net code="132" name="unconnected-(U801-NC-Pad1)" class="Default">
+    <net code="133" name="unconnected-(U801-NC-Pad1)" class="Default">
       <node ref="U801" pin="1" pinfunction="NC_1" pintype="no_connect"/>
     </net>
-    <net code="133" name="unconnected-(U801-NC-Pad8)" class="Default">
+    <net code="134" name="unconnected-(U801-NC-Pad8)" class="Default">
       <node ref="U801" pin="8" pinfunction="NC_8" pintype="no_connect"/>
     </net>
-    <net code="134" name="unconnected-(U802-OUT2-Pad7)" class="Default">
+    <net code="135" name="unconnected-(U802-OUT2-Pad7)" class="Default">
       <node ref="U802" pin="7" pinfunction="OUT2_7" pintype="open_collector+no_connect"/>
     </net>
   </nets>

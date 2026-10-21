@@ -1,0 +1,580 @@
+{
+  "stage": "PARTIAL_LED1_POWER_ROUTING",
+  "date": "2026-10-21",
+  "scope": "LED1 local boost power loop, series inductors, input capacitor bank, output terminal and gate resistor; In1 ground reference. Controller, upstream power and rest of board remain incomplete.",
+  "limits": [
+    "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
+    "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
+  ],
+  "vias": [
+    {
+      "id": "sw-a",
+      "net": "LED1_SW",
+      "at": [
+        79.5,
+        44.8
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "sw-b",
+      "net": "LED1_SW",
+      "at": [
+        80.5,
+        44.8
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "out-a",
+      "net": "LED1_OUT",
+      "at": [
+        76,
+        51
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "out-return",
+      "net": "GND",
+      "at": [
+        81.35,
+        51.35
+      ],
+      "diameter": 0.7,
+      "drill": 0.3
+    },
+    {
+      "id": "led-pos-a",
+      "net": "LED1_LED_POS",
+      "at": [
+        77.2,
+        41.1
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "led-pos-b",
+      "net": "LED1_LED_POS",
+      "at": [
+        78.2,
+        41.3
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "vin-a",
+      "net": "+24V_LED1",
+      "at": [
+        61,
+        18
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "vin-b",
+      "net": "+24V_LED1",
+      "at": [
+        61,
+        19.2
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    }
+  ],
+  "routes": [
+    {
+      "id": "series-inductors",
+      "net": "LED1_L_MID",
+      "layer": "B.Cu",
+      "width": 2,
+      "points": [
+        {
+          "pad": "L501.2"
+        },
+        [
+          84.1,
+          23
+        ],
+        [
+          75.9,
+          23
+        ],
+        {
+          "pad": "L502.1"
+        }
+      ]
+    },
+    {
+      "id": "inductor-switch",
+      "net": "LED1_SW",
+      "layer": "B.Cu",
+      "width": 1.8,
+      "points": [
+        {
+          "pad": "L502.2"
+        },
+        [
+          84.1,
+          39.5
+        ],
+        [
+          83,
+          40.6
+        ],
+        {
+          "pad": "Q501.2"
+        }
+      ]
+    },
+    {
+      "id": "switch-neck",
+      "net": "LED1_SW",
+      "layer": "B.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "pad": "Q501.2"
+        },
+        [
+          83,
+          44.8
+        ]
+      ]
+    },
+    {
+      "id": "switch-vias-back",
+      "net": "LED1_SW",
+      "layer": "B.Cu",
+      "width": 1.8,
+      "points": [
+        [
+          83,
+          44.8
+        ],
+        {
+          "via": "sw-b"
+        },
+        {
+          "via": "sw-a"
+        }
+      ]
+    },
+    {
+      "id": "switch-vias-front",
+      "net": "LED1_SW",
+      "layer": "F.Cu",
+      "width": 1.8,
+      "points": [
+        {
+          "via": "sw-a"
+        },
+        {
+          "via": "sw-b"
+        }
+      ]
+    },
+    {
+      "id": "switch-diode",
+      "net": "LED1_SW",
+      "layer": "F.Cu",
+      "width": 1.8,
+      "points": [
+        {
+          "via": "sw-b"
+        },
+        [
+          79.765,
+          45.235
+        ],
+        {
+          "pad": "D501.2"
+        },
+        {
+          "pad": "D501.2",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "id": "source-neck",
+      "net": "LED1_IS",
+      "layer": "F.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "pad": "Q501.3"
+        },
+        [
+          85.54,
+          43.8
+        ]
+      ]
+    },
+    {
+      "id": "source-shunt",
+      "net": "LED1_IS",
+      "layer": "F.Cu",
+      "width": 2,
+      "points": [
+        [
+          85.54,
+          43.8
+        ],
+        {
+          "pad": "R501.1"
+        }
+      ]
+    },
+    {
+      "id": "shunt-cap-return",
+      "net": "GND",
+      "layer": "F.Cu",
+      "width": 2,
+      "points": [
+        {
+          "pad": "R501.2"
+        },
+        {
+          "pad": "C508.2"
+        }
+      ]
+    },
+    {
+      "id": "diode-output-via",
+      "net": "LED1_OUT",
+      "layer": "F.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "pad": "D501.1"
+        },
+        {
+          "via": "out-a"
+        }
+      ]
+    },
+    {
+      "id": "output-bypass",
+      "net": "LED1_OUT",
+      "layer": "B.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "via": "out-a"
+        },
+        {
+          "pad": "C511.1"
+        },
+        {
+          "pad": "C508.1"
+        }
+      ]
+    },
+    {
+      "id": "bypass-return",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.6,
+      "points": [
+        {
+          "pad": "C511.2"
+        },
+        {
+          "via": "out-return"
+        }
+      ]
+    },
+    {
+      "id": "output-current-shunt",
+      "net": "LED1_OUT",
+      "layer": "F.Cu",
+      "width": 1.5,
+      "points": [
+        {
+          "pad": "D501.1"
+        },
+        [
+          70.5375,
+          49
+        ],
+        {
+          "pad": "R502.1"
+        }
+      ]
+    },
+    {
+      "id": "output-current-via-a",
+      "net": "LED1_LED_POS",
+      "layer": "F.Cu",
+      "width": 0.9,
+      "points": [
+        {
+          "pad": "R502.2"
+        },
+        {
+          "via": "led-pos-a"
+        }
+      ]
+    },
+    {
+      "id": "output-current-via-b",
+      "net": "LED1_LED_POS",
+      "layer": "F.Cu",
+      "width": 0.9,
+      "points": [
+        {
+          "pad": "R502.2"
+        },
+        {
+          "via": "led-pos-b"
+        }
+      ]
+    },
+    {
+      "id": "output-to-terminal",
+      "net": "LED1_LED_POS",
+      "layer": "In2.Cu",
+      "width": 2,
+      "points": [
+        {
+          "via": "led-pos-a"
+        },
+        [
+          77.5,
+          41.4
+        ],
+        [
+          77.5,
+          46.7
+        ],
+        [
+          93.8,
+          46.7
+        ],
+        {
+          "pad": "J501.1"
+        }
+      ]
+    },
+    {
+      "id": "output-via-tie",
+      "net": "LED1_LED_POS",
+      "layer": "In2.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "via": "led-pos-b"
+        },
+        [
+          77.5,
+          42
+        ]
+      ]
+    },
+    {
+      "id": "input-cap-bank",
+      "net": "+24V_LED1",
+      "layer": "F.Cu",
+      "width": 2,
+      "points": [
+        {
+          "pad": "C501.1"
+        },
+        {
+          "pad": "C502.1"
+        }
+      ]
+    },
+    {
+      "id": "input-fuse",
+      "net": "+24V_LED1",
+      "layer": "F.Cu",
+      "width": 1.5,
+      "points": [
+        [
+          41.4988,
+          18.7
+        ],
+        {
+          "pad": "F103.2"
+        }
+      ]
+    },
+    {
+      "id": "input-via-front",
+      "net": "+24V_LED1",
+      "layer": "F.Cu",
+      "width": 2,
+      "points": [
+        {
+          "pad": "F103.2"
+        },
+        [
+          59.5,
+          18.7
+        ],
+        {
+          "via": "vin-a"
+        },
+        {
+          "via": "vin-b"
+        }
+      ]
+    },
+    {
+      "id": "input-via-back",
+      "net": "+24V_LED1",
+      "layer": "B.Cu",
+      "width": 2,
+      "points": [
+        {
+          "via": "vin-b"
+        },
+        {
+          "via": "vin-a"
+        },
+        [
+          62.5,
+          16.5
+        ],
+        {
+          "pad": "L501.1"
+        }
+      ]
+    },
+    {
+      "id": "gate-series",
+      "net": "LED1_GATE",
+      "layer": "B.Cu",
+      "width": 0.5,
+      "points": [
+        {
+          "pad": "R803.2"
+        },
+        [
+          80.46,
+          40.5975
+        ],
+        {
+          "pad": "Q501.1"
+        }
+      ]
+    },
+    {
+      "id": "gate-pulldown",
+      "net": "LED1_GATE",
+      "layer": "B.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "pad": "R804.1"
+        },
+        [
+          80.46,
+          40.5975
+        ]
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "id": "ground-reference",
+      "net": "GND",
+      "layer": "In1.Cu",
+      "clearance": 0.3,
+      "outline": [
+        [
+          0.4,
+          0.4
+        ],
+        [
+          99.6,
+          0.4
+        ],
+        [
+          99.6,
+          99.6
+        ],
+        [
+          0.4,
+          99.6
+        ]
+      ]
+    }
+  ],
+  "connected_groups": [
+    {
+      "net": "LED1_SW",
+      "pads": [
+        "L502.2",
+        "Q501.2",
+        "D501.2"
+      ]
+    },
+    {
+      "net": "LED1_IS",
+      "pads": [
+        "Q501.3",
+        "R501.1"
+      ]
+    },
+    {
+      "net": "LED1_OUT",
+      "pads": [
+        "D501.1",
+        "R502.1",
+        "C511.1",
+        "C508.1"
+      ]
+    },
+    {
+      "net": "LED1_LED_POS",
+      "pads": [
+        "R502.2",
+        "J501.1"
+      ]
+    },
+    {
+      "net": "LED1_L_MID",
+      "pads": [
+        "L501.2",
+        "L502.1"
+      ]
+    },
+    {
+      "net": "+24V_LED1",
+      "pads": [
+        "F103.2",
+        "C501.1",
+        "C502.1",
+        "L501.1"
+      ]
+    },
+    {
+      "net": "LED1_GATE",
+      "pads": [
+        "R803.2",
+        "Q501.1",
+        "R804.1"
+      ]
+    },
+    {
+      "net": "GND",
+      "pads": [
+        "R501.2",
+        "C511.2",
+        "C508.2",
+        "J501.2",
+        "C501.2",
+        "C502.2"
+      ]
+    }
+  ]
+}

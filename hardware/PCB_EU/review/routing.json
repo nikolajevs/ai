@@ -1,0 +1,116 @@
+{
+  "stage": "PARTIAL_LED1_POWER_ROUTING",
+  "date": "2026-10-21",
+  "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
+  "planned_copper_objects_checked": 49,
+  "tracks": 40,
+  "vias": 8,
+  "tracks_by_layer": {
+    "F.Cu": 17,
+    "B.Cu": 18,
+    "In2.Cu": 5
+  },
+  "copper_zones": [
+    {
+      "net": "GND",
+      "layer": "In1.Cu",
+      "filled_area_mm2": 9030.08
+    }
+  ],
+  "actual_copper_connected_groups": [
+    {
+      "net": "LED1_SW",
+      "pads": [
+        "L502.2",
+        "Q501.2",
+        "D501.2"
+      ],
+      "physical_pad_count": 4,
+      "copper_connected": true
+    },
+    {
+      "net": "LED1_IS",
+      "pads": [
+        "Q501.3",
+        "R501.1"
+      ],
+      "physical_pad_count": 2,
+      "copper_connected": true
+    },
+    {
+      "net": "LED1_OUT",
+      "pads": [
+        "D501.1",
+        "R502.1",
+        "C511.1",
+        "C508.1"
+      ],
+      "physical_pad_count": 4,
+      "copper_connected": true
+    },
+    {
+      "net": "LED1_LED_POS",
+      "pads": [
+        "R502.2",
+        "J501.1"
+      ],
+      "physical_pad_count": 2,
+      "copper_connected": true
+    },
+    {
+      "net": "LED1_L_MID",
+      "pads": [
+        "L501.2",
+        "L502.1"
+      ],
+      "physical_pad_count": 2,
+      "copper_connected": true
+    },
+    {
+      "net": "+24V_LED1",
+      "pads": [
+        "F103.2",
+        "C501.1",
+        "C502.1",
+        "L501.1"
+      ],
+      "physical_pad_count": 4,
+      "copper_connected": true
+    },
+    {
+      "net": "LED1_GATE",
+      "pads": [
+        "R803.2",
+        "Q501.1",
+        "R804.1"
+      ],
+      "physical_pad_count": 3,
+      "copper_connected": true
+    },
+    {
+      "net": "GND",
+      "pads": [
+        "R501.2",
+        "C511.2",
+        "C508.2",
+        "J501.2",
+        "C501.2",
+        "C502.2"
+      ],
+      "physical_pad_count": 6,
+      "copper_connected": true
+    }
+  ],
+  "scope": "LED1 local boost power loop, series inductors, input capacitor bank, output terminal and gate resistor; In1 ground reference. Controller, upstream power and rest of board remain incomplete.",
+  "limits": [
+    "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
+    "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
+  ],
+  "complete_board_routing": false,
+  "ampacity_verified": false,
+  "thermal_verified": false,
+  "source_sha256": {
+    "PCB_EU.kicad_pcb": "bd37b3e2cb4968e4e9accab0123c746c003b042136c013749bd47dafa3903c7f",
+    "routing.json": "9c1d7247dad21291f8546418d8a9c3a7a04c5b3d4063a7bcda65eada0d52b277"
+  }
+}

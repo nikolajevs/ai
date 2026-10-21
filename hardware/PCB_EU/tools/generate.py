@@ -24,6 +24,7 @@ parts = []
 sheets = {}
 symbols = {}
 counts = Counter()
+MECHANICAL = json.loads((HERE/'footprint_assignments.json').read_text())['assignments']
 
 
 def uid(*args):
@@ -98,7 +99,7 @@ ic('USBLC6',[(1,'IO1','passive'),(3,'IO2','passive'),(2,'GND','power_in')],[(6,'
 ic('ESDAL',[(1,'K1','passive'),(2,'K2','passive')],[(3,'A_COMMON','power_in')])
 ic('BAT54',[(1,'A','passive'),(2,'NC','no_connect')],[(3,'K','passive')])
 ic('SD',[(1,'DAT2','passive'),(2,'DAT3_CS','input'),(3,'CMD_MOSI','input'),(4,'VDD','power_in'),(5,'CLK','input')],
-        [(8,'DAT1','passive'),(7,'DAT0_MISO','tri_state'),(6,'VSS','power_in'),('SH','SHELL','passive'),('CD','CARD_DETECT','passive')],30.48)
+        [(8,'DAT1','passive'),(7,'DAT0_MISO','tri_state'),(6,'VSS','power_in'),('SH','SHELL','passive'),('CD1','CARD_DETECT_1','passive'),('CD2','CARD_DETECT_2','passive')],30.48)
 for n in [2,6]:
     ic(f'J{n}',[(i,str(i),'passive') for i in range(1,n+1)],[],10.16)
 esp = [(1,'GND','power_in'),(2,'3V3','power_in'),(3,'EN','input'),(4,'GPIO36','input'),(5,'GPIO39','input'),
@@ -119,6 +120,7 @@ P = 'power_in'
 
 
 def add(sh, ref, sym, value, mpn, nets, fp='', note='', pos=None, bom=True):
+    if not fp and mpn in MECHANICAL: fp = MECHANICAL[mpn]['footprint']
     pd = {str(k):v for k,v in (nets.items() if isinstance(nets,dict) else enumerate(nets,1))}
     expected = {x['number'] for x in symbols[sym]['pins']}
     if set(pd) != expected:
@@ -156,15 +158,15 @@ sheet('InputPower','01 | 24 V input and 12 V auxiliary supply',[
  'RF + CF series from COMP to FB; CP across the complete RF/CF network.',
  'C112 has 0.1 ohm in series to GND. This is deliberate compensation damping.'
 ],95)
-add('InputPower','J101','J2','24 V IN','DG301R-5.0-2P12',['+24V_RAW',GND],note='16 A terminal; exact footprint pending drawing')
+add('InputPower','J101','J2','24 V IN','DG301R-5.0-2P12',['+24V_RAW',GND],note='DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing')
 fuses=[('F101','15 A slow','3413.0330.11','+24V_RAW',V24),('F102','8 A slow','3413.0327.11',V24,'+24V_PTC'),
        ('F103','6.3 A fast','3413.0224.11',V24,'+24V_LED1'),('F104','2 A slow','3403.0169.11',V24,'+24V_LED2'),
        ('F105','2 A slow','3403.0169.11',V24,'+24V_AUX'),('F106','1 A slow','3403.0166.11',V24,'+24V_PUMP')]
-for ref,val,mpn,a,b in fuses:add('InputPower',ref,'F',val,mpn,[a,b],note='DC fuse package / clearing I2t to be checked before layout')
+for ref,val,mpn,a,b in fuses:add('InputPower',ref,'F',val,mpn,[a,b],note='SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified')
 add('InputPower','D101','TVS','SMBJ26A','SMBJ26A-E3/52',[V24,GND],'Diode_SMD:D_SMB')
 c('InputPower','C101','220u 50V','UPW1H221MPD',V24)
-add('InputPower','U101','L7987','L7987 3A','L7987',{1:V12,2:'+24V_AUX',3:'+24V_AUX',4:'+24V_AUX',5:'+24V_AUX',6:'AUX_SS',7:None,8:'AUX_COMP',9:'AUX_FB',10:'AUX_FSW',11:'AUX_ILIM',12:'BLOCK_OC',13:'AUX_SW',14:'AUX_SW',15:'AUX_BOOT',16:GND,17:GND},note='HTSSOP16 EP; exact exposed pad footprint still pending',pos=(90,60))
-add('InputPower','L101','L','33u','JNRH1207-330M-A',['AUX_SW',V12],note='Jantek drawing and hot Isat remain layout/prototype checks')
+add('InputPower','U101','L7987','L7987 3A','L7987',{1:V12,2:'+24V_AUX',3:'+24V_AUX',4:'+24V_AUX',5:'+24V_AUX',6:'AUX_SS',7:None,8:'AUX_COMP',9:'AUX_FB',10:'AUX_FSW',11:'AUX_ILIM',12:'BLOCK_OC',13:'AUX_SW',14:'AUX_SW',15:'AUX_BOOT',16:GND,17:GND},note='ST HTSSOP16 EP17=GND; 3x3 EP and 0.65 pitch; assembly and thermal vias pending',pos=(90,60))
+add('InputPower','L101','L','33u','JNRH1207-330M-A',['AUX_SW',V12],note='Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check')
 add('InputPower','D102','D','SS510 100V','SS510-YAN',['AUX_SW',GND],'Diode_SMD:D_SMC')
 c('InputPower','C102','220u 50V','UPW1H221MPD','+24V_AUX')
 for n in range(103,107):c('InputPower',f'C{n}','1u 50V',C1,'+24V_AUX')
@@ -193,7 +195,7 @@ sheet('MCU','02 | 3.3 V supply and ESP32',[
  'Programmer power is not a board supply. Keep its VCC disconnected while PSU powers the board.'
 ],110)
 add('MCU','U201','AP63203','AP63203WU-7','AP63203WU-7',{1:V3,2:V12,3:V12,4:GND,5:'LOGIC_SW',6:'LOGIC_BOOT'},'Package_TO_SOT_SMD:TSOT-23-6',pos=(80,45))
-add('MCU','L201','L','6u8','SRN6045-6R8Y',['LOGIC_SW',V3],note='Bourns SRN6045, exact footprint dimensions to verify')
+add('MCU','L201','L','6u8','SRN6045-6R8Y',['LOGIC_SW',V3],note='Bourns SRN6045 lands checked; not the TA variant; stability remains prototype check')
 c('MCU','C201','10u 25V',C10,V12)
 c('MCU','C202','10u 25V',C10,V12)
 c('MCU','C203','100n BOOT',C100,'LOGIC_BOOT','LOGIC_SW')
@@ -217,7 +219,7 @@ sheet('Peripherals','03 | RTC, battery and microSD',[
  'CR2032 is not rechargeable. No path from +3V3 to VBAT; MFP is unused.',
  'SD uses SPI; CMD and DAT0..DAT3 all have 10k pull-ups, including unused DAT1/2.',
  'GCT drawing Rev A1: shell is ground; normally closed detect contact is unused.',
- 'CD / shell pad IDs are symbolic in this schematic; resolve exact footprint pad numbering before layout.',
+ 'CD1/CD2 are separate unused contact pads; both SH ground tabs are grounded. Preserve socket keepout.',
  'Initial SD speed 2-4 MHz with 220R SCK/MOSI; validate with the actual card.'
 ],85)
 add('Peripherals','U301','MCP7940N','MCP7940N-I/SN','MCP7940N-I/SN',{1:'RTC_X1',2:'RTC_X2',3:'VBAT',4:GND,5:'I2C_SDA',6:'I2C_SCL',7:None,8:V3},'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm',pos=(75,60))
@@ -225,8 +227,8 @@ add('Peripherals','Y301','Y','32.768k CL7p','ABS07-32.768KHZ-7-T',['RTC_X1','RTC
 c('Peripherals','C301','10p C0G','C1206C100J5GAC','RTC_X1')
 c('Peripherals','C302','10p C0G','C1206C100J5GAC','RTC_X2')
 c('Peripherals','C303','100n',C100,V3)
-add('Peripherals','BT301','BAT','CR2032 + BC-2001','BC-2001',['VBAT',GND],note='BC-2001 clip footprint / negative PCB contact still pending drawing')
-add('Peripherals','J301','SD','MEM2061 SPI','MEM2061-01-188-00-A',{1:'SD_DAT2',2:'SD_CS',3:'SD_MOSI',4:V3,5:'SD_SCK',6:GND,7:'SD_MISO',8:'SD_DAT1','SH':GND,'CD':None},note='GCT MEM2061 drawing A1, no locating pegs, normally closed CD',pos=(280,60))
+add('Peripherals','BT301','BAT','CR2032 + BC-2001','BC-2001',['VBAT',GND],note='COMF BC-2001: side pads 1 positive; centre pad 2 negative, no paste; durable plated finish and physical fit required')
+add('Peripherals','J301','SD','MEM2061 SPI','MEM2061-01-188-00-A',{1:'SD_DAT2',2:'SD_CS',3:'SD_MOSI',4:V3,5:'SD_SCK',6:GND,7:'SD_MISO',8:'SD_DAT1','SH':GND,'CD1':None,'CD2':None},note='GCT MEM2061 A1: without pegs; separate CD1/CD2 pads unused; both SH tabs GND; preserve contact keepout and card access',pos=(280,60))
 c('Peripherals','C304','22u 6.3V',C22,V3)
 c('Peripherals','C305','100n',C100,V3)
 r('Peripherals','R301','220R','SMD1206-220R-1%','SD_SCK_GPIO','SD_SCK')
@@ -284,7 +286,7 @@ for k in (1,2):
     ],85)
     def ref(letter,n):return f'{letter}{base+n}'
     nn={1:vin,2:pre+'COMP',3:pre+'CSH',4:pre+'RCT',5:GND,6:pre+'OVP',7:'LED_NDIM',8:None,9:GND,10:pre+'GATE_RAW',11:pre+'VCC',12:pre+'IS',13:pre+'HSP',14:pre+'HSN',15:GND}
-    add(sh,ref('U',1),'LM3429','LM3429MH/NOPB','LM3429MH/NOPB',nn,note='HTSSOP14 EP footprint dimensions must be validated',pos=(85,60))
+    add(sh,ref('U',1),'LM3429','LM3429MH/NOPB','LM3429MH/NOPB',nn,note='TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending',pos=(85,60))
     if k==1:
         add(sh,ref('L',1),'L','10u','JNRH1207-100N-A',[vin,pre+'L_MID'])
         add(sh,ref('L',2),'L','10u','JNRH1207-100N-A',[pre+'L_MID',pre+'SW'])
@@ -430,7 +432,10 @@ def libsymbol(name, qualified=False):
 
 
 def header(name,title):
-    return f'(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid {q(uid(name))}) (paper "A3") (title_block (title {q(title)}) (date {q(DATE)}) (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | no PCB / manufacturing release"))'
+    stage = ('SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release' if (HERE/'routing.json').exists()
+             else 'SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release' if (HERE/'placement.json').exists()
+             else 'SCHEMATIC DRAFT | no PCB / manufacturing release')
+    return f'(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid {q(uid(name))}) (paper "A3") (title_block (title {q(title)}) (date {q(DATE)}) (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 {q(stage)}))'
 
 
 def textblk(name,key,t,x,y,size=1.1):
@@ -457,7 +462,7 @@ def schematic(sh,meta):
         a.append(f'(symbol (lib_id {q("EU:"+p["symbol"])}) (at {num(x)} {num(y)} 0) (unit 1) (in_bom {"yes" if p["in_bom"] else "no"}) (on_board {"no" if p["symbol"]=="FLAG" else "yes"}) (dnp no) (uuid {q(pi)})')
         tx=x-7.62 if s['kind'] in ['nmos','npn','pnp'] else x
         if s['kind']=='tp':tx=x-8.89
-        a.extend([prop('Reference',p['ref'],tx,y-h-3.1,s['kind']=='flag',1.15),prop('Value',val,tx,y+h+3.1,s['kind'] in ['flag','tp'],.98),prop('Footprint',p['footprint'],x,y),prop('Datasheet',source_urls.get(p['mpn'],''),x,y),prop('MPN',p['mpn'],x,y),prop('Design_note',p['note'],x,y),prop('FootprintStatus','PACKAGE ONLY - verify before PCB' if p['footprint'] else 'PENDING - no approved footprint',x,y)])
+        a.extend([prop('Reference',p['ref'],tx,y-h-3.1,s['kind']=='flag',1.15),prop('Value',val,tx,y+h+3.1,s['kind'] in ['flag','tp'],.98),prop('Footprint',p['footprint'],x,y),prop('Datasheet',source_urls.get(p['mpn'],''),x,y),prop('MPN',p['mpn'],x,y),prop('Design_note',p['note'],x,y),prop('FootprintStatus','DRAWING CHECKED - physical fit and PCB validation pending' if p['mpn'] in MECHANICAL else ('PACKAGE ONLY - verify before PCB' if p['footprint'] else 'PENDING - no approved footprint'),x,y)])
         for pin_ in s['pins']:a.append(f'(pin {q(pin_["number"])} (uuid {q(uid(pi,pin_["number"]))}))')
         a.append(f'(instances (project {q(ROOT)} (path {q("/"+root+"/"+su)} (reference {q(p["ref"])}) (unit 1)))) )')
         for pin_ in s['pins']:
@@ -501,18 +506,25 @@ def main():
     (HERE/'libraries/EU.kicad_sym').write_text(lib)
     (HERE/'sym-lib-table').write_text('(sym_lib_table (version 7) (lib (name "EU") (type "KiCad") (uri "${KIPRJMOD}/libraries/EU.kicad_sym") (options "") (descr "Project pin-verified symbols")))\n')
     libs=sorted(x.name[:-7] for x in (HERE/'libraries').glob('*.pretty'))
-    (HERE/'fp-lib-table').write_text('(fp_lib_table (version 7)\n'+'\n'.join(f'(lib (name {q(n)}) (type "KiCad") (uri "${{KIPRJMOD}}/libraries/{n}.pretty") (options "") (descr "Selected library footprints, package check pending"))' for n in libs)+')\n')
+    (HERE/'fp-lib-table').write_text('(fp_lib_table (version 7)\n'+'\n'.join(f'(lib (name {q(n)}) (type "KiCad") (uri "${{KIPRJMOD}}/libraries/{n}.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))' for n in libs)+')\n')
     for sh,meta in sheets.items(): (HERE/f'{sh}.kicad_sch').write_text(schematic(sh,meta))
     root=[header(ROOT,'GrowBox | EU redesign | schematic review'),'(lib_symbols)']
     root.append(textblk(ROOT,'title','GrowBox controller\nEuropean sourcing / 24 V PSU / one prototype',20,17,2.5))
-    root.append(textblk(ROOT,'scope','SCHEMATIC DRAFT EU-0.1 | 20 October 2026\nFull connection/BOM draft. No PCB placement, routing or manufacturing release.\nSeparate project; original PCB_V1 rev 0.22 remains the functional reference.',20,40,1.6))
+    placement_stage = (HERE/'placement.json').exists()
+    routing_stage = (HERE/'routing.json').exists()
+    scope = ('Connection/BOM draft; partial LED1 PCB routing. No manufacturing release.' if routing_stage
+             else 'Connection/BOM draft; unrouted PCB placement candidate. No manufacturing release.' if placement_stage
+             else 'Full connection/BOM draft. No PCB placement, routing or manufacturing release.')
+    root.append(textblk(ROOT,'scope','SCHEMATIC DRAFT EU-0.1 | 20 October 2026\n'+scope+'\nSeparate project; original PCB_V1 rev 0.22 remains the functional reference.',20,40,1.6))
     for k,(sh,meta) in enumerate(sheets.items()):
         x=25+185*(k%2);y=75+42*(k//2);sid=uid('sheet',sh)
         root.append(f'(sheet (at {x} {y}) (size 155 28) (stroke (width 0.254) (type default)) (fill (color 0 0 0 0)) (uuid {q(sid)}) {prop("Sheetname",meta["title"],x+77.5,y-2,False,1.4)} {prop("Sheetfile",sh+".kicad_sch",x+77.5,y+30,False,1)} (instances (project {q(ROOT)} (path {q("/"+uid(ROOT))} (page {q(k+2)})))))')
     root.append('(sheet_instances (path "/" (page "1"))) (embedded_fonts no))')
     (HERE/f'{ROOT}.kicad_sch').write_text('\n'.join(root)+'\n')
-    # A compact project; KiCad supplies defaults. No broad ERC exclusions.
-    project=dict(meta=dict(filename=f'{ROOT}.kicad_pro',version=3),erc=dict(erc_exclusions=[],meta=dict(version=0)),schematic=dict(meta=dict(version=1)),text_variables={'DESIGN_STAGE':'SCHEMATIC_DRAFT'})
+    # Preserve PCB rules/stackup added by the board editor. No broad ERC exclusions.
+    project_path = HERE/f'{ROOT}.kicad_pro'
+    project = json.loads(project_path.read_text()) if project_path.exists() else dict(meta=dict(filename=f'{ROOT}.kicad_pro',version=3),erc=dict(erc_exclusions=[],meta=dict(version=0)),schematic=dict(meta=dict(version=1)))
+    project.setdefault('text_variables',{})['DESIGN_STAGE'] = 'PARTIAL_LED1_ROUTING' if routing_stage else 'UNROUTED_PLACEMENT' if placement_stage else 'SCHEMATIC_DRAFT'
     (HERE/f'{ROOT}.kicad_pro').write_text(json.dumps(project,indent=2)+'\n')
     spec=dict(revision=REV,date=DATE,source_commit='1d6b1eaf1273149b32eb1cf5c91fc69ff6a6ca09',parts=parts,accessories=accessories,source_urls=source_urls)
     (HERE/'design.json').write_text(json.dumps(spec,ensure_ascii=False,indent=2)+'\n')
@@ -535,7 +547,7 @@ def main():
     assert not [x['mpn'] for x in rows if not x['needed']], 'Unallocated purchased SKU'
     (HERE/'BOM_allocated.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n')
     with (HERE/'BOM_allocated.csv').open('w',newline='',encoding='utf-8-sig') as f:
-        w=csv.writer(f);w.writerow(['Shop','MPN_or_shop_SKU','Fitted_or_accessory','Buy_pieces','Sale_unit','Price_per_sale_unit_EUR_VAT','Line_EUR_VAT','References','Accessory_count','URL','Price_date'])
+        w=csv.writer(f,lineterminator="\n");w.writerow(['Shop','MPN_or_shop_SKU','Fitted_or_accessory','Buy_pieces','Sale_unit','Price_per_sale_unit_EUR_VAT','Line_EUR_VAT','References','Accessory_count','URL','Price_date'])
         for row in rows:w.writerow([row['shop'],row['mpn'],row['needed'],row['buy'],row['unit'],row['price_unit'],f'{row["line"]:.2f}',' '.join(row['refs']),row['accessory_count'],row['url'],DATE])
     totals=defaultdict(Decimal)
     for row in rows:totals[row['shop']]+=Decimal(str(row['line']))

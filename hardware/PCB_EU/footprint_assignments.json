@@ -1,0 +1,198 @@
+{
+  "status": "drawing-checked footprint assignments; prototype fit, thermal design, placement and board DRC pending",
+  "date": "2026-10-20",
+  "sources": {
+    "ust1206": {
+      "url": "https://www.mouser.com/datasheet/3/386/1/typ_UST_1206.pdf",
+      "sha256": "58d409aaeb0d317731fb3b4a15446f302d7cd1f6f4c0fc280b6d4286692440d4"
+    },
+    "usi1206": {
+      "url": "https://lv.mouser.com/datasheet/3/386/1/typ_USI_1206.pdf",
+      "sha256": "b0d1c3276e963ee531fd73878d0175ac93bf935cce0e42105cd4507a84040b91"
+    },
+    "l7987": {
+      "url": "https://www.st.com/resource/en/datasheet/l7987.pdf",
+      "sha256": "481abe81339105aa04fefe4cc025ab733d6966f01b70cc9bcd13389c9b24f7a3"
+    },
+    "lm3429": {
+      "url": "https://www.ti.com/lit/ds/symlink/lm3429.pdf",
+      "sha256": "3e1d13598a9c0c70bd37bfb0e97f49da2bdc95184dd29a3136c20af2ff346841"
+    },
+    "jnrh33": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/581873-1",
+      "sha256": "9fbcc61dbd4cfe7a04bae38b438eb3bbb51308c423ae4324f29e8287de9751a9"
+    },
+    "jnrh10": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/581872-1",
+      "sha256": "e136f4029f577e519e3246e5d512fbb4a4706ad5bab66bb294c19be450d7412d"
+    },
+    "jnrh22": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/583290-1",
+      "sha256": "8e5c91def50faf5eee38272bc6eedbbb5648261e9a769484cb2f356504d9ebd5"
+    },
+    "srn6045": {
+      "url": "https://www.bourns.com/docs/Product-Datasheets/SRN6045.pdf",
+      "sha256": "fb909e67fcca90f5181aadcc36f8b072ee436b2182752b9afd8ea77d68bfeb1b"
+    },
+    "abs07": {
+      "url": "https://abracon.com/Resonators/ABS07.pdf?download=1",
+      "sha256": "5b21d42d9ca704d86cfb8f1b93488f3f3671c55ca90f334aa66f931866277dd1"
+    },
+    "bc2001": {
+      "url": "https://www.comf-hk.com/storage/BC-2001-Data-Sheet.pdf",
+      "sha256": "bee1cdf0844956a4dcbda3d58434e88acf37eddfe287520fe5491d91eb7a6985"
+    },
+    "dg301r": {
+      "url": "https://ja.degson.com/index.php?a=downloadFile&id=2149222&name=%27ZmlsZTQ%3D%27",
+      "sha256": "0070c4bd35e5a8b0f38216f6286350ec1b2f6aa2e1cd4fd3cae912bd11ecce35"
+    },
+    "dg306": {
+      "url": "https://it.degson.com/index.php?a=downloadFile&id=3748674&name=%27ZmlsZTQ%3D%27",
+      "sha256": "84591f55b112144772cb7d9d487b2ada3e9765ec3a3834d3f1bfbea1b4fdd985"
+    },
+    "tact": {
+      "url": "https://ce8dc832c.cloudimg.io/v7/_cdn-params-tep_/image_15200.gif?ci_sign=7ac53a2367ed510d806f817570812fd4a2d21b60",
+      "manufacturer_page": "https://ninigi.com/gb/en/product/ninigi/microswitches-tact/tactb-64k-f/113048",
+      "sha256": "00c51519d3376139d83e2b5eb4c819b0c91ca9843aa71593b08481ca254ac106"
+    },
+    "mem2061": {
+      "url": "https://gct.co/Files/Drawings/MEM2061.pdf",
+      "sha256": "ec8d23bfe692ef79804e1f87cc30b22ef7289e6ce6a391304e88f182b0536965"
+    },
+    "umt250": {
+      "url": "https://www.schurter.com/en/pdf/english/typ_umt_250.pdf",
+      "upstream_git_blob": "cbb208235980bc128463c367f6f680e68beb9030",
+      "geometry_review": "Primary PDF dimensions and solder-pad labels; imported footprint source unchanged."
+    }
+  },
+  "assignments": {
+    "3413.0330.11": {
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "drawing": "SCHURTER UST <=25 A / USI 1206 reflow pattern",
+      "sources": [
+        "ust1206",
+        "usi1206"
+      ]
+    },
+    "3413.0327.11": {
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "drawing": "SCHURTER UST <=25 A / USI 1206 reflow pattern",
+      "sources": [
+        "ust1206",
+        "usi1206"
+      ]
+    },
+    "3413.0224.11": {
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "drawing": "SCHURTER UST <=25 A / USI 1206 reflow pattern",
+      "sources": [
+        "ust1206",
+        "usi1206"
+      ]
+    },
+    "3403.0169.11": {
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
+      "drawing": "SCHURTER UMT250 solder lands",
+      "sources": [
+        "umt250"
+      ]
+    },
+    "3403.0166.11": {
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
+      "drawing": "SCHURTER UMT250 solder lands",
+      "sources": [
+        "umt250"
+      ]
+    },
+    "L7987": {
+      "footprint": "EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm",
+      "drawing": "ST L7987 DocID025589 rev 3 table 8 and figure 23",
+      "sources": [
+        "l7987"
+      ]
+    },
+    "JNRH1207-330M-A": {
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
+      "drawing": "Jantek SP-N251224012 / SP-N251224007 / SP-N251224010 rev A",
+      "sources": [
+        "jnrh33",
+        "jnrh10",
+        "jnrh22"
+      ]
+    },
+    "JNRH1207-100N-A": {
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
+      "drawing": "Jantek SP-N251224012 / SP-N251224007 / SP-N251224010 rev A",
+      "sources": [
+        "jnrh33",
+        "jnrh10",
+        "jnrh22"
+      ]
+    },
+    "JNRH1207-220M-A": {
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
+      "drawing": "Jantek SP-N251224012 / SP-N251224007 / SP-N251224010 rev A",
+      "sources": [
+        "jnrh33",
+        "jnrh10",
+        "jnrh22"
+      ]
+    },
+    "SRN6045-6R8Y": {
+      "footprint": "EU_Mechanical:L_Bourns_SRN6045",
+      "drawing": "Bourns SRN6045 recommended layout",
+      "sources": [
+        "srn6045"
+      ]
+    },
+    "LM3429MH/NOPB": {
+      "footprint": "EU_Mechanical:TI_PWP0014A_LM3429",
+      "drawing": "TI PWP0014A 4214867/A 09/2016 land and 0.125 mm stencil example",
+      "sources": [
+        "lm3429"
+      ]
+    },
+    "ABS07-32.768KHZ-7-T": {
+      "footprint": "EU_Mechanical:Crystal_Abracon_ABS07",
+      "drawing": "Abracon ABS07 rev 08-10-22 mechanical dimensions",
+      "sources": [
+        "abs07"
+      ]
+    },
+    "BC-2001": {
+      "footprint": "EU_Mechanical:Battery_COMF_BC-2001",
+      "drawing": "COMF BC-2001 PCB mounting layout",
+      "sources": [
+        "bc2001"
+      ]
+    },
+    "TACTB-64K-F": {
+      "footprint": "EU_Mechanical:SW_Ninigi_TACTB-64K-F",
+      "drawing": "Ninigi/TME image_15200 component, PCB land and circuit drawing",
+      "sources": [
+        "tact"
+      ]
+    },
+    "DG301R-5.0-2P12": {
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02",
+      "drawing": "Degson DG301R-C02 rev T1 approved 2020-05-25",
+      "sources": [
+        "dg301r"
+      ]
+    },
+    "DG306-5.0-2P12": {
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
+      "drawing": "Degson DG306-5.0-C06 rev T1 approved 2020-05-25",
+      "sources": [
+        "dg306"
+      ]
+    },
+    "MEM2061-01-188-00-A": {
+      "footprint": "EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A",
+      "drawing": "GCT MEM2061 revision A1 dated 02/12/25",
+      "sources": [
+        "mem2061"
+      ]
+    }
+  }
+}

@@ -1,10 +1,10 @@
 Traceback (most recent call last):
-  File "/workspace/scratch/304de5ccb690/ai/hardware/check_all.py", line 194, in <module>
+  File "/workspace/scratch/304de5ccb690/eu-footprints/hardware/check_all.py", line 194, in <module>
     sys.exit(main())
              ^^^^^^
-  File "/workspace/scratch/304de5ccb690/ai/hardware/check_all.py", line 130, in main
+  File "/workspace/scratch/304de5ccb690/eu-footprints/hardware/check_all.py", line 130, in main
     run('ERC', [KICAD_CLI, 'sch', 'erc', '--exit-code-violations', '-o', str(erc), str(sch)])
-  File "/workspace/scratch/304de5ccb690/ai/hardware/check_all.py", line 52, in run
+  File "/workspace/scratch/304de5ccb690/eu-footprints/hardware/check_all.py", line 52, in run
     res = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', cwd=HERE)
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run

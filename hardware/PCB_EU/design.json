@@ -13,8 +13,8 @@
         "1": "+24V_RAW",
         "2": "GND"
       },
-      "footprint": "",
-      "note": "16 A terminal; exact footprint pending drawing",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02",
+      "note": "DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing",
       "position": [
         45.72,
         129.54
@@ -31,8 +31,8 @@
         "1": "+24V_RAW",
         "2": "+24V_FUSED"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         106.68,
         129.54
@@ -49,8 +49,8 @@
         "1": "+24V_FUSED",
         "2": "+24V_PTC"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         173.99,
         129.54
@@ -67,8 +67,8 @@
         "1": "+24V_FUSED",
         "2": "+24V_LED1"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         241.3,
         129.54
@@ -85,8 +85,8 @@
         "1": "+24V_FUSED",
         "2": "+24V_LED2"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         308.61,
         129.54
@@ -103,8 +103,8 @@
         "1": "+24V_FUSED",
         "2": "+24V_AUX"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         374.65,
         129.54
@@ -121,8 +121,8 @@
         "1": "+24V_FUSED",
         "2": "+24V_PUMP"
       },
-      "footprint": "",
-      "note": "DC fuse package / clearing I2t to be checked before layout",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
+      "note": "SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified",
       "position": [
         45.72,
         149.86
@@ -190,8 +190,8 @@
         "16": "GND",
         "17": "GND"
       },
-      "footprint": "",
-      "note": "HTSSOP16 EP; exact exposed pad footprint still pending",
+      "footprint": "EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm",
+      "note": "ST HTSSOP16 EP17=GND; 3x3 EP and 0.65 pitch; assembly and thermal vias pending",
       "position": [
         90.17,
         59.69
@@ -208,8 +208,8 @@
         "1": "AUX_SW",
         "2": "+12V"
       },
-      "footprint": "",
-      "note": "Jantek drawing and hot Isat remain layout/prototype checks",
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
+      "note": "Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check",
       "position": [
         241.3,
         149.86
@@ -626,8 +626,8 @@
         "1": "LOGIC_SW",
         "2": "+3V3"
       },
-      "footprint": "",
-      "note": "Bourns SRN6045, exact footprint dimensions to verify",
+      "footprint": "EU_Mechanical:L_Bourns_SRN6045",
+      "note": "Bourns SRN6045 lands checked; not the TA variant; stability remains prototype check",
       "position": [
         45.72,
         144.78
@@ -879,7 +879,7 @@
         "1": "ESP_EN",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:SW_Ninigi_TACTB-64K-F",
       "note": "4 physical button leads form two internally common pairs",
       "position": [
         374.65,
@@ -897,7 +897,7 @@
         "1": "ESP_BOOT",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:SW_Ninigi_TACTB-64K-F",
       "note": "",
       "position": [
         45.72,
@@ -961,7 +961,7 @@
         "1": "RTC_X1",
         "2": "RTC_X2"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:Crystal_Abracon_ABS07",
       "note": "Crystal ESR/load/drive to verify on prototype",
       "position": [
         45.72,
@@ -1033,8 +1033,8 @@
         "1": "VBAT",
         "2": "GND"
       },
-      "footprint": "",
-      "note": "BC-2001 clip footprint / negative PCB contact still pending drawing",
+      "footprint": "EU_Mechanical:Battery_COMF_BC-2001",
+      "note": "COMF BC-2001: side pads 1 positive; centre pad 2 negative, no paste; durable plated finish and physical fit required",
       "position": [
         308.61,
         119.38
@@ -1057,10 +1057,11 @@
         "7": "SD_MISO",
         "8": "SD_DAT1",
         "SH": "GND",
-        "CD": null
+        "CD1": null,
+        "CD2": null
       },
-      "footprint": "",
-      "note": "GCT MEM2061 drawing A1, no locating pegs, normally closed CD",
+      "footprint": "EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A",
+      "note": "GCT MEM2061 A1: without pegs; separate CD1/CD2 pads unused; both SH tabs GND; preserve contact keepout and card access",
       "position": [
         279.4,
         59.69
@@ -1275,7 +1276,7 @@
         "1": "+3V3",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         45.72,
@@ -1293,7 +1294,7 @@
         "1": "SHT_SDA",
         "2": "SHT_SCL"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         106.68,
@@ -1311,7 +1312,7 @@
         "1": "FLOAT_EXT",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         173.99,
@@ -1499,7 +1500,7 @@
         "1": "+12V",
         "2": "+12V_FANS"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
       "note": "",
       "position": [
         308.61,
@@ -1517,7 +1518,7 @@
         "1": "GND",
         "2": "+12V_FANS"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         374.65,
@@ -1535,7 +1536,7 @@
         "1": "FAN1_TACH_EXT",
         "2": "FAN1_PWM"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         45.72,
@@ -1663,7 +1664,7 @@
         "1": "GND",
         "2": "+12V_FANS"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         374.65,
@@ -1681,7 +1682,7 @@
         "1": "FAN2_TACH_EXT",
         "2": "FAN2_PWM"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         45.72,
@@ -1822,8 +1823,8 @@
         "14": "LED1_HSN",
         "15": "GND"
       },
-      "footprint": "",
-      "note": "HTSSOP14 EP footprint dimensions must be validated",
+      "footprint": "EU_Mechanical:TI_PWP0014A_LM3429",
+      "note": "TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending",
       "position": [
         85.09,
         59.69
@@ -1840,7 +1841,7 @@
         "1": "+24V_LED1",
         "2": "LED1_L_MID"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
       "note": "",
       "position": [
         45.72,
@@ -1858,7 +1859,7 @@
         "1": "LED1_L_MID",
         "2": "LED1_SW"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
       "note": "",
       "position": [
         106.68,
@@ -2309,7 +2310,7 @@
         "1": "LED1_LED_POS",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         106.68,
@@ -2340,8 +2341,8 @@
         "14": "LED2_HSN",
         "15": "GND"
       },
-      "footprint": "",
-      "note": "HTSSOP14 EP footprint dimensions must be validated",
+      "footprint": "EU_Mechanical:TI_PWP0014A_LM3429",
+      "note": "TI PWP0014A: EP15=GND; copper 3.4x5, mask 3.155x3.255; thermal vias and assembly pending",
       "position": [
         85.09,
         59.69
@@ -2358,7 +2359,7 @@
         "1": "+24V_LED2",
         "2": "LED2_SW"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
       "note": "",
       "position": [
         45.72,
@@ -2791,7 +2792,7 @@
         "1": "LED2_LED_POS",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         374.65,
@@ -2809,7 +2810,7 @@
         "1": "LED2_LED_POS",
         "2": "GND"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         45.72,
@@ -2827,7 +2828,7 @@
         "1": "+24V_PTC",
         "2": "PTC_DRAIN"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02",
       "note": "",
       "position": [
         45.72,
@@ -3010,7 +3011,7 @@
         "1": "+24V_PUMP",
         "2": "PUMP_DRAIN"
       },
-      "footprint": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
         106.68,
