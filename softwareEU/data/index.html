@@ -52,6 +52,8 @@
                     <div class="metric-box" data-growing-only>
                         <span class="label">Статус насоса</span>
                         <div class="value" id="pump-val" style="color: var(--text-muted)">--</div>
+                        <div class="metric-sub" id="water-level">Вода: --</div>
+                        <div class="metric-sub" id="last-water">Последний полив: --</div>
                     </div>
                     <div class="metric-box">
                         <span class="label">Обогреватель</span>
@@ -67,10 +69,26 @@
                     <div class="metric-box">
                         <span class="label">Вентилятор 1 (Обдув)</span>
                         <div class="value" id="fan1-val" style="color: var(--success)">--<span class="unit">%</span></div>
+                        <div class="metric-sub" id="fan1-rpm">-- об/мин</div>
                     </div>
                     <div class="metric-box">
                         <span class="label">Вентилятор 2 (Вытяжка)</span>
                         <div class="value" id="fan2-val" style="color: var(--success)">--<span class="unit">%</span></div>
+                        <div class="metric-sub" id="fan2-rpm">-- об/мин</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INA226 на плате: вся мощность от блока питания 24 В (свет, обогрев, вентиляторы, насос) -->
+            <div class="card">
+                <h3>Питание платы</h3>
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <span class="label">Потребление</span>
+                        <div class="value" id="power-val" style="color: var(--warning)">--<span class="unit">Вт</span></div>
+                        <div class="metric-sub" id="power-details">-- В · -- А</div>
+                        <div class="metric-sub" id="energy-val">Сегодня: -- кВт·ч</div>
+                        <div class="metric-sub warn" id="power-warning" hidden></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +103,9 @@
                 <svg id="svgChart" viewBox="0 0 1000 400"></svg>
                 <div id="chart-tooltip" class="chart-tooltip"></div>
             </div>
+            <!-- Средняя мощность за каждые 10 минут (колонка power_w в CSV). Скрыт, если данных нет -->
+            <div class="chart-title chart-subtitle" id="power-chart-title" hidden>Мощность, Вт</div>
+            <svg id="powerChart" viewBox="0 0 1000 200" hidden></svg>
         </div>
 
     </div>

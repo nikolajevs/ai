@@ -13,7 +13,8 @@
 
 ## Аппаратная часть
 
-- [PCB_V1](hardware/PCB_V1/README.md) — основной проект платы: вход 24 В, четыре слоя, размер до 100×100 мм.
+- [PCB_EU](hardware/PCB_EU/README.md) — текущая плата: ESP32-WROOM-32E-N4, вход 24 В, четыре слоя, 100×100 мм, детали только из магазинов ЕС. Прошивка — [softwareEU/](softwareEU/README.md).
+- [PCB_V1](hardware/PCB_V1/README.md) — предыдущий проект платы, отдельный от PCB_EU. Прошивка `softwareEU/` его не поддерживает.
 - [cheap-version](hardware/cheap-version/README.md) — вариант платы с использованием имеющихся компонентов. Файлы изготовления и состояние проверок описаны в его [FAB.md](hardware/cheap-version/FAB.md).
 - [Корпус](hardware/enclosure/README.md) — параметрическая модель для 3D-печати; перед использованием сверяйте её с выбранной версией платы.
 

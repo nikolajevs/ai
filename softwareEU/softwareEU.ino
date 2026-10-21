@@ -1,5 +1,6 @@
 #include <esp_task_wdt.h>
 #include <driver/gpio.h>
+#include <driver/pulse_cnt.h>
 #include <Arduino.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -91,6 +92,9 @@ struct Settings {
   // Обогрев: 0 = только день, 1 = только ночь, 2 = всегда, 3 = никогда
   int heater_mode;
 
+  // Поправка показаний тока INA226, %: шунт 1% и усилитель дают ±3–5% без калибровки
+  float power_cal_pct;
+
   // Автополив
   uint8_t watering_days;       // Битовая маска: бит0=Пн, бит1=Вт, ... бит6=Вс
   int watering_hour, watering_minute;
@@ -114,15 +118,27 @@ struct State {
   int led_pwm;          // Текущий ШИМ, 0-255
   int fan1_pwm;
   int fan2_pwm;
-  uint32_t fan1_rpm;     // Diagnostic only, assuming two tach pulses per revolution.
-  uint32_t fan2_rpm;
+  int32_t fan1_rpm;      // Diagnostic only, two tach pulses per revolution; -1 = implausible (noise).
+  int32_t fan2_rpm;
   bool is_day;
   bool sht_online;
   bool rtc_online;
   bool clock_trusted;
   bool pump_active;
   bool heater_active;
+  uint8_t rtc_status;      // RtcStatus of the last RTC read
+  bool water_present;      // Debounced float switch, whatever water_sensor_enabled says
+  uint32_t last_water_day; // unixtime / 86400 of the last scheduled watering, 0 = never
+  // INA226 power meter. Display and logging only: no control decision uses it.
+  bool power_ok;
+  float bus_v;
+  float current_a;
+  float power_w;
+  float energy_wh;         // Since midnight (or since boot, if the board restarted today)
 };
+
+enum RtcStatus : uint8_t { RTC_OK = 0, RTC_NOT_SET = 1, RTC_NO_RESPONSE = 2 };
+enum TimeSetResult : uint8_t { TIME_SET_NONE = 0, TIME_SET_PENDING = 1, TIME_SET_OK = 2, TIME_SET_FAILED = 3 };
 
 static const int OP_MODE_GROWING = 0;
 static const int OP_MODE_DRYING = 1;
@@ -316,6 +332,7 @@ uint32_t last_rtc_check_ms = 0;
 // то есть лезли в I2C параллельно с опросом SHT4x и одновременно правили rtc_online/backup_unixtime.
 std::atomic<uint32_t> cached_unixtime{0};  // Снимок времени для веб-обработчиков, обновляет loop()
 std::atomic<uint32_t> pending_time_set{0}; // Запрос "выставить часы" с формы; применяет loop()
+std::atomic<uint8_t> time_set_result{TIME_SET_NONE}; // Итог последней установки часов для страницы настроек
 
 // --- Хендлы FreeRTOS для многоядерности ---
 TaskHandle_t UbidotsTaskHandle = NULL;
@@ -327,35 +344,49 @@ AsyncWebServer server(80);
 Preferences preferences;
 
 // Tach readings are diagnostics only. No climate/watering/safety decision uses RPM.
-static volatile uint32_t fan1_tach_pulses = 0, fan2_tach_pulses = 0;
-static portMUX_TYPE tachMux = portMUX_INITIALIZER_UNLOCKED;
+// The PCNT peripheral counts falling edges in hardware behind a glitch filter, so PWM
+// crosstalk on the fan cable is ignored and no interrupt runs for every pulse.
+static pcnt_unit_handle_t fan_tach_unit[2] = {nullptr, nullptr};
 static uint32_t last_tach_ms = 0;
 
-void ARDUINO_ISR_ATTR fan1TachISR() {
-  portENTER_CRITICAL_ISR(&tachMux);
-  fan1_tach_pulses = fan1_tach_pulses + 1;
-  portEXIT_CRITICAL_ISR(&tachMux);
+bool tachBegin(int index, int gpio) {
+  pcnt_unit_config_t unitConfig = {};
+  unitConfig.low_limit = -1;          // The count never goes down; the driver needs low < 0.
+  unitConfig.high_limit = 32767;      // Far above any real fan in one second.
+  pcnt_glitch_filter_config_t filter = {};
+  filter.max_glitch_ns = FAN_TACH_GLITCH_NS;
+  pcnt_chan_config_t chanConfig = {};
+  chanConfig.edge_gpio_num = gpio;
+  chanConfig.level_gpio_num = -1;
+  pcnt_unit_handle_t unit = nullptr;
+  pcnt_channel_handle_t chan = nullptr;
+  if (pcnt_new_unit(&unitConfig, &unit) != ESP_OK) return false;
+  if (pcnt_unit_set_glitch_filter(unit, &filter) != ESP_OK || pcnt_new_channel(unit, &chanConfig, &chan) != ESP_OK ||
+      pcnt_channel_set_edge_action(chan, PCNT_CHANNEL_EDGE_ACTION_HOLD, PCNT_CHANNEL_EDGE_ACTION_INCREASE) != ESP_OK ||
+      pcnt_unit_enable(unit) != ESP_OK || pcnt_unit_clear_count(unit) != ESP_OK || pcnt_unit_start(unit) != ESP_OK) {
+    if (chan) pcnt_del_channel(chan);
+    pcnt_unit_disable(unit);
+    pcnt_del_unit(unit);
+    return false;
+  }
+  fan_tach_unit[index] = unit;
+  return true;
 }
 
-void ARDUINO_ISR_ATTR fan2TachISR() {
-  portENTER_CRITICAL_ISR(&tachMux);
-  fan2_tach_pulses = fan2_tach_pulses + 1;
-  portEXIT_CRITICAL_ISR(&tachMux);
+int32_t readTachRpm(int index, uint32_t elapsed) {
+  int pulses = 0;
+  pcnt_unit_handle_t unit = fan_tach_unit[index];
+  if (!unit || pcnt_unit_get_count(unit, &pulses) != ESP_OK) return -1;
+  pcnt_unit_clear_count(unit);
+  return tachRpm(pulses, elapsed);
 }
 
 void updateFanRpm(uint32_t nowMs) {
   const uint32_t elapsed = elapsedMs(nowMs, last_tach_ms);
   if (elapsed < 1000) return;
-  uint32_t pulses1, pulses2;
-  portENTER_CRITICAL(&tachMux);
-  pulses1 = fan1_tach_pulses;
-  pulses2 = fan2_tach_pulses;
-  fan1_tach_pulses = 0;
-  fan2_tach_pulses = 0;
-  portEXIT_CRITICAL(&tachMux);
   last_tach_ms = nowMs;
-  state.fan1_rpm = uint64_t(pulses1) * 60000 / (uint64_t(elapsed) * FAN_TACH_PULSES_PER_REV);
-  state.fan2_rpm = uint64_t(pulses2) * 60000 / (uint64_t(elapsed) * FAN_TACH_PULSES_PER_REV);
+  state.fan1_rpm = readTachRpm(0, elapsed);
+  state.fan2_rpm = readTachRpm(1, elapsed);
 }
 
 void stopPumpAtDeadline() {
@@ -368,12 +399,6 @@ void stopPumpAtDeadline() {
 
 // --- Хелперы валидации входных данных (защита от некорректных значений из веб-формы) ---
 int clampInt(int v, int lo, int hi) {
-  if (v < lo) return lo;
-  if (v > hi) return hi;
-  return v;
-}
-
-float clampFloat(float v, float lo, float hi) {
   if (v < lo) return lo;
   if (v > hi) return hi;
   return v;
@@ -529,6 +554,8 @@ static const SettingDef SETTING_DEFS[] = {
   SET_INT  ("fan2_max_limit",      "fan2_max_limit",  fan2_max_limit,        0,    100,   100),
   // --- Обогрев ---
   SET_INT  ("heater_mode",         "heater_mode",     heater_mode,           0,    3,     3),
+  // --- Измерение мощности (INA226) ---
+  SET_FLOAT("power_cal_pct",       "pwr_cal_pct",     power_cal_pct,         -20,  20,    0),
   // --- Автополив ---
   SET_U8   ("watering_days",       "watering_days",   watering_days,         0,    127,   0),
   SET_INT  ("watering_hour",       "watering_hour",   watering_hour,         0,    23,    8),
@@ -586,7 +613,8 @@ void loadSettingsFromNVS(Settings &s) {
     uint8_t *p = fieldAddr(s, d);
     switch (d.type) {
       case ST_FLOAT:
-        *(float *)p = clampFloat(preferences.getFloat(d.nvsKey, d.def), d.lo, d.hi);
+        // NaN/inf in NVS (e.g. saved by an older build) falls back to the default.
+        *(float *)p = clampSettingFloat(preferences.getFloat(d.nvsKey, d.def), d.lo, d.hi, d.def);
         break;
       case ST_INT:
         *(int *)p = clampInt(preferences.getInt(d.nvsKey, (int)d.def), (int)d.lo, (int)d.hi);
@@ -644,7 +672,8 @@ String applyFormToSettings(AsyncWebServerRequest *request, Settings &s) {
     String v = request->getParam(d.param, true)->value();
 
     switch (d.type) {
-      case ST_FLOAT: *(float *)p = clampFloat(v.toFloat(), d.lo, d.hi); break;
+      // toFloat() accepts "nan" and "inf": such input keeps the current value.
+      case ST_FLOAT: *(float *)p = clampSettingFloat(v.toFloat(), d.lo, d.hi, *(float *)p); break;
       case ST_INT:   *(int *)p = clampInt(v.toInt(), (int)d.lo, (int)d.hi); break;
       case ST_U8:    *(uint8_t *)p = (uint8_t)clampInt(v.toInt(), (int)d.lo, (int)d.hi); break;
       case ST_BOOL:  *(bool *)p = (v == "1"); break;
@@ -768,6 +797,7 @@ void vUbidotsTask(void *pvParameters) {
     payload += "\"led-power\":" + String(round(st.led_pwm / 2.55)) + ",";
     payload += "\"fan1-power\":" + String(round(st.fan1_pwm / 2.55)) + ",";
     payload += "\"fan2-power\":" + String(round(st.fan2_pwm / 2.55)) + ",";
+    if (st.power_ok) payload += "\"power\":" + String(st.power_w, 1) + ",";
     payload += "\"sensor-status\":" + String(st.sht_online ? 1 : 0); // Статус датчика в облако
     payload += "}";
 
@@ -866,7 +896,7 @@ void logI2CScan() {
     Wire.beginTransmission(addr);
     if (Wire.endTransmission() != 0) continue;
     const char *name = addr == 0x44 ? " (SHT4x)" : addr == 0x45 ? " (SHT4x-B?)" :
-                       addr == MCP7940N_ADDR ? " (MCP7940N)" : "";
+                       addr == MCP7940N_ADDR ? " (MCP7940N)" : addr == INA226_ADDR ? " (INA226)" : "";
     char item[40];
     snprintf(item, sizeof(item), " 0x%02X%s", addr, name);
     found += item;
@@ -934,7 +964,10 @@ bool writeRtcRegisters(uint8_t reg, const uint8_t *data, size_t count) {
 bool rtcBegin() {
   uint8_t raw[7];
   rtc_present = readRtcRegisters(0x00, raw, sizeof(raw));
-  if (!rtc_present) return false;
+  if (!rtc_present) {
+    state.rtc_status = RTC_NO_RESPONSE;
+    return false;
+  }
   if (!(raw[3] & MCP7940N_VBATEN)) {
     const uint8_t weekday = (raw[3] & 0x07) | MCP7940N_VBATEN;
     if (!writeRtcRegisters(0x03, &weekday, 1)) return false;
@@ -945,6 +978,7 @@ bool rtcBegin() {
   return true;
 }
 
+// 3 s: the 32 kHz crystal can take over a second to start, longer when cold.
 bool waitRtcOscillator(bool running) {
   const uint32_t started = millis();
   do {
@@ -953,34 +987,71 @@ bool waitRtcOscillator(bool running) {
     if (!readRtcRegisters(0x03, &weekday, 1)) return false;
     if (bool(weekday & MCP7940N_OSCRUN) == running) return true;
     delay(5);
-  } while (elapsedMs(millis(), started) < 1000);
+  } while (elapsedMs(millis(), started) < 3000);
   return false; // A missing/stuck crystal must never make a write look successful.
 }
 
-// Microchip DS20005010J section 5.3: stop, wait for OSCRUN=0, load the calendar,
-// then start. ST is written last so a failed/partial calendar write stays untrusted.
+// Microchip DS20005010J section 5.3: stop, wait for OSCRUN=0, load the calendar, then start.
+// Month and year are written first, on their own, so the date is never loaded against a
+// stale month (e.g. the 31st while the chip still holds a 30-day month). ST is written last,
+// so a failed or partial write leaves the clock stopped and therefore untrusted.
+// Every failed step is logged: the console then says what to check on the board.
 bool rtcAdjust(const DateTime &time) {
   uint8_t raw[7];
   const RtcFields fields{time.year(), time.month(), time.day(), time.hour(), time.minute(), time.second()};
-  if (!encodeMcp7940n(fields, time.dayOfTheWeek() + 1, raw)) return false;
+  if (!encodeMcp7940n(fields, time.dayOfTheWeek() + 1, raw)) {
+    logPrintln("[RTC] Установка: дата вне диапазона 2024–2099.");
+    return false;
+  }
   const uint8_t control = 0; // Crystal oscillator; unused MFP square wave/alarms off.
   const uint8_t stopped = 0;
-  if (!writeRtcRegisters(0x07, &control, 1) || !writeRtcRegisters(0x00, &stopped, 1) ||
-      !waitRtcOscillator(false)) return false;
+  if (!writeRtcRegisters(0x07, &control, 1) || !writeRtcRegisters(0x00, &stopped, 1)) {
+    logPrintln("[RTC] Установка: MCP7940N не принял команду остановки (I2C).");
+    return false;
+  }
+  if (!waitRtcOscillator(false)) {
+    logPrintln("[RTC] Установка: генератор не остановился за 3 с (OSCRUN=1).");
+    return false;
+  }
   const uint8_t secondsWithStart = raw[0];
   raw[0] &= ~MCP7940N_ST;
-  if (!writeRtcRegisters(0x00, raw, sizeof(raw)) ||
-      !writeRtcRegisters(0x00, &secondsWithStart, 1)) return false;
-  return waitRtcOscillator(true);
+  if (!writeRtcRegisters(0x05, raw + 5, 2) || !writeRtcRegisters(0x00, raw, 5)) {
+    logPrintln("[RTC] Установка: ошибка I2C при записи даты и времени.");
+    return false;
+  }
+  if (!writeRtcRegisters(0x00, &secondsWithStart, 1)) {
+    logPrintln("[RTC] Установка: ошибка I2C при запуске часов.");
+    return false;
+  }
+  if (!waitRtcOscillator(true)) {
+    logPrintln("[RTC] Установка: кварц Y301 не запустился за 3 с (OSCRUN=0). Проверьте кварц и его пайку.");
+    return false;
+  }
+  return true;
 }
 
-bool readRTC(DateTime &result) {
+// One read: RTC_OK with a valid running calendar, RTC_NOT_SET when the chip answers but the
+// clock is stopped or holds an invalid date, RTC_NO_RESPONSE on an I2C error.
+RtcStatus readRtcOnce(DateTime &result) {
   // One sequential read uses the MCP7940N's rollover-safe snapshot buffers (section 5.3).
   uint8_t raw[7];
   RtcFields fields{};
-  if (!readRtcRegisters(0x00, raw, sizeof(raw)) || !decodeMcp7940n(raw, fields)) return false;
+  if (!readRtcRegisters(0x00, raw, sizeof(raw))) return RTC_NO_RESPONSE;
+  if (!decodeMcp7940n(raw, fields)) return RTC_NOT_SET;
   result = DateTime(fields.year, fields.month, fields.day, fields.hour, fields.minute, fields.second);
-  return true;
+  return RTC_OK;
+}
+
+// Up to three tries: a single I2C glitch must not throw the clock out of trust for a minute.
+bool readRTC(DateTime &result) {
+  RtcStatus status = RTC_NO_RESPONSE;
+  for (int attempt = 0; attempt < 3; ++attempt) {
+    if (attempt) delay(2);
+    status = readRtcOnce(result);
+    if (status == RTC_OK) break;
+  }
+  state.rtc_status = status;
+  return status == RTC_OK;
 }
 
 // Безопасное время: из RTC или из программного бэкапа. Вызывается только из setup()/loop().
@@ -1039,6 +1110,105 @@ void tryRecoverRTC(unsigned long currentMillis) {
   if (!retry_ok) {
     rtc_recovery_streak = 0; // Сбрасываем счётчик серии при любой неудачной попытке
   }
+}
+
+// --- INA226: power drawn by the whole board from the 24 V supply ---
+// 5 mOhm low-side shunt after Q102 (IN+ on the GND side), VBUS from +24V_FUSED through R113.
+// Only loop() talks to it. A silent chip shows "нет данных" in the UI and changes nothing else.
+bool ina226Read(uint8_t reg, uint16_t &value) {
+  Wire.beginTransmission(INA226_ADDR);
+  Wire.write(reg);
+  if (Wire.endTransmission(false) != 0 || Wire.requestFrom(INA226_ADDR, size_t(2), true) != 2) return false;
+  const uint8_t hi = Wire.read();
+  value = uint16_t(hi) << 8 | uint8_t(Wire.read());
+  return true;
+}
+
+bool ina226Write(uint8_t reg, uint16_t value) {
+  Wire.beginTransmission(INA226_ADDR);
+  Wire.write(reg);
+  Wire.write(uint8_t(value >> 8));
+  Wire.write(uint8_t(value & 0xff));
+  return Wire.endTransmission() == 0;
+}
+
+// Checks the manufacturer ID, so another chip at 0x40 is never taken for a power meter.
+bool ina226Begin() {
+  uint16_t id = 0, config = 0, cal = 0;
+  return ina226Read(0xFE, id) && id == INA226_MANUFACTURER_ID && ina226Write(0x00, INA226_CONFIG) &&
+         ina226Write(0x05, INA226_CALIBRATION) && ina226Read(0x00, config) && config == INA226_CONFIG &&
+         ina226Read(0x05, cal) && cal == INA226_CALIBRATION;
+}
+
+static bool power_online = false;
+static uint32_t power_last_poll_ms = 0, power_last_retry_ms = 0, power_last_check_ms = 0, power_last_sample_ms = 0;
+static uint8_t power_failures = 0;
+static uint32_t energy_day = 0;   // Day code energy_wh belongs to
+static double energy_wh = 0;
+static double csv_power_ws = 0;   // For the 10-minute CSV average
+static uint32_t csv_power_ms = 0;
+
+// Average watts since the previous CSV row; NaN when the meter gave nothing in that time.
+float takeCsvAveragePower() {
+  const float avg = csv_power_ms >= 1000 ? float(csv_power_ws * 1000.0 / csv_power_ms) : NAN;
+  csv_power_ws = 0;
+  csv_power_ms = 0;
+  return avg;
+}
+
+void updatePowerMeter(uint32_t nowMs, uint32_t todayCode, float calPct) {
+  if (todayCode != energy_day) {   // Midnight (or the clock was set to another day)
+    energy_day = todayCode;
+    energy_wh = 0;
+  }
+  state.energy_wh = float(energy_wh);
+  if (!power_online) {
+    if (power_last_retry_ms != 0 && elapsedMs(nowMs, power_last_retry_ms) < 30000) return;
+    power_last_retry_ms = nowMs ? nowMs : 1;
+    if (!ina226Begin()) return;
+    power_online = true;
+    power_failures = 0;
+    power_last_check_ms = power_last_poll_ms = nowMs;
+    power_last_sample_ms = 0;
+    logPrintln("[INA226] Найден на 0x40, измерение мощности включено.");
+    return;
+  }
+  if (elapsedMs(nowMs, power_last_poll_ms) < 1000) return;
+  power_last_poll_ms = nowMs;
+
+  uint16_t shuntRaw = 0, busRaw = 0, config = 0;
+  bool ok = ina226Read(0x01, shuntRaw) && ina226Read(0x02, busRaw);
+  // A brown-out resets the chip to its defaults: re-check the configuration every 30 s.
+  if (ok && elapsedMs(nowMs, power_last_check_ms) >= 30000) {
+    power_last_check_ms = nowMs;
+    ok = ina226Read(0x00, config) && (config == INA226_CONFIG || ina226Begin());
+  }
+  if (!ok) {
+    power_last_sample_ms = 0;
+    if (++power_failures >= 3) {
+      power_online = false;
+      state.power_ok = false;
+      power_last_retry_ms = nowMs ? nowMs : 1;
+      logPrintln("[INA226] Не отвечает — мощность не показывается, повтор раз в 30 с.");
+    }
+    return;
+  }
+  power_failures = 0;
+  state.current_a = ina226Amps(int16_t(shuntRaw), 1.0f + calPct / 100.0f);
+  state.bus_v = ina226Volts(busRaw);
+  state.power_w = state.bus_v * state.current_a;
+  state.power_ok = true;
+  if (power_last_sample_ms != 0) {
+    // Integrate only over a normal 1 s step: a gap (failed reads, a long set-time) is skipped.
+    const uint32_t dt = elapsedMs(nowMs, power_last_sample_ms);
+    if (dt <= 5000 && state.power_w > 0) {
+      energy_wh += double(state.power_w) * dt / 3600000.0;
+      csv_power_ws += double(state.power_w) * dt / 1000.0;
+    }
+    if (dt <= 5000) csv_power_ms += dt;
+  }
+  power_last_sample_ms = nowMs;
+  state.energy_wh = float(energy_wh);
 }
 
 String randomSecret() {
@@ -1191,6 +1361,7 @@ void setup() {
   Serial.printf("AP password: %s\nWeb login: admin / %s\n", cfg.ap_pass, admin_password.c_str());
   publishSettings(cfg);
   last_watering_day = preferences.getUInt("last_water", 0);
+  state.last_water_day = last_watering_day;
 
   state.is_day = true;
   state.fan1_pwm = state.fan2_pwm = PWM_MAX; // Logical airflow; boot GPIO duty is zero.
@@ -1245,12 +1416,12 @@ void setup() {
   delay(10); // Даём входу установиться: с фильтрующим конденсатором первое чтение иначе ложный LOW
   const bool waterNow = isWaterAvailable();
   water_level = {waterNow, waterNow, (uint32_t)millis()};
+  state.water_present = waterNow;
 
-  pinMode(FAN1_TACH_PIN, INPUT);
-  pinMode(FAN2_TACH_PIN, INPUT);
+  // GPIO34/35 have no internal pull-ups; the board has 10k pull-ups and 1k series resistors.
+  if (!tachBegin(0, FAN1_TACH_PIN)) logPrintln("[Fans] Тахометр вентилятора 1 (PCNT) не запустился.");
+  if (!tachBegin(1, FAN2_TACH_PIN)) logPrintln("[Fans] Тахометр вентилятора 2 (PCNT) не запустился.");
   last_tach_ms = millis();
-  attachInterrupt(digitalPinToInterrupt(FAN1_TACH_PIN), fan1TachISR, FALLING);
-  attachInterrupt(digitalPinToInterrupt(FAN2_TACH_PIN), fan2TachISR, FALLING);
 
   // AP+STA сразу и навсегда: точка доступа больше не передёргивается задачей телеметрии
   WiFi.mode(WIFI_AP_STA);
@@ -1292,8 +1463,9 @@ void setup() {
     json += "\"led\":" + String(st.led_pwm) + ",";
     json += "\"fan1\":" + String(st.fan1_pwm) + ",";
     json += "\"fan2\":" + String(st.fan2_pwm) + ",";
-    json += "\"fan1_rpm\":" + String(st.fan1_rpm) + ",";
-    json += "\"fan2_rpm\":" + String(st.fan2_rpm) + ",";
+    // RPM < 0 = implausible tach signal (noise); JSON null, the UI shows a dash.
+    json += "\"fan1_rpm\":" + (st.fan1_rpm >= 0 ? String(st.fan1_rpm) : String("null")) + ",";
+    json += "\"fan2_rpm\":" + (st.fan2_rpm >= 0 ? String(st.fan2_rpm) : String("null")) + ",";
     json += "\"time\":\"" + now.timestamp(DateTime::TIMESTAMP_TIME) + "\",";
     json += "\"date\":\"" + now.timestamp(DateTime::TIMESTAMP_DATE) + "\",";
     json += "\"is_day\":" + String(st.is_day ? "true" : "false") + ",";
@@ -1301,7 +1473,25 @@ void setup() {
     json += "\"sht_online\":" + String(st.sht_online ? "true" : "false") + ","; // Передаем статус в UI
     json += "\"rtc_online\":" + String(st.rtc_online ? "true" : "false") + ",";
     json += "\"clock_trusted\":" + String(st.clock_trusted ? "true" : "false") + ",";
+    static const char *const RTC_STATUS_NAMES[] = {"ok", "not_set", "no_response"};
+    json += "\"rtc_status\":\"" + String(RTC_STATUS_NAMES[st.rtc_status <= RTC_NO_RESPONSE ? st.rtc_status : uint8_t(RTC_NO_RESPONSE)]) + "\",";
+    static const char *const TIME_SET_NAMES[] = {"none", "pending", "ok", "failed"};
+    const uint8_t timeSet = time_set_result;
+    json += "\"time_set\":\"" + String(TIME_SET_NAMES[timeSet <= TIME_SET_FAILED ? timeSet : uint8_t(TIME_SET_NONE)]) + "\",";
     json += "\"pump_active\":" + String(st.pump_active ? "true" : "false") + ",";
+    json += "\"water_sensor_enabled\":" + String(cfg.water_sensor_enabled ? "true" : "false") + ",";
+    json += "\"water_present\":" + String(st.water_present ? "true" : "false") + ",";
+    // Day code of the last scheduled watering (local date = code * 86400), null = never.
+    json += "\"last_water_day\":" + (st.last_water_day ? String(st.last_water_day) : String("null")) + ",";
+    json += "\"power_ok\":" + String(st.power_ok ? "true" : "false") + ",";
+    if (st.power_ok) {
+      json += "\"bus_v\":" + String(st.bus_v, 2) + ",";
+      json += "\"current_a\":" + String(st.current_a, 3) + ",";
+      json += "\"power_w\":" + String(st.power_w, 1) + ",";
+      json += "\"bus_low\":" + String(st.bus_v < PSU_LOW_VOLTAGE_V ? "true" : "false") + ",";
+    }
+    // Energy since midnight; kept while the meter is briefly silent.
+    json += "\"energy_kwh\":" + String(st.energy_wh / 1000.0f, 3) + ",";
     json += "\"heater_active\":" + String(st.heater_active ? "true" : "false");
     json += "}";
     request->send(200, "application/json", json);
@@ -1380,8 +1570,12 @@ void setup() {
         return;
       }
       // Само применение — в loop(): rtcAdjust() из задачи веб-сервера означал бы
-      // обращение к I2C с другого ядра, параллельно с опросом SHT4x
+      // обращение к I2C с другого ядра, параллельно с опросом SHT4x.
+      // Итог (pending -> ok/failed) страница настроек читает из /api/status.
+      time_set_result = TIME_SET_PENDING;
       pending_time_set = userTime.unixtime();
+      request->redirect("/settings?time=1"); // Страница сама дождётся итога записи
+      return;
     }
     request->redirect("/settings?saved=1");
   });
@@ -1513,8 +1707,15 @@ void loop() {
     if (rtcBegin() && rtcAdjust(userTime)) {
       DateTime checked;
       state.rtc_online = readRTC(checked) && checked.unixtime() >= requested && checked.unixtime() - requested <= 2;
+      if (!state.rtc_online) logPrintln("[RTC] Установка: часы пошли, но проверочное чтение не совпало со временем.");
+    }
+    if (!state.rtc_online) {
+      // Stop the clock, so tryRecoverRTC() cannot later trust a half-written or unverified time.
+      const uint8_t stopped = 0;
+      if (rtc_present && writeRtcRegisters(0x00, &stopped, 1)) state.rtc_status = RTC_NOT_SET;
     }
     state.clock_trusted = state.rtc_online;
+    time_set_result = state.rtc_online ? TIME_SET_OK : TIME_SET_FAILED;
     rtc_recovery_streak = 0;
     backup_unixtime = requested;
     last_rtc_check_ms = millis();
@@ -1522,14 +1723,13 @@ void loop() {
     cached_unixtime = requested;
     watering_armed_from = requested; // Полив, "пропущенный" по новым часам, не догоняем
     logPrintln(state.rtc_online ? "[RTC] MCP7940N: время записано и проверено."
-                               : "[RTC] Запись/проверка не удалась; полив заблокирован, время в интерфейсе резервное.");
+                               : "[RTC] Установка не удалась, часы остановлены; новый полив заблокирован, "
+                                 "время в интерфейсе резервное. Повторите установку.");
   }
+  // An untrusted clock only blocks new waterings. A running one still ends by millis()
+  // (stopPumpAtDeadline), so a brief RTC glitch no longer costs the day's watering.
 
-  if (!state.clock_trusted && state.pump_active) {
-    state.pump_active = false;
-    digitalWrite(PUMP_PIN, LOW);
-    logPrintln("[Watering] RTC time untrusted; pump stopped.");
-  }
+  updatePowerMeter(currentMillis, now.unixtime() / 86400, cfg.power_cal_pct); // Self-limits to 1 s
 
   if (currentMillis - lastClimateTime >= 10000) {
     lastClimateTime = currentMillis;
@@ -1645,12 +1845,13 @@ void loop() {
       bool heater_schedule_ok = drying_mode ? cfg.heater_mode != 3
                                             : (cfg.heater_mode == 2 || (cfg.heater_mode == 0 && is_day) ||
                                                (cfg.heater_mode == 1 && !is_day));
-      if (!heater_schedule_ok) {
-        state.heater_active = false;
-      } else if (!state.heater_active && read_temp <= heater_min) {
-        state.heater_active = true;
-      } else if (state.heater_active && read_temp >= heater_off_threshold) {
-        state.heater_active = false;
+      // heaterNextState() (Safety.h) also switches off on a NaN reading or threshold and at
+      // HEATER_HARD_LIMIT_C, whatever the settings say.
+      const bool was_heating = state.heater_active;
+      state.heater_active = heaterNextState(state.heater_active, heater_schedule_ok, read_temp, heater_min,
+                                            heater_off_threshold, HEATER_HARD_LIMIT_C);
+      if (was_heating && !state.heater_active && finiteFloat(read_temp) && read_temp >= HEATER_HARD_LIMIT_C) {
+        logPrintln("[Heater] Off: temperature reached the " + String(HEATER_HARD_LIMIT_C, 0) + " C hard limit.");
       }
       digitalWrite(HEATER_PIN, state.heater_active ? HIGH : LOW);
 
@@ -1741,10 +1942,13 @@ void loop() {
     char logFilename[20];
     snprintf(logFilename, sizeof(logFilename), "/%04d-%02d-%02d.csv", now.year(), now.month(), now.day());
 
+    const float avgPower = takeCsvAveragePower(); // Taken even without SD: each row covers 10 min
     bool fileExists = SD.exists(logFilename);
     File logFile = SD.open(logFilename, FILE_APPEND);
     if (logFile) {
-      if (!fileExists) logFile.println("timestamp;temp;hum;led;fan1;fan2;sht_ok;rtc_ok");
+      // power_w is appended last, so older readers of the first 8 columns keep working.
+      // It is the average over the 10-minute interval, empty when the INA226 gave nothing.
+      if (!fileExists) logFile.println("timestamp;temp;hum;led;fan1;fan2;sht_ok;rtc_ok;power_w");
       logFile.print(now.timestamp(DateTime::TIMESTAMP_FULL)); logFile.print(";");
       logFile.print(state.temp, 2); logFile.print(";");
       logFile.print(state.hum, 2); logFile.print(";");
@@ -1752,7 +1956,9 @@ void loop() {
       logFile.print(state.fan1_pwm); logFile.print(";");
       logFile.print(state.fan2_pwm); logFile.print(";");
       logFile.print(state.sht_online ? "1" : "0"); logFile.print(";");
-      logFile.println(state.rtc_online ? "1" : "0");
+      logFile.print(state.rtc_online ? "1" : "0"); logFile.print(";");
+      if (finiteFloat(avgPower)) logFile.print(avgPower, 1);
+      logFile.println();
       logFile.close();
     }
   }
@@ -1779,6 +1985,8 @@ void loop() {
 
     // Если датчик уровня воды выключен в настройках — считаем, что вода есть всегда (старое поведение)
     bool water_ok = !cfg.water_sensor_enabled || water_level.stable;
+    state.water_present = water_level.stable;
+    state.last_water_day = last_watering_day;
 
     if (drying_mode) {
       if (state.pump_active) {

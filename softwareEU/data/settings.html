@@ -46,6 +46,8 @@
                 <div id="time-error-banner" class="form-error" style="display: none;">
                     Плата отклонила дату: ожидается формат ГГГГ-ММ-ДДTЧЧ:ММ. Время не изменено.
                 </div>
+                <!-- Итог записи в MCP7940N: плата пишет и проверяет часы за несколько секунд после отправки -->
+                <div id="time-result-banner" class="form-hint" style="margin-bottom: 15px;" hidden></div>
                 <form action="/set-time" method="POST" id="time-form">
                     <!-- Синхронизация берёт время телефона в момент нажатия, с секундами. Раньше в плату
                          уходило значение поля, заполненное при открытии страницы, и без секунд. -->
@@ -71,6 +73,25 @@
                         </div>
                     </div>
                     <div class="form-hint" style="margin-bottom: 15px;">Пустая дата — цикл не начат.</div>
+                    <button type="submit" class="btn-action btn-sync">Сохранить</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Измерение мощности (INA226)</h3>
+                <form action="/save-settings" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="power_cal_pct">Поправка тока, %</label>
+                            <input type="number" id="power_cal_pct" name="power_cal_pct" min="-20" max="20" step="0.1">
+                        </div>
+                    </div>
+                    <div class="form-hint" style="margin-bottom: 15px;">
+                        Без поправки показания точны примерно до ±5%. Сравните ток с мультиметром, включённым
+                        в разрыв провода 24 В: если мультиметр показывает на 3% больше — впишите 3.
+                        Бытовой ваттметр в розетке для этого не годится: он показывает больше из-за потерь
+                        в блоке питания.
+                    </div>
                     <button type="submit" class="btn-action btn-sync">Сохранить</button>
                 </form>
             </div>
