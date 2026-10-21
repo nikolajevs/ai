@@ -25,6 +25,8 @@ def main():
     layout = json.loads((HERE / 'placement.json').read_text())
     counts = Counter(v['side'] for v in layout['placements'].values())
     drc = json.loads((HERE / 'review/pcb_drc.json').read_text())
+    status = json.loads((HERE / 'review/placement.json').read_text())
+    stage = 'PARTIAL LED1 ROUTING' if status['routed_tracks'] else 'UNROUTED PLACEMENT'
     try:
         title = ImageFont.truetype('DejaVuSans.ttf', 20)
         small = ImageFont.truetype('DejaVuSans.ttf', 15)
@@ -45,9 +47,9 @@ def main():
             canvas = Image.new('RGB', (cad.width + 40, cad.height + 150), 'white')
             canvas.paste(cad, (20, 65))
             draw = ImageDraw.Draw(canvas)
-            draw.text((20, 12), f'EU-0.1 | UNROUTED PLACEMENT | {name.upper()}' + (' (mirrored)' if mirror else ''), font=title, fill='#17202a')
+            draw.text((20, 12), f'EU-0.1 | {stage} | {name.upper()}' + (' (mirrored)' if mirror else ''), font=title, fill='#17202a')
             draw.text((20, 39), f'100 x 100 mm / 4 Cu / {counts[side]} netlisted references on this face / {layout["date"]}', font=small, fill='#444444')
-            draw.text((20, cad.height + 80), f'0 tracks/vias; {len(drc["unconnected_items"])} unrouted connections. Not a fabrication release.', font=small, fill='#8b1a1a')
+            draw.text((20, cad.height + 80), f'{status["routed_tracks"]} tracks / {status["routed_vias"]} vias / {status["copper_zones"]} plane; {len(drc["unconnected_items"])} unrouted. Not a fabrication release.', font=small, fill='#8b1a1a')
             draw.text((20, cad.height + 105), 'Heatsink body reserves only; guide pins, mounting, height and thermal behaviour are not qualified.', font=small, fill='#444444')
             dest = HERE / 'review' / f'PCB_placement_{name}.png'
             canvas.save(dest)

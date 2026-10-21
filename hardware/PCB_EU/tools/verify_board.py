@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check an UNROUTED placement against the real schematic netlist and geometry.
+"""Check placement against the real schematic netlist and geometry.
 
 Requires KiCad pcbnew; native DRC remains a separate mandatory check. Mechanical
 checks cover 2D courtyards and solder-joint access, not height or physical fit.
@@ -88,11 +88,12 @@ def check(board_path, output=None):
     require(set(layout['placements']) == set(comps), 'Placement/netlist reference sets differ')
     require(board.GetCopperLayerCount() == layout['copper_layers'] == 4, 'Expected four copper layers')
     require(abs(p.ToMM(board.GetDesignSettings().GetBoardThickness()) - 1.6) < 1e-5, 'Expected 1.6 mm PCB')
-    require(not list(board.GetTracks()), 'Placement check expects no tracks or vias')
-    require(all(z.GetIsRuleArea() for z in board.Zones()), 'Placement check expects no copper zones')
+    if not (HERE / 'routing.json').exists():
+        require(not list(board.GetTracks()), 'No routing plan: unexpected tracks or vias')
+        require(all(z.GetIsRuleArea() for z in board.Zones()), 'No routing plan: unexpected copper zones')
     require(layout['courtyard_gap_mm'] >= .15, 'Assembly courtyard clearance must be at least 0.15 mm')
     require(layout['opposite_side_tht_joint_guard_mm'] >= .5, 'Opposite-face solder-joint guard must be at least 0.5 mm')
-    require(len(board.Zones()) == len(layout['heatsink_reserves']), 'Expected one native rule area per heatsink reserve')
+    require(sum(z.GetIsRuleArea() for z in board.Zones()) == len(layout['heatsink_reserves']), 'Expected one native rule area per heatsink reserve')
     edge = [d for d in board.GetDrawings() if d.GetLayer() == p.Edge_Cuts]
     expected_edges = {frozenset(pair) for pair in [((0, 0), (100, 0)), ((100, 0), (100, 100)), ((100, 100), (0, 100)), ((0, 100), (0, 0))]}
     actual_edges = {frozenset((tuple(round(p.ToMM(v), 6) for v in (d.GetStart().x, d.GetStart().y)), tuple(round(p.ToMM(v), 6) for v in (d.GetEnd().x, d.GetEnd().y)))) for d in edge}
@@ -184,10 +185,13 @@ def check(board_path, output=None):
     for name, pin, resistor in [('LED1', '7', 'R803'), ('LED2', '5', 'R807')]:
         a, b = pad_position('U801', pin), pad_position(resistor, '1')
         driver_distances[name] = round(((a[0]-b[0])**2 + (a[1]-b[1])**2)**.5, 2)
-    result = dict(stage='unrouted two-sided placement candidate; not fabrication release', date='2026-10-21', pcbnew_build=p.GetBuildVersion(),
+    tracks = list(board.GetTracks())
+    via_count = sum(isinstance(t, p.PCB_VIA) for t in tracks)
+    zone_count = sum(not z.GetIsRuleArea() for z in board.Zones())
+    result = dict(stage='two-sided placement with partial routing; not fabrication release' if tracks else 'unrouted two-sided placement candidate; not fabrication release', date='2026-10-21', pcbnew_build=p.GetBuildVersion(),
                   checks_passed=checks, netlisted_references=len(comps), board_only_mounting_holes=len(holes), copper_layers=4, board_mm=[100, 100],
                   face_counts=dict(Counter('B' if fps[r].IsFlipped() else 'F' for r in comps)), back_side_references=sorted(r for r in comps if fps[r].IsFlipped()),
-                  connected_physical_pads=connected_pads, connected_netlist_pins=sum(not n.startswith('unconnected-') for n in nets.values()), mapped_netlist_pins_including_nc=len(nets), pad_net_parity=True, routed_tracks=0, routed_vias=0, copper_zones=0,
+                  connected_physical_pads=connected_pads, connected_netlist_pins=sum(not n.startswith('unconnected-') for n in nets.values()), mapped_netlist_pins_including_nc=len(nets), pad_net_parity=True, routed_tracks=len(tracks)-via_count, routed_vias=via_count, copper_zones=zone_count,
                   geometry_scope='2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves',
                   gate_driver_output_to_series_resistor_straight_line_mm=driver_distances,
                   gate_driver_note='Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.',

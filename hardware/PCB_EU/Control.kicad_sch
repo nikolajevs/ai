@@ -1,4 +1,4 @@
-(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid "65ea3381-a032-52ef-ac85-e51c1cd0e4b6") (paper "A3") (title_block (title "08 | LED gate drive and hardware inhibit") (date "2026-10-20") (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"))
+(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid "65ea3381-a032-52ef-ac85-e51c1cd0e4b6") (paper "A3") (title_block (title "08 | LED gate drive and hardware inhibit") (date "2026-10-20") (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"))
 (lib_symbols (symbol "EU:BAT54" (pin_names (offset 0.762))
 (in_bom yes) (on_board yes)
 (property "Reference" "U" (at 0 5 0) (effects (font (size 1 1)) ))

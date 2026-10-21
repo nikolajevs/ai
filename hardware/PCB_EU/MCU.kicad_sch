@@ -1,4 +1,4 @@
-(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid "f2086045-2f4c-5574-a3d1-ed004a63e00b") (paper "A3") (title_block (title "02 | 3.3 V supply and ESP32") (date "2026-10-20") (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"))
+(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid "f2086045-2f4c-5574-a3d1-ed004a63e00b") (paper "A3") (title_block (title "02 | 3.3 V supply and ESP32") (date "2026-10-20") (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"))
 (lib_symbols (symbol "EU:AP63203" (pin_names (offset 0.762))
 (in_bom yes) (on_board yes)
 (property "Reference" "U" (at 0 5 0) (effects (font (size 1 1)) ))

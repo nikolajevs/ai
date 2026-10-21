@@ -2,9 +2,9 @@
 <export version="E">
   <design>
     <source>/workspace/scratch/304de5ccb690/eu-footprints/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-21T05:12:11</date>
+    <date>2026-10-21T10:42:04</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
-    <textvar name="DESIGN_STAGE">UNROUTED_PLACEMENT</textvar>
+    <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>GrowBox | EU redesign | schematic review</title>
@@ -12,7 +12,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>PCB_EU.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -30,7 +30,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>InputPower.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -48,7 +48,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>MCU.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -66,7 +66,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Peripherals.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -84,7 +84,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Interfaces.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -102,7 +102,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>LED1.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -120,7 +120,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>LED2.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -138,7 +138,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Loads.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -156,7 +156,7 @@
         <rev>EU-0.1</rev>
         <date>2026-10-20</date>
         <source>Control.kicad_sch</source>
-        <comment number="1" value="SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release"/>
+        <comment number="1" value="SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>

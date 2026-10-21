@@ -15,7 +15,7 @@
     }
   },
   "text_variables": {
-    "DESIGN_STAGE": "UNROUTED_PLACEMENT"
+    "DESIGN_STAGE": "PARTIAL_LED1_ROUTING"
   },
   "board": {
     "design_settings": {

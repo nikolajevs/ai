@@ -1,5 +1,5 @@
 {
-  "stage": "UNROUTED_PLACEMENT_CANDIDATE",
+  "stage": "PLACEMENT_WITH_PARTIAL_LED1_ROUTING",
   "date": "2026-10-21",
   "board_mm": [
     100,
@@ -11,8 +11,8 @@
   "opposite_side_tht_joint_guard_mm": 0.5,
   "limits": [
     "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserves only; rear components may require movement after pin drawing review.",
-    "Back-side battery and C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
-    "No routing, copper pours, thermal qualification or fabrication release."
+    "Back-side battery and C508/C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
+    "Partial LED1 power routing only. Rest of board, copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
   "heatsink_reserves": [
     {
@@ -274,9 +274,9 @@
       "side": "B"
     },
     "C504": {
-      "x": 79.5,
-      "y": 46.5,
-      "rotation": 90,
+      "x": 80.4,
+      "y": 46.8,
+      "rotation": 0,
       "side": "B"
     },
     "C505": {
@@ -292,16 +292,16 @@
       "side": "B"
     },
     "C507": {
-      "x": 72.5,
-      "y": 42.0,
+      "x": 67.5,
+      "y": 46.5,
       "rotation": 0,
       "side": "B"
     },
     "C508": {
-      "x": 63.2512,
-      "y": 46.5,
+      "x": 85.4512,
+      "y": 50.0,
       "rotation": 0,
-      "side": "F"
+      "side": "B"
     },
     "C509": {
       "x": 54.2512,
@@ -316,9 +316,9 @@
       "side": "F"
     },
     "C511": {
-      "x": 77.0,
-      "y": 42.5,
-      "rotation": 0,
+      "x": 80.25,
+      "y": 50.0,
+      "rotation": 270,
       "side": "B"
     },
     "C601": {
@@ -424,9 +424,9 @@
       "side": "F"
     },
     "D501": {
-      "x": 74.0,
-      "y": 48.0,
-      "rotation": 90,
+      "x": 77.0,
+      "y": 49.0,
+      "rotation": 270,
       "side": "F"
     },
     "D601": {
@@ -593,13 +593,13 @@
     },
     "L501": {
       "x": 80.0,
-      "y": 20.5,
+      "y": 16.5,
       "rotation": 0,
       "side": "B"
     },
     "L502": {
       "x": 80.0,
-      "y": 34.0,
+      "y": 30.0,
       "rotation": 0,
       "side": "B"
     },
@@ -838,9 +838,9 @@
       "side": "F"
     },
     "R501": {
-      "x": 88.0,
-      "y": 48.0,
-      "rotation": 270,
+      "x": 85.5,
+      "y": 46.2,
+      "rotation": 0,
       "side": "F"
     },
     "R502": {
@@ -850,15 +850,15 @@
       "side": "F"
     },
     "R503": {
-      "x": 77.0,
-      "y": 51.0,
-      "rotation": 0,
+      "x": 80.0,
+      "y": 55.0,
+      "rotation": 90,
       "side": "B"
     },
     "R504": {
-      "x": 82.0,
-      "y": 48.5,
-      "rotation": 90,
+      "x": 76.0,
+      "y": 58.5,
+      "rotation": 0,
       "side": "B"
     },
     "R505": {
@@ -874,8 +874,8 @@
       "side": "B"
     },
     "R507": {
-      "x": 71.0,
-      "y": 39.5,
+      "x": 74.0,
+      "y": 42.0,
       "rotation": 0,
       "side": "B"
     },
@@ -1030,16 +1030,16 @@
       "side": "B"
     },
     "R803": {
-      "x": 82.0,
-      "y": 46.1,
-      "rotation": 180,
-      "side": "F"
+      "x": 75.7,
+      "y": 38.8,
+      "rotation": 0,
+      "side": "B"
     },
     "R804": {
-      "x": 80.5,
-      "y": 49.0,
-      "rotation": 0,
-      "side": "F"
+      "x": 81.2,
+      "y": 38.3,
+      "rotation": 90,
+      "side": "B"
     },
     "R805": {
       "x": 52.8,

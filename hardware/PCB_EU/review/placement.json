@@ -1,8 +1,8 @@
 {
-  "stage": "unrouted two-sided placement candidate; not fabrication release",
+  "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "checks_passed": 22824,
+  "checks_passed": 22822,
   "netlisted_references": 196,
   "board_only_mounting_holes": 4,
   "copper_layers": 4,
@@ -11,8 +11,8 @@
     100
   ],
   "face_counts": {
-    "F": 112,
-    "B": 84
+    "F": 109,
+    "B": 87
   },
   "back_side_references": [
     "BT301",
@@ -29,6 +29,7 @@
     "C505",
     "C506",
     "C507",
+    "C508",
     "C511",
     "C601",
     "C603",
@@ -85,6 +86,8 @@
     "R708",
     "R801",
     "R802",
+    "R803",
+    "R804",
     "R805",
     "R806",
     "R809",
@@ -104,12 +107,12 @@
   "connected_netlist_pins": 488,
   "mapped_netlist_pins_including_nc": 516,
   "pad_net_parity": true,
-  "routed_tracks": 0,
-  "routed_vias": 0,
-  "copper_zones": 0,
+  "routed_tracks": 40,
+  "routed_vias": 8,
+  "copper_zones": 1,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "gate_driver_output_to_series_resistor_straight_line_mm": {
-    "LED1": 29.75,
+    "LED1": 28.78,
     "LED2": 31.21
   },
   "gate_driver_note": "Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.",
@@ -118,8 +121,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "2366da0f177b068b30f3b470aa31e066577241032ddc21be1e13e27c04bd57be",
-    "placement.json": "5c7d92d0992778103ff19be1a54d4b2182b8efc20b185c05a0cedc5e390080e2",
-    "netlist.xml": "eefe155306dee9c0d8ccac75606c78dfaad099867c228f8314eaac5c0a97f248"
+    "PCB_EU.kicad_pcb": "bd37b3e2cb4968e4e9accab0123c746c003b042136c013749bd47dafa3903c7f",
+    "placement.json": "b69a51b33bf1fe98dd83d350f5d5c523fe08d0016a6a41e7a3a0522d553655d2",
+    "netlist.xml": "1acd66acb0dab24a54cdda33112176fd09c389734dd802de2abd22dfd6fe970c"
   }
 }

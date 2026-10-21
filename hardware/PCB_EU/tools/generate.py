@@ -432,7 +432,9 @@ def libsymbol(name, qualified=False):
 
 
 def header(name,title):
-    stage = 'SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release' if (HERE/'placement.json').exists() else 'SCHEMATIC DRAFT | no PCB / manufacturing release'
+    stage = ('SCHEMATIC DRAFT | PARTIAL LED1 PCB ROUTING | no manufacturing release' if (HERE/'routing.json').exists()
+             else 'SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release' if (HERE/'placement.json').exists()
+             else 'SCHEMATIC DRAFT | no PCB / manufacturing release')
     return f'(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid {q(uid(name))}) (paper "A3") (title_block (title {q(title)}) (date {q(DATE)}) (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 {q(stage)}))'
 
 
@@ -509,7 +511,10 @@ def main():
     root=[header(ROOT,'GrowBox | EU redesign | schematic review'),'(lib_symbols)']
     root.append(textblk(ROOT,'title','GrowBox controller\nEuropean sourcing / 24 V PSU / one prototype',20,17,2.5))
     placement_stage = (HERE/'placement.json').exists()
-    scope = ('Connection/BOM draft; unrouted PCB placement candidate. No manufacturing release.' if placement_stage else 'Full connection/BOM draft. No PCB placement, routing or manufacturing release.')
+    routing_stage = (HERE/'routing.json').exists()
+    scope = ('Connection/BOM draft; partial LED1 PCB routing. No manufacturing release.' if routing_stage
+             else 'Connection/BOM draft; unrouted PCB placement candidate. No manufacturing release.' if placement_stage
+             else 'Full connection/BOM draft. No PCB placement, routing or manufacturing release.')
     root.append(textblk(ROOT,'scope','SCHEMATIC DRAFT EU-0.1 | 20 October 2026\n'+scope+'\nSeparate project; original PCB_V1 rev 0.22 remains the functional reference.',20,40,1.6))
     for k,(sh,meta) in enumerate(sheets.items()):
         x=25+185*(k%2);y=75+42*(k//2);sid=uid('sheet',sh)
@@ -519,7 +524,7 @@ def main():
     # Preserve PCB rules/stackup added by the board editor. No broad ERC exclusions.
     project_path = HERE/f'{ROOT}.kicad_pro'
     project = json.loads(project_path.read_text()) if project_path.exists() else dict(meta=dict(filename=f'{ROOT}.kicad_pro',version=3),erc=dict(erc_exclusions=[],meta=dict(version=0)),schematic=dict(meta=dict(version=1)))
-    project.setdefault('text_variables',{})['DESIGN_STAGE'] = 'UNROUTED_PLACEMENT' if placement_stage else 'SCHEMATIC_DRAFT'
+    project.setdefault('text_variables',{})['DESIGN_STAGE'] = 'PARTIAL_LED1_ROUTING' if routing_stage else 'UNROUTED_PLACEMENT' if placement_stage else 'SCHEMATIC_DRAFT'
     (HERE/f'{ROOT}.kicad_pro').write_text(json.dumps(project,indent=2)+'\n')
     spec=dict(revision=REV,date=DATE,source_commit='1d6b1eaf1273149b32eb1cf5c91fc69ff6a6ca09',parts=parts,accessories=accessories,source_urls=source_urls)
     (HERE/'design.json').write_text(json.dumps(spec,ensure_ascii=False,indent=2)+'\n')

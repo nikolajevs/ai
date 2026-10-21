@@ -7,6 +7,7 @@ footprints are flipped first, then given the specified front-view rotation.
 Refuses to overwrite any board containing routed copper or filled zones.
 SPDX-License-Identifier: MIT
 """
+import argparse
 import json
 from pathlib import Path
 import re
@@ -145,8 +146,12 @@ def mounting_hole(board, spec):
 
 
 def main():
-    if BOARD.exists():
-        old = p.LoadBoard(str(BOARD))
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--output', type=Path, default=BOARD,
+                    help='New unrouted base; existing routed copper is never overwritten')
+    args = ap.parse_args()
+    if args.output.exists():
+        old = p.LoadBoard(str(args.output))
         if len(old.GetTracks()) or any(not z.GetIsRuleArea() for z in old.Zones()):
             raise SystemExit('Refusing to overwrite routed tracks, vias or copper zones; preserve manual routing.')
     layout = json.loads((HERE / 'placement.json').read_text())
@@ -197,7 +202,7 @@ def main():
         board.Add(zone)
     label(board, 'stage', 'EU-0.1 / UNROUTED PLACEMENT / 100 x 100 mm / 4 Cu', 50, -17, 1.3)
     label(board, 'limits', 'HS guide holes / thermal / routing NOT qualified', 50, -14.5)
-    p.SaveBoard(str(BOARD), board)
+    p.SaveBoard(str(args.output), board)
     print(f'Built {len(fps)} netlisted references + {len(layout["mounting_holes"])} proposed mounting holes; 0 tracks/vias/copper pours')
 
 
