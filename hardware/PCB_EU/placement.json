@@ -12,7 +12,7 @@
   "limits": [
     "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserves only; rear components may require movement after pin drawing review.",
     "Back-side battery and C508/C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
-    "Partial LED1 power routing only. Rest of board, copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
+    "Autorouted except 13 connections near U501/U601, D101 and U101; LED2 power loop needs a reviewed plan. Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
   "heatsink_reserves": [
     {
@@ -71,7 +71,7 @@
   "placements": {
     "BT301": {
       "x": 28.5,
-      "y": 24,
+      "y": 36.0,
       "rotation": 90,
       "side": "B"
     },

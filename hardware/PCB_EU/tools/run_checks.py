@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Schematic, placement and partial-routing checks; not a fabrication release."""
+"""Schematic, placement and routing checks; not a fabrication release."""
 import argparse
 import hashlib
 import json
@@ -65,11 +65,11 @@ def main():
             from collections import Counter
             raise RuntimeError(Counter(v['type'] for v in drc.get('violations',[])+drc.get('schematic_parity',[])))
         pcb_drc=dict(geometric_violations=0,schematic_parity_violations=0,unconnected_items=len(drc.get('unconnected_items',[])),
-                     routing_status='partial LED1 power routing; board remains incomplete' if routing_result else 'intentionally unrouted; no fabricated-board DRC clearance claim')
+                     routing_status=(f"autorouted; {routing_result['unrouted_connections']} connections open" if routing_result['unrouted_connections'] else 'all connections routed') if routing_result else 'intentionally unrouted; no fabricated-board DRC clearance claim')
     source = [*HERE.glob('*.kicad_sch'),HERE/'PCB_EU.kicad_pro',HERE/'libraries/EU.kicad_sym',HERE/'design.json',HERE/'BOM_allocated.json',HERE/'footprint_assignments.json',HERE/'fp-lib-table',HERE/'sym-lib-table',*HERE.glob('tools/*.py'),*HERE.glob('libraries/*/*.kicad_mod')]
     if board.exists():source.extend([board,HERE/'placement.json'])
-    if routing_result:source.append(HERE/'routing.json')
-    result=dict(stage='partial LED1 power routing' if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-21',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
+    if routing_result:source.extend([HERE/'routing.json',HERE/'PCB_EU.kicad_dru',*sorted((HERE/'routing').glob('*.ses'))])
+    result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-21',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
     (out/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(f'PASS | {result["stage"]} | KiCad {version}; repository 10.0.6 target verified: {result["target_version_verified"]}')
 

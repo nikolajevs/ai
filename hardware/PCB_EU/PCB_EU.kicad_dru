@@ -1,0 +1,8 @@
+(version 1)
+
+# C609 (LED2 output electrolytic, B.Cu) sits between LED2 copper: the B.Cu GND pour reaches its
+# negative THT pad from one side only, so a thermal relief would keep a single spoke.
+# Solid connection instead; the pad also joins the In1 GND plane through its barrel.
+(rule "C609 solid ground connection"
+  (condition "A.memberOfFootprint('C609')")
+  (constraint zone_connection solid))
