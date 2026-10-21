@@ -2,8 +2,8 @@
   "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "checks_passed": 22822,
-  "netlisted_references": 196,
+  "checks_passed": 22175,
+  "netlisted_references": 193,
   "board_only_mounting_holes": 4,
   "copper_layers": 4,
   "board_mm": [
@@ -11,8 +11,8 @@
     100
   ],
   "face_counts": {
-    "F": 109,
-    "B": 87
+    "F": 108,
+    "B": 85
   },
   "back_side_references": [
     "BT301",
@@ -40,8 +40,6 @@
     "C608",
     "C609",
     "C611",
-    "C801",
-    "C802",
     "C803",
     "D701",
     "D801",
@@ -49,6 +47,7 @@
     "L501",
     "L502",
     "L601",
+    "Q102",
     "Q701",
     "Q702",
     "Q704",
@@ -58,6 +57,9 @@
     "R105",
     "R106",
     "R107",
+    "R108",
+    "R109",
+    "R110",
     "R503",
     "R504",
     "R505",
@@ -84,12 +86,8 @@
     "R706",
     "R707",
     "R708",
-    "R801",
-    "R802",
     "R803",
     "R804",
-    "R805",
-    "R806",
     "R809",
     "R810",
     "R811",
@@ -103,17 +101,23 @@
     "U501",
     "U601"
   ],
-  "connected_physical_pads": 504,
-  "connected_netlist_pins": 488,
-  "mapped_netlist_pins_including_nc": 516,
+  "connected_physical_pads": 495,
+  "connected_netlist_pins": 479,
+  "mapped_netlist_pins_including_nc": 505,
   "pad_net_parity": true,
   "routed_tracks": 40,
   "routed_vias": 8,
   "copper_zones": 1,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
-  "gate_driver_output_to_series_resistor_straight_line_mm": {
-    "LED1": 28.78,
-    "LED2": 31.21
+  "lm3429_gate_path_straight_line_mm": {
+    "LED1": {
+      "gate_pin_to_resistor": 8.19,
+      "resistor_to_mosfet_gate": 4.11
+    },
+    "LED2": {
+      "gate_pin_to_resistor": 7.93,
+      "resistor_to_mosfet_gate": 3.68
+    }
   },
   "gate_driver_note": "Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.",
   "mechanical_fit_verified": false,
@@ -121,8 +125,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "bd37b3e2cb4968e4e9accab0123c746c003b042136c013749bd47dafa3903c7f",
-    "placement.json": "b69a51b33bf1fe98dd83d350f5d5c523fe08d0016a6a41e7a3a0522d553655d2",
-    "netlist.xml": "1acd66acb0dab24a54cdda33112176fd09c389734dd802de2abd22dfd6fe970c"
+    "PCB_EU.kicad_pcb": "90ca634415047dc10792a52473db7572d859e3d22112e3cc6514688f4771338d",
+    "placement.json": "029b6f73354419899290bb19bab74a1559f0a3a15212b1ba49fabf5018c66481",
+    "netlist.xml": "ef365177dec1c38dc4b33c05a0a2886f77d2974052614fdc8897b81ff2c244cb"
   }
 }

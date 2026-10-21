@@ -182,9 +182,12 @@ def check(board_path, output=None):
         pos = pad.GetPosition()
         return p.ToMM(pos.x), p.ToMM(pos.y)
     driver_distances = {}
-    for name, pin, resistor in [('LED1', '7', 'R803'), ('LED2', '5', 'R807')]:
-        a, b = pad_position('U801', pin), pad_position(resistor, '1')
-        driver_distances[name] = round(((a[0]-b[0])**2 + (a[1]-b[1])**2)**.5, 2)
+    # No external driver: LM3429 GATE (pin 10) -> 4R7 -> IRF540Z gate (pin 1).
+    for name, ic, resistor, fet in [('LED1', 'U501', 'R803', 'Q501'), ('LED2', 'U601', 'R807', 'Q601')]:
+        a, b, c = pad_position(ic, '10'), pad_position(resistor, '1'), pad_position(resistor, '2')
+        d = pad_position(fet, '1')
+        driver_distances[name] = dict(gate_pin_to_resistor=round(((a[0]-b[0])**2 + (a[1]-b[1])**2)**.5, 2),
+                                      resistor_to_mosfet_gate=round(((c[0]-d[0])**2 + (c[1]-d[1])**2)**.5, 2))
     tracks = list(board.GetTracks())
     via_count = sum(isinstance(t, p.PCB_VIA) for t in tracks)
     zone_count = sum(not z.GetIsRuleArea() for z in board.Zones())
@@ -193,7 +196,7 @@ def check(board_path, output=None):
                   face_counts=dict(Counter('B' if fps[r].IsFlipped() else 'F' for r in comps)), back_side_references=sorted(r for r in comps if fps[r].IsFlipped()),
                   connected_physical_pads=connected_pads, connected_netlist_pins=sum(not n.startswith('unconnected-') for n in nets.values()), mapped_netlist_pins_including_nc=len(nets), pad_net_parity=True, routed_tracks=len(tracks)-via_count, routed_vias=via_count, copper_zones=zone_count,
                   geometry_scope='2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves',
-                  gate_driver_output_to_series_resistor_straight_line_mm=driver_distances,
+                  lm3429_gate_path_straight_line_mm=driver_distances,
                   gate_driver_note='Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.',
                   mechanical_fit_verified=False, heatsink_mounting_pin_coordinates_verified=False, routing_feasibility_verified=False, thermal_verified=False,
                   source_sha256={f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in [board_path, HERE / 'placement.json', HERE / 'review/netlist.xml']})

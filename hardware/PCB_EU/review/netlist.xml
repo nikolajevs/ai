@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/workspace/scratch/304de5ccb690/eu-footprints/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-21T10:42:04</date>
+    <source>/home/claude/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
+    <date>2026-10-21T08:58:40</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
     <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -674,7 +674,7 @@
       </units>
     </comp>
     <comp ref="F103">
-      <value>6.3 A fast</value>
+      <value>6.3 A slow</value>
       <footprint>EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow</footprint>
       <fields>
         <field name="MPN">3413.0224.11</field>
@@ -837,6 +837,35 @@
           <pins>
             <pin num="1"/>
             <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q102">
+      <value>IRF1010ESPBF</value>
+      <footprint>Package_TO_SOT_SMD:TO-263-2</footprint>
+      <fields>
+        <field name="MPN">IRF1010ESPBF</field>
+        <field name="Design_note">Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced</field>
+        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-263-2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EU" part="NMOS" description=""/>
+      <property name="MPN" value="IRF1010ESPBF"/>
+      <property name="Design_note" value="Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced"/>
+      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
+      <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
+      <property name="Sheetfile" value="InputPower.kicad_sch"/>
+      <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
+      <tstamps>13f6c26a-51f2-52b6-a951-4812f59b7c32</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
           </pins>
         </unit>
       </units>
@@ -1028,6 +1057,90 @@
       <property name="Sheetfile" value="InputPower.kicad_sch"/>
       <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
       <tstamps>32dae221-254f-5f0e-b9b8-3e88edf1875a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R108">
+      <value>5k6 1%</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">SMD1206 5K6 1%</field>
+        <field name="Design_note"/>
+        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EU" part="R" description=""/>
+      <property name="MPN" value="SMD1206 5K6 1%"/>
+      <property name="Design_note" value=""/>
+      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
+      <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
+      <property name="Sheetfile" value="InputPower.kicad_sch"/>
+      <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
+      <tstamps>b9c8c555-3224-585e-8b27-aa111ae9d0a1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R109">
+      <value>5k6 1%</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">SMD1206 5K6 1%</field>
+        <field name="Design_note"/>
+        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EU" part="R" description=""/>
+      <property name="MPN" value="SMD1206 5K6 1%"/>
+      <property name="Design_note" value=""/>
+      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
+      <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
+      <property name="Sheetfile" value="InputPower.kicad_sch"/>
+      <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
+      <tstamps>57df7c7e-6345-520c-a1b3-4b72ed880cb6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R110">
+      <value>10k 1%</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">SMD1206-10K-1%</field>
+        <field name="Design_note"/>
+        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EU" part="R" description=""/>
+      <property name="MPN" value="SMD1206-10K-1%"/>
+      <property name="Design_note" value=""/>
+      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
+      <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
+      <property name="Sheetfile" value="InputPower.kicad_sch"/>
+      <sheetpath names="/01 | 24 V input and 12 V auxiliary supply/" tstamps="/60d5a692-5df6-5cd2-92c0-981fb564fa6c/"/>
+      <tstamps>7f03f36c-9eda-5feb-a31a-e1ab696d8f16</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -1306,10 +1419,10 @@
       </units>
     </comp>
     <comp ref="C208">
-      <value>100n RESET</value>
+      <value>1u RESET</value>
       <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
       <fields>
-        <field name="MPN">CL21B104KBCNNNC</field>
+        <field name="MPN">CL21B105KBFNNNG</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
@@ -1317,7 +1430,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="C" description=""/>
-      <property name="MPN" value="CL21B104KBCNNNC"/>
+      <property name="MPN" value="CL21B105KBFNNNG"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="02 | 3.3 V supply and ESP32"/>
@@ -4839,18 +4952,18 @@
       </units>
     </comp>
     <comp ref="R702">
-      <value>100k</value>
-      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <value>4k7 1%</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
       <fields>
-        <field name="MPN">SMD0603-100K</field>
+        <field name="MPN">SMD1206 4K7 1%</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="R" description=""/>
-      <property name="MPN" value="SMD0603-100K"/>
+      <property name="MPN" value="SMD1206 4K7 1%"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="07 | PTC heater and 24 V pump"/>
@@ -5034,62 +5147,6 @@
         </unit>
       </units>
     </comp>
-    <comp ref="C801">
-      <value>10u 25V</value>
-      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
-      <fields>
-        <field name="MPN">CL31A106KAHNNNE</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="C" description=""/>
-      <property name="MPN" value="CL31A106KAHNNNE"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>2dce7f94-36f3-5bef-9cb9-410b864258a7</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="C802">
-      <value>100n</value>
-      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
-      <fields>
-        <field name="MPN">CL21B104KBCNNNC</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="C" description=""/>
-      <property name="MPN" value="CL21B104KBCNNNC"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>e4c83b99-cda0-5f57-90d9-459f5c944740</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
     <comp ref="C803">
       <value>100n</value>
       <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
@@ -5148,62 +5205,6 @@
         </unit>
       </units>
     </comp>
-    <comp ref="R801">
-      <value>1k</value>
-      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
-      <fields>
-        <field name="MPN">SMD0603-1K</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="R" description=""/>
-      <property name="MPN" value="SMD0603-1K"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>d89d3d5b-7f0b-58f6-81b9-82dd7af3f2af</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="R802">
-      <value>100k</value>
-      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
-      <fields>
-        <field name="MPN">SMD0603-100K</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="R" description=""/>
-      <property name="MPN" value="SMD0603-100K"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>68148952-9f03-5c4e-9b70-7bee1e8acaa1</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
     <comp ref="R803">
       <value>4R7 1W</value>
       <footprint>Resistor_SMD:R_2512_6332Metric</footprint>
@@ -5251,62 +5252,6 @@
       <property name="Sheetfile" value="Control.kicad_sch"/>
       <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
       <tstamps>69100a4d-6feb-5698-b142-e1019bc9916b</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="R805">
-      <value>1k</value>
-      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
-      <fields>
-        <field name="MPN">SMD0603-1K</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="R" description=""/>
-      <property name="MPN" value="SMD0603-1K"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>29a3b41c-c36c-5fff-87ce-5424eccb142c</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="R806">
-      <value>100k</value>
-      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
-      <fields>
-        <field name="MPN">SMD0603-100K</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="R" description=""/>
-      <property name="MPN" value="SMD0603-100K"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>66e7fbfa-89fa-55f9-8d42-436c2c9d345e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5732,41 +5677,6 @@
         <unit name="A">
           <pins>
             <pin num="1"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="U801">
-      <value>TC4427AEPA</value>
-      <footprint>Package_DIP:DIP-8_W7.62mm</footprint>
-      <datasheet>https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/TC4426A-TC4427A-TC4428A-1.5A-Dual-High-Speed-Power-MOSFET-Drivers-20001423.pdf</datasheet>
-      <fields>
-        <field name="MPN">TC4427AEPA</field>
-        <field name="Design_note"/>
-        <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
-        <field name="Footprint">Package_DIP:DIP-8_W7.62mm</field>
-        <field name="Datasheet">https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/TC4426A-TC4427A-TC4428A-1.5A-Dual-High-Speed-Power-MOSFET-Drivers-20001423.pdf</field>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="EU" part="TC4427A" description=""/>
-      <property name="MPN" value="TC4427AEPA"/>
-      <property name="Design_note" value=""/>
-      <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
-      <property name="Sheetname" value="08 | LED gate drive and hardware inhibit"/>
-      <property name="Sheetfile" value="Control.kicad_sch"/>
-      <sheetpath names="/08 | LED gate drive and hardware inhibit/" tstamps="/5908ee75-8829-5c5d-81e3-944d448b3593/"/>
-      <tstamps>944a80a1-d45e-5aec-b315-f153dc994f3f</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="2"/>
-            <pin num="4"/>
-            <pin num="1"/>
-            <pin num="8"/>
-            <pin num="7"/>
-            <pin num="5"/>
-            <pin num="6"/>
-            <pin num="3"/>
           </pins>
         </unit>
       </units>
@@ -6207,25 +6117,6 @@
         <pin num="2" name="~" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="EU" part="TC4427A">
-      <fields>
-        <field name="Reference">U</field>
-        <field name="Value">TC4427A</field>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <pins>
-        <pin num="1" name="NC" type="no_connect"/>
-        <pin num="2" name="INA" type="input"/>
-        <pin num="3" name="GND" type="power_in"/>
-        <pin num="4" name="INB" type="input"/>
-        <pin num="5" name="OUTB" type="output"/>
-        <pin num="6" name="VDD" type="power_in"/>
-        <pin num="7" name="OUTA" type="output"/>
-        <pin num="8" name="NC" type="no_connect"/>
-      </pins>
-    </libpart>
     <libpart lib="EU" part="TP">
       <fields>
         <field name="Reference">TP</field>
@@ -6329,8 +6220,6 @@
       <node ref="C112" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C201" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C202" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="C801" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="C802" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C803" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="F401" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="L101" pin="2" pinfunction="~_2" pintype="passive"/>
@@ -6341,7 +6230,6 @@
       <node ref="U101" pin="1" pinfunction="VBIAS_1" pintype="power_in"/>
       <node ref="U201" pin="2" pinfunction="EN_2" pintype="input"/>
       <node ref="U201" pin="3" pinfunction="VIN_3" pintype="power_in"/>
-      <node ref="U801" pin="6" pinfunction="VDD_6" pintype="power_in"/>
       <node ref="U802" pin="8" pinfunction="VCC_8" pintype="power_in"/>
     </net>
     <net code="3" name="+12V_FANS" class="Default">
@@ -6371,6 +6259,7 @@
       <node ref="F104" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="F105" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="F106" pin="1" pinfunction="~_1" pintype="passive"/>
+      <node ref="R108" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R809" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
     <net code="6" name="+24V_LED1" class="Default">
@@ -6578,14 +6467,11 @@
       <node ref="C608" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="C609" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="C611" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="C801" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="C802" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="C803" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="D101" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="D102" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="D411" pin="3" pinfunction="A_COMMON_3" pintype="power_in"/>
       <node ref="D421" pin="3" pinfunction="A_COMMON_3" pintype="power_in"/>
-      <node ref="J101" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="J201" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="J301" pin="6" pinfunction="VSS_6" pintype="power_in"/>
       <node ref="J301" pin="SH" pinfunction="SHELL_SH" pintype="passive"/>
@@ -6596,6 +6482,7 @@
       <node ref="J501" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="J601" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="J602" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="Q102" pin="3" pinfunction="S_3" pintype="passive"/>
       <node ref="Q411" pin="2" pinfunction="S_2" pintype="passive"/>
       <node ref="Q421" pin="2" pinfunction="S_2" pintype="passive"/>
       <node ref="Q701" pin="2" pinfunction="E_2" pintype="passive"/>
@@ -6605,6 +6492,7 @@
       <node ref="R104" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R106" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R107" pin="2" pinfunction="~_2" pintype="passive"/>
+      <node ref="R110" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R412" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R422" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R501" pin="2" pinfunction="~_2" pintype="passive"/>
@@ -6616,9 +6504,7 @@
       <node ref="R702" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R706" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R708" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="R802" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R804" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="R806" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R808" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R811" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R814" pin="2" pinfunction="~_2" pintype="passive"/>
@@ -6641,7 +6527,6 @@
       <node ref="U601" pin="15" pinfunction="EP_GND_15" pintype="power_in"/>
       <node ref="U601" pin="5" pinfunction="AGND_5" pintype="power_in"/>
       <node ref="U601" pin="9" pinfunction="PGND_9" pintype="power_in"/>
-      <node ref="U801" pin="3" pinfunction="GND_3" pintype="power_in"/>
       <node ref="U802" pin="4" pinfunction="GND_4" pintype="power_in"/>
       <node ref="U802" pin="5" pinfunction="IN2+_5" pintype="input"/>
     </net>
@@ -6675,7 +6560,7 @@
       <node ref="R804" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
     <net code="43" name="LED1_GATE_RAW" class="Default">
-      <node ref="R801" pin="1" pinfunction="~_1" pintype="passive"/>
+      <node ref="R803" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U501" pin="10" pinfunction="GATE_10" pintype="output"/>
     </net>
     <net code="44" name="LED1_HSN" class="Default">
@@ -6736,61 +6621,52 @@
       <node ref="Q501" pin="2" pinfunction="D_2" pintype="passive"/>
       <node ref="R507" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="55" name="LED1_TC_IN" class="Default">
-      <node ref="R801" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="R802" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="U801" pin="2" pinfunction="INA_2" pintype="input"/>
-    </net>
-    <net code="56" name="LED1_TC_OUT" class="Default">
-      <node ref="R803" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="U801" pin="7" pinfunction="OUTA_7" pintype="output"/>
-    </net>
-    <net code="57" name="LED1_VCC" class="Default">
+    <net code="55" name="LED1_VCC" class="Default">
       <node ref="C504" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U501" pin="11" pinfunction="VCC_11" pintype="power_out"/>
     </net>
-    <net code="58" name="LED2_COMP" class="Default">
+    <net code="56" name="LED2_COMP" class="Default">
       <node ref="C605" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="2" pinfunction="COMP_2" pintype="passive"/>
     </net>
-    <net code="59" name="LED2_CSH" class="Default">
+    <net code="57" name="LED2_CSH" class="Default">
       <node ref="R605" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="3" pinfunction="CSH_3" pintype="passive"/>
     </net>
-    <net code="60" name="LED2_CSH_MID" class="Default">
+    <net code="58" name="LED2_CSH_MID" class="Default">
       <node ref="R605" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R606" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="61" name="LED2_GATE" class="Default">
+    <net code="59" name="LED2_GATE" class="Default">
       <node ref="Q601" pin="1" pinfunction="G_1" pintype="input"/>
       <node ref="R807" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R808" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="62" name="LED2_GATE_RAW" class="Default">
-      <node ref="R805" pin="1" pinfunction="~_1" pintype="passive"/>
+    <net code="60" name="LED2_GATE_RAW" class="Default">
+      <node ref="R807" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="10" pinfunction="GATE_10" pintype="output"/>
     </net>
-    <net code="63" name="LED2_HSN" class="Default">
+    <net code="61" name="LED2_HSN" class="Default">
       <node ref="R604" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U601" pin="14" pinfunction="HSN_14" pintype="input"/>
     </net>
-    <net code="64" name="LED2_HSP" class="Default">
+    <net code="62" name="LED2_HSP" class="Default">
       <node ref="R603" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U601" pin="13" pinfunction="HSP_13" pintype="input"/>
     </net>
-    <net code="65" name="LED2_IS" class="Default">
+    <net code="63" name="LED2_IS" class="Default">
       <node ref="Q601" pin="3" pinfunction="S_3" pintype="passive"/>
       <node ref="R601" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="TP08" pin="1" pinfunction="PAD_1" pintype="passive"/>
       <node ref="U601" pin="12" pinfunction="IS_12" pintype="input"/>
     </net>
-    <net code="66" name="LED2_LED_POS" class="Default">
+    <net code="64" name="LED2_LED_POS" class="Default">
       <node ref="J601" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="J602" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="R602" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R604" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="67" name="LED2_OUT" class="Default">
+    <net code="65" name="LED2_OUT" class="Default">
       <node ref="C608" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C609" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="C611" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6799,45 +6675,36 @@
       <node ref="R603" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R609" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="68" name="LED2_OVP" class="Default">
+    <net code="66" name="LED2_OVP" class="Default">
       <node ref="C607" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R610" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R611" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="6" pinfunction="OVP_6" pintype="input"/>
     </net>
-    <net code="69" name="LED2_OVP_MID" class="Default">
+    <net code="67" name="LED2_OVP_MID" class="Default">
       <node ref="R609" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R610" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="70" name="LED2_RCT" class="Default">
+    <net code="68" name="LED2_RCT" class="Default">
       <node ref="C606" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R608" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U601" pin="4" pinfunction="RCT_4" pintype="passive"/>
     </net>
-    <net code="71" name="LED2_RT_MID" class="Default">
+    <net code="69" name="LED2_RT_MID" class="Default">
       <node ref="R607" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R608" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="72" name="LED2_SW" class="Default">
+    <net code="70" name="LED2_SW" class="Default">
       <node ref="D601" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="L601" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="Q601" pin="2" pinfunction="D_2" pintype="passive"/>
       <node ref="R607" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="73" name="LED2_TC_IN" class="Default">
-      <node ref="R805" pin="2" pinfunction="~_2" pintype="passive"/>
-      <node ref="R806" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="U801" pin="4" pinfunction="INB_4" pintype="input"/>
-    </net>
-    <net code="74" name="LED2_TC_OUT" class="Default">
-      <node ref="R807" pin="1" pinfunction="~_1" pintype="passive"/>
-      <node ref="U801" pin="5" pinfunction="OUTB_5" pintype="output"/>
-    </net>
-    <net code="75" name="LED2_VCC" class="Default">
+    <net code="71" name="LED2_VCC" class="Default">
       <node ref="C604" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U601" pin="11" pinfunction="VCC_11" pintype="power_out"/>
     </net>
-    <net code="76" name="LED_NDIM" class="Default">
+    <net code="72" name="LED_NDIM" class="Default">
       <node ref="D801" pin="1" pinfunction="A_1" pintype="passive"/>
       <node ref="R816" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R817" pin="1" pinfunction="~_1" pintype="passive"/>
@@ -6845,233 +6712,240 @@
       <node ref="U501" pin="7" pinfunction="nDIM_7" pintype="input"/>
       <node ref="U601" pin="7" pinfunction="nDIM_7" pintype="input"/>
     </net>
-    <net code="77" name="LED_PWM_GPIO" class="Default">
+    <net code="73" name="LED_PWM_GPIO" class="Default">
       <node ref="R816" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U202" pin="10" pinfunction="GPIO25_10" pintype="bidirectional"/>
     </net>
-    <net code="78" name="LOGIC_BOOT" class="Default">
+    <net code="74" name="LOGIC_BOOT" class="Default">
       <node ref="C203" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U201" pin="6" pinfunction="BST_6" pintype="passive"/>
     </net>
-    <net code="79" name="LOGIC_SW" class="Default">
+    <net code="75" name="LOGIC_SW" class="Default">
       <node ref="C203" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="L201" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U201" pin="5" pinfunction="SW_5" pintype="output"/>
     </net>
-    <net code="80" name="PTC_DRAIN" class="Default">
+    <net code="76" name="PSU_RTN" class="Default">
+      <node ref="J101" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="Q102" pin="2" pinfunction="D_2" pintype="passive"/>
+    </net>
+    <net code="77" name="PTC_DRAIN" class="Default">
       <node ref="J701" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="Q703" pin="2" pinfunction="D_2" pintype="passive"/>
     </net>
-    <net code="81" name="PTC_DRV" class="Default">
+    <net code="78" name="PTC_DRV" class="Default">
       <node ref="Q702" pin="3" pinfunction="C_3" pintype="passive"/>
       <node ref="R705" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="82" name="PTC_GATE" class="Default">
+    <net code="79" name="PTC_GATE" class="Default">
       <node ref="Q703" pin="1" pinfunction="G_1" pintype="input"/>
       <node ref="R705" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R706" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="83" name="PTC_GPIO" class="Default">
+    <net code="80" name="PTC_GPIO" class="Default">
       <node ref="R701" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U202" pin="8" pinfunction="GPIO32_8" pintype="bidirectional"/>
     </net>
-    <net code="84" name="PTC_NPN_B" class="Default">
+    <net code="81" name="PTC_NPN_B" class="Default">
       <node ref="Q701" pin="1" pinfunction="B_1" pintype="input"/>
       <node ref="R701" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R702" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="85" name="PTC_NPN_C" class="Default">
+    <net code="82" name="PTC_NPN_C" class="Default">
       <node ref="Q701" pin="3" pinfunction="C_3" pintype="passive"/>
       <node ref="R703" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="86" name="PTC_PNP_B" class="Default">
+    <net code="83" name="PTC_PNP_B" class="Default">
       <node ref="Q702" pin="1" pinfunction="B_1" pintype="input"/>
       <node ref="R703" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R704" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="87" name="PUMP_DRAIN" class="Default">
+    <net code="84" name="PUMP_DRAIN" class="Default">
       <node ref="D701" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="J702" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="Q704" pin="3" pinfunction="D_3" pintype="passive"/>
     </net>
-    <net code="88" name="PUMP_GATE" class="Default">
+    <net code="85" name="PUMP_GATE" class="Default">
       <node ref="Q704" pin="1" pinfunction="G_1" pintype="input"/>
       <node ref="R707" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R708" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="89" name="PUMP_GPIO" class="Default">
+    <net code="86" name="PUMP_GPIO" class="Default">
       <node ref="R707" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U202" pin="9" pinfunction="GPIO33_9" pintype="bidirectional"/>
     </net>
-    <net code="90" name="RTC_X1" class="Default">
+    <net code="87" name="REVP_GATE" class="Default">
+      <node ref="Q102" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="R109" pin="2" pinfunction="~_2" pintype="passive"/>
+      <node ref="R110" pin="1" pinfunction="~_1" pintype="passive"/>
+    </net>
+    <net code="88" name="REVP_MID" class="Default">
+      <node ref="R108" pin="2" pinfunction="~_2" pintype="passive"/>
+      <node ref="R109" pin="1" pinfunction="~_1" pintype="passive"/>
+    </net>
+    <net code="89" name="RTC_X1" class="Default">
       <node ref="C301" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U301" pin="1" pinfunction="X1_1" pintype="passive"/>
       <node ref="Y301" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="91" name="RTC_X2" class="Default">
+    <net code="90" name="RTC_X2" class="Default">
       <node ref="C302" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U301" pin="2" pinfunction="X2_2" pintype="passive"/>
       <node ref="Y301" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="92" name="SD_CS" class="Default">
+    <net code="91" name="SD_CS" class="Default">
       <node ref="J301" pin="2" pinfunction="DAT3_CS_2" pintype="input"/>
       <node ref="R303" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U202" pin="16" pinfunction="GPIO13_16" pintype="bidirectional"/>
     </net>
-    <net code="93" name="SD_DAT1" class="Default">
+    <net code="92" name="SD_DAT1" class="Default">
       <node ref="J301" pin="8" pinfunction="DAT1_8" pintype="passive"/>
       <node ref="R306" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="94" name="SD_DAT2" class="Default">
+    <net code="93" name="SD_DAT2" class="Default">
       <node ref="J301" pin="1" pinfunction="DAT2_1" pintype="passive"/>
       <node ref="R307" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="95" name="SD_MISO" class="Default">
+    <net code="94" name="SD_MISO" class="Default">
       <node ref="J301" pin="7" pinfunction="DAT0_MISO_7" pintype="tri_state"/>
       <node ref="R305" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U202" pin="31" pinfunction="GPIO19_31" pintype="bidirectional"/>
     </net>
-    <net code="96" name="SD_MOSI" class="Default">
+    <net code="95" name="SD_MOSI" class="Default">
       <node ref="J301" pin="3" pinfunction="CMD_MOSI_3" pintype="input"/>
       <node ref="R302" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R304" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="97" name="SD_MOSI_GPIO" class="Default">
+    <net code="96" name="SD_MOSI_GPIO" class="Default">
       <node ref="R302" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U202" pin="37" pinfunction="GPIO23_37" pintype="bidirectional"/>
     </net>
-    <net code="98" name="SD_SCK" class="Default">
+    <net code="97" name="SD_SCK" class="Default">
       <node ref="J301" pin="5" pinfunction="CLK_5" pintype="input"/>
       <node ref="R301" pin="2" pinfunction="~_2" pintype="passive"/>
     </net>
-    <net code="99" name="SD_SCK_GPIO" class="Default">
+    <net code="98" name="SD_SCK_GPIO" class="Default">
       <node ref="R301" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U202" pin="30" pinfunction="GPIO18_30" pintype="bidirectional"/>
     </net>
-    <net code="100" name="SHT_SCL" class="Default">
+    <net code="99" name="SHT_SCL" class="Default">
       <node ref="J402" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="R402" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U401" pin="3" pinfunction="IO2_3" pintype="passive"/>
       <node ref="U401" pin="4" pinfunction="IO2_4" pintype="passive"/>
     </net>
-    <net code="101" name="SHT_SDA" class="Default">
+    <net code="100" name="SHT_SDA" class="Default">
       <node ref="J402" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="R401" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="U401" pin="1" pinfunction="IO1_1" pintype="passive"/>
       <node ref="U401" pin="6" pinfunction="IO1_6" pintype="passive"/>
     </net>
-    <net code="102" name="UART_RX" class="Default">
+    <net code="101" name="UART_RX" class="Default">
       <node ref="J201" pin="4" pinfunction="4_4" pintype="passive"/>
       <node ref="U202" pin="34" pinfunction="GPIO3_RXD0_34" pintype="bidirectional"/>
     </net>
-    <net code="103" name="UART_TX" class="Default">
+    <net code="102" name="UART_TX" class="Default">
       <node ref="J201" pin="3" pinfunction="3_3" pintype="passive"/>
       <node ref="U202" pin="35" pinfunction="GPIO1_TXD0_35" pintype="bidirectional"/>
     </net>
-    <net code="104" name="UVLO_REF" class="Default">
+    <net code="103" name="UVLO_REF" class="Default">
       <node ref="R813" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R814" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="TP06" pin="1" pinfunction="PAD_1" pintype="passive"/>
       <node ref="U802" pin="2" pinfunction="IN1-_2" pintype="input"/>
       <node ref="U802" pin="6" pinfunction="IN2-_6" pintype="input"/>
     </net>
-    <net code="105" name="UVLO_SENSE" class="Default">
+    <net code="104" name="UVLO_SENSE" class="Default">
       <node ref="R810" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R811" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="R812" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="TP05" pin="1" pinfunction="PAD_1" pintype="passive"/>
       <node ref="U802" pin="3" pinfunction="IN1+_3" pintype="input"/>
     </net>
-    <net code="106" name="UVLO_TOP_MID" class="Default">
+    <net code="105" name="UVLO_TOP_MID" class="Default">
       <node ref="R809" pin="2" pinfunction="~_2" pintype="passive"/>
       <node ref="R810" pin="1" pinfunction="~_1" pintype="passive"/>
     </net>
-    <net code="107" name="VBAT" class="Default">
+    <net code="106" name="VBAT" class="Default">
       <node ref="BT301" pin="1" pinfunction="~_1" pintype="passive"/>
       <node ref="U301" pin="3" pinfunction="VBAT_3" pintype="power_in"/>
     </net>
-    <net code="108" name="unconnected-(D801-NC-Pad2)" class="Default">
+    <net code="107" name="unconnected-(D801-NC-Pad2)" class="Default">
       <node ref="D801" pin="2" pinfunction="NC_2" pintype="no_connect"/>
     </net>
-    <net code="109" name="unconnected-(J301-CARD_DETECT_1-PadCD1)" class="Default">
+    <net code="108" name="unconnected-(J301-CARD_DETECT_1-PadCD1)" class="Default">
       <node ref="J301" pin="CD1" pinfunction="CARD_DETECT_1_CD1" pintype="passive+no_connect"/>
     </net>
-    <net code="110" name="unconnected-(J301-CARD_DETECT_2-PadCD2)" class="Default">
+    <net code="109" name="unconnected-(J301-CARD_DETECT_2-PadCD2)" class="Default">
       <node ref="J301" pin="CD2" pinfunction="CARD_DETECT_2_CD2" pintype="passive+no_connect"/>
     </net>
-    <net code="111" name="unconnected-(U101-SYNCH-Pad7)" class="Default">
+    <net code="110" name="unconnected-(U101-SYNCH-Pad7)" class="Default">
       <node ref="U101" pin="7" pinfunction="SYNCH_7" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="112" name="unconnected-(U202-GPIO2-Pad24)" class="Default">
+    <net code="111" name="unconnected-(U202-GPIO2-Pad24)" class="Default">
       <node ref="U202" pin="24" pinfunction="GPIO2_24" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="113" name="unconnected-(U202-GPIO4-Pad26)" class="Default">
+    <net code="112" name="unconnected-(U202-GPIO4-Pad26)" class="Default">
       <node ref="U202" pin="26" pinfunction="GPIO4_26" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="114" name="unconnected-(U202-GPIO5-Pad29)" class="Default">
+    <net code="113" name="unconnected-(U202-GPIO5-Pad29)" class="Default">
       <node ref="U202" pin="29" pinfunction="GPIO5_29" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="115" name="unconnected-(U202-GPIO12-Pad14)" class="Default">
+    <net code="114" name="unconnected-(U202-GPIO12-Pad14)" class="Default">
       <node ref="U202" pin="14" pinfunction="GPIO12_14" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="116" name="unconnected-(U202-GPIO15-Pad23)" class="Default">
+    <net code="115" name="unconnected-(U202-GPIO15-Pad23)" class="Default">
       <node ref="U202" pin="23" pinfunction="GPIO15_23" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="117" name="unconnected-(U202-GPIO16-Pad27)" class="Default">
+    <net code="116" name="unconnected-(U202-GPIO16-Pad27)" class="Default">
       <node ref="U202" pin="27" pinfunction="GPIO16_27" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="118" name="unconnected-(U202-GPIO17-Pad28)" class="Default">
+    <net code="117" name="unconnected-(U202-GPIO17-Pad28)" class="Default">
       <node ref="U202" pin="28" pinfunction="GPIO17_28" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="119" name="unconnected-(U202-GPIO36-Pad4)" class="Default">
+    <net code="118" name="unconnected-(U202-GPIO36-Pad4)" class="Default">
       <node ref="U202" pin="4" pinfunction="GPIO36_4" pintype="input+no_connect"/>
     </net>
-    <net code="120" name="unconnected-(U202-GPIO39-Pad5)" class="Default">
+    <net code="119" name="unconnected-(U202-GPIO39-Pad5)" class="Default">
       <node ref="U202" pin="5" pinfunction="GPIO39_5" pintype="input+no_connect"/>
     </net>
-    <net code="121" name="unconnected-(U202-NC-Pad17)" class="Default">
+    <net code="120" name="unconnected-(U202-NC-Pad17)" class="Default">
       <node ref="U202" pin="17" pinfunction="NC_17" pintype="no_connect"/>
     </net>
-    <net code="122" name="unconnected-(U202-NC-Pad18)" class="Default">
+    <net code="121" name="unconnected-(U202-NC-Pad18)" class="Default">
       <node ref="U202" pin="18" pinfunction="NC_18" pintype="no_connect"/>
     </net>
-    <net code="123" name="unconnected-(U202-NC-Pad19)" class="Default">
+    <net code="122" name="unconnected-(U202-NC-Pad19)" class="Default">
       <node ref="U202" pin="19" pinfunction="NC_19" pintype="no_connect"/>
     </net>
-    <net code="124" name="unconnected-(U202-NC-Pad20)" class="Default">
+    <net code="123" name="unconnected-(U202-NC-Pad20)" class="Default">
       <node ref="U202" pin="20" pinfunction="NC_20" pintype="no_connect"/>
     </net>
-    <net code="125" name="unconnected-(U202-NC-Pad21)" class="Default">
+    <net code="124" name="unconnected-(U202-NC-Pad21)" class="Default">
       <node ref="U202" pin="21" pinfunction="NC_21" pintype="no_connect"/>
     </net>
-    <net code="126" name="unconnected-(U202-NC-Pad22)" class="Default">
+    <net code="125" name="unconnected-(U202-NC-Pad22)" class="Default">
       <node ref="U202" pin="22" pinfunction="NC_22" pintype="no_connect"/>
     </net>
-    <net code="127" name="unconnected-(U202-NC-Pad32)" class="Default">
+    <net code="126" name="unconnected-(U202-NC-Pad32)" class="Default">
       <node ref="U202" pin="32" pinfunction="NC_32" pintype="no_connect"/>
     </net>
-    <net code="128" name="unconnected-(U301-MFP-Pad7)" class="Default">
+    <net code="127" name="unconnected-(U301-MFP-Pad7)" class="Default">
       <node ref="U301" pin="7" pinfunction="MFP_7" pintype="open_collector+no_connect"/>
     </net>
-    <net code="129" name="unconnected-(U402-IO2-Pad3)" class="Default">
+    <net code="128" name="unconnected-(U402-IO2-Pad3)" class="Default">
       <node ref="U402" pin="3" pinfunction="IO2_3" pintype="passive+no_connect"/>
     </net>
-    <net code="130" name="unconnected-(U402-IO2-Pad4)" class="Default">
+    <net code="129" name="unconnected-(U402-IO2-Pad4)" class="Default">
       <node ref="U402" pin="4" pinfunction="IO2_4" pintype="passive+no_connect"/>
     </net>
-    <net code="131" name="unconnected-(U501-NC-Pad8)" class="Default">
+    <net code="130" name="unconnected-(U501-NC-Pad8)" class="Default">
       <node ref="U501" pin="8" pinfunction="NC_8" pintype="no_connect"/>
     </net>
-    <net code="132" name="unconnected-(U601-NC-Pad8)" class="Default">
+    <net code="131" name="unconnected-(U601-NC-Pad8)" class="Default">
       <node ref="U601" pin="8" pinfunction="NC_8" pintype="no_connect"/>
     </net>
-    <net code="133" name="unconnected-(U801-NC-Pad1)" class="Default">
-      <node ref="U801" pin="1" pinfunction="NC_1" pintype="no_connect"/>
-    </net>
-    <net code="134" name="unconnected-(U801-NC-Pad8)" class="Default">
-      <node ref="U801" pin="8" pinfunction="NC_8" pintype="no_connect"/>
-    </net>
-    <net code="135" name="unconnected-(U802-OUT2-Pad7)" class="Default">
+    <net code="132" name="unconnected-(U802-OUT2-Pad7)" class="Default">
       <node ref="U802" pin="7" pinfunction="OUT2_7" pintype="open_collector+no_connect"/>
     </net>
   </nets>

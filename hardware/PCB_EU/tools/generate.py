@@ -152,18 +152,24 @@ C100='CL21B104KBCNNNC';C1='CL21B105KBFNNNG';C22='CL31A226KQHNNNE';C10='CL31A106K
 GND='GND';V3='+3V3';V12='+12V';V24='+24V_FUSED'
 
 sheet('InputPower','01 | 24 V input and 12 V auxiliary supply',[
- 'External PSU 24.0 V, max 25 V. J101: 1 = +24 V, 2 = GND.',
- 'Fuse coordination and reverse polarity survival are NOT qualified.',
+ 'External PSU 24.0 V, max 25 V, at least 240 W / 10 A. J101: 1 = +24 V, 2 = PSU return.',
+ 'Reverse polarity: Q102 IRF1010ES in the return path; drain = J101.2, source = board GND.',
+ 'Q102 gate divider 5k6+5k6 / 10k from +24V_FUSED: Vgs 10.2 V at 21.6 V, 19.8 V at 42 V TVS clamp.',
+ 'Programmer/USB ground must never become the power return. Fuse coordination NOT qualified.',
  'L7987 is the 3 A part. VCC is on 24 V; VBIAS is on the regulated 12 V rail.',
  'RF + CF series from COMP to FB; CP across the complete RF/CF network.',
  'C112 has 0.1 ohm in series to GND. This is deliberate compensation damping.'
 ],95)
-add('InputPower','J101','J2','24 V IN','DG301R-5.0-2P12',['+24V_RAW',GND],note='DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing')
+add('InputPower','J101','J2','24 V IN','DG301R-5.0-2P12',['+24V_RAW','PSU_RTN'],note='DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing')
 fuses=[('F101','15 A slow','3413.0330.11','+24V_RAW',V24),('F102','8 A slow','3413.0327.11',V24,'+24V_PTC'),
-       ('F103','6.3 A fast','3413.0224.11',V24,'+24V_LED1'),('F104','2 A slow','3403.0169.11',V24,'+24V_LED2'),
+       ('F103','6.3 A slow','3413.0224.11',V24,'+24V_LED1'),('F104','2 A slow','3403.0169.11',V24,'+24V_LED2'),
        ('F105','2 A slow','3403.0169.11',V24,'+24V_AUX'),('F106','1 A slow','3403.0166.11',V24,'+24V_PUMP')]
 for ref,val,mpn,a,b in fuses:add('InputPower',ref,'F',val,mpn,[a,b],note='SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified')
 add('InputPower','D101','TVS','SMBJ26A','SMBJ26A-E3/52',[V24,GND],'Diode_SMD:D_SMB')
+add('InputPower','Q102','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'REVP_GATE',2:'PSU_RTN',3:GND},'Package_TO_SOT_SMD:TO-263-2',note='Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced',pos=(265,200))
+r('InputPower','R108','5k6 1%','SMD1206 5K6 1%',V24,'REVP_MID')
+r('InputPower','R109','5k6 1%','SMD1206 5K6 1%','REVP_MID','REVP_GATE')
+r('InputPower','R110','10k 1%',R10,'REVP_GATE',GND)
 c('InputPower','C101','220u 50V','UPW1H221MPD',V24)
 add('InputPower','U101','L7987','L7987 3A','L7987',{1:V12,2:'+24V_AUX',3:'+24V_AUX',4:'+24V_AUX',5:'+24V_AUX',6:'AUX_SS',7:None,8:'AUX_COMP',9:'AUX_FB',10:'AUX_FSW',11:'AUX_ILIM',12:'BLOCK_OC',13:'AUX_SW',14:'AUX_SW',15:'AUX_BOOT',16:GND,17:GND},note='ST HTSSOP16 EP17=GND; 3x3 EP and 0.65 pitch; assembly and thermal vias pending',pos=(90,60))
 add('InputPower','L101','L','33u','JNRH1207-330M-A',['AUX_SW',V12],note='Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check')
@@ -206,7 +212,7 @@ en.update({'1':GND,'2':V3,'3':'ESP_EN','6':'FAN1_TACH','7':'FAN2_TACH','8':'PTC_
 add('MCU','U202','ESP32','ESP32-WROOM-32E-N4','ESP32-WROOM-32E-N4',en,'EU_Parts:ESP32-WROOM-32E_NoVias',note='Antenna keepout and GND pad 39 mandatory',pos=(285,69))
 c('MCU','C206','22u 6.3V',C22,V3)
 c('MCU','C207','100n',C100,V3)
-c('MCU','C208','100n RESET',C100,'ESP_EN')
+c('MCU','C208','1u RESET',C1,'ESP_EN')
 r('MCU','R201','10k',D10,V3,'ESP_EN')
 r('MCU','R202','10k',D10,V3,'ESP_BOOT')
 add('MCU','SW201','SW','RESET','TACTB-64K-F',['ESP_EN',GND],note='4 physical button leads form two internally common pairs')
@@ -321,6 +327,7 @@ sheet('Loads','07 | PTC heater and 24 V pump',[
  'Q703 IRF1010ES pin 2 and metal tab = DRAIN, pin 3 = SOURCE, pin 1 = GATE.',
  'Pump GPIO33 HIGH turns on Q704. 1k series gate uses the purchased spare resistor pack.',
  'D701 pump flyback cathode to fused +24V_PUMP, anode to PUMP_DRAIN.',
+ 'R702 4k7 keeps Q701 off (<0.4 V) even with the ESP32 internal pull-up on GPIO32; HIGH still gives ~0.13 mA base.',
  '100k GPIO/gate pulls stay active during reset. Pump stall current and fuse coordination still unmeasured.'
 ],70)
 add('Loads','J701','J2','PTC + / RETURN','DG301R-5.0-2P12',['+24V_PTC','PTC_DRAIN'])
@@ -328,7 +335,7 @@ add('Loads','Q701','NPN','BC847B-DIO','BC847B-DIO',{1:'PTC_NPN_B',2:GND,3:'PTC_N
 add('Loads','Q702','PNP','BC857B','BC857B',{1:'PTC_PNP_B',2:V12,3:'PTC_DRV'},'Package_TO_SOT_SMD:SOT-23',pos=(165,55))
 add('Loads','Q703','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'PTC_GATE',2:'PTC_DRAIN',3:GND},'Package_TO_SOT_SMD:TO-263-2',pos=(265,55))
 r('Loads','R701','10k',D10,'PTC_GPIO','PTC_NPN_B')
-r('Loads','R702','100k',D100,'PTC_NPN_B',GND)
+r('Loads','R702','4k7 1%','SMD1206 4K7 1%','PTC_NPN_B',GND)
 r('Loads','R703','2k2 1%','SMD1206-2K2-1%','PTC_NPN_C','PTC_PNP_B')
 r('Loads','R704','10k',D10,V12,'PTC_PNP_B')
 r('Loads','R705','220R','SMD1206-220R-1%','PTC_DRV','PTC_GATE')
@@ -345,18 +352,13 @@ sheet('Control','08 | LED gate drive and hardware inhibit',[
  'One shared 10k pull-down on nDIM defeats BOTH internal LM3429 hysteresis sources after MCU reset.',
  'Do NOT add a 100n capacitor to nDIM. GPIO25 HIGH is enabled only after software checks.',
  'UVLO nominal release 19.90 V / fall 19.70 V depends on +3V3 reference and comparator tolerances.',
- 'TC4427A is dual non-inverting. 1k inputs + 100k pulls; 4R7 output resistors drive IRF540Z gates.',
- 'Power sequencing, BAT54 cold Vf / hot leakage and nDIM reset levels remain hardware tests.',
+ 'No external gate driver: each LM3429 GATE drives its own IRF540Z through 4R7; 100k gate pull-down.',
+ 'BAT54 cold Vf / hot leakage and nDIM reset levels remain hardware tests.',
  'Unused comparator inputs tied to valid DC levels; its unused open-collector output is NC.'
 ],85)
-add('Control','U801','TC4427A','TC4427AEPA','TC4427AEPA',{1:None,2:'LED1_TC_IN',3:GND,4:'LED2_TC_IN',5:'LED2_TC_OUT',6:V12,7:'LED1_TC_OUT',8:None},'Package_DIP:DIP-8_W7.62mm',pos=(80,55))
-c('Control','C801','10u 25V',C10,V12)
-c('Control','C802','100n',C100,V12)
 for k in (1,2):
     pre=f'LED{k}_';b=800+(k-1)*4
-    r('Control',f'R{b+1}','1k',D1,pre+'GATE_RAW',pre+'TC_IN')
-    r('Control',f'R{b+2}','100k',D100,pre+'TC_IN',GND)
-    r('Control',f'R{b+3}','4R7 1W','SMD2512-4R7',pre+'TC_OUT',pre+'GATE')
+    r('Control',f'R{b+3}','4R7 1W','SMD2512-4R7',pre+'GATE_RAW',pre+'GATE')
     r('Control',f'R{b+4}','100k',D100,pre+'GATE',GND)
 add('Control','U802','LM2903','LM2903D-ST','LM2903D-ST',{1:'BLOCK_OC',2:'UVLO_REF',3:'UVLO_SENSE',4:GND,5:GND,6:'UVLO_REF',7:None,8:V12},'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm',pos=(280,55))
 c('Control','C803','100n',C100,V12)
@@ -487,7 +489,6 @@ def schematic(sh,meta):
 source_urls={
  'LM3429MH/NOPB':'https://www.ti.com/lit/ds/symlink/lm3429.pdf',
  'L7987':'https://www.st.com/resource/en/datasheet/l7987.pdf',
- 'TC4427AEPA':'https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/TC4426A-TC4427A-TC4428A-1.5A-Dual-High-Speed-Power-MOSFET-Drivers-20001423.pdf',
  'AP63203WU-7':'https://www.diodes.com/datasheet/download/AP63200-AP63201-AP63203-AP63205.pdf',
  'LM2903D-ST':'https://www.st.com/resource/en/datasheet/lm2903.pdf',
  'USBLC6-2SC6':'https://www.st.com/resource/en/datasheet/usblc6-2.pdf',
@@ -497,6 +498,21 @@ source_urls={
  'ESP32-WROOM-32E-N4':'https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf',
  'AO3422':'https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf',
  'MCP7940N-I/SN':'https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf',
+}
+
+
+# Review fixes of 2026-10-21 change these per-piece quantities against the
+# dated 2026-10-20 price snapshot (prices unchanged, stock was sufficient then).
+REVIEW_BUY={'SMD1206 4K7 1%':3,'IRF1010ESPBF':2,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2}
+REVIEW_USAGE={
+ 'SMD1206 4K7 1%':'1%: I2C pull-ups ×2, R702 база Q701 (держит PTC выключенным при внутренней подтяжке ESP32)',
+ 'IRF1010ESPBF':'60 В, D2PAK: Q703 ключ PTC (затвор от 12 В) и Q102 защита от переполюсовки в минусе входа',
+ 'SMD1206 5K6 1%':'1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2',
+ 'SMD1206-10K-1%':'1%: верх OVP ×2, верх FB L7987 ×1, опорный делитель UVLO ×2, gate–source Q102 ×1',
+ 'CL31A106KAHNNNE':'10 мкФ / 25 В: 2 на входе AP63203',
+ 'CL21B104KBCNNNC':'12 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 8',
+ 'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
+ 'SMD0603-100K':'0603 / 5%: gate IRF540Z ×2, gate помпы ×1, gate fan PWM ×2',
 }
 
 
@@ -539,8 +555,13 @@ def main():
         # retained except the three unused 100-ohm gate resistors.
         if mpn=='SMD0603-10K': row['buy']=10*math.ceil(need/10);row['line']=float(Decimal(str(row['price_unit']))*(row['buy']//10))
         if mpn=='SMD1206-100R-1%': row['buy']=need;row['line']=float(Decimal(str(row['price_unit']))*need)
-        if mpn=='SMD0603-1K':row['usage']='1k: TC inputs x2, tach x2, float x1, pump/fan gates x3; 8 of 10 purchased'
+        if mpn in REVIEW_BUY:
+            row['buy']=REVIEW_BUY[mpn];row['line']=float(Decimal(str(row['price_unit']))*row['buy'])
+        if mpn in REVIEW_USAGE:row['usage']=REVIEW_USAGE[mpn]
+        if mpn=='SMD0603-1K':row['usage']='1k: tach x2, float x1, pump/fan gates x3; 6 of 10 purchased'
         assert need<=row['buy'],(mpn,need,row['buy'])
+    dropped=[row['mpn'] for row in rows if not row['needed']]
+    rows=[row for row in rows if row['needed']]
     unknown=set(counts)|set(accessories)
     unknown-=set(row['mpn'] for row in rows)
     assert not unknown,unknown
@@ -554,6 +575,7 @@ def main():
     summary=dict(electrical_components=sum(counts.values()),testpads=8,accessories=accessories,rows=len(rows),shop_totals={k:str(v) for k,v in totals.items()},shipping_EUR='5.87',total_EUR=str(sum(totals.values())+Decimal('5.87')),price_basis='Dated sourcing snapshot 2026-10-20; quantities now allocated to actual schematic. No reservation or order.')
     (HERE/'review/BOM_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(summary,ensure_ascii=False,indent=2))
+    print('Dropped SKUs (no fitted reference):',dropped)
     print('Changed quantities:',[(r['mpn'],r['previous_needed'],r['needed']) for r in rows if r['previous_needed']!=r['needed']])
 
 

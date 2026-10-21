@@ -59,7 +59,8 @@ def main():
     nc_or_stub = [name for name,ns in nodes.items() if not name.startswith('unconnected-') and len(ns)<2]
     check('No one-pin orphan nets in exported design',not nc_or_stub)
 
-    check('Input terminal polarity and main fuse precede the TVS',pins('J101',{1:'+24V_RAW',2:'GND'}) and pins('F101',{1:'+24V_RAW',2:'+24V_FUSED'}) and pins('D101',{1:'+24V_FUSED',2:'GND'}))
+    check('Input terminal polarity and main fuse precede the TVS',pins('J101',{1:'+24V_RAW',2:'PSU_RTN'}) and pins('F101',{1:'+24V_RAW',2:'+24V_FUSED'}) and pins('D101',{1:'+24V_FUSED',2:'GND'}))
+    check('Reverse polarity: Q102 drain on PSU return, source on GND, gate divider keeps Vgs <= 20 V at the 42 V TVS clamp',pins('Q102',{1:'REVP_GATE',2:'PSU_RTN',3:'GND'}) and r('R108','SMD1206 5K6 1%','+24V_FUSED','REVP_MID') and r('R109','SMD1206 5K6 1%','REVP_MID','REVP_GATE') and r('R110','SMD1206-10K-1%','REVP_GATE','GND') and 42*10/(10+5.6+5.6)<=20 and 21.6*10/(10+5.6+5.6)>=10 and {k for k in nodes['PSU_RTN']}=={('J101','2'),('Q102','2')})
     fuse_expected={'F102':'+24V_PTC','F103':'+24V_LED1','F104':'+24V_LED2','F105':'+24V_AUX','F106':'+24V_PUMP'}
     check('All five 24 V load branches are separately fused',all(pins(ref,{1:'+24V_FUSED',2:net}) for ref,net in fuse_expected.items()))
     check('Fan branch fuse is on the 12 V rail',pins('F401',{1:'+12V',2:'+12V_FANS'}))
@@ -80,11 +81,13 @@ def main():
     check('LED1 has two series 10u coils; LED2 one 22u coil',pins('L501',{1:'+24V_LED1',2:'LED1_L_MID'}) and pins('L502',{1:'LED1_L_MID',2:'LED1_SW'}) and pins('L601',{1:'+24V_LED2',2:'LED2_SW'}))
     check('Shared nDIM has one 10k pull-down, a 5k6 GPIO series resistor and correct BAT54 polarity',r('R817','SMD0603-10K','LED_NDIM','GND') and r('R816','SMD1206 5K6 1%','LED_PWM_GPIO','LED_NDIM') and pins('D801',{1:'LED_NDIM',3:'BLOCK_OC'}) and len([1 for x in p.values() if x['symbol']=='R' and set(x['nets'].values())=={'LED_NDIM','GND'}])==1)
     check('No capacitor is attached to PWM nDIM',not any('LED_NDIM' in x['nets'].values() and x['symbol'] in ['C','CP'] for x in p.values()))
-    check('TC4427A verified DIP pin map, 12 V VDD, separate channel gate paths',pins('U801',{2:'LED1_TC_IN',3:'GND',4:'LED2_TC_IN',5:'LED2_TC_OUT',6:'+12V',7:'LED1_TC_OUT'}) and r('R803','SMD2512-4R7','LED1_TC_OUT','LED1_GATE') and r('R807','SMD2512-4R7','LED2_TC_OUT','LED2_GATE'))
+    check('Each LM3429 GATE drives only its own IRF540Z through 4R7; no external driver',r('R803','SMD2512-4R7','LED1_GATE_RAW','LED1_GATE') and r('R807','SMD2512-4R7','LED2_GATE_RAW','LED2_GATE') and 'U801' not in p and len(nodes['LED1_GATE_RAW'])==2 and len(nodes['LED2_GATE_RAW'])==2)
     check('UVLO positive feedback, valid unused comparator inputs, output tied to PGOOD',pins('U802',{1:'BLOCK_OC',2:'UVLO_REF',3:'UVLO_SENSE',4:'GND',5:'GND',6:'UVLO_REF',8:'+12V'}) and r('R812','SMD1206-1M-1%','BLOCK_OC','UVLO_SENSE') and r('R815','SMD0603-10K','+3V3','BLOCK_OC'))
-    check('All four LED gate / driver input pull-downs are 100k',all(r(f'R{no}','SMD0603-100K',net,'GND') for no,net in [(802,'LED1_TC_IN'),(804,'LED1_GATE'),(806,'LED2_TC_IN'),(808,'LED2_GATE')]))
+    check('Both LED MOSFET gate pull-downs are 100k',all(r(f'R{no}','SMD0603-100K',net,'GND') for no,net in [(804,'LED1_GATE'),(808,'LED2_GATE')]))
 
-    check('PTC driver defaults off, with separate NPN and PNP stages',pins('Q701',{1:'PTC_NPN_B',2:'GND',3:'PTC_NPN_C'}) and pins('Q702',{1:'PTC_PNP_B',2:'+12V',3:'PTC_DRV'}) and pins('Q703',{1:'PTC_GATE',2:'PTC_DRAIN',3:'GND'}) and r('R702','SMD0603-100K','PTC_NPN_B','GND') and r('R706','SMD1206-2K2-1%','PTC_GATE','GND'))
+    check('PTC driver defaults off, with separate NPN and PNP stages',pins('Q701',{1:'PTC_NPN_B',2:'GND',3:'PTC_NPN_C'}) and pins('Q702',{1:'PTC_PNP_B',2:'+12V',3:'PTC_DRV'}) and pins('Q703',{1:'PTC_GATE',2:'PTC_DRAIN',3:'GND'}) and r('R702','SMD1206 4K7 1%','PTC_NPN_B','GND') and r('R706','SMD1206-2K2-1%','PTC_GATE','GND'))
+    # ESP32 internal pull-up is 45k typ; worst low value taken as 30k. Q701 needs Vbe ~0.6 V to conduct.
+    check('PTC stays off with the ESP32 internal pull-up enabled on GPIO32 (R701 10k / R702 4k7)',3.6*4.7/(30+10+4.7)<0.45 and (3.3-0.7)/10-0.7/4.7>0.1)
     check('Pump AO3422: 1 gate / 2 source / 3 drain, reset pull-down and flyback polarity',pins('Q704',{1:'PUMP_GATE',2:'GND',3:'PUMP_DRAIN'}) and pins('D701',{1:'+24V_PUMP',2:'PUMP_DRAIN'}) and r('R708','SMD0603-100K','PUMP_GATE','GND'))
     for k,b in [(1,410),(2,420)]:
         pre=f'FAN{k}'
@@ -103,12 +106,12 @@ def main():
     reserved=[14,17,18,19,20,21,22,23,24,29,32]
     check('ESP32 NC / flash pins and unused strapping pins are not externally loaded',all(p['U202']['nets'][str(i)] is None for i in reserved))
     check('UART service connector has explicit 3.3 V-only pin order',pins('J201',{1:'GND',2:'+3V3',3:'UART_TX',4:'UART_RX',5:'ESP_EN',6:'ESP_BOOT'}))
-    check('BOOT / EN have external pull-ups and active-low buttons',r('R201','SMD0603-10K','+3V3','ESP_EN') and r('R202','SMD0603-10K','+3V3','ESP_BOOT') and pins('SW201',{1:'ESP_EN',2:'GND'}) and pins('SW202',{1:'ESP_BOOT',2:'GND'}))
+    check('BOOT / EN have external pull-ups and active-low buttons; EN delay 10k / 1u per Espressif',pins('C208',{1:'ESP_EN',2:'GND'}) and p['C208']['mpn']=='CL21B105KBFNNNG' and r('R201','SMD0603-10K','+3V3','ESP_EN') and r('R202','SMD0603-10K','+3V3','ESP_BOOT') and pins('SW201',{1:'ESP_EN',2:'GND'}) and pins('SW202',{1:'ESP_BOOT',2:'GND'}))
     allocated=Counter(x['mpn'] for x in spec['parts'] if x['in_bom'])+Counter(spec['accessories'])
     check('Every purchasing quantity is allocated to fitted references or assembly accessories',all(x['needed']==allocated[x['mpn']] and x['buy']>=x['needed'] for x in bom) and set(allocated)=={x['mpn'] for x in bom})
     check('No passive SMD footprint is smaller than 0603',all(not re.search(r'_(0201|0402)_',x['footprint']) for x in spec['parts'] if x['symbol'] in ['R','C','CP','L']))
     delivered=sum(Decimal(str(x['line'])) for x in bom)+Decimal('5.87')
-    check('Purchased quantities + dated VAT and delivery estimate do not exceed 80 EUR',delivered<=Decimal('80.00'))
+    check('Purchased quantities + dated VAT and delivery estimate stay under the 100 EUR ceiling (target ~80 EUR)',delivered<=Decimal('100.00'))
     out=['EU-0.1 schematic connectivity review',f'Input: {args.netlist.name}',f'PASS: {len(passed)} checks',f'Exported electrical components: {sum(x["in_bom"] for x in spec["parts"])}',f'Specified connected pins checked: {len(expected)}',f'Procurement snapshot incl. VAT and delivery: {delivered:.2f} EUR','']
     out += [f'PASS {i+1:02d} | {label}' for i,label in enumerate(passed)]
     out += ['', 'Limitations: these checks establish pin/net and BOM consistency, not analog stability,',

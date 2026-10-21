@@ -11,7 +11,7 @@
       "mpn": "DG301R-5.0-2P12",
       "nets": {
         "1": "+24V_RAW",
-        "2": "GND"
+        "2": "PSU_RTN"
       },
       "footprint": "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02",
       "note": "DG301R-C02 T1 drawing; UL 15 A / IEC 17.5 A; confirm ordered suffix matches drawing",
@@ -61,7 +61,7 @@
       "sheet": "InputPower",
       "ref": "F103",
       "symbol": "F",
-      "value": "6.3 A fast",
+      "value": "6.3 A slow",
       "mpn": "3413.0224.11",
       "nets": {
         "1": "+24V_FUSED",
@@ -149,6 +149,79 @@
     },
     {
       "sheet": "InputPower",
+      "ref": "Q102",
+      "symbol": "NMOS",
+      "value": "IRF1010ESPBF",
+      "mpn": "IRF1010ESPBF",
+      "nets": {
+        "1": "REVP_GATE",
+        "2": "PSU_RTN",
+        "3": "GND"
+      },
+      "footprint": "Package_TO_SOT_SMD:TO-263-2",
+      "note": "Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced",
+      "position": [
+        265.43,
+        199.39
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R108",
+      "symbol": "R",
+      "value": "5k6 1%",
+      "mpn": "SMD1206 5K6 1%",
+      "nets": {
+        "1": "+24V_FUSED",
+        "2": "REVP_MID"
+      },
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
+      "note": "",
+      "position": [
+        173.99,
+        149.86
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R109",
+      "symbol": "R",
+      "value": "5k6 1%",
+      "mpn": "SMD1206 5K6 1%",
+      "nets": {
+        "1": "REVP_MID",
+        "2": "REVP_GATE"
+      },
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
+      "note": "",
+      "position": [
+        241.3,
+        149.86
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R110",
+      "symbol": "R",
+      "value": "10k 1%",
+      "mpn": "SMD1206-10K-1%",
+      "nets": {
+        "1": "REVP_GATE",
+        "2": "GND"
+      },
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
+      "note": "",
+      "position": [
+        308.61,
+        149.86
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
       "ref": "C101",
       "symbol": "CP",
       "value": "220u 50V",
@@ -160,7 +233,7 @@
       "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
       "note": "",
       "position": [
-        173.99,
+        374.65,
         149.86
       ],
       "in_bom": true
@@ -211,8 +284,8 @@
       "footprint": "EU_Mechanical:L_Jantek_JNRH1207",
       "note": "Jantek SP-N251224012 rev A lands checked; hot Isat remains prototype check",
       "position": [
-        241.3,
-        149.86
+        45.72,
+        170.18
       ],
       "in_bom": true
     },
@@ -229,8 +302,8 @@
       "footprint": "Diode_SMD:D_SMC",
       "note": "",
       "position": [
-        308.61,
-        149.86
+        106.68,
+        170.18
       ],
       "in_bom": true
     },
@@ -247,8 +320,8 @@
       "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
       "note": "",
       "position": [
-        374.65,
-        149.86
+        173.99,
+        170.18
       ],
       "in_bom": true
     },
@@ -265,7 +338,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        45.72,
+        241.3,
         170.18
       ],
       "in_bom": true
@@ -283,7 +356,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        106.68,
+        308.61,
         170.18
       ],
       "in_bom": true
@@ -301,7 +374,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        173.99,
+        374.65,
         170.18
       ],
       "in_bom": true
@@ -319,8 +392,8 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        241.3,
-        170.18
+        45.72,
+        190.5
       ],
       "in_bom": true
     },
@@ -337,8 +410,8 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        308.61,
-        170.18
+        106.68,
+        190.5
       ],
       "in_bom": true
     },
@@ -355,8 +428,8 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        374.65,
-        170.18
+        173.99,
+        190.5
       ],
       "in_bom": true
     },
@@ -373,7 +446,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        45.72,
+        241.3,
         190.5
       ],
       "in_bom": true
@@ -391,7 +464,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        106.68,
+        308.61,
         190.5
       ],
       "in_bom": true
@@ -409,7 +482,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        173.99,
+        374.65,
         190.5
       ],
       "in_bom": true
@@ -427,8 +500,8 @@
       "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
       "note": "",
       "position": [
-        241.3,
-        190.5
+        45.72,
+        209.55
       ],
       "in_bom": true
     },
@@ -445,8 +518,8 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        308.61,
-        190.5
+        106.68,
+        209.55
       ],
       "in_bom": true
     },
@@ -463,8 +536,8 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        374.65,
-        190.5
+        173.99,
+        209.55
       ],
       "in_bom": true
     },
@@ -481,7 +554,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        45.72,
+        241.3,
         209.55
       ],
       "in_bom": true
@@ -499,7 +572,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        106.68,
+        308.61,
         209.55
       ],
       "in_bom": true
@@ -517,7 +590,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        173.99,
+        374.65,
         209.55
       ],
       "in_bom": true
@@ -535,8 +608,8 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        241.3,
-        209.55
+        45.72,
+        229.87
       ],
       "in_bom": true
     },
@@ -553,8 +626,8 @@
       "footprint": "Capacitor_SMD:C_1206_3216Metric",
       "note": "",
       "position": [
-        308.61,
-        209.55
+        106.68,
+        229.87
       ],
       "in_bom": true
     },
@@ -571,8 +644,8 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        374.65,
-        209.55
+        173.99,
+        229.87
       ],
       "in_bom": true
     },
@@ -589,7 +662,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        45.72,
+        241.3,
         229.87
       ],
       "in_bom": true
@@ -819,8 +892,8 @@
       "sheet": "MCU",
       "ref": "C208",
       "symbol": "C",
-      "value": "100n RESET",
-      "mpn": "CL21B104KBCNNNC",
+      "value": "1u RESET",
+      "mpn": "CL21B105KBFNNNG",
       "nets": {
         "1": "ESP_EN",
         "2": "GND"
@@ -2915,13 +2988,13 @@
       "sheet": "Loads",
       "ref": "R702",
       "symbol": "R",
-      "value": "100k",
-      "mpn": "SMD0603-100K",
+      "value": "4k7 1%",
+      "mpn": "SMD1206 4K7 1%",
       "nets": {
         "1": "PTC_NPN_B",
         "2": "GND"
       },
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
         173.99,
@@ -3094,114 +3167,18 @@
     },
     {
       "sheet": "Control",
-      "ref": "U801",
-      "symbol": "TC4427A",
-      "value": "TC4427AEPA",
-      "mpn": "TC4427AEPA",
-      "nets": {
-        "1": null,
-        "2": "LED1_TC_IN",
-        "3": "GND",
-        "4": "LED2_TC_IN",
-        "5": "LED2_TC_OUT",
-        "6": "+12V",
-        "7": "LED1_TC_OUT",
-        "8": null
-      },
-      "footprint": "Package_DIP:DIP-8_W7.62mm",
-      "note": "",
-      "position": [
-        80.01,
-        54.61
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "C801",
-      "symbol": "C",
-      "value": "10u 25V",
-      "mpn": "CL31A106KAHNNNE",
-      "nets": {
-        "1": "+12V",
-        "2": "GND"
-      },
-      "footprint": "Capacitor_SMD:C_1206_3216Metric",
-      "note": "",
-      "position": [
-        45.72,
-        119.38
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "C802",
-      "symbol": "C",
-      "value": "100n",
-      "mpn": "CL21B104KBCNNNC",
-      "nets": {
-        "1": "+12V",
-        "2": "GND"
-      },
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "note": "",
-      "position": [
-        106.68,
-        119.38
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "R801",
-      "symbol": "R",
-      "value": "1k",
-      "mpn": "SMD0603-1K",
-      "nets": {
-        "1": "LED1_GATE_RAW",
-        "2": "LED1_TC_IN"
-      },
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "note": "",
-      "position": [
-        173.99,
-        119.38
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "R802",
-      "symbol": "R",
-      "value": "100k",
-      "mpn": "SMD0603-100K",
-      "nets": {
-        "1": "LED1_TC_IN",
-        "2": "GND"
-      },
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "note": "",
-      "position": [
-        241.3,
-        119.38
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
       "ref": "R803",
       "symbol": "R",
       "value": "4R7 1W",
       "mpn": "SMD2512-4R7",
       "nets": {
-        "1": "LED1_TC_OUT",
+        "1": "LED1_GATE_RAW",
         "2": "LED1_GATE"
       },
       "footprint": "Resistor_SMD:R_2512_6332Metric",
       "note": "",
       "position": [
-        308.61,
+        45.72,
         119.38
       ],
       "in_bom": true
@@ -3219,44 +3196,8 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        374.65,
-        119.38
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "R805",
-      "symbol": "R",
-      "value": "1k",
-      "mpn": "SMD0603-1K",
-      "nets": {
-        "1": "LED2_GATE_RAW",
-        "2": "LED2_TC_IN"
-      },
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "note": "",
-      "position": [
-        45.72,
-        139.7
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Control",
-      "ref": "R806",
-      "symbol": "R",
-      "value": "100k",
-      "mpn": "SMD0603-100K",
-      "nets": {
-        "1": "LED2_TC_IN",
-        "2": "GND"
-      },
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "note": "",
-      "position": [
         106.68,
-        139.7
+        119.38
       ],
       "in_bom": true
     },
@@ -3267,14 +3208,14 @@
       "value": "4R7 1W",
       "mpn": "SMD2512-4R7",
       "nets": {
-        "1": "LED2_TC_OUT",
+        "1": "LED2_GATE_RAW",
         "2": "LED2_GATE"
       },
       "footprint": "Resistor_SMD:R_2512_6332Metric",
       "note": "",
       "position": [
         173.99,
-        139.7
+        119.38
       ],
       "in_bom": true
     },
@@ -3292,7 +3233,7 @@
       "note": "",
       "position": [
         241.3,
-        139.7
+        119.38
       ],
       "in_bom": true
     },
@@ -3334,7 +3275,7 @@
       "note": "",
       "position": [
         308.61,
-        139.7
+        119.38
       ],
       "in_bom": true
     },
@@ -3352,7 +3293,7 @@
       "note": "",
       "position": [
         374.65,
-        139.7
+        119.38
       ],
       "in_bom": true
     },
@@ -3370,7 +3311,7 @@
       "note": "",
       "position": [
         45.72,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3388,7 +3329,7 @@
       "note": "",
       "position": [
         106.68,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3406,7 +3347,7 @@
       "note": "",
       "position": [
         173.99,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3424,7 +3365,7 @@
       "note": "",
       "position": [
         241.3,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3442,7 +3383,7 @@
       "note": "",
       "position": [
         308.61,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3460,7 +3401,7 @@
       "note": "",
       "position": [
         374.65,
-        160.02
+        139.7
       ],
       "in_bom": true
     },
@@ -3478,7 +3419,7 @@
       "note": "",
       "position": [
         45.72,
-        180.34
+        160.02
       ],
       "in_bom": true
     },
@@ -3496,7 +3437,7 @@
       "note": "",
       "position": [
         106.68,
-        180.34
+        160.02
       ],
       "in_bom": true
     },
@@ -3515,7 +3456,7 @@
       "note": "",
       "position": [
         173.99,
-        180.34
+        160.02
       ],
       "in_bom": true
     },
@@ -3735,7 +3676,7 @@
       "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
       "note": "",
       "position": [
-        106.68,
+        308.61,
         229.87
       ],
       "in_bom": false
@@ -3753,7 +3694,7 @@
       "note": "",
       "position": [
         241.3,
-        180.34
+        160.02
       ],
       "in_bom": false
     },
@@ -3770,7 +3711,7 @@
       "note": "",
       "position": [
         308.61,
-        180.34
+        160.02
       ],
       "in_bom": false
     },
@@ -3787,7 +3728,7 @@
       "note": "",
       "position": [
         374.65,
-        180.34
+        160.02
       ],
       "in_bom": false
     },
@@ -3804,7 +3745,7 @@
       "note": "",
       "position": [
         45.72,
-        199.39
+        180.34
       ],
       "in_bom": false
     },
@@ -3852,7 +3793,6 @@
   "source_urls": {
     "LM3429MH/NOPB": "https://www.ti.com/lit/ds/symlink/lm3429.pdf",
     "L7987": "https://www.st.com/resource/en/datasheet/l7987.pdf",
-    "TC4427AEPA": "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/TC4426A-TC4427A-TC4428A-1.5A-Dual-High-Speed-Power-MOSFET-Drivers-20001423.pdf",
     "AP63203WU-7": "https://www.diodes.com/datasheet/download/AP63200-AP63201-AP63203-AP63205.pdf",
     "LM2903D-ST": "https://www.st.com/resource/en/datasheet/lm2903.pdf",
     "USBLC6-2SC6": "https://www.st.com/resource/en/datasheet/usblc6-2.pdf",

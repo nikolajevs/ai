@@ -324,20 +324,19 @@
   {
     "shop": "Salvats",
     "mpn": "CL31A106KAHNNNE",
-    "needed": 3,
-    "buy": 3,
+    "needed": 2,
+    "buy": 2,
     "unit": "шт.",
     "price_unit": 0.22,
-    "line": 0.66,
+    "line": 0.44,
     "stock": 71,
     "url": "https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/10mkf-1206-x5r-25v-k-10-smd-kondensators-1206",
     "block": "Питание логики и драйверов",
-    "usage": "10 мкФ / 25 В: 2 на входе AP63203, 1 у общего TC4427A",
+    "usage": "10 мкФ / 25 В: 2 на входе AP63203",
     "previous_needed": 3,
     "refs": [
       "C201",
-      "C202",
-      "C801"
+      "C202"
     ],
     "accessory_count": 0
   },
@@ -367,7 +366,7 @@
   {
     "shop": "Salvats",
     "mpn": "CL21B104KBCNNNC",
-    "needed": 14,
+    "needed": 12,
     "buy": 20,
     "unit": "уп. 10 шт.",
     "price_unit": 0.51,
@@ -375,14 +374,13 @@
     "stock": 38,
     "url": "https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805",
     "block": "Байпас и фильтры",
-    "usage": "14 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 6",
+    "usage": "12 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 8",
     "previous_needed": 14,
     "refs": [
       "C107",
       "C108",
       "C203",
       "C207",
-      "C208",
       "C303",
       "C305",
       "C401",
@@ -390,7 +388,6 @@
       "C403",
       "C503",
       "C603",
-      "C802",
       "C803"
     ],
     "accessory_count": 0
@@ -398,17 +395,18 @@
   {
     "shop": "Salvats",
     "mpn": "IRF1010ESPBF",
-    "needed": 1,
-    "buy": 1,
+    "needed": 2,
+    "buy": 2,
     "unit": "шт.",
     "price_unit": 1.21,
-    "line": 1.21,
+    "line": 2.42,
     "stock": 5,
     "url": "https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/irf1010es-smd-tranzistors-n-fet-60v-20v-59a-200w-0r012-to-263",
     "block": "PTC",
-    "usage": "60 В, D2PAK; управление затвором от 12 В",
+    "usage": "60 В, D2PAK: Q703 ключ PTC (затвор от 12 В) и Q102 защита от переполюсовки в минусе входа",
     "previous_needed": 1,
     "refs": [
+      "Q102",
       "Q703"
     ],
     "accessory_count": 0
@@ -871,17 +869,18 @@
   {
     "shop": "Salvats",
     "mpn": "SMD1206-10K-1%",
-    "needed": 5,
-    "buy": 5,
+    "needed": 6,
+    "buy": 6,
     "unit": "шт.",
     "price_unit": 0.03,
-    "line": 0.15,
+    "line": 0.18,
     "stock": 596,
     "url": "https://www.salvats.lv/lv/rezistori-smd-1206-025w/10k-1206-1-smd-rezistors-1206",
     "block": "Резисторы",
-    "usage": "1%: верх OVP ×2, верх FB L7987 ×1, опорный делитель UVLO ×2",
+    "usage": "1%: верх OVP ×2, верх FB L7987 ×1, опорный делитель UVLO ×2, gate–source Q102 ×1",
     "previous_needed": 5,
     "refs": [
+      "R110",
       "R102",
       "R510",
       "R610",
@@ -913,19 +912,20 @@
   {
     "shop": "Salvats",
     "mpn": "SMD1206 4K7 1%",
-    "needed": 2,
-    "buy": 2,
+    "needed": 3,
+    "buy": 3,
     "unit": "шт.",
     "price_unit": 0.04,
-    "line": 0.08,
+    "line": 0.12,
     "stock": 347,
     "url": "https://www.salvats.lv/lv/rezistori-smd-1206-025w/4k7-1206-1-smd-rezistors-1206",
     "block": "Резисторы",
-    "usage": "Подтяжки I²C к 3,3 В",
+    "usage": "1%: I2C pull-ups ×2, R702 база Q701 (держит PTC выключенным при внутренней подтяжке ESP32)",
     "previous_needed": 2,
     "refs": [
       "R308",
-      "R309"
+      "R309",
+      "R702"
     ],
     "accessory_count": 0
   },
@@ -1008,17 +1008,19 @@
   {
     "shop": "Salvats",
     "mpn": "SMD1206 5K6 1%",
-    "needed": 4,
-    "buy": 4,
+    "needed": 6,
+    "buy": 6,
     "unit": "шт.",
     "price_unit": 0.03,
-    "line": 0.12,
+    "line": 0.18,
     "stock": 1500,
     "url": "https://www.salvats.lv/lv/rezistori-smd-1206-025w/5k6-1206-1-smd-rezistors-1206",
     "block": "Резисторы",
-    "usage": "1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → общий nDIM",
+    "usage": "1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2",
     "previous_needed": 4,
     "refs": [
+      "R108",
+      "R109",
       "R605",
       "R810",
       "R811",
@@ -1139,24 +1141,6 @@
   },
   {
     "shop": "Salvats",
-    "mpn": "TC4427AEPA",
-    "needed": 1,
-    "buy": 1,
-    "unit": "шт.",
-    "price_unit": 2.53,
-    "line": 2.53,
-    "stock": 8,
-    "url": "https://www.salvats.lv/lv/t/tc4427aepa-mikroshema-mosfet-driver-15a-18v-470mw-dip8",
-    "block": "LED",
-    "usage": "Два неинвертирующих драйвера 1,5 А; PDIP-8, от 12 В; E: −40…+85 °C",
-    "previous_needed": 1,
-    "refs": [
-      "U801"
-    ],
-    "accessory_count": 0
-  },
-  {
-    "shop": "Salvats",
     "mpn": "SMD2512-4R7",
     "needed": 2,
     "buy": 2,
@@ -1195,7 +1179,7 @@
   {
     "shop": "Salvats",
     "mpn": "CL21B105KBFNNNG",
-    "needed": 8,
+    "needed": 9,
     "buy": 10,
     "unit": "уп. 10 шт.",
     "price_unit": 0.54,
@@ -1203,7 +1187,7 @@
     "stock": 12,
     "url": "https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/1mkf-50v-0805-10gab-mlcc-x7r-10-smd-kondensators-0805",
     "block": "12 В",
-    "usage": "1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS; купить пачку 10",
+    "usage": "1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10",
     "previous_needed": 8,
     "refs": [
       "C103",
@@ -1213,7 +1197,8 @@
       "C109",
       "C110",
       "C111",
-      "C113"
+      "C113",
+      "C208"
     ],
     "accessory_count": 0
   },
@@ -1349,7 +1334,7 @@
   {
     "shop": "Salvats",
     "mpn": "SMD0603-1K",
-    "needed": 8,
+    "needed": 6,
     "buy": 10,
     "unit": "уп. 10 шт.",
     "price_unit": 0.11,
@@ -1357,7 +1342,7 @@
     "stock": 50,
     "url": "https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1",
     "block": "Цифровые цепи",
-    "usage": "1k: TC inputs x2, tach x2, float x1, pump/fan gates x3; 8 of 10 purchased",
+    "usage": "1k: tach x2, float x1, pump/fan gates x3; 6 of 10 purchased",
     "previous_needed": 8,
     "refs": [
       "R403",
@@ -1365,9 +1350,7 @@
       "R413",
       "R421",
       "R423",
-      "R707",
-      "R801",
-      "R805"
+      "R707"
     ],
     "accessory_count": 0
   },
@@ -1405,7 +1388,7 @@
   {
     "shop": "Salvats",
     "mpn": "SMD0603-100K",
-    "needed": 8,
+    "needed": 5,
     "buy": 10,
     "unit": "уп. 10 шт.",
     "price_unit": 0.11,
@@ -1413,16 +1396,13 @@
     "stock": 207,
     "url": "https://www.salvats.lv/lv/rezistori-smd-0603-01w/100k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603",
     "block": "Цифровые цепи",
-    "usage": "0603 / 5%: входы TC4427 ×2, gate IRF540Z ×2, база NPN PTC ×1, gate помпы ×1, gate fan PWM ×2",
+    "usage": "0603 / 5%: gate IRF540Z ×2, gate помпы ×1, gate fan PWM ×2",
     "previous_needed": 8,
     "refs": [
       "R412",
       "R422",
-      "R702",
       "R708",
-      "R802",
       "R804",
-      "R806",
       "R808"
     ],
     "accessory_count": 0
