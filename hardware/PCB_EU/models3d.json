@@ -1,0 +1,646 @@
+{
+  "date": "2026-10-21",
+  "stage": "project-local placement models; assembly NOT qualified",
+  "coordinate_frame": "mm, X=footprint X, Y=-footprint Y, Z=0 PCB component face; KiCad flips bottom side",
+  "footprints": {
+    "Capacitor_SMD:C_0805_2012Metric": "C_0805_2012Metric.step",
+    "Capacitor_SMD:C_1206_3216Metric": "C_1206_3216Metric.step",
+    "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
+    "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
+    "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical": "PinHeader_1x06_P2.54mm_Vertical.step",
+    "Diode_SMD:D_SMB": "D_SMB.step",
+    "Diode_SMD:D_SMC": "D_SMC.step",
+    "EU_Mechanical:Battery_COMF_BC-2001": "Battery_COMF_BC-2001_with_CR2032.step",
+    "EU_Mechanical:Crystal_Abracon_ABS07": "Crystal_Abracon_ABS07.step",
+    "EU_Mechanical:Fuse_Schurter_UMT250": "Fuse_Schurter_UMT250.step",
+    "EU_Mechanical:Fuse_Schurter_UST_USI1206_Reflow": "Fuse_Schurter_UST_USI1206.step",
+    "EU_Mechanical:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm": "ST_HTSSOP16_L7987.step",
+    "EU_Mechanical:L_Bourns_SRN6045": "L_Bourns_SRN6045.step",
+    "EU_Mechanical:L_Jantek_JNRH1207": "L_Jantek_JNRH1207.step",
+    "EU_Mechanical:SW_Ninigi_TACTB-64K-F": "SW_Ninigi_TACTB-64K-F.step",
+    "EU_Mechanical:TI_PWP0014A_LM3429": "TI_PWP0014A_LM3429.step",
+    "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02": "TerminalBlock_Degson_DG301R-5.0_1x02.step",
+    "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02": "TerminalBlock_Degson_DG306-5.0_1x02.step",
+    "EU_Mechanical:microSD_GCT_MEM2061-01-188-00-A": "microSD_GCT_MEM2061-01-188-00-A.step",
+    "EU_Parts:ESP32-WROOM-32E_NoVias": "ESP32-WROOM-32E.step",
+    "EU_Parts:Vishay_TO-277A_D_K1_A2": "TO-277A.step",
+    "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm": "SOIC-8_3.9x4.9mm_P1.27mm.step",
+    "Package_TO_SOT_SMD:SOT-23": "SOT-23.step",
+    "Package_TO_SOT_SMD:SOT-23-6": "SOT-23-6.step",
+    "Package_TO_SOT_SMD:TO-263-2": "TO-263-2.step",
+    "Package_TO_SOT_SMD:TSOT-23-6": "TSOT-23-6.step",
+    "Package_TO_SOT_THT:TO-220-3_Vertical": "TO-220-3_Vertical.step",
+    "Resistor_SMD:R_0603_1608Metric": "R_0603_1608Metric.step",
+    "Resistor_SMD:R_1206_3216Metric": "R_1206_3216Metric.step",
+    "Resistor_SMD:R_2512_6332Metric": "R_2512_6332Metric.step"
+  },
+  "reference_overrides": {
+    "C112": "Panasonic_EEUFR1E102_D10_L20_P5.step"
+  },
+  "models": {
+    "Battery_COMF_BC-2001_with_CR2032.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Battery_COMF_BC-2001_with_CR2032.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -15.25,
+          15.25,
+          -10.0,
+          10.0,
+          0.0,
+          3.85
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "93ed589b3312f2c1cd4a274ce6f202f45dcec058780cf23d55c78895eed500a1",
+      "source_ids": [
+        "bc2001"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "C_0805_2012Metric.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Capacitor_SMD.3dshapes/C_0805_2012Metric.step",
+      "sha256": "9a669c1a2f1ea25b88b401acef6efeaa80a067bd7da9db6993de719a7fbe155c",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "C_1206_3216Metric.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Capacitor_SMD.3dshapes/C_1206_3216Metric.step",
+      "sha256": "11e948c72c90e2b6322436b72745f40ff4e8ba0da64fb2a0df943dfa61e89c1a",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "Crystal_Abracon_ABS07.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Crystal_Abracon_ABS07.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -1.6,
+          1.6,
+          -0.75,
+          0.75,
+          0.0,
+          0.9
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "6f7607accf336ea8e9ce6e288f3c11eae49c27065b94a8b31cf084c45b7475d3",
+      "source_ids": [
+        "abs07"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "D_SMB.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Diode_SMD.3dshapes/D_SMB.step",
+      "sha256": "029466277d91e9f5492556be93e46611049e07115c7913880c547afa96058ed4",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "D_SMC.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Diode_SMD.3dshapes/D_SMC.step",
+      "sha256": "30dab4c2e22239b7e3694a4d45304e04255c6b70a79d28e9c34c6072ba647991",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "ESP32-WROOM-32E.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/b15a62e3502cb2ba48338e354bd1fb6e35c43ef1/RF_Module.3dshapes/ESP32-WROOM-32E.step",
+      "sha256": "57f41a512434023f19bef010df050e42a80a478b62cf87b8b96868b490791bee",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "Fuse_Schurter_UMT250.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Fuse_Schurter_UMT250.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -5.05,
+          5.05,
+          -1.5,
+          1.5,
+          0.0,
+          3.0
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "d0c99042d8c578fb3cc0eed44e95057f25545a6871ddaecb291aa0f9d15fc6a7",
+      "source_ids": [
+        "umt250"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "Fuse_Schurter_UST_USI1206.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Fuse_Schurter_UST_USI1206.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -1.6,
+          1.6,
+          -0.8,
+          0.8,
+          0.0,
+          0.6
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "3a1ba04aab1b68adad3c31ffc4731e5b5faffac31504a07d5f9dd0c64cd04f89",
+      "source_ids": [
+        "ust1206",
+        "usi1206"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "L_Bourns_SRN6045.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "L_Bourns_SRN6045.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -3.1,
+          3.1,
+          -3.1,
+          3.1,
+          0.0,
+          4.5
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "ea9eb4b09f5029b99fde1bc08824ea25d8082378a5a8b8ec112abf69e7617fb3",
+      "source_ids": [
+        "srn6045"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "L_Jantek_JNRH1207.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "L_Jantek_JNRH1207.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -6.25,
+          6.25,
+          -6.25,
+          6.25,
+          0.0,
+          8.05
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "203c31d29b8ed8438fcb6d9de9011daa611d3ef5223ce20fea08bc44d48f6a8f",
+      "source_ids": [
+        "jnrh33",
+        "jnrh10",
+        "jnrh22"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "Nichicon_UPW1H221MPD_D10_L16_P5.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -2.5,
+          7.5,
+          -5.0,
+          5.0,
+          -3.0,
+          16.15
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "36f71d84c287c07407186d5467a784fa7bfd64334dbc589f25ccdf62f1e7ec25",
+      "source_ids": [
+        "nichicon_upw"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "Panasonic_EEUFR1E102_D10_L20_P5.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Panasonic_EEUFR1E102_D10_L20_P5.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -2.5,
+          7.5,
+          -5.0,
+          5.0,
+          -3.0,
+          20.15
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "31137472befbab616b7f9d89c48067bc9c84ff44db8633e811ddf257e7103622",
+      "source_ids": [
+        "panasonic_fr"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "Panasonic_EEUFR1J101LB_D8_L15_P5.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -1.5,
+          6.5,
+          -4.0,
+          4.0,
+          -3.0,
+          15.15
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": "EEUFR1J101LB taped B leads are 5 mm; PCB holes are 3.5 mm. Physical fit is NOT verified."
+      },
+      "sha256": "9cb15b5b34bf4397c6a1b853a43decec58b97f6f1bd1f76c9bca94fa479ccfe3",
+      "source_ids": [
+        "panasonic_fr"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "PinHeader_1x06_P2.54mm_Vertical.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x06_P2.54mm_Vertical.step",
+      "sha256": "d6113af109a14a67c50dcefd1cfc7b43b59b59afa85d808b2319e2452da91318",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -15.0,
+          15.0,
+          -15.0,
+          15.0,
+          0.0,
+          15.0
+        ],
+        "contact_sections": 0,
+        "known_fit_issue": null
+      },
+      "sha256": "95b3e2f224d1bc228a79cd1246ca8075dce7d53991e686166da925c47b09a68d",
+      "source_ids": [
+        "rad_dy_gf_3"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "R_0603_1608Metric.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "sha256": "1875571c326d0d9e96f36b4efeb8094068ef7619f0a449c781caf0b49c2e5861",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "R_1206_3216Metric.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Resistor_SMD.3dshapes/R_1206_3216Metric.step",
+      "sha256": "f5d1ea5c47935091292bd1c6c698e0df88d3d4bbf92bf66b4c97e49df5be9ebc",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "R_2512_6332Metric.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Resistor_SMD.3dshapes/R_2512_6332Metric.step",
+      "sha256": "76b2052a3c120193de7cdc0af99157b6f375e9a4af7721e3e3d012968c877f27",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "SOIC-8_3.9x4.9mm_P1.27mm.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+      "sha256": "d9b46f6dd6cf8c5e2028838eed38e2a6a7f26235856078511e5a71a594ca809e",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "SOT-23-6.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_SMD.3dshapes/SOT-23-6.step",
+      "sha256": "9491de18305b16fe125ee3d603109a29edd837d50d22305b6f929886492ce755",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "SOT-23.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+      "sha256": "9fe9af3cc6cf3d3bc3bd3da71731af2037c67f690245102a20e1e39a33e9ade4",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "ST_HTSSOP16_L7987.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "ST_HTSSOP16_L7987.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -3.3,
+          3.3,
+          -2.5,
+          2.5,
+          0.0,
+          1.2
+        ],
+        "contact_sections": 17,
+        "known_fit_issue": null
+      },
+      "sha256": "5bc79d92b053d22195f7364f2a9706f9e05c9ae61899f3cde9a1fd0f34d8b15f",
+      "source_ids": [
+        "l7987"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "SW_Ninigi_TACTB-64K-F.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "SW_Ninigi_TACTB-64K-F.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -3.2,
+          3.2,
+          -2.6,
+          2.6,
+          0.0,
+          1.5
+        ],
+        "contact_sections": 4,
+        "known_fit_issue": null
+      },
+      "sha256": "43f1b425c4501fc04486e23244667696af348603f23438bf0e5aea8d82be50ec",
+      "source_ids": [
+        "tact"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "TI_PWP0014A_LM3429.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "TI_PWP0014A_LM3429.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -3.3,
+          3.3,
+          -2.5,
+          2.5,
+          0.0,
+          1.2
+        ],
+        "contact_sections": 15,
+        "known_fit_issue": null
+      },
+      "sha256": "6c39e54087a36bf012322a0ee50f1fe1358ebbaf52c55619fae329b2c7eb6271",
+      "source_ids": [
+        "lm3429"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "TO-220-3_Vertical.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.step",
+      "sha256": "7cb065d935df5771f0ba6e48ddd180863a121af76483dad7f18e667a7b68204a",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "TO-263-2.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_SMD.3dshapes/TO-263-2.step",
+      "sha256": "38b99b642c57bd27a214706192f9383c4ae998782666158ebe749982bf727d60",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "TO-277A.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_SMD.3dshapes/TO-277A.step",
+      "sha256": "69a9aa5a47db4a2792452bac34f2cad6cb0c5d3a4713f4b3c03b779f23d194ed",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "TSOT-23-6.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_TO_SOT_SMD.3dshapes/TSOT-23-6.step",
+      "sha256": "2d3e717db8a1e3f896db8524674f4f96ade77e4b2c5f3bde252f8124c6cb543a",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
+    "TerminalBlock_Degson_DG301R-5.0_1x02.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "TerminalBlock_Degson_DG301R-5.0_1x02.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -2.5,
+          8.1,
+          -7.35,
+          2.65,
+          -4.6,
+          7.6
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "ddd7fac3777859a52dafdd7171fd583e7a3d5cb323cc7889b2e198b86cc751f9",
+      "source_ids": [
+        "dg301r"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "TerminalBlock_Degson_DG306-5.0_1x02.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "TerminalBlock_Degson_DG306-5.0_1x02.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          -3.1,
+          7.5,
+          -3.1,
+          4.5,
+          -3.9,
+          10.0
+        ],
+        "contact_sections": 2,
+        "known_fit_issue": null
+      },
+      "sha256": "dcec70d241037efd2fe0835a48c8cc1a7b714739ec3bc0aa0bb700809671e678",
+      "source_ids": [
+        "dg306"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "microSD_GCT_MEM2061-01-188-00-A.step": {
+      "origin": "project-generated",
+      "license": "MIT",
+      "geometry_check": {
+        "model": "microSD_GCT_MEM2061-01-188-00-A.step",
+        "valid_AP214_mm": true,
+        "bounds_mm": [
+          0.0,
+          14.05,
+          -15.45,
+          0.05,
+          0.0,
+          1.88
+        ],
+        "contact_sections": 12,
+        "known_fit_issue": null
+      },
+      "sha256": "49cd155741e29910282b855415dc151f9f40c41b26abf110a18b91e289cfe771",
+      "source_ids": [
+        "mem2061"
+      ],
+      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    }
+  },
+  "sources": {
+    "ust1206": {
+      "url": "https://www.mouser.com/datasheet/3/386/1/typ_UST_1206.pdf",
+      "sha256": "58d409aaeb0d317731fb3b4a15446f302d7cd1f6f4c0fc280b6d4286692440d4"
+    },
+    "usi1206": {
+      "url": "https://lv.mouser.com/datasheet/3/386/1/typ_USI_1206.pdf",
+      "sha256": "b0d1c3276e963ee531fd73878d0175ac93bf935cce0e42105cd4507a84040b91"
+    },
+    "l7987": {
+      "url": "https://www.st.com/resource/en/datasheet/l7987.pdf",
+      "sha256": "481abe81339105aa04fefe4cc025ab733d6966f01b70cc9bcd13389c9b24f7a3"
+    },
+    "lm3429": {
+      "url": "https://www.ti.com/lit/ds/symlink/lm3429.pdf",
+      "sha256": "3e1d13598a9c0c70bd37bfb0e97f49da2bdc95184dd29a3136c20af2ff346841"
+    },
+    "jnrh33": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/581873-1",
+      "sha256": "9fbcc61dbd4cfe7a04bae38b438eb3bbb51308c423ae4324f29e8287de9751a9"
+    },
+    "jnrh10": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/581872-1",
+      "sha256": "e136f4029f577e519e3246e5d512fbb4a4706ad5bab66bb294c19be450d7412d"
+    },
+    "jnrh22": {
+      "url": "https://www.jantek-elec.com.tw/en/product/file/583290-1",
+      "sha256": "8e5c91def50faf5eee38272bc6eedbbb5648261e9a769484cb2f356504d9ebd5"
+    },
+    "srn6045": {
+      "url": "https://www.bourns.com/docs/Product-Datasheets/SRN6045.pdf",
+      "sha256": "fb909e67fcca90f5181aadcc36f8b072ee436b2182752b9afd8ea77d68bfeb1b"
+    },
+    "abs07": {
+      "url": "https://abracon.com/Resonators/ABS07.pdf?download=1",
+      "sha256": "5b21d42d9ca704d86cfb8f1b93488f3f3671c55ca90f334aa66f931866277dd1"
+    },
+    "bc2001": {
+      "url": "https://www.comf-hk.com/storage/BC-2001-Data-Sheet.pdf",
+      "sha256": "bee1cdf0844956a4dcbda3d58434e88acf37eddfe287520fe5491d91eb7a6985"
+    },
+    "dg301r": {
+      "url": "https://ja.degson.com/index.php?a=downloadFile&id=2149222&name=%27ZmlsZTQ%3D%27",
+      "sha256": "0070c4bd35e5a8b0f38216f6286350ec1b2f6aa2e1cd4fd3cae912bd11ecce35"
+    },
+    "dg306": {
+      "url": "https://it.degson.com/index.php?a=downloadFile&id=3748674&name=%27ZmlsZTQ%3D%27",
+      "sha256": "84591f55b112144772cb7d9d487b2ada3e9765ec3a3834d3f1bfbea1b4fdd985"
+    },
+    "tact": {
+      "url": "https://ce8dc832c.cloudimg.io/v7/_cdn-params-tep_/image_15200.gif?ci_sign=7ac53a2367ed510d806f817570812fd4a2d21b60",
+      "manufacturer_page": "https://ninigi.com/gb/en/product/ninigi/microswitches-tact/tactb-64k-f/113048",
+      "sha256": "00c51519d3376139d83e2b5eb4c819b0c91ca9843aa71593b08481ca254ac106"
+    },
+    "mem2061": {
+      "url": "https://gct.co/Files/Drawings/MEM2061.pdf",
+      "sha256": "ec8d23bfe692ef79804e1f87cc30b22ef7289e6ce6a391304e88f182b0536965"
+    },
+    "umt250": {
+      "url": "https://www.schurter.com/en/datasheet/typ_umt_250.pdf",
+      "upstream_git_blob": "cbb208235980bc128463c367f6f680e68beb9030",
+      "geometry_review": "Primary PDF dimensions and solder-pad labels; imported footprint source unchanged.",
+      "drawing": "Manufacturer PDF p3; inspected using PDF retrieval. 10.1 x 3 mm surface-mount package, end caps 1.6 mm; no upstream CAD geometry reused."
+    },
+    "panasonic_fr": {
+      "url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1259.pdf",
+      "sha256": "47cf18461482e03270f72e475f855080e11e2154e3f343f735e5cb0e61e27df7",
+      "drawing": "FR-A 01-Sep-25: dimensions p1; 63 V table and taped-B pitch note",
+      "exact_mpn_pages": [
+        "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1E102",
+        "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1J101LB"
+      ]
+    },
+    "nichicon_upw": {
+      "url": "https://www.nichicon.com/en-us/part/upw1h221mpd/8477/",
+      "sha256": "85fb7a46b1896a96a78d9795cd68f0b7cd7fe70da8291f2dc75aedce8968d606",
+      "drawing": "Exact MPN page: diameter 10, length 16, pitch 5 mm"
+    },
+    "rad_dy_gf_3": {
+      "url": "https://www.tme.eu/en/details/rad-dy-gf_3/heatsinks/stonecold/",
+      "drawing": "Only 30 x 30 x 15 mm supplier envelope; guide coordinates and installed orientation unknown"
+    }
+  },
+  "known_fit_issues": [
+    {
+      "references": [
+        "C508",
+        "C509",
+        "C510",
+        "C608",
+        "C609"
+      ],
+      "mpn": "EEUFR1J101LB",
+      "model_pitch_mm": 5,
+      "pcb_pitch_mm": 3.5,
+      "status": "OPEN - requires footprint/assembly review before fabrication",
+      "reason": "Panasonic exact-MPN table and FR-A taped B note specify 5 mm lead pitch. Model represents ordered B variant; it must not be squeezed/scaled to conceal the PCB mismatch.",
+      "source_ids": [
+        "panasonic_fr"
+      ]
+    }
+  ],
+  "unattached_envelope_models": [
+    "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step"
+  ]
+}

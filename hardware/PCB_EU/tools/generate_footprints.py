@@ -51,9 +51,12 @@ class Footprint:
         self.items.append(f'(zone (layers {layers}) (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed)) (polygon (pts (xy {n(x1)} {n(y1)}) (xy {n(x2)} {n(y1)}) (xy {n(x2)} {n(y2)}) (xy {n(x1)} {n(y2)}))))')
 
     def save(self):
+        from models3d import config, replace_model, PREFIX
         x,y = self.reference_at
         content = '\n'.join(self.items)+')\n'
         content = content.replace('(at 0 -5 0)', f'(at {n(x)} {n(y)} 0)', 1)
+        mapping = config()['footprints']
+        content = replace_model(content, PREFIX + mapping['EU_Mechanical:' + self.name])
         (LIB/(self.name+'.kicad_mod')).write_text(content)
 
 
@@ -148,7 +151,7 @@ def main():
     fp.line(-.2,-.15,-.2,12);fp.line(14.25,-.15,14.25,13.1)
     fp.text('1',9.5,9,'F.SilkS')
     fp.save()
-    print('Generated 10 project-specific footprints; UMT250 and HTSSOP16 remain unmodified upstream files.')
+    print('Generated 10 project-specific footprints with local 3D models; UMT250/HTSSOP16 retain upstream geometry.')
 
 
 if __name__=='__main__':main()

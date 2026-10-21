@@ -25,4 +25,9 @@
 (fp_line (start -2.2 -2.7) (end 2.2 -2.7) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 (fp_line (start -2.2 2.7) (end 2.2 2.7) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 (fp_circle (center -3.7 -2.6) (end -3.55 -2.6) (stroke (width 0.12) (type solid)) (fill none) (layer "F.SilkS"))
-(fp_text user "15 GND" (at 0 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12)))))
+(fp_text user "15 GND" (at 0 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))	(model "${KIPRJMOD}/libraries/EU.3dshapes/TI_PWP0014A_LM3429.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
+)

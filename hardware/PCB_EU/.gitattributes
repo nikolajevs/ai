@@ -1,0 +1,4 @@
+# STEP is reviewed through generated views/import checks. Preserve exact CAD
+# bytes, including upstream line endings and embedded licence comments.
+libraries/EU.3dshapes/*.step binary
+review/PCB_EU_assembly.step binary
