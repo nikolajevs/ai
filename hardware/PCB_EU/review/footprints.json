@@ -43,7 +43,7 @@
   "minimum_distinct_pad_bounding_box_gap_mm": 0.2,
   "checks_passed": 2168,
   "source_sha256": {
-    "libraries/EU_Mechanical.pretty/TerminalBlock_Degson_DG301R-5.0_1x02.kicad_mod": "3206f2fc971ccbd158524e243b31bbadb668f24c9d25cfca24e095f691bc0bd3",
+    "libraries/EU_Mechanical.pretty/TerminalBlock_Degson_DG301R-5.0_1x02.kicad_mod": "5139d8afa43d0a0f633b69f60e90411bf5c86a3547ba5ac2aea56dfe01908091",
     "libraries/EU_Mechanical.pretty/Fuse_Schurter_UST_USI1206_Reflow.kicad_mod": "927c765e2fa36ecfd34debb48008ec1c97bbfd947f7805bc1e8a8074a07c7578",
     "libraries/EU_Mechanical.pretty/Fuse_Schurter_UMT250.kicad_mod": "612cac03d184888a34b3584deaefde1a22b276d1fbebffe1e2b1a828e0311a94",
     "libraries/Diode_SMD.pretty/D_SMB.kicad_mod": "01274857b58e3d532f8898cda40fefd5f39fa93c2dd03a54db2230d411f9f402",
@@ -64,7 +64,7 @@
     "libraries/EU_Mechanical.pretty/Crystal_Abracon_ABS07.kicad_mod": "39e2aa3a1543f223e90961a81fc17c23831012c1262fa4aff2e3d68f7481debf",
     "libraries/EU_Mechanical.pretty/Battery_COMF_BC-2001.kicad_mod": "8e1f94dba963a4ce01b4a0aa58d5fc3728c1066a8e55fa7a34560ce2b44f3c23",
     "libraries/EU_Mechanical.pretty/microSD_GCT_MEM2061-01-188-00-A.kicad_mod": "2a47425a21714231664631f88288a92d346479dafdd4fbd021948a7acf029497",
-    "libraries/EU_Mechanical.pretty/TerminalBlock_Degson_DG306-5.0_1x02.kicad_mod": "a7260e2172e143619e4967f3e5b29730f89072608b5d4714d0aae662235027b6",
+    "libraries/EU_Mechanical.pretty/TerminalBlock_Degson_DG306-5.0_1x02.kicad_mod": "b3ca5888c1289cb3b3d7890fa11fc738aa655e02347552cbded760aa874df09e",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23-6.kicad_mod": "fa43b3b798136815af9733d3fe45e1547111765e49c0274d86c8ea7942f8e63b",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod": "db5b998f0d36708205a4b8edc0db1501deb0246a81b52e9cb036cfd58b7570d3",
     "libraries/EU_Mechanical.pretty/TI_PWP0014A_LM3429.kicad_mod": "15f47e83eb545b200bd52f4555098acbc885365bf7dbe3afd7bb1d7363338cd1",

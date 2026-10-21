@@ -121,7 +121,10 @@ def main():
         fp.rect(body_x1,y1,body_x2,y2)
         fp.rect(body_x1-.5,y1-.5,body_x2+.5,y2+.5,'F.CrtYd',.05)
         fp.rect(body_x1-.12,y1-.12,body_x2+.12,y2+.12,'F.SilkS',.12)
-        fp.text('1',0,y2+1,'F.SilkS');fp.text('2',5,y2+1,'F.SilkS')
+        # Keep pin numbers within the terminal body envelope so an edge-mounted
+        # terminal does not print text beyond the board or across its neighbour.
+        label_y = 4.5 if family == 'DG301R' else 2.0
+        fp.text('1',0,label_y,'F.SilkS');fp.text('2',5,label_y,'F.SilkS')
         fp.save()
 
     fp=Footprint('microSD_GCT_MEM2061-01-188-00-A','GCT MEM2061 A1 02/12/25; component-side PCB layout; without pegs; CD1/CD2 both unused; SH two ground tabs; card access envelope on Dwgs.User',1.88)

@@ -54,7 +54,7 @@ def main():
                 'pcbnew_build':pcb.GetBuildVersion(),'unique_footprints':len(ids),'violations':0,
                 'unconnected_items':len(raw.get('unconnected_items',[])),
                 'unconnected_reason':'Duplicate-number lands are intentionally not routed on the sample board. No product nets are present.',
-                'product_pcb_drc':'not performed: no product PCB exists',
+                'product_pcb_drc':'not part of this isolated-sample check; see review/pcb_drc.json for the placement candidate',
                 'source_sha256':sources}
         (HERE/'review/footprint_drc.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
         print(f'PASS | isolated footprint DRC | {len(ids)} footprints, 0 violations; {result["unconnected_items"]} unrouted duplicate-pad connections')

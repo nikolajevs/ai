@@ -432,7 +432,8 @@ def libsymbol(name, qualified=False):
 
 
 def header(name,title):
-    return f'(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid {q(uid(name))}) (paper "A3") (title_block (title {q(title)}) (date {q(DATE)}) (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 "SCHEMATIC DRAFT | no PCB / manufacturing release"))'
+    stage = 'SCHEMATIC DRAFT | UNROUTED PCB | no manufacturing release' if (HERE/'placement.json').exists() else 'SCHEMATIC DRAFT | no PCB / manufacturing release'
+    return f'(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid {q(uid(name))}) (paper "A3") (title_block (title {q(title)}) (date {q(DATE)}) (rev "EU-0.1") (company "GrowBox | EU prototype") (comment 1 {q(stage)}))'
 
 
 def textblk(name,key,t,x,y,size=1.1):
@@ -507,14 +508,18 @@ def main():
     for sh,meta in sheets.items(): (HERE/f'{sh}.kicad_sch').write_text(schematic(sh,meta))
     root=[header(ROOT,'GrowBox | EU redesign | schematic review'),'(lib_symbols)']
     root.append(textblk(ROOT,'title','GrowBox controller\nEuropean sourcing / 24 V PSU / one prototype',20,17,2.5))
-    root.append(textblk(ROOT,'scope','SCHEMATIC DRAFT EU-0.1 | 20 October 2026\nFull connection/BOM draft. No PCB placement, routing or manufacturing release.\nSeparate project; original PCB_V1 rev 0.22 remains the functional reference.',20,40,1.6))
+    placement_stage = (HERE/'placement.json').exists()
+    scope = ('Connection/BOM draft; unrouted PCB placement candidate. No manufacturing release.' if placement_stage else 'Full connection/BOM draft. No PCB placement, routing or manufacturing release.')
+    root.append(textblk(ROOT,'scope','SCHEMATIC DRAFT EU-0.1 | 20 October 2026\n'+scope+'\nSeparate project; original PCB_V1 rev 0.22 remains the functional reference.',20,40,1.6))
     for k,(sh,meta) in enumerate(sheets.items()):
         x=25+185*(k%2);y=75+42*(k//2);sid=uid('sheet',sh)
         root.append(f'(sheet (at {x} {y}) (size 155 28) (stroke (width 0.254) (type default)) (fill (color 0 0 0 0)) (uuid {q(sid)}) {prop("Sheetname",meta["title"],x+77.5,y-2,False,1.4)} {prop("Sheetfile",sh+".kicad_sch",x+77.5,y+30,False,1)} (instances (project {q(ROOT)} (path {q("/"+uid(ROOT))} (page {q(k+2)})))))')
     root.append('(sheet_instances (path "/" (page "1"))) (embedded_fonts no))')
     (HERE/f'{ROOT}.kicad_sch').write_text('\n'.join(root)+'\n')
-    # A compact project; KiCad supplies defaults. No broad ERC exclusions.
-    project=dict(meta=dict(filename=f'{ROOT}.kicad_pro',version=3),erc=dict(erc_exclusions=[],meta=dict(version=0)),schematic=dict(meta=dict(version=1)),text_variables={'DESIGN_STAGE':'SCHEMATIC_DRAFT'})
+    # Preserve PCB rules/stackup added by the board editor. No broad ERC exclusions.
+    project_path = HERE/f'{ROOT}.kicad_pro'
+    project = json.loads(project_path.read_text()) if project_path.exists() else dict(meta=dict(filename=f'{ROOT}.kicad_pro',version=3),erc=dict(erc_exclusions=[],meta=dict(version=0)),schematic=dict(meta=dict(version=1)))
+    project.setdefault('text_variables',{})['DESIGN_STAGE'] = 'UNROUTED_PLACEMENT' if placement_stage else 'SCHEMATIC_DRAFT'
     (HERE/f'{ROOT}.kicad_pro').write_text(json.dumps(project,indent=2)+'\n')
     spec=dict(revision=REV,date=DATE,source_commit='1d6b1eaf1273149b32eb1cf5c91fc69ff6a6ca09',parts=parts,accessories=accessories,source_urls=source_urls)
     (HERE/'design.json').write_text(json.dumps(spec,ensure_ascii=False,indent=2)+'\n')
