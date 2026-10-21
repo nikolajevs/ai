@@ -1,6 +1,5 @@
 #pragma once
 #include "Safety.h"
-#include "Board.h"
 
 // Compile-time regressions: every firmware build checks these, with no runtime cost.
 static_assert(validCalendar(2024, 2, 29, 23, 59, 59), "leap day must work");
@@ -73,79 +72,41 @@ constexpr bool backupWrapRegression() {
 }
 static_assert(backupWrapRegression(), "fallback clock must survive millis wrap");
 
-constexpr bool mcp7940nRegression() {
-  // 2026-10-21 23:59:59, ST=1, OSCRUN=1, VBATEN=1, weekday=4.
-  uint8_t raw[7] = {0xd9, 0x59, 0x23, 0x2c, 0x21, 0x10, 0x26};
+constexpr bool rtcRegression() {
+  uint8_t raw[7] = {0x59, 0x59, 0x23, 6, 0x26, 0x09, 0x26};
   RtcFields result{};
-  if (!decodeMcp7940n(raw, result) || result.year != 2026 || result.month != 10 || result.day != 21 ||
-      result.hour != 23 || result.minute != 59 || result.second != 59) return false;
-  raw[0] &= ~MCP7940N_ST;
-  if (decodeMcp7940n(raw, result)) return false; // Plausible date but oscillator disabled.
-  raw[0] |= MCP7940N_ST;
-  raw[3] &= ~MCP7940N_OSCRUN;
-  if (decodeMcp7940n(raw, result)) return false; // ST alone does not prove the crystal runs.
-  raw[3] |= MCP7940N_OSCRUN;
-  raw[3] &= ~MCP7940N_VBATEN;
-  if (decodeMcp7940n(raw, result)) return false;
-  raw[3] |= MCP7940N_VBATEN | 0x10;
-  if (!decodeMcp7940n(raw, result)) return false; // PWRFAIL after good battery backup is OK.
-  raw[2] = 0x63;
-  if (decodeMcp7940n(raw, result)) return false; // Do not silently accept 12-hour mode.
-  raw[2] = 0x23;
-  for (int i = 0; i < 7; ++i) {
-    const uint8_t saved = raw[i];
-    raw[i] = (raw[i] & 0xf0) | (i == 3 ? 0x08 : 0x0a);
-    if (decodeMcp7940n(raw, result)) return false; // Bad BCD in each field, or weekday zero.
-    raw[i] = saved;
-  }
-  raw[0] = 0xe0;
-  if (decodeMcp7940n(raw, result)) return false; // Seconds 60.
-  raw[0] = 0xd9; raw[1] = 0x60;
-  if (decodeMcp7940n(raw, result)) return false;
-  raw[1] = 0x59; raw[2] = 0x24;
-  if (decodeMcp7940n(raw, result)) return false;
-  raw[2] = 0x23; raw[4] = 0x31; raw[5] = 0x04;
-  if (decodeMcp7940n(raw, result)) return false; // 31 April.
-  raw[4] = 0x29; raw[5] = 0x22; raw[6] = 0x24;
-  if (!decodeMcp7940n(raw, result) || result.month != 2) return false; // LPYR is not month BCD.
-  raw[6] = 0x25;
-  if (decodeMcp7940n(raw, result)) return false; // Non-leap year.
-  raw[4] = 0x01; raw[5] = 0x01; raw[6] = 0x00;
-  return !decodeMcp7940n(raw, result); // Factory reset year is not trusted.
+  if (!decodeDs3231(raw, 0, result) || result.year != 2026 || result.hour != 23 || result.day != 26) return false;
+  if (decodeDs3231(raw, 0x80, result)) return false; // Valid date but oscillator stopped.
+  raw[2] = 0x52; // 12 AM.
+  if (!decodeDs3231(raw, 0, result) || result.hour != 0) return false;
+  raw[2] = 0x72; // 12 PM.
+  if (!decodeDs3231(raw, 0, result) || result.hour != 12) return false;
+  raw[2] = 0x61; // 1 PM.
+  if (!decodeDs3231(raw, 0, result) || result.hour != 13) return false;
+  raw[2] = 0x24;
+  if (decodeDs3231(raw, 0, result)) return false;
+  raw[2] = 0x12; raw[0] = 0x2a;
+  if (decodeDs3231(raw, 0, result)) return false; // Invalid BCD.
+  raw[0] = 0; raw[4] = 0x30; raw[5] = 0x02;
+  return !decodeDs3231(raw, 0, result);
 }
-static_assert(mcp7940nRegression(), "validate MCP7940N ST/OSCRUN/VBATEN, BCD, 24h and calendar");
+static_assert(rtcRegression(), "validate DS3231 OSF, BCD, calendar, 12h and 24h registers");
 
-constexpr bool mcp7940nWriteRegression() {
-  const RtcFields dates[] = {{2024, 2, 29, 0, 0, 0}, {2026, 10, 21, 12, 34, 56}, {2099, 12, 31, 23, 59, 59}};
-  for (const RtcFields &date : dates) {
-    for (uint8_t weekday = 1; weekday <= 7; ++weekday) {
-      uint8_t raw[7]{};
-      if (!encodeMcp7940n(date, weekday, raw) || !(raw[0] & MCP7940N_ST) ||
-          raw[3] != (weekday | MCP7940N_VBATEN) || (raw[2] & 0xc0)) return false;
-      raw[3] |= MCP7940N_OSCRUN; // Read-only flag set by the chip after starting.
-      RtcFields read{};
-      if (!decodeMcp7940n(raw, read) || read.year != date.year || read.month != date.month ||
-          read.day != date.day || read.hour != date.hour || read.minute != date.minute || read.second != date.second) return false;
-    }
-  }
-  uint8_t raw[7]{};
-  return !encodeMcp7940n(dates[0], 0, raw) && !encodeMcp7940n(dates[0], 8, raw) &&
-         !encodeMcp7940n({2025, 2, 29, 0, 0, 0}, 1, raw);
+constexpr bool pcf8563Regression() {
+  // VL_seconds, minutes, hours, days, weekdays, century_months, years: 2026-09-26 23:59:59.
+  uint8_t raw[7] = {0x59, 0x59, 0x23, 0x26, 6, 0x89, 0x26};
+  RtcFields result{};
+  if (!decodePcf8563(raw, result) || result.year != 2026 || result.month != 9 || result.day != 26 ||
+      result.hour != 23 || result.minute != 59 || result.second != 59) return false; // Century bit ignored.
+  raw[0] = 0xd9;
+  if (decodePcf8563(raw, result)) return false; // VL: integrity lost after a supply dropout.
+  raw[0] = 0x59; raw[1] = 0xd9; raw[2] = 0xe3; raw[4] = 0xfe;
+  if (!decodePcf8563(raw, result) || result.minute != 59 || result.hour != 23) return false; // Unused bits masked.
+  raw[3] = 0x2a;
+  if (decodePcf8563(raw, result)) return false; // Invalid BCD.
+  raw[3] = 0x31; raw[5] = 0x04;
+  if (decodePcf8563(raw, result)) return false; // 31 April.
+  raw[3] = 0x01; raw[5] = 0x01; raw[6] = 0x00;
+  return !decodePcf8563(raw, result); // Factory date 2000-01-01.
 }
-static_assert(mcp7940nWriteRegression(), "MCP7940N writes set ST/VBATEN and round-trip all calendar fields");
-
-constexpr bool ledPulseRegression() {
-  for (int request = -5; request <= 260; ++request) {
-    const int duty = ledDutyForRequest(request);
-    if (duty < 0 || duty > PWM_MAX || (request <= 0 && duty != 0)) return false;
-    if (request > 0 && uint64_t(duty) * 1000000 < uint64_t(LED_MIN_PULSE_US) * LED_PWM_FREQ * PWM_COUNTS) return false;
-    if (request >= LED_MIN_DUTY && duty != clampPwm(request)) return false;
-  }
-  return ledDutyForRequest(255) == 255;
-}
-static_assert(LED_PWM_FREQ >= 500 && LED_PWM_FREQ <= 1000 && ledPulseRegression(), "every nonzero LED pulse must be at least 10 us");
-static_assert(FAN_PWM_FREQ == 25000 && fanGpioDuty(255) == 0 && fanGpioDuty(0) == 255 &&
-              fanGpioDuty(128) == 127 && fanGpioDuty(-1) == 255 && fanGpioDuty(256) == 0,
-              "fan GPIO duty must invert logical airflow, including endpoint saturation");
-static_assert(LED_PWM_CHANNEL / 2 != FAN1_PWM_CHANNEL / 2 && LED_PWM_CHANNEL / 2 != FAN2_PWM_CHANNEL / 2,
-              "ESP32 LED and fans must use separate LEDC timers");
+static_assert(pcf8563Regression(), "validate PCF8563 VL flag, register masks, BCD and calendar");

@@ -6,7 +6,7 @@
 
 | Папка | Содержимое |
 | --- | --- |
-| [software/](software/README.md) | Прошивка Arduino для ESP32, веб-интерфейс и инструкция по сборке |
+| [softwareEU/](softwareEU/README.md) | Прошивка PCB_EU для ESP32-WROOM-32E-N4, веб-интерфейс и инструкция по сборке |
 | [hardware/](hardware/README.md) | Проекты KiCad 10, BOM, модели деталей, корпус и файлы изготовления |
 | [tests/](tests/) | Автоматические тесты веб-интерфейса |
 | [vps-docs/](vps-docs/README.md) | Инструкция по работе с удалённой KiCad-станцией |
@@ -19,8 +19,8 @@
 
 ## Начало работы
 
-Для прошивки откройте `software/software.ino`; зависимости, загрузка веб-интерфейса и проверки описаны в [software/README.md](software/README.md).
+Для прошивки PCB_EU откройте `softwareEU/softwareEU.ino`; зависимости, загрузка веб-интерфейса и проверки описаны в [softwareEU/README.md](softwareEU/README.md).
 
-Для платы откройте нужный проект KiCad: `hardware/PCB_V1/PCB_V1.kicad_pro` или `hardware/cheap-version/cheap-version.kicad_pro`. Инструкции по проверкам и изготовлению находятся в документации соответствующего проекта.
+Для платы PCB_EU откройте `hardware/PCB_EU/PCB_EU.kicad_pro`; распиновка и состояние разработки описаны в [DESIGN.md](hardware/PCB_EU/DESIGN.md).
 
 Правила работы с репозиторием — [AGENTS.md](AGENTS.md).
