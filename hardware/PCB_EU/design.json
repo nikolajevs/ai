@@ -156,7 +156,7 @@
       "nets": {
         "1": "REVP_GATE",
         "2": "PSU_RTN",
-        "3": "GND"
+        "3": "RTN_SHUNT"
       },
       "footprint": "Package_TO_SOT_SMD:TO-263-2",
       "note": "Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced",
@@ -664,6 +664,122 @@
       "position": [
         241.3,
         229.87
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R111",
+      "symbol": "R",
+      "value": "0R01 3W 1%",
+      "mpn": "SMD2512-0R01-1%-3W",
+      "nets": {
+        "1": "GND",
+        "2": "RTN_SHUNT"
+      },
+      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "note": "Shunt for U102; pad 1 = board GND side (Kelvin IN+), pad 2 = Q102 source side (IN-)",
+      "position": [
+        165.1,
+        95.25
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R112",
+      "symbol": "R",
+      "value": "0R01 3W 1%",
+      "mpn": "SMD2512-0R01-1%-3W",
+      "nets": {
+        "1": "GND",
+        "2": "RTN_SHUNT"
+      },
+      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "note": "Parallel with R111: 5 mOhm, 81.92 mV full scale = 16.4 A",
+      "position": [
+        165.1,
+        111.76
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "U102",
+      "symbol": "INA226",
+      "value": "INA226",
+      "mpn": "INA226AIDGSR",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": null,
+        "4": "I2C_SDA",
+        "5": "I2C_SCL",
+        "6": "+3V3",
+        "7": "GND",
+        "8": "INA_VBUS",
+        "9": "RTN_SHUNT",
+        "10": "GND"
+      },
+      "footprint": "Package_SO:VSSOP-10_3x3mm_P0.5mm",
+      "note": "I2C 0x40. IN+ Kelvin to R111.1, IN- Kelvin to R111.2; bus = +24V_FUSED through R113",
+      "position": [
+        240.03,
+        74.93
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "R113",
+      "symbol": "R",
+      "value": "1k VBUS",
+      "mpn": "SMD0603-1K",
+      "nets": {
+        "1": "+24V_FUSED",
+        "2": "INA_VBUS"
+      },
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "note": "Limits current into VBUS above 40 V; 0.12% gain error with the 830k VBUS input",
+      "position": [
+        309.88,
+        74.93
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "C115",
+      "symbol": "C",
+      "value": "100n VS",
+      "mpn": "CL21B104KBCNNNC",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "note": "",
+      "position": [
+        309.88,
+        95.25
+      ],
+      "in_bom": true
+    },
+    {
+      "sheet": "InputPower",
+      "ref": "D103",
+      "symbol": "TVS",
+      "value": "33V zener",
+      "mpn": "BZV55-C33",
+      "nets": {
+        "1": "INA_VBUS",
+        "2": "GND"
+      },
+      "footprint": "Diode_SMD:D_MiniMELF",
+      "note": "Keeps VBUS below its 40 V absolute maximum when D101 clamps up to 42 V; R113 limits the current. 31-35 V, no conduction at 25 V",
+      "position": [
+        309.88,
+        111.76
       ],
       "in_bom": true
     },
@@ -3802,6 +3918,8 @@
     "ESP32-WROOM-32E-N4": "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
     "AO3422": "https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf",
     "TK22E10N1": "https://docs.rs-online.com/8d7e/0900766b81294f79.pdf",
+    "INA226AIDGSR": "https://www.ti.com/lit/ds/symlink/ina226.pdf",
+    "BZV55-C33": "https://assets.nexperia.com/documents/data-sheet/BZV55_SER.pdf",
     "MCP7940N-I/SN": "https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf"
   }
 }

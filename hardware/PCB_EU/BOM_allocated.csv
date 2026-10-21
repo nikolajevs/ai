@@ -18,8 +18,11 @@ Electrobase,AP63203WU-7,1,1,шт.,1.24,1.24,U201,0,https://electrobase.lv/katalo
 Electrobase,SRN6045-6R8Y,1,1,шт.,0.28,0.28,L201,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-68uh-ioper-28a-r-473mo-30-6x6x45mm,2026-10-20
 Salvats,CL31A106KAHNNNE,2,2,шт.,0.22,0.44,C201 C202,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/10mkf-1206-x5r-25v-k-10-smd-kondensators-1206,2026-10-20
 Salvats,CL31A226KQHNNNE,6,6,шт.,0.18,1.08,C204 C205 C206 C304 C505 C605,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/22mkf-1206-x5r-63v-k-smd-kondensators-1206,2026-10-20
-Salvats,CL21B104KBCNNNC,12,20,уп. 10 шт.,0.51,1.02,C107 C108 C203 C207 C303 C305 C401 C402 C403 C503 C603 C803,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805,2026-10-20
+Salvats,CL21B104KBCNNNC,13,20,уп. 10 шт.,0.51,1.02,C107 C108 C115 C203 C207 C303 C305 C401 C402 C403 C503 C603 C803,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805,2026-10-20
 Salvats,IRF1010ESPBF,2,2,шт.,1.21,2.42,Q102 Q703,0,https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/irf1010es-smd-tranzistors-n-fet-60v-20v-59a-200w-0r012-to-263,2026-10-20
+Electrobase,INA226AIDGSR,1,1,шт.,3.94,3.94,U102,0,https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0,2026-10-21
+Salvats,SMD2512-0R01-1%-3W,2,2,шт.,0.24,0.48,R111 R112,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r01-2512635x32mm-3w-1-smd-55170c-rezistors-thick-film-2512,2026-10-21
+Salvats,BZV55-C33,1,1,шт.,0.13,0.13,D103,0,https://www.salvats.lv/lv/stabilitroni-smd-bzv55/33v-stabilitrons-smd-bzv55-5-05w-minimelf-1,2026-10-21
 Salvats,BC847B-DIO,1,1,шт.,0.06,0.06,Q701,0,https://www.salvats.lv/lv/npn-tranzistori-smd/bc847b1f-smd-tranzistors-npn-50v-01a-300mhz-sot23,2026-10-20
 Salvats,BC857B,1,1,шт.,0.08,0.08,Q702,0,https://www.salvats.lv/lv/pnp-tranzistori-smd/bc857b3f-smd-tranzistors-pnp-50v-01a-hfe220475-035w-200mhz-sot23,2026-10-20
 Electrobase,AO3422,3,5,шт.,0.26,1.30,Q411 Q421 Q704,0,https://electrobase.lv/katalogs/tranzistori-ar-n-veida-kanalu-smd/transistor-n-mosfet-unipolar-55v-17a-800mw-sot23,2026-10-20
@@ -68,7 +71,7 @@ Salvats,SMD1206-27K-1%,1,1,шт.,0.03,0.03,R106,0,https://www.salvats.lv/lv/rezi
 Salvats,SMD1206-68K,1,1,шт.,0.03,0.03,R107,0,https://www.salvats.lv/lv/rezistori-smd-1206-025w/68k-1206-5-smd-rezistors-1206,2026-10-20
 Electrobase,JNRH1207-220M-A,1,1,шт.,0.54,0.54,L601,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-22uh-ioper-54a-r-525o-30-isat-56a,2026-10-20
 Electrobase,C0805C104K1RACTU,2,2,шт.,0.16,0.32,C511 C611,0,https://electrobase.lv/katalogs/kondensatori-mlcc-smd-0201/capacitor-ceramic-mlcc-100nf-100v-x7r-10-smd-0805-0,2026-10-20
-Salvats,SMD0603-1K,6,10,уп. 10 шт.,0.11,0.11,R403 R411 R413 R421 R423 R707,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
+Salvats,SMD0603-1K,7,10,уп. 10 шт.,0.11,0.11,R113 R403 R411 R413 R421 R423 R707,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
 Salvats,SMD0603-10K,14,20,уп. 10 шт.,0.11,0.22,R201 R202 R303 R304 R305 R306 R307 R404 R414 R424 R701 R704 R815 R817,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/10k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
 Salvats,SMD0603-100K,5,10,уп. 10 шт.,0.11,0.11,R412 R422 R708 R804 R808,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/100k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603,2026-10-20
 Salvats,RAD-DY-GF/3,2,2,шт.,0.77,1.54,,2,https://www.salvats.lv/lv/radiatori/radiators-30x30x15mm-88kw-to220-to247-aluminijs-melna-krasa,2026-10-20

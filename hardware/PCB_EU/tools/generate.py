@@ -98,6 +98,8 @@ ic('MCP7940N',[(1,'X1','passive'),(2,'X2','passive'),(3,'VBAT','power_in'),(4,'V
 ic('USBLC6',[(1,'IO1','passive'),(3,'IO2','passive'),(2,'GND','power_in')],[(6,'IO1','passive'),(4,'IO2','passive'),(5,'VREF','power_in')])
 ic('ESDAL',[(1,'K1','passive'),(2,'K2','passive')],[(3,'A_COMMON','power_in')])
 ic('BAT54',[(1,'A','passive'),(2,'NC','no_connect')],[(3,'K','passive')])
+ic('INA226',[(10,'IN+','input'),(9,'IN-','input'),(8,'VBUS','input'),(1,'A1','input'),(2,'A0','input')],
+            [(6,'VS','power_in'),(4,'SDA','bidirectional'),(5,'SCL','input'),(3,'ALERT','open_collector'),(7,'GND','power_in')])
 ic('SD',[(1,'DAT2','passive'),(2,'DAT3_CS','input'),(3,'CMD_MOSI','input'),(4,'VDD','power_in'),(5,'CLK','input')],
         [(8,'DAT1','passive'),(7,'DAT0_MISO','tri_state'),(6,'VSS','power_in'),('SH','SHELL','passive'),('CD1','CARD_DETECT_1','passive'),('CD2','CARD_DETECT_2','passive')],30.48)
 for n in [2,6]:
@@ -153,7 +155,10 @@ GND='GND';V3='+3V3';V12='+12V';V24='+24V_FUSED'
 
 sheet('InputPower','01 | 24 V input and 12 V auxiliary supply',[
  'External PSU 24.0 V, max 25 V, at least 240 W / 10 A. J101: 1 = +24 V, 2 = PSU return.',
- 'Reverse polarity: Q102 IRF1010ES in the return path; drain = J101.2, source = board GND.',
+ 'Reverse polarity: Q102 IRF1010ES in the return path; drain = J101.2, source = RTN_SHUNT.',
+ 'Power monitor: R111||R112 = 5 mOhm from board GND to Q102 source; INA226 U102 at I2C 0x40 (A0=A1=GND).',
+ 'U102 IN+ (pin 10) is a Kelvin tap on the GND pad of R111 and has no own ground via or pour connection.',
+ 'U102 VBUS: R113 1k + D103 33 V zener, because the SMBJ26A clamp (42 V) exceeds the INA226 40 V rating.',
  'Q102 gate divider 5k6+5k6 / 10k from +24V_FUSED: Vgs 10.2 V at 21.6 V, 19.8 V at 42 V TVS clamp.',
  'Programmer/USB ground must never become the power return. Fuse coordination NOT qualified.',
  'L7987 is the 3 A part. VCC is on 24 V; VBIAS is on the regulated 12 V rail.',
@@ -166,7 +171,7 @@ fuses=[('F101','15 A slow','3413.0330.11','+24V_RAW',V24),('F102','8 A slow','34
        ('F105','2 A slow','3403.0169.11',V24,'+24V_AUX'),('F106','1 A slow','3403.0166.11',V24,'+24V_PUMP')]
 for ref,val,mpn,a,b in fuses:add('InputPower',ref,'F',val,mpn,[a,b],note='SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified')
 add('InputPower','D101','TVS','SMBJ26A','SMBJ26A-E3/52',[V24,GND],'Diode_SMD:D_SMB')
-add('InputPower','Q102','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'REVP_GATE',2:'PSU_RTN',3:GND},'Package_TO_SOT_SMD:TO-263-2',note='Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced',pos=(265,200))
+add('InputPower','Q102','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'REVP_GATE',2:'PSU_RTN',3:'RTN_SHUNT'},'Package_TO_SOT_SMD:TO-263-2',note='Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced',pos=(265,200))
 r('InputPower','R108','5k6 1%','SMD1206 5K6 1%',V24,'REVP_MID')
 r('InputPower','R109','5k6 1%','SMD1206 5K6 1%','REVP_MID','REVP_GATE')
 r('InputPower','R110','10k 1%',R10,'REVP_GATE',GND)
@@ -191,6 +196,13 @@ c('InputPower','C113','1u CF',C1,'AUX_COMP_MID','AUX_FB')
 c('InputPower','C114','330p C0G','CC1206JRNPO9331','AUX_COMP','AUX_FB')
 r('InputPower','R106','27k 1%','SMD1206-27K-1%','AUX_ILIM',GND)
 r('InputPower','R107','68k 5%','SMD1206-68K','AUX_FSW',GND)
+# Low-side power monitor: all board return current flows GND -> R111||R112 -> Q102 source.
+r('InputPower','R111','0R01 3W 1%','SMD2512-0R01-1%-3W',GND,'RTN_SHUNT','Shunt for U102; pad 1 = board GND side (Kelvin IN+), pad 2 = Q102 source side (IN-)',pos=(165,95))
+r('InputPower','R112','0R01 3W 1%','SMD2512-0R01-1%-3W',GND,'RTN_SHUNT','Parallel with R111: 5 mOhm, 81.92 mV full scale = 16.4 A',pos=(165,112))
+add('InputPower','U102','INA226','INA226','INA226AIDGSR',{1:GND,2:GND,3:None,4:'I2C_SDA',5:'I2C_SCL',6:V3,7:GND,8:'INA_VBUS',9:'RTN_SHUNT',10:GND},'Package_SO:VSSOP-10_3x3mm_P0.5mm',note='I2C 0x40. IN+ Kelvin to R111.1, IN- Kelvin to R111.2; bus = +24V_FUSED through R113',pos=(240,75))
+r('InputPower','R113','1k VBUS',D1,V24,'INA_VBUS','Limits current into VBUS above 40 V; 0.12% gain error with the 830k VBUS input',pos=(310,75))
+c('InputPower','C115','100n VS',C100,V3,pos=(310,95))
+add('InputPower','D103','TVS','33V zener','BZV55-C33',['INA_VBUS',GND],'Diode_SMD:D_MiniMELF',note='Keeps VBUS below its 40 V absolute maximum when D101 clamps up to 42 V; R113 limits the current. 31-35 V, no conduction at 25 V',pos=(310,112))
 
 sheet('MCU','02 | 3.3 V supply and ESP32',[
  'AP63203 is supplied from +12V only. Raw 24 V / TVS-clamped input is prohibited.',
@@ -498,6 +510,8 @@ source_urls={
  'ESP32-WROOM-32E-N4':'https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf',
  'AO3422':'https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf',
  'TK22E10N1':'https://docs.rs-online.com/8d7e/0900766b81294f79.pdf',
+ 'INA226AIDGSR':'https://www.ti.com/lit/ds/symlink/ina226.pdf',
+ 'BZV55-C33':'https://assets.nexperia.com/documents/data-sheet/BZV55_SER.pdf',
  'MCP7940N-I/SN':'https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf',
 }
 
@@ -511,17 +525,29 @@ REVIEW_USAGE={
  'SMD1206 5K6 1%':'1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2',
  'SMD1206-10K-1%':'1%: верх OVP ×2, верх FB L7987 ×1, опорный делитель UVLO ×2, gate–source Q102 ×1',
  'CL31A106KAHNNNE':'10 мкФ / 25 В: 2 на входе AP63203',
- 'CL21B104KBCNNNC':'12 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 8',
+ 'CL21B104KBCNNNC':'13 байпасных/фильтрующих конденсаторов в схеме (вкл. VS INA226), покупка 20, остаток 7',
  'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
  'SMD0603-100K':'0603 / 5%: gate TK22E10N1 ×2, gate помпы ×1, gate fan PWM ×2',
 }
 
 
-# Rows added after the 2026-10-20 snapshot. TK22E10N1 replaced IRF540ZPBF on
-# 2026-10-21: lower gate charge for the 7 V, 1 A LM3429 driver at 400 kHz.
-REVIEW_ROWS={'IRF540ZPBF':dict(shop='Salvats',mpn='TK22E10N1',needed=2,buy=2,unit='шт.',price_unit=1.38,line=2.76,stock=22,
- url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
- usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501/Q601 от GATE LM3429 через 4,7 Ом',price_date='2026-10-21')}
+# Rows added after the 2026-10-20 snapshot, inserted after the named row.
+# TK22E10N1 replaced IRF540ZPBF on 2026-10-21: lower gate charge for the 7 V,
+# 1 A LM3429 driver at 400 kHz. INA226 and its shunt added 2026-10-21 for the
+# board power display.
+REVIEW_ROWS={
+ 'IRF540ZPBF':[dict(shop='Salvats',mpn='TK22E10N1',needed=2,buy=2,unit='шт.',price_unit=1.38,line=2.76,stock=22,
+  url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
+  usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501/Q601 от GATE LM3429 через 4,7 Ом',price_date='2026-10-21')],
+ 'IRF1010ESPBF':[dict(shop='Electrobase',mpn='INA226AIDGSR',needed=1,buy=1,unit='шт.',price_unit=3.94,line=3.94,stock='',
+  url='https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0',block='Вход 24 В',
+  usage='TI INA226, VSSOP-10: ток, напряжение и мощность всей платы по I2C (0x40). Цена от Igors 21.10.2026; наличие и продажа поштучно с катушки не подтверждены',price_date='2026-10-21'),
+  dict(shop='Salvats',mpn='SMD2512-0R01-1%-3W',needed=2,buy=2,unit='шт.',price_unit=0.24,line=0.48,stock=369,
+  url='https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r01-2512635x32mm-3w-1-smd-55170c-rezistors-thick-film-2512',block='Вход 24 В',
+  usage='0R01 2512 3 Вт 1%: R111||R112 = 5 мОм, шунт INA226 в обратном проводе',price_date='2026-10-21'),
+  dict(shop='Salvats',mpn='BZV55-C33',needed=1,buy=1,unit='шт.',price_unit=0.13,line=0.13,stock=94,
+  url='https://www.salvats.lv/lv/stabilitroni-smd-bzv55/33v-stabilitrons-smd-bzv55-5-05w-minimelf-1',block='Вход 24 В',
+  usage='Стабилитрон 33 В 0,5 Вт MiniMELF: D103 защищает вход VBUS INA226 (предел 40 В) при срабатывании D101',price_date='2026-10-21')]}
 
 
 def main():
@@ -555,7 +581,7 @@ def main():
     # Allocate all purchasing rows to actual component references / accessories.
     rows=json.loads((HERE/'procurement_2026-10-20.json').read_text())
     for i in range(len(rows)-1,-1,-1):
-        if rows[i]['mpn'] in REVIEW_ROWS:rows.insert(i+1,dict(REVIEW_ROWS[rows[i]['mpn']]))
+        for extra in reversed(REVIEW_ROWS.get(rows[i]['mpn'],[])):rows.insert(i+1,dict(extra))
     for row in rows:
         row['previous_needed']=row['needed'];mpn=row['mpn']
         refs=[p['ref'] for p in parts if p['mpn']==mpn and p['in_bom']]
@@ -568,7 +594,7 @@ def main():
         if mpn in REVIEW_BUY:
             row['buy']=REVIEW_BUY[mpn];row['line']=float(Decimal(str(row['price_unit']))*row['buy'])
         if mpn in REVIEW_USAGE:row['usage']=REVIEW_USAGE[mpn]
-        if mpn=='SMD0603-1K':row['usage']='1k: tach x2, float x1, pump/fan gates x3; 6 of 10 purchased'
+        if mpn=='SMD0603-1K':row['usage']='1k: tach x2, float x1, pump/fan gates x3, INA226 VBUS x1; 7 of 10 purchased'
         assert need<=row['buy'],(mpn,need,row['buy'])
     dropped=[row['mpn'] for row in rows if not row['needed']]
     rows=[row for row in rows if row['needed']]

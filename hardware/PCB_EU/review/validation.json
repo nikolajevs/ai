@@ -13,15 +13,15 @@
     "single_global_label"
   ],
   "project_erc_exclusions": [],
-  "connectivity_checks": 51,
-  "connected_pins": 479,
-  "purchased_electrical_components": 185,
+  "connectivity_checks": 53,
+  "connected_pins": 498,
+  "purchased_electrical_components": 191,
   "footprints": {
-    "assigned_references": 193,
-    "unique": 31,
+    "assigned_references": 199,
+    "unique": 33,
     "drawing_checked_references": 33,
     "missing": [],
-    "checks_passed": 2131,
+    "checks_passed": 2197,
     "native_KiCad_load_and_plot": true,
     "physical_fit_verified": false
   },
@@ -29,8 +29,8 @@
     "stage": "two-sided placement with partial routing; not fabrication release",
     "date": "2026-10-21",
     "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-    "checks_passed": 22175,
-    "netlisted_references": 193,
+    "checks_passed": 23466,
+    "netlisted_references": 199,
     "board_only_mounting_holes": 4,
     "copper_layers": 4,
     "board_mm": [
@@ -39,7 +39,7 @@
     ],
     "face_counts": {
       "F": 108,
-      "B": 85
+      "B": 91
     },
     "back_side_references": [
       "BT301",
@@ -51,6 +51,7 @@
       "C111",
       "C113",
       "C114",
+      "C115",
       "C503",
       "C504",
       "C505",
@@ -67,6 +68,7 @@
       "C608",
       "C609",
       "C803",
+      "D103",
       "D701",
       "D801",
       "F106",
@@ -86,6 +88,9 @@
       "R108",
       "R109",
       "R110",
+      "R111",
+      "R112",
+      "R113",
       "R503",
       "R504",
       "R505",
@@ -125,15 +130,16 @@
       "R816",
       "R817",
       "TP06",
+      "U102",
       "U501",
       "U601"
     ],
-    "connected_physical_pads": 495,
-    "connected_netlist_pins": 479,
-    "mapped_netlist_pins_including_nc": 505,
+    "connected_physical_pads": 514,
+    "connected_netlist_pins": 498,
+    "mapped_netlist_pins_including_nc": 525,
     "pad_net_parity": true,
-    "routed_tracks": 1518,
-    "routed_vias": 311,
+    "routed_tracks": 1636,
+    "routed_vias": 352,
     "copper_zones": 3,
     "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
     "lm3429_gate_path_straight_line_mm": {
@@ -152,38 +158,38 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
-      "placement.json": "8f2d88b10c299c16220439e3cc677d6bf41c666be522e181a6c5af2ad1cc728f",
-      "netlist.xml": "4e7737c62cc25b17560dbf0224016b27959b119f75a1e185d6d292fff25222c9"
+      "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+      "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
+      "netlist.xml": "45ab2ae6f1d32a93e08a73552ec4cae2d7eeb6ee1767a7fdfa424803b29f3f73"
     }
   },
   "pcb_routing": {
     "stage": "fully routed board",
     "date": "2026-10-21",
     "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-    "planned_copper_objects_checked": 167,
-    "tracks": 1518,
-    "vias": 311,
+    "planned_copper_objects_checked": 203,
+    "tracks": 1636,
+    "vias": 352,
     "tracks_by_layer": {
-      "F.Cu": 678,
-      "B.Cu": 488,
-      "In2.Cu": 352
+      "F.Cu": 725,
+      "B.Cu": 565,
+      "In2.Cu": 346
     },
     "copper_zones": [
       {
         "net": "GND",
         "layer": "F.Cu",
-        "filled_area_mm2": 4920.29
+        "filled_area_mm2": 4885.91
       },
       {
         "net": "GND",
         "layer": "B.Cu",
-        "filled_area_mm2": 7062.39
+        "filled_area_mm2": 6979.61
       },
       {
         "net": "GND",
         "layer": "In1.Cu",
-        "filled_area_mm2": 8866.4
+        "filled_area_mm2": 8835.37
       }
     ],
     "actual_copper_connected_groups": [
@@ -351,9 +357,40 @@
         ],
         "physical_pad_count": 3,
         "copper_connected": true
+      },
+      {
+        "net": "RTN_SHUNT",
+        "pads": [
+          "Q102.3",
+          "R111.2",
+          "R112.2",
+          "U102.9"
+        ],
+        "physical_pad_count": 4,
+        "copper_connected": true
+      },
+      {
+        "net": "INA_VBUS",
+        "pads": [
+          "U102.8",
+          "D103.1",
+          "R113.2"
+        ],
+        "physical_pad_count": 3,
+        "copper_connected": true
+      },
+      {
+        "net": "REVP_GATE",
+        "pads": [
+          "Q102.1",
+          "R110.1",
+          "R109.2"
+        ],
+        "physical_pad_count": 3,
+        "copper_connected": true
       }
     ],
-    "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
+    "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
     "limits": [
       "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
       "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -362,16 +399,16 @@
     "complete_board_routing": true,
     "router": "LED1 plan (routing.json) + tools/route_board.py: Freerouting 2.4.1 sessions in routing/, grid completion, GND ties and pours",
     "min_track_width_mm": {
-      "HEAVY24": 0.8,
+      "HEAVY24": 0.25,
       "LOAD": 0.25,
-      "PWR": 0.3,
+      "PWR": 0.25,
       "Default": 0.25
     },
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
-      "routing.json": "e9618e7de85c57b31fbadc33a1490bfd0c9d3a7e05de1db7f138bae05788948d",
+      "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+      "routing.json": "33cb5d42e0496a37052792a06ba1bc945f189b3c1600b0d524d8afb36c16969e",
       "routing/pass1.ses": "52d8a0040a82d137b172aebd1be141a11ef87dffd06fda3ebbe923234d4d2313",
       "routing/pass2.ses": "facd4d03aafa33b297798d4f050b69e8660d1b310e19d396972dfb2f53cc60e4"
     }
@@ -384,20 +421,20 @@
   },
   "firmware_build": "not performed: old firmware is incompatible",
   "source_sha256": {
-    "BOM_allocated.json": "77296b0dccd80bd61a17120f6a777483ddce3a7a4bcac64208e59e47d8f26c93",
+    "BOM_allocated.json": "85bd25d6eed428f27c73d1d194d082d4191e369075b14dfe17042c2b8319c911",
     "Control.kicad_sch": "d4902a922e8e0f6a49ec648c548f1c2c65749e3dec9309da755b9caf6f1d1636",
-    "InputPower.kicad_sch": "c62d85a6a222363791cca4ef053d6ef5e56e528825f6feb590c2a435003e2372",
+    "InputPower.kicad_sch": "9b4e35b3d39147948f6bfbdd6f133b510a3a964666f20a50a2a73f5310dfb8dd",
     "Interfaces.kicad_sch": "8ae44c9a70d8ace23829eeb471d3b6e345c808c601911904a8463c5e1fe04488",
     "LED1.kicad_sch": "c86d7464e926494727de7ad22caa6700345484864ed15133318beedf3bc589e4",
     "LED2.kicad_sch": "6aea1c863f1726dc11aac41f55b87fd88539434ad4328fb1db44199208f56a59",
     "Loads.kicad_sch": "6af70cfdbcf69739d735381f34d84bab9e13c1459ba02eafc1a38ccea8187ab5",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "ff4c18224e5b6c663f8bbb17c64904888a0d02d3c3e699380457c00df790b640",
-    "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
-    "PCB_EU.kicad_pro": "10b0d25a1559d8e46b248134bcb24a4e02478f36878bd2bb1df195067797d3d4",
+    "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+    "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
-    "design.json": "5d8368c1e228ccca6b9f6616682937648d392057d43d53eade58809ce67db349",
+    "design.json": "2b015990f55e213f08088b41126ec532b77367073d3080a720e2eb9c646fd4ea",
     "footprint_assignments.json": "b316e90b185b24420782d793953bf588e81239dd2723da5f6b642db6945d0aca",
     "fp-lib-table": "b2c8f29e8cbb93264b91d1a48545309e1eee734432dba493994bf61c4773306c",
     "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "09140d95987b1f7e3dd12bae3ef264d2d6d7c465b69c2894abebdc1f50e3581f",
@@ -405,12 +442,14 @@
     "libraries/Capacitor_THT.pretty/CP_Radial_D10.0mm_P5.00mm.kicad_mod": "b8f3874639396a7ac300091c530daf22648720a6dd95031cccf5db0d75ed4e58",
     "libraries/Capacitor_THT.pretty/CP_Radial_D8.0mm_P5.00mm.kicad_mod": "4fa16ff8846adcb0403fd4bd94142e4694c7881e9de99d730c28b9839efa9d2f",
     "libraries/Connector_PinHeader_2.54mm.pretty/PinHeader_1x06_P2.54mm_Vertical.kicad_mod": "4832053ad569fbf62d0a78b570a46bcd07f204933d04be4dcf46efbff7d98a83",
+    "libraries/Diode_SMD.pretty/D_MiniMELF.kicad_mod": "2c82c5267b15842ba9644827a3fe9948c541d261b7daa37d5a8d4d2683627c70",
     "libraries/Diode_SMD.pretty/D_SMB.kicad_mod": "586717fabe033883b8afb7a6277e0f6360132f06ef929566c55d17eddf84be56",
     "libraries/Diode_SMD.pretty/D_SMC.kicad_mod": "c3e34a0c4f57967ce36258220b23e85f77ef00e8b6624d77c8ae71f7d13626a9",
     "libraries/EU.3dshapes/Battery_COMF_BC-2001_with_CR2032.step": "93ed589b3312f2c1cd4a274ce6f202f45dcec058780cf23d55c78895eed500a1",
     "libraries/EU.3dshapes/C_0805_2012Metric.step": "9a669c1a2f1ea25b88b401acef6efeaa80a067bd7da9db6993de719a7fbe155c",
     "libraries/EU.3dshapes/C_1206_3216Metric.step": "11e948c72c90e2b6322436b72745f40ff4e8ba0da64fb2a0df943dfa61e89c1a",
     "libraries/EU.3dshapes/Crystal_Abracon_ABS07.step": "6f7607accf336ea8e9ce6e288f3c11eae49c27065b94a8b31cf084c45b7475d3",
+    "libraries/EU.3dshapes/D_MiniMELF.step": "bab3a3356a14efb0438caca9adf53472dea34425715606e933f092f87f73f650",
     "libraries/EU.3dshapes/D_SMB.step": "029466277d91e9f5492556be93e46611049e07115c7913880c547afa96058ed4",
     "libraries/EU.3dshapes/D_SMC.step": "30dab4c2e22239b7e3694a4d45304e04255c6b70a79d28e9c34c6072ba647991",
     "libraries/EU.3dshapes/ESP32-WROOM-32E.step": "57f41a512434023f19bef010df050e42a80a478b62cf87b8b96868b490791bee",
@@ -440,8 +479,9 @@
     "libraries/EU.3dshapes/TSOT-23-6.step": "2d3e717db8a1e3f896db8524674f4f96ade77e4b2c5f3bde252f8124c6cb543a",
     "libraries/EU.3dshapes/TerminalBlock_Degson_DG301R-5.0_1x02.step": "ddd7fac3777859a52dafdd7171fd583e7a3d5cb323cc7889b2e198b86cc751f9",
     "libraries/EU.3dshapes/TerminalBlock_Degson_DG306-5.0_1x02.step": "dcec70d241037efd2fe0835a48c8cc1a7b714739ec3bc0aa0bb700809671e678",
+    "libraries/EU.3dshapes/VSSOP-10_3x3mm_P0.5mm.step": "24fb2bd055d0d988ec8582e8a5f473ecf890c4d247091414c8b38e75833411d0",
     "libraries/EU.3dshapes/microSD_GCT_MEM2061-01-188-00-A.step": "49cd155741e29910282b855415dc151f9f40c41b26abf110a18b91e289cfe771",
-    "libraries/EU.kicad_sym": "07c05a39a6bcd83c5c19244c8117faa697481e48346ca420747905ce34d9ce1b",
+    "libraries/EU.kicad_sym": "3a369b727660794ee72ee0645cbdeba955fa5b94b16e845e5697d12bddce1ef4",
     "libraries/EU_Mechanical.pretty/Battery_COMF_BC-2001.kicad_mod": "44d0c801c0b21db71cf506523624815dad30d4c5dc75d0ad66259096341f5626",
     "libraries/EU_Mechanical.pretty/Crystal_Abracon_ABS07.kicad_mod": "82144f0ee788182b8fa0424a398ca0c3cf6e483230caea44ce4a5994daa2d5a2",
     "libraries/EU_Mechanical.pretty/Fuse_Schurter_UMT250.kicad_mod": "1b5abc0ae27c742522804b9e0d9a0fb41b7d67692b11faf10fe03025fa58dfd4",
@@ -458,6 +498,7 @@
     "libraries/EU_Parts.pretty/Vishay_TO-277A_D_K1_A2.kicad_mod": "14a2446f329e31e8d6af928395be372d7a3dbe7844588f6e1be2763d992b9768",
     "libraries/Package_DIP.pretty/DIP-8_W7.62mm.kicad_mod": "df768bdefad864b7c7fea02d41c2313b27cf7f5e59e5caac956b8c76cce7c034",
     "libraries/Package_SO.pretty/SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod": "3e3443ca6b68c2bdfc7c6414c3633f2d7abd35a82343124072aa0f525f426128",
+    "libraries/Package_SO.pretty/VSSOP-10_3x3mm_P0.5mm.kicad_mod": "e1602ac04008b409a19c3def885b85b92539e6e8d58865b3ec9701adf645fea4",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23-6.kicad_mod": "7b11a385819ca5e06c19495fe8b1c951f1e68402298ea046faf97bd5b719cf1b",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod": "344b1c3614143b448c2addd759f06b0a35c14ed7e5027ff3ea2eb5a75cb93976",
     "libraries/Package_TO_SOT_SMD.pretty/TO-263-2.kicad_mod": "fa0cce393fe7d7c9039e143ed102ece6630f8087273ef294660df628c15b0d93",
@@ -467,35 +508,35 @@
     "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "63307caf675e2c1602ccc769f48ff311532e63ce2d8a15a69705675cf1fce80f",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "288a53fad2a613aeaf4ef9577ad7bfb63a8bcbecd8a2dc108d85499baf619be2",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "94cfe0c5bc119601c27b70b1027adfd7a136336b6af513b1c35fbe9cd859ab86",
-    "models3d.json": "7802ca645040344636c2f8ac81a13a5f0bbd69040942af97ec09bcb1de4e54d0",
-    "placement.json": "8f2d88b10c299c16220439e3cc677d6bf41c666be522e181a6c5af2ad1cc728f",
+    "models3d.json": "f94c7cdc54b3a56e5845591a7f06795d4d37e697f8ffe3ebdcc4aa55fff30da1",
+    "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
     "routing/pass1.ses": "52d8a0040a82d137b172aebd1be141a11ef87dffd06fda3ebbe923234d4d2313",
     "routing/pass2.ses": "facd4d03aafa33b297798d4f050b69e8660d1b310e19d396972dfb2f53cc60e4",
-    "routing.json": "e9618e7de85c57b31fbadc33a1490bfd0c9d3a7e05de1db7f138bae05788948d",
+    "routing.json": "33cb5d42e0496a37052792a06ba1bc945f189b3c1600b0d524d8afb36c16969e",
     "sym-lib-table": "5841b81e90fe3d0162d39abf67b0319073ad80122469018df6212ccd5957381f",
     "tools/build_board.py": "0809d86a035bbabb05996a3922dbacab151cef29303c798fbe20cfba0bbcf6a0",
     "tools/check_footprint_drc.py": "54a1309792ef0f017b702e243baa542a95173165322e42d049ed9be08a89aef5",
-    "tools/generate.py": "5fa2717de0b16e72c21a7850aee19f7a615c7b829944720ff29fa6eb8fafac41",
+    "tools/generate.py": "887babca5313460a15ae82a06b2a12b5cf383a3659cb0e2b1217d9f65bfeb688",
     "tools/generate_footprints.py": "e16f315320019a0747ca112ff991d4df7a48aa936959ee1e30c60bc40468705d",
     "tools/make_models3d.py": "bec9a1815b60ca388d674b5ebc57fdb80c2453f4b22811f59f63b70fb48c6946",
     "tools/models3d.py": "f7bb05f9f3079a609a0aa73805998c0277b65e8a9549080647ec9cd34eb37bb2",
     "tools/plot_board.py": "ff94730465358834659944d294084a681d07ee03fd2d4420c5f56ce057d5b187",
-    "tools/route_board.py": "494455d572180c3704f6399f99a8b37c7939681824d240c8e415760536c38ec6",
+    "tools/route_board.py": "2151f2955eea02029d6c7ae11159cc554ed989e81ff16cbf7f3b20d88d5abe4e",
     "tools/route_complete.py": "1ccaeaa4f03939eb219083405b890aac8c94249e47fc50554b7dd982132a12fc",
-    "tools/route_power.py": "b5662fc61c864623c0799a50b618c46f9d3d6cb02ed587c2f74de6b6461c0052",
+    "tools/route_power.py": "a24ba232dda227646f6c6046a6590eadca91ffd5591dbfea27b02d2c185dc6e5",
     "tools/run_checks.py": "2677907523bb5f6760b24667b8e2de4f62a489b72d1cb79c01b6f81a74152a30",
-    "tools/verify.py": "de86665aad08487be711328e57841204ea106663f7d4ef7deba76dde2c867833",
-    "tools/verify_board.py": "bc2f8336b1b9a8abe40d5c857351f5d3d5c641d529b82edab049ef9af4778404",
+    "tools/verify.py": "b9bbfe13bf2c3e9b47d693a7142d99f3076d827891f5caa70cb4db5f50340516",
+    "tools/verify_board.py": "06e356a1a48c0243504d0f7fd635f2431f70fd2997cd4b55469a3a039adb63af",
     "tools/verify_footprints.py": "88ef857a544842462dac457bdb179947675bcd86aed6b2e8a4ab46ef54f7a4d4",
     "tools/verify_routing.py": "baca276675bad8e54e9c4d13c679f5b5e189fc101feb5c3aa1bf75c35b12c6c4"
   },
   "models3d": {
-    "physical_components": 185,
-    "local_resolvable_models": 185,
-    "unique_attached_models": 31,
+    "physical_components": 191,
+    "local_resolvable_models": 191,
+    "unique_attached_models": 33,
     "missing_models": [],
-    "model_files": 32,
-    "library_footprints": 30,
+    "model_files": 34,
+    "library_footprints": 32,
     "known_fit_issues": [],
     "mechanical_qualification": false
   }

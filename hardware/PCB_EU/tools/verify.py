@@ -60,7 +60,17 @@ def main():
     check('No one-pin orphan nets in exported design',not nc_or_stub)
 
     check('Input terminal polarity and main fuse precede the TVS',pins('J101',{1:'+24V_RAW',2:'PSU_RTN'}) and pins('F101',{1:'+24V_RAW',2:'+24V_FUSED'}) and pins('D101',{1:'+24V_FUSED',2:'GND'}))
-    check('Reverse polarity: Q102 drain on PSU return, source on GND, gate divider keeps Vgs <= 20 V at the 42 V TVS clamp',pins('Q102',{1:'REVP_GATE',2:'PSU_RTN',3:'GND'}) and r('R108','SMD1206 5K6 1%','+24V_FUSED','REVP_MID') and r('R109','SMD1206 5K6 1%','REVP_MID','REVP_GATE') and r('R110','SMD1206-10K-1%','REVP_GATE','GND') and 42*10/(10+5.6+5.6)<=20 and 21.6*10/(10+5.6+5.6)>=10 and {k for k in nodes['PSU_RTN']}=={('J101','2'),('Q102','2')})
+    check('Reverse polarity: Q102 drain on PSU return, source on the shunt, gate divider keeps Vgs <= 20 V at the 42 V TVS clamp',pins('Q102',{1:'REVP_GATE',2:'PSU_RTN',3:'RTN_SHUNT'}) and r('R108','SMD1206 5K6 1%','+24V_FUSED','REVP_MID') and r('R109','SMD1206 5K6 1%','REVP_MID','REVP_GATE') and r('R110','SMD1206-10K-1%','REVP_GATE','GND') and 42*10/(10+5.6+5.6)<=20 and 21.6*10/(10+5.6+5.6)>=10 and {k for k in nodes['PSU_RTN']}=={('J101','2'),('Q102','2')})
+    shunt=Decimal('0.01')/2
+    check('Power monitor: INA226 U102 at I2C 0x40 (A0=A1=GND), 5 mOhm low-side shunt carries all return current, full scale >= 15 A main fuse',
+          pins('U102',{1:'GND',2:'GND',4:'I2C_SDA',5:'I2C_SCL',6:'+3V3',7:'GND',8:'INA_VBUS',9:'RTN_SHUNT',10:'GND'}) and n('U102',3).startswith('unconnected-')
+          and all(r(x,'SMD2512-0R01-1%-3W','GND','RTN_SHUNT') for x in ('R111','R112'))
+          and {k for k in nodes['RTN_SHUNT']}=={('Q102','3'),('R111','2'),('R112','2'),('U102','9')}
+          and Decimal('0.08192')/shunt>=15 and p['U102']['mpn']=='INA226AIDGSR')
+    check('INA226 VBUS: 1k from +24V_FUSED, 33 V zener keeps the pin below 40 V at the 42 V TVS clamp; 100n on VS',
+          r('R113','SMD0603-1K','+24V_FUSED','INA_VBUS') and pins('D103',{1:'INA_VBUS',2:'GND'}) and p['D103']['mpn']=='BZV55-C33'
+          and {k for k in nodes['INA_VBUS']}=={('R113','2'),('U102','8'),('D103','1')} and 33*1.05+(42-33*1.05)*80/(1000+80)<40
+          and {n('C115',1),n('C115',2)}=={'+3V3','GND'})
     fuse_expected={'F102':'+24V_PTC','F103':'+24V_LED1','F104':'+24V_LED2','F105':'+24V_AUX','F106':'+24V_PUMP'}
     check('All five 24 V load branches are separately fused',all(pins(ref,{1:'+24V_FUSED',2:net}) for ref,net in fuse_expected.items()))
     check('Fan branch fuse is on the 12 V rail',pins('F401',{1:'+12V',2:'+12V_FANS'}))

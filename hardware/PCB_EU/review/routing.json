@@ -2,29 +2,29 @@
   "stage": "fully routed board",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "planned_copper_objects_checked": 167,
-  "tracks": 1518,
-  "vias": 311,
+  "planned_copper_objects_checked": 203,
+  "tracks": 1636,
+  "vias": 352,
   "tracks_by_layer": {
-    "F.Cu": 678,
-    "B.Cu": 488,
-    "In2.Cu": 352
+    "F.Cu": 725,
+    "B.Cu": 565,
+    "In2.Cu": 346
   },
   "copper_zones": [
     {
       "net": "GND",
       "layer": "F.Cu",
-      "filled_area_mm2": 4920.29
+      "filled_area_mm2": 4885.91
     },
     {
       "net": "GND",
       "layer": "B.Cu",
-      "filled_area_mm2": 7062.39
+      "filled_area_mm2": 6979.61
     },
     {
       "net": "GND",
       "layer": "In1.Cu",
-      "filled_area_mm2": 8866.4
+      "filled_area_mm2": 8835.37
     }
   ],
   "actual_copper_connected_groups": [
@@ -192,9 +192,40 @@
       ],
       "physical_pad_count": 3,
       "copper_connected": true
+    },
+    {
+      "net": "RTN_SHUNT",
+      "pads": [
+        "Q102.3",
+        "R111.2",
+        "R112.2",
+        "U102.9"
+      ],
+      "physical_pad_count": 4,
+      "copper_connected": true
+    },
+    {
+      "net": "INA_VBUS",
+      "pads": [
+        "U102.8",
+        "D103.1",
+        "R113.2"
+      ],
+      "physical_pad_count": 3,
+      "copper_connected": true
+    },
+    {
+      "net": "REVP_GATE",
+      "pads": [
+        "Q102.1",
+        "R110.1",
+        "R109.2"
+      ],
+      "physical_pad_count": 3,
+      "copper_connected": true
     }
   ],
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -203,16 +234,16 @@
   "complete_board_routing": true,
   "router": "LED1 plan (routing.json) + tools/route_board.py: Freerouting 2.4.1 sessions in routing/, grid completion, GND ties and pours",
   "min_track_width_mm": {
-    "HEAVY24": 0.8,
+    "HEAVY24": 0.25,
     "LOAD": 0.25,
-    "PWR": 0.3,
+    "PWR": 0.25,
     "Default": 0.25
   },
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
-    "routing.json": "e9618e7de85c57b31fbadc33a1490bfd0c9d3a7e05de1db7f138bae05788948d",
+    "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+    "routing.json": "33cb5d42e0496a37052792a06ba1bc945f189b3c1600b0d524d8afb36c16969e",
     "routing/pass1.ses": "52d8a0040a82d137b172aebd1be141a11ef87dffd06fda3ebbe923234d4d2313",
     "routing/pass2.ses": "facd4d03aafa33b297798d4f050b69e8660d1b310e19d396972dfb2f53cc60e4"
   }

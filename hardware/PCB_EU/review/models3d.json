@@ -1,10 +1,10 @@
 {
-  "physical_components": 185,
-  "local_resolvable_models": 185,
-  "unique_attached_models": 31,
+  "physical_components": 191,
+  "local_resolvable_models": 191,
+  "unique_attached_models": 33,
   "missing_models": [],
-  "model_files": 32,
-  "library_footprints": 30,
+  "model_files": 34,
+  "library_footprints": 32,
   "known_fit_issues": [],
   "mechanical_qualification": false
 }
