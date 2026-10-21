@@ -1,7 +1,7 @@
 ﻿Shop,MPN_or_shop_SKU,Fitted_or_accessory,Buy_pieces,Sale_unit,Price_per_sale_unit_EUR_VAT,Line_EUR_VAT,References,Accessory_count,URL,Price_date
 Electrobase,ESP32-WROOM-32E-N4,1,1,шт.,7.48,7.48,U202,0,https://electrobase.lv/katalogs/moduli-iot-wifi-bluetooth-lora/module-iot-bluetooth-low-energywifi-smd-0,2026-10-20
 Electrobase,LM3429MH/NOPB,2,2,шт.,4.86,9.72,U501 U601,0,https://electrobase.lv/katalogs/led-draiveri/ic-driver-boostbuck-boost-led-driver-htssop14-5a-372v-ch-1,2026-10-20
-Salvats,IRF540ZPBF,2,2,шт.,1.7,3.40,Q501 Q601,0,https://www.salvats.lv/lv/100v-n-fet-tht/irf540z-tranzistors-n-fet-100v-36a-20v-92w-0r0265-to-220,2026-10-20
+Salvats,TK22E10N1,2,2,шт.,1.38,2.76,Q501 Q601,0,https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220,2026-10-21
 Electrobase,JNRH1207-100N-A,2,2,шт.,0.54,1.08,L501 L502,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-10uh-ioper-66a-r-355mo-30-isat-8a,2026-10-20
 Electrobase,SS5P10-M3/86A,2,2,шт.,1.09,2.18,D501 D601,0,https://electrobase.lv/katalogs/diodes-schottky-smd/diode-schottky-rectifying-smpcto277a-smd-100v-5a,2026-10-20
 Salvats,CS2512-0R15-1%-HP,1,1,шт.,0.32,0.32,R502,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r15-2512635x32mm-2w-1-smd-55125c-rezistors-thick-film-2512,2026-10-20

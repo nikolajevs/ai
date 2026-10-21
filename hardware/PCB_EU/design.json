@@ -1962,8 +1962,8 @@
       "sheet": "LED1",
       "ref": "Q501",
       "symbol": "NMOS",
-      "value": "IRF540ZPBF",
-      "mpn": "IRF540ZPBF",
+      "value": "TK22E10N1",
+      "mpn": "TK22E10N1",
       "nets": {
         "1": "LED1_GATE",
         "2": "LED1_SW",
@@ -2311,7 +2311,7 @@
         "1": "LED1_OUT",
         "2": "GND"
       },
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm",
       "note": "",
       "position": [
         241.3,
@@ -2329,7 +2329,7 @@
         "1": "LED1_OUT",
         "2": "GND"
       },
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm",
       "note": "",
       "position": [
         308.61,
@@ -2347,7 +2347,7 @@
         "1": "LED1_OUT",
         "2": "GND"
       },
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm",
       "note": "",
       "position": [
         374.65,
@@ -2462,8 +2462,8 @@
       "sheet": "LED2",
       "ref": "Q601",
       "symbol": "NMOS",
-      "value": "IRF540ZPBF",
-      "mpn": "IRF540ZPBF",
+      "value": "TK22E10N1",
+      "mpn": "TK22E10N1",
       "nets": {
         "1": "LED2_GATE",
         "2": "LED2_SW",
@@ -2811,7 +2811,7 @@
         "1": "LED2_OUT",
         "2": "GND"
       },
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm",
       "note": "",
       "position": [
         173.99,
@@ -2829,7 +2829,7 @@
         "1": "LED2_OUT",
         "2": "GND"
       },
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm",
       "note": "",
       "position": [
         241.3,
@@ -3801,6 +3801,7 @@
     "MEM2061-01-188-00-A": "https://gct.co/Files/Drawings/MEM2061.pdf",
     "ESP32-WROOM-32E-N4": "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
     "AO3422": "https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf",
+    "TK22E10N1": "https://docs.rs-online.com/8d7e/0900766b81294f79.pdf",
     "MCP7940N-I/SN": "https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf"
   }
 }

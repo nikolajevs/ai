@@ -5,24 +5,6 @@
   "missing_models": [],
   "model_files": 32,
   "library_footprints": 30,
-  "known_fit_issues": [
-    {
-      "references": [
-        "C508",
-        "C509",
-        "C510",
-        "C608",
-        "C609"
-      ],
-      "mpn": "EEUFR1J101LB",
-      "model_pitch_mm": 5,
-      "pcb_pitch_mm": 3.5,
-      "status": "OPEN - requires footprint/assembly review before fabrication",
-      "reason": "Panasonic exact-MPN table and FR-A taped B note specify 5 mm lead pitch. Model represents ordered B variant; it must not be squeezed/scaled to conceal the PCB mismatch.",
-      "source_ids": [
-        "panasonic_fr"
-      ]
-    }
-  ],
+  "known_fit_issues": [],
   "mechanical_qualification": false
 }

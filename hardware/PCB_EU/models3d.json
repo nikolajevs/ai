@@ -6,7 +6,7 @@
     "Capacitor_SMD:C_0805_2012Metric": "C_0805_2012Metric.step",
     "Capacitor_SMD:C_1206_3216Metric": "C_1206_3216Metric.step",
     "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
-    "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
+    "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
     "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical": "PinHeader_1x06_P2.54mm_Vertical.step",
     "Diode_SMD:D_SMB": "D_SMB.step",
     "Diode_SMD:D_SMC": "D_SMC.step",
@@ -280,7 +280,7 @@
           15.15
         ],
         "contact_sections": 2,
-        "known_fit_issue": "EEUFR1J101LB taped B leads are 5 mm; PCB holes are 3.5 mm. Physical fit is NOT verified."
+        "known_fit_issue": null
       },
       "sha256": "9cb15b5b34bf4397c6a1b853a43decec58b97f6f1bd1f76c9bca94fa479ccfe3",
       "source_ids": [
@@ -621,25 +621,7 @@
       "drawing": "Only 30 x 30 x 15 mm supplier envelope; guide coordinates and installed orientation unknown"
     }
   },
-  "known_fit_issues": [
-    {
-      "references": [
-        "C508",
-        "C509",
-        "C510",
-        "C608",
-        "C609"
-      ],
-      "mpn": "EEUFR1J101LB",
-      "model_pitch_mm": 5,
-      "pcb_pitch_mm": 3.5,
-      "status": "OPEN - requires footprint/assembly review before fabrication",
-      "reason": "Panasonic exact-MPN table and FR-A taped B note specify 5 mm lead pitch. Model represents ordered B variant; it must not be squeezed/scaled to conceal the PCB mismatch.",
-      "source_ids": [
-        "panasonic_fr"
-      ]
-    }
-  ],
+  "known_fit_issues": [],
   "unattached_envelope_models": [
     "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step"
   ]

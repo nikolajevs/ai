@@ -141,7 +141,7 @@ def r(sh,ref,val,mpn,a,b,note='',pos=None):
 def c(sh,ref,val,mpn,a,b='GND',pos=None):
     if mpn=='UPW1H221MPD':fp='Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'
     elif mpn=='EEUFR1E102':fp='Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'
-    elif mpn=='EEUFR1J101LB':fp='Capacitor_THT:CP_Radial_D8.0mm_P3.50mm'
+    elif mpn=='EEUFR1J101LB':fp='Capacitor_THT:CP_Radial_D8.0mm_P5.00mm'
     else:fp=FP_0805 if mpn.startswith(('CL21','C0805')) else FP_C
     return add(sh,ref,'CP' if mpn.startswith(('UPW','EEU')) else 'C',val,mpn,[a,b],fp,pos=pos)
 
@@ -298,7 +298,7 @@ for k in (1,2):
         add(sh,ref('L',2),'L','10u','JNRH1207-100N-A',[pre+'L_MID',pre+'SW'])
     else:add(sh,ref('L',1),'L','22u','JNRH1207-220M-A',[vin,pre+'SW'])
     add(sh,ref('D',1),'D','SS5P10 100V','SS5P10-M3/86A',[pre+'OUT',pre+'SW'],'EU_Parts:Vishay_TO-277A_D_K1_A2')
-    add(sh,ref('Q',1),'NMOS','IRF540ZPBF','IRF540ZPBF',{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note='Drain tab live. Separate insulated heatsink; exact assembly placement pending',pos=(300,60))
+    add(sh,ref('Q',1),'NMOS','TK22E10N1','TK22E10N1',{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note='Drain tab live. Separate insulated heatsink; exact assembly placement pending',pos=(300,60))
     r(sh,ref('R',1),'0R040 3W' if k==1 else '0R068 2W','LRP2512-R040-1%' if k==1 else 'CS2512-0R068-1%-HP',pre+'IS',GND)
     r(sh,ref('R',2),'0R15 2W' if k==1 else '0R47 2W','CS2512-0R15-1%-HP' if k==1 else 'CS2512-0R47-1%-HP',pre+'OUT',pre+'LED_POS','High side LED current shunt, separate Kelvin sense pair')
     r(sh,ref('R',3),'1k 1%',R1,pre+'OUT',pre+'HSP')
@@ -352,7 +352,7 @@ sheet('Control','08 | LED gate drive and hardware inhibit',[
  'One shared 10k pull-down on nDIM defeats BOTH internal LM3429 hysteresis sources after MCU reset.',
  'Do NOT add a 100n capacitor to nDIM. GPIO25 HIGH is enabled only after software checks.',
  'UVLO nominal release 19.90 V / fall 19.70 V depends on +3V3 reference and comparator tolerances.',
- 'No external gate driver: each LM3429 GATE drives its own IRF540Z through 4R7; 100k gate pull-down.',
+ 'No external gate driver: each LM3429 GATE drives its own TK22E10N1 (Qg 28 nC) through 4R7; 100k gate pull-down.',
  'BAT54 cold Vf / hot leakage and nDIM reset levels remain hardware tests.',
  'Unused comparator inputs tied to valid DC levels; its unused open-collector output is NC.'
 ],85)
@@ -497,6 +497,7 @@ source_urls={
  'MEM2061-01-188-00-A':'https://gct.co/Files/Drawings/MEM2061.pdf',
  'ESP32-WROOM-32E-N4':'https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf',
  'AO3422':'https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf',
+ 'TK22E10N1':'https://docs.rs-online.com/8d7e/0900766b81294f79.pdf',
  'MCP7940N-I/SN':'https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf',
 }
 
@@ -512,8 +513,15 @@ REVIEW_USAGE={
  'CL31A106KAHNNNE':'10 мкФ / 25 В: 2 на входе AP63203',
  'CL21B104KBCNNNC':'12 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 8',
  'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
- 'SMD0603-100K':'0603 / 5%: gate IRF540Z ×2, gate помпы ×1, gate fan PWM ×2',
+ 'SMD0603-100K':'0603 / 5%: gate TK22E10N1 ×2, gate помпы ×1, gate fan PWM ×2',
 }
+
+
+# Rows added after the 2026-10-20 snapshot. TK22E10N1 replaced IRF540ZPBF on
+# 2026-10-21: lower gate charge for the 7 V, 1 A LM3429 driver at 400 kHz.
+REVIEW_ROWS={'IRF540ZPBF':dict(shop='Salvats',mpn='TK22E10N1',needed=2,buy=2,unit='шт.',price_unit=1.38,line=2.76,stock=22,
+ url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
+ usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501/Q601 от GATE LM3429 через 4,7 Ом',price_date='2026-10-21')}
 
 
 def main():
@@ -546,6 +554,8 @@ def main():
     (HERE/'design.json').write_text(json.dumps(spec,ensure_ascii=False,indent=2)+'\n')
     # Allocate all purchasing rows to actual component references / accessories.
     rows=json.loads((HERE/'procurement_2026-10-20.json').read_text())
+    for i in range(len(rows)-1,-1,-1):
+        if rows[i]['mpn'] in REVIEW_ROWS:rows.insert(i+1,dict(REVIEW_ROWS[rows[i]['mpn']]))
     for row in rows:
         row['previous_needed']=row['needed'];mpn=row['mpn']
         refs=[p['ref'] for p in parts if p['mpn']==mpn and p['in_bom']]
@@ -569,7 +579,7 @@ def main():
     (HERE/'BOM_allocated.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n')
     with (HERE/'BOM_allocated.csv').open('w',newline='',encoding='utf-8-sig') as f:
         w=csv.writer(f,lineterminator="\n");w.writerow(['Shop','MPN_or_shop_SKU','Fitted_or_accessory','Buy_pieces','Sale_unit','Price_per_sale_unit_EUR_VAT','Line_EUR_VAT','References','Accessory_count','URL','Price_date'])
-        for row in rows:w.writerow([row['shop'],row['mpn'],row['needed'],row['buy'],row['unit'],row['price_unit'],f'{row["line"]:.2f}',' '.join(row['refs']),row['accessory_count'],row['url'],DATE])
+        for row in rows:w.writerow([row['shop'],row['mpn'],row['needed'],row['buy'],row['unit'],row['price_unit'],f'{row["line"]:.2f}',' '.join(row['refs']),row['accessory_count'],row['url'],row.get('price_date',DATE)])
     totals=defaultdict(Decimal)
     for row in rows:totals[row['shop']]+=Decimal(str(row['line']))
     summary=dict(electrical_components=sum(counts.values()),testpads=8,accessories=accessories,rows=len(rows),shop_totals={k:str(v) for k,v in totals.items()},shipping_EUR='5.87',total_EUR=str(sum(totals.values())+Decimal('5.87')),price_basis='Dated sourcing snapshot 2026-10-20; quantities now allocated to actual schematic. No reservation or order.')

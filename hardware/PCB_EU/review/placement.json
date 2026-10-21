@@ -39,7 +39,6 @@
     "C607",
     "C608",
     "C609",
-    "C611",
     "C803",
     "D701",
     "D801",
@@ -88,6 +87,7 @@
     "R708",
     "R803",
     "R804",
+    "R808",
     "R809",
     "R810",
     "R811",
@@ -105,8 +105,8 @@
   "connected_netlist_pins": 479,
   "mapped_netlist_pins_including_nc": 505,
   "pad_net_parity": true,
-  "routed_tracks": 1527,
-  "routed_vias": 285,
+  "routed_tracks": 1518,
+  "routed_vias": 311,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
@@ -115,8 +115,8 @@
       "resistor_to_mosfet_gate": 4.11
     },
     "LED2": {
-      "gate_pin_to_resistor": 8.39,
-      "resistor_to_mosfet_gate": 4.67
+      "gate_pin_to_resistor": 3.45,
+      "resistor_to_mosfet_gate": 18.03
     }
   },
   "gate_driver_note": "Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.",
@@ -125,8 +125,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "d96290f48c5a9ad83a74eaa5b3aa6d239f91de8332cec59f1cb6bb32e79a62df",
-    "placement.json": "063e36e0410e62d10e1ca1ce42ba9a809228e32cf3b83dd0e79db0c87ad0b57a",
-    "netlist.xml": "089be65089cd0c44ebe2fa59dba47db5d6f83db051a51bc38a4393fd4a28ce46"
+    "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
+    "placement.json": "8f2d88b10c299c16220439e3cc677d6bf41c666be522e181a6c5af2ad1cc728f",
+    "netlist.xml": "4e7737c62cc25b17560dbf0224016b27959b119f75a1e185d6d292fff25222c9"
   }
 }
