@@ -1,9 +1,9 @@
 {
   "status": "drawing/pad-map checks; no board placement, routing, thermal or physical-fit qualification",
   "kicad_version": "10.0.7",
-  "components_with_footprints": 196,
+  "components_with_footprints": 193,
   "missing_footprints": [],
-  "unique_assigned_footprints": 32,
+  "unique_assigned_footprints": 31,
   "drawing_checked_references": [
     "J101",
     "F101",
@@ -39,20 +39,21 @@
     "J701",
     "J702"
   ],
-  "other_package_assignments_still_require_datasheet_review": 163,
+  "other_package_assignments_still_require_datasheet_review": 160,
   "minimum_distinct_pad_bounding_box_gap_mm": 0.2,
-  "checks_passed": 2168,
+  "checks_passed": 2129,
   "source_sha256": {
     "libraries/EU_Mechanical.pretty/TerminalBlock_Degson_DG301R-5.0_1x02.kicad_mod": "5139d8afa43d0a0f633b69f60e90411bf5c86a3547ba5ac2aea56dfe01908091",
     "libraries/EU_Mechanical.pretty/Fuse_Schurter_UST_USI1206_Reflow.kicad_mod": "927c765e2fa36ecfd34debb48008ec1c97bbfd947f7805bc1e8a8074a07c7578",
     "libraries/EU_Mechanical.pretty/Fuse_Schurter_UMT250.kicad_mod": "612cac03d184888a34b3584deaefde1a22b276d1fbebffe1e2b1a828e0311a94",
     "libraries/Diode_SMD.pretty/D_SMB.kicad_mod": "01274857b58e3d532f8898cda40fefd5f39fa93c2dd03a54db2230d411f9f402",
+    "libraries/Package_TO_SOT_SMD.pretty/TO-263-2.kicad_mod": "99a5668f85889c1ceeb9bd9b2700dd0a1c5d7412d616e448983b37de7f0e25f8",
+    "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "a60cd27dd3042c001f09af2189fc2a06b879335e01c59704ab7c67d0387d2c91",
     "libraries/Capacitor_THT.pretty/CP_Radial_D10.0mm_P5.00mm.kicad_mod": "c88d1cab029285fa195a8866f9dd63e08e0247eeccc08f38ee1839b23b17e5e3",
     "libraries/EU_Mechanical.pretty/HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm.kicad_mod": "a24d56f8f0d42bc4453642299da93afa5a5d20729df8d64f9f3a548cffd03859",
     "libraries/EU_Mechanical.pretty/L_Jantek_JNRH1207.kicad_mod": "294f34d8779ed96a7bb53abc6425705a7f4a163f8934b9e55690e8a629602c10",
     "libraries/Diode_SMD.pretty/D_SMC.kicad_mod": "ad6bb9410cce9dd5917ea26d21df623155dbd0c22db193d663d8d203e22baac9",
     "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02",
-    "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "a60cd27dd3042c001f09af2189fc2a06b879335e01c59704ab7c67d0387d2c91",
     "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "8a29f23ddad5dc5ce652ed5395fa0113ce11ef55379a4ebe1da5bf4320848c04",
     "libraries/Package_TO_SOT_SMD.pretty/TSOT-23-6.kicad_mod": "76cbcd593de68659b7dbb9c4c0d9c1d398b6b185f515b10e1fac98bbbc482630",
     "libraries/EU_Mechanical.pretty/L_Bourns_SRN6045.kicad_mod": "675937c9b804077c7e7ba1567cd02e32af821d0b6dc2cde211e33d987446ea24",
@@ -72,8 +73,6 @@
     "libraries/Package_TO_SOT_THT.pretty/TO-220-3_Vertical.kicad_mod": "d736a000415c944a7f1f47f396c126a4b78c9a96d6f81223ba1df51c9352f2af",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "30ab8fd94bd69e66680d897efdac07ab1f0e2b74d84bc61e8296a2563089adc0",
     "libraries/Capacitor_THT.pretty/CP_Radial_D8.0mm_P3.50mm.kicad_mod": "a756173d70f267b9d4827fdc4ccb0d2c386e032a39ec7f440c508e5acb75de46",
-    "libraries/Package_TO_SOT_SMD.pretty/TO-263-2.kicad_mod": "99a5668f85889c1ceeb9bd9b2700dd0a1c5d7412d616e448983b37de7f0e25f8",
-    "libraries/Package_DIP.pretty/DIP-8_W7.62mm.kicad_mod": "df768bdefad864b7c7fea02d41c2313b27cf7f5e59e5caac956b8c76cce7c034",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "94cfe0c5bc119601c27b70b1027adfd7a136336b6af513b1c35fbe9cd859ab86"
   }
 }

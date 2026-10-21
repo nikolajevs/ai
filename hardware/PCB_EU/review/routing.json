@@ -14,7 +14,7 @@
     {
       "net": "GND",
       "layer": "In1.Cu",
-      "filled_area_mm2": 9030.08
+      "filled_area_mm2": 9058.27
     }
   ],
   "actual_copper_connected_groups": [
@@ -110,7 +110,7 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "bd37b3e2cb4968e4e9accab0123c746c003b042136c013749bd47dafa3903c7f",
+    "PCB_EU.kicad_pcb": "90ca634415047dc10792a52473db7572d859e3d22112e3cc6514688f4771338d",
     "routing.json": "9c1d7247dad21291f8546418d8a9c3a7a04c5b3d4063a7bcda65eada0d52b277"
   }
 }
