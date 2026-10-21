@@ -1,4 +1,13 @@
-# GI — ESP32 Controller
+# GI — исходная прошивка
+
+Прошивка платы **PCB_EU / ESP32-WROOM-32E-N4 (4 МБ)** находится в [softwareEU/](../softwareEU/README.md). Её скетч — `softwareEU/softwareEU.ino`, веб-файлы — `softwareEU/data/`.
+
+```sh
+arduino-cli compile --fqbn esp32:esp32:esp32 softwareEU
+node --test tests/settings.test.cjs
+```
+
+Ниже сохранено описание исходной версии `software/`.
 
 Автоматизированная система управления гроубоксом на базе ESP32: климат-контроль, освещение, вентиляция, автополив и обогрев с веб-интерфейсом управления и облачной телеметрией.
 
