@@ -76,7 +76,8 @@ function renderStatus(data) {
         : data.water_present ? 'Вода в баке: есть' : 'Вода в баке: нет';
     waterEl.classList.toggle('warn', noWater);
     // День, когда сработал полив по расписанию (и когда он был пропущен из-за пустого бака)
-    document.getElementById('last-water').textContent = 'Последний полив: ' + formatWaterDay(data.last_water_day, data.date);
+    document.getElementById('last-water').textContent = 'Полив по расписанию: ' +
+        formatWaterDay(data.last_water_day, data.date) + (data.last_water_skipped ? ' — пропущен' : '');
 
     const heaterEl = document.getElementById('heater-val');
     if (data.heater_active) {
@@ -142,7 +143,7 @@ const fanStallSince = [0, 0];
 function renderFanRpm(index, pwm, rpm) {
     const el = document.getElementById(`fan${index + 1}-rpm`);
     const now = Date.now();
-    if (rpm === 0 && pwm >= 77) {
+    if (rpm === 0 && Math.round(pwm / 2.55) >= 30) {
         if (!fanStallSince[index]) fanStallSince[index] = now;
     } else {
         fanStallSince[index] = 0;
@@ -176,7 +177,7 @@ function renderPower(data) {
     energyEl.title = 'С полуночи или с последнего включения платы';
 }
 
-// last_water_day — номер дня (unixtime / 86400) по часам платы; null — полива ещё не было
+// last_water_day — номер дня (unixtime / 86400) по часам платы; null — отметок ещё не было
 function formatWaterDay(code, today) {
     if (typeof code !== 'number' || code <= 0) return 'ещё не было';
     const iso = new Date(code * 86400000).toISOString().slice(0, 10);
@@ -298,7 +299,7 @@ async function drawSvgChart() {
 function drawPowerChart(points) {
     const svg = document.getElementById('powerChart');
     const show = points.length > 0;
-    svg.hidden = !show;
+    svg.toggleAttribute('hidden', !show); // SVG elements have no .hidden property
     document.getElementById('power-chart-title').hidden = !show;
     if (!show) { svg.innerHTML = ''; return; }
 

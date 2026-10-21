@@ -128,7 +128,8 @@ struct State {
   bool heater_active;
   uint8_t rtc_status;      // RtcStatus of the last RTC read
   bool water_present;      // Debounced float switch, whatever water_sensor_enabled says
-  uint32_t last_water_day; // unixtime / 86400 of the last scheduled watering, 0 = never
+  uint32_t last_water_day; // unixtime / 86400 of the day marked as watered, 0 = never
+  uint32_t last_skip_day;  // Same day code when that mark was set but the pump did NOT run (RAM only)
   // INA226 power meter. Display and logging only: no control decision uses it.
   bool power_ok;
   float bus_v;
@@ -1483,6 +1484,8 @@ void setup() {
     json += "\"water_present\":" + String(st.water_present ? "true" : "false") + ",";
     // Day code of the last scheduled watering (local date = code * 86400), null = never.
     json += "\"last_water_day\":" + (st.last_water_day ? String(st.last_water_day) : String("null")) + ",";
+    // True when the marked day passed without the pump running (tank empty, NVS error, mark moved).
+    json += "\"last_water_skipped\":" + String(st.last_water_day && st.last_skip_day == st.last_water_day ? "true" : "false") + ",";
     json += "\"power_ok\":" + String(st.power_ok ? "true" : "false") + ",";
     if (st.power_ok) {
       json += "\"bus_v\":" + String(st.bus_v, 2) + ",";
@@ -1980,6 +1983,7 @@ void loop() {
     if (reconciled != last_watering_day) {
       last_watering_day = reconciled;
       preferences.putUInt("last_water", reconciled);
+      state.last_skip_day = reconciled; // The mark moved to today; nothing was watered today
       logPrintln("[ПОЛИВ] Отметка последнего полива была из будущего — сдвинута на сегодня.");
     }
 
@@ -2006,6 +2010,7 @@ void loop() {
         // Persist before energizing the pump; reboot during this minute must not repeat it.
         last_watering_day = today_code;
         if (preferences.putUInt("last_water", today_code) != sizeof(uint32_t)) {
+          state.last_skip_day = today_code;
           logPrintln("[Watering] NVS write failed; pump remains off.");
         } else if (water_ok) {
           state.pump_active = true;
@@ -2015,6 +2020,7 @@ void loop() {
           if (late_min > 0) logPrintf("[ПОЛИВ] Старт автополива с опозданием на %u мин (плата была недоступна)\n", (unsigned)late_min);
           else logPrintln("[ПОЛИВ] Старт автополива");
         } else {
+          state.last_skip_day = today_code;
           logPrintln("[ПОЛИВ] Пропущен: датчик не видит воду в баке");
         }
       }
