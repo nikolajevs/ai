@@ -35115,6 +35115,11 @@
 			(uuid "efb350a1-a4e3-5628-a6e8-a46670c0a1b9")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/libraries/EU.3dshapes/RAD-DY-GF_3.stp"
+			(offset (xyz 0 -37.55 30))
+			(scale (xyz 1 1 1))
+			(rotate (xyz 0 180 0))
+		)
 	)
 	(footprint "Capacitor_SMD:C_1206_3216Metric"
 		(layer "F.Cu")

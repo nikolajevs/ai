@@ -191,6 +191,7 @@ def heatsink_legs(board, spec):
     fp.Reference().SetLayer(p.F_Fab)
     fp.Reference().SetPosition(point(0, y0 + 7))
     fp.Value().SetVisible(False)
+    set_native(fp, ref)
     for i, field in enumerate(fp.GetFields()):
         identity(field, f'{ref}/field/{i}')
     board.Add(fp)
