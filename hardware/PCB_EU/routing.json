@@ -1,7 +1,7 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
   "date": "2026-10-21",
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -15,7 +15,11 @@
     "LED2_GATE",
     "LED2_GATE_RAW",
     "REVP_GATE",
-    "REVP_MID"
+    "REVP_MID",
+    "+24V_FUSED",
+    "+24V_PTC",
+    "+24V_RAW",
+    "PSU_RTN"
   ],
   "vias": [
     {
@@ -294,6 +298,276 @@
       "at": [
         14.6,
         82.5
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "cu-hub-led2-1",
+      "net": "+24V_FUSED",
+      "at": [
+        43.5,
+        71.65
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-end-1",
+      "net": "+24V_FUSED",
+      "at": [
+        17.9,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-end-2",
+      "net": "+24V_FUSED",
+      "at": [
+        19.1,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-end-3",
+      "net": "+24V_FUSED",
+      "at": [
+        20.3,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-ptc-leg-1",
+      "net": "+24V_PTC",
+      "at": [
+        46.6,
+        84.9
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-ptc-leg-2",
+      "net": "+24V_PTC",
+      "at": [
+        45.65,
+        83.95
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-ptc-leg-3",
+      "net": "+24V_PTC",
+      "at": [
+        44.7,
+        83.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-top-1",
+      "net": "+24V_FUSED",
+      "at": [
+        51.0,
+        28.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-top-2",
+      "net": "+24V_FUSED",
+      "at": [
+        51.0,
+        29.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-mid-1",
+      "net": "+24V_FUSED",
+      "at": [
+        39.7,
+        56.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-low-1",
+      "net": "+24V_FUSED",
+      "at": [
+        29.9,
+        58.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-hub-led2-2",
+      "net": "+24V_FUSED",
+      "at": [
+        42.6,
+        71.3
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-hub-led2-3",
+      "net": "+24V_FUSED",
+      "at": [
+        44.4,
+        70.9
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-mid-2",
+      "net": "+24V_FUSED",
+      "at": [
+        40.6,
+        56.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-led1-low-2",
+      "net": "+24V_FUSED",
+      "at": [
+        30.5,
+        59.2
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-run-1",
+      "net": "+24V_FUSED",
+      "at": [
+        13.0,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-run-2",
+      "net": "+24V_FUSED",
+      "at": [
+        14.6,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-run-3",
+      "net": "+24V_FUSED",
+      "at": [
+        16.2,
+        53.45
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-1",
+      "net": "+24V_FUSED",
+      "at": [
+        9.0,
+        57.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-2",
+      "net": "+24V_FUSED",
+      "at": [
+        9.0,
+        56.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-3",
+      "net": "+24V_FUSED",
+      "at": [
+        9.0,
+        55.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-4",
+      "net": "+24V_FUSED",
+      "at": [
+        10.0,
+        57.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-5",
+      "net": "+24V_FUSED",
+      "at": [
+        10.0,
+        56.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-6",
+      "net": "+24V_FUSED",
+      "at": [
+        10.0,
+        55.4
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "block-oc-2",
+      "net": "BLOCK_OC",
+      "at": [
+        34.55,
+        68.07
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "block-oc-3",
+      "net": "BLOCK_OC",
+      "at": [
+        35.95,
+        62.47
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "block-oc-4",
+      "net": "BLOCK_OC",
+      "at": [
+        43.35,
+        58.77
       ],
       "diameter": 0.6,
       "drill": 0.3
@@ -1853,6 +2127,565 @@
           "via": "u402-gnd"
         }
       ]
+    },
+    {
+      "id": "cu-power-trunk-stub",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 3.0,
+      "points": [
+        [
+          9.2,
+          59.7
+        ],
+        [
+          9.2,
+          56.6
+        ],
+        [
+          10.0,
+          55.8
+        ]
+      ]
+    },
+    {
+      "id": "cu-power-trunk-b",
+      "net": "+24V_FUSED",
+      "layer": "B.Cu",
+      "width": 2.5,
+      "points": [
+        [
+          9.5,
+          56.6
+        ],
+        [
+          9.5,
+          55.9
+        ],
+        [
+          12.1,
+          53.3
+        ],
+        [
+          26.8,
+          53.3
+        ],
+        {
+          "pad": "C101.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-return-input-stub",
+      "net": "PSU_RTN",
+      "layer": "B.Cu",
+      "width": 3.0,
+      "points": [
+        [
+          18.8,
+          56.6
+        ],
+        [
+          18.0,
+          58.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-return-trunk",
+      "net": "PSU_RTN",
+      "layer": "B.Cu",
+      "width": 4.5,
+      "points": [
+        [
+          18.0,
+          58.0
+        ],
+        [
+          12.4,
+          63.6
+        ],
+        {
+          "pad": "Q102.2"
+        }
+      ]
+    },
+    {
+      "id": "cu-raw-trunk",
+      "net": "+24V_RAW",
+      "layer": "F.Cu",
+      "width": 3.0,
+      "points": [
+        [
+          14.0,
+          56.6
+        ],
+        [
+          14.0,
+          57.6
+        ],
+        [
+          12.5,
+          59.1
+        ],
+        [
+          12.5,
+          62.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-raw-neck",
+      "net": "+24V_RAW",
+      "layer": "F.Cu",
+      "width": 2.4,
+      "points": [
+        [
+          12.5,
+          62.0
+        ],
+        [
+          11.2,
+          62.8
+        ],
+        {
+          "pad": "F101.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-hub-branch",
+      "net": "+24V_FUSED",
+      "layer": "B.Cu",
+      "width": 3.0,
+      "points": [
+        {
+          "pad": "C101.1"
+        },
+        [
+          27.5,
+          57.0
+        ],
+        [
+          34.4,
+          63.9
+        ],
+        [
+          34.5,
+          63.9
+        ],
+        [
+          37.2,
+          66.6
+        ],
+        [
+          37.2,
+          68.0
+        ],
+        [
+          40.7,
+          71.5
+        ],
+        [
+          41.4,
+          71.5
+        ],
+        [
+          43.4,
+          73.5
+        ],
+        [
+          43.4,
+          74.9
+        ],
+        [
+          43.9,
+          75.1
+        ]
+      ]
+    },
+    {
+      "id": "cu-led2-feed",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          43.5,
+          71.65
+        ],
+        [
+          43.25,
+          68.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-ptc-feed",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 1.5,
+      "points": [
+        [
+          43.5,
+          71.65
+        ],
+        [
+          43.5,
+          70.8
+        ],
+        [
+          44.6,
+          70.8
+        ],
+        [
+          46.3,
+          72.5
+        ],
+        [
+          46.7,
+          72.9
+        ],
+        [
+          46.7,
+          77.7
+        ],
+        [
+          45.5,
+          78.9
+        ],
+        [
+          45.5,
+          80.9
+        ],
+        [
+          49.3,
+          84.7
+        ],
+        [
+          49.5,
+          84.7
+        ],
+        [
+          50.0,
+          85.2
+        ],
+        [
+          50.0,
+          87.2
+        ],
+        [
+          48.4,
+          88.8
+        ],
+        {
+          "pad": "F102.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-ptc-leg-f",
+      "net": "+24V_PTC",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        {
+          "pad": "F102.2"
+        },
+        [
+          47.9,
+          86.2
+        ],
+        [
+          44.7,
+          83.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-ptc-leg-b",
+      "net": "+24V_PTC",
+      "layer": "B.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          46.6,
+          84.9
+        ],
+        [
+          44.7,
+          83.0
+        ],
+        [
+          44.7,
+          78.4
+        ],
+        [
+          44.1,
+          77.8
+        ],
+        [
+          41.9,
+          77.8
+        ],
+        [
+          40.0,
+          75.9
+        ],
+        [
+          26.2,
+          75.9
+        ],
+        [
+          21.5,
+          80.6
+        ],
+        [
+          21.2,
+          80.7
+        ],
+        [
+          19.3,
+          80.7
+        ],
+        {
+          "pad": "J701.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-led1-feed-f1",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        {
+          "pad": "F103.1"
+        },
+        [
+          51.0,
+          29.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-led1-feed-b",
+      "net": "+24V_FUSED",
+      "layer": "B.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          51.0,
+          27.8
+        ],
+        [
+          51.0,
+          29.0
+        ],
+        [
+          39.7,
+          40.3
+        ],
+        [
+          39.7,
+          52.0
+        ],
+        [
+          39.2,
+          52.5
+        ],
+        [
+          39.2,
+          55.5
+        ],
+        [
+          39.7,
+          56.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-led1-feed-f2",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          39.7,
+          56.0
+        ],
+        [
+          40.4,
+          56.7
+        ],
+        [
+          40.4,
+          58.1
+        ],
+        [
+          38.5,
+          60.0
+        ],
+        [
+          35.7,
+          60.0
+        ],
+        [
+          34.1,
+          58.4
+        ],
+        [
+          29.9,
+          58.4
+        ]
+      ]
+    },
+    {
+      "id": "cu-hub-via-stub",
+      "net": "+24V_FUSED",
+      "layer": "B.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          43.5,
+          71.65
+        ],
+        [
+          44.4,
+          70.9
+        ]
+      ]
+    },
+    {
+      "id": "cu-power-trunk-f",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          10.0,
+          55.8
+        ],
+        [
+          12.2,
+          53.6
+        ],
+        [
+          27.1,
+          53.6
+        ],
+        {
+          "pad": "C101.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-hub-f106",
+      "net": "+24V_FUSED",
+      "layer": "B.Cu",
+      "width": 1.0,
+      "points": [
+        [
+          43.9,
+          75.1
+        ],
+        {
+          "pad": "F106.1"
+        }
+      ]
+    },
+    {
+      "id": "block-oc-b1",
+      "net": "BLOCK_OC",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "block-oc"
+        },
+        [
+          28.75,
+          67.77
+        ],
+        [
+          34.25,
+          67.77
+        ],
+        {
+          "via": "block-oc-2"
+        }
+      ]
+    },
+    {
+      "id": "block-oc-in2",
+      "net": "BLOCK_OC",
+      "layer": "In2.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "block-oc-2"
+        },
+        [
+          35.95,
+          66.67
+        ],
+        {
+          "via": "block-oc-3"
+        }
+      ]
+    },
+    {
+      "id": "block-oc-f",
+      "net": "BLOCK_OC",
+      "layer": "F.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "block-oc-3"
+        },
+        [
+          37.05,
+          61.37
+        ],
+        [
+          40.75,
+          61.37
+        ],
+        {
+          "via": "block-oc-4"
+        }
+      ]
+    },
+    {
+      "id": "block-oc-b2",
+      "net": "BLOCK_OC",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "via": "block-oc-4"
+        },
+        [
+          43.35,
+          60.17
+        ],
+        [
+          43.15,
+          60.37
+        ],
+        [
+          41.85,
+          60.37
+        ],
+        [
+          41.45,
+          59.97
+        ],
+        [
+          41.45,
+          59.47
+        ]
+      ]
     }
   ],
   "zones": [
@@ -2072,6 +2905,39 @@
         "Q102.1",
         "R110.1",
         "R109.2"
+      ]
+    },
+    {
+      "net": "+24V_RAW",
+      "pads": [
+        "J101.1",
+        "F101.1"
+      ]
+    },
+    {
+      "net": "PSU_RTN",
+      "pads": [
+        "J101.2",
+        "Q102.2"
+      ]
+    },
+    {
+      "net": "+24V_PTC",
+      "pads": [
+        "F102.2",
+        "J701.1"
+      ]
+    },
+    {
+      "net": "+24V_FUSED",
+      "pads": [
+        "F101.2",
+        "C101.1",
+        "F105.1",
+        "F103.1",
+        "F102.1",
+        "F104.1",
+        "F106.1"
       ]
     }
   ]
