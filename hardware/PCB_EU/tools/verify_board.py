@@ -15,6 +15,8 @@ import xml.etree.ElementTree as ET
 
 import pcbnew as p
 
+from stackup import BOARD_MM
+
 HERE = Path(__file__).resolve().parents[1]
 
 
@@ -88,7 +90,7 @@ def check(board_path, output=None):
     require(set(fps) == set(comps) | set(holes) | {legs['ref']}, 'PCB/netlist/board-only reference sets differ')
     require(set(layout['placements']) == set(comps), 'Placement/netlist reference sets differ')
     require(board.GetCopperLayerCount() == layout['copper_layers'] == 4, 'Expected four copper layers')
-    require(abs(p.ToMM(board.GetDesignSettings().GetBoardThickness()) - 1.6) < 1e-5, 'Expected 1.6 mm PCB')
+    require(abs(p.ToMM(board.GetDesignSettings().GetBoardThickness()) - BOARD_MM) < 1e-5, f'Expected {BOARD_MM:g} mm PCB (JLC04161H-7628 stack)')
     if not (HERE / 'routing.json').exists():
         require(not list(board.GetTracks()), 'No routing plan: unexpected tracks or vias')
         require(all(z.GetIsRuleArea() for z in board.Zones()), 'No routing plan: unexpected copper zones')

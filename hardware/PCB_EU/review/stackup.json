@@ -1,14 +1,14 @@
 {
-  "board_mm": 1.6,
+  "board_mm": 1.6062,
   "copper_layers": 4,
   "copper_um": {
     "F.Cu": 35.0,
-    "In1.Cu": 17.5,
-    "In2.Cu": 17.5,
+    "In1.Cu": 15.2,
+    "In2.Cu": 15.2,
     "B.Cu": 35.0
   },
-  "stack_total_including_masks_mm": 1.6,
-  "dielectric_schedule": "existing schedule preserved; not qualified by this check",
+  "stack_total_including_masks_mm": 1.6062,
+  "dielectric_schedule": "JLCPCB JLC04161H-7628, same as PCB_V1 and cheap-version (FAB.md)",
   "factory_stackup_approved": false,
   "impedance_control_verified": false,
   "plating_and_finished_copper_tolerances_verified": false

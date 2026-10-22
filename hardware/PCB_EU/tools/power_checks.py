@@ -9,7 +9,7 @@ import pcbnew as p
 
 from ampacity import SCENARIOS, analyze_net
 from aux_power import CASES
-from stackup import check_text
+from stackup import INNER_UM, OUTER_UM, check_text
 
 HERE = Path(__file__).resolve().parents[1]
 
@@ -27,7 +27,7 @@ def main():
     flags = []
     for scale in [.5, 1, 2]:
         for net, (source, sinks) in SCENARIOS.items():
-            result = analyze_net(board, pads, net, source, sinks, 35, 17.5, scale)
+            result = analyze_net(board, pads, net, source, sinks, OUTER_UM, INNER_UM, scale)
             result['via_resistance_scale'] = scale
             if 'error' in result:
                 raise RuntimeError(result)
@@ -35,7 +35,7 @@ def main():
             flags.extend(dict(net=net, scale=scale, **v) for v in result['vias_over_limit'])
     aux = []
     for net, (source, sinks) in CASES.items():
-        result = analyze_net(board, pads, net, source, sinks, 35, 17.5)
+        result = analyze_net(board, pads, net, source, sinks, OUTER_UM, INNER_UM)
         if 'error' in result:
             raise RuntimeError(result)
         aux.append(result)
@@ -58,7 +58,7 @@ def main():
                            actual_current_sharing_qualified=False))
     report = dict(date='2026-10-22', kicad_version=p.Version(),
                   status='DC pre-prototype screening; no fabrication release',
-                  stackup=stack, outer_um=35, inner_um=17.5,
+                  stackup=stack, outer_um=OUTER_UM, inner_um=INNER_UM,
                   via_resistance_scales=[.5, 1, 2], input_current_a=9.5,
                   cases=cases, auxiliary_cases=aux, ground_via_banks=ground,
                   unresolved_screening_flags=flags,
