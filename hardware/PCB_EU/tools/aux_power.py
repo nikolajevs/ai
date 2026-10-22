@@ -17,6 +17,7 @@ import pcbnew as p
 
 from ampacity import analyze_net
 from models3d import spans
+from stackup import INNER_UM, OUTER_UM
 from verify_footprints import parse, child
 
 HERE = Path(__file__).resolve().parents[1]
@@ -102,7 +103,7 @@ def update_text(text, selected):
 def check_cases(board):
     pads = {fp.GetReference() + '.' + pad.GetNumber(): pad
             for fp in board.GetFootprints() for pad in fp.Pads()}
-    return [analyze_net(board, pads, net, source, sinks, 35, 17.5)
+    return [analyze_net(board, pads, net, source, sinks, OUTER_UM, INNER_UM)
             for net, (source, sinks) in CASES.items()]
 
 
@@ -128,7 +129,7 @@ def main():
         raise RuntimeError(errors)
     hot = [dict(net=v['net'], **s) for v in cases for s in v['segments'] if s['dt_ipc2221_c'] > 30]
     excessive_vias = [dict(net=v['net'], **via) for v in cases for via in v['vias_over_limit']]
-    report = dict(pcbnew_version=p.Version(), outer_um=35, inner_um=17.5,
+    report = dict(pcbnew_version=p.Version(), outer_um=OUTER_UM, inner_um=INNER_UM,
                   screening_only=True, thermal_qualified=False,
                   assumptions=['12 V fans allocated 0.45 A each (0.9 A total, above documented 10 W steady budget)',
                                '12 V logic input allocated 0.27 A plus 12 mA driver/comparator allowance',

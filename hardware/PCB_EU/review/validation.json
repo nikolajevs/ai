@@ -151,9 +151,9 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+      "PCB_EU.kicad_pcb": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96",
       "placement.json": "d6f920cacab23ac8ef522d21cca8c9045977e8cbf65691864844b187c07e85f0",
-      "netlist.xml": "e9baebabfe8410e2efb14585216664c782683d20be3d41664b325734e884478c"
+      "netlist.xml": "e1948ecdb58b73d03094635f5d292cd490cf8dc228c37c7522ae8bbe7b954e53"
     }
   },
   "pcb_routing": {
@@ -472,7 +472,7 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+      "PCB_EU.kicad_pcb": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96",
       "routing.json": "01444fa459a04cdfadb7caed8469813db6e3eb7429055e26766db1db01708242",
       "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
       "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
@@ -495,7 +495,7 @@
     "Loads.kicad_sch": "f54196325e04cd588366920d008135e06e11ddaa7752a6c15ea40e720a5d18ea",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "edd74546c3a662048c2f81cace7014020026bf6586abc6b7333db7df5644bfc7",
-    "PCB_EU.kicad_pcb": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+    "PCB_EU.kicad_pcb": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
@@ -583,8 +583,8 @@
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7",
     "routing.json": "01444fa459a04cdfadb7caed8469813db6e3eb7429055e26766db1db01708242",
     "sym-lib-table": "5841b81e90fe3d0162d39abf67b0319073ad80122469018df6212ccd5957381f",
-    "tools/ampacity.py": "1ed22260cab4f1dadfe91814ffa3b298b147a86343d56d4115f5551a60aa59b2",
-    "tools/aux_power.py": "c5e0bcb84c712c2277343d59cb2cdade91c224c09680a90fe4ba6aeb6457ce1f",
+    "tools/ampacity.py": "368714ea66e75eea576c74e96e4980297c1a54cf8f794a695792e5178885d3f4",
+    "tools/aux_power.py": "8d7e449acba1320bda23aadebd27de50c1bd840d7300b6f1a07afbae1662e061",
     "tools/build_board.py": "8b43781fb54dd8cd08184f9f02b70dcca18f87bf40a7a578afcf8480503537f5",
     "tools/check_footprint_drc.py": "54a1309792ef0f017b702e243baa542a95173165322e42d049ed9be08a89aef5",
     "tools/generate.py": "17e6cfd36bfd785afc7f43d8265e773bc618ca47e8629aaf15b90f4315db3c0c",
@@ -592,16 +592,16 @@
     "tools/make_models3d.py": "bec9a1815b60ca388d674b5ebc57fdb80c2453f4b22811f59f63b70fb48c6946",
     "tools/models3d.py": "f7bb05f9f3079a609a0aa73805998c0277b65e8a9549080647ec9cd34eb37bb2",
     "tools/plot_board.py": "9e92878aa440640dd6ff0dd9e7b19e3b0f4c1e5bc6dd9029c1100fbb9576b975",
-    "tools/power_checks.py": "d6f30a60aecd32d24d91abb7c514a7c6d04f12ba3266bf9a5d664bd9d4c45520",
+    "tools/power_checks.py": "0934ee53d90abab07cb904935754eb1459a93d778936e737207bf8bb375defc8",
     "tools/route_board.py": "5158274c62e6d77294b1985db9a2e8de64a50a87fe8bf71b6e2161e858030c54",
     "tools/route_complete.py": "1ccaeaa4f03939eb219083405b890aac8c94249e47fc50554b7dd982132a12fc",
     "tools/route_power.py": "a24ba232dda227646f6c6046a6590eadca91ffd5591dbfea27b02d2c185dc6e5",
     "tools/run_checks.py": "a43c4630ac688fbd814298f6926df277d66e679cdbe729980751f7163dfc99a2",
     "tools/silkscreen.py": "5c908d0a49755c82c319428791b4db587da9a432710ca56ade52a8d376b0943d",
-    "tools/stackup.py": "0b6fc5c2ecb0f3dec7d88c8b0c722d2dca27d3c25d38290ca3ddfcce62542693",
+    "tools/stackup.py": "8ab24b26b550af7d1779c8fd813678de520c7cb059785811340bd65b4ad4eea3",
     "tools/test_ampacity.py": "c5882ae84cfc02b1cf80890c060e3361e713a12d96ed8d467b6d304d0ca7c616",
     "tools/verify.py": "9a0334874a2b5ce06aebaf67c5d3ad15e825586a9a46543881b7a2ab2e4ce1f2",
-    "tools/verify_board.py": "a4418975ea0fdca43ffedce2c6de21bc6e2122b523147487dd47979d4f8294f2",
+    "tools/verify_board.py": "2ed991d1046a79c3ff50b30a151400ed48c12a80abc53e154a8441d27bea294c",
     "tools/verify_footprints.py": "88ef857a544842462dac457bdb179947675bcd86aed6b2e8a4ab46ef54f7a4d4",
     "tools/verify_routing.py": "baca276675bad8e54e9c4d13c679f5b5e189fc101feb5c3aa1bf75c35b12c6c4"
   },
@@ -3587,20 +3587,20 @@
         "reason": "no clear space for readable reference on component side"
       }
     ],
-    "base_pcb_sha256": "4f60d2b446791d36268541aa71ff4174288ca8102144ce1add312a9dda98e316",
-    "source_sha256": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612"
+    "base_pcb_sha256": "fdc583ead2e743389379c568388dfd5b1f64e87495b5dc170c88bc3ded3fbab1",
+    "source_sha256": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96"
   },
   "stackup": {
-    "board_mm": 1.6,
+    "board_mm": 1.6062,
     "copper_layers": 4,
     "copper_um": {
       "F.Cu": 35.0,
-      "In1.Cu": 17.5,
-      "In2.Cu": 17.5,
+      "In1.Cu": 15.2,
+      "In2.Cu": 15.2,
       "B.Cu": 35.0
     },
-    "stack_total_including_masks_mm": 1.6,
-    "dielectric_schedule": "existing schedule preserved; not qualified by this check",
+    "stack_total_including_masks_mm": 1.6062,
+    "dielectric_schedule": "JLCPCB JLC04161H-7628, same as PCB_V1 and cheap-version (FAB.md)",
     "factory_stackup_approved": false,
     "impedance_control_verified": false,
     "plating_and_finished_copper_tolerances_verified": false
@@ -3609,7 +3609,7 @@
     "report": "review/power_copper.json",
     "dc_screening_cases": 27,
     "unresolved_screening_flags": 0,
-    "source_sha256": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+    "source_sha256": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96",
     "thermal_qualified": false
   }
 }

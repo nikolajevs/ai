@@ -15,7 +15,7 @@ is not checked). Vias are compared with a rule of thumb (about 1 A per 0.3 mm dr
 not a formula. The GND return, pours and the 12 V / 3.3 V rails
 are not covered. Currents are worst-case design values, not measurements.
 
-    python3 tools/ampacity.py [--board PCB_EU.kicad_pcb] [--outer-um 35] [--inner-um 17.5] [--json OUT]
+    python3 tools/ampacity.py [--board PCB_EU.kicad_pcb] [--outer-um 35] [--inner-um 15.2] [--json OUT]
 """
 import argparse
 import collections
@@ -27,6 +27,8 @@ from pathlib import Path
 
 import numpy as np
 import pcbnew
+
+from stackup import INNER_UM, OUTER_UM
 
 HERE = Path(__file__).resolve().parents[1]
 RHO = 1.72e-5      # copper, ohm * mm at 20 C
@@ -261,8 +263,8 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um, via_resista
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--board', type=Path, default=HERE / 'PCB_EU.kicad_pcb')
-    ap.add_argument('--outer-um', type=float, default=35.0, help='outer copper thickness, um (35 = 1 oz)')
-    ap.add_argument('--inner-um', type=float, default=17.5, help='inner copper thickness, um (17.5 = 0.5 oz)')
+    ap.add_argument('--outer-um', type=float, default=OUTER_UM, help='outer copper thickness, um (35 = 1 oz)')
+    ap.add_argument('--inner-um', type=float, default=INNER_UM, help='inner copper thickness, um (15.2 = 0.5 oz as JLCPCB finishes it)')
     ap.add_argument('--via-resistance-scale', type=float, default=1.0,
                     help='sensitivity multiplier for assumed via barrel resistance (e.g. 0.5, 1, 2); not an ampacity rating')
     ap.add_argument('--json', type=Path, help='also write the result as JSON')

@@ -2970,6 +2970,6 @@
       "reason": "no clear space for readable reference on component side"
     }
   ],
-  "base_pcb_sha256": "4f60d2b446791d36268541aa71ff4174288ca8102144ce1add312a9dda98e316",
-  "source_sha256": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612"
+  "base_pcb_sha256": "fdc583ead2e743389379c568388dfd5b1f64e87495b5dc170c88bc3ded3fbab1",
+  "source_sha256": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96"
 }

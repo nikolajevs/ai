@@ -84,6 +84,8 @@ python3 hardware/PCB_EU/tools/generate.py
 
 ## Проверка силовой меди и стека
 
+Стек платы — JLCPCB JLC04161H-7628, как у PCB_V1 и cheap-version (медь 1 oz снаружи и 15,2 мкм внутри, всего 1,6062 мм); числа заданы в `tools/stackup.py`, расчёт меди берёт их оттуда.
+
 С установленным KiCad 10 Python (NumPy, Shapely 2):
 
 ```sh
