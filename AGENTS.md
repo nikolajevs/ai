@@ -1,6 +1,7 @@
 # AI development instructions
 
-This repository uses a shared KiCad VPS workstation for hardware development.
+The former KiCad VPS workstation was decommissioned on 2026-10-22.
+Develop and validate hardware in a separate environment with KiCad installed.
 
 ## Source of truth
 
@@ -18,19 +19,14 @@ Primary KiCad project:
 
 `hardware/PCB_V1/PCB_V1.kicad_pro`
 
-VPS KiCad version:
+## VPS status
 
-`10.0.6`
+KiCad, its libraries, service unit files and `~/kicad/` checkouts/worktrees
+were removed from the VPS on 2026-10-22. Do not assume `kicad-cli` or the old
+`ai-codex` / `ai-claude` launchers work there. See `vps-docs/README.md` for the
+cleanup evidence, access limitations and remaining service documentation.
 
-## VPS layout
-
-The VPS is a persistent remote KiCad workstation.
-
-- Main checkout: `~/kicad/main`
-- Task worktrees: `~/kicad/worktrees/`
-- Full VPS setup, access, operations and troubleshooting: `vps-docs/README.md`
-
-When working on the VPS, read `vps-docs/README.md` before changing workstation configuration.
+Do not recreate the workstation unless explicitly requested.
 
 ## Git / worktree workflow
 
@@ -39,17 +35,20 @@ Before starting work:
 1. Fetch the latest repository state.
 2. Start from `origin/main`.
 3. Create or use a dedicated task branch.
-4. If working on the VPS, use a separate Git worktree under `~/kicad/worktrees/`.
+4. In an isolated cloud task, use the existing checkout; do not create a worktree unless requested.
 5. Do not modify another agent's worktree.
 6. Make focused commits.
 7. Push the branch to GitHub.
 8. Merge only after checks and review.
 
-ChatGPT and Claude may work in parallel, but they should use different branches/worktrees.
+ChatGPT and Claude may work in parallel, but they should use separate branches
+and isolated checkouts, or separate worktrees when explicitly requested.
 
 ## Validation
 
-For PCB-related changes, run from the repository's `hardware` directory:
+For PCB-related changes, use an environment with KiCad, its Python bindings
+and standard libraries configured. The former VPS no longer provides them.
+Run from the repository's `hardware` directory:
 
 ```bash
 KICAD_CLI=/usr/bin/kicad-cli \
