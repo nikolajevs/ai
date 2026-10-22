@@ -150,9 +150,9 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
+      "PCB_EU.kicad_pcb": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
       "placement.json": "65a49086df11323fb6463a77e2243bb313046b89f806148e74abc4066332a1ea",
-      "netlist.xml": "c2a7eab2c85ed8099e4a5ef1b9e163846d6324e7d10a7d254a993a76449f25d5"
+      "netlist.xml": "5aa387a7c73113e101f4f7aebea4b59d406fc1d235d1ff4426f7bcf07be7e8aa"
     }
   },
   "pcb_routing": {
@@ -471,7 +471,7 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
+      "PCB_EU.kicad_pcb": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
       "routing.json": "8e691a432a02af5bc45557fef370656afb41e5f5df27739af101c2e780d3555d",
       "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
       "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
@@ -494,7 +494,7 @@
     "Loads.kicad_sch": "f54196325e04cd588366920d008135e06e11ddaa7752a6c15ea40e720a5d18ea",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "edd74546c3a662048c2f81cace7014020026bf6586abc6b7333db7df5644bfc7",
-    "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
+    "PCB_EU.kicad_pcb": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
@@ -505,7 +505,7 @@
     "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "086ebca74c6e7ba5115d2070d6ba08a54c2599b07546233dd7aa082fc64a08e4",
     "libraries/Capacitor_THT.pretty/CP_Radial_D10.0mm_P5.00mm.kicad_mod": "b8f3874639396a7ac300091c530daf22648720a6dd95031cccf5db0d75ed4e58",
     "libraries/Capacitor_THT.pretty/CP_Radial_D8.0mm_P5.00mm.kicad_mod": "4fa16ff8846adcb0403fd4bd94142e4694c7881e9de99d730c28b9839efa9d2f",
-    "libraries/Connector_JST.pretty/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.kicad_mod": "5316a86a14ff9158d73341cff19d97d69768ff63074801af60535853ed44f48c",
+    "libraries/Connector_JST.pretty/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.kicad_mod": "52e2401d758e0f1cb88827465d1fdf589b428100f4295d59061257a5838946cb",
     "libraries/Connector_Molex.pretty/Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical.kicad_mod": "8781c2110dfdf6403aa5df619bfdaeeddff5105c4a1725ef77102f9083dffadd",
     "libraries/Connector_PinHeader_2.54mm.pretty/PinHeader_1x06_P2.54mm_Vertical.kicad_mod": "4832053ad569fbf62d0a78b570a46bcd07f204933d04be4dcf46efbff7d98a83",
     "libraries/Diode_SMD.pretty/D_MiniMELF.kicad_mod": "2c82c5267b15842ba9644827a3fe9948c541d261b7daa37d5a8d4d2683627c70",
@@ -521,8 +521,8 @@
     "libraries/EU.3dshapes/ESP32-WROOM-32E.step": "57f41a512434023f19bef010df050e42a80a478b62cf87b8b96868b490791bee",
     "libraries/EU.3dshapes/Fuse_Schurter_UMT250.step": "d0c99042d8c578fb3cc0eed44e95057f25545a6871ddaecb291aa0f9d15fc6a7",
     "libraries/EU.3dshapes/Fuse_Schurter_UST_USI1206.step": "3a1ba04aab1b68adad3c31ffc4731e5b5faffac31504a07d5f9dd0c64cd04f89",
-    "libraries/EU.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step": "5a64a9bcf2a4e71d73522b5213a8af062113d5a0e626da3360749df87814ca36",
-    "libraries/EU.3dshapes/LICENSE-KiCad.md": "285b027a721577d0bc0198f36e948c6c282ddaa4b58fef8ed826749576eb0aef",
+    "libraries/EU.3dshapes/JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step": "f8273dba31216ceab2e7e465d64367bdecb5be82b9851c1e0d8468de8dac97ae",
+    "libraries/EU.3dshapes/LICENSE-KiCad.md": "ffc92f47ff4e8b80e00e48a871d3ab61cd312938bf60bec08558051a7862ba15",
     "libraries/EU.3dshapes/LICENSE-own-models.txt": "974e847afeafbfb331c59a4c7134df661bcce7b08e50065b99acbb2f401f363a",
     "libraries/EU.3dshapes/L_Bourns_SRN6045.step": "ea9eb4b09f5029b99fde1bc08824ea25d8082378a5a8b8ec112abf69e7617fb3",
     "libraries/EU.3dshapes/L_Jantek_JNRH1207.step": "203c31d29b8ed8438fcb6d9de9011daa611d3ef5223ce20fea08bc44d48f6a8f",
@@ -576,7 +576,7 @@
     "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "63307caf675e2c1602ccc769f48ff311532e63ce2d8a15a69705675cf1fce80f",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "288a53fad2a613aeaf4ef9577ad7bfb63a8bcbecd8a2dc108d85499baf619be2",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "94cfe0c5bc119601c27b70b1027adfd7a136336b6af513b1c35fbe9cd859ab86",
-    "models3d.json": "fa80de71258392d255aaba7ec2398412c62719734c21e51af4bf279e274b419e",
+    "models3d.json": "d96ae389a7cf872cd6ab94299d1d19d1bee667f4e131b6d705b855a095e0bb06",
     "placement.json": "65a49086df11323fb6463a77e2243bb313046b89f806148e74abc4066332a1ea",
     "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7",
@@ -596,7 +596,7 @@
     "tools/route_complete.py": "1ccaeaa4f03939eb219083405b890aac8c94249e47fc50554b7dd982132a12fc",
     "tools/route_power.py": "a24ba232dda227646f6c6046a6590eadca91ffd5591dbfea27b02d2c185dc6e5",
     "tools/run_checks.py": "a43c4630ac688fbd814298f6926df277d66e679cdbe729980751f7163dfc99a2",
-    "tools/silkscreen.py": "a1ebb95dc3cfcd8d9f7e14ce2bff3878731648e7c3af236637b930d3408043f2",
+    "tools/silkscreen.py": "d945916b7f75867ad27df5df19181838d1e93f93ef10be1f96ff05c3d2289aed",
     "tools/stackup.py": "0b6fc5c2ecb0f3dec7d88c8b0c722d2dca27d3c25d38290ca3ddfcce62542693",
     "tools/test_ampacity.py": "c5882ae84cfc02b1cf80890c060e3361e713a12d96ed8d467b6d304d0ca7c616",
     "tools/verify.py": "9a0334874a2b5ce06aebaf67c5d3ad15e825586a9a46543881b7a2ab2e4ce1f2",
@@ -618,13 +618,19 @@
     "pcbnew_version": "10.0.7",
     "minimum_text_mm": 0.8,
     "stroke_mm": 0.15,
-    "generated_labels": 178,
+    "generated_labels": 185,
     "labels_by_face": {
-      "F": 75,
-      "B": 103
+      "F": 81,
+      "B": 104
     },
     "references_placed": 89,
-    "preserved_native_marks": "electrolytic + / negative half-disc, diode cathode outlines, pin-1 keys; Fab references unchanged",
+    "ic_pin1_dots": 7,
+    "ic_native_pin1_marks": [
+      "U202",
+      "U501",
+      "U601"
+    ],
+    "preserved_native_marks": "electrolytic + / negative half-disc, diode cathode outlines; library IC footprints without a silk pin-1 mark get a dot; native marks are kept; Fab references unchanged",
     "non_silkscreen_data_unchanged": true,
     "labels": [
       {
@@ -1931,6 +1937,125 @@
         "uuid": "c7ac1d81-ff1a-5452-9b86-2e37c3263b6c",
         "pin": "3",
         "net": "BLOCK_OC"
+      },
+      {
+        "name": "U101/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U101",
+        "side": "F",
+        "pin": "1",
+        "net": "+12V",
+        "at": [
+          20.7488,
+          63.9913
+        ],
+        "diameter_mm": 0.6,
+        "nearer_than_other_pads_mm": 0.25,
+        "nearer_than_other_parts_mm": 0.3,
+        "under_body": false,
+        "uuid": "b60ac201-9262-5b6f-bf03-b65a5f556e4b"
+      },
+      {
+        "name": "U102/pin/1/dot/B",
+        "kind": "dot",
+        "ref": "U102",
+        "side": "B",
+        "pin": "1",
+        "net": "GND",
+        "at": [
+          13.2084,
+          86.5818
+        ],
+        "diameter_mm": 0.6,
+        "nearer_than_other_pads_mm": 0.25,
+        "nearer_than_other_parts_mm": 0.3,
+        "under_body": false,
+        "uuid": "f8ebc403-e897-54b4-b57e-7687e73175b0"
+      },
+      {
+        "name": "U201/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U201",
+        "side": "F",
+        "pin": "1",
+        "net": "+3V3",
+        "at": [
+          37.741,
+          38.0542
+        ],
+        "diameter_mm": 0.5,
+        "nearer_than_other_pads_mm": 0.05,
+        "nearer_than_other_parts_mm": null,
+        "under_body": true,
+        "uuid": "2311c710-77bb-5648-aebb-72a5e44f8629"
+      },
+      {
+        "name": "U301/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U301",
+        "side": "F",
+        "pin": "1",
+        "net": "RTC_X1",
+        "at": [
+          24.0478,
+          41.8345
+        ],
+        "diameter_mm": 0.6,
+        "nearer_than_other_pads_mm": 0.25,
+        "nearer_than_other_parts_mm": 0.3,
+        "under_body": false,
+        "uuid": "473a1541-63e5-5d39-adf3-9239f1105da3"
+      },
+      {
+        "name": "U401/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U401",
+        "side": "F",
+        "pin": "1",
+        "net": "SHT_SDA",
+        "at": [
+          11.05,
+          87.0375
+        ],
+        "diameter_mm": 0.5,
+        "nearer_than_other_pads_mm": 0.05,
+        "nearer_than_other_parts_mm": null,
+        "under_body": true,
+        "uuid": "b86c5cc7-d356-5650-967a-39c059fbc7c6"
+      },
+      {
+        "name": "U402/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U402",
+        "side": "F",
+        "pin": "1",
+        "net": "FLOAT_EXT",
+        "at": [
+          11.241,
+          82.5542
+        ],
+        "diameter_mm": 0.5,
+        "nearer_than_other_pads_mm": 0.05,
+        "nearer_than_other_parts_mm": null,
+        "under_body": true,
+        "uuid": "e09810ff-f230-52fe-8a0e-29372d189b9c"
+      },
+      {
+        "name": "U802/pin/1/dot/F",
+        "kind": "dot",
+        "ref": "U802",
+        "side": "F",
+        "pin": "1",
+        "net": "BLOCK_OC",
+        "at": [
+          42.0478,
+          60.8555
+        ],
+        "diameter_mm": 0.6,
+        "nearer_than_other_pads_mm": 0.25,
+        "nearer_than_other_parts_mm": 0.3,
+        "under_body": false,
+        "uuid": "074759e0-cff3-5192-9306-ac29bfeb3fbf"
       },
       {
         "name": "BT301/reference",
@@ -3476,8 +3601,8 @@
         "reason": "no clear space for readable reference on component side"
       }
     ],
-    "base_pcb_sha256": "d3a66c9cf210b340bc80bebe411e925b42f51c2f75f2e2c2e7c356e131550ff9",
-    "source_sha256": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de"
+    "base_pcb_sha256": "66a7efff0b2c8769be693da279c24a7cddb2b4368affbf18d391ef2f17725460",
+    "source_sha256": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443"
   },
   "stackup": {
     "board_mm": 1.6,
@@ -3498,7 +3623,7 @@
     "report": "review/power_copper.json",
     "dc_screening_cases": 27,
     "unresolved_screening_flags": 0,
-    "source_sha256": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
+    "source_sha256": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
     "thermal_qualified": false
   }
 }
