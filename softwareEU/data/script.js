@@ -56,6 +56,9 @@ function renderStatus(data) {
     document.getElementById('led-val').innerHTML = Math.round(data.led / 2.55) + '<span class="unit">%</span>';
     document.getElementById('fan1-val').innerHTML = Math.round(data.fan1 / 2.55) + '<span class="unit">%</span>';
     document.getElementById('fan2-val').innerHTML = Math.round(data.fan2 / 2.55) + '<span class="unit">%</span>';
+    renderFanRpm(0, data.fan1, data.fan1_rpm);
+    renderFanRpm(1, data.fan2, data.fan2_rpm);
+    renderPower(data);
 
     document.getElementById('box-time').innerText = data.time;
 
@@ -67,6 +70,14 @@ function renderStatus(data) {
         pumpEl.innerText = 'Выключен';
         pumpEl.style.color = 'var(--text-muted)';
     }
+    const waterEl = document.getElementById('water-level');
+    const noWater = data.water_sensor_enabled && !data.water_present;
+    waterEl.textContent = !data.water_sensor_enabled ? 'Датчик воды выключен'
+        : data.water_present ? 'Вода в баке: есть' : 'Вода в баке: нет';
+    waterEl.classList.toggle('warn', noWater);
+    // День, когда сработал полив по расписанию (и когда он был пропущен из-за пустого бака)
+    document.getElementById('last-water').textContent = 'Полив по расписанию: ' +
+        formatWaterDay(data.last_water_day, data.date) + (data.last_water_skipped ? ' — пропущен' : '');
 
     const heaterEl = document.getElementById('heater-val');
     if (data.heater_active) {
@@ -111,17 +122,67 @@ function renderStatus(data) {
     document.querySelectorAll('[data-growing-only]').forEach(el => { el.hidden = drying; });
     document.getElementById('power-title').textContent = drying ? 'Силовые цепи' : 'Освещение и Силовые цепи';
 
-    // Без доверенных часов прошивка не поливает — и раньше нигде об этом не сообщала
+    // Без доверенных часов прошивка не начинает полив. Раньше любая проблема с часами
+    // показывалась как "Часы не выставлены", даже когда микросхема RTC просто не отвечала.
     const warnEl = document.getElementById('clock-warning');
-    if (!data.clock_trusted) {
-        warnEl.textContent = drying ? 'Часы не выставлены' : 'Часы не выставлены — полив выключен';
-        warnEl.hidden = false;
-    } else if (!data.rtc_online) {
-        warnEl.textContent = 'RTC не отвечает — время по таймеру';
-        warnEl.hidden = false;
+    const wateringNote = drying ? '' : ' — полив выключен';
+    if (data.clock_trusted) {
+        warnEl.hidden = true;
     } else {
+        warnEl.textContent = (data.rtc_status === 'no_response' ? 'Часы RTC не отвечают'
+            : data.rtc_status === 'not_set' ? 'Часы не выставлены'
+            : 'Проверка часов') + wateringNote; // RTC снова читается, доверие вернётся через ~1 мин
+        warnEl.hidden = false;
+    }
+}
+
+// Обороты нужны только для диагностики. Если вентилятор крутится на 30% и больше, а сигнала
+// оборотов нет дольше 30 с — он стоит или не подключён провод тахометра.
+const FAN_STALL_HINT_MS = 30000;
+const fanStallSince = [0, 0];
+function renderFanRpm(index, pwm, rpm) {
+    const el = document.getElementById(`fan${index + 1}-rpm`);
+    const now = Date.now();
+    if (rpm === 0 && Math.round(pwm / 2.55) >= 30) {
+        if (!fanStallSince[index]) fanStallSince[index] = now;
+    } else {
+        fanStallSince[index] = 0;
+    }
+    const stalled = fanStallSince[index] && now - fanStallSince[index] >= FAN_STALL_HINT_MS;
+    if (typeof rpm !== 'number') {
+        el.textContent = '-- об/мин (помехи)'; // Прошивка отбросила неправдоподобное значение
+    } else {
+        el.textContent = stalled ? '0 об/мин — нет сигнала оборотов' : `${rpm} об/мин`;
+    }
+    el.classList.toggle('warn', Boolean(stalled));
+}
+
+function renderPower(data) {
+    const valueEl = document.getElementById('power-val');
+    const detailsEl = document.getElementById('power-details');
+    const warnEl = document.getElementById('power-warning');
+    if (data.power_ok) {
+        const watts = data.power_w < 10 ? data.power_w.toFixed(1) : Math.round(data.power_w);
+        valueEl.innerHTML = watts + '<span class="unit">Вт</span>';
+        detailsEl.textContent = `${data.bus_v.toFixed(1)} В · ${data.current_a.toFixed(2)} А`;
+        warnEl.textContent = 'Низкое напряжение питания — проверьте блок 24 В';
+        warnEl.hidden = !data.bus_low;
+    } else {
+        valueEl.innerHTML = '--<span class="unit">Вт</span>';
+        detailsEl.textContent = 'нет данных от INA226';
         warnEl.hidden = true;
     }
+    const energyEl = document.getElementById('energy-val');
+    energyEl.textContent = typeof data.energy_kwh === 'number' ? `Сегодня: ${data.energy_kwh.toFixed(2)} кВт·ч` : 'Сегодня: -- кВт·ч';
+    energyEl.title = 'С полуночи или с последнего включения платы';
+}
+
+// last_water_day — номер дня (unixtime / 86400) по часам платы; null — отметок ещё не было
+function formatWaterDay(code, today) {
+    if (typeof code !== 'number' || code <= 0) return 'ещё не было';
+    const iso = new Date(code * 86400000).toISOString().slice(0, 10);
+    if (iso === today) return 'сегодня';
+    return `${iso.slice(8, 10)}.${iso.slice(5, 7)}.${iso.slice(0, 4)}`;
 }
 
 async function drawSvgChart() {
@@ -136,11 +197,13 @@ async function drawSvgChart() {
         if (lines.length <= 1) {
             document.getElementById('svgChart').innerHTML = `<text x="500" y="200" fill="var(--text-muted)" text-anchor="middle" font-size="16">Нет записей лога за выбранный день</text>`;
             chartPoints = [];
+            drawPowerChart([]);
             return;
         }
 
         const dataLines = lines.slice(1);
         const data = [];
+        const power = [];
         // Берем каждую точку для отображения суточного хода (так как точек за день много, прореживаем по надобности)
         // Для суточного файла можно отображать каждую 10-ю или 15-ю запись для красивой плавности
         const step = dataLines.length > 300 ? Math.floor(dataLines.length / 100) : 1; 
@@ -148,15 +211,20 @@ async function drawSvgChart() {
         for (let i = 0; i < dataLines.length; i += step) {
             const cols = dataLines[i].split(';');
             if (cols.length < 3) continue;
+            // Извлекаем "HH:MM" из полной метки времени YYYY-MM-DDTHH:MM:SS
+            const timePart = cols[0].split('T')[1]?.substring(0, 5) || "--:--";
+            // 9-я колонка power_w появилась вместе с INA226: средняя мощность за 10 минут.
+            // В старых файлах её нет, пустая — мощность в этот интервал неизвестна.
+            const watts = cols.length >= 9 && cols[8].trim() !== '' ? parseFloat(cols[8]) : NaN;
+            if (Number.isFinite(watts)) power.push({ time: timePart, watts });
             // Строки, записанные при отказавшем датчике (sht_ok = 0), хранят последнее старое
             // значение — на графике оно выглядело бы как настоящее измерение
             if (cols.length >= 7 && cols[6].trim() === '0') continue;
             const temp = parseFloat(cols[1]), hum = parseFloat(cols[2]);
             if (!Number.isFinite(temp) || !Number.isFinite(hum)) continue;
-            // Извлекаем "HH:MM" из полной метки времени YYYY-MM-DDTHH:MM:SS
-            const timePart = cols[0].split('T')[1]?.substring(0, 5) || "--:--";
-            data.push({ time: timePart, temp, hum });
+            data.push({ time: timePart, temp, hum, watts });
         }
+        drawPowerChart(power);
 
         if (data.length === 0) {
             document.getElementById('svgChart').innerHTML = `<text x="500" y="200" fill="var(--text-muted)" text-anchor="middle" font-size="16">Нет записей лога за выбранный день</text>`;
@@ -222,9 +290,42 @@ async function drawSvgChart() {
         chartViewBox = { width, height };
         chartPoints = data.map((d, i) => ({
             x: getX(i), yTemp: getYTemp(d.temp), yHum: fillYHum(d.hum),
-            time: d.time, temp: d.temp, hum: d.hum
+            time: d.time, temp: d.temp, hum: d.hum, watts: d.watts
         }));
     } catch (e) { console.error("Ошибка построения графиков:", e); }
+}
+
+// Отдельный график мощности под основным: свой масштаб в ваттах, скрыт, если данных нет
+function drawPowerChart(points) {
+    const svg = document.getElementById('powerChart');
+    const show = points.length > 0;
+    svg.toggleAttribute('hidden', !show); // SVG elements have no .hidden property
+    document.getElementById('power-chart-title').hidden = !show;
+    if (!show) { svg.innerHTML = ''; return; }
+
+    const width = 1000, height = 200, padding = { top: 20, right: 60, bottom: 30, left: 60 };
+    const chartWidth = width - padding.left - padding.right, chartHeight = height - padding.top - padding.bottom;
+    const maxWatts = Math.max(10, Math.ceil(Math.max(...points.map(p => p.watts)) / 10) * 10);
+    const getX = (index) => points.length > 1
+        ? padding.left + (index / (points.length - 1)) * chartWidth
+        : padding.left + chartWidth / 2;
+    const getY = (val) => padding.top + chartHeight - (Math.max(0, val) / maxWatts) * chartHeight;
+
+    let content = '';
+    for (let i = 0; i <= 2; i++) {
+        const y = padding.top + (chartHeight / 2) * i;
+        content += `<line class="grid-line" x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" />`;
+        content += `<text class="axis-text" x="${padding.left - 10}" y="${y + 4}" text-anchor="end">${Math.round(maxWatts - (maxWatts / 2) * i)} Вт</text>`;
+    }
+    const timeStep = Math.max(1, Math.floor(points.length / 6));
+    for (let i = 0; i < points.length; i += timeStep) {
+        content += `<text class="axis-text" x="${getX(i)}" y="${height - padding.bottom + 20}" text-anchor="middle">${points[i].time}</text>`;
+    }
+    let path = `M ${getX(0)} ${getY(points[0].watts)}`;
+    for (let i = 1; i < points.length; i++) path += ` L ${getX(i)} ${getY(points[i].watts)}`;
+    content += `<path class="line-power" d="${path}" />`;
+    if (points.length === 1) content += `<circle cx="${getX(0)}" cy="${getY(points[0].watts)}" r="5" fill="var(--warning)" />`;
+    svg.innerHTML = content;
 }
 
 function handleChartHover(e) {
@@ -257,7 +358,8 @@ function handleChartHover(e) {
     document.getElementById('hoverDotHum').style.opacity = 1;
 
     const tooltip = document.getElementById('chart-tooltip');
-    tooltip.innerHTML = `<div class="tt-time">${nearest.time}</div><div class="tt-temp">🌡 ${nearest.temp.toFixed(1)}°C</div><div class="tt-hum">💧 ${nearest.hum.toFixed(1)}%</div>`;
+    tooltip.innerHTML = `<div class="tt-time">${nearest.time}</div><div class="tt-temp">🌡 ${nearest.temp.toFixed(1)}°C</div><div class="tt-hum">💧 ${nearest.hum.toFixed(1)}%</div>` +
+        (Number.isFinite(nearest.watts) ? `<div class="tt-power">⚡ ${Math.round(nearest.watts)} Вт</div>` : '');
     tooltip.style.left = (nearest.x / chartViewBox.width) * rect.width + 'px';
     tooltip.style.top = ((nearest.yTemp < nearest.yHum ? nearest.yTemp : nearest.yHum) / chartViewBox.height) * rect.height + 'px';
     tooltip.style.opacity = 1;

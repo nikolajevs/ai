@@ -10,7 +10,7 @@ const TAB_STORAGE_KEY = 'gi-settings-tab';
 const returnedFromSave = (() => {
     try {
         const params = new URLSearchParams(window.location.search);
-        return params.has('saved') || params.has('error');
+        return params.has('saved') || params.has('error') || params.has('time');
     } catch (e) {
         return false;
     }
@@ -146,6 +146,12 @@ function showServerErrors() {
         document.getElementById('date-error-banner').style.display = 'block';
         document.querySelector('[data-tab="tab-general"]').click();
     }
+    // ?time=1 — форма часов отправлена; запись и проверку делает плата, итог берём из /api/status
+    const timeSent = params.get('time');
+    if (timeSent) {
+        document.querySelector('[data-tab="tab-general"]').click();
+        watchTimeSet();
+    }
     // ?saved=1 — плата приняла настройки. Раньше после сохранения не было никакого подтверждения.
     const saved = params.get('saved');
     if (saved) {
@@ -153,7 +159,7 @@ function showServerErrors() {
         banner.hidden = false;
         setTimeout(() => { banner.hidden = true; }, 4000);
     }
-    if (errors.length || saved) {
+    if (errors.length || saved || timeSent) {
         // Убираем параметры из адресной строки, чтобы баннер не всплывал повторно при обновлении страницы
         window.history.replaceState({}, '', window.location.pathname);
     }
@@ -219,6 +225,29 @@ function setCurrentTime() {
 
 // Берёт время в момент нажатия и сразу отправляет. Раньше в плату уходило значение поля,
 // заполненное при открытии страницы: провисела страница 5 минут — часы на 5 минут назад.
+// Раньше страница после установки часов всегда писала "Настройки сохранены", даже если
+// MCP7940N время не принял. Теперь ждём итог от платы (до ~20 с: запуск кварца бывает долгим).
+const TIME_RESULT_TEXT = {
+    pending: ['form-hint', 'Записываем время в часы платы…'],
+    ok: ['form-ok', 'Время записано в часы и проверено.'],
+    failed: ['form-error', 'Часы не приняли время. Повторите установку; если не поможет — причина в консоли (вкладка «Консоль»).'],
+};
+async function watchTimeSet(attempt = 0) {
+    const banner = document.getElementById('time-result-banner');
+    let result = 'pending';
+    try {
+        const res = await fetch('/api/status');
+        if (res.ok) result = (await res.json()).time_set || 'pending';
+    } catch (e) { /* Повторим ниже */ }
+    if (result === 'pending' && attempt >= 20) result = 'failed';
+    const [cls, text] = TIME_RESULT_TEXT[result] || TIME_RESULT_TEXT.pending;
+    banner.className = cls;
+    banner.textContent = text;
+    banner.hidden = result === 'none';
+    if (result === 'pending') setTimeout(() => watchTimeSet(attempt + 1), 1000);
+    else if (result === 'ok') loadCurrentSettings(); // Обновить "Текущие дата и время на плате"
+}
+
 function syncTimeFromBrowser() {
     document.getElementById('datetime').value = localIsoTime(19);
     document.getElementById('time-form').requestSubmit();
@@ -264,6 +293,7 @@ async function loadCurrentSettings() {
         document.getElementById('drying_temp_delta').value = data.drying_temp_delta;
         document.getElementById('drying_hum_target').value = data.drying_hum_target;
         document.getElementById('drying_hum_band').value = data.drying_hum_band;
+        document.getElementById('power_cal_pct').value = data.power_cal_pct;
         applySettingsMode(data.operation_mode);
         if (!activeTabRestored) {
             // После сохранения возвращаемся на вкладку, с которой сохраняли

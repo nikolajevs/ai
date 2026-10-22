@@ -138,14 +138,61 @@ constexpr bool ledPulseRegression() {
   for (int request = -5; request <= 260; ++request) {
     const int duty = ledDutyForRequest(request);
     if (duty < 0 || duty > PWM_MAX || (request <= 0 && duty != 0)) return false;
+    // Every nonzero HIGH pulse and every LOW gap below full brightness lasts at least 10 us.
     if (request > 0 && uint64_t(duty) * 1000000 < uint64_t(LED_MIN_PULSE_US) * LED_PWM_FREQ * PWM_COUNTS) return false;
-    if (request >= LED_MIN_DUTY && duty != clampPwm(request)) return false;
+    if (duty > 0 && duty < PWM_MAX &&
+        uint64_t(PWM_COUNTS - duty) * 1000000 < uint64_t(LED_MIN_PULSE_US) * LED_PWM_FREQ * PWM_COUNTS) return false;
+    if (request >= LED_MIN_DUTY && request <= PWM_MAX - LED_MIN_DUTY + 1 && duty != request) return false;
   }
-  return ledDutyForRequest(255) == 255;
+  return ledDutyForRequest(255) == 255 && ledDutyForRequest(254) == 255 && ledDutyForRequest(253) == 253 &&
+         ledDutyForRequest(1) == LED_MIN_DUTY;
 }
-static_assert(LED_PWM_FREQ >= 500 && LED_PWM_FREQ <= 1000 && ledPulseRegression(), "every nonzero LED pulse must be at least 10 us");
+static_assert(LED_PWM_FREQ >= 500 && LED_PWM_FREQ <= 1000 && ledPulseRegression(),
+              "every LED pulse and every gap below full brightness must be at least 10 us");
 static_assert(FAN_PWM_FREQ == 25000 && fanGpioDuty(255) == 0 && fanGpioDuty(0) == 255 &&
               fanGpioDuty(128) == 127 && fanGpioDuty(-1) == 255 && fanGpioDuty(256) == 0,
               "fan GPIO duty must invert logical airflow, including endpoint saturation");
-static_assert(LED_PWM_CHANNEL / 2 != FAN1_PWM_CHANNEL / 2 && LED_PWM_CHANNEL / 2 != FAN2_PWM_CHANNEL / 2,
-              "ESP32 LED and fans must use separate LEDC timers");
+// Core 3.3.x shares an LEDC timer between channels with the same frequency and resolution.
+static_assert(LED_PWM_FREQ != FAN_PWM_FREQ, "LED nDIM and fans must never share an LEDC timer");
+
+constexpr bool settingFloatRegression() {
+  const float nan = __builtin_nanf(""), inf = __builtin_inff();
+  return !finiteFloat(nan) && !finiteFloat(inf) && !finiteFloat(-inf) && finiteFloat(0.0f) && finiteFloat(-20.5f) &&
+         clampSettingFloat(nan, 0, 50, 25) == 25 && clampSettingFloat(inf, 0, 50, 25) == 25 &&
+         clampSettingFloat(-inf, 0, 50, 25) == 25 && clampSettingFloat(60, 0, 50, 25) == 50 &&
+         clampSettingFloat(-1, 0, 50, 25) == 0 && clampSettingFloat(22.5f, 0, 50, 25) == 22.5f;
+}
+static_assert(settingFloatRegression(), "NaN/inf settings must fall back to the default, numbers are clamped");
+
+constexpr bool heaterRegression() {
+  const float nan = __builtin_nanf("");
+  // Normal hysteresis: on at/below 23, off at/above 25, unchanged in between.
+  if (!heaterNextState(false, true, 23.0f, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  if (heaterNextState(false, true, 24.0f, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  if (!heaterNextState(true, true, 24.9f, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  if (heaterNextState(true, true, 25.0f, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  if (heaterNextState(true, false, 10.0f, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false; // Schedule.
+  // A NaN threshold or reading used to freeze the heater in its current state.
+  if (heaterNextState(true, true, 30.0f, nan, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  if (heaterNextState(true, true, 30.0f, 23.0f, nan, HEATER_HARD_LIMIT_C)) return false;
+  if (heaterNextState(true, true, nan, 23.0f, 25.0f, HEATER_HARD_LIMIT_C)) return false;
+  // Hard limit wins over any setting, e.g. a Drying off-threshold of 70 C.
+  if (heaterNextState(true, true, 60.0f, 49.0f, 70.0f, HEATER_HARD_LIMIT_C)) return false;
+  return heaterNextState(true, true, 59.9f, 49.0f, 70.0f, HEATER_HARD_LIMIT_C);
+}
+static_assert(HEATER_HARD_LIMIT_C <= 60.0f && heaterRegression(), "PTC thermostat: hysteresis, schedule, NaN and hard limit");
+
+constexpr bool ina226Regression() {
+  // 46.5 mV across 5 mOhm = 9.3 A (18600 counts of 2.5 uV); 24.000 V reads 19177 counts with R113.
+  const float amps = ina226Amps(18600, 1.0f), volts = ina226Volts(19177);
+  return INA226_CALIBRATION == 2048 && amps > 9.299f && amps < 9.301f && volts > 23.99f && volts < 24.01f &&
+         ina226Amps(-200, 1.0f) < 0 && ina226Amps(10000, 1.05f) > 5.249f && ina226Amps(10000, 1.05f) < 5.251f &&
+         ina226Volts(0x8000) == 0.0f;
+}
+static_assert(ina226Regression(), "INA226 raw registers convert to amps and volts for the 5 mOhm shunt");
+
+static_assert(tachRpm(0, 1000) == 0 && tachRpm(40, 1000) == 1200 && tachRpm(50, 1000) == 1500 &&
+              tachRpm(100, 2000) == 1500 && tachRpm(500, 1000) == 15000 && tachRpm(501, 1000) == -1 &&
+              tachRpm(25000, 1000) == -1 && tachRpm(-1, 1000) == -1 && tachRpm(10, 0) == -1,
+              "tach: two pulses per revolution, implausible counts are reported as -1");
+static_assert(FAN_TACH_GLITCH_NS <= 12700, "ESP32 PCNT glitch filter cannot exceed 1023 APB cycles");

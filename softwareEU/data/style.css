@@ -98,6 +98,9 @@ h3 { margin: 0; color: var(--text-muted); font-size: 12px; text-transform: upper
 }
 .metric-box .value { font-size: 28px; font-weight: 800; color: var(--primary); display: flex; justify-content: center; align-items: baseline; }
 .metric-box .unit { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-left: 2px; }
+/* Вторая строка под крупным значением: обороты, вольты/амперы, вода, последний полив */
+.metric-box .metric-sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.metric-box .metric-sub.warn { color: var(--warning); font-weight: 600; }
 
 /* Стили графиков */
 .analytics-section { display: flex; flex-direction: column; margin-top: 25px; border-top: 1px solid var(--card-border); padding-top: 25px; }
@@ -109,6 +112,8 @@ svg { background: #070a13; border: 1px solid var(--card-border); border-radius: 
 .grid-line { stroke: #141b2d; stroke-width: 1; stroke-dasharray: 4,4; }
 .line-temp { fill: none; stroke: var(--danger); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .line-hum { fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.line-power { fill: none; stroke: var(--warning); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.chart-subtitle { margin: 20px 0 10px; }
 .axis-text { fill: var(--text-muted); font-size: 11px; }
 
 .chart-container { position: relative; }
@@ -136,6 +141,7 @@ svg { background: #070a13; border: 1px solid var(--card-border); border-radius: 
 .chart-tooltip .tt-time { color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
 .chart-tooltip .tt-temp { color: var(--danger); }
 .chart-tooltip .tt-hum { color: var(--primary); }
+.chart-tooltip .tt-power { color: var(--warning); }
 
 /* Настройки и формы */
 .form-section { background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 20px; margin-bottom: 25px; }

@@ -18,6 +18,22 @@ constexpr bool validCalendar(int year, int month, int day, int hour, int minute,
   return day >= 1 && day <= maximum;
 }
 
+// NaN and infinity never compare as out of range, so an ordinary clamp lets them through,
+// and String::toFloat() accepts "nan" and "inf". Comparisons only, so it works in constexpr.
+constexpr bool finiteFloat(float v) { return v == v && v <= 3.402823466e+38f && v >= -3.402823466e+38f; }
+
+constexpr float clampSettingFloat(float v, float lo, float hi, float fallback) {
+  return !finiteFloat(v) ? fallback : (v < lo ? lo : (v > hi ? hi : v));
+}
+
+// One thermostat step for the 100 W PTC. Off when the schedule forbids heating, when any
+// input is not a finite number, or at/above the settings-proof hard limit. Otherwise it
+// switches on at/below onBelow and off at/above offAbove, with hysteresis in between.
+constexpr bool heaterNextState(bool active, bool scheduleOk, float temp, float onBelow, float offAbove, float hardLimit) {
+  if (!scheduleOk || !finiteFloat(temp) || !finiteFloat(onBelow) || !finiteFloat(offAbove) || !(temp < hardLimit)) return false;
+  return active ? temp < offAbove : temp <= onBelow;
+}
+
 constexpr bool wateringDayAllowed(bool clockTrusted, uint32_t today, uint32_t lastDay) {
   // Also suppress duplicate watering after moving the date backwards.
   return clockTrusted && today > lastDay;
