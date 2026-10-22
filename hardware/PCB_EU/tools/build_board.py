@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 
 import pcbnew as p
 from models3d import set_native
+from stackup import apply_file as apply_stackup
 
 HERE = Path(__file__).resolve().parents[1]
 BOARD = HERE / 'PCB_EU.kicad_pcb'
@@ -203,8 +204,9 @@ def main():
             outline.Append(p.FromMM(x), p.FromMM(y))
         board.Add(zone)
     label(board, 'stage', 'EU-0.1 / UNROUTED PLACEMENT / 100 x 100 mm / 4 Cu', 50, -17, 1.3)
-    label(board, 'limits', 'HS guide holes / thermal / routing NOT qualified', 50, -14.5)
+    label(board, 'limits', 'Glue-mounted HS1 / physical fit and thermal NOT qualified', 50, -14.5)
     p.SaveBoard(str(args.output), board)
+    apply_stackup(args.output)
     print(f'Built {len(fps)} netlisted references + {len(layout["mounting_holes"])} proposed mounting holes; 0 tracks/vias/copper pours')
 
 

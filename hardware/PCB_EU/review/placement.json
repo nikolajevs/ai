@@ -103,8 +103,8 @@
   "connected_netlist_pins": 498,
   "mapped_netlist_pins_including_nc": 525,
   "pad_net_parity": true,
-  "routed_tracks": 1425,
-  "routed_vias": 327,
+  "routed_tracks": 1445,
+  "routed_vias": 342,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
@@ -123,8 +123,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "5fd32bfab8f6f1d088918ba35e1581e959a7ace86dcfa2aba318924bbd25dadd",
-    "placement.json": "93a59543617a398fd938dc73fb41a5acd1489ee3002b869d45e1309146f7ebe3",
-    "netlist.xml": "b2b847959c540a2756d5f75342d1d97ffe8603c0df6962e02de56171cd2cce11"
+    "PCB_EU.kicad_pcb": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e",
+    "placement.json": "65a49086df11323fb6463a77e2243bb313046b89f806148e74abc4066332a1ea",
+    "netlist.xml": "5687886de51b24bde86f8831d174936d36395a5551cd1d2a44b211a3a96cfba2"
   }
 }

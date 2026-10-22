@@ -52,6 +52,7 @@ def main():
     routing_result=None
     pcb_drc='not applicable: no PCB exists yet'
     if board.exists():
+        subprocess.run([sys.executable,str(HERE/'tools/stackup.py'),'--check','--output',str(out/'stackup.json')],check=True)
         settings=project.get('board',{}).get('design_settings',{})
         if settings.get('drc_exclusions'):raise RuntimeError('DRC exclusions are not permitted in this placement candidate')
         if any(v=='ignore' for v in settings.get('rule_severities',{}).values()):raise RuntimeError('Do not silence DRC categories in the project')
@@ -62,11 +63,15 @@ def main():
             subprocess.run([args.kicad_python,str(HERE/'tools/verify_routing.py')],check=True)
             routing_result=json.loads((out/'routing.json').read_text())
         subprocess.run([args.kicad_python,str(HERE/'tools/silkscreen.py'),'--check'],check=True)
+        subprocess.run([args.kicad_python,str(HERE/'tools/power_checks.py')],check=True)
         subprocess.run([cli,'pcb','drc','--schematic-parity','--format','json','-o',str(out/'pcb_drc.json'),str(board)],check=True)
         drc=json.loads((out/'pcb_drc.json').read_text())
-        if drc.get('violations') or drc.get('schematic_parity'):
+        if drc.get('violations') or drc.get('schematic_parity') or (routing_result and drc.get('unconnected_items')):
             from collections import Counter
-            raise RuntimeError(Counter(v['type'] for v in drc.get('violations',[])+drc.get('schematic_parity',[])))
+            counts=Counter(v['type'] for v in drc.get('violations',[])+drc.get('schematic_parity',[]))
+            if routing_result and drc.get('unconnected_items'):
+                counts['unconnected_items']=len(drc['unconnected_items'])
+            raise RuntimeError(counts)
         pcb_drc=dict(geometric_violations=0,schematic_parity_violations=0,unconnected_items=len(drc.get('unconnected_items',[])),
                      routing_status=(f"autorouted; {routing_result['unrouted_connections']} connections open" if routing_result['unrouted_connections'] else 'all connections routed') if routing_result else 'intentionally unrouted; no fabricated-board DRC clearance claim')
     source = [*HERE.glob('*.kicad_sch'),HERE/'PCB_EU.kicad_pro',HERE/'libraries/EU.kicad_sym',HERE/'design.json',HERE/'BOM_allocated.json',HERE/'footprint_assignments.json',HERE/'fp-lib-table',HERE/'sym-lib-table',*HERE.glob('tools/*.py'),*HERE.glob('libraries/*/*.kicad_mod')]
@@ -77,6 +82,11 @@ def main():
     result['models3d']=models_review
     if board.exists():
         result['silkscreen']=json.loads((out/'silkscreen.json').read_text())
+        result['stackup']=json.loads((out/'stackup.json').read_text())
+        power=json.loads((out/'power_copper.json').read_text())
+        result['power_copper']=dict(report='review/power_copper.json',dc_screening_cases=len(power['cases'])+len(power['auxiliary_cases']),
+                                   unresolved_screening_flags=len(power['unresolved_screening_flags']),
+                                   source_sha256=power['source_sha256'],thermal_qualified=False)
     (out/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(f'PASS | {result["stage"]} | KiCad {version}; repository 10.0.6 target verified: {result["target_version_verified"]}')
 

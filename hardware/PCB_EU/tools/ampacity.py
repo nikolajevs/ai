@@ -2,7 +2,7 @@
 """Screening of copper ampacity on the 24 V power nets of PCB_EU.
 
 For every net in SCENARIOS the tracks and vias are turned into a resistive network. The design
-current is injected at the source pad and taken out at the sink pads; Kirchhoff's laws give the real
+current is injected at the source pad and taken out at the sink pads; Kirchhoff's laws give the modelled
 split between parallel tracks and layers. Each track piece gets a temperature rise from IPC-2221,
 which is conservative (IPC-2152 gives lower values, especially with a plane next to the trace).
 
@@ -19,6 +19,7 @@ are not covered. Currents are worst-case design values, not measurements.
 """
 import argparse
 import collections
+import hashlib
 import json
 import math
 import sys
@@ -58,7 +59,7 @@ def delta_t(i, width_mm, um, outer):
     return (i / (k * area_mil2 ** 0.725)) ** (1 / 0.44)
 
 
-def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
+def analyze_net(board, pads, net, source, sinks, outer_um, inner_um, via_resistance_scale=1.0):
     mm = lambda v: v / 1e6
     tracks = [t for t in board.GetTracks() if t.GetNetname() == net and t.GetClass() != 'PCB_VIA']
     vias = [t for t in board.GetTracks() if t.GetNetname() == net and t.GetClass() == 'PCB_VIA']
@@ -88,7 +89,7 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
         # pad or a pad of the net overlapping it. forced[u] names that conductor even when the track centre
         # line passes beside its centre.
         cuts = {0.0, 1.0}
-        forced = {}
+        forced = collections.defaultdict(set)
         for px, py in ends[layer]:
             s = (px - ax) * dx + (py - ay) * dy
             if 1000 < s < length - 1000 and abs((px - ax) * dy - (py - ay) * dx) <= w / 2:
@@ -98,7 +99,7 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
             s = (px - ax) * dx + (py - ay) * dy
             if 1000 < s < length - 1000 and abs((px - ax) * dy - (py - ay) * dx) <= w / 2 + v.GetWidth(layer) / 2:
                 cuts.add(s / length)
-                forced[s / length] = ('V', i, LAYERS[layer])
+                forced[s / length].add(('V', i, LAYERS[layer]))
         shape = t.GetEffectiveShape()
         for name, pad in netpads.items():
             if not pad.IsOnLayer(layer):
@@ -108,7 +109,7 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
             if 1000 < s < length - 1000 and (abs((px - ax) * dy - (py - ay) * dx) <= w / 2
                                              or pad.GetEffectiveShape(layer).Collide(shape, 0)):
                 cuts.add(s / length)
-                forced[s / length] = ('P', name)
+                forced[s / length].add(('P', name))
         # a via whose pad overlaps only the rounded end of the track joins that end; the link is a piece of this
         # track's width from its end to the centre of the via
         for (ex, ey) in ((ax, ay), (cx, cy)):
@@ -127,11 +128,24 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
                     res = max(RHO * d / (mm(w) * um * 1e-3), 1e-7)
                     edges.append((ke, kj, res, ('trk', name, d, mm(w), um, (mm(ex), mm(ey)), (mm(jx), mm(jy)), False)))
         cuts = sorted(cuts)
+        junctions = {}
+        for u, contacts in forced.items():
+            if len(contacts) == 1:
+                junctions[u] = next(iter(contacts))
+            else:
+                # A transverse row of vias can have identical projections onto
+                # a wide track. Preserve EVERY physical contact; a singleton
+                # dict used to discard all but the last via in that row.
+                x, y = ax + (cx - ax) * u, ay + (cy - ay) * u
+                junction = ('J', LAYERS[layer], round(mm(x), 3), round(mm(y), 3))
+                junctions[u] = junction
+                for contact in sorted(contacts):
+                    edges.append((junction, contact, 1e-7, ('link',)))
         for u, v in zip(cuts, cuts[1:]):
             p0 = (ax + (cx - ax) * u, ay + (cy - ay) * u)
             p1 = (ax + (cx - ax) * v, ay + (cy - ay) * v)
-            ka = forced.get(u) or key_at(*p0, layer)
-            kb = forced.get(v) or key_at(*p1, layer)
+            ka = junctions.get(u) or key_at(*p0, layer)
+            kb = junctions.get(v) or key_at(*p1, layer)
             piece = math.hypot(p1[0] - p0[0], p1[1] - p0[1]) / 1e6
             if ka == kb:
                 continue
@@ -141,17 +155,35 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
             res = max(RHO * piece / (mm(w) * um * 1e-3), 1e-7)
             edges.append((ka, kb, res, ('trk', name, piece, mm(w), um, (mm(p0[0]), mm(p0[1])), (mm(p1[0]), mm(p1[1])), True)))
     for i, v in enumerate(vias):
-        r = VIA_R * 0.3 / max(v.GetDrillValue() / 1e6, 0.1) / 3
+        r = VIA_R * via_resistance_scale * 0.3 / max(v.GetDrillValue() / 1e6, 0.1) / 3
         for l1, l2 in zip(ORDER, ORDER[1:]):
             edges.append((('V', i, l1), ('V', i, l2), r, ('via', i)))
 
+    adjacent = collections.defaultdict(set)
+    for ka, kb, _, _ in edges:
+        adjacent[ka].add(kb)
+        adjacent[kb].add(ka)
+    for pad in [source, *sinks]:
+        if ('P', pad) not in adjacent:
+            return {'net': net, 'error': f'pad {pad} is not on a track of the net'}
+    reached = {('P', source)}
+    pending = [('P', source)]
+    while pending:
+        for node in adjacent[pending.pop()]:
+            if node not in reached:
+                reached.add(node)
+                pending.append(node)
+    missing = [pad for pad in sinks if ('P', pad) not in reached]
+    if missing:
+        return {'net': net, 'error': f'disconnected source/sink in track/via model: {source} -> {missing}'}
+    excluded_nodes = len(adjacent) - len(reached)
+    # Floating metal not joined by modelled tracks/vias must not make the
+    # conductance matrix singular. It carries no injected current in this model.
+    edges = [e for e in edges if e[0] in reached]
     keys = {}
     for ka, kb, _, _ in edges:
         for k in (ka, kb):
             keys.setdefault(k, len(keys))
-    for pad in [source, *sinks]:
-        if ('P', pad) not in keys:
-            return {'net': net, 'error': f'pad {pad} is not on a track of the net'}
     n = len(keys)
     g = np.zeros((n, n))
     for ka, kb, r, _ in edges:
@@ -168,7 +200,14 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
     mask = np.ones(n, bool)
     mask[ref] = False
     volt = np.zeros(n)
-    volt[mask] = np.linalg.lstsq(g[np.ix_(mask, mask)], inj[mask], rcond=None)[0]
+    try:
+        volt[mask] = np.linalg.solve(g[np.ix_(mask, mask)], inj[mask])
+    except np.linalg.LinAlgError as exc:
+        return {'net': net, 'error': f'conductance solve failed: {exc}'}
+    residual = float(np.max(np.abs(g @ volt - inj)))
+    tolerance = 1e-6 * max(1.0, sum(sinks.values()))
+    if not np.all(np.isfinite(volt)) or not math.isfinite(residual) or residual > tolerance:
+        return {'net': net, 'error': f'Kirchhoff current residual {residual:g} A exceeds {tolerance:g} A'}
 
     loss = 0.0
     segs = collections.defaultdict(lambda: {'length_mm': 0.0, 'i_max': 0.0, 'xs': [], 'ys': []})
@@ -195,22 +234,28 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
     for (layer, w, hot), s in sorted(segs.items()):
         row = {'layer': layer, 'width_mm': w, 'length_mm': round(s['length_mm'], 1), 'i_max_a': round(s['i_max'], 2),
                'dt_ipc2221_c': round(delta_t(s['i_max'], w, s['um'], layer in OUTER), 1)}
-        if hot:
+        if hot and s['xs']:
             row['hot_box_mm'] = [round(min(s['xs']), 1), round(min(s['ys']), 1), round(max(s['xs']), 1), round(max(s['ys']), 1)]
         rows.append(row)
     first = next(iter(sinks))
     drop = volt[keys[('P', source)]] - volt[keys[('P', first)]]
     # rule of thumb at ~20 C rise: about 1 A per 0.3 mm drill, 2 A per 0.5 mm drill, 3 A per 0.8 mm drill
     over = []
+    via_currents = []
     for i, cur in sorted(via_i.items(), key=lambda kv: -kv[1]):
         drill = vias[i].GetDrillValue() / 1e6
         limit = 1.0 if drill < 0.4 else 2.0 if drill < 0.7 else 3.0
+        via_currents.append({'at_mm': [round(mm(vias[i].GetPosition().x), 2), round(mm(vias[i].GetPosition().y), 2)],
+                             'drill_mm': drill, 'i_a': round(float(cur), 4), 'rule_of_thumb_a': limit})
         if cur > limit:
             over.append({'at_mm': [round(mm(vias[i].GetPosition().x), 2), round(mm(vias[i].GetPosition().y), 2)],
                          'drill_mm': drill, 'i_a': round(cur, 2), 'rule_of_thumb_a': limit})
     return {'net': net, 'source': source, 'sinks': sinks, 'current_a': sum(sinks.values()),
             'drop_mv': round(drop * 1000, 1), 'loss_mw': round(loss * 1000), 'segments': rows,
-            'vias': len(vias), 'via_i_max_a': round(max(via_i.values(), default=0.0), 2), 'vias_over_limit': over}
+            'drop_mv_by_sink': {pad: round(float(volt[keys[('P', source)]] - volt[keys[('P', pad)]]) * 1000, 4) for pad in sinks},
+            'max_kcl_residual_a': residual, 'floating_model_nodes_excluded': excluded_nodes,
+            'vias': len(vias), 'via_i_max_a': round(max(via_i.values(), default=0.0), 2),
+            'via_currents': via_currents, 'vias_over_limit': over}
 
 
 def main():
@@ -218,11 +263,15 @@ def main():
     ap.add_argument('--board', type=Path, default=HERE / 'PCB_EU.kicad_pcb')
     ap.add_argument('--outer-um', type=float, default=35.0, help='outer copper thickness, um (35 = 1 oz)')
     ap.add_argument('--inner-um', type=float, default=17.5, help='inner copper thickness, um (17.5 = 0.5 oz)')
+    ap.add_argument('--via-resistance-scale', type=float, default=1.0,
+                    help='sensitivity multiplier for assumed via barrel resistance (e.g. 0.5, 1, 2); not an ampacity rating')
     ap.add_argument('--json', type=Path, help='also write the result as JSON')
     args = ap.parse_args()
+    if any(not math.isfinite(v) or v <= 0 for v in [args.outer_um, args.inner_um, args.via_resistance_scale]):
+        ap.error('copper thicknesses and via-resistance scale must be finite and positive')
     board = pcbnew.LoadBoard(str(args.board))
     pads = {fp.GetReference() + '.' + p.GetNumber(): p for fp in board.GetFootprints() for p in fp.Pads()}
-    result = [analyze_net(board, pads, net, src, snk, args.outer_um, args.inner_um)
+    result = [analyze_net(board, pads, net, src, snk, args.outer_um, args.inner_um, args.via_resistance_scale)
               for net, (src, snk) in SCENARIOS.items()]
     print(f'outer {args.outer_um:g} um, inner {args.inner_um:g} um, IPC-2221 temperature rise (conservative)')
     for r in result:
@@ -239,8 +288,20 @@ def main():
         for v in r['vias_over_limit']:
             print(f"  via at {v['at_mm']} drill {v['drill_mm']:g} mm carries {v['i_a']} A (rule of thumb {v['rule_of_thumb_a']:g} A)")
     if args.json:
-        args.json.write_text(json.dumps({'outer_um': args.outer_um, 'inner_um': args.inner_um, 'nets': result},
+        args.json.write_text(json.dumps({'model_version': 2, 'model_status': 'track/via current-sharing and IPC-2221 screening; not thermal qualification',
+                                        'source_board': str(args.board), 'source_board_sha256': hashlib.sha256(args.board.read_bytes()).hexdigest(),
+                                        'kicad_version': pcbnew.Version(),
+                                        'outer_um': args.outer_um, 'inner_um': args.inner_um,
+                                        'via_resistance_scale': args.via_resistance_scale, 'reference_via_resistance_ohm': VIA_R,
+                                        'limitations': [
+                                            'GND planes, pours, 12 V / 3V3 and THT barrel resistance are not modelled.',
+                                            'Overlapping copper contacts are ideal junctions; this is not a 2D sheet-resistance or finite-element model.',
+                                            'Assumed via resistance scales with drill only; barrel plating and unequal layer spacing are not qualified.',
+                                            'Via current comparisons are drill-based design heuristics, not guaranteed current ratings.',
+                                            'Currents are design scenarios; transient startup, copper/plating tolerances and measured temperatures remain unverified.'
+                                        ], 'nets': result},
                                         ensure_ascii=False, indent=1) + '\n')
+    return 1 if any('error' in r for r in result) else 0
 
 
 if __name__ == '__main__':

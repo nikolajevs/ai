@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/workspace/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-22T12:33:15</date>
+    <date>2026-10-22T14:19:14</date>
     <tool>Eeschema 10.0.7</tool>
     <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">

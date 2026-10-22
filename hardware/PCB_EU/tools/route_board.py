@@ -33,6 +33,7 @@ import pcbnew as p
 
 from build_board import HERE, identity, point
 from route_complete import complete
+from aux_power import reinforce as reinforce_auxiliary
 from route_power import plan_items
 
 MM = p.FromMM
@@ -637,6 +638,7 @@ def main():
     board.BuildConnectivity()
     p.ZONE_FILLER(board).Fill(board.Zones())
     board.BuildConnectivity()
+    reinforce_auxiliary(board)  # repeat the reviewed 12 V trunk widths after session import
     for item in board.GetDrawings():
         if isinstance(item, p.PCB_TEXT) and 'ROUTING' in item.GetText() and item.GetText().startswith('EU-0.1'):
             item.SetText('EU-0.1 / ROUTED, NOT RELEASED / 100 x 100 mm / 4 Cu')

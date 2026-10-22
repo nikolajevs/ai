@@ -1,0 +1,15 @@
+{
+  "board_mm": 1.6,
+  "copper_layers": 4,
+  "copper_um": {
+    "F.Cu": 35.0,
+    "In1.Cu": 17.5,
+    "In2.Cu": 17.5,
+    "B.Cu": 35.0
+  },
+  "stack_total_including_masks_mm": 1.6,
+  "dielectric_schedule": "existing schedule preserved; not qualified by this check",
+  "factory_stackup_approved": false,
+  "impedance_control_verified": false,
+  "plating_and_finished_copper_tolerances_verified": false
+}
