@@ -1,7 +1,12 @@
 {
   "physical_components": 188,
   "local_resolvable_models": 188,
-  "unique_attached_models": 35,
+  "board_only_model_refs": [
+    "HS1"
+  ],
+  "board_only_resolvable_models": 1,
+  "total_resolvable_models": 189,
+  "unique_attached_models": 36,
   "missing_models": [],
   "model_files": 36,
   "library_footprints": 34,

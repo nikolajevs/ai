@@ -316,29 +316,6 @@
       "source_cad_modified": false,
       "mpn_specific_qualification": false
     },
-    "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step": {
-      "origin": "project-generated",
-      "license": "MIT",
-      "geometry_check": {
-        "model": "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step",
-        "valid_AP214_mm": true,
-        "bounds_mm": [
-          -15.0,
-          15.0,
-          -15.0,
-          15.0,
-          0.0,
-          15.0
-        ],
-        "contact_sections": 0,
-        "known_fit_issue": null
-      },
-      "sha256": "95b3e2f224d1bc228a79cd1246ca8075dce7d53991e686166da925c47b09a68d",
-      "source_ids": [
-        "rad_dy_gf_3"
-      ],
-      "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
-    },
     "R_0603_1608Metric.step": {
       "origin": "KiCad library contributors",
       "license": "CC-BY-SA-4.0 WITH KiCad exception",
@@ -579,6 +556,33 @@
       "mpn_specific_qualification": false,
       "detail": "Reused unchanged from cheap-version J301 for PCB_EU J401, which uses the same stock connector and footprint. Visual adaptation based on the user photo, not a qualified manufacturer drawing or fit guarantee.",
       "upstream_source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step"
+    },
+    "RAD-DY-GF_3.stp": {
+      "origin": "STONECOLD supplier CAD, user-supplied TME library archive",
+      "license": "Not specified in the supplied archive; original CAD bytes retained",
+      "source_ids": [
+        "rad_dy_gf_3"
+      ],
+      "sha256": "7a41909fb41255472588ab0983f94f9c1da848f34777b2347e76eb3f405a20b8",
+      "source_cad_modified": false,
+      "detail": "Full finned heatsink and solder pins. Attached to board-only HS1; mounting screw thread is absent from the supplied CAD. Physical assembly and insulation remain unqualified.",
+      "geometry_check": {
+        "valid_step": true,
+        "solids": 3,
+        "body_board_bounds_mm": [
+          68.0,
+          98.0,
+          24.05,
+          39.05,
+          -0.0,
+          30.0
+        ],
+        "max_pin_axis_error_mm": 4.808384099822225e-05,
+        "generic_to220_model_gap_mm": 0.29,
+        "nominal_insulating_pad_mm": 0.3,
+        "q501_heatsink_intersection_mm3": 0.0,
+        "physical_fit_verified": false
+      }
     }
   },
   "sources": {
@@ -661,11 +665,26 @@
     },
     "rad_dy_gf_3": {
       "url": "https://www.tme.eu/en/details/rad-dy-gf_3/heatsinks/stonecold/",
-      "drawing": "Only 30 x 30 x 15 mm supplier envelope; guide coordinates and installed orientation unknown"
+      "drawing": "User-supplied supplier STEP, received 2026-10-22; fins and two 1.4 mm solder pins included; screw thread not modelled",
+      "archive": "LIB_RAD-DY-GF_3.zip",
+      "archive_sha256": "b8c0871bdf5f9c440ef9ace1792b59deae21d50a7e1403e24aac5792237a997b",
+      "archive_member": "RAD-DY-GF_3/3D/RAD-DY-GF_3.stp"
     }
   },
   "known_fit_issues": [],
-  "unattached_envelope_models": [
-    "RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step"
-  ]
+  "board_only_models": {
+    "HS1": {
+      "model": "RAD-DY-GF_3.stp",
+      "offset_mm": [
+        0,
+        -37.55,
+        30
+      ],
+      "rotation_deg": [
+        0,
+        180,
+        0
+      ]
+    }
+  }
 }

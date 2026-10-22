@@ -255,14 +255,6 @@ def radial(name,diameter,length,pitch,wire,footprint,issue=None):
                  footprint,contacts,issue)
 
 
-def heatsink_envelope():
-    name='RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15'
-    a=cq.Assembly(name=name)
-    # No invented fin, guide, hole or TO-220 screw geometry. Not attached to PCB.
-    add(a,box(-15,-15,0,30,30,15),'UNQUALIFIED_ENVELOPE',cq.Color(.75,.32,.10,.35))
-    return Model(name,a,(-15,15,-15,15,0,15))
-
-
 def models():
     return [chip_fuse(),umt_fuse(),
             inductor('L_Jantek_JNRH1207',12.5,8.05,4.10,3.50,7.5,'EU_Mechanical:L_Jantek_JNRH1207'),
@@ -272,8 +264,7 @@ def models():
             tactile(),terminal('DG301R'),terminal('DG306'),battery(),microsd(),
             radial('Nichicon_UPW1H221MPD_D10_L16_P5',10,16,5,.6,'Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'),
             radial('Panasonic_EEUFR1E102_D10_L20_P5',10,20,5,.6,'Capacitor_THT:CP_Radial_D10.0mm_P5.00mm'),
-            radial('Panasonic_EEUFR1J101LB_D8_L15_P5',8,15,5,.6,'Capacitor_THT:CP_Radial_D8.0mm_P5.00mm'),
-            heatsink_envelope()]
+            radial('Panasonic_EEUFR1J101LB_D8_L15_P5',8,15,5,.6,'Capacitor_THT:CP_Radial_D8.0mm_P5.00mm')]
 
 
 def export(model):
