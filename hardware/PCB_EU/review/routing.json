@@ -1,7 +1,7 @@
 {
   "stage": "fully routed board",
   "date": "2026-10-22",
-  "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
+  "pcbnew_build": "10.0.7",
   "planned_copper_objects_checked": 293,
   "tracks": 1425,
   "vias": 327,
@@ -292,7 +292,7 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "1882d91e527aaddc6a78ccf7ca9bcd8fe762b6a7156bf83d9c1b7a42ba65a643",
+    "PCB_EU.kicad_pcb": "5fd32bfab8f6f1d088918ba35e1581e959a7ace86dcfa2aba318924bbd25dadd",
     "routing.json": "6584d0f05320f6ca86e943e827a90157e2e2a2c8ea79c393fd88ab422a463bc9",
     "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
