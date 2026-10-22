@@ -93,7 +93,9 @@ def check(board_path, output=None):
         require(all(z.GetIsRuleArea() for z in board.Zones()), 'No routing plan: unexpected copper zones')
     require(layout['courtyard_gap_mm'] >= .15, 'Assembly courtyard clearance must be at least 0.15 mm')
     require(layout['opposite_side_tht_joint_guard_mm'] >= .5, 'Opposite-face solder-joint guard must be at least 0.5 mm')
-    require(sum(z.GetIsRuleArea() for z in board.Zones()) == len(layout['heatsink_reserves']), 'Expected one native rule area per heatsink reserve')
+    # Routed boards also carry the planned no-fill areas of routing.json (Kelvin sense tracks).
+    keepouts = len(json.loads((HERE / 'routing.json').read_text()).get('fill_keepouts', [])) if list(board.GetTracks()) else 0
+    require(sum(z.GetIsRuleArea() for z in board.Zones()) == len(layout['heatsink_reserves']) + keepouts, 'Expected one native rule area per heatsink reserve and planned fill keepout')
     edge = [d for d in board.GetDrawings() if d.GetLayer() == p.Edge_Cuts]
     expected_edges = {frozenset(pair) for pair in [((0, 0), (100, 0)), ((100, 0), (100, 100)), ((100, 100), (0, 100)), ((0, 100), (0, 0))]}
     actual_edges = {frozenset((tuple(round(p.ToMM(v), 6) for v in (d.GetStart().x, d.GetStart().y)), tuple(round(p.ToMM(v), 6) for v in (d.GetEnd().x, d.GetEnd().y)))) for d in edge}

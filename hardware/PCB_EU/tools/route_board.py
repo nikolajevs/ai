@@ -50,8 +50,11 @@ SECOND_PASS_WIDTHS = {'HEAVY24': 1.0, 'LOAD': 0.4, 'PWR': 0.3}
 RF_KEEPOUT = [4.5, 0.0, 52.5, 7.44]       # ESP32 antenna reserve on the board, verify_board.py
 POUR_CLEARANCE = .2
 # High-current ground pads: (pad, vias wanted). Each 0.3 mm via carries about 1 A.
-GROUND_TIES = {'Q102.3': 10, 'Q703.3': 6, 'R501.2': 4, 'R601.2': 4, 'Q704.2': 2, 'D101.2': 2,
+# The board return current enters the INA226 shunts R111/R112 at their GND pads (pad 1).
+GROUND_TIES = {'R111.1': 5, 'R112.1': 5, 'Q703.3': 6, 'R501.2': 4, 'R601.2': 4, 'Q704.2': 2, 'D101.2': 2,
                'C101.2': 3, 'J501.2': 3, 'J602.2': 3}
+# Kelvin sense pads: GND net, joined only by their planned sense track, never tied or poured.
+KELVIN_PADS = {'U102.10'}
 TIE_VIA = (0.6, 0.3)
 
 
@@ -199,7 +202,8 @@ def drop_conflicts(board, fixed):
 
     A session made before a change in routing.json may cross new planned copper; the grid
     completion then reroutes the connections that lose a track."""
-    gap = MM(POUR_CLEARANCE) - 1000
+    # 10 nm tolerance only: anything native DRC would report as below the clearance is dropped.
+    gap = MM(POUR_CLEARANCE) - 10
     layers = (p.F_Cu, p.In2_Cu, p.B_Cu)
 
     def box(item):
@@ -219,9 +223,15 @@ def drop_conflicts(board, fixed):
              if t.m_Uuid.AsString() in fixed and isinstance(t, p.PCB_VIA)]
     holes += [(pad.GetPosition(), max(pad.GetDrillSize().x, pad.GetDrillSize().y) // 2)
               for fp in board.GetFootprints() for pad in fp.Pads() if pad.HasHole()]
+    # Planned no-fill areas around sense tracks: no session copper of any net inside.
+    keepouts = [z for z in board.Zones() if z.GetIsRuleArea() and z.GetZoneName().startswith('routing/keepout/')]
     dropped = []
     for item in list(board.GetTracks()):
         if item.m_Uuid.AsString() in fixed:
+            continue
+        if any(z.Outline().Collide(item.GetEffectiveShape(l)) for z in keepouts for l in item_layers(item) if z.IsOnLayer(l)):
+            dropped.append(item.GetNetname())
+            board.Delete(item)
             continue
         if isinstance(item, p.PCB_VIA):
             # Hole spacing applies to every net, including the via's own.
@@ -255,13 +265,16 @@ def replace_session_nets(board, fixed, plan):
     return dropped
 
 
-def prune_dangling(board, nets):
-    """Remove dead-end tracks and vias of the given nets, left over from dropped session copper."""
+def prune_dangling(board, nets, keep=frozenset()):
+    """Remove dead-end tracks and vias of the given nets, left over from dropped session copper.
+
+    Planned copper (UUIDs in keep) is never removed, even where a dropped session track it met
+    leaves it open; the grid completion reconnects it."""
     removed = 0
     while True:
         board.BuildConnectivity()
         conn = board.GetConnectivity()
-        items = [i for i in board.GetTracks() if i.GetNetname() in nets]
+        items = [i for i in board.GetTracks() if i.GetNetname() in nets and i.m_Uuid.AsString() not in keep]
         dead = []
         for item in items:
             if isinstance(item, p.PCB_VIA):
@@ -452,6 +465,8 @@ def tie_remaining_ground(board):
         for pad in fp.Pads():
             if pad.GetNetname() != 'GND' or pad.GetAttribute() in (p.PAD_ATTRIB_NPTH, p.PAD_ATTRIB_PTH):
                 continue
+            if f'{fp.GetReference()}.{pad.GetNumber()}' in KELVIN_PADS:
+                continue
             reached = {i.m_Uuid.AsString() for i in conn.GetConnectedItems(pad)}
             if reached & plane_ids:
                 continue
@@ -610,7 +625,7 @@ def main():
         identity(item, name)
     routed, failed = complete(board)
     # GND is left out: its session vias are stitching vias that only connect once the pours exist.
-    pruned = prune_dangling(board, set(dropped) - {'GND'})
+    pruned = prune_dangling(board, set(dropped) - {'GND'}, keep)
     for layer, name in (('F.Cu', 'gnd-top'), ('B.Cu', 'gnd-bottom')):
         board.Add(rect_zone(board, 'route_board/' + name, 'GND', [layer], [0.3, 0.3, 99.7, 99.7]))
     stitched, unstitched = stitch_islands(board)

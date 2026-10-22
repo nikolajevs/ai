@@ -367,7 +367,7 @@
   {
     "shop": "Salvats",
     "mpn": "CL21B104KBCNNNC",
-    "needed": 12,
+    "needed": 13,
     "buy": 20,
     "unit": "уп. 10 шт.",
     "price_unit": 0.51,
@@ -375,11 +375,12 @@
     "stock": 38,
     "url": "https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805",
     "block": "Байпас и фильтры",
-    "usage": "12 байпасных/фильтрующих конденсаторов в схеме, покупка 20, остаток 8",
+    "usage": "13 байпасных/фильтрующих конденсаторов в схеме (вкл. VS INA226), покупка 20, остаток 7",
     "previous_needed": 14,
     "refs": [
       "C107",
       "C108",
+      "C115",
       "C203",
       "C207",
       "C303",
@@ -409,6 +410,64 @@
     "refs": [
       "Q102",
       "Q703"
+    ],
+    "accessory_count": 0
+  },
+  {
+    "shop": "Electrobase",
+    "mpn": "INA226AIDGSR",
+    "needed": 1,
+    "buy": 1,
+    "unit": "шт.",
+    "price_unit": 3.94,
+    "line": 3.94,
+    "stock": "",
+    "url": "https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0",
+    "block": "Вход 24 В",
+    "usage": "TI INA226, VSSOP-10: ток, напряжение и мощность всей платы по I2C (0x40). Цена от Igors 21.10.2026; наличие и продажа поштучно с катушки не подтверждены",
+    "price_date": "2026-10-21",
+    "previous_needed": 1,
+    "refs": [
+      "U102"
+    ],
+    "accessory_count": 0
+  },
+  {
+    "shop": "Salvats",
+    "mpn": "SMD2512-0R01-1%-3W",
+    "needed": 2,
+    "buy": 2,
+    "unit": "шт.",
+    "price_unit": 0.24,
+    "line": 0.48,
+    "stock": 369,
+    "url": "https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r01-2512635x32mm-3w-1-smd-55170c-rezistors-thick-film-2512",
+    "block": "Вход 24 В",
+    "usage": "0R01 2512 3 Вт 1%: R111||R112 = 5 мОм, шунт INA226 в обратном проводе",
+    "price_date": "2026-10-21",
+    "previous_needed": 2,
+    "refs": [
+      "R111",
+      "R112"
+    ],
+    "accessory_count": 0
+  },
+  {
+    "shop": "Salvats",
+    "mpn": "BZV55-C33",
+    "needed": 1,
+    "buy": 1,
+    "unit": "шт.",
+    "price_unit": 0.13,
+    "line": 0.13,
+    "stock": 94,
+    "url": "https://www.salvats.lv/lv/stabilitroni-smd-bzv55/33v-stabilitrons-smd-bzv55-5-05w-minimelf-1",
+    "block": "Вход 24 В",
+    "usage": "Стабилитрон 33 В 0,5 Вт MiniMELF: D103 защищает вход VBUS INA226 (предел 40 В) при срабатывании D101",
+    "price_date": "2026-10-21",
+    "previous_needed": 1,
+    "refs": [
+      "D103"
     ],
     "accessory_count": 0
   },
@@ -1335,7 +1394,7 @@
   {
     "shop": "Salvats",
     "mpn": "SMD0603-1K",
-    "needed": 6,
+    "needed": 7,
     "buy": 10,
     "unit": "уп. 10 шт.",
     "price_unit": 0.11,
@@ -1343,9 +1402,10 @@
     "stock": 50,
     "url": "https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1",
     "block": "Цифровые цепи",
-    "usage": "1k: tach x2, float x1, pump/fan gates x3; 6 of 10 purchased",
+    "usage": "1k: tach x2, float x1, pump/fan gates x3, INA226 VBUS x1; 7 of 10 purchased",
     "previous_needed": 8,
     "refs": [
+      "R113",
       "R403",
       "R411",
       "R413",

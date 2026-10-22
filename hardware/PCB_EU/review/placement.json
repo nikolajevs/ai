@@ -2,8 +2,8 @@
   "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "checks_passed": 22175,
-  "netlisted_references": 193,
+  "checks_passed": 23466,
+  "netlisted_references": 199,
   "board_only_mounting_holes": 4,
   "copper_layers": 4,
   "board_mm": [
@@ -12,7 +12,7 @@
   ],
   "face_counts": {
     "F": 108,
-    "B": 85
+    "B": 91
   },
   "back_side_references": [
     "BT301",
@@ -24,6 +24,7 @@
     "C111",
     "C113",
     "C114",
+    "C115",
     "C503",
     "C504",
     "C505",
@@ -40,6 +41,7 @@
     "C608",
     "C609",
     "C803",
+    "D103",
     "D701",
     "D801",
     "F106",
@@ -59,6 +61,9 @@
     "R108",
     "R109",
     "R110",
+    "R111",
+    "R112",
+    "R113",
     "R503",
     "R504",
     "R505",
@@ -98,15 +103,16 @@
     "R816",
     "R817",
     "TP06",
+    "U102",
     "U501",
     "U601"
   ],
-  "connected_physical_pads": 495,
-  "connected_netlist_pins": 479,
-  "mapped_netlist_pins_including_nc": 505,
+  "connected_physical_pads": 514,
+  "connected_netlist_pins": 498,
+  "mapped_netlist_pins_including_nc": 525,
   "pad_net_parity": true,
-  "routed_tracks": 1518,
-  "routed_vias": 311,
+  "routed_tracks": 1636,
+  "routed_vias": 352,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
@@ -125,8 +131,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "baa5198bb08b68aa2b414b4ab55ce11fc2b0e05bd85b7c59ad69fcf520a19a69",
-    "placement.json": "8f2d88b10c299c16220439e3cc677d6bf41c666be522e181a6c5af2ad1cc728f",
-    "netlist.xml": "4e7737c62cc25b17560dbf0224016b27959b119f75a1e185d6d292fff25222c9"
+    "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+    "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
+    "netlist.xml": "45ab2ae6f1d32a93e08a73552ec4cae2d7eeb6ee1767a7fdfa424803b29f3f73"
   }
 }

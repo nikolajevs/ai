@@ -130,6 +130,10 @@
       },
       {
         "netclass": "HEAVY24",
+        "pattern": "RTN_SHUNT"
+      },
+      {
+        "netclass": "HEAVY24",
         "pattern": "+24V_FUSED"
       },
       {

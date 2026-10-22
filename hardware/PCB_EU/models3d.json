@@ -8,6 +8,7 @@
     "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
     "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
     "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical": "PinHeader_1x06_P2.54mm_Vertical.step",
+    "Diode_SMD:D_MiniMELF": "D_MiniMELF.step",
     "Diode_SMD:D_SMB": "D_SMB.step",
     "Diode_SMD:D_SMC": "D_SMC.step",
     "EU_Mechanical:Battery_COMF_BC-2001": "Battery_COMF_BC-2001_with_CR2032.step",
@@ -25,6 +26,7 @@
     "EU_Parts:ESP32-WROOM-32E_NoVias": "ESP32-WROOM-32E.step",
     "EU_Parts:Vishay_TO-277A_D_K1_A2": "TO-277A.step",
     "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm": "SOIC-8_3.9x4.9mm_P1.27mm.step",
+    "Package_SO:VSSOP-10_3x3mm_P0.5mm": "VSSOP-10_3x3mm_P0.5mm.step",
     "Package_TO_SOT_SMD:SOT-23": "SOT-23.step",
     "Package_TO_SOT_SMD:SOT-23-6": "SOT-23-6.step",
     "Package_TO_SOT_SMD:TO-263-2": "TO-263-2.step",
@@ -99,6 +101,14 @@
         "abs07"
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "D_MiniMELF.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Diode_SMD.3dshapes/D_MiniMELF.step",
+      "sha256": "bab3a3356a14efb0438caca9adf53472dea34425715606e933f092f87f73f650",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
     },
     "D_SMB.step": {
       "origin": "KiCad library contributors",
@@ -513,6 +523,14 @@
         "dg306"
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "VSSOP-10_3x3mm_P0.5mm.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Package_SO.3dshapes/VSSOP-10_3x3mm_P0.5mm.step",
+      "sha256": "24fb2bd055d0d988ec8582e8a5f473ecf890c4d247091414c8b38e75833411d0",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
     },
     "microSD_GCT_MEM2061-01-188-00-A.step": {
       "origin": "project-generated",

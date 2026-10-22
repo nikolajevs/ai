@@ -1,7 +1,7 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
   "date": "2026-10-21",
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -13,7 +13,9 @@
     "LED2_LED_POS",
     "LED2_IS",
     "LED2_GATE",
-    "LED2_GATE_RAW"
+    "LED2_GATE_RAW",
+    "REVP_GATE",
+    "REVP_MID"
   ],
   "vias": [
     {
@@ -262,6 +264,36 @@
       "at": [
         87.3,
         93.6
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "ina-3v3",
+      "net": "+3V3",
+      "at": [
+        5.4,
+        79.4
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "ina-3v3-sht",
+      "net": "+3V3",
+      "at": [
+        12.0,
+        86.75
+      ],
+      "diameter": 0.6,
+      "drill": 0.3
+    },
+    {
+      "id": "u402-gnd",
+      "net": "GND",
+      "at": [
+        14.6,
+        82.5
       ],
       "diameter": 0.6,
       "drill": 0.3
@@ -1542,6 +1574,285 @@
           "pad": "L601.1"
         }
       ]
+    },
+    {
+      "id": "rtn-shunt-trunk",
+      "net": "RTN_SHUNT",
+      "layer": "B.Cu",
+      "width": 3.0,
+      "points": [
+        {
+          "pad": "Q102.3"
+        },
+        [
+          8.25,
+          77.6
+        ]
+      ]
+    },
+    {
+      "id": "rtn-shunt-r112",
+      "net": "RTN_SHUNT",
+      "layer": "B.Cu",
+      "width": 1.2,
+      "points": [
+        [
+          8.25,
+          77.6
+        ],
+        {
+          "pad": "R112.2"
+        }
+      ]
+    },
+    {
+      "id": "rtn-shunt-r111",
+      "net": "RTN_SHUNT",
+      "layer": "B.Cu",
+      "width": 1.2,
+      "points": [
+        [
+          8.25,
+          77.6
+        ],
+        {
+          "pad": "R111.2"
+        }
+      ]
+    },
+    {
+      "id": "ina-sense-neg",
+      "net": "RTN_SHUNT",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "R111.2"
+        },
+        [
+          9.6,
+          79.0
+        ],
+        [
+          9.6,
+          79.85
+        ],
+        [
+          12.5,
+          79.85
+        ],
+        {
+          "pad": "U102.9"
+        }
+      ]
+    },
+    {
+      "id": "ina-sense-pos",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U102.10"
+        },
+        [
+          13.0,
+          79.85
+        ],
+        [
+          14.8,
+          79.85
+        ],
+        [
+          14.8,
+          79.0
+        ],
+        {
+          "pad": "R111.1"
+        }
+      ]
+    },
+    {
+      "id": "ina-vs",
+      "net": "+3V3",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U102.6"
+        },
+        {
+          "pad": "C115.1"
+        }
+      ]
+    },
+    {
+      "id": "ina-gnd",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U102.7"
+        },
+        [
+          11.5,
+          82.95
+        ],
+        {
+          "pad": "C115.2"
+        }
+      ]
+    },
+    {
+      "id": "ina-vbus",
+      "net": "INA_VBUS",
+      "layer": "B.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U102.8"
+        },
+        [
+          12.0,
+          82.6
+        ],
+        [
+          13.6,
+          82.6
+        ],
+        [
+          14.25,
+          83.25
+        ],
+        {
+          "pad": "D103.1"
+        },
+        {
+          "pad": "R113.2"
+        }
+      ]
+    },
+    {
+      "id": "revp-gate",
+      "net": "REVP_GATE",
+      "layer": "B.Cu",
+      "width": 0.3,
+      "points": [
+        {
+          "pad": "Q102.1"
+        },
+        [
+          13.34,
+          73.8
+        ],
+        {
+          "pad": "R110.1"
+        },
+        {
+          "pad": "R109.2"
+        }
+      ]
+    },
+    {
+      "id": "revp-mid",
+      "net": "REVP_MID",
+      "layer": "B.Cu",
+      "width": 0.3,
+      "points": [
+        {
+          "pad": "R109.1"
+        },
+        {
+          "pad": "R108.2"
+        }
+      ]
+    },
+    {
+      "id": "ina-3v3-b",
+      "net": "+3V3",
+      "layer": "B.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "pad": "C115.1"
+        },
+        [
+          7.65,
+          81.05
+        ],
+        {
+          "via": "ina-3v3"
+        }
+      ]
+    },
+    {
+      "id": "ina-3v3-f",
+      "net": "+3V3",
+      "layer": "F.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "via": "ina-3v3"
+        },
+        [
+          11.2,
+          79.4
+        ],
+        [
+          12.0,
+          80.2
+        ],
+        {
+          "pad": "U402.5"
+        }
+      ]
+    },
+    {
+      "id": "ina-3v3-sht",
+      "net": "+3V3",
+      "layer": "In2.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "via": "ina-3v3"
+        },
+        {
+          "via": "ina-3v3-sht"
+        }
+      ]
+    },
+    {
+      "id": "sht-3v3",
+      "net": "+3V3",
+      "layer": "F.Cu",
+      "width": 0.4,
+      "points": [
+        {
+          "via": "ina-3v3-sht"
+        },
+        {
+          "pad": "U401.5"
+        }
+      ]
+    },
+    {
+      "id": "u402-gnd",
+      "net": "GND",
+      "layer": "F.Cu",
+      "width": 0.25,
+      "points": [
+        {
+          "pad": "U402.2"
+        },
+        [
+          12.0,
+          82.5
+        ],
+        {
+          "via": "u402-gnd"
+        }
+      ]
     }
   ],
   "zones": [
@@ -1566,6 +1877,40 @@
         [
           0.4,
           99.6
+        ]
+      ]
+    }
+  ],
+  "fill_keepouts": [
+    {
+      "id": "ina-sense-pos",
+      "layers": [
+        "B.Cu"
+      ],
+      "outline": [
+        [
+          12.72,
+          79.3
+        ],
+        [
+          15.25,
+          79.3
+        ],
+        [
+          15.25,
+          80.2
+        ],
+        [
+          13.45,
+          80.2
+        ],
+        [
+          13.45,
+          82.0
+        ],
+        [
+          12.72,
+          82.0
         ]
       ]
     }
@@ -1702,6 +2047,31 @@
         "R601.2",
         "C611.2",
         "C609.2"
+      ]
+    },
+    {
+      "net": "RTN_SHUNT",
+      "pads": [
+        "Q102.3",
+        "R111.2",
+        "R112.2",
+        "U102.9"
+      ]
+    },
+    {
+      "net": "INA_VBUS",
+      "pads": [
+        "U102.8",
+        "D103.1",
+        "R113.2"
+      ]
+    },
+    {
+      "net": "REVP_GATE",
+      "pads": [
+        "Q102.1",
+        "R110.1",
+        "R109.2"
       ]
     }
   ]

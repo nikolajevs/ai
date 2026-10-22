@@ -74,6 +74,26 @@ def plan_items(board, plan):
             outline.Append(p.FromMM(x), p.FromMM(y))
         identity(zone, 'routing/zone/' + spec['id'])
         items.append(zone)
+    # No-fill rule areas: keep same-net pours off a sense track so it touches copper only at its ends.
+    for spec in plan.get('fill_keepouts', []):
+        zone = p.ZONE(board)
+        zone.SetIsRuleArea(True)
+        zone.SetDoNotAllowZoneFills(True)
+        zone.SetDoNotAllowVias(True)
+        zone.SetDoNotAllowTracks(False)
+        zone.SetDoNotAllowPads(False)
+        zone.SetDoNotAllowFootprints(False)
+        layers = p.LSET()
+        for layer in spec['layers']:
+            layers.AddLayer(board.GetLayerID(layer))
+        zone.SetLayerSet(layers)
+        zone.SetZoneName('routing/keepout/' + spec['id'])
+        outline = zone.Outline()
+        outline.NewOutline()
+        for x, y in spec['outline']:
+            outline.Append(p.FromMM(x), p.FromMM(y))
+        identity(zone, 'routing/keepout/' + spec['id'])
+        items.append(zone)
     return items
 
 
@@ -87,6 +107,9 @@ def signature(item):
         return ('track', item.GetNetname(), item.GetLayer(), item.GetWidth(),
                 item.GetStart().x, item.GetStart().y, item.GetEnd().x, item.GetEnd().y)
     poly = item.Outline().Outline(0)
+    if item.GetIsRuleArea():
+        return ('rule', tuple(item.GetLayerSet().Seq()), tuple((poly.CPoint(i).x, poly.CPoint(i).y) for i in range(poly.PointCount())),
+                item.GetDoNotAllowZoneFills(), item.GetDoNotAllowVias(), item.GetDoNotAllowTracks(), item.GetDoNotAllowPads())
     return ('zone', item.GetNetname(), tuple(item.GetLayerSet().Seq()),
             tuple((poly.CPoint(i).x, poly.CPoint(i).y) for i in range(poly.PointCount())),
             item.GetLocalClearance(), item.GetMinThickness(), item.GetPadConnection(),
