@@ -2,7 +2,9 @@
 """Add readable, net-checked assembly silk without rewriting any routed geometry.
 
 Run after routing, using KiCad 10's Python and Shapely. Existing Fab references,
-library polarity marks and all underlying PCB items are preserved.
+library polarity marks and all underlying PCB items are preserved. The only change to
+existing items is silk_clean.py: the silkscreen lines of library footprints are cut back to
+0.15 mm from pads and holes and widened to 0.15 mm, as JLCPCB requires.
 SPDX-License-Identifier: MIT
 """
 import argparse
@@ -12,6 +14,7 @@ import json
 import math
 from pathlib import Path
 import re
+import tempfile
 import uuid
 
 import pcbnew as p
@@ -20,10 +23,12 @@ from shapely.ops import unary_union
 from shapely.strtree import STRtree
 
 from models3d import spans
+from silk_clean import clean_board
 from verify_footprints import parse, child, children
 
 HERE = Path(__file__).resolve().parents[1]
 GROUP = 'PCB_EU assembly silkscreen'
+TEXT_MM = 1.0   # JLCPCB: character height of at least 1.0 mm, stroke 0.15 mm (0.8-0.9 mm texts were used before 22.10.2026)
 NS = uuid.UUID('b5e58c64-044f-432a-98f0-a378af7ff276')
 # Pin labels are explicit: switched load returns and the raw PSU return are NOT GND.
 CONNECTORS = {
@@ -69,6 +74,54 @@ def without_generated(text):
     text = re.sub(r'(?m)^[ \t]+$', '', text)
     # Generated nodes are inserted immediately before the final board close.
     return text[:text.rfind(')')].rstrip() + '\n)\n'
+
+
+FP_SILK_SHAPES = ('fp_line', 'fp_arc', 'fp_circle', 'fp_rect', 'fp_poly', 'fp_text')
+
+
+def without_footprint_silk(board_node):
+    """Board tree minus the silkscreen shapes and texts of its footprints (the only items silk_clean.py may change)."""
+    def on_silk(node):
+        return any(isinstance(x, list) and x[:1] == ['layer'] and x[1:2] and x[1] in ('F.SilkS', 'B.SilkS') for x in node)
+    out = []
+    for node in board_node:
+        if isinstance(node, list) and node[:1] == ['footprint']:
+            node = [c for c in node if not (isinstance(c, list) and c[:1] and c[0] in FP_SILK_SHAPES and on_silk(c))]
+        out.append(node)
+    return out
+
+
+def clean_library_silk(text):
+    """(text, {reference: [pieces kept, shapes cut]}): the library silk of the board cut back from pads and holes.
+
+    pcbnew does the geometry on a temporary copy; only the footprints it changed are spliced into the
+    text, so every other byte of the board stays."""
+    with tempfile.TemporaryDirectory(prefix='eu-silk-clean-') as tmp:
+        source = Path(tmp) / 'PCB_EU.kicad_pcb'
+        source.write_text(text)
+        board = p.LoadBoard(str(source))
+        changed = clean_board(board)
+        if not changed:
+            return text, changed
+        target = Path(tmp) / 'cleaned.kicad_pcb'
+        p.SaveBoard(str(target), board)
+        saved = target.read_text()
+    old, new = spans(text, 'footprint'), spans(saved, 'footprint')
+    if len(old) != len(new):
+        raise RuntimeError('pcbnew changed the number of footprints')
+    edits = []
+    for (a, b), (c, d) in zip(old, new):
+        if text[a:b] != saved[c:d]:
+            ref = re.search(r'\(property "Reference" "([^"]+)"', saved[c:d]).group(1)
+            if ref not in changed:
+                raise RuntimeError(f'{ref}: pcbnew rewrote a footprint that silk_clean.py did not change')
+            edits.append((a, b, saved[c:d]))
+    result = text
+    for a, b, value in sorted(edits, reverse=True):
+        result = result[:a] + value + result[b:]
+    if without_footprint_silk(parse(result)) != without_footprint_silk(parse(text)):
+        raise RuntimeError('silk_clean.py changed more than footprint silkscreen shapes')
+    return result, changed
 
 
 def rect(item):
@@ -218,7 +271,7 @@ class Layout:
         self.skipped.append(dict(ref=ref, pin=str(pin), reason=f'no clear unambiguous space for a pin-1 dot within {max_outside} mm of the pad or between its pad rows'))
         return None
 
-    def add(self, name, text, ref, side, size=.85, anchor=None, max_distance=4, other_pins=(), rotation=0):
+    def add(self, name, text, ref, side, size=TEXT_MM, anchor=None, max_distance=4, other_pins=(), rotation=0):
         fp = self.fps[ref]
         body = self.bodies[ref]
         # Native KiCad stroke-font bounds, including the bottom-side mirror.
@@ -299,7 +352,7 @@ class Layout:
         sides = faces or (['F', 'B'] if ref.startswith('J') or not (fp.GetAttributes() & p.FP_SMD) else ['B' if fp.IsFlipped() else 'F'])
         for side in sides:
             item = self.add(f'{ref}/pin/{pin}/{side}', text, ref, side,
-                            .9 if text in ('+', '-') else .8, anchor, 6, other_pins)
+                            TEXT_MM, anchor, 6, other_pins)
             if item:
                 item.update(pin=str(pin), net=net)
                 result.append(item)
@@ -312,9 +365,9 @@ def render(labels):
     for v in labels:
         x, y = v['at']
         if v.get('kind') == 'dot':
-            # Filled circle: centre radius + half the 0.1 mm stroke = outer radius diameter / 2.
-            r = round(v['diameter_mm'] / 2 - .05, 4)
-            blocks.append(f'\t(gr_circle (center {x} {y}) (end {round(x + r, 4)} {y}) (stroke (width 0.1) (type default)) '
+            # Filled circle: centre radius + half the 0.15 mm stroke (the JLCPCB minimum) = outer radius diameter / 2.
+            r = round(v['diameter_mm'] / 2 - .075, 4)
+            blocks.append(f'\t(gr_circle (center {x} {y}) (end {round(x + r, 4)} {y}) (stroke (width 0.15) (type default)) '
                           f'(fill yes) (layer "{v["side"]}.SilkS") (uuid "{v["uuid"]}"))')
             continue
         mirror = ' (justify mirror)' if v['side'] == 'B' else ''
@@ -336,8 +389,10 @@ def main():
         ap.error('KiCad 10 pcbnew is required; never downgrade the PCB file')
     original = args.board.read_text()
     base = without_generated(original)
-    # pcbnew is used for geometry only; its serializer never rewrites this board.
-    import tempfile
+    base, library_silk = clean_library_silk(base)
+    if args.check and library_silk:
+        raise RuntimeError(f'Library silkscreen is not cut back from pads: regenerate with tools/silkscreen.py ({sorted(library_silk)})')
+    # pcbnew is used for geometry only; apart from the footprints in clean_library_silk its serializer never rewrites this board.
     with tempfile.TemporaryDirectory(prefix='eu-silkscreen-') as tmp:
         path = Path(tmp) / 'PCB_EU.kicad_pcb'
         path.write_text(base)
@@ -351,20 +406,15 @@ def main():
     for ref, (function, _) in CONNECTORS.items():
         placed = False
         for side in ['F', 'B']:
-            item = layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side, 1)
+            item = layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side)
             if not item:
-                item = layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side, 1, rotation=90)
-            if not item:
-                item = (layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side, .8) or
-                        layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side, .8, rotation=90))
+                item = layout.add(f'{ref}/function/{side}', f'{ref} {function}', ref, side, rotation=90)
             placed |= item is not None
         if not placed:
             layout.skipped.append(dict(ref=ref, reason='connector title has no clear space'))
     for ref, text, side in [('J301', 'J301 microSD', 'B'), ('BT301', 'BT301 CR2032', 'B')]:
-        if not (layout.add(f'{ref}/function', text, ref, side, 1) or
-                layout.add(f'{ref}/function', text, ref, side, 1, rotation=90) or
-                layout.add(f'{ref}/function', text, ref, side, .8) or
-                layout.add(f'{ref}/function', text, ref, side, .8, rotation=90)):
+        if not (layout.add(f'{ref}/function', text, ref, side) or
+                layout.add(f'{ref}/function', text, ref, side, rotation=90)):
             layout.skipped.append(dict(ref=ref, reason='no clear space for function label'))
     layout.pin('BT301', 1, '+', 'VBAT')
     # Library electrolytics already carry + and a negative half-disc on their
@@ -397,13 +447,14 @@ def main():
             raise RuntimeError('Managed silk is stale: regenerate with tools/silkscreen.py')
     else:
         args.board.write_text(updated)
-    report = dict(pcbnew_version=p.Version(), minimum_text_mm=.8, stroke_mm=.15,
+    report = dict(pcbnew_version=p.Version(), minimum_text_mm=TEXT_MM, stroke_mm=.15,
                   generated_labels=len(layout.labels), labels_by_face=dict(Counter(v['side'] for v in layout.labels)),
                   references_placed=sum(v['name'].endswith('/reference') for v in layout.labels),
                   ic_pin1_dots=sum(v.get('kind') == 'dot' for v in layout.labels),
                   ic_native_pin1_marks=layout.native_marks,
                   preserved_native_marks='electrolytic + / negative half-disc, diode cathode outlines; library IC footprints without a silk pin-1 mark get a dot; native marks are kept; Fab references unchanged',
                   non_silkscreen_data_unchanged=True, labels=layout.labels, omitted=layout.skipped,
+                  library_silk_cut={ref: dict(pieces_kept=v[0], shapes_cut=v[1]) for ref, v in sorted(library_silk.items())},
                   base_pcb_sha256=hashlib.sha256(base.encode()).hexdigest(),
                   source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest())
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')

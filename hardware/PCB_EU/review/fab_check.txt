@@ -1,0 +1,37 @@
+[PASS] silkscreen strokes (lines and text) at least 0.15 mm
+[WARN] silkscreen stroke 0.150 mm below 0.2 mm (JLCDFM warns at 0.15 mm; run --fix-silk)
+[PASS] 178 visible silkscreen texts at least 1.0 mm high
+[PASS] silkscreen keeps 0.15 mm away from every pad and hole
+[PASS] board outline 100.00 x 100.00 mm (inside the JLCPCB limits; 100 x 100 mm is the lowest price tier)
+[PASS] board fits the 100 x 100 mm price tier
+[PASS] project rule track width 0.25 mm (JLCPCB minimum 0.09)
+[PASS] project rule copper clearance 0.15 mm (JLCPCB minimum 0.09)
+[PASS] project rule via diameter 0.6 mm (JLCPCB minimum 0.25)
+[PASS] project rule drill 0.3 mm (JLCPCB minimum 0.15)
+[PASS] project rule copper to board edge 0.3 mm (JLCPCB minimum 0.2)
+[PASS] project rule hole to hole 0.25 mm (JLCPCB minimum 0.2)
+[PASS] project rule via annular width 0.15 mm (JLCPCB minimum 0.0)
+[PASS] board thickness 1.606 mm (1.6 mm +-10 %)
+[PASS] solder mask expansion 0.00 mm (JLCPCB takes 1:1 openings)
+[PASS] vias tented on both sides
+[PASS] 1451 tracks, narrowest 0.25 mm (minimum 0.09)
+[PASS] 345 vias: drill, diameter and ring above the minimum
+[WARN] via annular ring 0.150 mm is above the minimum 0.15 but below the recommended 0.2 mm (0.3/0.65 mm vias; the standard 0.3/0.4 mm order option is met)
+[PASS] via annular ring at least 0.15 mm
+[PASS] every SMD pad at least 0.25 x 0.25 mm
+[PASS] 64 plated pads: annular ring at least 0.28 mm (J411.1; minimum 0.15)
+[PASS] PTH rings at or above the recommended value
+[PASS] plated holes at least 0.5 mm (smallest 0.80)
+[PASS] non-plated holes at least 0.5 mm
+[PASS] 0 plated slots: width at least 0.35 mm and length at least twice the width
+[PASS] hole-to-hole spacing meets 0.2 mm (vias) and 0.45 mm (pad holes)
+[PASS] plated hole edge to foreign copper at least 0.49 mm (minimum 0.28)
+[PASS] plated holes at or above the recommended distance to copper
+[PASS] non-plated hole edge to copper at least 1.00 mm (minimum 0.2)
+[PASS] narrowest solder mask web between pad openings 0.20 mm (U501.1 / U501.2; minimum 0.1)
+[WARN] 82 same-net track pairs closer than 0.25 mm without touching (13 under 0.09 mm etch as one piece, 69 are narrow slits between parts of one net, no short: electrically harmless)
+[PASS] no via touches a pad or comes within 0.1 mm of one (thermal pads of U902 and U201, or the pads in fab_exceptions.json, excepted)
+[PASS] no track passes a pad closer than 0.09 mm without touching it
+[PASS] through-hole pads keep 0.5 mm from SMD pads
+
+0 FAIL, 3 WARN
