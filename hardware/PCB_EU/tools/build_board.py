@@ -147,6 +147,56 @@ def mounting_hole(board, spec):
     fp.SetPosition(point(x, y))
 
 
+def heatsink_legs(board, spec):
+    """Board-only footprint for the two plated GND holes of the Q501 heatsink's solder pins.
+
+    The heatsink stands on its 30 x 15 mm end face; the outline below is that footprint on the
+    board (assembly aid, not a component model). Positions are derived in placement.json."""
+    fp = p.FOOTPRINT(board)
+    ref = spec['ref']
+    x0, y0, x1, y1 = spec['body_box']
+    cx = spec['heatsink_center_x']
+    fp.SetReference(ref)
+    fp.SetValue('RAD-DY-GF/3 pins 2x d1.4 / GND')
+    fp.SetAttributes(p.FP_BOARD_ONLY | p.FP_EXCLUDE_FROM_BOM | p.FP_EXCLUDE_FROM_POS_FILES)
+    identity(fp, ref)
+    net = board.FindNet(spec['net'])
+    if net is None:
+        raise RuntimeError(f'{ref}: net {spec["net"]} is not in the netlist')
+    layers = p.LSET()
+    layers.AddLayerSet(p.LSET.AllCuMask())
+    layers.AddLayer(p.F_Mask)
+    layers.AddLayer(p.B_Mask)
+    for number, (x, y) in enumerate(spec['pins_mm'], 1):
+        pad = p.PAD(fp)
+        pad.SetNumber(str(number))
+        pad.SetAttribute(p.PAD_ATTRIB_PTH)
+        pad.SetShape(p.PAD_SHAPE_CIRCLE)
+        pad.SetSize(point(spec['pad_mm'], spec['pad_mm']))
+        pad.SetDrillSize(point(spec['drill_mm'], spec['drill_mm']))
+        pad.SetLayerSet(layers)
+        pad.SetNet(net)
+        pad.SetPosition(point(x - cx, y))
+        identity(pad, f'{ref}/pin/{number}')
+        fp.Add(pad)
+    for layer, width in [(p.F_Fab, .1), (p.F_CrtYd, .05)]:
+        outline = p.PCB_SHAPE(fp)
+        outline.SetShape(p.SHAPE_T_RECT)
+        outline.SetStart(point(x0 - cx, y0))
+        outline.SetEnd(point(x1 - cx, y1))
+        outline.SetLayer(layer)
+        outline.SetWidth(p.FromMM(width))
+        identity(outline, f'{ref}/outline/{layer}')
+        fp.Add(outline)
+    fp.Reference().SetLayer(p.F_Fab)
+    fp.Reference().SetPosition(point(0, y0 + 7))
+    fp.Value().SetVisible(False)
+    for i, field in enumerate(fp.GetFields()):
+        identity(field, f'{ref}/field/{i}')
+    board.Add(fp)
+    fp.SetPosition(point(cx, 0))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output', type=Path, default=BOARD,
@@ -178,6 +228,7 @@ def main():
     rectangle(board, 'outline', [0, 0, w, h], p.Edge_Cuts)
     for hole in layout['mounting_holes']:
         mounting_hole(board, hole)
+    heatsink_legs(board, layout['heatsink_legs'])
     for reserve in layout['heatsink_reserves']:
         rectangle(board, reserve['name'], reserve['box'], p.Dwgs_User)
         x0, y0, x1, y1 = reserve['box']
@@ -186,14 +237,14 @@ def main():
         identity(zone, reserve['name'] + '/keepout')
         zone.SetIsRuleArea(True)
         layers = p.LSET()
-        # Front-side body reserve; rear SMDs are allowed. Guide-pin locations
-        # remain unqualified and can require later movement of rear parts.
+        # Front-side body reserve; rear SMDs are allowed. The heatsink's own two plated
+        # GND holes (HS1) sit inside it, so pads are checked by verify_board.py instead.
         for layer in [p.F_Cu]:
             layers.AddLayer(layer)
         zone.SetLayerSet(layers)
         zone.SetDoNotAllowTracks(True)
         zone.SetDoNotAllowVias(True)
-        zone.SetDoNotAllowPads(True)
+        zone.SetDoNotAllowPads(False)
         zone.SetDoNotAllowZoneFills(True)
         # The associated TO-220 body enters this region; its pads remain outside.
         # verify_board.py separately checks every other component against it.
@@ -204,7 +255,7 @@ def main():
             outline.Append(p.FromMM(x), p.FromMM(y))
         board.Add(zone)
     label(board, 'stage', 'EU-0.1 / UNROUTED PLACEMENT / 100 x 100 mm / 4 Cu', 50, -17, 1.3)
-    label(board, 'limits', 'Glue-mounted HS1 / physical fit and thermal NOT qualified', 50, -14.5)
+    label(board, 'limits', 'HS1 on two soldered GND pins / clamping, physical fit and thermal NOT qualified', 50, -14.5)
     p.SaveBoard(str(args.output), board)
     apply_stackup(args.output)
     print(f'Built {len(fps)} netlisted references + {len(layout["mounting_holes"])} proposed mounting holes; 0 tracks/vias/copper pours')

@@ -10,7 +10,7 @@
   "courtyard_gap_mm": 0.15,
   "opposite_side_tht_joint_guard_mm": 0.5,
   "limits": [
-    "Q501 uses an electrically insulating thermal adhesive heatsink attachment (user decision 2026-10-22), with no PCB guide-pin holes. Front-side 32 x 32 mm HS1 body/access reserve remains; physical fit and adhesive thermal/mechanical performance require user inspection and prototype verification. Q601 has no heatsink.",
+    "Q501 heatsink HS1 (STONECOLD RAD-DY-GF/3) stands on its 30 x 15 mm end face with two 1.4 mm solder pins in two 1.7 mm plated GND holes with 2.6 mm pads (pin geometry from the supplier STEP supplied by the user 2026-10-22; hole/pad sizes and the 0.3 mm silicone pad offset are design choices; R803/R804 moved right to clear the left pin). Front-side 34 x 32 mm HS1 body/access reserve (widened from 32 x 32 on 2026-10-22 so the 30 mm heatsink can be centred on the Q501 screw hole); Q501 is clamped to the threaded M3 hole of the heatsink (hole position taken as the centre of the mounting face from the supplier photo, not in the STEP; the screw is supplied by the user); physical fit, enclosure height (30 mm) and thermal performance require user inspection and prototype verification. Q601 has no heatsink.",
     "Back-side battery and the tall inductors require enclosure clearance; all twelve electrolytic capacitors are on the front since 2026-10-22; no 3D/physical-fit qualification.",
     "All connections routed (hand-planned LED1 and LED2 power loops and LM3429 pin escapes in routing.json, rest autorouted). Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
@@ -20,13 +20,32 @@
       "box": [
         65,
         8,
-        97,
+        99,
         40
       ],
       "side": "F",
       "associated_ref": "Q501"
     }
   ],
+  "heatsink_legs": {
+    "ref": "HS1",
+    "associated_ref": "Q501",
+    "net": "GND",
+    "source": "STONECOLD RAD-DY-GF/3 STEP from the TME library (supplied by the user 2026-10-22): extruded profile, mounting face y=-1.5, pin axes at x=+-11.1, y=0.7275 (2.2275 mm from the mounting face), pin diameter 1.4 mm, pins protrude 10 mm from the 30 mm end face",
+    "heatsink_mm": {"width": 30, "height_on_board": 30, "depth": 15},
+    "pin_pitch_mm": 22.2,
+    "pin_diameter_mm": 1.4,
+    "pin_offset_from_mounting_face_mm": 2.2275,
+    "pin_protrusion_mm": 10,
+    "to220_tab_plane_offset_mm": -3.15,
+    "insulating_pad_mm": 0.3,
+    "heatsink_center_x": 83.0,
+    "drill_mm": 1.7,
+    "pad_mm": 2.6,
+    "mounting_face_y": 39.05,
+    "pins_mm": [[71.9, 36.8225], [94.1, 36.8225]],
+    "body_box": [68.0, 24.05, 98.0, 39.05]
+  },
   "mounting_holes": [
     {
       "ref": "H1",
@@ -1031,13 +1050,13 @@
       "side": "F"
     },
     "R803": {
-      "x": 75.7,
+      "x": 77.2,
       "y": 38.8,
       "rotation": 0,
       "side": "B"
     },
     "R804": {
-      "x": 81.2,
+      "x": 82.1,
       "y": 38.3,
       "rotation": 90,
       "side": "B"

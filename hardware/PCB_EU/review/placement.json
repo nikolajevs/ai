@@ -2,7 +2,7 @@
   "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "checks_passed": 22639,
+  "checks_passed": 22991,
   "netlisted_references": 196,
   "board_only_mounting_holes": 4,
   "copper_layers": 4,
@@ -103,14 +103,14 @@
   "connected_netlist_pins": 498,
   "mapped_netlist_pins_including_nc": 525,
   "pad_net_parity": true,
-  "routed_tracks": 1446,
-  "routed_vias": 344,
+  "routed_tracks": 1451,
+  "routed_vias": 345,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
     "LED1": {
-      "gate_pin_to_resistor": 8.19,
-      "resistor_to_mosfet_gate": 4.11
+      "gate_pin_to_resistor": 7.54,
+      "resistor_to_mosfet_gate": 3.71
     },
     "LED2": {
       "gate_pin_to_resistor": 3.45,
@@ -120,11 +120,12 @@
   "gate_driver_note": "Straight-line pin distances, not routed lengths; dedicated return paths, ringing and further placement optimisation remain unqualified.",
   "mechanical_fit_verified": false,
   "heatsink_mounting_pin_coordinates_verified": false,
+  "heatsink_pin_coordinates_source": "supplier STEP (user-supplied 2026-10-22); not measured on a physical part",
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
-    "placement.json": "65a49086df11323fb6463a77e2243bb313046b89f806148e74abc4066332a1ea",
-    "netlist.xml": "5aa387a7c73113e101f4f7aebea4b59d406fc1d235d1ff4426f7bcf07be7e8aa"
+    "PCB_EU.kicad_pcb": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+    "placement.json": "d6f920cacab23ac8ef522d21cca8c9045977e8cbf65691864844b187c07e85f0",
+    "netlist.xml": "e9baebabfe8410e2efb14585216664c782683d20be3d41664b325734e884478c"
   }
 }

@@ -2,9 +2,9 @@
   "pcbnew_version": "10.0.7",
   "minimum_text_mm": 0.8,
   "stroke_mm": 0.15,
-  "generated_labels": 185,
+  "generated_labels": 184,
   "labels_by_face": {
-    "F": 81,
+    "F": 80,
     "B": 104
   },
   "references_placed": 89,
@@ -106,21 +106,6 @@
       "uuid": "92b32350-3beb-57cc-b5cc-f36c57c38728",
       "pin": "1",
       "net": "LED1_LED_POS"
-    },
-    {
-      "name": "J501/pin/2/F",
-      "text": "-",
-      "ref": "J501",
-      "side": "F",
-      "at": [
-        98.06,
-        39.1153
-      ],
-      "rotation_deg": 0,
-      "size_mm": 0.9,
-      "uuid": "7c4cc4bf-bec9-52eb-bd7e-9bdca01fd45e",
-      "pin": "2",
-      "net": "GND"
     },
     {
       "name": "J501/pin/2/B",
@@ -2305,7 +2290,7 @@
       "ref": "R511",
       "side": "B",
       "at": [
-        67.0,
+        66.0,
         36.8245
       ],
       "rotation_deg": 0,
@@ -2474,7 +2459,7 @@
       "ref": "R804",
       "side": "B",
       "at": [
-        84.0043,
+        84.9043,
         38.8
       ],
       "rotation_deg": 0,
@@ -2985,6 +2970,6 @@
       "reason": "no clear space for readable reference on component side"
     }
   ],
-  "base_pcb_sha256": "66a7efff0b2c8769be693da279c24a7cddb2b4368affbf18d391ef2f17725460",
-  "source_sha256": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443"
+  "base_pcb_sha256": "4f60d2b446791d36268541aa71ff4174288ca8102144ce1add312a9dda98e316",
+  "source_sha256": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612"
 }

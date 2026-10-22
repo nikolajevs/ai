@@ -56,7 +56,7 @@ def main():
             draw.text((20, 12), f'EU-0.1 | {kind} | {name.upper()}' + (' (mirrored)' if mirror else ''), font=title, fill='#17202a')
             draw.text((20, 39), f'100 x 100 mm / 4 Cu / {counts[side]} netlisted references on this face / {layout["date"]}', font=small, fill='#444444')
             draw.text((20, cad.height + 80), f'{status["routed_tracks"]} tracks / {status["routed_vias"]} vias / {status["copper_zones"]} plane; {len(drc["unconnected_items"])} unrouted. Not a fabrication release.', font=small, fill='#8b1a1a')
-            draw.text((20, cad.height + 105), 'HS1: insulating thermal adhesive; physical fit, bond and thermal behaviour require prototype checks.', font=small, fill='#444444')
+            draw.text((20, cad.height + 105), 'HS1: two soldered GND pins, M3 screw; physical fit, 30 mm height and thermal behaviour require prototype checks.', font=small, fill='#444444')
             dest = HERE / 'review' / f'PCB_{"silkscreen" if args.silkscreen_only else "placement"}_{name}.png'
             canvas.save(dest)
             print(dest)
