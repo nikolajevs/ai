@@ -3,28 +3,28 @@
   "date": "2026-10-22",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
   "planned_copper_objects_checked": 328,
-  "tracks": 1446,
-  "vias": 344,
+  "tracks": 1451,
+  "vias": 345,
   "tracks_by_layer": {
-    "F.Cu": 666,
-    "In2.Cu": 274,
+    "F.Cu": 667,
+    "In2.Cu": 278,
     "B.Cu": 506
   },
   "copper_zones": [
     {
       "net": "GND",
       "layer": "F.Cu",
-      "filled_area_mm2": 5897.92
+      "filled_area_mm2": 5838.05
     },
     {
       "net": "GND",
       "layer": "B.Cu",
-      "filled_area_mm2": 6988.31
+      "filled_area_mm2": 6974.82
     },
     {
       "net": "GND",
       "layer": "In1.Cu",
-      "filled_area_mm2": 8863.17
+      "filled_area_mm2": 8849.35
     }
   ],
   "actual_copper_connected_groups": [
@@ -300,7 +300,7 @@
   "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch. All electrolytic capacitors on the front (2026-10-22): the LED2 output bank C608/C609 is chained from D601 on F.Cu, C611 joins D601 directly, the LED2 input C601 is fed from F104.2 on F.Cu and feeds L601 on B.Cu, C508 sits beside C510 and is autorouted like C509/C510. Pre-prototype copper review (2026-10-22): extra parallel 0.5 mm drill vias on RAW, PTC, FUSED and both shunt ground banks; current-sharing model tested at 0.5/1/2 assumed via resistance. A 0.8 mm parallel 12 V fan-feed path (four 0.5 mm drill layer transitions) reduces current in the former 0.6 mm In2 feed. Existing routes and component placements retained.",
   "limits": [
     "Widths/via banks receive DC pre-prototype screening at documented currents; transient, switching-loop, thermal and EMC qualification still require prototype measurements and factory copper/plating confirmation.",
-    "Q501 uses electrically insulating thermal adhesive heatsink attachment (user decision2026-10-22), no guide-pin PCB holes. Body/access reserve remains; adhesive thermal/mechanical performance and isolation need physical checks."
+    "Q501 heatsink HS1 stands on two soldered pins in plated GND holes (placement.json heatsink_legs, geometry from the supplier STEP); the left hole displaced the autorouted LED1_IS copper on In2.Cu and R803/R804 moved right, so LED1_IS, LED1_GATE_RAW and LED1_RT_MID were re-completed by the grid router. Body/access reserve remains; isolation, clamping and fit need physical checks."
   ],
   "unrouted_connections": 0,
   "complete_board_routing": true,
@@ -314,8 +314,8 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "409ae584ab0523c7a08d4bd39ebc24661fb8d7828f72817ae13a5d1ed9bfc443",
-    "routing.json": "8e691a432a02af5bc45557fef370656afb41e5f5df27739af101c2e780d3555d",
+    "PCB_EU.kicad_pcb": "646278d6542642c6e466cca8c094f5c82c8cdd13acbee958fb6a17e41618f612",
+    "routing.json": "01444fa459a04cdfadb7caed8469813db6e3eb7429055e26766db1db01708242",
     "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
   }

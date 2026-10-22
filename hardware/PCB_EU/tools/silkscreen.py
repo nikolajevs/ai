@@ -98,7 +98,7 @@ class Layout:
         for ref, fp in self.fps.items():
             face = 'B' if fp.IsFlipped() else 'F'
             self.obstruct(face, self.bodies[ref].buffer(.12), ref, 'courtyard')
-            if ref.startswith('H'):
+            if re.fullmatch(r'H\d+', ref):
                 self.obstruct('B', self.bodies[ref].buffer(.12), ref, 'courtyard')
             for pad in fp.Pads():
                 for side, layer in [('F', p.F_Mask), ('B', p.B_Mask)]:
