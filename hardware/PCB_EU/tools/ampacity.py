@@ -6,8 +6,13 @@ current is injected at the source pad and taken out at the sink pads; Kirchhoff'
 split between parallel tracks and layers. Each track piece gets a temperature rise from IPC-2221,
 which is conservative (IPC-2152 gives lower values, especially with a plane next to the trace).
 
+A via or pad joins a track wherever its copper overlaps the track, so wide bands tied by several vias are
+modelled as parallel paths. Via resistance scales with the drill. Pieces above HOT_C are reported with the
+box they occupy.
+
 Only tracks and vias are modelled; pours are not, and a through-hole pad is a single node (its barrel
-is not checked). Vias are compared with a rule of thumb, not a formula. The GND return, pours and the 12 V / 3.3 V rails
+is not checked). Vias are compared with a rule of thumb (about 1 A per 0.3 mm drill, 2 A per 0.5 mm),
+not a formula. The GND return, pours and the 12 V / 3.3 V rails
 are not covered. Currents are worst-case design values, not measurements.
 
     python3 tools/ampacity.py [--board PCB_EU.kicad_pcb] [--outer-um 35] [--inner-um 17.5] [--json OUT]
@@ -24,10 +29,11 @@ import pcbnew
 
 HERE = Path(__file__).resolve().parents[1]
 RHO = 1.72e-5      # copper, ohm * mm at 20 C
-VIA_R = 1.2e-3     # whole 0.3 mm drill barrel through 1.6 mm board, ohm
+VIA_R = 1.2e-3     # whole 0.3 mm drill barrel through 1.6 mm board, ohm; scaled by 0.3 / drill for other drills
 LAYERS = {pcbnew.F_Cu: 'F.Cu', pcbnew.In1_Cu: 'In1.Cu', pcbnew.In2_Cu: 'In2.Cu', pcbnew.B_Cu: 'B.Cu'}
 ORDER = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 OUTER = ('F.Cu', 'B.Cu')
+HOT_C = 30.0       # pieces at or above this rise are reported on their own line
 
 # net -> (source pad, {sink pad: A}). Worst-case DC design currents (DESIGN.md "Требования"):
 # PTC 4.5, LED1 input 2.8, LED2 input 1.2, AUX 0.7, pump 0.3 -> 9.5 A total at the input.
@@ -78,27 +84,66 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
         if length == 0:
             continue
         dx, dy = (cx - ax) / length, (cy - ay) / length
+        # A node is cut into the track where another conductor touches its copper: a track end on it, a via
+        # pad or a pad of the net overlapping it. forced[u] names that conductor even when the track centre
+        # line passes beside its centre.
         cuts = {0.0, 1.0}
-        cand = list(ends[layer]) + [(v.GetPosition().x, v.GetPosition().y) for v in vias]
-        cand += [(p.GetPosition().x, p.GetPosition().y) for p in netpads.values() if p.IsOnLayer(layer)]
-        for px, py in cand:
+        forced = {}
+        for px, py in ends[layer]:
             s = (px - ax) * dx + (py - ay) * dy
             if 1000 < s < length - 1000 and abs((px - ax) * dy - (py - ay) * dx) <= w / 2:
                 cuts.add(s / length)
+        for i, v in enumerate(vias):
+            px, py = v.GetPosition().x, v.GetPosition().y
+            s = (px - ax) * dx + (py - ay) * dy
+            if 1000 < s < length - 1000 and abs((px - ax) * dy - (py - ay) * dx) <= w / 2 + v.GetWidth(layer) / 2:
+                cuts.add(s / length)
+                forced[s / length] = ('V', i, LAYERS[layer])
+        shape = t.GetEffectiveShape()
+        for name, pad in netpads.items():
+            if not pad.IsOnLayer(layer):
+                continue
+            px, py = pad.GetPosition().x, pad.GetPosition().y
+            s = (px - ax) * dx + (py - ay) * dy
+            if 1000 < s < length - 1000 and (abs((px - ax) * dy - (py - ay) * dx) <= w / 2
+                                             or pad.GetEffectiveShape(layer).Collide(shape, 0)):
+                cuts.add(s / length)
+                forced[s / length] = ('P', name)
+        # a via whose pad overlaps only the rounded end of the track joins that end; the link is a piece of this
+        # track's width from its end to the centre of the via
+        for (ex, ey) in ((ax, ay), (cx, cy)):
+            ke = key_at(ex, ey, layer)
+            name = LAYERS[layer]
+            um = outer_um if name in OUTER else inner_um
+            joined = []
+            for i, v in enumerate(vias):
+                vx, vy = v.GetPosition().x, v.GetPosition().y
+                s = (vx - ax) * dx + (vy - ay) * dy
+                if math.hypot(vx - ex, vy - ey) <= w / 2 + v.GetWidth(layer) / 2 and not 1000 < s < length - 1000:
+                    joined.append((('V', i, name), vx, vy))
+            for kj, jx, jy in joined:
+                if kj != ke:
+                    d = math.hypot(jx - ex, jy - ey) / 1e6
+                    res = max(RHO * d / (mm(w) * um * 1e-3), 1e-7)
+                    edges.append((ke, kj, res, ('trk', name, d, mm(w), um, (mm(ex), mm(ey)), (mm(jx), mm(jy)), False)))
         cuts = sorted(cuts)
         for u, v in zip(cuts, cuts[1:]):
             p0 = (ax + (cx - ax) * u, ay + (cy - ay) * u)
             p1 = (ax + (cx - ax) * v, ay + (cy - ay) * v)
-            ka, kb = key_at(*p0, layer), key_at(*p1, layer)
+            ka = forced.get(u) or key_at(*p0, layer)
+            kb = forced.get(v) or key_at(*p1, layer)
             piece = math.hypot(p1[0] - p0[0], p1[1] - p0[1]) / 1e6
-            if ka == kb or piece <= 0:
+            if ka == kb:
                 continue
             name = LAYERS[layer]
             um = outer_um if name in OUTER else inner_um
-            edges.append((ka, kb, RHO * piece / (mm(w) * um * 1e-3), ('trk', name, piece, mm(w), um)))
+            # two conductors cut at the same point are one blob of copper: a tiny resistance joins them
+            res = max(RHO * piece / (mm(w) * um * 1e-3), 1e-7)
+            edges.append((ka, kb, res, ('trk', name, piece, mm(w), um, (mm(p0[0]), mm(p0[1])), (mm(p1[0]), mm(p1[1])), True)))
     for i, v in enumerate(vias):
+        r = VIA_R * 0.3 / max(v.GetDrillValue() / 1e6, 0.1) / 3
         for l1, l2 in zip(ORDER, ORDER[1:]):
-            edges.append((('V', i, l1), ('V', i, l2), VIA_R / 3, ('via', i)))
+            edges.append((('V', i, l1), ('V', i, l2), r, ('via', i)))
 
     keys = {}
     for ka, kb, _, _ in edges:
@@ -126,23 +171,33 @@ def analyze_net(board, pads, net, source, sinks, outer_um, inner_um):
     volt[mask] = np.linalg.lstsq(g[np.ix_(mask, mask)], inj[mask], rcond=None)[0]
 
     loss = 0.0
-    segs = collections.defaultdict(lambda: {'length_mm': 0.0, 'i_max': 0.0})
+    segs = collections.defaultdict(lambda: {'length_mm': 0.0, 'i_max': 0.0, 'xs': [], 'ys': []})
     via_i = collections.defaultdict(float)
     for ka, kb, r, info in edges:
         cur = abs(volt[keys[ka]] - volt[keys[kb]]) / r
         loss += cur * cur * r
-        if info[0] == 'trk':
-            _, layer, piece, w, um = info
-            s = segs[(layer, round(w, 2))]
-            s['length_mm'] += piece
+        if info[0] == 'link':
+            pass
+        elif info[0] == 'trk':
+            _, layer, piece, w, um, e0, e1, real = info
+            # pieces over 30 C are listed apart, so a short narrow neck is not hidden in a long wide run
+            hot = delta_t(cur, w, um, layer in OUTER) >= HOT_C and cur >= 0.05
+            s = segs[(layer, round(w, 2), hot)]
+            s['length_mm'] += piece if real else 0.0
             s['i_max'] = max(s['i_max'], cur)
             s['um'] = um
+            if hot and real:
+                s['xs'] += [e0[0], e1[0]]
+                s['ys'] += [e0[1], e1[1]]
         else:
             via_i[info[1]] = max(via_i[info[1]], cur)
     rows = []
-    for (layer, w), s in sorted(segs.items()):
-        rows.append({'layer': layer, 'width_mm': w, 'length_mm': round(s['length_mm'], 1), 'i_max_a': round(s['i_max'], 2),
-                     'dt_ipc2221_c': round(delta_t(s['i_max'], w, s['um'], layer in OUTER), 1)})
+    for (layer, w, hot), s in sorted(segs.items()):
+        row = {'layer': layer, 'width_mm': w, 'length_mm': round(s['length_mm'], 1), 'i_max_a': round(s['i_max'], 2),
+               'dt_ipc2221_c': round(delta_t(s['i_max'], w, s['um'], layer in OUTER), 1)}
+        if hot:
+            row['hot_box_mm'] = [round(min(s['xs']), 1), round(min(s['ys']), 1), round(max(s['xs']), 1), round(max(s['ys']), 1)]
+        rows.append(row)
     first = next(iter(sinks))
     drop = volt[keys[('P', source)]] - volt[keys[('P', first)]]
     # rule of thumb at ~20 C rise: about 1 A per 0.3 mm drill, 2 A per 0.5 mm drill, 3 A per 0.8 mm drill
@@ -178,7 +233,9 @@ def main():
               f"drop {r['drop_mv']} mV  copper loss {r['loss_mw']} mW  vias {r['vias']} (max {r['via_i_max_a']} A each)")
         for s in r['segments']:
             if s['i_max_a'] >= 0.05:
-                print(f"  {s['layer']:6s} {s['width_mm']:4.2f} mm  {s['length_mm']:6.1f} mm  {s['i_max_a']:5.2f} A  dT {s['dt_ipc2221_c']:5.1f} C")
+                box = s.get('hot_box_mm')
+                print(f"  {s['layer']:6s} {s['width_mm']:4.2f} mm  {s['length_mm']:6.1f} mm  {s['i_max_a']:5.2f} A  dT {s['dt_ipc2221_c']:5.1f} C"
+                      + (f"  hot, in the box x {box[0]}..{box[2]}, y {box[1]}..{box[3]} mm" if box else ''))
         for v in r['vias_over_limit']:
             print(f"  via at {v['at_mm']} drill {v['drill_mm']:g} mm carries {v['i_a']} A (rule of thumb {v['rule_of_thumb_a']:g} A)")
     if args.json:

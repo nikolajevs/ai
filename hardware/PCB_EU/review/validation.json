@@ -138,8 +138,8 @@
     "connected_netlist_pins": 498,
     "mapped_netlist_pins_including_nc": 525,
     "pad_net_parity": true,
-    "routed_tracks": 1636,
-    "routed_vias": 352,
+    "routed_tracks": 1691,
+    "routed_vias": 383,
     "copper_zones": 3,
     "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
     "lm3429_gate_path_straight_line_mm": {
@@ -158,38 +158,38 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+      "PCB_EU.kicad_pcb": "471bfb479e0c9b6d9b6803dad50050e84ef06b2e1e70ca8d2842f93d9ddb104a",
       "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
-      "netlist.xml": "45ab2ae6f1d32a93e08a73552ec4cae2d7eeb6ee1767a7fdfa424803b29f3f73"
+      "netlist.xml": "44b3cdad51dd9635126e9bf9129fb17978f254cc4d4bd73b1231a77bd5ae52f6"
     }
   },
   "pcb_routing": {
     "stage": "fully routed board",
     "date": "2026-10-21",
     "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-    "planned_copper_objects_checked": 203,
-    "tracks": 1636,
-    "vias": 352,
+    "planned_copper_objects_checked": 311,
+    "tracks": 1691,
+    "vias": 383,
     "tracks_by_layer": {
-      "F.Cu": 725,
-      "B.Cu": 565,
-      "In2.Cu": 346
+      "F.Cu": 755,
+      "B.Cu": 606,
+      "In2.Cu": 330
     },
     "copper_zones": [
       {
         "net": "GND",
         "layer": "F.Cu",
-        "filled_area_mm2": 4885.91
+        "filled_area_mm2": 4773.57
       },
       {
         "net": "GND",
         "layer": "B.Cu",
-        "filled_area_mm2": 6979.61
+        "filled_area_mm2": 6707.82
       },
       {
         "net": "GND",
         "layer": "In1.Cu",
-        "filled_area_mm2": 8835.37
+        "filled_area_mm2": 8790.12
       }
     ],
     "actual_copper_connected_groups": [
@@ -388,9 +388,50 @@
         ],
         "physical_pad_count": 3,
         "copper_connected": true
+      },
+      {
+        "net": "+24V_RAW",
+        "pads": [
+          "J101.1",
+          "F101.1"
+        ],
+        "physical_pad_count": 2,
+        "copper_connected": true
+      },
+      {
+        "net": "PSU_RTN",
+        "pads": [
+          "J101.2",
+          "Q102.2"
+        ],
+        "physical_pad_count": 2,
+        "copper_connected": true
+      },
+      {
+        "net": "+24V_PTC",
+        "pads": [
+          "F102.2",
+          "J701.1"
+        ],
+        "physical_pad_count": 2,
+        "copper_connected": true
+      },
+      {
+        "net": "+24V_FUSED",
+        "pads": [
+          "F101.2",
+          "C101.1",
+          "F105.1",
+          "F103.1",
+          "F102.1",
+          "F104.1",
+          "F106.1"
+        ],
+        "physical_pad_count": 7,
+        "copper_connected": true
       }
     ],
-    "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them.",
+    "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch.",
     "limits": [
       "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
       "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -407,8 +448,8 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
-      "routing.json": "33cb5d42e0496a37052792a06ba1bc945f189b3c1600b0d524d8afb36c16969e",
+      "PCB_EU.kicad_pcb": "471bfb479e0c9b6d9b6803dad50050e84ef06b2e1e70ca8d2842f93d9ddb104a",
+      "routing.json": "9685edff91e82e88605f04b0c0f76cebf3bd3b91a65c1a72e28590ef1dfb1d92",
       "routing/pass1.ses": "52d8a0040a82d137b172aebd1be141a11ef87dffd06fda3ebbe923234d4d2313",
       "routing/pass2.ses": "facd4d03aafa33b297798d4f050b69e8660d1b310e19d396972dfb2f53cc60e4"
     }
@@ -430,7 +471,7 @@
     "Loads.kicad_sch": "6af70cfdbcf69739d735381f34d84bab9e13c1459ba02eafc1a38ccea8187ab5",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "ff4c18224e5b6c663f8bbb17c64904888a0d02d3c3e699380457c00df790b640",
-    "PCB_EU.kicad_pcb": "5a2a9d6d31bd537e4442116899519637c2eeddedce0f4e98f4d5a9c039990da3",
+    "PCB_EU.kicad_pcb": "471bfb479e0c9b6d9b6803dad50050e84ef06b2e1e70ca8d2842f93d9ddb104a",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
@@ -512,8 +553,9 @@
     "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
     "routing/pass1.ses": "52d8a0040a82d137b172aebd1be141a11ef87dffd06fda3ebbe923234d4d2313",
     "routing/pass2.ses": "facd4d03aafa33b297798d4f050b69e8660d1b310e19d396972dfb2f53cc60e4",
-    "routing.json": "33cb5d42e0496a37052792a06ba1bc945f189b3c1600b0d524d8afb36c16969e",
+    "routing.json": "9685edff91e82e88605f04b0c0f76cebf3bd3b91a65c1a72e28590ef1dfb1d92",
     "sym-lib-table": "5841b81e90fe3d0162d39abf67b0319073ad80122469018df6212ccd5957381f",
+    "tools/ampacity.py": "f1272e4a86bfe625b936de2a86940dd5edf2458e099933c3d438bdc999e073d2",
     "tools/build_board.py": "0809d86a035bbabb05996a3922dbacab151cef29303c798fbe20cfba0bbcf6a0",
     "tools/check_footprint_drc.py": "54a1309792ef0f017b702e243baa542a95173165322e42d049ed9be08a89aef5",
     "tools/generate.py": "887babca5313460a15ae82a06b2a12b5cf383a3659cb0e2b1217d9f65bfeb688",
