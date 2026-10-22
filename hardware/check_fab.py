@@ -476,6 +476,9 @@ check(not close, f'{len(close)} same-net track pairs closer than {SAME_NET_SPACE
 
 # --- vias against pads, tracks that skim a pad, through-hole pads next to SMD pads (JLCDFM categories) ---------
 EP_PADS = {'U902': None, 'U201': {'39'}}        # thermal pads that carry vias on purpose (None = every pad of the part)
+exceptions_file = path.with_name('fab_exceptions.json')     # a project may list its own via-in-pad cases, with the reason
+if exceptions_file.exists():
+    EP_PADS = {ref: set(entry['pads']) for ref, entry in json.loads(exceptions_file.read_text(encoding='utf-8'))['via_in_pad'].items()}
 VIA_PAD_MIN, TRACK_PAD_MIN, THT_SMD_REC = 0.10, 0.09, 0.5
 touching = []
 for v in vias:
@@ -494,7 +497,7 @@ for v in vias:
                 touching.append(f'via@{mm(v.GetPosition().x):.2f},{mm(v.GetPosition().y):.2f} / {fp.GetReference()}.{pad.GetNumber()}')
                 break
 check(not touching, f'{len(touching)} vias touch or come within {VIA_PAD_MIN} mm of a pad: {touching[:6]}',
-      f'no via touches a pad or comes within {VIA_PAD_MIN} mm of one (thermal pads of U902 and U201 excepted)')
+      f'no via touches a pad or comes within {VIA_PAD_MIN} mm of one (thermal pads of U902 and U201, or the pads in fab_exceptions.json, excepted)')
 skim = []
 for t in tracks:
     st = t.GetEffectiveShape()

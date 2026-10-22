@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Schematic, placement and routing checks; not a fabrication release."""
+"""Schematic, placement, routing and JLCPCB capability checks; not a fabrication release."""
 import argparse
 import hashlib
 import json
@@ -63,26 +63,34 @@ def main():
             subprocess.run([args.kicad_python,str(HERE/'tools/verify_routing.py')],check=True)
             routing_result=json.loads((out/'routing.json').read_text())
         subprocess.run([args.kicad_python,str(HERE/'tools/silkscreen.py'),'--check'],check=True)
+        subprocess.run([args.kicad_python,str(HERE/'tools/verify_library_match.py')],check=True)
         subprocess.run([args.kicad_python,str(HERE/'tools/power_checks.py')],check=True)
         subprocess.run([cli,'pcb','drc','--schematic-parity','--format','json','-o',str(out/'pcb_drc.json'),str(board)],check=True)
         drc=json.loads((out/'pcb_drc.json').read_text())
+        silk_only=set(json.loads((out/'library_match.json').read_text())['silk_only'])     # footprints whose library copy differs in the cut silkscreen only
+        drc['violations']=[v for v in drc.get('violations',[]) if not (v['type']=='lib_footprint_mismatch' and v['items'] and all(i['description'].removeprefix('Footprint ') in silk_only for i in v['items']))]
         if drc.get('violations') or drc.get('schematic_parity') or (routing_result and drc.get('unconnected_items')):
             from collections import Counter
             counts=Counter(v['type'] for v in drc.get('violations',[])+drc.get('schematic_parity',[]))
             if routing_result and drc.get('unconnected_items'):
                 counts['unconnected_items']=len(drc['unconnected_items'])
             raise RuntimeError(counts)
+        with (out/'fab_check.txt').open('w') as report:     # JLCPCB capabilities, hardware/check_fab.py; exits 1 on a FAIL
+            subprocess.run([args.kicad_python,str(HERE.parent/'check_fab.py'),str(board)],check=True,stdout=report)
         pcb_drc=dict(geometric_violations=0,schematic_parity_violations=0,unconnected_items=len(drc.get('unconnected_items',[])),
                      routing_status=(f"autorouted; {routing_result['unrouted_connections']} connections open" if routing_result['unrouted_connections'] else 'all connections routed') if routing_result else 'intentionally unrouted; no fabricated-board DRC clearance claim')
     source = [*HERE.glob('*.kicad_sch'),HERE/'PCB_EU.kicad_pro',HERE/'libraries/EU.kicad_sym',HERE/'design.json',HERE/'BOM_allocated.json',HERE/'footprint_assignments.json',HERE/'fp-lib-table',HERE/'sym-lib-table',*HERE.glob('tools/*.py'),*HERE.glob('libraries/*/*.kicad_mod')]
-    if board.exists():source.extend([board,HERE/'placement.json'])
+    if board.exists():source.extend([board,HERE/'placement.json',HERE/'fab_exceptions.json',HERE.parent/'check_fab.py'])
     if routing_result:source.extend([HERE/'routing.json',HERE/'PCB_EU.kicad_dru',*sorted((HERE/'routing').glob('*.ses'))])
     source.extend([HERE/'models3d.json',*HERE.glob('libraries/EU.3dshapes/*')])
-    result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-22',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
+    result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-22',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)) if f.is_relative_to(HERE) else f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
     result['models3d']=models_review
     if board.exists():
         result['silkscreen']=json.loads((out/'silkscreen.json').read_text())
         result['stackup']=json.loads((out/'stackup.json').read_text())
+        result['library_match']=json.loads((out/'library_match.json').read_text())
+        fab_lines=[v for v in (out/'fab_check.txt').read_text().splitlines() if v.strip()]
+        result['fab_check']=dict(report='review/fab_check.txt',summary=fab_lines[-1],checks=sum(v.startswith('[') for v in fab_lines))
         power=json.loads((out/'power_copper.json').read_text())
         result['power_copper']=dict(report='review/power_copper.json',dc_screening_cases=len(power['cases'])+len(power['auxiliary_cases']),
                                    unresolved_screening_flags=len(power['unresolved_screening_flags']),

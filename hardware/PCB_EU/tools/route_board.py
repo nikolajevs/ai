@@ -14,7 +14,9 @@ can be repeated. The order is:
 3. Freerouting 2.4.1 (Java 25) without fan-out and telemetry, or import of a saved session.
    The router is not deterministic; the committed session file is the record of the result.
 4. Imported copper gets UUIDs derived from its geometry, so the same session gives the same board.
-5. Ground stitching vias next to the high-current ground pads, GND pours on F.Cu and B.Cu,
+5. JLCPCB mask openings: tracks and vias that skim a pad of their own net move off its edge
+   (dfm_tracks.py; the reviewed plan copper stays where routing.json puts it).
+6. Ground stitching vias next to the high-current ground pads, GND pours on F.Cu and B.Cu,
    zone fill.
 
 Ampacity, temperature and EMC are not qualified by this script.
@@ -32,6 +34,7 @@ from pathlib import Path
 import pcbnew as p
 
 from build_board import HERE, identity, point
+from dfm_tracks import relax_skims, relax_vias
 from route_complete import complete
 from aux_power import reinforce as reinforce_auxiliary
 from route_power import plan_items
@@ -628,6 +631,8 @@ def main():
     routed, failed = complete(board)
     # GND is left out: its session vias are stitching vias that only connect once the pours exist.
     pruned = prune_dangling(board, set(dropped) - {'GND'}, keep)
+    relaxed, unrelaxed = relax_skims(board, keep)  # JLCPCB: no same-net track or via may skim a pad edge under the mask opening
+    moved_vias, unmoved_vias = relax_vias(board, keep)
     for layer, name in (('F.Cu', 'gnd-top'), ('B.Cu', 'gnd-bottom')):
         board.Add(rect_zone(board, 'route_board/' + name, 'GND', [layer], [0.3, 0.3, 99.7, 99.7]))
     stitched, unstitched = stitch_islands(board)
@@ -645,7 +650,7 @@ def main():
     p.SaveBoard(str(args.board), board)
     unrouted = board.GetConnectivity().GetUnconnectedCount(False)
     print(json.dumps(dict(removed_previous=removed, fixed_before_router=fixed, tracks_and_vias=len(board.GetTracks()),
-                          ground_tie_vias=ties, exposed_pad_vias=ep, pad_ties=len(tied), untied_ground_pads=untied, dropped_session_copper=sorted(set(dropped)), pruned_dead_ends=pruned, island_vias=stitched, unjoined_islands=unstitched, completed=len(routed), completion_failed=failed, unrouted=unrouted)))
+                          ground_tie_vias=ties, exposed_pad_vias=ep, pad_ties=len(tied), untied_ground_pads=untied, dropped_session_copper=sorted(set(dropped)), pruned_dead_ends=pruned, pad_skims_moved=relaxed + moved_vias, pad_skims_left=unrelaxed + unmoved_vias, island_vias=stitched, unjoined_islands=unstitched, completed=len(routed), completion_failed=failed, unrouted=unrouted)))
 
 
 if __name__ == '__main__':

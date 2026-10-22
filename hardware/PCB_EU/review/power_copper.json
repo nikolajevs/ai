@@ -47,8 +47,8 @@
           "layer": "F.Cu",
           "width_mm": 3.0,
           "length_mm": 4.4,
-          "i_max_a": 7.71,
-          "dt_ipc2221_c": 23.4
+          "i_max_a": 7.68,
+          "dt_ipc2221_c": 23.2
         },
         {
           "layer": "F.Cu",
@@ -65,12 +65,12 @@
         }
       ],
       "drop_mv_by_sink": {
-        "F101.1": 4.9358
+        "F101.1": 4.9477
       },
-      "max_kcl_residual_a": 1.0480505352461478e-13,
+      "max_kcl_residual_a": 3.979039320256561e-13,
       "floating_model_nodes_excluded": 0,
       "vias": 6,
-      "via_i_max_a": 1.79,
+      "via_i_max_a": 1.82,
       "via_currents": [
         {
           "at_mm": [
@@ -78,16 +78,7 @@
             54.19
           ],
           "drill_mm": 0.5,
-          "i_a": 1.7896,
-          "rule_of_thumb_a": 2.0
-        },
-        {
-          "at_mm": [
-            11.59,
-            53.39
-          ],
-          "drill_mm": 0.5,
-          "i_a": 1.7757,
+          "i_a": 1.8229,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -96,7 +87,16 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 1.7325,
+          "i_a": 1.7646,
+          "rule_of_thumb_a": 2.0
+        },
+        {
+          "at_mm": [
+            11.54,
+            53.39
+          ],
+          "drill_mm": 0.5,
+          "i_a": 1.7039,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -105,7 +105,7 @@
             51.93
           ],
           "drill_mm": 0.5,
-          "i_a": 1.0083,
+          "i_a": 1.0074,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -114,7 +114,7 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 0.8577,
+          "i_a": 0.8615,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -123,7 +123,7 @@
             52.66
           ],
           "drill_mm": 0.5,
-          "i_a": 0.1518,
+          "i_a": 0.1531,
           "rule_of_thumb_a": 2.0
         }
       ],
@@ -861,14 +861,14 @@
           "width_mm": 3.0,
           "length_mm": 4.3,
           "i_max_a": 5.2,
-          "dt_ipc2221_c": 9.6
+          "dt_ipc2221_c": 9.5
         },
         {
           "layer": "F.Cu",
           "width_mm": 3.0,
           "length_mm": 4.4,
-          "i_max_a": 8.02,
-          "dt_ipc2221_c": 25.6
+          "i_max_a": 8.0,
+          "dt_ipc2221_c": 25.4
         },
         {
           "layer": "F.Cu",
@@ -885,12 +885,12 @@
         }
       ],
       "drop_mv_by_sink": {
-        "F101.1": 5.2747
+        "F101.1": 5.286
       },
-      "max_kcl_residual_a": 2.2737367544323206e-13,
+      "max_kcl_residual_a": 1.5631940186722204e-13,
       "floating_model_nodes_excluded": 0,
       "vias": 6,
-      "via_i_max_a": 1.48,
+      "via_i_max_a": 1.5,
       "via_currents": [
         {
           "at_mm": [
@@ -898,16 +898,7 @@
             54.19
           ],
           "drill_mm": 0.5,
-          "i_a": 1.4847,
-          "rule_of_thumb_a": 2.0
-        },
-        {
-          "at_mm": [
-            11.59,
-            53.39
-          ],
-          "drill_mm": 0.5,
-          "i_a": 1.4628,
+          "i_a": 1.5021,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -916,7 +907,16 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 1.439,
+          "i_a": 1.4547,
+          "rule_of_thumb_a": 2.0
+        },
+        {
+          "at_mm": [
+            11.54,
+            53.39
+          ],
+          "drill_mm": 0.5,
+          "i_a": 1.421,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -925,7 +925,7 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 0.845,
+          "i_a": 0.8485,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -934,7 +934,7 @@
             51.93
           ],
           "drill_mm": 0.5,
-          "i_a": 0.4119,
+          "i_a": 0.4104,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -943,7 +943,7 @@
             52.66
           ],
           "drill_mm": 0.5,
-          "i_a": 0.379,
+          "i_a": 0.3811,
           "rule_of_thumb_a": 2.0
         }
       ],
@@ -1674,7 +1674,7 @@
       },
       "current_a": 9.5,
       "drop_mv": 5.7,
-      "loss_mw": 54,
+      "loss_mw": 55,
       "segments": [
         {
           "layer": "B.Cu",
@@ -1687,7 +1687,7 @@
           "layer": "F.Cu",
           "width_mm": 3.0,
           "length_mm": 4.4,
-          "i_max_a": 8.31,
+          "i_max_a": 8.3,
           "dt_ipc2221_c": 27.7
         },
         {
@@ -1705,12 +1705,12 @@
         }
       ],
       "drop_mv_by_sink": {
-        "F101.1": 5.7304
+        "F101.1": 5.7406
       },
-      "max_kcl_residual_a": 2.2737367544323206e-13,
+      "max_kcl_residual_a": 5.293543381412746e-13,
       "floating_model_nodes_excluded": 0,
       "vias": 6,
-      "via_i_max_a": 1.19,
+      "via_i_max_a": 1.2,
       "via_currents": [
         {
           "at_mm": [
@@ -1718,16 +1718,7 @@
             54.19
           ],
           "drill_mm": 0.5,
-          "i_a": 1.1904,
-          "rule_of_thumb_a": 2.0
-        },
-        {
-          "at_mm": [
-            11.59,
-            53.39
-          ],
-          "drill_mm": 0.5,
-          "i_a": 1.172,
+          "i_a": 1.1987,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -1736,7 +1727,16 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 1.1591,
+          "i_a": 1.1665,
+          "rule_of_thumb_a": 2.0
+        },
+        {
+          "at_mm": [
+            11.54,
+            53.39
+          ],
+          "drill_mm": 0.5,
+          "i_a": 1.1481,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -1745,7 +1745,7 @@
             52.39
           ],
           "drill_mm": 0.5,
-          "i_a": 0.7881,
+          "i_a": 0.7906,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -1754,7 +1754,7 @@
             52.66
           ],
           "drill_mm": 0.5,
-          "i_a": 0.4985,
+          "i_a": 0.5003,
           "rule_of_thumb_a": 2.0
         },
         {
@@ -1763,7 +1763,7 @@
             51.93
           ],
           "drill_mm": 0.5,
-          "i_a": 0.0183,
+          "i_a": 0.017,
           "rule_of_thumb_a": 2.0
         }
       ],
@@ -2783,7 +2783,7 @@
         }
       ],
       "drop_mv_by_sink": {
-        "U202.2": 108.8088,
+        "U202.2": 108.7626,
         "J301.4": 48.1469,
         "J401.1": 47.9598,
         "U301.8": 0.2854,
@@ -2792,7 +2792,7 @@
         "U402.5": 47.2228,
         "R813.1": 7.9544
       },
-      "max_kcl_residual_a": 2.651212582804874e-13,
+      "max_kcl_residual_a": 2.437494650564531e-13,
       "floating_model_nodes_excluded": 0,
       "vias": 11,
       "via_i_max_a": 0.78,
@@ -2835,8 +2835,8 @@
         },
         {
           "at_mm": [
-            41.21,
-            44.0
+            41.53,
+            31.94
           ],
           "drill_mm": 0.3,
           "i_a": 0.005,
@@ -2844,8 +2844,8 @@
         },
         {
           "at_mm": [
-            41.53,
-            31.94
+            41.21,
+            44.0
           ],
           "drill_mm": 0.3,
           "i_a": 0.005,
@@ -2924,5 +2924,5 @@
     "Design currents are not measurements; converter switching peaks, startup, real ambient and assembly temperatures require prototype checks.",
     "Factory dielectric schedule, minimum finished copper and barrel plating must be confirmed before manufacturing release."
   ],
-  "source_sha256": "b456fa6c9bf73010dbcae66cb142c4ec879709e2c2789278be268b243e342f96"
+  "source_sha256": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d"
 }

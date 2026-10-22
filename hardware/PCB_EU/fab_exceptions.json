@@ -1,0 +1,14 @@
+{
+  "note": "Vias that stand inside a pad of their own net on purpose. check_fab.py skips these pads in the via-to-pad check; every other via must keep 0.1 mm from every pad. A via in a pad is open to solder under reflow (wicking); the prototype is hand-soldered.",
+  "via_in_pad": {
+    "U501": {"pads": ["15"], "reason": "LM3429 exposed pad, thermal vias (GND)"},
+    "U601": {"pads": ["15"], "reason": "LM3429 exposed pad, thermal vias (GND)"},
+    "U101": {"pads": ["17"], "reason": "L7987 exposed pad, thermal via (GND)"},
+    "BT301": {"pads": ["2"], "reason": "battery holder minus contact, four GND vias into the plane"},
+    "J301": {"pads": ["SH"], "reason": "microSD shield tab, two GND vias"},
+    "D501": {"pads": ["1"], "reason": "LED1 output diode pad 4.8 x 4.7 mm, vias carry LED1_OUT current (copper PRs #72-#74)"},
+    "R502": {"pads": ["2"], "reason": "LED1 current sense pad 1.2 x 3.4 mm, via carries LED1_LED_POS current"},
+    "J101": {"pads": ["1"], "reason": "24 V input terminal, vias on its through-hole pad carry the 9.5 A trunk"},
+    "U401": {"pads": ["5"], "reason": "+3V3 pin pad, via placed by the router; wicking risk for reflow, accepted for hand soldering until Igors decides"}
+  }
+}

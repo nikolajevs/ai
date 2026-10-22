@@ -23,7 +23,8 @@
     "+24V_RAW",
     "PSU_RTN",
     "PTC_DRAIN",
-    "BLOCK_OC"
+    "BLOCK_OC",
+    "LED2_COMP"
   ],
   "vias": [
     {
@@ -160,7 +161,7 @@
       "id": "led2-comp-pin",
       "net": "LED2_COMP",
       "at": [
-        87.5,
+        87.44,
         88.85
       ],
       "diameter": 0.6,
@@ -340,7 +341,7 @@
       "id": "cu-raw-3",
       "net": "+24V_RAW",
       "at": [
-        11.59,
+        11.54,
         53.39
       ],
       "diameter": 1.0,
