@@ -28,7 +28,7 @@
   "pcb_placement": {
     "stage": "two-sided placement with partial routing; not fabrication release",
     "date": "2026-10-21",
-    "pcbnew_build": "10.0.7",
+    "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
     "checks_passed": 22639,
     "netlisted_references": 196,
     "board_only_mounting_holes": 4,
@@ -130,8 +130,8 @@
     "connected_netlist_pins": 498,
     "mapped_netlist_pins_including_nc": 525,
     "pad_net_parity": true,
-    "routed_tracks": 1445,
-    "routed_vias": 342,
+    "routed_tracks": 1446,
+    "routed_vias": 344,
     "copper_zones": 3,
     "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
     "lm3429_gate_path_straight_line_mm": {
@@ -150,22 +150,22 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e",
+      "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
       "placement.json": "65a49086df11323fb6463a77e2243bb313046b89f806148e74abc4066332a1ea",
-      "netlist.xml": "5687886de51b24bde86f8831d174936d36395a5551cd1d2a44b211a3a96cfba2"
+      "netlist.xml": "c2a7eab2c85ed8099e4a5ef1b9e163846d6324e7d10a7d254a993a76449f25d5"
     }
   },
   "pcb_routing": {
     "stage": "fully routed board",
     "date": "2026-10-22",
-    "pcbnew_build": "10.0.7",
+    "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
     "planned_copper_objects_checked": 328,
-    "tracks": 1445,
-    "vias": 342,
+    "tracks": 1446,
+    "vias": 344,
     "tracks_by_layer": {
       "F.Cu": 666,
       "In2.Cu": 274,
-      "B.Cu": 505
+      "B.Cu": 506
     },
     "copper_zones": [
       {
@@ -471,7 +471,7 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e",
+      "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
       "routing.json": "8e691a432a02af5bc45557fef370656afb41e5f5df27739af101c2e780d3555d",
       "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
       "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
@@ -494,7 +494,7 @@
     "Loads.kicad_sch": "f54196325e04cd588366920d008135e06e11ddaa7752a6c15ea40e720a5d18ea",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "edd74546c3a662048c2f81cace7014020026bf6586abc6b7333db7df5644bfc7",
-    "PCB_EU.kicad_pcb": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e",
+    "PCB_EU.kicad_pcb": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
@@ -3476,8 +3476,8 @@
         "reason": "no clear space for readable reference on component side"
       }
     ],
-    "base_pcb_sha256": "afc5fe204ca2e4c29c910caf9a0b47b39de139eefdf0529186fa6b2b40f22200",
-    "source_sha256": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e"
+    "base_pcb_sha256": "d3a66c9cf210b340bc80bebe411e925b42f51c2f75f2e2c2e7c356e131550ff9",
+    "source_sha256": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de"
   },
   "stackup": {
     "board_mm": 1.6,
@@ -3498,7 +3498,7 @@
     "report": "review/power_copper.json",
     "dc_screening_cases": 27,
     "unresolved_screening_flags": 0,
-    "source_sha256": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e",
+    "source_sha256": "705148da7b67ab31ddf0fdbc3f223453b7e9d625c933febc183a7dd15508b2de",
     "thermal_qualified": false
   }
 }
