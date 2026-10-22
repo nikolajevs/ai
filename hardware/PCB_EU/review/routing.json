@@ -2,29 +2,29 @@
   "stage": "fully routed board",
   "date": "2026-10-22",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "planned_copper_objects_checked": 294,
-  "tracks": 1399,
-  "vias": 323,
+  "planned_copper_objects_checked": 293,
+  "tracks": 1425,
+  "vias": 327,
   "tracks_by_layer": {
-    "F.Cu": 665,
-    "In2.Cu": 234,
-    "B.Cu": 500
+    "F.Cu": 661,
+    "In2.Cu": 271,
+    "B.Cu": 493
   },
   "copper_zones": [
     {
       "net": "GND",
       "layer": "F.Cu",
-      "filled_area_mm2": 5996.37
+      "filled_area_mm2": 5905.66
     },
     {
       "net": "GND",
       "layer": "B.Cu",
-      "filled_area_mm2": 6955.03
+      "filled_area_mm2": 7043.41
     },
     {
       "net": "GND",
       "layer": "In1.Cu",
-      "filled_area_mm2": 8885.76
+      "filled_area_mm2": 8878.29
     }
   ],
   "actual_copper_connected_groups": [
@@ -275,7 +275,7 @@
       "copper_connected": true
     }
   ],
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch. All electrolytic capacitors on the front (2026-10-22): the LED2 output bank C608/C609 is chained from D601 on F.Cu, C611 joins D601 directly, the LED2 input C601 is fed from F104.2 on F.Cu and feeds L601 on B.Cu, C508 sits beside C510 and is autorouted like C509/C510.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -292,9 +292,9 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "45d9ab768f0650441846c9a12c3ad8f0807b39d217c769e5d24054a66e16232e",
-    "routing.json": "30e136c6329f7db215e49f39529a172f89a2bf2f1c487b69adb2660a3882d4de",
-    "routing/pass1.ses": "f54fb9b2ece7fc79afcd1088f65d6752aa14144599d62b58deaa3a7ac657feef",
-    "routing/pass2.ses": "30397758e3f7aae7e1367f67cedcf58cfcc0d8de9d6103490c2bfecfe172ff54"
+    "PCB_EU.kicad_pcb": "1882d91e527aaddc6a78ccf7ca9bcd8fe762b6a7156bf83d9c1b7a42ba65a643",
+    "routing.json": "6584d0f05320f6ca86e943e827a90157e2e2a2c8ea79c393fd88ab422a463bc9",
+    "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
+    "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
   }
 }
