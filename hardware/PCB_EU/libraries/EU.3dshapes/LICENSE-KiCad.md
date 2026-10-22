@@ -25,3 +25,21 @@ However, if you wish to redistribute the KiCad libraries, or parts thereof (incl
 The KiCad libraries are provided in the hope that they will be useful, but are provided without warranty of any kind, express or implied.
 
 The KiCad libraries are compiled by the KiCad community - if you find an error in the library data, please help the community and contribute a fix!
+
+
+### Reused XH connector adaptation
+
+`JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step` is copied unchanged from
+`hardware/cheap-version/libraries/GrowBox.3dshapes/`. Its base model is
+`JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step`, Copyright (C) 2019 Rene Poeschl.
+The derivative retains CC-BY-SA 4.0 with the KiCad exception above. The original
+attribution and a modification notice are embedded in the STEP.
+
+The GrowBox adaptation removes only two rear support wings for the stock
+XH2.54-4P-90 connector shown by the user; the lead positions, principal body
+and height are retained. It was produced by
+`hardware/cheap-version/tools/make_xh_no_supports.py`; its provenance and
+limitations are recorded in that project's `SOURCES_mechanical.md` and in
+PCB_EU `models3d.json`. The pinned upstream URL and SHA-256 are retained in `models3d.json`
+for reproduction. The visual adaptation does not qualify the exact
+stock part or its dimensions.
