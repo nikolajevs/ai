@@ -1,6 +1,8 @@
 (fp_lib_table (version 7)
 (lib (name "Capacitor_SMD") (type "KiCad") (uri "${KIPRJMOD}/libraries/Capacitor_SMD.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
 (lib (name "Capacitor_THT") (type "KiCad") (uri "${KIPRJMOD}/libraries/Capacitor_THT.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
+(lib (name "Connector_JST") (type "KiCad") (uri "${KIPRJMOD}/libraries/Connector_JST.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
+(lib (name "Connector_Molex") (type "KiCad") (uri "${KIPRJMOD}/libraries/Connector_Molex.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
 (lib (name "Connector_PinHeader_2.54mm") (type "KiCad") (uri "${KIPRJMOD}/libraries/Connector_PinHeader_2.54mm.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
 (lib (name "Diode_SMD") (type "KiCad") (uri "${KIPRJMOD}/libraries/Diode_SMD.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))
 (lib (name "EU_Mechanical") (type "KiCad") (uri "${KIPRJMOD}/libraries/EU_Mechanical.pretty") (options "") (descr "Project-local footprints; see SOURCES.md for qualification status"))

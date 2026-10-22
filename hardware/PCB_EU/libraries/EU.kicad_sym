@@ -169,6 +169,18 @@
 (symbol "J2_1_1"
 (pin passive line (at -10.16 1.27 0) (length 5.08) (name "1" (effects (font (size 0.95 0.95)) )) (number "1" (effects (font (size 0.95 0.95)) )))
 (pin passive line (at -10.16 -1.27 0) (length 5.08) (name "2" (effects (font (size 0.95 0.95)) )) (number "2" (effects (font (size 0.95 0.95)) )))))
+(symbol "J4" (pin_names (offset 0.762))
+(in_bom yes) (on_board yes)
+(property "Reference" "U" (at 0 5 0) (effects (font (size 1 1)) ))
+(property "Value" "J4" (at 0 -5 0) (effects (font (size 1 1)) ))
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1 1)) (hide yes)))
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1 1)) (hide yes)))
+(symbol "J4_0_1" (rectangle (start -5.08 6.35) (end 5.08 -6.35) (stroke (width 0.254) (type default)) (fill (type background))))
+(symbol "J4_1_1"
+(pin passive line (at -10.16 3.81 0) (length 5.08) (name "1" (effects (font (size 0.95 0.95)) )) (number "1" (effects (font (size 0.95 0.95)) )))
+(pin passive line (at -10.16 1.27 0) (length 5.08) (name "2" (effects (font (size 0.95 0.95)) )) (number "2" (effects (font (size 0.95 0.95)) )))
+(pin passive line (at -10.16 -1.27 0) (length 5.08) (name "3" (effects (font (size 0.95 0.95)) )) (number "3" (effects (font (size 0.95 0.95)) )))
+(pin passive line (at -10.16 -3.81 0) (length 5.08) (name "4" (effects (font (size 0.95 0.95)) )) (number "4" (effects (font (size 0.95 0.95)) )))))
 (symbol "J6" (pin_names (offset 0.762))
 (in_bom yes) (on_board yes)
 (property "Reference" "U" (at 0 5 0) (effects (font (size 1 1)) ))

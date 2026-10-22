@@ -1,16 +1,17 @@
 {
-  "electrical_components": 191,
+  "electrical_components": 188,
   "testpads": 8,
   "accessories": {
     "BAT-CR2032/P": 1,
-    "RAD-DY-GF/3": 2,
-    "TO220-SET": 2,
-    "SMICA-TO220-2": 2
+    "RAD-DY-GF/3": 1,
+    "TO220-SET": 1,
+    "SMICA-TO220-2": 1
   },
-  "rows": 78,
+  "rows": 80,
   "shop_totals": {
     "Electrobase": "37.24",
-    "Salvats": "39.39"
+    "Salvats": "39.39",
+    "не выбран": "0.0"
   },
   "shipping_EUR": "5.87",
   "total_EUR": "82.50",

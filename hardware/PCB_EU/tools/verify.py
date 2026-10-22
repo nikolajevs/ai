@@ -103,6 +103,8 @@ def main():
         pre=f'FAN{k}'
         check(f'Fan{k}: AO3422 source pin 2 grounded, reset gate pull-down and externally pulled tach',pins(f'Q{b+1}',{1:pre+'_GATE',2:'GND',3:pre+'_PWM'}) and r(f'R{b+2}','SMD0603-100K',pre+'_GATE','GND') and r(f'R{b+4}','SMD0603-10K','+3V3',pre+'_TACH'))
         check(f'Fan{k}: ST ESDA6V1L pin 3 common anode is grounded',pins(f'D{b+1}',{1:pre+'_PWM',2:pre+'_TACH_EXT',3:'GND'}))
+        check(f'Fan{k}: one 4-pin PC fan header J{b+1}: 1 GND, 2 +12 V, 3 tach, 4 PWM',pins(f'J{b+1}',{1:'GND',2:'+12V_FANS',3:pre+'_TACH_EXT',4:pre+'_PWM'}) and p[f'J{b+1}']['mpn']=='KF2510-4A' and f'J{b+2}' not in p)
+    check('SHT4x: one 4-pin XH header J401 (1 +3V3, 2 GND, 3 SDA, 4 SCL), USBLC6 U401 on SDA/SCL, R401/R402 in series',pins('J401',{1:'+3V3',2:'GND',3:'SHT_SDA',4:'SHT_SCL'}) and p['J401']['mpn']=='XH2.54-4P-90' and 'J402' not in p and pins('U401',{1:'SHT_SDA',6:'SHT_SDA',3:'SHT_SCL',4:'SHT_SCL'}) and r('R401','SMD1206-100R-1%','I2C_SDA','SHT_SDA') and r('R402','SMD1206-100R-1%','I2C_SCL','SHT_SCL'))
     check('USBLC6 reference and ground are correctly wired for both external interfaces',all(pins(ref,{2:'GND',5:'+3V3'}) for ref in ['U401','U402']))
     check('Float has series 1k, external pull-up and local filter',r('R403','SMD0603-1K','FLOAT_EXT','FLOAT_GPIO') and r('R404','SMD0603-10K','+3V3','FLOAT_GPIO') and pins('C403',{1:'FLOAT_GPIO',2:'GND'}))
     check('RTC battery is isolated from 3.3 V; MCP7940N pin 3 VBAT / pin 8 VCC',pins('U301',{1:'RTC_X1',2:'RTC_X2',3:'VBAT',4:'GND',5:'I2C_SDA',6:'I2C_SCL',8:'+3V3'}) and {(ref,pin) for ref,pin in nodes['VBAT'] if not ref.startswith('#')}=={('U301','3'),('BT301','1')})

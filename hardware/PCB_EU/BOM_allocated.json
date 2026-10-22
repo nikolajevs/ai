@@ -785,7 +785,7 @@
   {
     "shop": "Salvats",
     "mpn": "DG301R-5.0-2P12",
-    "needed": 2,
+    "needed": 1,
     "buy": 2,
     "unit": "шт.",
     "price_unit": 0.35,
@@ -793,18 +793,17 @@
     "stock": 98,
     "url": "https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-25mm2-300v16a-10x76x10mm-taisns",
     "block": "Разъёмы",
-    "usage": "16 А: вход 24 В и PTC; проверить тепловой запас, провод до 2,5 мм²",
+    "usage": "Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306: 1 шт. в покупке лишняя, количество не менялось до проверки BOM",
     "previous_needed": 2,
     "refs": [
-      "J101",
-      "J701"
+      "J101"
     ],
     "accessory_count": 0
   },
   {
     "shop": "Salvats",
     "mpn": "DG306-5.0-2P12",
-    "needed": 11,
+    "needed": 6,
     "buy": 11,
     "unit": "шт.",
     "price_unit": 0.32,
@@ -812,20 +811,54 @@
     "stock": 22,
     "url": "https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-15mm2-250v15a-10x8x10mm",
     "block": "Разъёмы",
-    "usage": "Помпа, LED×3, float, SHT4x×2, fan×4; два 2-pin образуют каждый 4-pin порт",
+    "usage": "PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края: 5 шт. в покупке лишние, количество не менялось до проверки BOM",
     "previous_needed": 11,
     "refs": [
-      "J401",
-      "J402",
       "J403",
-      "J411",
-      "J412",
-      "J421",
-      "J422",
       "J501",
       "J601",
       "J602",
+      "J701",
       "J702"
+    ],
+    "accessory_count": 0
+  },
+  {
+    "shop": "не выбран",
+    "mpn": "KF2510-4A",
+    "needed": 2,
+    "buy": 2,
+    "unit": "шт.",
+    "price_unit": 0.0,
+    "line": 0.0,
+    "stock": "",
+    "url": "",
+    "block": "Вентиляторы",
+    "usage": "Прямой хидер 4 контакта 2,54 мм (серия KF2510 / «2510-4P», посадка Molex KK-254) для J411/J421. Магазин и цена не выбраны: ждут проверки BOM",
+    "price_date": "2026-10-22",
+    "previous_needed": 2,
+    "refs": [
+      "J411",
+      "J421"
+    ],
+    "accessory_count": 0
+  },
+  {
+    "shop": "не выбран",
+    "mpn": "XH2.54-4P-90",
+    "needed": 1,
+    "buy": 1,
+    "unit": "шт.",
+    "price_unit": 0.0,
+    "line": 0.0,
+    "stock": "",
+    "url": "",
+    "block": "Интерфейсы",
+    "usage": "Угловой хидер XH 4 контакта (посадка JST XH S4B-XH-A, шаг 2,50 мм) для внешнего SHT4x, J401. Магазин и цена не выбраны: ждут проверки BOM; сверить шаг и порядок проводов",
+    "price_date": "2026-10-22",
+    "previous_needed": 1,
+    "refs": [
+      "J401"
     ],
     "accessory_count": 0
   },
@@ -1471,7 +1504,7 @@
   {
     "shop": "Salvats",
     "mpn": "RAD-DY-GF/3",
-    "needed": 2,
+    "needed": 1,
     "buy": 2,
     "unit": "шт.",
     "price_unit": 0.77,
@@ -1479,15 +1512,15 @@
     "stock": 12,
     "url": "https://www.salvats.lv/lv/radiatori/radiators-30x30x15mm-88kw-to220-to247-aluminijs-melna-krasa",
     "block": "Охлаждение LED",
-    "usage": "STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; отдельный радиатор каждого IRF540Z",
+    "usage": "STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026: второй в покупке лишний",
     "previous_needed": 2,
     "refs": [],
-    "accessory_count": 2
+    "accessory_count": 1
   },
   {
     "shop": "Salvats",
     "mpn": "TO220-SET",
-    "needed": 2,
+    "needed": 1,
     "buy": 2,
     "unit": "шт.",
     "price_unit": 0.43,
@@ -1495,15 +1528,15 @@
     "stock": 23,
     "url": "https://www.salvats.lv/lv/izolacijas-materiali/izolacija-mica-to220-kit-mitrikis-izolejosas-tapas-kontaktu-ziedlapina-montazu-skruve-pakrute-vizla",
     "block": "Крепёж LED",
-    "usage": "TO220-SET: винт, гайка, шайба, втулка, слюда; слюда остаётся запасной, используется силиконовая прокладка",
+    "usage": "TO220-SET: винт, гайка, шайба, втулка, слюда для Q501; второй комплект лишний с 22.10.2026",
     "previous_needed": 2,
     "refs": [],
-    "accessory_count": 2
+    "accessory_count": 1
   },
   {
     "shop": "Salvats",
     "mpn": "SMICA-TO220-2",
-    "needed": 2,
+    "needed": 1,
     "buy": 2,
     "unit": "шт.",
     "price_unit": 0.18,
@@ -1511,9 +1544,9 @@
     "stock": 55,
     "url": "https://www.salvats.lv/lv/izolacijas-materiali/izolacija-smica-to-220-15x20x03mm-gumija-ar-izulatoru",
     "block": "Теплоинтерфейс LED",
-    "usage": "NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм; ставить вместо слюды, не вместе с ней",
+    "usage": "NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм, для Q501; вторая лишняя с 22.10.2026",
     "previous_needed": 2,
     "refs": [],
-    "accessory_count": 2
+    "accessory_count": 1
   }
 ]

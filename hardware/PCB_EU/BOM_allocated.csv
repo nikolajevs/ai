@@ -40,8 +40,10 @@ Salvats,3403.0169.11,3,3,шт.,0.78,2.34,F104 F105 F401,0,https://www.salvats.lv
 Salvats,3403.0166.11,1,1,шт.,0.75,0.75,F106,0,https://www.salvats.lv/lv/drosinataji-smd-10x3x3mm-umt-leni/1a-umt-drosinataji-leni-250vac125vdc-101x3x3mm-smd,2026-10-20
 Salvats,USBLC6-2SC6,2,2,шт.,0.67,1.34,U401 U402,0,https://www.salvats.lv/lv/u/usblc6-2sc6-smd-mikroshema-esd-protection-sot23-6,2026-10-20
 Salvats,ESDA6V1L,2,2,шт.,0.26,0.52,D411 D421,0,https://www.salvats.lv/lv/supresori-smd-p6/esda6v1lel61-smd-diode-transil-61v-300w-double-common-anode-sot23,2026-10-20
-Salvats,DG301R-5.0-2P12,2,2,шт.,0.35,0.70,J101 J701,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-25mm2-300v16a-10x76x10mm-taisns,2026-10-20
-Salvats,DG306-5.0-2P12,11,11,шт.,0.32,3.52,J401 J402 J403 J411 J412 J421 J422 J501 J601 J602 J702,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-15mm2-250v15a-10x8x10mm,2026-10-20
+Salvats,DG301R-5.0-2P12,1,2,шт.,0.35,0.70,J101,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-25mm2-300v16a-10x76x10mm-taisns,2026-10-20
+Salvats,DG306-5.0-2P12,6,11,шт.,0.32,3.52,J403 J501 J601 J602 J701 J702,0,https://www.salvats.lv/lv/solis-508mm-1/terminal-blocks-pcb-ar-skruvem-2pin-5mm-15mm2-250v15a-10x8x10mm,2026-10-20
+не выбран,KF2510-4A,2,2,шт.,0.0,0.00,J411 J421,0,,2026-10-22
+не выбран,XH2.54-4P-90,1,1,шт.,0.0,0.00,J401,0,,2026-10-22
 Salvats,TACTB-64K-F,2,2,шт.,0.35,0.70,SW201 SW202,0,https://www.salvats.lv/lv/taktumembranas-sledzi/mikrosledzejs-horizontals-spst-no-off-on-005a12vdc-smd-5x5x2mm-25n-l05mm,2026-10-20
 Salvats,LM2903D-ST,1,1,шт.,0.37,0.37,U802,0,https://www.salvats.lv/lv/l/lm2903d-smd-mikroshema-comparator-low-power-comp-2-500ns-236v-so8,2026-10-20
 Salvats,BAT54-DIO,1,1,шт.,0.06,0.06,D801,0,https://www.salvats.lv/lv/diodes-sotki-smd-1/bat54l4-smd-diode-schottky-30v-02a-5ns-sot23,2026-10-20
@@ -74,6 +76,6 @@ Electrobase,C0805C104K1RACTU,2,2,шт.,0.16,0.32,C511 C611,0,https://electrobase
 Salvats,SMD0603-1K,7,10,уп. 10 шт.,0.11,0.11,R113 R403 R411 R413 R421 R423 R707,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/1k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
 Salvats,SMD0603-10K,14,20,уп. 10 шт.,0.11,0.22,R201 R202 R303 R304 R305 R306 R307 R404 R414 R424 R701 R704 R815 R817,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/10k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603-1,2026-10-20
 Salvats,SMD0603-100K,5,10,уп. 10 шт.,0.11,0.11,R412 R422 R708 R804 R808,0,https://www.salvats.lv/lv/rezistori-smd-0603-01w/100k-0603-18x08mm-10gab-50v-01w-5-smd-rezistors-0603,2026-10-20
-Salvats,RAD-DY-GF/3,2,2,шт.,0.77,1.54,,2,https://www.salvats.lv/lv/radiatori/radiators-30x30x15mm-88kw-to220-to247-aluminijs-melna-krasa,2026-10-20
-Salvats,TO220-SET,2,2,шт.,0.43,0.86,,2,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-mica-to220-kit-mitrikis-izolejosas-tapas-kontaktu-ziedlapina-montazu-skruve-pakrute-vizla,2026-10-20
-Salvats,SMICA-TO220-2,2,2,шт.,0.18,0.36,,2,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-smica-to-220-15x20x03mm-gumija-ar-izulatoru,2026-10-20
+Salvats,RAD-DY-GF/3,1,2,шт.,0.77,1.54,,1,https://www.salvats.lv/lv/radiatori/radiators-30x30x15mm-88kw-to220-to247-aluminijs-melna-krasa,2026-10-20
+Salvats,TO220-SET,1,2,шт.,0.43,0.86,,1,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-mica-to220-kit-mitrikis-izolejosas-tapas-kontaktu-ziedlapina-montazu-skruve-pakrute-vizla,2026-10-20
+Salvats,SMICA-TO220-2,1,2,шт.,0.18,0.36,,1,https://www.salvats.lv/lv/izolacijas-materiali/izolacija-smica-to-220-15x20x03mm-gumija-ar-izulatoru,2026-10-20

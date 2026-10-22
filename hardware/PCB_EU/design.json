@@ -1458,35 +1458,19 @@
     {
       "sheet": "Interfaces",
       "ref": "J401",
-      "symbol": "J2",
-      "value": "SHT 3V3 / GND",
-      "mpn": "DG306-5.0-2P12",
+      "symbol": "J4",
+      "value": "SHT4x XH2.54-4P-90",
+      "mpn": "XH2.54-4P-90",
       "nets": {
         "1": "+3V3",
-        "2": "GND"
+        "2": "GND",
+        "3": "SHT_SDA",
+        "4": "SHT_SCL"
       },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
+      "footprint": "Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal",
+      "note": "1 +3V3, 2 GND, 3 SDA, 4 SCL. XH clone, right angle; real pitch is the JST XH 2.50 mm; check pitch and wire order of the purchased part and the sensor cable",
       "position": [
         45.72,
-        144.78
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Interfaces",
-      "ref": "J402",
-      "symbol": "J2",
-      "value": "SHT SDA / SCL",
-      "mpn": "DG306-5.0-2P12",
-      "nets": {
-        "1": "SHT_SDA",
-        "2": "SHT_SCL"
-      },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
-      "position": [
-        106.68,
         144.78
       ],
       "in_bom": true
@@ -1504,7 +1488,7 @@
       "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
       "note": "",
       "position": [
-        173.99,
+        106.68,
         144.78
       ],
       "in_bom": true
@@ -1522,7 +1506,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        241.3,
+        173.99,
         144.78
       ],
       "in_bom": true
@@ -1540,7 +1524,7 @@
       "footprint": "Resistor_SMD:R_1206_3216Metric",
       "note": "",
       "position": [
-        308.61,
+        241.3,
         144.78
       ],
       "in_bom": true
@@ -1580,7 +1564,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        374.65,
+        308.61,
         144.78
       ],
       "in_bom": true
@@ -1620,8 +1604,8 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        45.72,
-        165.1
+        374.65,
+        144.78
       ],
       "in_bom": true
     },
@@ -1638,7 +1622,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        106.68,
+        45.72,
         165.1
       ],
       "in_bom": true
@@ -1656,7 +1640,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        173.99,
+        106.68,
         165.1
       ],
       "in_bom": true
@@ -1674,7 +1658,7 @@
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "note": "",
       "position": [
-        241.3,
+        173.99,
         165.1
       ],
       "in_bom": true
@@ -1692,7 +1676,7 @@
       "footprint": "EU_Mechanical:Fuse_Schurter_UMT250",
       "note": "",
       "position": [
-        308.61,
+        241.3,
         165.1
       ],
       "in_bom": true
@@ -1700,36 +1684,20 @@
     {
       "sheet": "Interfaces",
       "ref": "J411",
-      "symbol": "J2",
-      "value": "FAN1: GND / +12",
-      "mpn": "DG306-5.0-2P12",
+      "symbol": "J4",
+      "value": "FAN1 2510-4P",
+      "mpn": "KF2510-4A",
       "nets": {
         "1": "GND",
-        "2": "+12V_FANS"
+        "2": "+12V_FANS",
+        "3": "FAN1_TACH_EXT",
+        "4": "FAN1_PWM"
       },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
+      "footprint": "Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical",
+      "note": "4-pin PC fan pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM. KF2510 header matches Molex KK-254; confirm against the purchased part",
       "position": [
-        374.65,
+        308.61,
         165.1
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Interfaces",
-      "ref": "J412",
-      "symbol": "J2",
-      "value": "FAN1: TACH / PWM",
-      "mpn": "DG306-5.0-2P12",
-      "nets": {
-        "1": "FAN1_TACH_EXT",
-        "2": "FAN1_PWM"
-      },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
-      "position": [
-        45.72,
-        185.42
       ],
       "in_bom": true
     },
@@ -1765,8 +1733,8 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "Uses spare from purchased pack; 25 kHz edge timing must be checked",
       "position": [
-        106.68,
-        185.42
+        374.65,
+        165.1
       ],
       "in_bom": true
     },
@@ -1783,7 +1751,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        173.99,
+        45.72,
         185.42
       ],
       "in_bom": true
@@ -1801,7 +1769,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        241.3,
+        106.68,
         185.42
       ],
       "in_bom": true
@@ -1819,7 +1787,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        308.61,
+        173.99,
         185.42
       ],
       "in_bom": true
@@ -1846,36 +1814,20 @@
     {
       "sheet": "Interfaces",
       "ref": "J421",
-      "symbol": "J2",
-      "value": "FAN2: GND / +12",
-      "mpn": "DG306-5.0-2P12",
+      "symbol": "J4",
+      "value": "FAN2 2510-4P",
+      "mpn": "KF2510-4A",
       "nets": {
         "1": "GND",
-        "2": "+12V_FANS"
+        "2": "+12V_FANS",
+        "3": "FAN2_TACH_EXT",
+        "4": "FAN2_PWM"
       },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
+      "footprint": "Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical",
+      "note": "4-pin PC fan pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM. KF2510 header matches Molex KK-254; confirm against the purchased part",
       "position": [
-        374.65,
+        241.3,
         185.42
-      ],
-      "in_bom": true
-    },
-    {
-      "sheet": "Interfaces",
-      "ref": "J422",
-      "symbol": "J2",
-      "value": "FAN2: TACH / PWM",
-      "mpn": "DG306-5.0-2P12",
-      "nets": {
-        "1": "FAN2_TACH_EXT",
-        "2": "FAN2_PWM"
-      },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
-      "note": "",
-      "position": [
-        45.72,
-        204.47
       ],
       "in_bom": true
     },
@@ -1911,8 +1863,8 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "Uses spare from purchased pack; 25 kHz edge timing must be checked",
       "position": [
-        106.68,
-        204.47
+        308.61,
+        185.42
       ],
       "in_bom": true
     },
@@ -1929,8 +1881,8 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        173.99,
-        204.47
+        374.65,
+        185.42
       ],
       "in_bom": true
     },
@@ -1947,7 +1899,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        241.3,
+        45.72,
         204.47
       ],
       "in_bom": true
@@ -1965,7 +1917,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "note": "",
       "position": [
-        308.61,
+        106.68,
         204.47
       ],
       "in_bom": true
@@ -2586,7 +2538,7 @@
         "3": "LED2_IS"
       },
       "footprint": "Package_TO_SOT_THT:TO-220-3_Vertical",
-      "note": "Drain tab live. Separate insulated heatsink; exact assembly placement pending",
+      "note": "Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype",
       "position": [
         299.72,
         59.69
@@ -3012,13 +2964,13 @@
       "ref": "J701",
       "symbol": "J2",
       "value": "PTC + / RETURN",
-      "mpn": "DG301R-5.0-2P12",
+      "mpn": "DG306-5.0-2P12",
       "nets": {
         "1": "+24V_PTC",
         "2": "PTC_DRAIN"
       },
-      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG301R-5.0_1x02",
-      "note": "",
+      "footprint": "EU_Mechanical:TerminalBlock_Degson_DG306-5.0_1x02",
+      "note": "Bottom-edge DG306 since 2026-10-22: 15 A / 1.5 mm2 rating covers the 4.5 A heater",
       "position": [
         45.72,
         105.41
@@ -3902,9 +3854,9 @@
   ],
   "accessories": {
     "BAT-CR2032/P": 1,
-    "RAD-DY-GF/3": 2,
-    "TO220-SET": 2,
-    "SMICA-TO220-2": 2
+    "RAD-DY-GF/3": 1,
+    "TO220-SET": 1,
+    "SMICA-TO220-2": 1
   },
   "source_urls": {
     "LM3429MH/NOPB": "https://www.ti.com/lit/ds/symlink/lm3429.pdf",

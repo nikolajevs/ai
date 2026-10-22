@@ -377,7 +377,7 @@
 (property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
 (property "Datasheet" "https://docs.rs-online.com/8d7e/0900766b81294f79.pdf" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
 (property "MPN" "TK22E10N1" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
-(property "Design_note" "Drain tab live. Separate insulated heatsink; exact assembly placement pending" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
+(property "Design_note" "Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
 (property "FootprintStatus" "PACKAGE ONLY - verify before PCB" (at 299.72 59.69 0) (effects (font (size 1 1)) (hide yes)))
 (pin "1" (uuid "85c9290a-d6a7-5dac-bf80-513bd6735808"))
 (pin "2" (uuid "12277a3a-c131-5990-99a6-95f877eb7c58"))
