@@ -26847,7 +26847,7 @@
 			(uuid "3179c1e2-a0b9-5cf2-9a3e-01fc9e81f721")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/libraries/EU.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/libraries/EU.3dshapes/JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step"
 			(offset
 				(xyz 0 0 0)
 			)

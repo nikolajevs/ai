@@ -7,7 +7,7 @@
     "Capacitor_SMD:C_1206_3216Metric": "C_1206_3216Metric.step",
     "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
     "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
-    "Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal": "JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step",
+    "Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal": "JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step",
     "Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical": "Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical.step",
     "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical": "PinHeader_1x06_P2.54mm_Vertical.step",
     "Diode_SMD:D_MiniMELF": "D_MiniMELF.step",
@@ -182,14 +182,6 @@
         "usi1206"
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
-    },
-    "JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step": {
-      "origin": "KiCad library contributors",
-      "license": "CC-BY-SA-4.0 WITH KiCad exception",
-      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step",
-      "sha256": "5a64a9bcf2a4e71d73522b5213a8af062113d5a0e626da3360749df87814ca36",
-      "source_cad_modified": false,
-      "mpn_specific_qualification": false
     },
     "L_Bourns_SRN6045.step": {
       "origin": "project-generated",
@@ -572,6 +564,21 @@
         "mem2061"
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step": {
+      "origin": "GrowBox cheap-version adaptation of KiCad model; Rene Poeschl (2019)",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_project_path": "hardware/cheap-version/libraries/GrowBox.3dshapes/JST_XH_1x04_P2.50mm_Horizontal_NoSupports.step",
+      "source_script": "hardware/cheap-version/tools/make_xh_no_supports.py",
+      "source_notes": "hardware/cheap-version/libraries/GrowBox.3dshapes/SOURCES_mechanical.md#j301-xh-без-боковых-подпорок-03102026",
+      "upstream_model": "JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step",
+      "upstream_sha256": "5a64a9bcf2a4e71d73522b5213a8af062113d5a0e626da3360749df87814ca36",
+      "sha256": "f8273dba31216ceab2e7e465d64367bdecb5be82b9851c1e0d8468de8dac97ae",
+      "source_cad_modified": true,
+      "modifications": "Two rear support wings removed for the stock XH2.54-4P-90 connector; original lead positions, body and height retained. Upstream attribution and modification notice remain in STEP.",
+      "mpn_specific_qualification": false,
+      "detail": "Reused unchanged from cheap-version J301 for PCB_EU J401, which uses the same stock connector and footprint. Visual adaptation based on the user photo, not a qualified manufacturer drawing or fit guarantee.",
+      "upstream_source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step"
     }
   },
   "sources": {
