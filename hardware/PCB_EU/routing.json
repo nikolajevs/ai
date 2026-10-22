@@ -1,10 +1,10 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
   "date": "2026-10-22",
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch. All electrolytic capacitors on the front (2026-10-22): the LED2 output bank C608/C609 is chained from D601 on F.Cu, C611 joins D601 directly, the LED2 input C601 is fed from F104.2 on F.Cu and feeds L601 on B.Cu, C508 sits beside C510 and is autorouted like C509/C510.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch. All electrolytic capacitors on the front (2026-10-22): the LED2 output bank C608/C609 is chained from D601 on F.Cu, C611 joins D601 directly, the LED2 input C601 is fed from F104.2 on F.Cu and feeds L601 on B.Cu, C508 sits beside C510 and is autorouted like C509/C510. Pre-prototype copper review (2026-10-22): extra parallel 0.5 mm drill vias on RAW, PTC, FUSED and both shunt ground banks; current-sharing model tested at 0.5/1/2 assumed via resistance. A 0.8 mm parallel 12 V fan-feed path (four 0.5 mm drill layer transitions) reduces current in the former 0.6 mm In2 feed. Existing routes and component placements retained.",
   "limits": [
-    "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
-    "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
+    "Widths/via banks receive DC pre-prototype screening at documented currents; transient, switching-loop, thermal and EMC qualification still require prototype measurements and factory copper/plating confirmation.",
+    "Q501 uses electrically insulating thermal adhesive heatsink attachment (user decision2026-10-22), no guide-pin PCB holes. Body/access reserve remains; adhesive thermal/mechanical performance and isolation need physical checks."
   ],
   "replace_session_nets": [
     "+24V_LED2",
@@ -523,6 +523,156 @@
       ],
       "diameter": 0.6,
       "drill": 0.3
+    },
+    {
+      "net": "+24V_RAW",
+      "at": [
+        12.39,
+        52.39
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-1"
+    },
+    {
+      "net": "+24V_RAW",
+      "at": [
+        10.99,
+        54.19
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-2"
+    },
+    {
+      "net": "+24V_RAW",
+      "at": [
+        11.59,
+        52.39
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-3"
+    },
+    {
+      "net": "+24V_PTC",
+      "at": [
+        45.95,
+        85.35
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-4"
+    },
+    {
+      "net": "+24V_PTC",
+      "at": [
+        44.8,
+        84.1
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-5"
+    },
+    {
+      "net": "+24V_FUSED",
+      "at": [
+        43.4,
+        70.7
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-6"
+    },
+    {
+      "net": "+24V_FUSED",
+      "at": [
+        30.7,
+        58.4
+      ],
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-7"
+    },
+    {
+      "at": [
+        13.7125,
+        77.6
+      ],
+      "net": "GND",
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-8"
+    },
+    {
+      "at": [
+        13.7125,
+        78.6
+      ],
+      "net": "GND",
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-9"
+    },
+    {
+      "at": [
+        2.7875,
+        77.8
+      ],
+      "net": "GND",
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-10"
+    },
+    {
+      "at": [
+        2.7875,
+        78.8
+      ],
+      "net": "GND",
+      "diameter": 1,
+      "drill": 0.5,
+      "id": "cu-review-11"
+    },
+    {
+      "id": "cu-aux12-via-1",
+      "net": "+12V",
+      "at": [
+        33.75,
+        66.5
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-aux12-via-2",
+      "net": "+12V",
+      "at": [
+        21.5,
+        58.75
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-aux12-via-3",
+      "net": "+12V",
+      "at": [
+        19.0,
+        49.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-aux12-via-4",
+      "net": "+12V",
+      "at": [
+        15.25,
+        24.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
     }
   ],
   "routes": [
@@ -2585,6 +2735,326 @@
           60.17
         ]
       ]
+    },
+    {
+      "id": "cu-aux12-track-5",
+      "net": "+12V",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          39.1,
+          67.2
+        ],
+        [
+          39.0,
+          67.25
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-6",
+      "net": "+12V",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          39.0,
+          67.25
+        ],
+        [
+          38.25,
+          66.5
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-7",
+      "net": "+12V",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          38.25,
+          66.5
+        ],
+        [
+          33.75,
+          66.5
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-8",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          33.75,
+          66.5
+        ],
+        [
+          30.25,
+          63.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-9",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          30.25,
+          63.0
+        ],
+        [
+          30.25,
+          62.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-10",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          30.25,
+          62.75
+        ],
+        [
+          30.0,
+          62.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-11",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          30.0,
+          62.75
+        ],
+        [
+          30.0,
+          62.5
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-12",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          30.0,
+          62.5
+        ],
+        [
+          29.25,
+          62.5
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-13",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          29.25,
+          62.5
+        ],
+        [
+          25.5,
+          58.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-14",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          25.5,
+          58.75
+        ],
+        [
+          21.5,
+          58.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-15",
+      "net": "+12V",
+      "layer": "In2.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          21.5,
+          58.75
+        ],
+        [
+          21.5,
+          53.25
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-16",
+      "net": "+12V",
+      "layer": "In2.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          21.5,
+          53.25
+        ],
+        [
+          19.0,
+          50.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-17",
+      "net": "+12V",
+      "layer": "In2.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          19.0,
+          50.75
+        ],
+        [
+          19.0,
+          49.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-18",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          19.0,
+          49.0
+        ],
+        [
+          15.25,
+          45.25
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-19",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          15.25,
+          45.25
+        ],
+        [
+          15.25,
+          30.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-20",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          15.25,
+          30.0
+        ],
+        [
+          16.25,
+          29.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-21",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          16.25,
+          29.0
+        ],
+        [
+          16.25,
+          25.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-22",
+      "net": "+12V",
+      "layer": "B.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          16.25,
+          25.0
+        ],
+        [
+          15.25,
+          24.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-23",
+      "net": "+12V",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          15.25,
+          24.0
+        ],
+        [
+          16.0,
+          24.75
+        ]
+      ]
+    },
+    {
+      "id": "cu-aux12-track-24",
+      "net": "+12V",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          16.0,
+          24.75
+        ],
+        [
+          16.0,
+          25.75
+        ]
+      ]
     }
   ],
   "zones": [
@@ -2844,6 +3314,24 @@
         "F102.1",
         "F104.1",
         "F106.1"
+      ]
+    },
+    {
+      "net": "GND",
+      "pads": [
+        "R111.1",
+        "R112.1",
+        "Q703.3",
+        "J501.2",
+        "J602.2"
+      ]
+    },
+    {
+      "net": "+12V",
+      "pads": [
+        "L101.2",
+        "F401.1",
+        "U201.2"
       ]
     }
   ]

@@ -10,7 +10,7 @@
   "courtyard_gap_mm": 0.15,
   "opposite_side_tht_joint_guard_mm": 0.5,
   "limits": [
-    "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserve for HS1 (Q501) only; Q601 has no heatsink since 2026-10-22; rear components may require movement after pin drawing review.",
+    "Q501 uses an electrically insulating thermal adhesive heatsink attachment (user decision 2026-10-22), with no PCB guide-pin holes. Front-side 32 x 32 mm HS1 body/access reserve remains; physical fit and adhesive thermal/mechanical performance require user inspection and prototype verification. Q601 has no heatsink.",
     "Back-side battery and the tall inductors require enclosure clearance; all twelve electrolytic capacitors are on the front since 2026-10-22; no 3D/physical-fit qualification.",
     "All connections routed (hand-planned LED1 and LED2 power loops and LM3429 pin escapes in routing.json, rest autorouted). Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],

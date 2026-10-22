@@ -2,12 +2,12 @@
   "pcbnew_version": "10.0.7",
   "minimum_text_mm": 0.8,
   "stroke_mm": 0.15,
-  "generated_labels": 180,
+  "generated_labels": 178,
   "labels_by_face": {
-    "F": 76,
-    "B": 104
+    "F": 75,
+    "B": 103
   },
-  "references_placed": 91,
+  "references_placed": 89,
   "preserved_native_marks": "electrolytic + / negative half-disc, diode cathode outlines, pin-1 keys; Fab references unchanged",
   "non_silkscreen_data_unchanged": true,
   "labels": [
@@ -1738,8 +1738,8 @@
       "ref": "F101",
       "side": "F",
       "at": [
-        13.5,
-        51.5945
+        16.0,
+        57.0055
       ],
       "rotation_deg": 0,
       "size_mm": 0.85,
@@ -1783,19 +1783,6 @@
       "rotation_deg": 0,
       "size_mm": 0.85,
       "uuid": "64db3e75-a7cf-5c68-a72e-84b2ee86c4d0"
-    },
-    {
-      "name": "Q102/reference",
-      "text": "Q102",
-      "ref": "Q102",
-      "side": "B",
-      "at": [
-        11.8,
-        55.4245
-      ],
-      "rotation_deg": 0,
-      "size_mm": 0.85,
-      "uuid": "4bf2412c-d968-583a-a623-facc532bd80f"
     },
     {
       "name": "Q411/reference",
@@ -1946,8 +1933,8 @@
       "ref": "R102",
       "side": "B",
       "at": [
-        20.0,
-        59.3245
+        21.5,
+        57.1245
       ],
       "rotation_deg": 0,
       "size_mm": 0.85,
@@ -1973,7 +1960,7 @@
       "side": "B",
       "at": [
         32.2543,
-        65.5
+        64.5
       ],
       "rotation_deg": 0,
       "size_mm": 0.85,
@@ -2056,19 +2043,6 @@
       "rotation_deg": 0,
       "size_mm": 0.85,
       "uuid": "fdaa7473-6f17-593a-ac4f-c7d9be2cd6a8"
-    },
-    {
-      "name": "R305/reference",
-      "text": "R305",
-      "ref": "R305",
-      "side": "F",
-      "at": [
-        20.6957,
-        58.5
-      ],
-      "rotation_deg": 0,
-      "size_mm": 0.85,
-      "uuid": "2492d30e-fa1c-5aea-b7af-cbf9d2f72bd9"
     },
     {
       "name": "R306/reference",
@@ -2642,6 +2616,10 @@
       "reason": "no clear space for readable reference on component side"
     },
     {
+      "ref": "Q102",
+      "reason": "no clear space for readable reference on component side"
+    },
+    {
       "ref": "Q421",
       "reason": "no clear space for readable reference on component side"
     },
@@ -2727,6 +2705,10 @@
     },
     {
       "ref": "R303",
+      "reason": "no clear space for readable reference on component side"
+    },
+    {
+      "ref": "R305",
       "reason": "no clear space for readable reference on component side"
     },
     {
@@ -2878,6 +2860,6 @@
       "reason": "no clear space for readable reference on component side"
     }
   ],
-  "base_pcb_sha256": "1882d91e527aaddc6a78ccf7ca9bcd8fe762b6a7156bf83d9c1b7a42ba65a643",
-  "source_sha256": "5fd32bfab8f6f1d088918ba35e1581e959a7ace86dcfa2aba318924bbd25dadd"
+  "base_pcb_sha256": "afc5fe204ca2e4c29c910caf9a0b47b39de139eefdf0529186fa6b2b40f22200",
+  "source_sha256": "e48fdd04882daf9e5cf218fb0fbe9249fab96da94abd9b5ff3a0ccbd36d8cd7e"
 }

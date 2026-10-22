@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import re
 import uuid
 
 import pcbnew as p
@@ -61,6 +62,9 @@ def without_generated(text):
         raise RuntimeError('Managed silkscreen group contains unexpected non-text items')
     for a, b in sorted(edits, reverse=True):
         text = text[:a] + text[b:]
+    # Native KiCad saves managed texts on indented lines. Removing their forms
+    # must not retain hundreds of whitespace-only lines on each regeneration.
+    text = re.sub(r'(?m)^[ \t]+$', '', text)
     # Generated nodes are inserted immediately before the final board close.
     return text[:text.rfind(')')].rstrip() + '\n)\n'
 
