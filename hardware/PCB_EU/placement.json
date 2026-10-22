@@ -1,6 +1,6 @@
 {
   "stage": "PLACEMENT_WITH_PARTIAL_LED1_ROUTING",
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "board_mm": [
     100,
     100
@@ -10,7 +10,7 @@
   "courtyard_gap_mm": 0.15,
   "opposite_side_tht_joint_guard_mm": 0.5,
   "limits": [
-    "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserves only; rear components may require movement after pin drawing review.",
+    "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserve for HS1 (Q501) only; Q601 has no heatsink since 2026-10-22; rear components may require movement after pin drawing review.",
     "Back-side battery and C508/C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
     "All connections routed (hand-planned LED1 and LED2 power loops and LM3429 pin escapes in routing.json, rest autorouted). Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
@@ -25,17 +25,6 @@
       ],
       "side": "F",
       "associated_ref": "Q501"
-    },
-    {
-      "name": "HS2",
-      "box": [
-        65,
-        52,
-        97,
-        84
-      ],
-      "side": "F",
-      "associated_ref": "Q601"
     }
   ],
   "mounting_holes": [
@@ -418,8 +407,8 @@
       "side": "F"
     },
     "D421": {
-      "x": 13.5,
-      "y": 50.5,
+      "x": 9.5,
+      "y": 43.5,
       "rotation": 0,
       "side": "F"
     },
@@ -436,10 +425,10 @@
       "side": "F"
     },
     "D701": {
-      "x": 44.5,
-      "y": 89.5,
-      "rotation": 0,
-      "side": "B"
+      "x": 87.4,
+      "y": 61.5,
+      "rotation": 90,
+      "side": "F"
     },
     "D801": {
       "x": 43.5,
@@ -448,9 +437,9 @@
       "side": "B"
     },
     "F101": {
-      "x": 9.5,
-      "y": 61.5,
-      "rotation": 90,
+      "x": 14.0,
+      "y": 54.3,
+      "rotation": 0,
       "side": "F"
     },
     "F102": {
@@ -490,14 +479,14 @@
       "side": "F"
     },
     "J101": {
-      "x": 14,
-      "y": 56,
-      "rotation": 0,
+      "x": 8.25,
+      "y": 50.65,
+      "rotation": 270,
       "side": "F"
     },
     "J201": {
-      "x": 12,
-      "y": 34,
+      "x": 4.0,
+      "y": 9.75,
       "rotation": 0,
       "side": "F"
     },
@@ -508,14 +497,8 @@
       "side": "F"
     },
     "J401": {
-      "x": 7,
-      "y": 96,
-      "rotation": 0,
-      "side": "F"
-    },
-    "J402": {
-      "x": 20,
-      "y": 96,
+      "x": 17.2,
+      "y": 90.0,
       "rotation": 0,
       "side": "F"
     },
@@ -526,26 +509,14 @@
       "side": "F"
     },
     "J411": {
-      "x": 5,
-      "y": 12,
-      "rotation": 270,
-      "side": "F"
-    },
-    "J412": {
-      "x": 5,
-      "y": 25,
+      "x": 4.0,
+      "y": 26.3,
       "rotation": 270,
       "side": "F"
     },
     "J421": {
-      "x": 5,
-      "y": 38,
-      "rotation": 270,
-      "side": "F"
-    },
-    "J422": {
-      "x": 5,
-      "y": 51,
+      "x": 4.0,
+      "y": 37.7,
       "rotation": 270,
       "side": "F"
     },
@@ -568,15 +539,15 @@
       "side": "F"
     },
     "J701": {
-      "x": 17,
-      "y": 83,
+      "x": 46,
+      "y": 96,
       "rotation": 0,
       "side": "F"
     },
     "J702": {
-      "x": 46,
-      "y": 96,
-      "rotation": 0,
+      "x": 96.06,
+      "y": 64.0,
+      "rotation": 90,
       "side": "F"
     },
     "L101": {
@@ -658,10 +629,10 @@
       "side": "F"
     },
     "Q704": {
-      "x": 53.0,
-      "y": 90.0,
+      "x": 86.5,
+      "y": 54.5,
       "rotation": 0,
-      "side": "B"
+      "side": "F"
     },
     "R101": {
       "x": 53.0,
@@ -737,7 +708,7 @@
     },
     "R113": {
       "x": 16.8,
-      "y": 88.2,
+      "y": 86.7,
       "rotation": 180,
       "side": "B"
     },
@@ -821,13 +792,13 @@
     },
     "R403": {
       "x": 26.5,
-      "y": 87.0,
+      "y": 84.0,
       "rotation": 90,
       "side": "F"
     },
     "R404": {
       "x": 26.5,
-      "y": 83.5,
+      "y": 80.5,
       "rotation": 90,
       "side": "F"
     },
@@ -1048,16 +1019,16 @@
       "side": "B"
     },
     "R707": {
-      "x": 56.0,
-      "y": 90.0,
+      "x": 83.0,
+      "y": 54.5,
       "rotation": 90,
-      "side": "B"
+      "side": "F"
     },
     "R708": {
-      "x": 53.0,
-      "y": 93.0,
-      "rotation": 0,
-      "side": "B"
+      "x": 83.0,
+      "y": 58.0,
+      "rotation": 90,
+      "side": "F"
     },
     "R803": {
       "x": 75.7,

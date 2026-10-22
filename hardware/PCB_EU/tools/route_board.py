@@ -45,7 +45,8 @@ ROUTER_WIDTHS = {'LOAD': 0.6}
 # Short controller nets around the LM3429 (B side, between the heatsink keepouts) and the
 # L7987 AUX buck: routed first by the grid router so the autorouter cannot box them in.
 PREROUTE = {f'LED{k}_{n}' for k in (1, 2) for n in ('CSH', 'CSH_MID', 'RCT', 'RT_MID', 'HSN', 'HSP', 'VCC', 'COMP', 'OVP', 'OVP_MID', 'GATE_RAW')} | \
-    {'AUX_FB', 'AUX_FB_MID', 'AUX_COMP', 'AUX_COMP_MID', 'AUX_SS', 'AUX_FSW', 'AUX_ILIM', 'AUX_BOOT'}
+    {'AUX_FB', 'AUX_FB_MID', 'AUX_COMP', 'AUX_COMP_MID', 'AUX_SS', 'AUX_FSW', 'AUX_ILIM', 'AUX_BOOT'} | \
+    {'PTC_GATE'}                               # R706 sits between the Q703 tab and the BC8x7 pair; Freerouting left it open
 SECOND_PASS_WIDTHS = {'HEAVY24': 1.0, 'LOAD': 0.4, 'PWR': 0.3}
 RF_KEEPOUT = [4.5, 0.0, 52.5, 7.44]       # ESP32 antenna reserve on the board, verify_board.py
 POUR_CLEARANCE = .2

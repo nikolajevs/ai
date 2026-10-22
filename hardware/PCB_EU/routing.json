@@ -1,6 +1,6 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
@@ -19,7 +19,9 @@
     "+24V_FUSED",
     "+24V_PTC",
     "+24V_RAW",
-    "PSU_RTN"
+    "PSU_RTN",
+    "PTC_DRAIN",
+    "BLOCK_OC"
   ],
   "vias": [
     {
@@ -313,31 +315,71 @@
       "drill": 0.5
     },
     {
-      "id": "cu-trunk-end-1",
-      "net": "+24V_FUSED",
+      "id": "cu-raw-1",
+      "net": "+24V_RAW",
       "at": [
-        17.9,
-        53.45
+        9.81,
+        51.93
       ],
       "diameter": 1.0,
       "drill": 0.5
     },
     {
-      "id": "cu-trunk-end-2",
-      "net": "+24V_FUSED",
+      "id": "cu-raw-2",
+      "net": "+24V_RAW",
       "at": [
-        19.1,
-        53.45
+        10.7,
+        52.66
       ],
       "diameter": 1.0,
       "drill": 0.5
     },
     {
-      "id": "cu-trunk-end-3",
+      "id": "cu-raw-3",
+      "net": "+24V_RAW",
+      "at": [
+        11.59,
+        53.39
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-1",
       "net": "+24V_FUSED",
       "at": [
-        20.3,
-        53.45
+        16.8,
+        53.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-2",
+      "net": "+24V_FUSED",
+      "at": [
+        16.8,
+        54.2
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-3",
+      "net": "+24V_FUSED",
+      "at": [
+        18.0,
+        53.0
+      ],
+      "diameter": 1.0,
+      "drill": 0.5
+    },
+    {
+      "id": "cu-trunk-start-4",
+      "net": "+24V_FUSED",
+      "at": [
+        18.0,
+        54.2
       ],
       "diameter": 1.0,
       "drill": 0.5
@@ -448,96 +490,6 @@
       "at": [
         30.5,
         59.2
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-run-1",
-      "net": "+24V_FUSED",
-      "at": [
-        13.0,
-        53.45
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-run-2",
-      "net": "+24V_FUSED",
-      "at": [
-        14.6,
-        53.45
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-run-3",
-      "net": "+24V_FUSED",
-      "at": [
-        16.2,
-        53.45
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-1",
-      "net": "+24V_FUSED",
-      "at": [
-        9.0,
-        57.4
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-2",
-      "net": "+24V_FUSED",
-      "at": [
-        9.0,
-        56.4
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-3",
-      "net": "+24V_FUSED",
-      "at": [
-        9.0,
-        55.4
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-4",
-      "net": "+24V_FUSED",
-      "at": [
-        10.0,
-        57.4
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-5",
-      "net": "+24V_FUSED",
-      "at": [
-        10.0,
-        56.4
-      ],
-      "diameter": 1.0,
-      "drill": 0.5
-    },
-    {
-      "id": "cu-trunk-start-6",
-      "net": "+24V_FUSED",
-      "at": [
-        10.0,
-        55.4
       ],
       "diameter": 1.0,
       "drill": 0.5
@@ -2129,46 +2081,18 @@
       ]
     },
     {
-      "id": "cu-power-trunk-stub",
-      "net": "+24V_FUSED",
-      "layer": "F.Cu",
-      "width": 3.0,
-      "points": [
-        [
-          9.2,
-          59.7
-        ],
-        [
-          9.2,
-          56.6
-        ],
-        [
-          10.0,
-          55.8
-        ]
-      ]
-    },
-    {
       "id": "cu-power-trunk-b",
       "net": "+24V_FUSED",
       "layer": "B.Cu",
-      "width": 2.5,
+      "width": 3.0,
       "points": [
         [
-          9.5,
-          56.6
+          16.8,
+          53.6
         ],
         [
-          9.5,
-          55.9
-        ],
-        [
-          12.1,
-          53.3
-        ],
-        [
-          26.8,
-          53.3
+          26.5,
+          53.6
         ],
         {
           "pad": "C101.1"
@@ -2176,80 +2100,52 @@
       ]
     },
     {
-      "id": "cu-return-input-stub",
-      "net": "PSU_RTN",
-      "layer": "B.Cu",
-      "width": 3.0,
-      "points": [
-        [
-          18.8,
-          56.6
-        ],
-        [
-          18.0,
-          58.0
-        ]
-      ]
-    },
-    {
-      "id": "cu-return-trunk",
+      "id": "cu-return-input",
       "net": "PSU_RTN",
       "layer": "B.Cu",
       "width": 4.5,
       "points": [
         [
-          18.0,
-          58.0
+          8.25,
+          56.5
         ],
         [
-          12.4,
-          63.6
-        ],
-        {
-          "pad": "Q102.2"
-        }
-      ]
-    },
-    {
-      "id": "cu-raw-trunk",
-      "net": "+24V_RAW",
-      "layer": "F.Cu",
-      "width": 3.0,
-      "points": [
-        [
-          14.0,
-          56.6
-        ],
-        [
-          14.0,
-          57.6
-        ],
-        [
-          12.5,
-          59.1
-        ],
-        [
-          12.5,
-          62.0
+          8.25,
+          60.5
         ]
       ]
     },
     {
-      "id": "cu-raw-neck",
+      "id": "cu-raw-f",
       "net": "+24V_RAW",
       "layer": "F.Cu",
-      "width": 2.4,
+      "width": 3.0,
       "points": [
-        [
-          12.5,
-          62.0
-        ],
-        [
-          11.2,
-          62.8
-        ],
+        {
+          "pad": "J101.1"
+        },
         {
           "pad": "F101.1"
+        }
+      ]
+    },
+    {
+      "id": "cu-raw-b",
+      "net": "+24V_RAW",
+      "layer": "B.Cu",
+      "width": 3.0,
+      "points": [
+        {
+          "pad": "J101.1"
+        },
+        {
+          "via": "cu-raw-1"
+        },
+        {
+          "via": "cu-raw-2"
+        },
+        {
+          "via": "cu-raw-3"
         }
       ]
     },
@@ -2406,51 +2302,66 @@
       "id": "cu-ptc-leg-b",
       "net": "+24V_PTC",
       "layer": "B.Cu",
-      "width": 2.0,
+      "width": 3.0,
       "points": [
-        [
-          46.6,
-          84.9
-        ],
         [
           44.7,
           83.0
         ],
         [
-          44.7,
-          78.4
+          46.6,
+          84.9
         ],
         [
-          44.1,
-          77.8
-        ],
-        [
-          41.9,
-          77.8
-        ],
-        [
-          40.0,
-          75.9
-        ],
-        [
-          26.2,
-          75.9
-        ],
-        [
-          21.5,
-          80.6
-        ],
-        [
-          21.2,
-          80.7
-        ],
-        [
-          19.3,
-          80.7
+          46.6,
+          94.5
         ],
         {
           "pad": "J701.1"
         }
+      ]
+    },
+    {
+      "id": "cu-ptc-drain-f",
+      "net": "PTC_DRAIN",
+      "layer": "F.Cu",
+      "width": 2.4,
+      "points": [
+        {
+          "pad": "J701.2"
+        },
+        [
+          51.0,
+          93.0
+        ],
+        [
+          50.0,
+          92.0
+        ],
+        [
+          39.8,
+          92.0
+        ]
+      ]
+    },
+    {
+      "id": "cu-ptc-drain-tab",
+      "net": "PTC_DRAIN",
+      "layer": "F.Cu",
+      "width": 2.0,
+      "points": [
+        [
+          39.8,
+          92.0
+        ],
+        [
+          38.6,
+          90.8
+        ],
+        [
+          38.6,
+          83.2
+        ]
       ]
     },
     {
@@ -2557,22 +2468,38 @@
       ]
     },
     {
+      "id": "cu-power-trunk-neck",
+      "net": "+24V_FUSED",
+      "layer": "F.Cu",
+      "width": 2.4,
+      "points": [
+        [
+          15.75,
+          54.3
+        ],
+        [
+          16.4,
+          54.3
+        ]
+      ]
+    },
+    {
       "id": "cu-power-trunk-f",
       "net": "+24V_FUSED",
       "layer": "F.Cu",
-      "width": 2.0,
+      "width": 3.0,
       "points": [
         [
-          10.0,
-          55.8
+          16.4,
+          54.3
         ],
         [
-          12.2,
-          53.6
+          17.2,
+          53.5
         ],
         [
-          27.1,
-          53.6
+          26.5,
+          53.5
         ],
         {
           "pad": "C101.1"
@@ -2668,22 +2595,6 @@
         [
           43.35,
           60.17
-        ],
-        [
-          43.15,
-          60.37
-        ],
-        [
-          41.85,
-          60.37
-        ],
-        [
-          41.45,
-          59.97
-        ],
-        [
-          41.45,
-          59.47
         ]
       ]
     }
@@ -2926,6 +2837,13 @@
       "pads": [
         "F102.2",
         "J701.1"
+      ]
+    },
+    {
+      "net": "PTC_DRAIN",
+      "pads": [
+        "J701.2",
+        "Q703.2"
       ]
     },
     {

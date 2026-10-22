@@ -2,8 +2,8 @@
   "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
   "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
-  "checks_passed": 23466,
-  "netlisted_references": 199,
+  "checks_passed": 22639,
+  "netlisted_references": 196,
   "board_only_mounting_holes": 4,
   "copper_layers": 4,
   "board_mm": [
@@ -11,8 +11,8 @@
     100
   ],
   "face_counts": {
-    "F": 108,
-    "B": 91
+    "F": 109,
+    "B": 87
   },
   "back_side_references": [
     "BT301",
@@ -42,7 +42,6 @@
     "C609",
     "C803",
     "D103",
-    "D701",
     "D801",
     "F106",
     "L501",
@@ -51,7 +50,6 @@
     "Q102",
     "Q701",
     "Q702",
-    "Q704",
     "R102",
     "R103",
     "R104",
@@ -88,8 +86,6 @@
     "R704",
     "R705",
     "R706",
-    "R707",
-    "R708",
     "R803",
     "R804",
     "R808",
@@ -111,8 +107,8 @@
   "connected_netlist_pins": 498,
   "mapped_netlist_pins_including_nc": 525,
   "pad_net_parity": true,
-  "routed_tracks": 1691,
-  "routed_vias": 383,
+  "routed_tracks": 1399,
+  "routed_vias": 323,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
@@ -131,8 +127,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "471bfb479e0c9b6d9b6803dad50050e84ef06b2e1e70ca8d2842f93d9ddb104a",
-    "placement.json": "2fd7c6b80e84d4fefd4806fcecff37ee6bde8c4f66f896ff79c743db83c96cf7",
-    "netlist.xml": "44b3cdad51dd9635126e9bf9129fb17978f254cc4d4bd73b1231a77bd5ae52f6"
+    "PCB_EU.kicad_pcb": "45d9ab768f0650441846c9a12c3ad8f0807b39d217c769e5d24054a66e16232e",
+    "placement.json": "6f8b3eeeac7342894aa46da8eb5c568ed0b20067d9ca899dc4097feef12cd84c",
+    "netlist.xml": "e8dd21882df192a4f97b73c50d40f6d08bdc072ca285affb6b91379f73c05eb1"
   }
 }

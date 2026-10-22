@@ -102,7 +102,7 @@ ic('INA226',[(10,'IN+','input'),(9,'IN-','input'),(8,'VBUS','input'),(1,'A1','in
             [(6,'VS','power_in'),(4,'SDA','bidirectional'),(5,'SCL','input'),(3,'ALERT','open_collector'),(7,'GND','power_in')])
 ic('SD',[(1,'DAT2','passive'),(2,'DAT3_CS','input'),(3,'CMD_MOSI','input'),(4,'VDD','power_in'),(5,'CLK','input')],
         [(8,'DAT1','passive'),(7,'DAT0_MISO','tri_state'),(6,'VSS','power_in'),('SH','SHELL','passive'),('CD1','CARD_DETECT_1','passive'),('CD2','CARD_DETECT_2','passive')],30.48)
-for n in [2,6]:
+for n in [2,4,6]:
     ic(f'J{n}',[(i,str(i),'passive') for i in range(1,n+1)],[],10.16)
 esp = [(1,'GND','power_in'),(2,'3V3','power_in'),(3,'EN','input'),(4,'GPIO36','input'),(5,'GPIO39','input'),
        (6,'GPIO34','input'),(7,'GPIO35','input'),(8,'GPIO32','bidirectional'),(9,'GPIO33','bidirectional'),
@@ -118,6 +118,8 @@ FP_R = 'Resistor_SMD:R_1206_3216Metric'
 FP_C = 'Capacitor_SMD:C_1206_3216Metric'
 FP_0805 = 'Capacitor_SMD:C_0805_2012Metric'
 FP_DIG = 'Resistor_SMD:R_0603_1608Metric'
+FP_SHT = 'Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal'
+FP_FAN = 'Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical'
 P = 'power_in'
 
 
@@ -263,10 +265,13 @@ sheet('Interfaces','04 | SHT4x, float and two 4-wire fans',[
  'ESDA6V1L: pins 1/2 are protected cathodes, pin 3 is common anode -> GND.',
  'USBLC6: 1=6 IO1; 3=4 IO2; 2 GND; 5 +3V3. Place at connector, before series resistors.',
  'Float J403 closed -> GPIO14 LOW. Firmware water-present polarity must follow wiring.',
+ 'J411/J421 fan headers: 1 GND, 2 +12 V, 3 tach, 4 PWM (standard 4-pin PC fan order).',
+ 'J401 SHT4x header XH2.54-4P-90: 1 +3V3, 2 GND, 3 SDA, 4 SCL. Confirm the wire order of the sensor cable.',
  'SHT4x module is external. No 5 V sensor or push-pull tach on these 3.3 V inputs.'
 ],110)
-add('Interfaces','J401','J2','SHT 3V3 / GND','DG306-5.0-2P12',[V3,GND])
-add('Interfaces','J402','J2','SHT SDA / SCL','DG306-5.0-2P12',['SHT_SDA','SHT_SCL'])
+# External SHT4x on one right-angle XH 4-pin header since 2026-10-22 (was two screw terminals J401/J402).
+add('Interfaces','J401','J4','SHT4x XH2.54-4P-90','XH2.54-4P-90',[V3,GND,'SHT_SDA','SHT_SCL'],FP_SHT,
+    note='1 +3V3, 2 GND, 3 SDA, 4 SCL. XH clone, right angle; real pitch is the JST XH 2.50 mm; check pitch and wire order of the purchased part and the sensor cable')
 add('Interfaces','J403','J2','FLOAT / GND','DG306-5.0-2P12',['FLOAT_EXT',GND])
 r('Interfaces','R401','100R',R100,'I2C_SDA','SHT_SDA')
 r('Interfaces','R402','100R',R100,'I2C_SCL','SHT_SCL')
@@ -281,8 +286,9 @@ add('Interfaces','F401','F','2 A slow','3403.0169.11',[V12,'+12V_FANS'])
 for k in (1,2):
     i=410 if k==1 else 420
     sh='Interfaces';prefix=f'FAN{k}'
-    add(sh,f'J{i+1}','J2',f'FAN{k}: GND / +12','DG306-5.0-2P12',[GND,'+12V_FANS'])
-    add(sh,f'J{i+2}','J2',f'FAN{k}: TACH / PWM','DG306-5.0-2P12',[prefix+'_TACH_EXT',prefix+'_PWM'])
+    # 4-pin PC fan header (KF2510 / Molex KK-254 style, 2.54 mm): the fans come with this plug.
+    add(sh,f'J{i+1}','J4',f'FAN{k} 2510-4P','KF2510-4A',[GND,'+12V_FANS',prefix+'_TACH_EXT',prefix+'_PWM'],FP_FAN,
+        note='4-pin PC fan pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM. KF2510 header matches Molex KK-254; confirm against the purchased part')
     add(sh,f'Q{i+1}','NMOS_GSD',f'FAN{k} AO3422','AO3422',{1:prefix+'_GATE',2:GND,3:prefix+'_PWM'},'Package_TO_SOT_SMD:SOT-23',pos=(65 if k==1 else 195,100))
     r(sh,f'R{i+1}','1k GATE',D1,prefix+'_GPIO',prefix+'_GATE','Uses spare from purchased pack; 25 kHz edge timing must be checked')
     r(sh,f'R{i+2}','100k',D100,prefix+'_GATE',GND)
@@ -310,7 +316,7 @@ for k in (1,2):
         add(sh,ref('L',2),'L','10u','JNRH1207-100N-A',[pre+'L_MID',pre+'SW'])
     else:add(sh,ref('L',1),'L','22u','JNRH1207-220M-A',[vin,pre+'SW'])
     add(sh,ref('D',1),'D','SS5P10 100V','SS5P10-M3/86A',[pre+'OUT',pre+'SW'],'EU_Parts:Vishay_TO-277A_D_K1_A2')
-    add(sh,ref('Q',1),'NMOS','TK22E10N1','TK22E10N1',{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note='Drain tab live. Separate insulated heatsink; exact assembly placement pending',pos=(300,60))
+    add(sh,ref('Q',1),'NMOS','TK22E10N1','TK22E10N1',{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note=('Drain tab live. Separate insulated heatsink; exact assembly placement pending' if k==1 else 'Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype'),pos=(300,60))
     r(sh,ref('R',1),'0R040 3W' if k==1 else '0R068 2W','LRP2512-R040-1%' if k==1 else 'CS2512-0R068-1%-HP',pre+'IS',GND)
     r(sh,ref('R',2),'0R15 2W' if k==1 else '0R47 2W','CS2512-0R15-1%-HP' if k==1 else 'CS2512-0R47-1%-HP',pre+'OUT',pre+'LED_POS','High side LED current shunt, separate Kelvin sense pair')
     r(sh,ref('R',3),'1k 1%',R1,pre+'OUT',pre+'HSP')
@@ -342,7 +348,7 @@ sheet('Loads','07 | PTC heater and 24 V pump',[
  'R702 4k7 keeps Q701 off (<0.4 V) even with the ESP32 internal pull-up on GPIO32; HIGH still gives ~0.13 mA base.',
  '100k GPIO/gate pulls stay active during reset. Pump stall current and fuse coordination still unmeasured.'
 ],70)
-add('Loads','J701','J2','PTC + / RETURN','DG301R-5.0-2P12',['+24V_PTC','PTC_DRAIN'])
+add('Loads','J701','J2','PTC + / RETURN','DG306-5.0-2P12',['+24V_PTC','PTC_DRAIN'],note='Bottom-edge DG306 since 2026-10-22: 15 A / 1.5 mm2 rating covers the 4.5 A heater')
 add('Loads','Q701','NPN','BC847B-DIO','BC847B-DIO',{1:'PTC_NPN_B',2:GND,3:'PTC_NPN_C'},'Package_TO_SOT_SMD:SOT-23',pos=(65,55))
 add('Loads','Q702','PNP','BC857B','BC857B',{1:'PTC_PNP_B',2:V12,3:'PTC_DRV'},'Package_TO_SOT_SMD:SOT-23',pos=(165,55))
 add('Loads','Q703','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'PTC_GATE',2:'PTC_DRAIN',3:GND},'Package_TO_SOT_SMD:TO-263-2',pos=(265,55))
@@ -394,7 +400,8 @@ for k,net in enumerate([GND,'+24V_RAW',V24,'+24V_PTC','+24V_PUMP','+24V_LED1','+
 for n,(sh,net) in enumerate([('MCU',V3),('InputPower',V12),('Control','LED_NDIM'),('Control','BLOCK_OC'),('Control','UVLO_SENSE'),('Control','UVLO_REF'),('LED1','LED1_IS'),('LED2','LED2_IS')],1):
     add(sh,f'TP{n:02}','TP',net,'',{1:net},'TestPoint:TestPoint_Pad_D1.0mm',bom=False)
 
-accessories = {'BAT-CR2032/P':1,'RAD-DY-GF/3':2,'TO220-SET':2,'SMICA-TO220-2':2}
+# One heatsink set: Q501 (LED1). Q601 (LED2, ~0.65 W) runs without a heatsink since 2026-10-22.
+accessories = {'BAT-CR2032/P':1,'RAD-DY-GF/3':1,'TO220-SET':1,'SMICA-TO220-2':1}
 
 
 def geometry(s):
@@ -528,6 +535,11 @@ REVIEW_USAGE={
  'CL21B104KBCNNNC':'13 байпасных/фильтрующих конденсаторов в схеме (вкл. VS INA226), покупка 20, остаток 7',
  'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
  'SMD0603-100K':'0603 / 5%: gate TK22E10N1 ×2, gate помпы ×1, gate fan PWM ×2',
+ 'DG306-5.0-2P12':'PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края: 5 шт. в покупке лишние, количество не менялось до проверки BOM',
+ 'DG301R-5.0-2P12':'Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306: 1 шт. в покупке лишняя, количество не менялось до проверки BOM',
+ 'RAD-DY-GF/3':'STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026: второй в покупке лишний',
+ 'TO220-SET':'TO220-SET: винт, гайка, шайба, втулка, слюда для Q501; второй комплект лишний с 22.10.2026',
+ 'SMICA-TO220-2':'NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм, для Q501; вторая лишняя с 22.10.2026',
 }
 
 
@@ -539,6 +551,12 @@ REVIEW_ROWS={
  'IRF540ZPBF':[dict(shop='Salvats',mpn='TK22E10N1',needed=2,buy=2,unit='шт.',price_unit=1.38,line=2.76,stock=22,
   url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
   usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501/Q601 от GATE LM3429 через 4,7 Ом',price_date='2026-10-21')],
+ 'DG306-5.0-2P12':[dict(shop='не выбран',mpn='KF2510-4A',needed=2,buy=2,unit='шт.',price_unit=0.0,line=0.0,stock='',
+  url='',block='Вентиляторы',
+  usage='Прямой хидер 4 контакта 2,54 мм (серия KF2510 / «2510-4P», посадка Molex KK-254) для J411/J421. Магазин и цена не выбраны: ждут проверки BOM',price_date='2026-10-22'),
+  dict(shop='не выбран',mpn='XH2.54-4P-90',needed=1,buy=1,unit='шт.',price_unit=0.0,line=0.0,stock='',
+  url='',block='Интерфейсы',
+  usage='Угловой хидер XH 4 контакта (посадка JST XH S4B-XH-A, шаг 2,50 мм) для внешнего SHT4x, J401. Магазин и цена не выбраны: ждут проверки BOM; сверить шаг и порядок проводов',price_date='2026-10-22')],
  'IRF1010ESPBF':[dict(shop='Electrobase',mpn='INA226AIDGSR',needed=1,buy=1,unit='шт.',price_unit=3.94,line=3.94,stock='',
   url='https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0',block='Вход 24 В',
   usage='TI INA226, VSSOP-10: ток, напряжение и мощность всей платы по I2C (0x40). Цена от Igors 21.10.2026; наличие и продажа поштучно с катушки не подтверждены',price_date='2026-10-21'),

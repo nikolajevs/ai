@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "stage": "project-local placement models; assembly NOT qualified",
   "coordinate_frame": "mm, X=footprint X, Y=-footprint Y, Z=0 PCB component face; KiCad flips bottom side",
   "footprints": {
@@ -7,6 +7,8 @@
     "Capacitor_SMD:C_1206_3216Metric": "C_1206_3216Metric.step",
     "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm": "Nichicon_UPW1H221MPD_D10_L16_P5.step",
     "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm": "Panasonic_EEUFR1J101LB_D8_L15_P5.step",
+    "Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal": "JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step",
+    "Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical": "Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical.step",
     "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical": "PinHeader_1x06_P2.54mm_Vertical.step",
     "Diode_SMD:D_MiniMELF": "D_MiniMELF.step",
     "Diode_SMD:D_SMB": "D_SMB.step",
@@ -181,6 +183,14 @@
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
     },
+    "JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_JST.3dshapes/JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal.step",
+      "sha256": "5a64a9bcf2a4e71d73522b5213a8af062113d5a0e626da3360749df87814ca36",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
+    },
     "L_Bourns_SRN6045.step": {
       "origin": "project-generated",
       "license": "MIT",
@@ -228,6 +238,14 @@
         "jnrh22"
       ],
       "detail": "Simplified placement CAD; body dimensions from drawing, undimensioned terminals/windows/fillets are illustrative. Not tolerance-stack or physical-fit qualification."
+    },
+    "Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical.step": {
+      "origin": "KiCad library contributors",
+      "license": "CC-BY-SA-4.0 WITH KiCad exception",
+      "source_url": "https://raw.githubusercontent.com/KiCad/kicad-packages3D/b8b3cfdfad88ba66f21002b3de51dc6f7d55ba5a/Connector_Molex.3dshapes/Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical.step",
+      "sha256": "162d03c3e228dbcf98794cbe9d3bed5d3db4945818c2ff1c5db545aa62a12827",
+      "source_cad_modified": false,
+      "mpn_specific_qualification": false
     },
     "Nichicon_UPW1H221MPD_D10_L16_P5.step": {
       "origin": "project-generated",
