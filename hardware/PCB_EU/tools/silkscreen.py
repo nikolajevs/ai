@@ -16,6 +16,7 @@ import uuid
 
 import pcbnew as p
 from shapely.geometry import Point, Polygon, box
+from shapely.ops import unary_union
 from shapely.strtree import STRtree
 
 from models3d import spans
@@ -45,7 +46,7 @@ def ident(name):
 
 
 def without_generated(text):
-    """Remove only our group and its board texts, never native library marks."""
+    """Remove only our group and its board texts/dots, never native library marks."""
     edits = []
     members = set()
     for a, b in spans(text, 'group'):
@@ -53,13 +54,14 @@ def without_generated(text):
         if node[1] == GROUP:
             members.update(child(node, 'members')[1:])
             edits.append((a, b))
-    for a, b in spans(text, 'gr_text'):
-        node = parse(text[a:b])
-        if child(node, 'uuid')[1] in members:
-            edits.append((a, b))
-            members.remove(child(node, 'uuid')[1])
+    for tag in ('gr_text', 'gr_circle'):
+        for a, b in spans(text, tag):
+            node = parse(text[a:b])
+            if child(node, 'uuid')[1] in members:
+                edits.append((a, b))
+                members.remove(child(node, 'uuid')[1])
     if members:
-        raise RuntimeError('Managed silkscreen group contains unexpected non-text items')
+        raise RuntimeError('Managed silkscreen group contains unexpected items (only texts and dots are generated)')
     for a, b in sorted(edits, reverse=True):
         text = text[:a] + text[b:]
     # Native KiCad saves managed texts on indented lines. Removing their forms
@@ -88,34 +90,133 @@ class Layout:
         self.fps = {f.GetReference(): f for f in board.GetFootprints()}
         self.bodies = {r: courtyard(fp) for r, fp in self.fps.items()}
         self.obstacles = {'F': [], 'B': []}
+        self.owners = {'F': [], 'B': []}  # (footprint ref or None, kind, tight keep-out) for each obstacle
+        self.pad_rects = {'F': [], 'B': []}  # (ref, bounding box) of every copper pad on each face
         self.labels = []
         self.skipped = []
+        self.native_marks = []
         for ref, fp in self.fps.items():
             face = 'B' if fp.IsFlipped() else 'F'
-            self.obstacles[face].append(self.bodies[ref].buffer(.12))
+            self.obstruct(face, self.bodies[ref].buffer(.12), ref, 'courtyard')
             if ref.startswith('H'):
-                self.obstacles['B'].append(self.bodies[ref].buffer(.12))
+                self.obstruct('B', self.bodies[ref].buffer(.12), ref, 'courtyard')
             for pad in fp.Pads():
                 for side, layer in [('F', p.F_Mask), ('B', p.B_Mask)]:
                     if pad.IsOnLayer(layer):
-                        self.obstacles[side].append(rect(pad).buffer(.25 + max(0, p.ToMM(pad.GetSolderMaskExpansion(layer)))))
+                        self.pad_rects[side].append((ref, rect(pad)))
+                        expansion = max(0, p.ToMM(pad.GetSolderMaskExpansion(layer)))
+                        self.obstruct(side, rect(pad).buffer(.25 + expansion), ref, 'pad', rect(pad).buffer(.15 + expansion))
             for g in [*fp.GraphicalItems(), *fp.GetFields()]:
                 if g.GetLayer() in (p.F_SilkS, p.B_SilkS):
                     if not hasattr(g, 'IsVisible') or g.IsVisible():
-                        self.obstacles['B' if g.GetLayer() == p.B_SilkS else 'F'].append(rect(g).buffer(.2))
+                        self.obstruct('B' if g.GetLayer() == p.B_SilkS else 'F', rect(g).buffer(.2), ref, 'silk')
         for g in board.GetDrawings():
             if g.GetLayer() in (p.F_SilkS, p.B_SilkS):
-                self.obstacles['B' if g.GetLayer() == p.B_SilkS else 'F'].append(rect(g).buffer(.2))
+                self.obstruct('B' if g.GetLayer() == p.B_SilkS else 'F', rect(g).buffer(.2))
         # Conservatively avoid all vias, including those covered by solder mask.
         for track in board.GetTracks():
             if isinstance(track, p.PCB_VIA):
                 for side in ['F', 'B']:
-                    self.obstacles[side].append(rect(track).buffer(.25))
+                    self.obstruct(side, rect(track).buffer(.25), None, 'via')
         spec = json.loads((HERE / 'placement.json').read_text())
         for reserve in spec['heatsink_reserves']:
-            self.obstacles[reserve['side']].append(box(*reserve['box']).buffer(.25))
+            self.obstruct(reserve['side'], box(*reserve['box']).buffer(.25), None, 'reserve')
         self.trees = {side: STRtree(items) for side, items in self.obstacles.items()}
+        self.pad_trees = {side: STRtree([r for _, r in items]) for side, items in self.pad_rects.items()}
         self.placed = {'F': [], 'B': []}
+
+    def native_pin1(self, ref, pin):
+        """True if the library footprint already draws a pin-1 mark on silk: a filled shape within 3 mm
+        of pad `pin`, or a (hollow) circle nearer to pad `pin` than to any other pad of the part."""
+        fp = self.fps[ref]
+        layer = p.B_SilkS if fp.IsFlipped() else p.F_SilkS
+        target = rect([a for a in fp.Pads() if a.GetNumber() == str(pin)][0])
+        others = [rect(a) for a in fp.Pads() if a.GetNumber() and a.GetNumber() != str(pin)]
+        for g in fp.GraphicalItems():
+            if g.GetLayer() != layer or not isinstance(g, p.PCB_SHAPE):
+                continue
+            mark = rect(g)
+            if g.IsSolidFill() and mark.distance(target) < 3:
+                return True
+            if g.GetShape() == p.SHAPE_T_CIRCLE and mark.distance(target) < 1 \
+                    and all(mark.distance(o) > mark.distance(target) for o in others):
+                return True
+        return False
+
+    def obstruct(self, side, geometry, ref=None, kind='other', tight=None):
+        self.obstacles[side].append(geometry)
+        self.owners[side].append((ref, kind, tight))  # tight: smaller keep-out used only by pin-1 dots
+
+    def dot(self, ref, pin, net, diameters=(.6, .5), margins=(.25, .05), foreign=(.3, .1, 0), max_outside=1.0):
+        """Filled silk dot beside pad `pin` on the component side.
+
+        Library IC footprints carry pin 1 only on Fab. The dot may sit inside the IC's own
+        courtyard (between its pads and the courtyard edge) but not on pads, vias, other silk
+        or other parts' courtyards, and it must be nearer to pad `pin` than to any other pad.
+        Outside the IC's pad rows it must be within `max_outside` mm of the pad and 0.3 mm
+        (0.1 mm if nothing else fits) nearer to pad `pin` than to any pad of another part, so it
+        cannot be read as the mark of a neighbour; between the pad rows (under the package) it
+        needs neither.
+        Pads keep 0.15 mm (+ mask expansion) clear of a dot instead of the 0.25 mm used for text.
+        Where the neighbourhood is too tight, the dot shrinks from 0.6 to 0.5 mm and may be only
+        0.05 mm nearer to pad `pin` than to any other pad (it then marks the pin-1 end of the
+        package, which fixes the rotation of a dual-row part), otherwise the margin is 0.25 mm.
+        """
+        fp = self.fps[ref]
+        side = 'B' if fp.IsFlipped() else 'F'
+        pads = [pad for pad in fp.Pads() if pad.GetNumber() == str(pin)]
+        if not pads or any(pad.GetNetname() != net for pad in pads):
+            raise RuntimeError(f'{ref}.{pin}: pin-1 dot disagrees with PCB net {net}')
+        target = rect(pads[0])
+        cx, cy = target.centroid.x, target.centroid.y
+        others = [rect(a) for a in fp.Pads() if a.GetNumber() and a.GetNumber() != str(pin)]
+        hull = unary_union([rect(a) for a in fp.Pads()]).convex_hull
+        for apart, margin, diameter in [(f, m, d) for f in foreign for m in margins for d in diameters]:
+            reach = max(target.bounds[2] - target.bounds[0], target.bounds[3] - target.bounds[1]) / 2 + max_outside + diameter
+            candidates = []
+            for step in range(0, int(reach / .1) + 1):
+                for angle in range(0, 360, 10):
+                    x = cx + step * .1 * math.cos(math.radians(angle))
+                    y = cy + step * .1 * math.sin(math.radians(angle))
+                    point = Point(x, y)
+                    edge = target.distance(point) - diameter / 2
+                    inside = hull.contains(point)
+                    if edge > max_outside and not inside:
+                        continue
+                    candidates.append((inside, round(edge, 3), angle, step, x, y))
+            candidates.sort()
+            for under_body, edge, _, _, x, y in candidates:
+                area = Point(x, y).buffer(diameter / 2)
+                if not box(.3, .3, 99.7, 99.7).contains(area):
+                    continue
+                blocked = False
+                for i in self.trees[side].query(area, predicate='intersects'):
+                    owner, kind, tight = self.owners[side][i]
+                    if (owner, kind) == (ref, 'courtyard'):
+                        continue
+                    if tight is None or area.intersects(tight):
+                        blocked = True
+                        break
+                if blocked or any(area.intersects(o) for o in self.placed[side]):
+                    continue
+                if any(o.distance(Point(x, y)) < target.distance(Point(x, y)) + margin for o in others):
+                    continue  # Always nearer to pad `pin` than to any other pad.
+                if not under_body:
+                    reach_own = target.distance(Point(x, y)) + apart
+                    if any(self.pad_rects[side][i][0] != ref
+                           for i in self.pad_trees[side].query(Point(x, y).buffer(reach_own), predicate='intersects')
+                           if self.pad_rects[side][i][1].distance(Point(x, y)) < reach_own):
+                        continue  # A neighbouring part's pad is as close: ambiguous.
+                self.placed[side].append(area.buffer(.2))
+                entry = dict(name=f'{ref}/pin/{pin}/dot/{side}', kind='dot', ref=ref, side=side, pin=str(pin), net=net,
+                             at=[round(x, 4), round(y, 4)], diameter_mm=diameter, nearer_than_other_pads_mm=margin,
+                             nearer_than_other_parts_mm=None if under_body else apart,
+                             under_body=bool(under_body),
+                             uuid=ident(f'{ref}/pin/{pin}/dot/{side}'))
+                self.labels.append(entry)
+                return entry
+        self.skipped.append(dict(ref=ref, pin=str(pin), reason=f'no clear unambiguous space for a pin-1 dot within {max_outside} mm of the pad or between its pad rows'))
+        return None
 
     def add(self, name, text, ref, side, size=.85, anchor=None, max_distance=4, other_pins=(), rotation=0):
         fp = self.fps[ref]
@@ -210,6 +311,12 @@ def render(labels):
     blocks = []
     for v in labels:
         x, y = v['at']
+        if v.get('kind') == 'dot':
+            # Filled circle: centre radius + half the 0.1 mm stroke = outer radius diameter / 2.
+            r = round(v['diameter_mm'] / 2 - .05, 4)
+            blocks.append(f'\t(gr_circle (center {x} {y}) (end {round(x + r, 4)} {y}) (stroke (width 0.1) (type default)) '
+                          f'(fill yes) (layer "{v["side"]}.SilkS") (uuid "{v["uuid"]}"))')
+            continue
         mirror = ' (justify mirror)' if v['side'] == 'B' else ''
         blocks.append(f'\t(gr_text {json.dumps(v["text"])} (at {x} {y} {v["rotation_deg"]}) '
                       f'(layer "{v["side"]}.SilkS") (uuid "{v["uuid"]}") '
@@ -267,6 +374,12 @@ def main():
             layout.pin(ref, 1, '+', parts[ref]['nets']['1'], faces=['F' if fp.IsFlipped() else 'B'])
     for ref, pin in [('D101', 1), ('D102', 1), ('D103', 1), ('D501', 1), ('D601', 1), ('D701', 1), ('D801', 3)]:
         layout.pin(ref, pin, 'K', parts[ref]['nets'][str(pin)])
+    for ref in sorted(layout.fps):
+        if ref.startswith('U'):
+            if layout.native_pin1(ref, 1):
+                layout.native_marks.append(ref)
+                continue
+            layout.dot(ref, 1, parts[ref]['nets']['1'])
     priorities = lambda r: (0 if r.startswith(('U', 'Q', 'D', 'C', 'BT', 'F')) else 1, r)
     for ref in sorted(layout.fps, key=priorities):
         if ref.startswith(('J', 'H')):
@@ -278,8 +391,8 @@ def main():
     if parse(without_generated(updated)) != parse(base):
         raise RuntimeError('Non-silkscreen PCB data changed')
     if args.check:
-        old = {child(g, 'uuid')[1]: g for g in children(parse(original), 'gr_text')}
-        new = {child(g, 'uuid')[1]: g for g in children(parse(updated), 'gr_text')}
+        old = {child(g, 'uuid')[1]: g for tag in ('gr_text', 'gr_circle') for g in children(parse(original), tag)}
+        new = {child(g, 'uuid')[1]: g for tag in ('gr_text', 'gr_circle') for g in children(parse(updated), tag)}
         if old != new:
             raise RuntimeError('Managed silk is stale: regenerate with tools/silkscreen.py')
     else:
@@ -287,12 +400,14 @@ def main():
     report = dict(pcbnew_version=p.Version(), minimum_text_mm=.8, stroke_mm=.15,
                   generated_labels=len(layout.labels), labels_by_face=dict(Counter(v['side'] for v in layout.labels)),
                   references_placed=sum(v['name'].endswith('/reference') for v in layout.labels),
-                  preserved_native_marks='electrolytic + / negative half-disc, diode cathode outlines, pin-1 keys; Fab references unchanged',
+                  ic_pin1_dots=sum(v.get('kind') == 'dot' for v in layout.labels),
+                  ic_native_pin1_marks=layout.native_marks,
+                  preserved_native_marks='electrolytic + / negative half-disc, diode cathode outlines; library IC footprints without a silk pin-1 mark get a dot; native marks are kept; Fab references unchanged',
                   non_silkscreen_data_unchanged=True, labels=layout.labels, omitted=layout.skipped,
                   base_pcb_sha256=hashlib.sha256(base.encode()).hexdigest(),
                   source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest())
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-    print(f'PASS | silkscreen | {len(layout.labels)} labels; {report["references_placed"]} references; {len(layout.skipped)} omitted; all underlying PCB data preserved')
+    print(f'PASS | silkscreen | {len(layout.labels)} labels incl. {report["ic_pin1_dots"]} IC pin-1 dots; {report["references_placed"]} references; {len(layout.skipped)} omitted; all underlying PCB data preserved')
 
 
 if __name__ == '__main__':
