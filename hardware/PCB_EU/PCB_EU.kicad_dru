@@ -1,15 +1,1 @@
 (version 1)
-
-# C609 (LED2 output electrolytic, B.Cu): its negative THT pad closes the LED2 power loop
-# (R601 -> C611 -> C609 on F.Cu). Solid connection to the GND pours instead of thermal
-# spokes; the pad also joins the In1 GND plane through its barrel.
-(rule "C609 solid ground connection"
-  (condition "A.memberOfFootprint('C609')")
-  (constraint zone_connection solid))
-
-# C510 (LED1 output electrolytic, 63 V): after the 2026-10-22 re-route only one thermal spoke of its
-# negative pad could reach the bottom pour (the other sides are taken by the PTC and LED1 tracks).
-# Solid connection instead of spokes; the pad also joins the In1 GND plane through its barrel.
-(rule "C510 solid ground connection"
-  (condition "A.memberOfFootprint('C510')")
-  (constraint zone_connection solid))

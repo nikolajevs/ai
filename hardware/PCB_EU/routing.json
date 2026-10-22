@@ -1,7 +1,7 @@
 {
   "stage": "PARTIAL_LED1_POWER_ROUTING",
   "date": "2026-10-22",
-  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch.",
+  "scope": "LED1 and LED2 local boost power loops (inductors, switch, diode, IS shunt, output bank, LED shunt, terminals, input bank, gate path); In1 ground reference. INA226 power monitor: shunt trunk RTN_SHUNT, Kelvin sense tracks, VS/GND/VBUS, Q102 gate divider and the +3V3 links to U402/U401, with a fill keepout around the IN+ Kelvin track. Hand-planned escapes for LM3429 pins between the via-free heatsink reserves (U501 IS/HSP, U601 IS/RCT/CSH/OVP/COMP and the nine-part block above U601), BLOCK_OC at U101.12 and the R706/Q701 ground. The rest of the board is autorouted by tools/route_board.py. Session copper of the nets in replace_session_nets is discarded on import because the plan now routes them. 1 oz power copper (2026-10-22): input +24V_RAW and PSU_RTN trunks widened, the 9.5 A F101.2 to C101.1 trunk doubled on F.Cu and B.Cu with via clusters, hub branch to F104/F106, the PTC feed F102.1, the PTC leg F102.2 to J701.1 and the LED1 feed F103.1 moved off In2.Cu onto the outer layers with parallel vias; BLOCK_OC reroute around the new hub branch. All electrolytic capacitors on the front (2026-10-22): the LED2 output bank C608/C609 is chained from D601 on F.Cu, C611 joins D601 directly, the LED2 input C601 is fed from F104.2 on F.Cu and feeds L601 on B.Cu, C508 sits beside C510 and is autorouted like C509/C510.",
   "limits": [
     "Trace widths and via counts are provisional; copper weight, ampacity, losses, temperature, ringing and EMC require qualification.",
     "No heatsink guide-hole coordinates are inferred. Rear components and copper may require movement after mounting drawing review."
@@ -670,20 +670,6 @@
       ]
     },
     {
-      "id": "shunt-cap-return",
-      "net": "GND",
-      "layer": "F.Cu",
-      "width": 2,
-      "points": [
-        {
-          "pad": "R501.2"
-        },
-        {
-          "pad": "C508.2"
-        }
-      ]
-    },
-    {
       "id": "diode-output-via",
       "net": "LED1_OUT",
       "layer": "F.Cu",
@@ -709,9 +695,10 @@
         {
           "pad": "C511.1"
         },
-        {
-          "pad": "C508.1"
-        }
+        [
+          81.88,
+          50.95
+        ]
       ]
     },
     {
@@ -1479,13 +1466,6 @@
         ],
         {
           "pad": "C611.2"
-        },
-        [
-          85.2,
-          92.75
-        ],
-        {
-          "pad": "C609.2"
         }
       ]
     },
@@ -1532,6 +1512,20 @@
       ]
     },
     {
+      "id": "led2-out-bulk-up",
+      "net": "LED2_OUT",
+      "layer": "F.Cu",
+      "width": 1.5,
+      "points": [
+        {
+          "pad": "C608.1"
+        },
+        {
+          "pad": "C609.1"
+        }
+      ]
+    },
+    {
       "id": "led2-out-bulk",
       "net": "LED2_OUT",
       "layer": "F.Cu",
@@ -1552,20 +1546,6 @@
           79.5,
           94.6
         ],
-        {
-          "pad": "C609.1"
-        }
-      ]
-    },
-    {
-      "id": "led2-out-hf",
-      "net": "LED2_OUT",
-      "layer": "F.Cu",
-      "width": 1.2,
-      "points": [
-        {
-          "pad": "C609.1"
-        },
         {
           "pad": "C611.1"
         }
@@ -1756,26 +1736,34 @@
           53.0,
           76.6
         ],
-        {
-          "pad": "C601.1"
-        }
-      ]
-    },
-    {
-      "id": "led2-vin-bank",
-      "net": "+24V_LED2",
-      "layer": "F.Cu",
-      "width": 1.2,
-      "points": [
-        {
-          "pad": "C601.1"
-        },
+        [
+          52.5,
+          77.6
+        ],
         [
           52.5,
           84.0
         ],
         {
           "pad": "C602.1"
+        }
+      ]
+    },
+    {
+      "id": "led2-vin-c601",
+      "net": "+24V_LED2",
+      "layer": "F.Cu",
+      "width": 1.2,
+      "points": [
+        {
+          "pad": "F104.2"
+        },
+        [
+          66.0,
+          68.0
+        ],
+        {
+          "pad": "C601.1"
         }
       ]
     },
@@ -1789,11 +1777,11 @@
           "pad": "C601.1"
         },
         [
-          54.0,
-          75.3
+          70.5,
+          72.5
         ],
         [
-          73.8,
+          74.0,
           75.3
         ],
         {

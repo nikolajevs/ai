@@ -11,7 +11,7 @@
   "opposite_side_tht_joint_guard_mm": 0.5,
   "limits": [
     "Heatsink guide-pin coordinates and mounting access are not qualified; front-side 32 x 32 mm body reserve for HS1 (Q501) only; Q601 has no heatsink since 2026-10-22; rear components may require movement after pin drawing review.",
-    "Back-side battery and C508/C601/C608/C609 require enclosure clearance; no 3D/physical-fit qualification.",
+    "Back-side battery and the tall inductors require enclosure clearance; all twelve electrolytic capacitors are on the front since 2026-10-22; no 3D/physical-fit qualification.",
     "All connections routed (hand-planned LED1 and LED2 power loops and LM3429 pin escapes in routing.json, rest autorouted). Copper-weight/ampacity/thermal qualification and fabrication release remain incomplete."
   ],
   "heatsink_reserves": [
@@ -293,10 +293,10 @@
       "side": "B"
     },
     "C508": {
-      "x": 84.7,
-      "y": 50.0,
-      "rotation": 0,
-      "side": "B"
+      "x": 70.0,
+      "y": 56.0,
+      "rotation": 180,
+      "side": "F"
     },
     "C509": {
       "x": 54.2512,
@@ -317,10 +317,10 @@
       "side": "B"
     },
     "C601": {
-      "x": 52.4988,
-      "y": 77.6,
-      "rotation": 0,
-      "side": "B"
+      "x": 68.0,
+      "y": 70.0,
+      "rotation": 90,
+      "side": "F"
     },
     "C602": {
       "x": 53.2488,
@@ -359,16 +359,16 @@
       "side": "B"
     },
     "C608": {
-      "x": 67.7,
-      "y": 88.3,
+      "x": 68.0,
+      "y": 86.5,
       "rotation": 180,
-      "side": "B"
+      "side": "F"
     },
     "C609": {
-      "x": 80.7,
-      "y": 95.0,
-      "rotation": 0,
-      "side": "B"
+      "x": 69.0,
+      "y": 80.0,
+      "rotation": 90,
+      "side": "F"
     },
     "C611": {
       "x": 83.2,

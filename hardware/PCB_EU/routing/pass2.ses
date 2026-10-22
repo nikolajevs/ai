@@ -41,9 +41,9 @@
     (component "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm"
       (place C510 542512 -565000 front 0)
       (place C509 542512 -455000 front 0)
-      (place C608 677000 -883000 back 0)
-      (place C609 807000 -950000 back 180)
-      (place C508 847000 -500000 back 180)
+      (place C608 680000 -865000 front 180)
+      (place C508 700000 -560000 front 180)
+      (place C609 690000 -800000 front 90)
     )
     (component "Resistor_SMD:R_2512_6332Metric"
       (place R807 977000 -888000 front 270)
@@ -94,6 +94,15 @@
       (place H2 965000 -35000 front 0)
       (place H1 610000 -35000 front 0)
       (place H3 35000 -850000 front 0)
+    )
+    (component "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+      (place C601 680000 -700000 front 90)
+      (place C112 424988 -800000 front 0)
+      (place C502 414988 -260000 front 0)
+      (place C501 414988 -135000 front 0)
+      (place C101 274988 -540000 front 0)
+      (place C102 414988 -540000 front 0)
+      (place C602 532488 -855000 front 0)
     )
     (component "Capacitor_SMD:C_1206_3216Metric"
       (place C206 170000 -105000 front 90)
@@ -160,15 +169,6 @@
       (place R810 405000 -600000 back 270)
       (place R503 804200 -493100 back 0)
       (place R109 189200 -762000 back 0)
-    )
-    (component "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
-      (place C112 424988 -800000 front 0)
-      (place C502 414988 -260000 front 0)
-      (place C501 414988 -135000 front 0)
-      (place C101 274988 -540000 front 0)
-      (place C102 414988 -540000 front 0)
-      (place C602 532488 -855000 front 0)
-      (place C601 524988 -776000 back 180)
     )
     (component "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
       (place U802 460000 -625000 front 0)
@@ -329,19 +329,14 @@
       )
     )
     (network_out 
-      (net "LED1_OUT"
+      (net "+24V_AUX"
         (wire
-          (path F.Cu 4000
-            542512 -455000
-            554529 -455000
-          )
-        )
-        (wire
-          (path F.Cu 4000
-            554529 -455000
-            584700 -485171
-            700546 -485171
-            705375 -490000
+          (path B.Cu 4000
+            200500 -640000
+            183928 -623428
+            176481 -623428
+            170765 -617712
+            170765 -606804
           )
         )
       )

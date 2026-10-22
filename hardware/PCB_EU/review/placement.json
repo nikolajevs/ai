@@ -11,8 +11,8 @@
     100
   ],
   "face_counts": {
-    "F": 109,
-    "B": 87
+    "F": 113,
+    "B": 83
   },
   "back_side_references": [
     "BT301",
@@ -30,16 +30,12 @@
     "C505",
     "C506",
     "C507",
-    "C508",
     "C511",
-    "C601",
     "C603",
     "C604",
     "C605",
     "C606",
     "C607",
-    "C608",
-    "C609",
     "C803",
     "D103",
     "D801",
@@ -107,8 +103,8 @@
   "connected_netlist_pins": 498,
   "mapped_netlist_pins_including_nc": 525,
   "pad_net_parity": true,
-  "routed_tracks": 1399,
-  "routed_vias": 323,
+  "routed_tracks": 1425,
+  "routed_vias": 327,
   "copper_zones": 3,
   "geometry_scope": "2D same-face courtyards >= 0.15 mm; opposite-face THT joint guards +0.5 mm; mounting reserves; ESP body and RF reserve; heatsink body reserves",
   "lm3429_gate_path_straight_line_mm": {
@@ -127,8 +123,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "45d9ab768f0650441846c9a12c3ad8f0807b39d217c769e5d24054a66e16232e",
-    "placement.json": "6f8b3eeeac7342894aa46da8eb5c568ed0b20067d9ca899dc4097feef12cd84c",
-    "netlist.xml": "e8dd21882df192a4f97b73c50d40f6d08bdc072ca285affb6b91379f73c05eb1"
+    "PCB_EU.kicad_pcb": "1882d91e527aaddc6a78ccf7ca9bcd8fe762b6a7156bf83d9c1b7a42ba65a643",
+    "placement.json": "93a59543617a398fd938dc73fb41a5acd1489ee3002b869d45e1309146f7ebe3",
+    "netlist.xml": "ae3f5bac5b8527713b8474839ec3d178bfd1cec1ce75500459e5ba9a4698daee"
   }
 }
