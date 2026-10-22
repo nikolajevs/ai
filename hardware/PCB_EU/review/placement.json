@@ -1,7 +1,7 @@
 {
   "stage": "two-sided placement with partial routing; not fabrication release",
   "date": "2026-10-21",
-  "pcbnew_build": "10.0.7-10.0.7~ubuntu24.04.1",
+  "pcbnew_build": "10.0.7",
   "checks_passed": 22639,
   "netlisted_references": 196,
   "board_only_mounting_holes": 4,
@@ -123,8 +123,8 @@
   "routing_feasibility_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "1882d91e527aaddc6a78ccf7ca9bcd8fe762b6a7156bf83d9c1b7a42ba65a643",
+    "PCB_EU.kicad_pcb": "5fd32bfab8f6f1d088918ba35e1581e959a7ace86dcfa2aba318924bbd25dadd",
     "placement.json": "93a59543617a398fd938dc73fb41a5acd1489ee3002b869d45e1309146f7ebe3",
-    "netlist.xml": "ae3f5bac5b8527713b8474839ec3d178bfd1cec1ce75500459e5ba9a4698daee"
+    "netlist.xml": "b2b847959c540a2756d5f75342d1d97ffe8603c0df6962e02de56171cd2cce11"
   }
 }
