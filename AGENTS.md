@@ -12,12 +12,42 @@ Develop and validate hardware in a separate environment with KiCad installed.
 - Start every task from the latest `origin/main`.
 - Use a dedicated task branch for each task.
 - Push the task branch and merge it only after review and validation.
+- When a check could not run in your environment (a cloud task usually has no KiCad), the PR description lists which checks were run and which were not. Committed reports that are older than the change are marked as such, never presented as current.
 
-## KiCad project
+## Projects
 
-Primary KiCad project:
+| Project | KiCad project | Firmware | Status |
+| --- | --- | --- | --- |
+| PCB_EU (EU-0.1) | `hardware/PCB_EU/PCB_EU.kicad_pro` | `softwareEU/` | current board |
+| PCB_V1 | `hardware/PCB_V1/PCB_V1.kicad_pro` | `software/` | previous board, separate project |
 
-`hardware/PCB_V1/PCB_V1.kicad_pro`
+- A task that does not name a project is about PCB_EU.
+- `hardware/PCB_V1/`, `hardware/cheap-version/`, `hardware/enclosure/` and `software/` are separate from PCB_EU. Do not change them in a PCB_EU task.
+- Firmware of one board does not run on the other.
+
+## PCB_EU
+
+Owner decisions (Igors). Change them only on his explicit word.
+
+- Language: README, `DESIGN.md`, PR titles and descriptions, and replies to Igors are in Russian. Commit subjects are in English.
+- Shops: buy only from Salvats, Electrobase, Semikom and Lemona (list confirmed by Igors on 2026-10-23). Farnell, Elektrika, Ormix and any other shop are not allowed. Prices are in EUR with VAT and carry a date.
+- Budget: target about 80 EUR, hard ceiling 100 EUR for parts with VAT and delivery. PCB, PSU, loads, tools and the external thermal cutoff are not included. The current estimate is in `hardware/PCB_EU/README.md`, section "Закупка"; `tools/verify.py` checks the ceiling.
+- Do not change the board design or the BOM unless the task asks for it.
+
+Sources and generated files:
+
+- `tools/generate.py` writes the schematics (`*.kicad_sch`), `PCB_EU.kicad_pro`, `libraries/EU.kicad_sym`, `design.json`, `BOM_allocated.csv`, `BOM_allocated.json` and `review/BOM_summary.json`. Change the generator and run it again; do not edit these outputs by hand.
+- `PCB_EU.kicad_pcb` is built by the scripts listed in the README, section "Проверки" (`build_board.py`, `route_power.py`, `route_board.py`, `silkscreen.py`). Edit the board text by hand only when the change cannot be rebuilt in your environment, and say so in the PR.
+- Firmware build and tests: `softwareEU/README.md`.
+
+Checks, run from the repository root:
+
+- Without KiCad: `python3 hardware/PCB_EU/tools/generate.py` (it must not change committed files unless the generator changed) and `python3 hardware/PCB_EU/tools/verify.py hardware/PCB_EU/review/netlist.xml` (connections, purchase quantities, budget ceiling).
+- With KiCad 10.0.7 (`kicad-cli` and `pcbnew` Python) and Shapely 2: `python3 hardware/PCB_EU/tools/run_checks.py` (ERC, footprints, placement, DRC, power copper, JLCPCB checks). KiCad 10.0.7 is the version of the committed reports. Another version needs `--allow-other-version` and is recorded in `review/validation.json`.
+- `hardware/check_all.py` checks only PCB_V1. Do not use it for PCB_EU.
+- `hardware/PCB_EU/review/` holds the result of the last full KiCad run. The README, section "Проверки", says which files are older than the design. Refresh them only with a full `run_checks.py` run.
+
+Documents: PCB_EU has no `CHANGELOG.md`. `README.md` and `DESIGN.md` record each owner decision once, with its date, and superseded text is removed when a decision changes (git history keeps it). `procurement_2026-10-20.json` is a dated price snapshot, not a current offer; the current prices are in `BOM_allocated.csv` (column `Price_date`).
 
 ## VPS status
 
@@ -44,7 +74,7 @@ Before starting work:
 ChatGPT and Claude may work in parallel, but they should use separate branches
 and isolated checkouts, or separate worktrees when explicitly requested.
 
-## Validation
+## Validation of PCB_V1
 
 For PCB-related changes, use an environment with KiCad, its Python bindings
 and standard libraries configured. The former VPS no longer provides them.
@@ -56,16 +86,18 @@ KICAD_PYTHON=/usr/bin/python3 \
 python3 check_all.py
 ```
 
-The project validation includes ERC, netlist checks, board verification, calculations/BOM checks and DRC.
+The validation includes ERC, netlist checks, board verification, calculations/BOM checks and DRC.
 
 Do not use `check_all.py --write` unless the task intentionally requires updating committed review artifacts.
+
+PCB_EU has its own checks; see the PCB_EU section above.
 
 ## Documentation and generated artifacts
 
 Keep only current information in the working tree; git history keeps the rest.
 
 - Living documents in `hardware/PCB_V1/`: `DESIGN.md` (current design, calculations, open items), `CHANGELOG.md` (one row per revision and the archive of removed files), `PLACEMENT.md`, `ROUTING_PREP.md`, `RTC_COMPATIBILITY.md`, `BOM_v0.1.*` and the README files. Update them instead of adding new documents.
-- Write a task report in the PR description, not as a new file. Move durable results into `DESIGN.md` (decisions, calculations, open items) and add a `CHANGELOG.md` row.
+- Write a task report in the PR description, not as a new file. Move durable results into `DESIGN.md` (decisions, calculations, open items); for PCB_V1 also add a `CHANGELOG.md` row.
 - `hardware/review/` and `hardware/PCB_V1/*_snapshot_*.json` hold only the revision selected by `REV` / `PRICE_REV` in `check_all.py`. When either changes, delete the previous files in the same commit. Link old files by GitHub permalink, as in the `CHANGELOG.md` archive.
 - Do not read large generated reports such as DRC `.rpt` in full; search them for the lines you need.
 
@@ -79,6 +111,8 @@ Treat these files carefully:
 Do not automatically resolve complex merge conflicts in KiCad schematic or PCB files.
 
 If two branches changed the same schematic/PCB area, preserve both branches and require review or visual inspection in KiCad before merging.
+
+In PCB_EU the schematics are generated: when the conflict comes from the generator inputs, merge the sources (`tools/*.py`, `placement.json`, `routing.json`) and run `tools/generate.py` again instead of editing the generated files.
 
 ## VPS safety
 

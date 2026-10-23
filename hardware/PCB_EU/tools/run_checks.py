@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]
+KICAD_TARGET_VERSION = '10.0.7'   # the version of the committed reports; AGENTS.md, section PCB_EU, names the same one
 
 
 def main():
@@ -23,8 +24,8 @@ def main():
         ap.error('KiCad CLI is required. Use --kicad-cli PATH or KICAD_CLI.')
     cli = args.kicad_cli
     version = subprocess.check_output([cli,'version'],text=True).strip()
-    if version!='10.0.6' and not args.allow_other_version:
-        ap.error(f'AGENTS.md target is KiCad 10.0.6; found {version}. Explicitly allow a local compatibility check with --allow-other-version.')
+    if version!=KICAD_TARGET_VERSION and not args.allow_other_version:
+        ap.error(f'Repository target is KiCad {KICAD_TARGET_VERSION} (AGENTS.md, section PCB_EU); found {version}. Explicitly allow a local compatibility check with --allow-other-version.')
     out = HERE/'review'
     out.mkdir(exist_ok=True)
     sch = HERE/'PCB_EU.kicad_sch'
@@ -83,7 +84,7 @@ def main():
     if board.exists():source.extend([board,HERE/'placement.json',HERE/'fab_exceptions.json',HERE.parent/'check_fab.py'])
     if routing_result:source.extend([HERE/'routing.json',HERE/'PCB_EU.kicad_dru',*sorted((HERE/'routing').glob('*.ses'))])
     source.extend([HERE/'models3d.json',*HERE.glob('libraries/EU.3dshapes/*')])
-    result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-22',kicad_version=version,repository_target_version='10.0.6',target_version_verified=version=='10.0.6',erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)) if f.is_relative_to(HERE) else f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
+    result=dict(stage=routing_result['stage'] if routing_result else 'unrouted two-sided placement candidate' if board_result else 'schematic with drawing-checked mechanical assignments; no PCB',date='2026-10-22',kicad_version=version,repository_target_version=KICAD_TARGET_VERSION,target_version_verified=version==KICAD_TARGET_VERSION,erc_errors=0,erc_warnings=0,default_ignored_erc_checks=sorted(ignored),project_erc_exclusions=[],connectivity_checks=connectivity['checks'],connected_pins=connectivity['pins'],purchased_electrical_components=connectivity['components'],footprints=dict(assigned_references=footprint_review['components_with_footprints'],unique=footprint_review['unique_assigned_footprints'],drawing_checked_references=len(footprint_review['drawing_checked_references']),missing=footprint_review['missing_footprints'],checks_passed=footprint_review['checks_passed'],native_KiCad_load_and_plot=True,physical_fit_verified=False),pcb_placement=board_result,pcb_routing=routing_result,pcb_drc=pcb_drc,firmware_build='not performed: old firmware is incompatible',source_sha256={str(f.relative_to(HERE)) if f.is_relative_to(HERE) else f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(source)})
     result['models3d']=models_review
     if board.exists():
         result['silkscreen']=json.loads((out/'silkscreen.json').read_text())
@@ -96,7 +97,7 @@ def main():
                                    unresolved_screening_flags=len(power['unresolved_screening_flags']),
                                    source_sha256=power['source_sha256'],thermal_qualified=False)
     (out/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print(f'PASS | {result["stage"]} | KiCad {version}; repository 10.0.6 target verified: {result["target_version_verified"]}')
+    print(f'PASS | {result["stage"]} | KiCad {version}; repository {KICAD_TARGET_VERSION} target verified: {result["target_version_verified"]}')
 
 
 if __name__=='__main__':main()
