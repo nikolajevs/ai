@@ -1,0 +1,2 @@
+# cmd.exe плохо читает .bat с переводами строк LF
+*.bat text eol=crlf
