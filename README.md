@@ -8,7 +8,6 @@
 | --- | --- |
 | [softwareEU/](softwareEU/README.md) | Прошивка PCB_EU для ESP32-WROOM-32E-N4, веб-интерфейс и инструкция по сборке |
 | [hardware/](hardware/README.md) | Проекты KiCad 10, BOM, модели деталей, корпус и файлы изготовления |
-| [parts-catalog/](parts-catalog/README.md) | Локальный каталог цен и остатков четырёх магазинов: поиск, проверка BOM PCB_EU, подбор аналогов |
 | [tests/](tests/) | Автоматические тесты веб-интерфейса |
 | [vps-docs/](vps-docs/README.md) | Состояние VPS после удаления KiCad и обслуживание прочих сервисов |
 
