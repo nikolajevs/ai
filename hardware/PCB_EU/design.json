@@ -151,8 +151,8 @@
       "sheet": "InputPower",
       "ref": "Q102",
       "symbol": "NMOS",
-      "value": "IRF1010ESPBF",
-      "mpn": "IRF1010ESPBF",
+      "value": "FDB5800",
+      "mpn": "FDB5800",
       "nets": {
         "1": "REVP_GATE",
         "2": "PSU_RTN",
@@ -2530,15 +2530,15 @@
       "sheet": "LED2",
       "ref": "Q601",
       "symbol": "NMOS",
-      "value": "TK22E10N1",
-      "mpn": "TK22E10N1",
+      "value": "CSD19534KCS",
+      "mpn": "CSD19534KCS",
       "nets": {
         "1": "LED2_GATE",
         "2": "LED2_SW",
         "3": "LED2_IS"
       },
       "footprint": "Package_TO_SOT_THT:TO-220-3_Vertical",
-      "note": "Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype",
+      "note": "Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype",
       "position": [
         299.72,
         59.69
@@ -3019,8 +3019,8 @@
       "sheet": "Loads",
       "ref": "Q703",
       "symbol": "NMOS",
-      "value": "IRF1010ESPBF",
-      "mpn": "IRF1010ESPBF",
+      "value": "FDB5800",
+      "mpn": "FDB5800",
       "nets": {
         "1": "PTC_GATE",
         "2": "PTC_DRAIN",
@@ -3870,6 +3870,8 @@
     "ESP32-WROOM-32E-N4": "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
     "AO3422": "https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf",
     "TK22E10N1": "https://docs.rs-online.com/8d7e/0900766b81294f79.pdf",
+    "CSD19534KCS": "https://www.ti.com/lit/ds/symlink/csd19534kcs.pdf",
+    "FDB5800": "https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf",
     "INA226AIDGSR": "https://www.ti.com/lit/ds/symlink/ina226.pdf",
     "BZV55-C33": "https://assets.nexperia.com/documents/data-sheet/BZV55_SER.pdf",
     "MCP7940N-I/SN": "https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf"

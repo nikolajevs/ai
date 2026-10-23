@@ -219,7 +219,7 @@ def check(board_path, output=None):
         pos = pad.GetPosition()
         return p.ToMM(pos.x), p.ToMM(pos.y)
     driver_distances = {}
-    # No external driver: LM3429 GATE (pin 10) -> 4R7 -> TK22E10N1 gate (pin 1).
+    # No external driver: LM3429 GATE (pin 10) -> 4R7 -> LED switch gate (pin 1; Q501 TK22E10N1, Q601 CSD19534KCS).
     for name, ic, resistor, fet in [('LED1', 'U501', 'R803', 'Q501'), ('LED2', 'U601', 'R807', 'Q601')]:
         a, b, c = pad_position(ic, '10'), pad_position(resistor, '1'), pad_position(resistor, '2')
         d = pad_position(fet, '1')

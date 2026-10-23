@@ -157,7 +157,7 @@ GND='GND';V3='+3V3';V12='+12V';V24='+24V_FUSED'
 
 sheet('InputPower','01 | 24 V input and 12 V auxiliary supply',[
  'External PSU 24.0 V, max 25 V, at least 240 W / 10 A. J101: 1 = +24 V, 2 = PSU return.',
- 'Reverse polarity: Q102 IRF1010ES in the return path; drain = J101.2, source = RTN_SHUNT.',
+ 'Reverse polarity: Q102 FDB5800 in the return path; drain = J101.2, source = RTN_SHUNT.',
  'Power monitor: R111||R112 = 5 mOhm from board GND to Q102 source; INA226 U102 at I2C 0x40 (A0=A1=GND).',
  'U102 IN+ (pin 10) is a Kelvin tap on the GND pad of R111 and has no own ground via or pour connection.',
  'U102 VBUS: R113 1k + D103 33 V zener, because the SMBJ26A clamp (42 V) exceeds the INA226 40 V rating.',
@@ -173,7 +173,7 @@ fuses=[('F101','15 A slow','3413.0330.11','+24V_RAW',V24),('F102','8 A slow','34
        ('F105','2 A slow','3403.0169.11',V24,'+24V_AUX'),('F106','1 A slow','3403.0166.11',V24,'+24V_PUMP')]
 for ref,val,mpn,a,b in fuses:add('InputPower',ref,'F',val,mpn,[a,b],note='SCHURTER reflow lands checked; fuse clearing I2t/coordination remain unqualified')
 add('InputPower','D101','TVS','SMBJ26A','SMBJ26A-E3/52',[V24,GND],'Diode_SMD:D_SMB')
-add('InputPower','Q102','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'REVP_GATE',2:'PSU_RTN',3:'RTN_SHUNT'},'Package_TO_SOT_SMD:TO-263-2',note='Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced',pos=(265,200))
+add('InputPower','Q102','NMOS','FDB5800','FDB5800',{1:'REVP_GATE',2:'PSU_RTN',3:'RTN_SHUNT'},'Package_TO_SOT_SMD:TO-263-2',note='Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced',pos=(265,200))
 r('InputPower','R108','5k6 1%','SMD1206 5K6 1%',V24,'REVP_MID')
 r('InputPower','R109','5k6 1%','SMD1206 5K6 1%','REVP_MID','REVP_GATE')
 r('InputPower','R110','10k 1%',R10,'REVP_GATE',GND)
@@ -316,7 +316,8 @@ for k in (1,2):
         add(sh,ref('L',2),'L','10u','JNRH1207-100N-A',[pre+'L_MID',pre+'SW'])
     else:add(sh,ref('L',1),'L','22u','JNRH1207-220M-A',[vin,pre+'SW'])
     add(sh,ref('D',1),'D','SS5P10 100V','SS5P10-M3/86A',[pre+'OUT',pre+'SW'],'EU_Parts:Vishay_TO-277A_D_K1_A2')
-    add(sh,ref('Q',1),'NMOS','TK22E10N1','TK22E10N1',{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note=('Drain tab live. Separate insulated heatsink; exact assembly placement pending' if k==1 else 'Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype'),pos=(300,60))
+    fet='TK22E10N1' if k==1 else 'CSD19534KCS'
+    add(sh,ref('Q',1),'NMOS',fet,fet,{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note=('Drain tab live. Separate insulated heatsink; exact assembly placement pending' if k==1 else 'Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype'),pos=(300,60))
     r(sh,ref('R',1),'0R040 3W' if k==1 else '0R068 2W','LRP2512-R040-1%' if k==1 else 'CS2512-0R068-1%-HP',pre+'IS',GND)
     r(sh,ref('R',2),'0R15 2W' if k==1 else '0R47 2W','CS2512-0R15-1%-HP' if k==1 else 'CS2512-0R47-1%-HP',pre+'OUT',pre+'LED_POS','High side LED current shunt, separate Kelvin sense pair')
     r(sh,ref('R',3),'1k 1%',R1,pre+'OUT',pre+'HSP')
@@ -342,7 +343,7 @@ for k in (1,2):
 sheet('Loads','07 | PTC heater and 24 V pump',[
  'PTC is ON/OFF only, no fast PWM. External independent thermal cut-out is required in series with heater.',
  'GPIO32 HIGH turns on Q701 NPN, Q702 PNP, then Q703 power MOSFET; LOW / Hi-Z turns it off.',
- 'Q703 IRF1010ES pin 2 and metal tab = DRAIN, pin 3 = SOURCE, pin 1 = GATE.',
+ 'Q703 FDB5800 pin 2 and metal tab = DRAIN, pin 3 = SOURCE, pin 1 = GATE.',
  'Pump GPIO33 HIGH turns on Q704. 1k series gate uses the purchased spare resistor pack.',
  'D701 pump flyback cathode to fused +24V_PUMP, anode to PUMP_DRAIN.',
  'R702 4k7 keeps Q701 off (<0.4 V) even with the ESP32 internal pull-up on GPIO32; HIGH still gives ~0.13 mA base.',
@@ -351,7 +352,7 @@ sheet('Loads','07 | PTC heater and 24 V pump',[
 add('Loads','J701','J2','PTC + / RETURN','DG306-5.0-2P12',['+24V_PTC','PTC_DRAIN'],note='Bottom-edge DG306 since 2026-10-22: 15 A / 1.5 mm2 rating covers the 4.5 A heater')
 add('Loads','Q701','NPN','BC847B-DIO','BC847B-DIO',{1:'PTC_NPN_B',2:GND,3:'PTC_NPN_C'},'Package_TO_SOT_SMD:SOT-23',pos=(65,55))
 add('Loads','Q702','PNP','BC857B','BC857B',{1:'PTC_PNP_B',2:V12,3:'PTC_DRV'},'Package_TO_SOT_SMD:SOT-23',pos=(165,55))
-add('Loads','Q703','NMOS','IRF1010ESPBF','IRF1010ESPBF',{1:'PTC_GATE',2:'PTC_DRAIN',3:GND},'Package_TO_SOT_SMD:TO-263-2',pos=(265,55))
+add('Loads','Q703','NMOS','FDB5800','FDB5800',{1:'PTC_GATE',2:'PTC_DRAIN',3:GND},'Package_TO_SOT_SMD:TO-263-2',pos=(265,55))
 r('Loads','R701','10k',D10,'PTC_GPIO','PTC_NPN_B')
 r('Loads','R702','4k7 1%','SMD1206 4K7 1%','PTC_NPN_B',GND)
 r('Loads','R703','2k2 1%','SMD1206-2K2-1%','PTC_NPN_C','PTC_PNP_B')
@@ -370,7 +371,7 @@ sheet('Control','08 | LED gate drive and hardware inhibit',[
  'One shared 10k pull-down on nDIM defeats BOTH internal LM3429 hysteresis sources after MCU reset.',
  'Do NOT add a 100n capacitor to nDIM. GPIO25 HIGH is enabled only after software checks.',
  'UVLO nominal release 19.90 V / fall 19.70 V depends on +3V3 reference and comparator tolerances.',
- 'No external gate driver: each LM3429 GATE drives its own TK22E10N1 (Qg 28 nC) through 4R7; 100k gate pull-down.',
+ 'No external gate driver: each LM3429 GATE drives its own switch (Q501 TK22E10N1, Q601 CSD19534KCS) through 4R7; 100k gate pull-down.',
  'BAT54 cold Vf / hot leakage and nDIM reset levels remain hardware tests.',
  'Unused comparator inputs tied to valid DC levels; its unused open-collector output is NC.'
 ],85)
@@ -517,6 +518,8 @@ source_urls={
  'ESP32-WROOM-32E-N4':'https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf',
  'AO3422':'https://www.aosmd.com/sites/default/files/res/datasheets/AO3422.pdf',
  'TK22E10N1':'https://docs.rs-online.com/8d7e/0900766b81294f79.pdf',
+ 'CSD19534KCS':'https://www.ti.com/lit/ds/symlink/csd19534kcs.pdf',
+ 'FDB5800':'https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf',
  'INA226AIDGSR':'https://www.ti.com/lit/ds/symlink/ina226.pdf',
  'BZV55-C33':'https://assets.nexperia.com/documents/data-sheet/BZV55_SER.pdf',
  'MCP7940N-I/SN':'https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/MCP7940N-Battery-Backed-I2C-RTCC-with-SRAM-20005010J.pdf',
@@ -525,16 +528,15 @@ source_urls={
 
 # Review fixes of 2026-10-21 change these per-piece quantities against the
 # dated 2026-10-20 price snapshot (prices unchanged, stock was sufficient then).
-REVIEW_BUY={'SMD1206 4K7 1%':3,'IRF1010ESPBF':2,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2}
+REVIEW_BUY={'SMD1206 4K7 1%':3,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2}
 REVIEW_USAGE={
  'SMD1206 4K7 1%':'1%: I2C pull-ups ×2, R702 база Q701 (держит PTC выключенным при внутренней подтяжке ESP32)',
- 'IRF1010ESPBF':'60 В, D2PAK: Q703 ключ PTC (затвор от 12 В) и Q102 защита от переполюсовки в минусе входа',
  'SMD1206 5K6 1%':'1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2',
  'SMD1206-10K-1%':'1%: верх OVP ×2, верх FB L7987 ×1, опорный делитель UVLO ×2, gate–source Q102 ×1',
  'CL31A106KAHNNNE':'10 мкФ / 25 В: 2 на входе AP63203',
  'CL21B104KBCNNNC':'13 байпасных/фильтрующих конденсаторов в схеме (вкл. VS INA226), покупка 20, остаток 7',
  'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
- 'SMD0603-100K':'0603 / 5%: gate TK22E10N1 ×2, gate помпы ×1, gate fan PWM ×2',
+ 'SMD0603-100K':'0603 / 5%: gate Q501/Q601 ×2, gate помпы ×1, gate fan PWM ×2',
  'DG306-5.0-2P12':'PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края: 5 шт. в покупке лишние, количество не менялось до проверки BOM',
  'DG301R-5.0-2P12':'Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306: 1 шт. в покупке лишняя, количество не менялось до проверки BOM',
  'RAD-DY-GF/3':'STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026: второй в покупке лишний',
@@ -546,18 +548,26 @@ REVIEW_USAGE={
 # Rows added after the 2026-10-20 snapshot, inserted after the named row.
 # TK22E10N1 replaced IRF540ZPBF on 2026-10-21: lower gate charge for the 7 V,
 # 1 A LM3429 driver at 400 kHz. INA226 and its shunt added 2026-10-21 for the
-# board power display.
+# board power display. On 2026-10-23 Q601 moved from TK22E10N1 to CSD19534KCS
+# (same TO-220 land, lower switching loss) and Q102/Q703 from IRF1010ESPBF to
+# FDB5800 (6 mOhm, one cheaper Salvats card); prices and stock rechecked that day.
 REVIEW_ROWS={
- 'IRF540ZPBF':[dict(shop='Salvats',mpn='TK22E10N1',needed=2,buy=2,unit='шт.',price_unit=1.38,line=2.76,stock=22,
+ 'IRF540ZPBF':[dict(shop='Salvats',mpn='TK22E10N1',needed=1,buy=1,unit='шт.',price_unit=1.38,line=1.38,stock=22,
   url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
-  usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501/Q601 от GATE LM3429 через 4,7 Ом',price_date='2026-10-21')],
+  usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501 от GATE LM3429 через 4,7 Ом (Q601 с 23.10.2026 на CSD19534KCS)',price_date='2026-10-23'),
+  dict(shop='Electrobase',mpn='CSD19534KCS',needed=1,buy=1,unit='шт.',price_unit=3.09,line=3.09,stock=91,
+  url='https://electrobase.lv/katalogs/tranzistori-ar-n-veida-kanalu-tht/transistor-n-mosfet-unipolar-100v-100a-118w-to220-3',block='LED',
+  usage='TI NexFET, 100 В, 13,7 мОм тип. (16,5 макс.) при 10 В, Qg 17,1 нКл, TO-220 G-D-S; Q601 от GATE LM3429 через 4,7 Ом, расчётные потери ~0,37 Вт вместо ~0,65 Вт; у поставщика Electrobase 91 шт. на 23.10.2026',price_date='2026-10-23')],
  'DG306-5.0-2P12':[dict(shop='не выбран',mpn='KF2510-4A',needed=2,buy=2,unit='шт.',price_unit=0.0,line=0.0,stock='',
   url='',block='Вентиляторы',
   usage='Прямой хидер 4 контакта 2,54 мм (серия KF2510 / «2510-4P», посадка Molex KK-254) для J411/J421. Магазин и цена не выбраны: ждут проверки BOM',price_date='2026-10-22'),
   dict(shop='не выбран',mpn='XH2.54-4P-90',needed=1,buy=1,unit='шт.',price_unit=0.0,line=0.0,stock='',
   url='',block='Интерфейсы',
   usage='Угловой хидер XH 4 контакта (посадка JST XH S4B-XH-A, шаг 2,50 мм) для внешнего SHT4x, J401. Магазин и цена не выбраны: ждут проверки BOM; сверить шаг и порядок проводов',price_date='2026-10-22')],
- 'IRF1010ESPBF':[dict(shop='Electrobase',mpn='INA226AIDGSR',needed=1,buy=1,unit='шт.',price_unit=3.94,line=3.94,stock='',
+ 'IRF1010ESPBF':[dict(shop='Salvats',mpn='FDB5800',needed=2,buy=2,unit='шт.',price_unit=1.98,line=3.96,stock=4,
+  url='https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/fdb5800-smd-tranzistors-n-fet-loglev125v-60v-20v-80a-242w-0r006-to-263',block='PTC',
+  usage='onsemi, 60 В, 6 мОм при 10 В, Vgs ±20 В, D2PAK: Q703 ключ PTC (затвор от 12 В) и Q102 защита от переполюсовки в минусе входа; на складе Salvats 4 шт. на 23.10.2026',price_date='2026-10-23'),
+  dict(shop='Electrobase',mpn='INA226AIDGSR',needed=1,buy=1,unit='шт.',price_unit=3.94,line=3.94,stock='',
   url='https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0',block='Вход 24 В',
   usage='TI INA226, VSSOP-10: ток, напряжение и мощность всей платы по I2C (0x40). Цена от Igors 21.10.2026; наличие и продажа поштучно с катушки не подтверждены',price_date='2026-10-21'),
   dict(shop='Salvats',mpn='SMD2512-0R01-1%-3W',needed=2,buy=2,unit='шт.',price_unit=0.24,line=0.48,stock=369,
