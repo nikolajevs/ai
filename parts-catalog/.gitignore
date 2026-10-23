@@ -1,8 +1,0 @@
-# База и кэш страниц магазинов создаются при работе программы
-data/
-# Снимок BOM кладёт в архив tools/pack_windows.py; в репозитории BOM берётся из ../hardware/PCB_EU
-bom/
-dist/
-__pycache__/
-*.pyc
-.pytest_cache/
