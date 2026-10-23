@@ -49,6 +49,14 @@ Checks, run from the repository root:
 
 Documents: PCB_EU has no `CHANGELOG.md`. `README.md` and `DESIGN.md` record each owner decision once, with its date, and superseded text is removed when a decision changes (git history keeps it). `procurement_2026-10-20.json` is a dated price snapshot, not a current offer; the current prices are in `BOM_allocated.csv` (column `Price_date`).
 
+## Parts catalog
+
+`parts-catalog/` is a local search over the prices and stock of the four allowed shops, with a BOM check and an analog finder (Python, FastAPI, SQLite; README in Russian). It is a tool, not a board: it only reads `hardware/PCB_EU/BOM_allocated.csv`, `BOM_allocated.json`, `design.json` and `review/BOM_summary.json`, and it never changes the board or the BOM.
+
+- Tests (offline, on saved shop pages): `cd parts-catalog && python -m pip install -r requirements-dev.txt && python -m pytest`.
+- Do not crawl the shops from a cloud task. Igors runs the live collection on his own computer (2026-10-23); Semikom bans an address that loads pages faster than about one in four seconds (HTTP 423). Keep the shop pauses and the `robots.txt` handling in `partscat/http.py` and `partscat/shops/` as they are.
+- The Windows archive is built by `python parts-catalog/tools/pack_windows.py` from the current BOM files; it has an empty database.
+
 ## VPS status
 
 KiCad, its libraries, service unit files and `~/kicad/` checkouts/worktrees
