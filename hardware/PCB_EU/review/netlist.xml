@@ -1956,7 +1956,7 @@
       <value>10p C0G</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
       <fields>
-        <field name="MPN">C1206C100J5GAC</field>
+        <field name="MPN">C1206C100J5GACTU</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
@@ -1964,7 +1964,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="C" description=""/>
-      <property name="MPN" value="C1206C100J5GAC"/>
+      <property name="MPN" value="C1206C100J5GACTU"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="03 | RTC, battery and microSD"/>
@@ -1984,7 +1984,7 @@
       <value>10p C0G</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
       <fields>
-        <field name="MPN">C1206C100J5GAC</field>
+        <field name="MPN">C1206C100J5GACTU</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
@@ -1992,7 +1992,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="C" description=""/>
-      <property name="MPN" value="C1206C100J5GAC"/>
+      <property name="MPN" value="C1206C100J5GACTU"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="03 | RTC, battery and microSD"/>
