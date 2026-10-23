@@ -2,8 +2,8 @@
   "stage": "fully routed board",
   "date": "2026-10-22",
   "kicad_version": "10.0.7",
-  "repository_target_version": "10.0.6",
-  "target_version_verified": false,
+  "repository_target_version": "10.0.7",
+  "target_version_verified": true,
   "erc_errors": 0,
   "erc_warnings": 0,
   "default_ignored_erc_checks": [
@@ -151,9 +151,9 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d",
+      "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
       "placement.json": "d6f920cacab23ac8ef522d21cca8c9045977e8cbf65691864844b187c07e85f0",
-      "netlist.xml": "b8d010f3ae6bea4939867938250bde7845ed1e2beab524017da58dabd97592a0"
+      "netlist.xml": "042b2dbd2721f1c3ebdf2d0d1bc10b145fb9ebfe7034b3055110975f5d4872ff"
     }
   },
   "pcb_routing": {
@@ -472,7 +472,7 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d",
+      "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
       "routing.json": "c9e280fda0ced6a43611624f22a69e2ed7a0e9886878cbc569dc25f3750e2c3d",
       "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
       "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
@@ -486,20 +486,20 @@
   },
   "firmware_build": "not performed: old firmware is incompatible",
   "source_sha256": {
-    "BOM_allocated.json": "d2af8d25ba42f74506d6376acdfdb17ea84b4ad5f395b73ffdb6105811873e79",
-    "Control.kicad_sch": "d4902a922e8e0f6a49ec648c548f1c2c65749e3dec9309da755b9caf6f1d1636",
-    "InputPower.kicad_sch": "9b4e35b3d39147948f6bfbdd6f133b510a3a964666f20a50a2a73f5310dfb8dd",
+    "BOM_allocated.json": "0efbb08060b071d6cf3464c82d9ceae7f25eb5b9dfadf157e711b598d73c35e7",
+    "Control.kicad_sch": "f0e7c51402eafc42f5f519517b477988d95ccedd2f084c0d69fdbdeed20d9e60",
+    "InputPower.kicad_sch": "6ed3f809ddee24c510fe1fda7bc164978afdd85dfd94328b6a730f496def4ab7",
     "Interfaces.kicad_sch": "5f7f02a2ea82395b3924dbffcb31cc673bb774030ea0b601fdbafdad615ea29a",
     "LED1.kicad_sch": "c86d7464e926494727de7ad22caa6700345484864ed15133318beedf3bc589e4",
-    "LED2.kicad_sch": "4d15d1444b1ff54ee08260bf2ec9afbe1cf5b07e8512ec971885aca262f7e038",
-    "Loads.kicad_sch": "f54196325e04cd588366920d008135e06e11ddaa7752a6c15ea40e720a5d18ea",
+    "LED2.kicad_sch": "20d7876cedd3739a5863762e76f942b533409a20736a2f5a57c293439dc301a7",
+    "Loads.kicad_sch": "d62644f8131b0f4273e91101c9255dedec30f0eb296e43aaa08d868f98b6381d",
     "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
     "PCB_EU.kicad_dru": "edd74546c3a662048c2f81cace7014020026bf6586abc6b7333db7df5644bfc7",
-    "PCB_EU.kicad_pcb": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d",
+    "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
-    "Peripherals.kicad_sch": "4341a8718a7351e595238be7831422de65b759afe006aa4a5eac821208d2b7c4",
-    "design.json": "6c42b29a73a4ba0ec88d0061dcf0ede4ba5d689f21bdda82ef33b89333e3ff18",
+    "Peripherals.kicad_sch": "d7766fa43979e18867d36862b1f0f6bbce00f99196558eb6cb2518c910d13341",
+    "design.json": "51e93bffacdc764c6869bfbdc5725a509631a083a7b35f6c9f8ea7262cd1434b",
     "fab_exceptions.json": "1b16b6e03e70126c4ee3aade51f21fc9bc4c64444bf24f5a57174f39890657b4",
     "footprint_assignments.json": "b316e90b185b24420782d793953bf588e81239dd2723da5f6b642db6945d0aca",
     "fp-lib-table": "77a832bbdace056ccc5423e454d344be3140a48a658c0b9cf0388a7462439b1a",
@@ -533,7 +533,7 @@
     "libraries/EU.3dshapes/Panasonic_EEUFR1E102_D10_L20_P5.step": "31137472befbab616b7f9d89c48067bc9c84ff44db8633e811ddf257e7103622",
     "libraries/EU.3dshapes/Panasonic_EEUFR1J101LB_D8_L15_P5.step": "9cb15b5b34bf4397c6a1b853a43decec58b97f6f1bd1f76c9bca94fa479ccfe3",
     "libraries/EU.3dshapes/PinHeader_1x06_P2.54mm_Vertical.step": "d6113af109a14a67c50dcefd1cfc7b43b59b59afa85d808b2319e2452da91318",
-    "libraries/EU.3dshapes/RAD-DY-GF_3_ENVELOPE_ONLY_30x30x15.step": "95b3e2f224d1bc228a79cd1246ca8075dce7d53991e686166da925c47b09a68d",
+    "libraries/EU.3dshapes/RAD-DY-GF_3.stp": "7a41909fb41255472588ab0983f94f9c1da848f34777b2347e76eb3f405a20b8",
     "libraries/EU.3dshapes/R_0603_1608Metric.step": "1875571c326d0d9e96f36b4efeb8094068ef7619f0a449c781caf0b49c2e5861",
     "libraries/EU.3dshapes/R_1206_3216Metric.step": "f5d1ea5c47935091292bd1c6c698e0df88d3d4bbf92bf66b4c97e49df5be9ebc",
     "libraries/EU.3dshapes/R_2512_6332Metric.step": "76b2052a3c120193de7cdc0af99157b6f375e9a4af7721e3e3d012968c877f27",
@@ -578,7 +578,7 @@
     "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "63307caf675e2c1602ccc769f48ff311532e63ce2d8a15a69705675cf1fce80f",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "288a53fad2a613aeaf4ef9577ad7bfb63a8bcbecd8a2dc108d85499baf619be2",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "94cfe0c5bc119601c27b70b1027adfd7a136336b6af513b1c35fbe9cd859ab86",
-    "models3d.json": "d96ae389a7cf872cd6ab94299d1d19d1bee667f4e131b6d705b855a095e0bb06",
+    "models3d.json": "f3c318d391a2d0ae0450c13351f596e37ed51a61492e3a8c942a7973cead1302",
     "placement.json": "d6f920cacab23ac8ef522d21cca8c9045977e8cbf65691864844b187c07e85f0",
     "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7",
@@ -586,25 +586,25 @@
     "sym-lib-table": "5841b81e90fe3d0162d39abf67b0319073ad80122469018df6212ccd5957381f",
     "tools/ampacity.py": "368714ea66e75eea576c74e96e4980297c1a54cf8f794a695792e5178885d3f4",
     "tools/aux_power.py": "8d7e449acba1320bda23aadebd27de50c1bd840d7300b6f1a07afbae1662e061",
-    "tools/build_board.py": "8b43781fb54dd8cd08184f9f02b70dcca18f87bf40a7a578afcf8480503537f5",
+    "tools/build_board.py": "8b0d63156dfdbc66e3a0feef63ffe575d6ae1e8abcc789f2dc1db6bac816fbd8",
     "tools/check_footprint_drc.py": "54a1309792ef0f017b702e243baa542a95173165322e42d049ed9be08a89aef5",
     "tools/dfm_tracks.py": "4bff84a3ccbaacc764b855a971c52fb62b32eb419b8e15e7c774f1974f89ad99",
-    "tools/generate.py": "17e6cfd36bfd785afc7f43d8265e773bc618ca47e8629aaf15b90f4315db3c0c",
+    "tools/generate.py": "bcac0b8d48f39f82d6ff538de25e6c80cbea11724bbd611016d515b7800ed528",
     "tools/generate_footprints.py": "e16f315320019a0747ca112ff991d4df7a48aa936959ee1e30c60bc40468705d",
-    "tools/make_models3d.py": "bec9a1815b60ca388d674b5ebc57fdb80c2453f4b22811f59f63b70fb48c6946",
-    "tools/models3d.py": "f7bb05f9f3079a609a0aa73805998c0277b65e8a9549080647ec9cd34eb37bb2",
+    "tools/make_models3d.py": "4f45398b01471da10d0c605568eaae8cec75ef0036a55a64cc8e4bf2e8c14ae3",
+    "tools/models3d.py": "491287f88f63985e4a46d99b68576b706aa1df4590c4b2987ba5b0b3f95c269f",
     "tools/plot_board.py": "9e92878aa440640dd6ff0dd9e7b19e3b0f4c1e5bc6dd9029c1100fbb9576b975",
     "tools/power_checks.py": "0934ee53d90abab07cb904935754eb1459a93d778936e737207bf8bb375defc8",
     "tools/route_board.py": "6b3670c33fb442e79912e367cb24f3e9f1645717c403c44b66482f31345c9328",
     "tools/route_complete.py": "1ccaeaa4f03939eb219083405b890aac8c94249e47fc50554b7dd982132a12fc",
     "tools/route_power.py": "a24ba232dda227646f6c6046a6590eadca91ffd5591dbfea27b02d2c185dc6e5",
-    "tools/run_checks.py": "889fdde328f5d0b91ad730c1cd2f1aa385d4a1a5cabb31ab2833f262998f33c6",
+    "tools/run_checks.py": "335cfca303bf9f86dcb82ce41733f3b46faec4a7970fc673537f3a9faa03b2ce",
     "tools/silk_clean.py": "518544ab4da8e5f6f4dc25e36802fa50159c9f7f582d366cd0c1d04c21255694",
     "tools/silkscreen.py": "631b7115de22c0a93acd9462da49e07ba80bf504f1e7f64c2af954a0e5c605e0",
     "tools/stackup.py": "8ab24b26b550af7d1779c8fd813678de520c7cb059785811340bd65b4ad4eea3",
     "tools/test_ampacity.py": "c5882ae84cfc02b1cf80890c060e3361e713a12d96ed8d467b6d304d0ca7c616",
-    "tools/verify.py": "9a0334874a2b5ce06aebaf67c5d3ad15e825586a9a46543881b7a2ab2e4ce1f2",
-    "tools/verify_board.py": "2ed991d1046a79c3ff50b30a151400ed48c12a80abc53e154a8441d27bea294c",
+    "tools/verify.py": "0888dda856a3d2472cc4244e877f3830742cab3af9ebbeddc41476e244fad58b",
+    "tools/verify_board.py": "2a45c5ff561278770d0d9b7e08f4465a06df052ddc0405ee788e375b8c58ec4f",
     "tools/verify_footprints.py": "88ef857a544842462dac457bdb179947675bcd86aed6b2e8a4ab46ef54f7a4d4",
     "tools/verify_library_match.py": "203920bd55837c57ae7b5e6b9db30261b8940b1da7c2ef5c2ca6802bb202b0df",
     "tools/verify_routing.py": "baca276675bad8e54e9c4d13c679f5b5e189fc101feb5c3aa1bf75c35b12c6c4",
@@ -613,7 +613,12 @@
   "models3d": {
     "physical_components": 188,
     "local_resolvable_models": 188,
-    "unique_attached_models": 35,
+    "board_only_model_refs": [
+      "HS1"
+    ],
+    "board_only_resolvable_models": 1,
+    "total_resolvable_models": 189,
+    "unique_attached_models": 36,
     "missing_models": [],
     "model_files": 36,
     "library_footprints": 34,
@@ -3434,8 +3439,8 @@
       }
     ],
     "library_silk_cut": {},
-    "base_pcb_sha256": "6a29e29cc904c8eb7e8ed373e33ad2e5958af855bbabbb9a13e071984354f793",
-    "source_sha256": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d"
+    "base_pcb_sha256": "7e08f538c8d6b8edfb4d38dffd1b4056608515a135cc6900aef52459ae0e0acc",
+    "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf"
   },
   "stackup": {
     "board_mm": 1.6062,
@@ -3553,7 +3558,7 @@
     "report": "review/power_copper.json",
     "dc_screening_cases": 27,
     "unresolved_screening_flags": 0,
-    "source_sha256": "fe61ee3fc1f9d8e322d5568674168b0557c673f47bbb9a9e159f0811f2eda32d",
+    "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
     "thermal_qualified": false
   }
 }
