@@ -1,0 +1,25 @@
+{# Offer tables shared by the search results and the part card. #}
+{% macro offer_rows(entries, qty, best_id) %}
+{% for e in entries %}
+{% set o = e.offer %}
+<tr class="{{ 'best' if best_id == o.id }} {{ 'out' if o.stock_state == 'out' }}">
+  <td class="shop"><a href="{{ o.url|safe_url }}" target="_blank" rel="noopener noreferrer">{{ o.shop|capitalize }}</a>
+    {% if o.shop_sku and o.shop_sku != o.mpn %}<span class="sub mono">{{ o.shop_sku }}</span>{% endif %}</td>
+  <td class="right nowrap">{{ o.unit_price|unit_money }}{% if o.pack_qty > 1 %}<span class="sub">{{ o.sale_price|money }} за {{ o.pack_qty }} шт.</span>{% endif %}
+    {% if o.tiers %}<span class="sub">от {{ o.tiers[-1][0] }} шт. — {{ o.tiers[-1][1]|unit_money }}</span>{% endif %}</td>
+  <td class="nowrap">{{ o|stock }}{% if e.status == 'short' %} <span class="chip bad">мало</span>{% elif e.status == 'order' %} <span class="chip warn">под заказ</span>{% endif %}
+    {% if o.note and o.stock_state != 'in' %}<span class="sub">{{ o.note }}</span>{% endif %}</td>
+  {% if qty %}<td class="right nowrap">{% if e.cost %}<b>{{ e.cost.total|money }}</b>
+    <span class="sub">{% if e.cost.packs %}{{ e.cost.packs }} уп. = {{ e.cost.buy }} шт.{% else %}{{ e.cost.buy }} шт. по {{ e.cost.unit|unit_money }}{% endif %}</span>{% else %}—{% endif %}</td>{% endif %}
+  <td class="muted nowrap">{{ o.last_seen|ago }}</td>
+</tr>
+{% endfor %}
+{% endmacro %}
+
+{% macro offer_head(qty) %}
+<tr><th>Магазин</th><th class="right">Цена за шт.</th><th>Остаток</th>{% if qty %}<th class="right">На {{ qty }} шт.</th>{% endif %}<th>Данные</th></tr>
+{% endmacro %}
+
+{% macro check_chip(c) %}
+<span class="chip {{ c.status }}" title="{{ c.label }}: нужно {{ c.ref }}, в магазине {{ c.cand }}{{ '. ' ~ c.note if c.note }}">{{ c.label }}{% if c.status == 'unknown' %} ?{% else %} {{ c.cand }}{% endif %}</span>
+{% endmacro %}

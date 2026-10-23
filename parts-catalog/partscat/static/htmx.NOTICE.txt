@@ -1,0 +1,2 @@
+htmx.min.js is htmx 2.0.4 (https://htmx.org, Big Sky Software), copied unchanged from the first version of this catalog.
+The page works without internet because of this copy. The licence text is in https://github.com/bigskysoftware/htmx/blob/master/LICENSE.
