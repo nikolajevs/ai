@@ -1163,7 +1163,7 @@
       "ref": "C301",
       "symbol": "C",
       "value": "10p C0G",
-      "mpn": "C1206C100J5GAC",
+      "mpn": "C1206C100J5GACTU",
       "nets": {
         "1": "RTC_X1",
         "2": "GND"
@@ -1181,7 +1181,7 @@
       "ref": "C302",
       "symbol": "C",
       "value": "10p C0G",
-      "mpn": "C1206C100J5GAC",
+      "mpn": "C1206C100J5GACTU",
       "nets": {
         "1": "RTC_X2",
         "2": "GND"

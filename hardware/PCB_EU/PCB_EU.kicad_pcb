@@ -42372,7 +42372,7 @@
 				)
 			)
 		)
-		(property "MPN" "C1206C100J5GAC"
+		(property "MPN" "C1206C100J5GACTU"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -42834,7 +42834,7 @@
 				)
 			)
 		)
-		(property "MPN" "C1206C100J5GAC"
+		(property "MPN" "C1206C100J5GACTU"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)

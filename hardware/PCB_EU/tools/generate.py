@@ -244,8 +244,8 @@ sheet('Peripherals','03 | RTC, battery and microSD',[
 ],85)
 add('Peripherals','U301','MCP7940N','MCP7940N-I/SN','MCP7940N-I/SN',{1:'RTC_X1',2:'RTC_X2',3:'VBAT',4:GND,5:'I2C_SDA',6:'I2C_SCL',7:None,8:V3},'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm',pos=(75,60))
 add('Peripherals','Y301','Y','32.768k CL7p','ABS07-32.768KHZ-7-T',['RTC_X1','RTC_X2'],note='Crystal ESR/load/drive to verify on prototype')
-c('Peripherals','C301','10p C0G','C1206C100J5GAC','RTC_X1')
-c('Peripherals','C302','10p C0G','C1206C100J5GAC','RTC_X2')
+c('Peripherals','C301','10p C0G','C1206C100J5GACTU','RTC_X1')
+c('Peripherals','C302','10p C0G','C1206C100J5GACTU','RTC_X2')
 c('Peripherals','C303','100n',C100,V3)
 add('Peripherals','BT301','BAT','CR2032 + BC-2001','BC-2001',['VBAT',GND],note='COMF BC-2001: side pads 1 positive; centre pad 2 negative, no paste; durable plated finish and physical fit required')
 add('Peripherals','J301','SD','MEM2061 SPI','MEM2061-01-188-00-A',{1:'SD_DAT2',2:'SD_CS',3:'SD_MOSI',4:V3,5:'SD_SCK',6:GND,7:'SD_MISO',8:'SD_DAT1','SH':GND,'CD1':None,'CD2':None},note='GCT MEM2061 A1: without pegs; separate CD1/CD2 pads unused; both SH tabs GND; preserve contact keepout and card access',pos=(280,60))
@@ -528,7 +528,10 @@ source_urls={
 
 # Review fixes of 2026-10-21 change these per-piece quantities against the
 # dated 2026-10-20 price snapshot (prices unchanged, stock was sufficient then).
-REVIEW_BUY={'SMD1206 4K7 1%':3,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2}
+# On 2026-10-23 Igors dropped the second cooling set (HS2 was removed from Q601
+# on 2026-10-22): RAD-DY-GF/3, TO220-SET and SMICA-TO220-2 are bought once.
+REVIEW_BUY={'SMD1206 4K7 1%':3,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2,
+ 'RAD-DY-GF/3':1,'TO220-SET':1,'SMICA-TO220-2':1}
 REVIEW_USAGE={
  'SMD1206 4K7 1%':'1%: I2C pull-ups ×2, R702 база Q701 (держит PTC выключенным при внутренней подтяжке ESP32)',
  'SMD1206 5K6 1%':'1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2',
@@ -539,9 +542,9 @@ REVIEW_USAGE={
  'SMD0603-100K':'0603 / 5%: gate Q501/Q601 ×2, gate помпы ×1, gate fan PWM ×2',
  'DG306-5.0-2P12':'PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края: 5 шт. в покупке лишние, количество не менялось до проверки BOM',
  'DG301R-5.0-2P12':'Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306: 1 шт. в покупке лишняя, количество не менялось до проверки BOM',
- 'RAD-DY-GF/3':'STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026: второй в покупке лишний',
- 'TO220-SET':'TO220-SET: винт, гайка, шайба, втулка, слюда для Q501; второй комплект лишний с 22.10.2026',
- 'SMICA-TO220-2':'NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм, для Q501; вторая лишняя с 22.10.2026',
+ 'RAD-DY-GF/3':'STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026; второй радиатор убран из покупки 23.10.2026',
+ 'TO220-SET':'TO220-SET: нужна изолирующая втулка под головку винта Q501 (остальное из набора не используется); второй комплект убран из покупки 23.10.2026',
+ 'SMICA-TO220-2':'NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм, для Q501; вторая убрана из покупки 23.10.2026',
 }
 
 
@@ -551,7 +554,13 @@ REVIEW_USAGE={
 # board power display. On 2026-10-23 Q601 moved from TK22E10N1 to CSD19534KCS
 # (same TO-220 land, lower switching loss) and Q102/Q703 from IRF1010ESPBF to
 # FDB5800 (6 mOhm, one cheaper Salvats card); prices and stock rechecked that day.
+# Also on 2026-10-23 C301/C302 (RTC crystal load, C0G needed) moved from the
+# Salvats card C1206C100J5GAC, whose heading says Y5V, to the KEMET C0G part
+# C1206C100J5GACTU (TU = reel packaging suffix) at Electrobase.
 REVIEW_ROWS={
+ 'C1206C100J5GAC':[dict(shop='Electrobase',mpn='C1206C100J5GACTU',needed=2,buy=2,unit='шт.',price_unit=0.25,line=0.5,stock='>1000',
+  url='https://electrobase.lv/katalogs/kondensatori-mlcc-smd-0201/capacitor-ceramic-mlcc-10pf-50vdc-c0g-5-smd-1206',block='RTC',
+  usage='KEMET, 10 пФ / 50 В / C0G / ±5%, 1206: нагрузка кварца Y301 (RTC_X1, RTC_X2), подобрать на плате. Карточка Salvats для C1206C100J5GAC называет Y5V, поэтому покупка у Electrobase; TU — суффикс упаковки (лента); у поставщика >1000 шт. на 23.10.2026',price_date='2026-10-23')],
  'IRF540ZPBF':[dict(shop='Salvats',mpn='TK22E10N1',needed=1,buy=1,unit='шт.',price_unit=1.38,line=1.38,stock=22,
   url='https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220',block='LED',
   usage='Toshiba, 100 В, 13,8 мОм, Qg 28 нКл, TO-220 G-D-S; Q501 от GATE LM3429 через 4,7 Ом (Q601 с 23.10.2026 на CSD19534KCS)',price_date='2026-10-23'),
