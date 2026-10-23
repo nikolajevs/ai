@@ -1099,7 +1099,7 @@
       "ref": "J201",
       "symbol": "J6",
       "value": "UART 3V3",
-      "mpn": "ZL2019-20",
+      "mpn": "ZL201-10G",
       "nets": {
         "1": "GND",
         "2": "+3V3",
@@ -1109,7 +1109,7 @@
         "6": "ESP_BOOT"
       },
       "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
-      "note": "Cut 6 of purchased 20 header positions; 14 spare",
+      "note": "Cut 6 of purchased 10 header positions; 4 spare",
       "position": [
         106.68,
         185.42
@@ -2012,8 +2012,8 @@
       "sheet": "LED1",
       "ref": "D501",
       "symbol": "D",
-      "value": "SS5P10 100V",
-      "mpn": "SS5P10-M3/86A",
+      "value": "SS8PH10 100V",
+      "mpn": "SS8PH10-M3/86A",
       "nets": {
         "1": "LED1_OUT",
         "2": "LED1_SW"
@@ -2512,8 +2512,8 @@
       "sheet": "LED2",
       "ref": "D601",
       "symbol": "D",
-      "value": "SS5P10 100V",
-      "mpn": "SS5P10-M3/86A",
+      "value": "SS8PH10 100V",
+      "mpn": "SS8PH10-M3/86A",
       "nets": {
         "1": "LED2_OUT",
         "2": "LED2_SW"

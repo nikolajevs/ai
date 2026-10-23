@@ -49425,7 +49425,7 @@
 				)
 			)
 		)
-		(property "MPN" "ZL2019-20"
+		(property "MPN" "ZL201-10G"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -49437,7 +49437,7 @@
 				)
 			)
 		)
-		(property "Design_note" "Cut 6 of purchased 20 header positions; 14 spare"
+		(property "Design_note" "Cut 6 of purchased 10 header positions; 4 spare"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -56444,7 +56444,7 @@
 				)
 			)
 		)
-		(property "Value" "SS5P10 100V"
+		(property "Value" "SS8PH10 100V"
 			(at 0 4.5 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -56482,7 +56482,7 @@
 				)
 			)
 		)
-		(property "MPN" "SS5P10-M3/86A"
+		(property "MPN" "SS8PH10-M3/86A"
 			(at 0 0 270)
 			(layer "F.SilkS")
 			(hide yes)
@@ -59936,7 +59936,7 @@
 				)
 			)
 		)
-		(property "Value" "SS5P10 100V"
+		(property "Value" "SS8PH10 100V"
 			(at 0 4.5 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -59974,7 +59974,7 @@
 				)
 			)
 		)
-		(property "MPN" "SS5P10-M3/86A"
+		(property "MPN" "SS8PH10-M3/86A"
 			(at 0 0 270)
 			(layer "F.SilkS")
 			(hide yes)
