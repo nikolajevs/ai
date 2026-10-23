@@ -899,18 +899,19 @@
       </units>
     </comp>
     <comp ref="Q102">
-      <value>IRF1010ESPBF</value>
+      <value>FDB5800</value>
       <footprint>Package_TO_SOT_SMD:TO-263-2</footprint>
+      <datasheet>https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf</datasheet>
       <fields>
-        <field name="MPN">IRF1010ESPBF</field>
+        <field name="MPN">FDB5800</field>
         <field name="Design_note">Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced</field>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Package_TO_SOT_SMD:TO-263-2</field>
-        <field name="Datasheet"/>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="NMOS" description=""/>
-      <property name="MPN" value="IRF1010ESPBF"/>
+      <property name="MPN" value="FDB5800"/>
       <property name="Design_note" value="Reverse-polarity switch in the 24 V return. Tab = DRAIN = PSU_RTN; body diode conducts until the gate is enhanced"/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="01 | 24 V input and 12 V auxiliary supply"/>
@@ -4417,20 +4418,20 @@
       </units>
     </comp>
     <comp ref="Q601">
-      <value>TK22E10N1</value>
+      <value>CSD19534KCS</value>
       <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
-      <datasheet>https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</datasheet>
+      <datasheet>https://www.ti.com/lit/ds/symlink/csd19534kcs.pdf</datasheet>
       <fields>
-        <field name="MPN">TK22E10N1</field>
-        <field name="Design_note">Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype</field>
+        <field name="MPN">CSD19534KCS</field>
+        <field name="Design_note">Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype</field>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
-        <field name="Datasheet">https://docs.rs-online.com/8d7e/0900766b81294f79.pdf</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/csd19534kcs.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="NMOS" description=""/>
-      <property name="MPN" value="TK22E10N1"/>
-      <property name="Design_note" value="Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype"/>
+      <property name="MPN" value="CSD19534KCS"/>
+      <property name="Design_note" value="Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype"/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>
       <property name="Sheetfile" value="LED2.kicad_sch"/>
@@ -4967,18 +4968,19 @@
       </units>
     </comp>
     <comp ref="Q703">
-      <value>IRF1010ESPBF</value>
+      <value>FDB5800</value>
       <footprint>Package_TO_SOT_SMD:TO-263-2</footprint>
+      <datasheet>https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf</datasheet>
       <fields>
-        <field name="MPN">IRF1010ESPBF</field>
+        <field name="MPN">FDB5800</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Package_TO_SOT_SMD:TO-263-2</field>
-        <field name="Datasheet"/>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="NMOS" description=""/>
-      <property name="MPN" value="IRF1010ESPBF"/>
+      <property name="MPN" value="FDB5800"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="07 | PTC heater and 24 V pump"/>

@@ -30836,7 +30836,7 @@
 				)
 			)
 		)
-		(property "Value" "TK22E10N1"
+		(property "Value" "CSD19534KCS"
 			(at 2.54 2.5 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -30848,7 +30848,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://docs.rs-online.com/8d7e/0900766b81294f79.pdf"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/csd19534kcs.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -30870,7 +30870,7 @@
 				)
 			)
 		)
-		(property "MPN" "TK22E10N1"
+		(property "MPN" "CSD19534KCS"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -30882,7 +30882,7 @@
 				)
 			)
 		)
-		(property "Design_note" "Drain tab live (switch node). No heatsink: ~0.65 W, Rth(ch-a) 83.3 K/W free air; measure on the prototype"
+		(property "Design_note" "Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -32293,7 +32293,7 @@
 				)
 			)
 		)
-		(property "Value" "IRF1010ESPBF"
+		(property "Value" "FDB5800"
 			(at 0 6.65 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -32305,7 +32305,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -32327,7 +32327,7 @@
 				)
 			)
 		)
-		(property "MPN" "IRF1010ESPBF"
+		(property "MPN" "FDB5800"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -65827,7 +65827,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "IRF1010ESPBF"
+		(property "Value" "FDB5800"
 			(at 0 -6.65 270)
 			(layer "B.Fab")
 			(hide yes)
@@ -65840,7 +65840,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/fdb5800-d.pdf"
 			(at 0 0 270)
 			(layer "B.Fab")
 			(hide yes)
@@ -65864,7 +65864,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "IRF1010ESPBF"
+		(property "MPN" "FDB5800"
 			(at 0 0 270)
 			(layer "B.SilkS")
 			(hide yes)

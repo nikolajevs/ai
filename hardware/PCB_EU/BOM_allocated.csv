@@ -1,7 +1,8 @@
 ﻿Shop,MPN_or_shop_SKU,Fitted_or_accessory,Buy_pieces,Sale_unit,Price_per_sale_unit_EUR_VAT,Line_EUR_VAT,References,Accessory_count,URL,Price_date
 Electrobase,ESP32-WROOM-32E-N4,1,1,шт.,7.48,7.48,U202,0,https://electrobase.lv/katalogs/moduli-iot-wifi-bluetooth-lora/module-iot-bluetooth-low-energywifi-smd-0,2026-10-20
 Electrobase,LM3429MH/NOPB,2,2,шт.,4.86,9.72,U501 U601,0,https://electrobase.lv/katalogs/led-draiveri/ic-driver-boostbuck-boost-led-driver-htssop14-5a-372v-ch-1,2026-10-20
-Salvats,TK22E10N1,2,2,шт.,1.38,2.76,Q501 Q601,0,https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220,2026-10-21
+Salvats,TK22E10N1,1,1,шт.,1.38,1.38,Q501,0,https://www.salvats.lv/lv/100v-n-fet-tht/22e10n-tranzistors-n-fet-100v-20v-22a-72w-0r0115-to-220,2026-10-23
+Electrobase,CSD19534KCS,1,1,шт.,3.09,3.09,Q601,0,https://electrobase.lv/katalogs/tranzistori-ar-n-veida-kanalu-tht/transistor-n-mosfet-unipolar-100v-100a-118w-to220-3,2026-10-23
 Electrobase,JNRH1207-100N-A,2,2,шт.,0.54,1.08,L501 L502,0,https://electrobase.lv/katalogs/induktori-tht/inductor-wire-smd-10uh-ioper-66a-r-355mo-30-isat-8a,2026-10-20
 Electrobase,SS5P10-M3/86A,2,2,шт.,1.09,2.18,D501 D601,0,https://electrobase.lv/katalogs/diodes-schottky-smd/diode-schottky-rectifying-smpcto277a-smd-100v-5a,2026-10-20
 Salvats,CS2512-0R15-1%-HP,1,1,шт.,0.32,0.32,R502,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r15-2512635x32mm-2w-1-smd-55125c-rezistors-thick-film-2512,2026-10-20
@@ -19,7 +20,7 @@ Electrobase,SRN6045-6R8Y,1,1,шт.,0.28,0.28,L201,0,https://electrobase.lv/katal
 Salvats,CL31A106KAHNNNE,2,2,шт.,0.22,0.44,C201 C202,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/10mkf-1206-x5r-25v-k-10-smd-kondensators-1206,2026-10-20
 Salvats,CL31A226KQHNNNE,6,6,шт.,0.18,1.08,C204 C205 C206 C304 C505 C605,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-1206-1/22mkf-1206-x5r-63v-k-smd-kondensators-1206,2026-10-20
 Salvats,CL21B104KBCNNNC,13,20,уп. 10 шт.,0.51,1.02,C107 C108 C115 C203 C207 C303 C305 C401 C402 C403 C503 C603 C803,0,https://www.salvats.lv/lv/kondensatori-keramiskie-smd-0805/100nf-50v-0805-10gab-mlcc-x7r-5-smd-kondensators-0805,2026-10-20
-Salvats,IRF1010ESPBF,2,2,шт.,1.21,2.42,Q102 Q703,0,https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/irf1010es-smd-tranzistors-n-fet-60v-20v-59a-200w-0r012-to-263,2026-10-20
+Salvats,FDB5800,2,2,шт.,1.98,3.96,Q102 Q703,0,https://www.salvats.lv/lv/n-kanalu-lauku-tranzistori-smd/fdb5800-smd-tranzistors-n-fet-loglev125v-60v-20v-80a-242w-0r006-to-263,2026-10-23
 Electrobase,INA226AIDGSR,1,1,шт.,3.94,3.94,U102,0,https://electrobase.lv/katalogs/operacijas-pastiprinataji-smd/ic-instrumentation-amplifier-2755vdc-vssop10-reeltape-0,2026-10-21
 Salvats,SMD2512-0R01-1%-3W,2,2,шт.,0.24,0.48,R111 R112,0,https://www.salvats.lv/lv/rezistori-smd-2512-1w3w/0r01-2512635x32mm-3w-1-smd-55170c-rezistors-thick-film-2512,2026-10-21
 Salvats,BZV55-C33,1,1,шт.,0.13,0.13,D103,0,https://www.salvats.lv/lv/stabilitroni-smd-bzv55/33v-stabilitrons-smd-bzv55-5-05w-minimelf-1,2026-10-21

@@ -7,13 +7,13 @@
     "TO220-SET": 1,
     "SMICA-TO220-2": 1
   },
-  "rows": 80,
+  "rows": 81,
   "shop_totals": {
-    "Electrobase": "37.24",
-    "Salvats": "39.39",
+    "Electrobase": "40.33",
+    "Salvats": "39.55",
     "не выбран": "0.0"
   },
   "shipping_EUR": "5.87",
-  "total_EUR": "82.50",
+  "total_EUR": "85.75",
   "price_basis": "Dated sourcing snapshot 2026-10-20; quantities now allocated to actual schematic. No reservation or order."
 }
