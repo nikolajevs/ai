@@ -3,7 +3,7 @@ Input: netlist.xml
 PASS: 56 checks
 Exported electrical components: 188
 Specified connected pins checked: 498
-Procurement snapshot incl. VAT and delivery: 85.75 EUR
+Procurement snapshot incl. VAT and delivery: 84.67 EUR
 
 PASS 01 | Every specified connected component pin matches the KiCad-exported net
 PASS 02 | All intended NC pins remain unconnected
