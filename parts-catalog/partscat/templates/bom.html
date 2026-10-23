@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Проверка BOM{% endblock %}
+{% block content %}
+<h1>Проверка BOM</h1>
+{% if not bom %}
+<div class="card">
+  <p><b>BOM платы не найден.</b> Нужна папка с файлами <span class="mono">BOM_allocated.csv</span> и <span class="mono">design.json</span>
+     (их кладёт в <span class="mono">hardware/PCB_EU</span> сборка платы).</p>
+  <p>Программа ищет их в таком порядке: переменная <span class="mono">PARTSCAT_BOM_DIR</span>, папка <span class="mono">bom</span> рядом с <span class="mono">run.py</span>,
+     затем <span class="mono">../hardware/PCB_EU</span> внутри репозитория. Сейчас смотрела: {{ folder or 'ни одной папки не нашла' }}.</p>
+</div>
+{% else %}
+{% set n = report.counts() %}
+<div class="tiles">
+  <div class="tile"><span class="muted">Строк в BOM</span><b>{{ bom.lines|length }}</b></div>
+  <div class="tile"><span class="muted"><span class="dot ok"></span>в порядке</span><b>{{ n.ok }}</b></div>
+  <div class="tile"><span class="muted"><span class="dot warn"></span>проверить</span><b>{{ n.warn }}</b></div>
+  <div class="tile"><span class="muted"><span class="dot bad"></span>проблема</span><b>{{ n.bad }}</b></div>
+  <div class="tile"><span class="muted"><span class="dot"></span>нет данных</span><b>{{ n.none }}</b></div>
+</div>
+<div class="card">
+  <div class="row" style="gap:28px">
+    <div><span class="muted">Сумма деталей по BOM</span><br><b style="font-size:1.25rem">{{ report.bom_total|money }}</b></div>
+    <div><span class="muted">Сейчас по базе</span><br><b style="font-size:1.25rem">{{ report.now_total|money }}</b>
+      {% set d = report.now_total - report.bom_total %}<span class="muted"> ({{ ('%+.2f'|format(d))|replace('.', ',') }} €; обновлено строк {{ report.refreshed }} из {{ bom.lines|length }})</span></div>
+    {% if report.with_shipping %}<div><span class="muted">С доставкой {{ bom.shipping|money }} (по сводке BOM)</span><br>
+      <b style="font-size:1.25rem">{{ report.with_shipping[0]|money }} → {{ report.with_shipping[1]|money }}</b></div>{% endif %}
+  </div>
+  <p class="muted">По магазинам: {% for shop, total in report.by_shop().items() %}<b>{{ shop|capitalize }}</b> {{ total|money }}{{ ' · ' if not loop.last }}{% endfor %}.
+    Строки без цены в базе считаются по цене из BOM; доставка не пересчитывается.</p>
+</div>
+<div class="card">
+  <div class="row">
+    <form class="inline" method="post" action="/crawl/start" hx-post="/crawl/start" hx-target="#live" hx-swap="innerHTML">
+      <input type="hidden" name="kind" value="bom"><button class="btn">Обновить цены и остатки из магазинов</button></form>
+    <a class="btn ghost" href="/bom.csv">Скачать CSV</a>
+    <span class="muted grow">Источник: <span class="mono">{{ folder }}</span>{% if bom.revision %} · ревизия {{ bom.revision }}{% endif %}</span>
+  </div>
+</div>
+<div id="live">{% if progress.state != 'idle' %}{% include '_progress.html' %}{% endif %}</div>
+
+<form class="row" method="get" action="/bom" style="margin-bottom:10px">
+  <select name="level" onchange="this.form.submit()">
+    {% for value, label in [('all', 'все строки'), ('bad', 'только проблемы'), ('warn', 'только «проверить»'), ('none', 'нет данных'), ('ok', 'в порядке')] %}
+    <option value="{{ value }}" {{ 'selected' if level == value }}>{{ label }}</option>{% endfor %}
+  </select>
+  <input type="search" name="q" value="{{ q }}" placeholder="артикул, позиция (Q501) или блок" class="grow">
+  <button class="btn ghost small">Показать</button>
+</form>
+
+<div class="card"><div class="table-wrap"><table>
+  <tr><th></th><th>Деталь</th><th>Магазин</th><th class="right">Купить</th><th class="right">Цена за ед.</th><th>Остаток</th><th>Что нашла проверка</th></tr>
+  {% for c in checks %}{% set l = c.line %}
+  <tr>
+    <td><span class="dot {{ c.level }}" title="{{ {'ok': 'в порядке', 'warn': 'проверить', 'bad': 'проблема', 'none': 'нет данных'}[c.level] }}"></span></td>
+    <td><b class="mono">{{ l.mpn }}</b>
+      <span class="sub" title="{{ l.refs|join(' ') }}">{{ (l.refs|join(' '))[:70] }}{{ '…' if (l.refs|join(' '))|length > 70 }}{% if l.accessory %} · принадлежность{% endif %}{% if l.block %} · {{ l.block }}{% endif %}</span></td>
+    <td>{{ l.shop_label }}{% if c.offer %}<span class="sub"><a href="{{ c.offer.url|safe_url }}" target="_blank" rel="noopener noreferrer">страница</a> · {{ c.offer.last_seen|ago }}</span>{% endif %}</td>
+    <td class="right nowrap">{{ l.buy }} шт.{% if l.pack > 1 %}<span class="sub">{{ (l.buy / l.pack)|int }} уп. по {{ l.pack }}</span>{% elif l.buy != l.fitted %}<span class="sub">нужно {{ l.fitted }}</span>{% endif %}</td>
+    <td class="right nowrap">{% if c.now_unit is not none and l.price %}{{ c.now_unit|money }}<span class="sub">в BOM {{ l.price|money }} {{ l.price|percent(c.now_unit) }}</span>
+      {% elif l.price %}{{ l.price|money }}<span class="sub">по BOM</span>{% else %}—{% endif %}</td>
+    <td class="nowrap">{% if c.offer %}{{ c.offer|stock }}{% else %}—{% endif %}</td>
+    <td>{% for i in c.issues %}<span class="chip {{ i.level if i.level != 'bad' else 'bad' }}" title="{{ i.code }}">{{ i.text }}</span> {% endfor %}
+      {% if c.cheaper %}<a class="chip ok" href="{{ c.cheaper.offer.url|safe_url }}" target="_blank" rel="noopener noreferrer">экономия {{ c.cheaper.saves|money }}</a>{% endif %}
+      {% if l.key in analog_lines %}<details hx-get="/analogs?line={{ l.key|quote }}" hx-trigger="toggle once" hx-target="find .analogs" hx-swap="innerHTML">
+        <summary>аналоги</summary><div class="analogs"><p class="muted">Подбираю…</p></div></details>{% endif %}</td>
+  </tr>
+  {% else %}<tr><td colspan="7" class="empty">Под фильтр ничего не попало.</td></tr>{% endfor %}
+</table></div></div>
+{% if report.refreshed == 0 %}
+<div class="flash warn">В базе пока нет ни одной позиции из BOM. Нажмите «Обновить цены и остатки из магазинов» — программа прочитает страницы деталей по адресам из BOM.</div>
+{% endif %}
+{% endif %}
+{% endblock %}
