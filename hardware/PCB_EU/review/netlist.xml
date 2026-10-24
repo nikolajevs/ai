@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/user/ai/hardware/PCB_EU/PCB_EU.kicad_sch</source>
-    <date>2026-10-23T15:37:31</date>
+    <date>2026-10-23T20:40:24</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu24.04.1</tool>
     <textvar name="DESIGN_STAGE">PARTIAL_LED1_ROUTING</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -1629,16 +1629,16 @@
       <value>UART 3V3</value>
       <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
       <fields>
-        <field name="MPN">ZL2019-20</field>
-        <field name="Design_note">Cut 6 of purchased 20 header positions; 14 spare</field>
+        <field name="MPN">ZL201-10G</field>
+        <field name="Design_note">Cut 6 of purchased 10 header positions; 4 spare</field>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="J6" description=""/>
-      <property name="MPN" value="ZL2019-20"/>
-      <property name="Design_note" value="Cut 6 of purchased 20 header positions; 14 spare"/>
+      <property name="MPN" value="ZL201-10G"/>
+      <property name="Design_note" value="Cut 6 of purchased 10 header positions; 4 spare"/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="02 | 3.3 V supply and ESP32"/>
       <property name="Sheetfile" value="MCU.kicad_sch"/>
@@ -3506,10 +3506,10 @@
       </units>
     </comp>
     <comp ref="D501">
-      <value>SS5P10 100V</value>
+      <value>SS8PH10 100V</value>
       <footprint>EU_Parts:Vishay_TO-277A_D_K1_A2</footprint>
       <fields>
-        <field name="MPN">SS5P10-M3/86A</field>
+        <field name="MPN">SS8PH10-M3/86A</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">EU_Parts:Vishay_TO-277A_D_K1_A2</field>
@@ -3517,7 +3517,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="D" description=""/>
-      <property name="MPN" value="SS5P10-M3/86A"/>
+      <property name="MPN" value="SS8PH10-M3/86A"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="05 | LED boost channel 1"/>
@@ -4306,10 +4306,10 @@
       </units>
     </comp>
     <comp ref="D601">
-      <value>SS5P10 100V</value>
+      <value>SS8PH10 100V</value>
       <footprint>EU_Parts:Vishay_TO-277A_D_K1_A2</footprint>
       <fields>
-        <field name="MPN">SS5P10-M3/86A</field>
+        <field name="MPN">SS8PH10-M3/86A</field>
         <field name="Design_note"/>
         <field name="FootprintStatus">PACKAGE ONLY - verify before PCB</field>
         <field name="Footprint">EU_Parts:Vishay_TO-277A_D_K1_A2</field>
@@ -4317,7 +4317,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="EU" part="D" description=""/>
-      <property name="MPN" value="SS5P10-M3/86A"/>
+      <property name="MPN" value="SS8PH10-M3/86A"/>
       <property name="Design_note" value=""/>
       <property name="FootprintStatus" value="PACKAGE ONLY - verify before PCB"/>
       <property name="Sheetname" value="06 | LED boost channel 2"/>

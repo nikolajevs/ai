@@ -2924,5 +2924,5 @@
     "Design currents are not measurements; converter switching peaks, startup, real ambient and assembly temperatures require prototype checks.",
     "Factory dielectric schedule, minimum finished copper and barrel plating must be confirmed before manufacturing release."
   ],
-  "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf"
+  "source_sha256": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7"
 }

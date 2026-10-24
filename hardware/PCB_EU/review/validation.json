@@ -151,9 +151,9 @@
     "routing_feasibility_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
+      "PCB_EU.kicad_pcb": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7",
       "placement.json": "d6f920cacab23ac8ef522d21cca8c9045977e8cbf65691864844b187c07e85f0",
-      "netlist.xml": "042b2dbd2721f1c3ebdf2d0d1bc10b145fb9ebfe7034b3055110975f5d4872ff"
+      "netlist.xml": "1d16e565fc762fddd7c03f3914e948895d4015064ecb18b8ce02d612bdc84200"
     }
   },
   "pcb_routing": {
@@ -472,7 +472,7 @@
     "ampacity_verified": false,
     "thermal_verified": false,
     "source_sha256": {
-      "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
+      "PCB_EU.kicad_pcb": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7",
       "routing.json": "c9e280fda0ced6a43611624f22a69e2ed7a0e9886878cbc569dc25f3750e2c3d",
       "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
       "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"
@@ -484,22 +484,22 @@
     "unconnected_items": 0,
     "routing_status": "all connections routed"
   },
-  "firmware_build": "not performed: old firmware is incompatible",
+  "firmware_build": "not run by hardware checks: PCB_EU firmware is in softwareEU/; see softwareEU/README.md for build, tests and bench checks",
   "source_sha256": {
-    "BOM_allocated.json": "0efbb08060b071d6cf3464c82d9ceae7f25eb5b9dfadf157e711b598d73c35e7",
+    "BOM_allocated.json": "07e7baddf3a008200718e7307ed3378ea98fcdb7c34fe95fcaa28295df5574c1",
     "Control.kicad_sch": "f0e7c51402eafc42f5f519517b477988d95ccedd2f084c0d69fdbdeed20d9e60",
     "InputPower.kicad_sch": "6ed3f809ddee24c510fe1fda7bc164978afdd85dfd94328b6a730f496def4ab7",
     "Interfaces.kicad_sch": "5f7f02a2ea82395b3924dbffcb31cc673bb774030ea0b601fdbafdad615ea29a",
-    "LED1.kicad_sch": "c86d7464e926494727de7ad22caa6700345484864ed15133318beedf3bc589e4",
-    "LED2.kicad_sch": "20d7876cedd3739a5863762e76f942b533409a20736a2f5a57c293439dc301a7",
+    "LED1.kicad_sch": "d2e38a9edb2d60755bf1d1d2b6153e3e6d32ab014a52ca9ff52e1d4f80b061a7",
+    "LED2.kicad_sch": "9dd70c5b1f067256291a6d21b3c3e505994a6d89f397db9639590be5547ed300",
     "Loads.kicad_sch": "d62644f8131b0f4273e91101c9255dedec30f0eb296e43aaa08d868f98b6381d",
-    "MCU.kicad_sch": "bc294675ea29a8ce9669fddfdc3ab996d28ee702aac3d3bbb72aba3a2e471605",
+    "MCU.kicad_sch": "4e1b1545cd5978f372db44d7388e931cf5de1e506b923c427c8de65cc565a0dc",
     "PCB_EU.kicad_dru": "edd74546c3a662048c2f81cace7014020026bf6586abc6b7333db7df5644bfc7",
-    "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
+    "PCB_EU.kicad_pcb": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7",
     "PCB_EU.kicad_pro": "02fb70ad0e05f8349c0fc30971c060124be88b2549d11875d55cba16f6c270dd",
     "PCB_EU.kicad_sch": "4295ae39daaedf4b19b5068e78e25fc3eef03648ffb7d849730882b372d55ce2",
     "Peripherals.kicad_sch": "d7766fa43979e18867d36862b1f0f6bbce00f99196558eb6cb2518c910d13341",
-    "design.json": "51e93bffacdc764c6869bfbdc5725a509631a083a7b35f6c9f8ea7262cd1434b",
+    "design.json": "dbaf048777d212a994aa354a0fbe2847abad0511dcc93043e1a2719e56d6af9e",
     "fab_exceptions.json": "1b16b6e03e70126c4ee3aade51f21fc9bc4c64444bf24f5a57174f39890657b4",
     "footprint_assignments.json": "b316e90b185b24420782d793953bf588e81239dd2723da5f6b642db6945d0aca",
     "fp-lib-table": "77a832bbdace056ccc5423e454d344be3140a48a658c0b9cf0388a7462439b1a",
@@ -589,7 +589,7 @@
     "tools/build_board.py": "8b0d63156dfdbc66e3a0feef63ffe575d6ae1e8abcc789f2dc1db6bac816fbd8",
     "tools/check_footprint_drc.py": "54a1309792ef0f017b702e243baa542a95173165322e42d049ed9be08a89aef5",
     "tools/dfm_tracks.py": "4bff84a3ccbaacc764b855a971c52fb62b32eb419b8e15e7c774f1974f89ad99",
-    "tools/generate.py": "bcac0b8d48f39f82d6ff538de25e6c80cbea11724bbd611016d515b7800ed528",
+    "tools/generate.py": "ff5f326e61b69bddea2df4485d0a31ecd1102bf18f647dd0226e0ce45687d376",
     "tools/generate_footprints.py": "e16f315320019a0747ca112ff991d4df7a48aa936959ee1e30c60bc40468705d",
     "tools/make_models3d.py": "4f45398b01471da10d0c605568eaae8cec75ef0036a55a64cc8e4bf2e8c14ae3",
     "tools/models3d.py": "491287f88f63985e4a46d99b68576b706aa1df4590c4b2987ba5b0b3f95c269f",
@@ -598,7 +598,7 @@
     "tools/route_board.py": "6b3670c33fb442e79912e367cb24f3e9f1645717c403c44b66482f31345c9328",
     "tools/route_complete.py": "1ccaeaa4f03939eb219083405b890aac8c94249e47fc50554b7dd982132a12fc",
     "tools/route_power.py": "a24ba232dda227646f6c6046a6590eadca91ffd5591dbfea27b02d2c185dc6e5",
-    "tools/run_checks.py": "335cfca303bf9f86dcb82ce41733f3b46faec4a7970fc673537f3a9faa03b2ce",
+    "tools/run_checks.py": "1a37739ff1b0d8dfdc3cb56245d2af3af6aff448012cb043db3c3ffbfe91d4f0",
     "tools/silk_clean.py": "518544ab4da8e5f6f4dc25e36802fa50159c9f7f582d366cd0c1d04c21255694",
     "tools/silkscreen.py": "631b7115de22c0a93acd9462da49e07ba80bf504f1e7f64c2af954a0e5c605e0",
     "tools/stackup.py": "8ab24b26b550af7d1779c8fd813678de520c7cb059785811340bd65b4ad4eea3",
@@ -3439,8 +3439,8 @@
       }
     ],
     "library_silk_cut": {},
-    "base_pcb_sha256": "7e08f538c8d6b8edfb4d38dffd1b4056608515a135cc6900aef52459ae0e0acc",
-    "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf"
+    "base_pcb_sha256": "5775250819d7f8ecd7e2b6b97c3093dd6a4761f11fd373cadb1a34a155f049da",
+    "source_sha256": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7"
   },
   "stackup": {
     "board_mm": 1.6062,
@@ -3558,7 +3558,7 @@
     "report": "review/power_copper.json",
     "dc_screening_cases": 27,
     "unresolved_screening_flags": 0,
-    "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
+    "source_sha256": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7",
     "thermal_qualified": false
   }
 }

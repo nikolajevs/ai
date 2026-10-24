@@ -2812,6 +2812,6 @@
     }
   ],
   "library_silk_cut": {},
-  "base_pcb_sha256": "7e08f538c8d6b8edfb4d38dffd1b4056608515a135cc6900aef52459ae0e0acc",
-  "source_sha256": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf"
+  "base_pcb_sha256": "5775250819d7f8ecd7e2b6b97c3093dd6a4761f11fd373cadb1a34a155f049da",
+  "source_sha256": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7"
 }

@@ -314,7 +314,7 @@
   "ampacity_verified": false,
   "thermal_verified": false,
   "source_sha256": {
-    "PCB_EU.kicad_pcb": "b9acdd6aaac6252e1b8a4ee9f8b63254e8c6d92cf578061c2cfdd366e3daf8cf",
+    "PCB_EU.kicad_pcb": "c6b4e0382d51009010f3a2ee79a94a5cc2f45494132e5557ee946960d23cc2c7",
     "routing.json": "c9e280fda0ced6a43611624f22a69e2ed7a0e9886878cbc569dc25f3750e2c3d",
     "routing/pass1.ses": "0e29afdf339c00523d525d4c8c9d65bcb68ff5d3f7b5eddb88518d6eb9ed4b14",
     "routing/pass2.ses": "b9d40cecfa04c8486c993525682be3d1839c0bc032b3f6c30c4abcbc6b61d5e7"

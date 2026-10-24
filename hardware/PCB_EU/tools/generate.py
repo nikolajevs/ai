@@ -231,7 +231,7 @@ r('MCU','R201','10k',D10,V3,'ESP_EN')
 r('MCU','R202','10k',D10,V3,'ESP_BOOT')
 add('MCU','SW201','SW','RESET','TACTB-64K-F',['ESP_EN',GND],note='4 physical button leads form two internally common pairs')
 add('MCU','SW202','SW','BOOT','TACTB-64K-F',['ESP_BOOT',GND])
-add('MCU','J201','J6','UART 3V3','ZL2019-20',[GND,V3,'UART_TX','UART_RX','ESP_EN','ESP_BOOT'],'Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical',note='Cut 6 of purchased 20 header positions; 14 spare')
+add('MCU','J201','J6','UART 3V3','ZL201-10G',[GND,V3,'UART_TX','UART_RX','ESP_EN','ESP_BOOT'],'Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical',note='Cut 6 of purchased 10 header positions; 4 spare')
 
 sheet('Peripherals','03 | RTC, battery and microSD',[
  'MCP7940N: I2C 0x6F; old PCF8563/DS3231 firmware is incompatible.',
@@ -315,7 +315,7 @@ for k in (1,2):
         add(sh,ref('L',1),'L','10u','JNRH1207-100N-A',[vin,pre+'L_MID'])
         add(sh,ref('L',2),'L','10u','JNRH1207-100N-A',[pre+'L_MID',pre+'SW'])
     else:add(sh,ref('L',1),'L','22u','JNRH1207-220M-A',[vin,pre+'SW'])
-    add(sh,ref('D',1),'D','SS5P10 100V','SS5P10-M3/86A',[pre+'OUT',pre+'SW'],'EU_Parts:Vishay_TO-277A_D_K1_A2')
+    add(sh,ref('D',1),'D','SS8PH10 100V','SS8PH10-M3/86A',[pre+'OUT',pre+'SW'],'EU_Parts:Vishay_TO-277A_D_K1_A2')
     fet='TK22E10N1' if k==1 else 'CSD19534KCS'
     add(sh,ref('Q',1),'NMOS',fet,fet,{1:pre+'GATE',2:pre+'SW',3:pre+'IS'},'Package_TO_SOT_THT:TO-220-3_Vertical',note=('Drain tab live. Separate insulated heatsink; exact assembly placement pending' if k==1 else 'Drain tab live (switch node). No heatsink: ~0.37 W modelled, Rth(j-a) 62 K/W free air; measure on the prototype'),pos=(300,60))
     r(sh,ref('R',1),'0R040 3W' if k==1 else '0R068 2W','LRP2512-R040-1%' if k==1 else 'CS2512-0R068-1%-HP',pre+'IS',GND)
@@ -530,8 +530,10 @@ source_urls={
 # dated 2026-10-20 price snapshot (prices unchanged, stock was sufficient then).
 # On 2026-10-23 Igors dropped the second cooling set (HS2 was removed from Q601
 # on 2026-10-22): RAD-DY-GF/3, TO220-SET and SMICA-TO220-2 are bought once.
+# Later the same day Igors also dropped the spare terminal blocks: DG306 is
+# bought 6 times (needed 6, was 11) and DG301R once (needed 1, was 2).
 REVIEW_BUY={'SMD1206 4K7 1%':3,'SMD1206 5K6 1%':6,'SMD1206-10K-1%':6,'CL31A106KAHNNNE':2,
- 'RAD-DY-GF/3':1,'TO220-SET':1,'SMICA-TO220-2':1}
+ 'RAD-DY-GF/3':1,'TO220-SET':1,'SMICA-TO220-2':1,'DG306-5.0-2P12':6,'DG301R-5.0-2P12':1}
 REVIEW_USAGE={
  'SMD1206 4K7 1%':'1%: I2C pull-ups ×2, R702 база Q701 (держит PTC выключенным при внутренней подтяжке ESP32)',
  'SMD1206 5K6 1%':'1%: RCSH CH2, два плеча UVLO, series-R GPIO25 → nDIM, делитель затвора Q102 ×2',
@@ -540,8 +542,8 @@ REVIEW_USAGE={
  'CL21B104KBCNNNC':'13 байпасных/фильтрующих конденсаторов в схеме (вкл. VS INA226), покупка 20, остаток 7',
  'CL21B105KBFNNNG':'1 мкФ / 50 В X7R 0805: 4 VCC/VIN, 2 VBIAS, 1 CF, 1 SS, 1 EN ESP32; купить пачку 10',
  'SMD0603-100K':'0603 / 5%: gate Q501/Q601 ×2, gate помпы ×1, gate fan PWM ×2',
- 'DG306-5.0-2P12':'PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края: 5 шт. в покупке лишние, количество не менялось до проверки BOM',
- 'DG301R-5.0-2P12':'Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306: 1 шт. в покупке лишняя, количество не менялось до проверки BOM',
+ 'DG306-5.0-2P12':'PTC, помпа, LED×3, float (6 шт.). С 22.10.2026 вентиляторы на хидерах KF2510, SHT4x на разъёме XH, PTC на DG306 у нижнего края; 5 лишних штук убраны из покупки 23.10.2026 по решению Игоря (куплено 6, запаса нет)',
+ 'DG301R-5.0-2P12':'Вход 24 В J101 (1 шт., 2,5 мм², 16 А). С 22.10.2026 клемма PTC J701 на DG306; вторая штука убрана из покупки 23.10.2026 по решению Игоря (куплено 1, запаса нет)',
  'RAD-DY-GF/3':'STONECOLD RAD-DY-GF/3, 30×30×15 мм, 8,8 К/Вт по каталогу; радиатор Q501 (LED1). У Q601 (LED2) радиатора нет с 22.10.2026; второй радиатор убран из покупки 23.10.2026',
  'TO220-SET':'TO220-SET: нужна изолирующая втулка под головку винта Q501 (остальное из набора не используется); второй комплект убран из покупки 23.10.2026',
  'SMICA-TO220-2':'NINIGI, силиконовая прокладка со втулкой, 15×20×0,3 мм, для Q501; вторая убрана из покупки 23.10.2026',
@@ -557,7 +559,18 @@ REVIEW_USAGE={
 # Also on 2026-10-23 C301/C302 (RTC crystal load, C0G needed) moved from the
 # Salvats card C1206C100J5GAC, whose heading says Y5V, to the KEMET C0G part
 # C1206C100J5GACTU (TU = reel packaging suffix) at Electrobase.
+# Also on 2026-10-23, from the shop price file of that day: D501/D601 moved from
+# SS5P10-M3/86A to SS8PH10-M3/86A (same TO-277A land pattern, 8 A, 0.59 EUR) and
+# J201 from the 20-position double-ended ZL2019-20 to the plain 10-position
+# header ZL201-10G (0.16 EUR; the Salvats card was not opened, price and stock
+# are from the file).
 REVIEW_ROWS={
+ 'SS5P10-M3/86A':[dict(shop='Electrobase',mpn='SS8PH10-M3/86A',needed=2,buy=2,unit='шт.',price_unit=0.59,line=1.18,stock='>1000',
+  url='https://electrobase.lv/katalogs/diodes-schottky-smd/diode-schottky-rectifying-smpcto277a-smd-100v-8a',block='Силовые диоды',
+  usage='Vishay eSMP, 100 В / 8 А, TO-277A (SMPC), Tj до 175 °C: только выпрямители двух LED-boost (D501, D601). Посадка и выводы анод–катод–анод те же, что у SS5P10: рекомендованные площадки в обоих даташитах совпадают; у поставщика больше 1000 шт. на 23.10.2026',price_date='2026-10-23')],
+ 'ZL2019-20':[dict(shop='Salvats',mpn='ZL201-10G',needed=1,buy=1,unit='шт.',price_unit=0.16,line=0.16,stock=41,
+  url='https://www.salvats.lv/lv/listes-un-nuju-ligzdas/254mm-uz-pcb-10pin-stekers-1',block='Обслуживание',
+  usage='Однорядная штыревая планка 2,54 мм, 10 контактов, отрезать 6 для UART J201; остаток 4 контакта; цена и остаток (41 шт.) Salvats из файла цен от 23.10.2026, карточку не открывали',price_date='2026-10-23')],
  'C1206C100J5GAC':[dict(shop='Electrobase',mpn='C1206C100J5GACTU',needed=2,buy=2,unit='шт.',price_unit=0.25,line=0.5,stock='>1000',
   url='https://electrobase.lv/katalogs/kondensatori-mlcc-smd-0201/capacitor-ceramic-mlcc-10pf-50vdc-c0g-5-smd-1206',block='RTC',
   usage='KEMET, 10 пФ / 50 В / C0G / ±5%, 1206: нагрузка кварца Y301 (RTC_X1, RTC_X2), подобрать на плате. Карточка Salvats для C1206C100J5GAC называет Y5V, поэтому покупка у Electrobase; TU — суффикс упаковки (лента); у поставщика >1000 шт. на 23.10.2026',price_date='2026-10-23')],
